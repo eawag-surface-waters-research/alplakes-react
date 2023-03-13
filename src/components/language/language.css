@@ -1,0 +1,14 @@
+.language {
+  z-index: 9;
+  position: fixed;
+  top: 32px;
+  right: 32px;
+}
+
+.language select {
+    padding: 4px;
+    border-radius: 5px;
+    color: white;
+    background-color: hsl(67, 13%, 13%);
+    border: none;
+}
