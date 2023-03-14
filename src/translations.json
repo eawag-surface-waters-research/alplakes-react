@@ -10,5 +10,23 @@
         "DE": "Suchen",
         "FR": "Recherche",
         "IT": "Ricerca"
+    },
+    "lakes": {
+        "EN": "Lakes",
+        "DE": "Seen",
+        "FR": "Lacs",
+        "IT": "Laghi"
+    },
+    "about": {
+        "EN": "About",
+        "DE": "Über",
+        "FR": "À propos",
+        "IT": "Sopra"
+    },
+    "demo": {
+        "EN": "",
+        "DE": "",
+        "FR": "",
+        "IT": ""
     }
 }

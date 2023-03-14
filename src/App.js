@@ -2,7 +2,10 @@ import React, { Component } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 import Language from "./components/language/language";
-import Lakes from "./pages/lakes/lakes";
+import Home from "./pages/home/home";
+import Lake from "./pages/lake/lake";
+import API from "./pages/api/api";
+import About from "./pages/about/about";
 import NotFound from "./pages/notfound/notfound";
 
 class App extends Component {
@@ -24,7 +27,14 @@ class App extends Component {
         />
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Lakes language={language} />} exact />
+            <Route path="/" element={<Home language={language} />} exact />
+            <Route path="/lake/*" element={<Lake language={language} />} />
+            <Route path="/api" element={<API language={language} />} exact />
+            <Route
+              path="/about"
+              element={<About language={language} />}
+              exact
+            />
             <Route path="/" element={<NotFound language={language} />} />
           </Routes>
         </BrowserRouter>

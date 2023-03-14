@@ -1,5 +1,6 @@
 [
     {
+        "key": "geneva",
         "name": {
             "EN": "Lake Geneva",
             "DE": "Genfersee",
@@ -19,6 +20,7 @@
         "longitude": 6.5
     },
     {
+        "key": "garda",
         "name": {
             "EN": "Lake Garda",
             "DE": "Gardasee",
@@ -38,6 +40,7 @@
         "longitude": 10.63
     },
     {
+        "key": "lugano",
         "name": {
             "EN": "Lake Lugano",
             "DE": "Luganersee",
@@ -57,6 +60,7 @@
         "longitude": 8.97
     },
     {
+        "key": "zurich",
         "name": {
             "EN": "Lake Zurich",
             "DE": "Zürichsee",
@@ -76,6 +80,7 @@
         "longitude": 8.68
     },
     {
+        "key": "biel",
         "name": {
             "EN": "Lake Biel",
             "DE": "Bielersee",
@@ -95,6 +100,7 @@
         "longitude": 7.17
     },
     {
+        "key": "murten",
         "name": {
             "EN": "Lake Murten",
             "DE": "Murtensee",
@@ -114,6 +120,7 @@
         "longitude": 7.08
     },
     {
+        "key": "griefen",
         "name": {
             "EN": "Lake Griefen",
             "DE": "Greifensee",
@@ -133,6 +140,7 @@
         "longitude": 8.68
     },
     {
+        "key": "caldonazzo",
         "name": {
             "EN": "Lake Caldonazzo",
             "DE": "Caldonazzosee",
@@ -152,6 +160,7 @@
         "longitude": 11.24
     },
     {
+        "key": "ageri",
         "name": {
             "EN": "Lake Ageri",
             "DE": "Ägerisee",
@@ -171,6 +180,7 @@
         "longitude": 8.62
     },
     {
+        "key": "joux",
         "name": {
             "EN": "Lac de Joux",
             "DE": "Lac de Joux",
@@ -190,6 +200,7 @@
         "longitude": 6.29
     },
     {
+        "key": "stmoritz",
         "name": {
             "EN": "Lake St Moritz",
             "DE": "St. Moritzersee",

@@ -23,26 +23,46 @@
 .main .primary .content .products .lake {
   display: inline-block;
   width: 256px;
-  height: 256px;
+  height: 300px;
   border-radius: 10px;
-  margin-right: 32px;
-  margin-bottom: 32px;
-  border: 1px solid white;
+  margin: 16px;
+  border: 1px solid transparent;
   cursor: pointer;
+  box-shadow: -3px -4px 13px #000000, 0px 1px 1px #333;
+  transition: 0.33s ease-in-out all;
+  background-color: hsl(50, 9%, 20%);
+}
+
+.main .primary .content .products .lake:hover {
+  border: 1px solid white;
+  box-shadow: none;
 }
 
 .main .primary .content .products .lake .image {
   height: 50%;
   background-color: white;
-  border-radius: 10px 10px 0 0;
+  border-radius: 8px 8px 0 0;
+  margin: 2px 2px 0 2px;
+  overflow: hidden;
+}
+
+.main .primary .content .products .lake .image img {
+  width: 100%;
 }
 
 .main .primary .content .products .lake .properties {
-  padding: 16px;
+  padding: 8px 16px;
+  color: hsl(50, 9%, 80%);
 }
 
 .main .primary .content .products .lake .properties .name {
   font-size: 24px;
+}
+
+.main .primary .content .products .lake .properties .type {
+  color: hsl(50, 9%, 50%);
+  font-size: 14px;
+  margin-bottom: 4px;
 }
 
 .main .primary .content .products .lake .properties .parameters .parameter {
@@ -52,4 +72,5 @@
 
 .main .primary .content .products .lake .properties .parameters .parameter img {
   height: 16px;
+  margin-right: 4px;
 }

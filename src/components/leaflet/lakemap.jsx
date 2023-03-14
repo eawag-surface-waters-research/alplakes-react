@@ -28,11 +28,12 @@ class LakeMap extends Component {
         attribution: "&copy; <a href='https://www.mapbox.com/'>mapbox</a>",
       }
     ).addTo(this.map);
-    lakes.map((lake) =>
-      L.marker([lake.latitude, lake.longitude], { icon: customIcon }).addTo(
-        this.map
+    var markers = L.featureGroup(
+      lakes.map((lake) =>
+        L.marker([lake.latitude, lake.longitude], { icon: customIcon })
       )
-    );
+    ).addTo(this.map);
+    this.map.flyToBounds(markers.getBounds());
   }
 
   render() {
