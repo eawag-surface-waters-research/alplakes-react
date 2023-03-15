@@ -16,24 +16,26 @@ class NavBar extends Component {
     return (
       <React.Fragment>
         <div className="navbar">
-          <img src={textLogoWhite} className="icon" alt="Alplakes logo" />
+          <NavLink to="/">
+            <img src={textLogoWhite} className="icon" alt="Alplakes logo" />
+          </NavLink>
           <div className="desktop-nav">
             <NavLink
-              className={selected == "lakes" ? "nav-item active" : "nav-item"}
+              className={selected === "lakes" ? "nav-item active" : "nav-item"}
               to="/"
             >
               <img alt="Lakes" src={lakes_img} />
               <div className="nav-text">{Translate.lakes[language]}</div>
             </NavLink>
             <NavLink
-              className={selected == "api" ? "nav-item active" : "nav-item"}
+              className={selected === "api" ? "nav-item active" : "nav-item"}
               to="/api"
             >
               <img alt="API" src={api_img} />
               <div className="nav-text">API</div>
             </NavLink>
             <NavLink
-              className={selected == "about" ? "nav-item active" : "nav-item"}
+              className={selected === "about" ? "nav-item active" : "nav-item"}
               to="/about"
             >
               <img alt="About" src={about_img} />
@@ -44,10 +46,10 @@ class NavBar extends Component {
           <div className="mobile-nav">
             <div className="mobile-navbar">
               <div className="mobile-flex">
-                <NavLink activeClassName="imgactive" to="/lakes">
+                <NavLink to="/lakes">
                   <img alt="Lakes" src={lakes_img} />
                 </NavLink>
-                <NavLink activeClassName="imgactive" to="/api">
+                <NavLink to="/api">
                   <img alt="API" src={api_img} />
                 </NavLink>
                 <NavLink to="/about">

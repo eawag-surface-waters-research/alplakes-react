@@ -16,11 +16,6 @@ class LakeMap extends Component {
       maxZoom: 15,
       maxBoundsViscosity: 0.5,
     });
-    var customIcon = new L.divIcon({
-      className: "marker",
-      iconSize: [8, 8],
-      iconAnchor: [8, 32],
-    });
     L.tileLayer(
       "https://api.mapbox.com/styles/v1/jamesrunnalls/clf4ao087000201qr00bsj1f1/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiamFtZXNydW5uYWxscyIsImEiOiJjazk0ZG9zd2kwM3M5M2hvYmk3YW0wdW9yIn0.uIJUZoDgaC2LfdGtgMz0cQ",
       {
@@ -30,7 +25,20 @@ class LakeMap extends Component {
     ).addTo(this.map);
     var markers = L.featureGroup(
       lakes.map((lake) =>
-        L.marker([lake.latitude, lake.longitude], { icon: customIcon })
+        L.marker([lake.latitude, lake.longitude], {
+          id: lake.key,
+          icon: L.divIcon({
+            className: "map-marker",
+            html:
+              `<div style="padding:10px;transform:translate(2px, -21px);position: absolute;">` +
+              `<div class="pin bounce" id="${
+                "pin-" + lake.key
+              }" style="background-color:#24251D" />` +
+              `</div> `,
+          }),
+        }).on("click", (event) => {
+          window.location.href = `/lake/${event.target.options.id}`;
+        })
       )
     ).addTo(this.map);
     this.map.flyToBounds(markers.getBounds());

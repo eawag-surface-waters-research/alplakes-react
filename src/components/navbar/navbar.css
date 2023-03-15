@@ -7,7 +7,7 @@
 }
 
 .navbar img.icon {
-  padding: 32px;
+  padding: 32px 32px 16px 32px;
   height: 64px;
 }
 
@@ -30,6 +30,7 @@
   transition: 0.2s ease-in-out all;
   box-sizing: border-box;
   margin: 0 4px;
+  border-top: 3px solid transparent;
 }
 
 .navbar .desktop-nav .nav-item:hover {

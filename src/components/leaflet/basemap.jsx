@@ -172,7 +172,7 @@ class Basemap extends Component {
 
   async componentDidMount() {
     this.store = {};
-    var center = [46.5, 6.57];
+    var center = [46.46, 6.57];
     var zoom = 11;
     this.map = L.map("map", {
       preferCanvas: true,

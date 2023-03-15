@@ -1,6 +1,7 @@
 @font-face {
-  font-family: 'exo';
-  src: url('fonts/exo/Exo-Italic-VariableFont_wght.ttf') format("truetype-variations");
+  font-family: "exo";
+  src: url("fonts/exo/Exo-Italic-VariableFont_wght.ttf")
+    format("truetype-variations");
   font-weight: 1 999;
 }
 
@@ -28,6 +29,7 @@
 .primary .content {
   position: relative;
   color: white;
+  height: 100%;
 }
 
 .secondary {
@@ -64,4 +66,66 @@
   left: -6px;
   border: 10px solid transparent;
   border-top: 17px solid hsl(67, 13%, 13%);
+}
+
+/* Map markers */
+
+.dot {
+  height: 8px;
+  width: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.pin {
+  width: 30px;
+  height: 30px;
+  border-radius: 50% 50% 50% 0;
+  background: white;
+  position: absolute;
+  transform: rotate(-45deg);
+  left: 50%;
+  top: 50%;
+  margin: -20px 0 0 -20px;
+  border: 2px solid transparent;
+  transition: 0.33s ease-in-out all;
+}
+.pin:after {
+  content: "";
+  width: 14px;
+  height: 14px;
+  margin: 8px 0 0 8px;
+  background: #e6e6e6;
+  position: absolute;
+  border-radius: 50%;
+}
+
+.pin:hover {
+  border: 2px solid orange!important;
+}
+
+.bounce {
+  animation-name: bounce;
+  animation-fill-mode: both;
+  animation-duration: 1s;
+}
+
+@keyframes bounce {
+  0% {
+    opacity: 0;
+    transform: translateY(-2000px) rotate(-45deg);
+  }
+
+  60% {
+    opacity: 1;
+    transform: translateY(30px) rotate(-45deg);
+  }
+
+  80% {
+    transform: translateY(-10px) rotate(-45deg);
+  }
+
+  100% {
+    transform: translateY(0) rotate(-45deg);
+  }
 }

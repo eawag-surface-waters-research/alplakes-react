@@ -7,19 +7,40 @@ import LakeMap from "../../components/leaflet/lakemap";
 import area from "../../img/area.png";
 import elevation from "../../img/elevation.png";
 import depth from "../../img/depth.png";
-import example from "../../img/example.png";
 
 import "./home.css";
 
 class Lake extends Component {
-  state = {};
+  onMouseOver = (event) => {
+    try {
+      document.getElementById(
+        "pin-" + event.target.id.split("-")[1]
+      ).style.border = "2px solid orange";
+    } catch (e) {}
+  };
+
+  onMouseOut = (event) => {
+    try {
+      document.getElementById(
+        "pin-" + event.target.id.split("-")[1]
+      ).style.border = "2px solid transparent";
+    } catch (e) {}
+  };
   render() {
     var { lake, language } = this.props;
     return (
       <NavLink to={`/lake/${lake.key}`}>
-        <div className="lake">
+        <div
+          className="lake"
+          id={"list-" + lake.key}
+          onMouseOver={this.onMouseOver}
+          onMouseOut={this.onMouseOut}
+        >
           <div className="image">
-            <img src={example} />
+            <img
+              src={`https://alplakes-eawag.s3.eu-central-1.amazonaws.com/static/website/images/lakes/${lake.key}.png`}
+              alt="Lake"
+            />
           </div>
           <div className="properties">
             <div className="name">{lake.name[language]}</div>
@@ -54,6 +75,7 @@ class Home extends Component {
         <NavBar language={language} />
         <div className="primary">
           <div className="content">
+            <div className="banner">{Translate.title[language]}</div>
             <div className="sorting">
               <input
                 type="search"
