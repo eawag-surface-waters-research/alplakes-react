@@ -216,7 +216,7 @@ class Basemap extends Component {
     );
 
     var secchi_geotiff = await this.addFloatGeotiff(
-      "https://datalakes-eawag.s3.eu-central-1.amazonaws.com/leaflet-sandbox/s2_secchi_singleband_float.tiff",
+      "https://datalakes-eawag.s3.eu-central-1.amazonaws.com/leaflet-sandbox/ACOLITE_p3qaa_zSD_S2A_20210906T103021_T31TGM.tif",
       {
         unit: "m",
         min: 0,
@@ -232,7 +232,7 @@ class Basemap extends Component {
     );
 
     var s3_secchi_geotiff = await this.addFloatGeotiff(
-      "https://datalakes-eawag.s3.eu-central-1.amazonaws.com/leaflet-sandbox/s3_secchi_singleband_float.tiff",
+      "https://datalakes-eawag.s3.eu-central-1.amazonaws.com/leaflet-sandbox/outfile.tif",
       {
         unit: "m",
         min: 0,
@@ -259,7 +259,7 @@ class Basemap extends Component {
       mapbox: mapbox,
     };
 
-    vectorfield.addTo(this.map);
+    s3_secchi_geotiff.addTo(this.map);
 
     var overlayMaps = {
       "Sentinel 2 (WMS)": sentinel2_wms,

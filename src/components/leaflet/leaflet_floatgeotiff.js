@@ -5,8 +5,8 @@ import * as GeoTIFF from "geotiff";
 L.FloatGeotiff = L.ImageOverlay.extend({
   options: {
     opacity: 1,
-    min: false,
-    max: false,
+    min: "null",
+    max: "null",
     palette: [
       { color: [255, 255, 255], point: 0 },
       { color: [0, 0, 0], point: 1 },
@@ -161,8 +161,8 @@ L.FloatGeotiff = L.ImageOverlay.extend({
         args.rasterPixelBounds.max.y < this.size.y
           ? args.rasterPixelBounds.max.y
           : this.size.y;
-      args.plotWidth = args.xFinish - args.xStart;
-      args.plotHeight = args.yFinish - args.yStart;
+      args.plotWidth = parseInt(args.xFinish - args.xStart);
+      args.plotHeight = parseInt(args.yFinish - args.yStart);
 
       if (args.plotWidth <= 0 || args.plotHeight <= 0) {
         let plotCanvas = document.createElement("canvas");
@@ -260,9 +260,11 @@ L.FloatGeotiff = L.ImageOverlay.extend({
           imgData.data[i * 4 + 0] = color[0];
           imgData.data[i * 4 + 1] = color[1];
           imgData.data[i * 4 + 2] = color[2];
-          imgData.data[i * 4 + 3] = validpixelexpression
-            ? raster.data[1][ii]
-            : 255;
+          if (validpixelexpression) {
+            imgData.data[i * 4 + 3] = (raster.data[1][ii] - 1) * -255;
+          } else {
+            imgData.data[i * 4 + 3] = 255;
+          }
         } else {
           imgData.data[i * 4 + 0] = 0;
           imgData.data[i * 4 + 1] = 0;
@@ -337,7 +339,7 @@ L.FloatGeotiff = L.ImageOverlay.extend({
     this.fire("click", e);
   },
   _queryValue: function (click) {
-    click["value"] = this.getValueAtLatLng(click.latlng.lat, click.latlng.lng)
+    click["value"] = this.getValueAtLatLng(click.latlng.lat, click.latlng.lng);
     return click;
   },
 });
