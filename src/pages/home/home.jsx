@@ -1,31 +1,19 @@
 import React, { Component } from "react";
+import axios from "axios";
 import { NavLink } from "react-router-dom";
 import Translate from "../../translations.json";
-import LakeList from "../../lakelist.json";
 import NavBar from "../../components/navbar/navbar";
 import LakeMap from "../../components/leaflet/lakemap";
+import URLS from "../../urls.json";
+import { onMouseOver, onMouseOut } from "./functions";
 import area from "../../img/area.png";
 import elevation from "../../img/elevation.png";
 import depth from "../../img/depth.png";
 
 import "./home.css";
+import Loading from "../../components/loading/loading";
 
 class Lake extends Component {
-  onMouseOver = (event) => {
-    try {
-      document.getElementById(
-        "pin-" + event.target.id.split("-")[1]
-      ).style.border = "2px solid orange";
-    } catch (e) {}
-  };
-
-  onMouseOut = (event) => {
-    try {
-      document.getElementById(
-        "pin-" + event.target.id.split("-")[1]
-      ).style.border = "2px solid transparent";
-    } catch (e) {}
-  };
   render() {
     var { lake, language } = this.props;
     return (
@@ -33,8 +21,8 @@ class Lake extends Component {
         <div
           className="lake"
           id={"list-" + lake.key}
-          onMouseOver={this.onMouseOver}
-          onMouseOut={this.onMouseOut}
+          onMouseOver={onMouseOver}
+          onMouseOut={onMouseOut}
         >
           <div className="image">
             <img
@@ -67,8 +55,16 @@ class Lake extends Component {
 }
 
 class Home extends Component {
+  state = {
+    list: [],
+  };
+  async componentDidMount() {
+    const { data: list } = await axios.get(URLS.metadata + "list.json");
+    this.setState({ list });
+  }
   render() {
     var { language } = this.props;
+    var { list } = this.state;
     document.title = Translate.title[language];
     return (
       <div className="main">
@@ -76,22 +72,17 @@ class Home extends Component {
         <div className="primary">
           <div className="content">
             <div className="banner">{Translate.title[language]}</div>
-            <div className="sorting">
-              <input
-                type="search"
-                placeholder={Translate.search[language]}
-                className="dark-inset"
-              />
-            </div>
             <div className="products">
-              {LakeList.map((lake) => (
-                <Lake lake={lake} language={language} />
-              ))}
+              {list.length === 0 ? (
+                <Loading marginTop={20} dark={true} />
+              ) : (
+                list.map((lake) => <Lake lake={lake} language={language} />)
+              )}
             </div>
           </div>
         </div>
         <div className="secondary">
-          <LakeMap lakes={LakeList} language={language} />
+          <LakeMap lakes={list} language={language} />
         </div>
       </div>
     );

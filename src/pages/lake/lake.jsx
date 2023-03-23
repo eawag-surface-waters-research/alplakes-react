@@ -1,34 +1,87 @@
 import React, { Component } from "react";
+import axios from "axios";
 import Translate from "../../translations.json";
 import NavBar from "../../components/navbar/navbar";
 import Basemap from "../../components/leaflet/basemap";
-import graph from "../../img/graph.png";
-import notification from "../../img/notification.png";
+import Loading from "../../components/loading/loading";
+import URLS from "../../urls.json";
+import { formatDate, formatTime, relativeDate, setCustomPeriod } from "./functions";
 import "./lake.css";
+
+class LakeSidebar extends Component {
+  state = {};
+  render() {
+    var { metadata, language } = this.props;
+    return (
+      <div className="info">
+        <div className="name">{metadata.name[language]}</div>
+        <div className="datetime">
+          <div className="date">{formatDate(this.props.datetime)}</div>
+          <div className="time">{formatTime(this.props.datetime)}</div>
+        </div>
+      </div>
+    );
+  }
+}
+
+class Playback extends Component {
+  state = {};
+  render() {
+    var { period } = this.props;
+    return (
+      <div className="playback">
+        <div className="play-controls"></div>
+        <div className="start-date">{formatDate(period[0])}</div>
+        <div className="slider"></div>
+        <div className="end-date">{formatDate(period[1])}</div>
+        <div className="settings"></div>
+      </div>
+    );
+  }
+}
 
 class Lake extends Component {
   state = {
-    depth: 0.6,
     datetime: Date.now(),
-    temperature: 17.6,
+    period: [relativeDate(-6), relativeDate(0)],
+    loading: true,
+    metadata: {},
+    layers: [],
+    updates: [],
   };
-  formatDate = (datetime) => {
-    var a = new Date(datetime);
-    var year = a.getFullYear();
-    var month = a.getMonth() + 1;
-    var date = a.getDate();
-    return `${date < 10 ? "0" + date : date}.${
-      month < 10 ? "0" + month : month
-    }.${String(year).slice(-2)}`;
+
+  updated = () => {
+    this.setState({ updates: [] });
   };
-  formatTime = (datetime) => {
-    var a = new Date(datetime);
-    var hour = a.getHours();
-    var minute = a.getMinutes();
-    return `${hour < 10 ? "0" + hour : hour}:${
-      minute < 10 ? "0" + minute : minute
-    }`;
-  };
+
+  async componentDidMount() {
+    var { period } = this.state;
+    const lake_id = window.location.href.split("/lake/")[1].split("?")[0];
+    try {
+      const { data: metadata } = await axios.get(
+        URLS.metadata + `${lake_id}.json`
+      );
+      var updates = [{ event: "bounds" }];
+      for (var layer of metadata.layers) {
+        if (layer.active === "true") {
+          updates.push({ event: "addLayer", id: layer.id });
+        }
+      }
+      if ("customPeriod" in metadata) {
+        period = await setCustomPeriod(metadata.customPeriod, period);
+      }
+      this.setState({
+        metadata,
+        loading: false,
+        layers: metadata.layers,
+        updates,
+        period,
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
   render() {
     var { language } = this.props;
     document.title = Translate.title[language];
@@ -39,36 +92,27 @@ class Lake extends Component {
           <div className="content">
             <div className="map-component">
               <div className="viewport">
-                <Basemap />
+                <Basemap
+                  language={language}
+                  {...this.state}
+                  updated={this.updated}
+                />
               </div>
               <div className="controls">
                 <div className="legend"></div>
-                <div className="playback"></div>
+                <div className="playback">
+                  <Playback language={language} {...this.state} />
+                </div>
               </div>
             </div>
           </div>
         </div>
         <div className="secondary">
-          <div className="notification">
-            <img src={notification} alt="Notification" />
-          </div>
-          <div className="info">
-            <div className="name">LAKE GENEVA</div>
-            <div className="temperature">
-              <div className="value">{this.state.temperature}</div>
-              <div className="unit">
-                <div>°C</div>
-                <div>AVE</div>
-              </div>
-            </div>
-            <div className="datetime">
-              <div className="date">{this.formatDate(this.state.datetime)}</div>
-              <div className="time">{this.formatTime(this.state.datetime)}</div>
-            </div>
-          </div>
-          <div className="info-graph">
-            <img src={graph} alt="Graph" />
-          </div>
+          {this.state.loading ? (
+            <Loading marginTop={100} />
+          ) : (
+            <LakeSidebar language={language} {...this.state} />
+          )}
         </div>
       </div>
     );

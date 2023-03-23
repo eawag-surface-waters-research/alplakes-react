@@ -1,0 +1,82 @@
+[
+    {
+        "key": "geneva",
+        "name": {
+            "EN": "Lake Geneva",
+            "DE": "Genfersee",
+            "FR": "Le Léman",
+            "IT": "Lago Lemano"
+        },
+        "type": {
+            "EN": "Glacial lake",
+            "DE": "Gletschersee",
+            "FR": "Lac glaciaire",
+            "IT": "Lago glaciale"
+        },
+        "area": 580,
+        "depth": 154,
+        "elevation": 372,
+        "latitude": 46.45,
+        "longitude": 6.5
+    },
+    {
+        "key": "zurich",
+        "name": {
+            "EN": "Lake Zurich",
+            "DE": "Zürichsee",
+            "FR": "Lac de Zurich",
+            "IT": "Lago di Zurigo"
+        },
+        "type": {
+            "EN": "Glacial lake",
+            "DE": "Gletschersee",
+            "FR": "Lac glaciaire",
+            "IT": "Lago glaciale"
+        },
+        "area": 89,
+        "depth": 49,
+        "elevation": 406,
+        "latitude": 47.24,
+        "longitude": 8.68
+    },
+    {
+        "key": "biel",
+        "name": {
+            "EN": "Lake Biel",
+            "DE": "Bielersee",
+            "FR": "Lac de Bienne",
+            "IT": "Lago di Bienne"
+        },
+        "type": {
+            "EN": "Glacial lake",
+            "DE": "Gletschersee",
+            "FR": "Lac glaciaire",
+            "IT": "Lago glaciale"
+        },
+        "area": 39.3,
+        "depth": 28,
+        "elevation": 429,
+        "latitude": 47.08,
+        "longitude": 7.17
+    },
+    {
+        "key": "greifen",
+        "name": {
+            "EN": "Lake Greifen",
+            "DE": "Greifensee",
+            "FR": "Lac de Greifen",
+            "IT": "Lago di Greifen"
+        },
+        "type": {
+            "EN": "Glacial lake",
+            "DE": "Gletschersee",
+            "FR": "Lac glaciaire",
+            "IT": "Lago glaciale"
+        },
+        "area": 8.45,
+        "depth": 18,
+        "elevation": 435,
+        "latitude": 47.36,
+        "longitude": 8.68
+    }
+]
