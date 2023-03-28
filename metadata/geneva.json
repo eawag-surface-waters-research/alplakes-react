@@ -43,7 +43,11 @@
                 "parameter": "temperature",
                 "height": 182,
                 "width": 36,
-                "timestep": 3
+                "timestep": 3,
+                "depths": [],
+                "display": {
+                    "paletteName": "Balance"
+                }
             }
         }
     ]

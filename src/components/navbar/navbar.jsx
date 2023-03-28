@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 import Translate from "../../translations.json";
-import textLogoWhite from "../../img/text-logo-white.png";
+import textLogo from "../../img/text-logo-black.png";
 import lakes_img from "../../img/lakes.png";
 import api_img from "../../img/api.png";
 import about_img from "../../img/about.png";
@@ -17,7 +17,7 @@ class NavBar extends Component {
       <React.Fragment>
         <div className="navbar">
           <NavLink to="/">
-            <img src={textLogoWhite} className="icon" alt="Alplakes logo" />
+            <img src={textLogo} className="icon" alt="Alplakes logo" />
           </NavLink>
           <div className="desktop-nav">
             <NavLink

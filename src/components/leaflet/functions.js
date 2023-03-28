@@ -1,6 +1,8 @@
 import L from "leaflet";
 import axios from "axios";
+import COLORS from "../colors/colors.json";
 import CONFIG from "../../config.json";
+import "./leaflet_raster";
 
 const addToNested = (obj, args, value) => {
   for (var i = 0; i < args.length; i++) {
@@ -44,20 +46,38 @@ export const flyToBounds = (bounds, map) => {
   );
 };
 
-export const addLayer = async (layer, period, dataStore, layerStore, map) => {
+export const addLayer = async (
+  layer,
+  period,
+  dataStore,
+  layerStore,
+  map,
+  datetime
+) => {
   if (layer.type === "alplakes_hydrodynamic")
-    await addAlplakesHydrodynamic(layer, period, dataStore, layerStore, map);
+    await addAlplakesHydrodynamic(
+      layer,
+      period,
+      dataStore,
+      layerStore,
+      map,
+      datetime
+    );
 };
+
+export const updateLayer = async () => {};
 
 const addAlplakesHydrodynamic = async (
   layer,
   period,
   dataStore,
   layerStore,
-  map
+  map,
+  datetime
 ) => {
   await downloadAlplakesHydrodynamicGeometry(layer, period, dataStore);
   await downloadAlplakesHydrodynamicParameter(layer, period, dataStore);
+  plotAlplakesHydrodynamic(layer, datetime, dataStore, layerStore, map);
 };
 
 const downloadAlplakesHydrodynamicGeometry = async (
@@ -84,14 +104,9 @@ const downloadAlplakesHydrodynamicGeometry = async (
   geometry = geometry
     .split("\n")
     .map((g) => g.split(",").map((s) => parseFloat(s)));
-  var x = [];
-  var y = [];
-  geometry.map((g) => {
-    x.push(g.slice(0, layer.width));
-    y.push(g.slice(layer.width));
-  });
-  addToNested(dataStore, path, { x, y });
+  addToNested(dataStore, path, geometry);
 };
+
 const downloadAlplakesHydrodynamicParameter = async (
   layer,
   period,
@@ -119,9 +134,76 @@ const downloadAlplakesHydrodynamicParameter = async (
     .split("\n")
     .map((g) => g.split(",").map((s) => parseFloat(s)));
 
-  for (var i = 1; i < Math.floor(parameter.length / layer.properties.height) + 1; i++){
-    console.log(formatDate(period[0], i * (3 * 3600 * 1000)))
+  for (
+    var i = 0;
+    i < Math.floor(parameter.length / (layer.properties.height + 1));
+    i++
+  ) {
+    var date = parameter[i * (layer.properties.height + 1)];
+    var data = parameter.slice(
+      i * (layer.properties.height + 1) + 1,
+      (i + 1) * (layer.properties.height + 1)
+    );
+    addToNested(dataStore, [...path, date], data);
+  }
+};
+
+const closestDate = (datetime, dates) => {
+  return dates[0];
+};
+
+const plotAlplakesHydrodynamic = (
+  layer,
+  datetime,
+  dataStore,
+  layerStore,
+  map
+) => {
+  var { model, lake, parameter } = layer.properties;
+  var data = dataStore[layer.type][model][lake][parameter];
+  var dates = Object.keys(data);
+  var date = closestDate(datetime, dates);
+  if (parameter === "temperature") {
+    plotAlplakesHydrodynamicTemperature(
+      layer,
+      layerStore,
+      map,
+      dataStore[layer.type][model][lake]["geometry"],
+      data[date]
+    );
+  }
+};
+
+const plotAlplakesHydrodynamicTemperature = (
+  layer,
+  layerStore,
+  map,
+  geometry,
+  data
+) => {
+  var options = {};
+  if (
+    "display" in layer.properties &&
+    "min_value" in layer.properties.display
+  ) {
+    options["min"] = layer.properties.display.min_value;
+  }
+  if (
+    "display" in layer.properties &&
+    "max_value" in layer.properties.display
+  ) {
+    options["max"] = layer.properties.display.max_value;
+  }
+  if ("display" in layer.properties && "palette" in layer.properties.display) {
+    options["palette"] = layer.properties.display.palette;
+  } else if (
+    "display" in layer.properties &&
+    "paletteName" in layer.properties.display
+  ) {
+    layer.properties.display.palette =
+      COLORS[layer.properties.display.paletteName];
+    options["palette"] = COLORS[layer.properties.display.paletteName];
   }
 
-  
+  var rasterLayer = new L.Raster(geometry, data, options).addTo(map);
 };

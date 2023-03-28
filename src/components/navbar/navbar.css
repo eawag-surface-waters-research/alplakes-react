@@ -20,7 +20,7 @@
 
 .navbar .desktop-nav a {
   text-decoration: none;
-  color: white;
+  color: black;
 }
 
 .navbar .desktop-nav .nav-item {
@@ -34,13 +34,11 @@
 }
 
 .navbar .desktop-nav .nav-item:hover {
-  background-color: hsl(50, 9%, 20%);
-  border-top: 3px solid hsl(50, 9%, 20%);
+  border-top: 3px solid grey;
 }
 
 .navbar .desktop-nav .nav-item.active {
-  background-color: hsl(50, 9%, 20%);
-  border-top: 3px solid orange;
+  border-top: 3px solid black;
 }
 
 .navbar .desktop-nav .nav-item img {

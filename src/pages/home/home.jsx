@@ -32,20 +32,7 @@ class Lake extends Component {
           </div>
           <div className="properties">
             <div className="name">{lake.name[language]}</div>
-            <div className="type">{lake.type[language]}</div>
             <div className="parameters">
-              <div className="parameter">
-                <img src={area} alt="Area" />
-                {lake.area}km&#178;
-              </div>
-              <div className="parameter">
-                <img src={depth} alt="Area" />
-                {lake.depth}m
-              </div>
-              <div className="parameter">
-                <img src={elevation} alt="Area" />
-                {lake.elevation}m a.s.l
-              </div>
             </div>
           </div>
         </div>
