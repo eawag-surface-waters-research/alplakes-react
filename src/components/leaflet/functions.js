@@ -28,6 +28,10 @@ const checkNested = (obj, args) => {
   return true;
 };
 
+const getNested = (obj, args) => {
+  return args.reduce((acc, arg) => acc && acc[arg], obj);
+};
+
 const formatDate = (datetime, offset = 0) => {
   var a = new Date(datetime).getTime();
   a = new Date(a + offset);
@@ -39,6 +43,24 @@ const formatDate = (datetime, offset = 0) => {
     date < 10 ? "0" + date : date
   }${hour < 10 ? "0" + hour : hour}`;
 };
+
+const parseAlplakesDate = (str) => {
+  const d = new Date(`${str.slice(0, 4)}-${str.slice(4,6)}-${str.slice(6,8)}T${str.slice(8,10)}:${str.slice(10,12)}:00.000+00:00`);
+  return String(d.getTime())
+}
+
+const closestDate = (targetDate, dateList) => {
+  let closest = Infinity;
+  let closestDate = null;
+  dateList.forEach(date => {
+    const diff = Math.abs(parseInt(date) - parseInt(targetDate));
+    if (diff < closest) {
+      closest = diff;
+      closestDate = date;
+    }
+  });
+  return closestDate;
+}
 
 export const flyToBounds = (bounds, map) => {
   map.flyToBounds(
@@ -54,6 +76,7 @@ export const addLayer = async (
   map,
   datetime
 ) => {
+  console.log("Add layer")
   if (layer.type === "alplakes_hydrodynamic")
     await addAlplakesHydrodynamic(
       layer,
@@ -139,7 +162,7 @@ const downloadAlplakesHydrodynamicParameter = async (
     i < Math.floor(parameter.length / (layer.properties.height + 1));
     i++
   ) {
-    var date = parameter[i * (layer.properties.height + 1)];
+    var date = parseAlplakesDate(String(parameter[i * (layer.properties.height + 1)][0]));
     var data = parameter.slice(
       i * (layer.properties.height + 1) + 1,
       (i + 1) * (layer.properties.height + 1)
@@ -148,9 +171,7 @@ const downloadAlplakesHydrodynamicParameter = async (
   }
 };
 
-const closestDate = (datetime, dates) => {
-  return dates[0];
-};
+
 
 const plotAlplakesHydrodynamic = (
   layer,
@@ -161,15 +182,13 @@ const plotAlplakesHydrodynamic = (
 ) => {
   var { model, lake, parameter } = layer.properties;
   var data = dataStore[layer.type][model][lake][parameter];
-  var dates = Object.keys(data);
-  var date = closestDate(datetime, dates);
   if (parameter === "temperature") {
     plotAlplakesHydrodynamicTemperature(
       layer,
       layerStore,
       map,
       dataStore[layer.type][model][lake]["geometry"],
-      data[date]
+      data[closestDate(datetime, Object.keys(data))]
     );
   }
 };
@@ -181,6 +200,12 @@ const plotAlplakesHydrodynamicTemperature = (
   geometry,
   data
 ) => {
+  var path = [
+    layer.type,
+    layer.properties.model,
+    layer.properties.lake,
+    layer.properties.parameter,
+  ];
   var options = {};
   if (
     "display" in layer.properties &&
@@ -204,6 +229,40 @@ const plotAlplakesHydrodynamicTemperature = (
       COLORS[layer.properties.display.paletteName];
     options["palette"] = COLORS[layer.properties.display.paletteName];
   }
+  var raster = new L.Raster(geometry, data, options).addTo(map);
+  addToNested(layerStore, path, raster);
+};
 
-  var rasterLayer = new L.Raster(geometry, data, options).addTo(map);
+const updateAlplakesHydrodynamicTemperature = (layer, layerStore, data) => {
+  var path = [
+    layer.type,
+    layer.properties.model,
+    layer.properties.lake,
+    layer.properties.parameter,
+  ];
+  var options = {};
+  if (
+    "display" in layer.properties &&
+    "min_value" in layer.properties.display
+  ) {
+    options["min"] = layer.properties.display.min_value;
+  }
+  if (
+    "display" in layer.properties &&
+    "max_value" in layer.properties.display
+  ) {
+    options["max"] = layer.properties.display.max_value;
+  }
+  if ("display" in layer.properties && "palette" in layer.properties.display) {
+    options["palette"] = layer.properties.display.palette;
+  } else if (
+    "display" in layer.properties &&
+    "paletteName" in layer.properties.display
+  ) {
+    layer.properties.display.palette =
+      COLORS[layer.properties.display.paletteName];
+    options["palette"] = COLORS[layer.properties.display.paletteName];
+  }
+  var raster = getNested(layerStore, path);
+  raster.update(data, options);
 };

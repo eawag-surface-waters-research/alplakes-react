@@ -19,11 +19,19 @@ L.Raster = L.Layer.extend({
     if (isNaN(this.options.max)) this.options.max = max(data.flat());
   },
   onAdd: function (map) {
-    this.raster = L.layerGroup().addTo(map);
+    this._map = map
+    this._raster = L.layerGroup().addTo(map);
     this.plotPolygons();
   },
   onRemove: function (map) {
-    map.removeLayer(this.raster);
+    map.removeLayer(this._raster);
+  },
+  update: function (data, options) {
+    this._data = data;
+    L.Util.setOptions(this, options);
+    this._raster.clearLayers()
+    this.plotPolygons();
+    this._map.invalidateSize()
   },
   plotPolygons: function () {
     var y = this._data.length;
@@ -38,11 +46,12 @@ L.Raster = L.Layer.extend({
             this.options.palette
           );
           let coords = this._getCellCorners(this._geometry, i, j, x);
-          this.raster.addLayer(
+          this._raster.addLayer(
             L.polygon(coords, {
               color: `rgb(${color.join(",")})`,
               fillColor: `rgb(${color.join(",")})`,
               fillOpacity: 1,
+              title: this._data[i][j],
             })
           );
         }

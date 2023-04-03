@@ -6,9 +6,6 @@ import NavBar from "../../components/navbar/navbar";
 import LakeMap from "../../components/leaflet/lakemap";
 import URLS from "../../urls.json";
 import { onMouseOver, onMouseOut } from "./functions";
-import area from "../../img/area.png";
-import elevation from "../../img/elevation.png";
-import depth from "../../img/depth.png";
 
 import "./home.css";
 import Loading from "../../components/loading/loading";
@@ -63,7 +60,7 @@ class Home extends Component {
               {list.length === 0 ? (
                 <Loading marginTop={20} dark={true} />
               ) : (
-                list.map((lake) => <Lake lake={lake} language={language} />)
+                list.map((lake) => <Lake lake={lake} language={language} key={lake.key}/>)
               )}
             </div>
           </div>

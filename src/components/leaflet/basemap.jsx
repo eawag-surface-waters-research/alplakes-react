@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import axios from "axios";
 import L from "leaflet";
 import { flyToBounds, addLayer, updateLayer } from "./functions";
 import "./leaflet_geotiff";
@@ -11,7 +10,7 @@ import "./css/leaflet.css";
 
 class Basemap extends Component {
   async componentDidUpdate() {
-    const { updates, metadata, layers, period, datetime } = this.props;
+    const { updates, updated, metadata, layers, period, datetime } = this.props;
     if (updates.length > 0) {
       for (var update of updates) {
         if (update.event === "bounds") {
@@ -36,6 +35,7 @@ class Basemap extends Component {
           );
         }
       }
+      updated()
     }
   }
   async componentDidMount() {
