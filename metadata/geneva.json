@@ -45,8 +45,35 @@
                 "width": 36,
                 "timestep": 3,
                 "depths": [],
-                "display": {
+                "display": "raster",
+                "options": {
                     "paletteName": "Balance"
+                }
+            }
+        },
+        {
+            "id": 1,
+            "type": "alplakes_hydrodynamic",
+            "active": "true",
+            "z-index": 5,
+            "properties": {
+                "model": "delft3d-flow",
+                "lake": "geneva",
+                "parameter": "velocity",
+                "height": 182,
+                "width": 36,
+                "timestep": 3,
+                "depths": [],
+                "display": "streamlines",
+                "options": {
+                    "paths": 800,
+                    "color": "white",
+                    "width": 0.5,
+                    "fade": 0.97,
+                    "duration": 10,
+                    "maxAge": 50,
+                    "velocityScale": 0.01,
+                    "opacity": 1
                 }
             }
         }
