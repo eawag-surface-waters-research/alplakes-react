@@ -25,19 +25,21 @@ class App extends Component {
           languages={languages}
           setLanguage={this.setLanguage}
         />
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Home language={language} />} exact />
-            <Route path="/lake/*" element={<Lake language={language} />} />
-            <Route path="/api" element={<API language={language} />} exact />
-            <Route
-              path="/about"
-              element={<About language={language} />}
-              exact
-            />
-            <Route path="/" element={<NotFound language={language} />} />
-          </Routes>
-        </BrowserRouter>
+        <div className="main">
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<Home language={language} />} exact />
+              <Route path="/lake/*" element={<Lake language={language} />} />
+              <Route path="/api" element={<API language={language} />} exact />
+              <Route
+                path="/about"
+                element={<About language={language} />}
+                exact
+              />
+              <Route path="/" element={<NotFound language={language} />} />
+            </Routes>
+          </BrowserRouter>
+        </div>
       </React.Fragment>
     );
   }

@@ -1,5 +1,5 @@
 import L from "leaflet";
-import { timer } from "d3";
+import * as d3 from "d3";
 
 L.Streamlines = (L.Layer ? L.Layer : L.Class).extend({
   options: {
@@ -11,27 +11,23 @@ L.Streamlines = (L.Layer ? L.Layer : L.Class).extend({
     maxAge: 50,
     velocityScale: 0.01,
     opacity: 1,
-    xMax: false,
-    xMin: false,
-    yMax: false,
-    yMin: false,
+    nCols: 200,
+    nRows: 200,
   },
-  initialize: function (data, options) {
+  initialize: function (geometry, data, options) {
     L.Util.setOptions(this, options);
-    if (
-      !this.options.xMax ||
-      !this.options.xMin ||
-      !this.options.yMax ||
-      !this.options.yMin
-    ) {
-      throw new Error("xMax, xMin, yMax and yMin are required.");
-    }
+    this._dataWidth = geometry[0].length / 2;
+    this._dataHeight = geometry.length;
+    var { bounds, transformationMatrix } =
+      this._generateTransformationMatrix(geometry);
     this._data = data;
-    this._nCols = this._data.u[0].length;
-    this._nRows = this._data.u.length;
-    this._xSize = (this.options.xMax - this.options.xMin) / this._nCols;
-    this._ySize = (this.options.yMax - this.options.yMin) / this._nRows;
     this.timer = null;
+
+    this._xMin = bounds.xMin;
+    this._yMin = bounds.yMin;
+    this._xSize = bounds.xSize;
+    this._ySize = bounds.ySize;
+    this._transformationMatrix = transformationMatrix;
   },
 
   onAdd: function (map) {
@@ -55,15 +51,77 @@ L.Streamlines = (L.Layer ? L.Layer : L.Class).extend({
     }
     this._reset();
   },
-
-  updateData: function (data) {
-    this._data = data;
-    this._nCols = this._data.u[0].length;
-    this._nRows = this._data.u.length;
-    this._xSize = (this.options.xMax - this.options.xMin) / this._nCols;
-    this._ySize = (this.options.yMax - this.options.yMin) / this._nRows;
+  _createAndFillTwoDArray: function ({ rows, columns, defaultValue }) {
+    return Array.from({ length: rows }, () =>
+      Array.from({ length: columns }, () => defaultValue)
+    );
   },
+  _generateTransformationMatrix: function (geometry) {
+    var quadtreedata = [];
+    var x_array = [];
+    var y_array = [];
 
+    for (var i = 0; i < this._dataHeight; i++) {
+      for (var j = 0; j < this._dataWidth; j++) {
+        if (!isNaN(geometry[i][j])) {
+          y_array.push(geometry[i][j]);
+          x_array.push(geometry[i][j + this._dataWidth]);
+          quadtreedata.push([
+            geometry[i][j + this._dataWidth],
+            geometry[i][j],
+            i,
+            j,
+          ]);
+        }
+      }
+    }
+
+    let xMin = Math.min(...x_array);
+    let yMin = Math.min(...y_array);
+    let xMax = Math.max(...x_array);
+    let yMax = Math.max(...y_array);
+
+    var nCols = this.options.nCols;
+    var nRows = this.options.nRows;
+    
+
+    let xSize = (xMax - xMin) / nCols;
+    let ySize = (yMax - yMin) / nRows;
+    var radius = 300;
+
+    let quadtree = d3
+      .quadtree()
+      .extent([
+        [xMin, yMin],
+        [xMax, yMax],
+      ])
+      .addAll(quadtreedata);
+
+    var transformationMatrix = this._createAndFillTwoDArray({
+      rows: nRows + 1,
+      columns: nCols + 1,
+      defaultValue: null,
+    });
+
+    var x, y;
+    for (var i = 0; i < nRows + 1; i++) {
+      y = yMax - i * ySize;
+      for (var j = 0; j < nCols + 1; j++) {
+        x = xMin + j * xSize;
+        let f = quadtree.find(x, y, radius);
+        if (f !== undefined) {
+          transformationMatrix[i][j] = [f[2], f[3]];
+        }
+      }
+    }
+
+    var bounds = { xMin, xMax, yMin, yMax, xSize, ySize };
+    return { bounds, transformationMatrix };
+  },
+  update: function (data, options) {
+    L.Util.setOptions(this, options);
+    this._data = data;
+  },
   _reset: function (event) {
     this._stopAnimation();
     var topLeft = this._map.containerPointToLayerPoint([0, 0]);
@@ -135,11 +193,11 @@ L.Streamlines = (L.Layer ? L.Layer : L.Class).extend({
     this._ctx.clearRect(0, 0, this._width, this._height);
     this._paths = this._prepareParticlePaths();
     let self = this;
-    for (let i = 0; i < 10; i++) {
+    /**for (let i = 0; i < 10; i++) {
       self._moveParticles();
       self._drawParticles();
-    }
-    this.timer = timer(function () {
+    }**/
+    this.timer = d3.timer(function () {
       self._moveParticles();
       self._drawParticles();
     }, this.options.duration);
@@ -159,10 +217,11 @@ L.Streamlines = (L.Layer ? L.Layer : L.Class).extend({
         self._randomPosition(par);
         par.age = 0;
       } else {
+        let t = self._transformationMatrix[index[0]][index[1]];
         par.xt = xt;
         par.yt = yt;
-        par.ut = self._data.u[index[0]][index[1]];
-        par.vt = self._data.v[index[0]][index[1]];
+        par.ut = self._data[t[0]][t[1]];
+        par.vt = self._data[t[0]][t[1] + self._dataWidth];
       }
 
       par.age += 1;
@@ -231,17 +290,15 @@ L.Streamlines = (L.Layer ? L.Layer : L.Class).extend({
   },
 
   _getIndexAtPoint(x, y) {
-    var i = this._nRows - Math.round((y - this.options.yMin) / this._ySize);
-    var j = Math.round((x - this.options.xMin) / this._xSize);
-    if (
-      i > -1 &&
-      i < this._nRows &&
-      j > -1 &&
-      j < this._nCols &&
-      this._data.u[i][j] !== null &&
-      this._data.v[i][j] !== null
-    ) {
-      return [i, j];
+    var i = this.options.nRows - Math.round((y - this._yMin) / this._ySize);
+    var j = Math.round((x - this._xMin) / this._xSize);
+    if (i > -1 && i < this.options.nRows && j > -1 && j < this.options.nCols) {
+      let t = this._transformationMatrix[i][j];
+      if (!isNaN(this._data[t[0]][t[1]])) {
+        return [i, j];
+      } else {
+        return null;
+      }
     } else {
       return null;
     }
@@ -269,22 +326,23 @@ L.Streamlines = (L.Layer ? L.Layer : L.Class).extend({
     delete o.ut;
     delete o.vt;
 
-    for (var k = 0; k < 1000; k++) {
-      let i = Math.ceil(Math.random() * this._nRows) - 1;
-      let j = Math.ceil(Math.random() * this._nCols) - 1;
-      if (this._data.u[i][j] !== null && this._data.v[i][j] !== null) {
+    for (var k = 0; k < this.options.paths; k++) {
+      let i = Math.ceil(Math.random() * this.options.nRows) - 1;
+      let j = Math.ceil(Math.random() * this.options.nCols) - 1;
+      let t = this._transformationMatrix[i][j];
+      if (!isNaN(this._data[t[0]][t[1]])) {
         o.x =
-          this.options.xMin +
+          this._xMin +
           j * this._xSize +
           this._xSize * Math.random() -
           this._xSize / 2;
         o.y =
-          this.options.yMin +
-          (this._nRows - i) * this._ySize +
+          this._yMin +
+          (this.options.nRows - i) * this._ySize +
           this._ySize * Math.random() -
           this._ySize / 2;
-        o.u = this._data.u[i][j];
-        o.v = this._data.v[i][j];
+        o.u = this._data[t[0]][t[1]];
+        o.v = this._data[t[0]][t[1] + this._dataWidth];
         return o;
       }
     }
@@ -338,9 +396,10 @@ L.Streamlines = (L.Layer ? L.Layer : L.Class).extend({
     if (index === null) {
       click["value"] = { u: null, v: null };
     } else {
+      let t = this._transformationMatrix[index[0]][index[1]];
       click["value"] = {
-        u: this._data.u[index[0]][index[1]],
-        v: this._data.v[index[0]][index[1]],
+        u: this._data[t[0]][t[1]],
+        v: this._data[t[0]][t[1] + this._dataWidth],
       };
     }
     return click;

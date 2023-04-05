@@ -5,7 +5,12 @@ import NavBar from "../../components/navbar/navbar";
 import Basemap from "../../components/leaflet/basemap";
 import Loading from "../../components/loading/loading";
 import URLS from "../../urls.json";
-import { formatDate, formatTime, relativeDate, setCustomPeriod } from "./functions";
+import {
+  formatDate,
+  formatTime,
+  relativeDate,
+  setCustomPeriod,
+} from "./functions";
 import "./lake.css";
 
 class LakeSidebar extends Component {
@@ -86,28 +91,24 @@ class Lake extends Component {
     var { language } = this.props;
     document.title = Translate.title[language];
     return (
-      <div className="main">
+      <div className="lake">
         <NavBar language={language} />
-        <div className="primary">
-          <div className="content">
-            <div className="map-component">
-              <div className="viewport">
-                <Basemap
-                  language={language}
-                  {...this.state}
-                  updated={this.updated}
-                />
-              </div>
-              <div className="controls">
-                <div className="legend"></div>
-                <div className="playback">
-                  <Playback language={language} {...this.state} />
-                </div>
-              </div>
+        <div className="map-component">
+          <div className="viewport">
+            <Basemap
+              language={language}
+              {...this.state}
+              updated={this.updated}
+            />
+          </div>
+          <div className="controls">
+            <div className="legend"></div>
+            <div className="playback">
+              <Playback language={language} {...this.state} />
             </div>
           </div>
         </div>
-        <div className="secondary">
+        <div className="sidebar">
           {this.state.loading ? (
             <Loading marginTop={100} />
           ) : (

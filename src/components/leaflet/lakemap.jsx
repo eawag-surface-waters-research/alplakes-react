@@ -4,26 +4,33 @@ import "./css/leaflet.css";
 
 class LakeMap extends Component {
   componentDidUpdate() {
-    var { lakes } = this.props;
-    const markers = L.featureGroup(
-      lakes.map((lake) =>
-        L.marker([lake.latitude, lake.longitude], {
-          id: lake.key,
-          icon: L.divIcon({
-            className: "map-marker",
-            html:
-              `<div style="padding:10px;transform:translate(2px, -21px);position: absolute;">` +
-              `<div class="pin bounce" id="${
-                "pin-" + lake.key
-              }" style="background-color:#24251D" />` +
-              `</div> `,
-          }),
-        }).on("click", (event) => {
-          window.location.href = `/lake/${event.target.options.id}`;
-        })
-      )
-    ).addTo(this.map);
-    this.map.flyToBounds(markers.getBounds());
+    if (this.markers) {
+      var { lakes } = this.props;
+      const markers = L.featureGroup(
+        lakes.map((lake) =>
+          L.marker([lake.latitude, lake.longitude], {
+            id: lake.key,
+            icon: L.divIcon({
+              className: "map-marker",
+              html:
+                `<div style="padding:10px;transform:translate(2px, -21px);position: absolute;">` +
+                `<div class="pin bounce" id="${
+                  "pin-" + lake.key
+                }" style="background-color:#24251D" />` +
+                `</div> `,
+            }),
+          }).on("click", (event) => {
+            window.location.href = `/lake/${event.target.options.id}`;
+          })
+        )
+      );
+      var bounds = markers.getBounds();
+      bounds._southWest.lng =
+        bounds._southWest.lng - (bounds._northEast.lng - bounds._southWest.lng);
+      this.map.flyToBounds(bounds);
+      markers.addTo(this.map);
+      this.markers = false;
+    }
   }
   async componentDidMount() {
     var center = [46.9, 8.2];
@@ -44,6 +51,7 @@ class LakeMap extends Component {
         attribution: "&copy; <a href='https://www.mapbox.com/'>mapbox</a>",
       }
     ).addTo(this.map);
+    this.markers = true;
   }
 
   render() {

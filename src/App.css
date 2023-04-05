@@ -6,40 +6,7 @@
 }
 
 .main {
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(248,248,250,255);
-  font-family: exo;
-}
-
-.primary {
-  position: absolute;
-  left: 0;
-  top: 128px;
-  width: 70%;
-  height: calc(100% - 128px);
-  display: inline-block;
-  padding: 0 32px;
-  box-sizing: border-box;
-}
-
-.primary .content {
-  position: relative;
-  color: black;
-  height: 100%;
-}
-
-.secondary {
-  position: absolute;
-  right: 0;
-  top: 0;
-  width: 30%;
-  height: 100%;
-  display: inline-block;
-  background-color: white;
+  font-family: "Source Sans Pro", Helvetica, Arial, sans-serif;
 }
 
 .dark-inset {

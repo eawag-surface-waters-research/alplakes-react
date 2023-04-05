@@ -1,6 +1,23 @@
-.main .primary .content .map-component {
+.main .lake .map-component {
+  position: fixed;
+  bottom: 32px;
+  left: 32px;
+  width: calc(100% - 464px);
+  height: calc(100% - 160px);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.24);
+}
+
+.main .lake .map-component .viewport {
   width: 100%;
-    height: calc(100% - 32px);
+  height: calc(100% - 50px);
+}
+
+.main .lake .sidebar {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  height: calc(100% - 160px);
+  width: 400px;
 }
 
 .main .primary .content .map-component .viewport {

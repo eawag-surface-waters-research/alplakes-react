@@ -1,6 +1,5 @@
 import L from "leaflet";
 import axios from "axios";
-import * as d3 from "d3";
 import COLORS from "../colors/colors.json";
 import CONFIG from "../../config.json";
 import "./leaflet_raster";
@@ -234,76 +233,6 @@ const plotAlplakesHydrodynamicRaster = (
   addToNested(layerStore, path, leaflet_layer);
 };
 
-const parseVectorData = (geometry, data, radius) => {
-  function createAndFillTwoDArray({ rows, columns, defaultValue }) {
-    return Array.from({ length: rows }, () =>
-      Array.from({ length: columns }, () => defaultValue)
-    );
-  }
-  var nCols = geometry[0].length / 2;
-  var nRows = geometry.length;
-  var quadtreedata = [];
-  var x_array = [];
-  var y_array = [];
-  for (var i = 0; i < nRows; i++) {
-    for (var j = 0; j < nCols; j++) {
-      if (!isNaN(geometry[i][j])) {
-        x_array.push(geometry[i][j + nCols]);
-        y_array.push(geometry[i][j]);
-        quadtreedata.push([
-          geometry[i][j + nCols],
-          geometry[i][j],
-          data[i][j],
-          data[i][j + nCols],
-        ]);
-      }
-    }
-  }
-
-  let xMin = Math.min(...x_array);
-  let yMin = Math.min(...y_array);
-  let xMax = Math.max(...x_array);
-  let yMax = Math.max(...y_array);
-
-  let xSize = (xMax - xMin) / nCols;
-  let ySize = (yMax - yMin) / nRows;
-
-  let quadtree = d3
-    .quadtree()
-    .extent([
-      [xMin, yMin],
-      [xMax, yMax],
-    ])
-    .addAll(quadtreedata);
-
-  var u = createAndFillTwoDArray({
-    rows: nRows + 1,
-    columns: nCols + 1,
-    defaultValue: null,
-  });
-  var v = createAndFillTwoDArray({
-    rows: nRows + 1,
-    columns: nCols + 1,
-    defaultValue: null,
-  });
-  var x, y;
-  for (var i = 0; i < nRows + 1; i++) {
-    y = yMax - i * ySize;
-    for (var j = 0; j < nCols + 1; j++) {
-      x = xMin + j * xSize;
-      if (quadtree.find(x, y, radius) !== undefined) {
-        u[i][j] = parseFloat(JSON.stringify(quadtree.find(x, y, radius)[2]));
-        v[i][j] = parseFloat(JSON.stringify(quadtree.find(x, y, radius)[3]));
-      }
-    }
-  }
-  var bounds = { xMin, xMax, yMin, yMax };
-  return {
-    bounds,
-    vectorData: { u, v },
-  };
-};
-
 const plotAlplakesHydrodynamicStreamlines = (
   layer,
   layerStore,
@@ -326,13 +255,11 @@ const plotAlplakesHydrodynamicStreamlines = (
       options["palette"] = COLORS[layer.properties.options.paletteName];
     }
   }
-  var { bounds, vectorData } = parseVectorData(geometry, data, 300);
-  options = { ...options, ...bounds };
-  var leaflet_layer = new L.Streamlines(vectorData, options).addTo(map);
+  var leaflet_layer = new L.Streamlines(geometry, data, options).addTo(map);
   addToNested(layerStore, path, leaflet_layer);
 };
 
-const updateAlplakesHydrodynamicRaster = (layer, layerStore, data) => {
+const updateAlplakesHydrodynamic = (layer, layerStore, data) => {
   var path = [
     layer.type,
     layer.properties.model,

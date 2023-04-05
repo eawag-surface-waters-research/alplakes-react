@@ -29,8 +29,7 @@ class Lake extends Component {
           </div>
           <div className="properties">
             <div className="name">{lake.name[language]}</div>
-            <div className="parameters">
-            </div>
+            <div className="parameters"></div>
           </div>
         </div>
       </NavLink>
@@ -51,21 +50,20 @@ class Home extends Component {
     var { list } = this.state;
     document.title = Translate.title[language];
     return (
-      <div className="main">
+      <div className="home">
         <NavBar language={language} />
-        <div className="primary">
-          <div className="content">
-            <div className="banner">{Translate.title[language]}</div>
-            <div className="products">
-              {list.length === 0 ? (
-                <Loading marginTop={20} dark={true} />
-              ) : (
-                list.map((lake) => <Lake lake={lake} language={language} key={lake.key}/>)
-              )}
-            </div>
+        <div className="content">
+          <div className="products">
+            {list.length === 0 ? (
+              <Loading marginTop={20} dark={true} />
+            ) : (
+              list.map((lake) => (
+                <Lake lake={lake} language={language} key={lake.key} />
+              ))
+            )}
           </div>
         </div>
-        <div className="secondary">
+        <div className="background">
           <LakeMap lakes={list} language={language} />
         </div>
       </div>
