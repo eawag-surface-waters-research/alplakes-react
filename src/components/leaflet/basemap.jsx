@@ -9,6 +9,9 @@ import "./leaflet_vectorfield";
 import "./css/leaflet.css";
 
 class Basemap extends Component {
+  find = (list, parameter, value) => {
+    return list.find((l) => l[parameter] === value);
+  };
   async componentDidUpdate() {
     const { updates, updated, metadata, layers, period, datetime } = this.props;
     if (updates.length > 0) {
@@ -17,7 +20,7 @@ class Basemap extends Component {
           flyToBounds(metadata.bounds, this.map);
         } else if (update.event === "addLayer") {
           addLayer(
-            layers.find((l) => l.id === update.id),
+            this.find(layers, "id", update.id),
             period,
             this.dataStore,
             this.layerStore,
@@ -26,8 +29,7 @@ class Basemap extends Component {
           );
         } else if (update.event === "updateLayer") {
           updateLayer(
-            layers.find((l) => l.id === update.id),
-            period,
+            this.find(layers, "id", update.id),
             this.dataStore,
             this.layerStore,
             this.map,
@@ -35,7 +37,7 @@ class Basemap extends Component {
           );
         }
       }
-      updated()
+      updated();
     }
   }
   async componentDidMount() {
@@ -53,7 +55,7 @@ class Basemap extends Component {
     });
 
     var basemap = L.tileLayer(
-      "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+      "https://api.mapbox.com/styles/v1/jamesrunnalls/clg4u62lq009a01oa5z336xn7/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiamFtZXNydW5uYWxscyIsImEiOiJjazk0ZG9zd2kwM3M5M2hvYmk3YW0wdW9yIn0.uIJUZoDgaC2LfdGtgMz0cQ",
       {
         maxZoom: 19,
         attribution: "&copy; <a href='https://www.mapbox.com/'>mapbox</a>",

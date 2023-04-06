@@ -4,6 +4,8 @@ import Translate from "../../translations.json";
 import NavBar from "../../components/navbar/navbar";
 import Basemap from "../../components/leaflet/basemap";
 import Loading from "../../components/loading/loading";
+import next from "../../img/next.svg";
+import settings from "../../img/settings.svg";
 import URLS from "../../urls.json";
 import {
   formatDate,
@@ -32,15 +34,49 @@ class LakeSidebar extends Component {
 class Playback extends Component {
   state = {};
   render() {
-    var { period } = this.props;
+    var { period, play, togglePlay, setDatetime, datetime, timestep } =
+      this.props;
     return (
-      <div className="playback">
-        <div className="play-controls"></div>
-        <div className="start-date">{formatDate(period[0])}</div>
-        <div className="slider"></div>
-        <div className="end-date">{formatDate(period[1])}</div>
-        <div className="settings"></div>
-      </div>
+      <React.Fragment>
+        <div className="gradient" />
+        <div className="playback">
+          <div className="slider">
+            <input
+              type="range"
+              min={period[0]}
+              max={period[1]}
+              step={timestep}
+              value={datetime}
+              className="slider-component"
+              onChange={setDatetime}
+            />
+          </div>
+          <div className="play-controls">
+            <div className="play-pause clickable-button">
+              <button>
+                <div
+                  className={
+                    play ? "play-pause-icon paused" : "play-pause-icon"
+                  }
+                  onClick={togglePlay}
+                ></div>
+              </button>
+            </div>
+            <div className="next-frame clickable-button">
+              <button>
+                <img src={next} alt="next"/>
+              </button>
+            </div>
+            <div className="current-datetime"></div>
+            <div className="selected-period"></div>
+            <div className="settings clickable-button">
+              <button>
+                <img src={settings} alt="settings"/>
+              </button>
+            </div>
+          </div>
+        </div>
+      </React.Fragment>
     );
   }
 }
@@ -48,16 +84,60 @@ class Playback extends Component {
 class Lake extends Component {
   state = {
     datetime: Date.now(),
-    period: [relativeDate(-6), relativeDate(0)],
+    period: [relativeDate(-2).getTime(), relativeDate(3).getTime()],
     loading: true,
     metadata: {},
     layers: [],
     updates: [],
+    play: false,
+    timestep: 3600000,
+    timeout: 100,
   };
 
   updated = () => {
     this.setState({ updates: [] });
   };
+
+  togglePlay = () => {
+    this.setState({ play: !this.state.play });
+  };
+
+  setDatetime = (event) => {
+    var { updates, layers } = this.state;
+    for (var layer of layers) {
+      if (layer.active === "true") {
+        updates.push({ event: "updateLayer", id: layer.id });
+      }
+    }
+    var datetime = parseInt(event.target.value);
+    this.setState({ datetime, updates });
+  };
+
+  componentDidUpdate() {
+    var { play, timestep, datetime, timeout, period, updates, layers } =
+      this.state;
+    if (play) {
+      if (datetime >= period[1]) {
+        datetime = period[0];
+        for (var layer of layers) {
+          if (layer.active === "true") {
+            updates.push({ event: "updateLayer", id: layer.id });
+          }
+        }
+        this.setState({ datetime, updates });
+      } else {
+        setTimeout(() => {
+          datetime = datetime + timestep;
+          for (var layer of layers) {
+            if (layer.active === "true") {
+              updates.push({ event: "updateLayer", id: layer.id });
+            }
+          }
+          this.setState({ datetime, updates });
+        }, timeout);
+      }
+    }
+  }
 
   async componentDidMount() {
     var { period } = this.state;
@@ -102,10 +182,12 @@ class Lake extends Component {
             />
           </div>
           <div className="controls">
-            <div className="legend"></div>
-            <div className="playback">
-              <Playback language={language} {...this.state} />
-            </div>
+            <Playback
+              language={language}
+              togglePlay={this.togglePlay}
+              setDatetime={this.setDatetime}
+              {...this.state}
+            />
           </div>
         </div>
         <div className="sidebar">

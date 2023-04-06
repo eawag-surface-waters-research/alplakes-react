@@ -2,11 +2,12 @@ import axios from "axios";
 import CONFIG from "../../config.json";
 
 const stringToDate = (date) => {
-  var year = parseInt(date.slice(0, 4));
-  var month = parseInt(date.slice(5, 7)) - 1;
-  var day = parseInt(date.slice(8, 10));
-  var hour = parseInt(date.slice(11, 13));
-  return new Date(year, month, day, hour);
+  return new Date(
+    `${date.slice(0, 4)}-${date.slice(5, 7)}-${date.slice(8, 10)}T${date.slice(
+      11,
+      13
+    )}:00:00.000+00:00`
+  );
 };
 
 export const formatDate = (datetime) => {
@@ -40,7 +41,7 @@ export const setCustomPeriod = async (customPeriod, period) => {
     var start = relativeDate(customPeriod.start);
     var { data } = await axios.get(CONFIG.alplakes_api + customPeriod.end);
     var end = stringToDate(data.end_date);
-    return [start, end];
+    return [start.getTime(), end.getTime()];
   } else {
     console.error("Custom period type not recognised.");
     return period;

@@ -1,103 +1,152 @@
 .main .lake .map-component {
   position: fixed;
-  bottom: 32px;
-  left: 32px;
-  width: calc(100% - 464px);
-  height: calc(100% - 160px);
+  bottom: 64px;
+  left: 64px;
+  width: calc(100% - 496px);
+  height: calc(100% - 200px);
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.24);
 }
 
 .main .lake .map-component .viewport {
   width: 100%;
-  height: calc(100% - 50px);
+  height: 100%;
+}
+
+.main .lake .map-component .controls .gradient {
+  position: absolute;
+  bottom: 0;
+  z-index: 999;
+  width: 100%;
+  height: 127px;
+  background-image: linear-gradient(
+    rgba(0, 0, 0, 0),
+    rgba(0, 0, 0, 0.2),
+    rgba(0, 0, 0, 0.7)
+  );
+  pointer-events: none;
+}
+
+.main .lake .map-component .controls .playback {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 999;
+  width: 100%;
+}
+
+.main .lake .map-component .controls .playback .slider {
+  width: calc(100% - 24px);
+  box-sizing: border-box;
+  position: absolute;
+  bottom: 44px;
+  left: 12px;
+  z-index: 9999;
+}
+
+.main .lake .map-component .controls .playback .slider .slider-component {
+  width: 100%;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.5); /* Grey background */
+  -webkit-appearance: none;
+  width: 100%;
+  height: 5px;
+  background: #d3d3d3;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
+
+.main .lake .map-component .controls .playback .play-controls {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  padding: 0 12px;
+  color: white;
+  box-sizing: border-box;
+}
+
+.main .lake .map-component .controls .playback .play-controls .play-pause-icon {
+  border: 0;
+  background: transparent;
+  box-sizing: border-box;
+  width: 0;
+  height: 24px;
+  border-color: transparent transparent transparent white;
+  transition: 100ms all ease;
+  cursor: pointer;
+  border-style: solid;
+  border-width: 12px 0 12px 18px;
+  margin-left: 12px;
+}
+
+.main
+  .lake
+  .map-component
+  .controls
+  .playback
+  .play-controls
+  .play-pause-icon.paused {
+  border-style: double;
+  border-width: 0px 0 0px 20px;
+}
+
+.main
+  .lake
+  .map-component
+  .controls
+  .playback
+  .play-controls
+  .current-datetime {
+  display: inline-block;
+}
+
+.main .lake .map-component .controls .playback .play-controls .selected-period {
+  display: inline-block;
+}
+
+.main
+  .lake
+  .map-component
+  .controls
+  .playback
+  .play-controls
+  .clickable-button {
+  display: inline-block;
+}
+
+.main
+  .lake
+  .map-component
+  .controls
+  .playback
+  .play-controls
+  .clickable-button.settings {
+  float: right;
+}
+
+.main .lake .map-component .controls .playback .play-controls button {
+  width: 46px;
+  height: 48px;
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.main .lake .map-component .controls .playback .play-controls button img {
+  width: 24px;
+  height: 24px;
 }
 
 .main .lake .sidebar {
   position: fixed;
-  bottom: 32px;
-  right: 32px;
-  height: calc(100% - 160px);
-  width: 400px;
+  bottom: 64px;
+  right: 64px;
+  height: calc(100% - 200px);
+  width: 336px;
 }
 
-.main .primary .content .map-component .viewport {
-  width: 100%;
-  height: calc(100% - 50px);
-}
-
-.main .primary .content .map-component .controls {
-  width: 100%;
-  height: 50px;
-  background-color: hsl(50, 9%, 20%);
-}
-
-.main .secondary .notification img {
-  position: absolute;
-  height: 48px;
-  left: 32px;
-  top: 32px;
-  cursor: pointer;
-}
-
-.main .secondary .notification img:hover {
-  animation: tilt-shaking 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
-  animation-iteration-count: infinite;
-}
-
-@keyframes tilt-shaking {
-  0% {
-    transform: rotate(0deg);
-  }
-  25% {
-    transform: rotate(5deg);
-  }
-  50% {
-    transform: rotate(0eg);
-  }
-  75% {
-    transform: rotate(-5deg);
-  }
-  100% {
-    transform: rotate(0deg);
-  }
-}
-
-.main .secondary .info {
-  margin-top: 64px;
-  padding: 32px 32px 16px 32px;
-}
-
-.main .secondary .info .name {
-  font-size: 48px;
-}
-
-.main .secondary .info .name {
-  font-size: 48px;
-}
-
-.main .secondary .info .temperature {
-  display: inline-block;
-}
-
-.main .secondary .info .datetime {
-  display: inline-block;
-  font-size: 24px;
-}
-
-.main .secondary .info .temperature .value {
-  display: inline-block;
-  font-size: 60px;
-}
-
-.main .secondary .info .temperature .unit {
-  display: inline-block;
-  font-size: 22px;
-}
-
-.main .secondary .info-graph {
-  padding: 0 32px;
-}
-
-.main .secondary .info-graph img {
-  width: 100%;
+.main .lake .sidebar .info .name {
+  font-size: 42px;
 }

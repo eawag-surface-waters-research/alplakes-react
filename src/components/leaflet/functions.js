@@ -82,7 +82,6 @@ export const addLayer = async (
   map,
   datetime
 ) => {
-  console.log("Add layer");
   if (layer.type === "alplakes_hydrodynamic")
     await addAlplakesHydrodynamic(
       layer,
@@ -94,7 +93,22 @@ export const addLayer = async (
     );
 };
 
-export const updateLayer = async () => {};
+export const updateLayer = async (
+  layer,
+  dataStore,
+  layerStore,
+  map,
+  datetime
+) => {
+  if (layer.type === "alplakes_hydrodynamic")
+    await updateAlplakesHydrodynamic(
+      layer,
+      dataStore,
+      layerStore,
+      map,
+      datetime
+    );
+};
 
 const addAlplakesHydrodynamic = async (
   layer,
@@ -259,13 +273,25 @@ const plotAlplakesHydrodynamicStreamlines = (
   addToNested(layerStore, path, leaflet_layer);
 };
 
-const updateAlplakesHydrodynamic = (layer, layerStore, data) => {
+const updateAlplakesHydrodynamic = (
+  layer,
+  dataStore,
+  layerStore,
+  map,
+  datetime
+) => {
+  var { model, lake, parameter } = layer.properties;
   var path = [
     layer.type,
     layer.properties.model,
     layer.properties.lake,
     layer.properties.parameter,
   ];
+
+  
+  var data = dataStore[layer.type][model][lake][parameter];
+  var newData = data[closestDate(datetime, Object.keys(data))];
+
   var options = {};
   if ("options" in layer.properties) {
     options = layer.properties.options;
@@ -276,5 +302,5 @@ const updateAlplakesHydrodynamic = (layer, layerStore, data) => {
     }
   }
   var leaflet_layer = getNested(layerStore, path);
-  leaflet_layer.update(data, options);
+  leaflet_layer.update(newData, options);
 };

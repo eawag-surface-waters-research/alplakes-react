@@ -1,10 +1,10 @@
 {
-    "lake_id": "geneva",
+    "lake_id": "zurich",
     "name": {
-        "EN": "Lake Geneva",
-        "DE": "Genfersee",
-        "FR": "Le Léman",
-        "IT": "Lago Lemano"
+        "EN": "Lake Zurich",
+        "DE": "Zürichsee",
+        "FR": "Lac de Zurich",
+        "IT": "Lago di Zurigo"
     },
     "type": {
         "EN": "Glacial lake",
@@ -12,24 +12,24 @@
         "FR": "Lac glaciaire",
         "IT": "Lago glaciale"
     },
-    "area": 580,
-    "depth": 154,
-    "max_depth": 310,
-    "elevation": 372,
+    "area": 89,
+    "depth": 49,
+    "max_depth": 143,
+    "elevation": 406,
     "bounds": {
         "southWest": [
-            46.2,
-            6.147
+            47.19,
+            8.53
         ],
         "northEast": [
-            46.52,
-            6.93
+            47.37,
+            8.95
         ]
     },
     "customPeriod": {
         "type": "alplakes_hydrodynamic",
         "start": -2,
-        "end": "/simulations/metadata/delft3d-flow/geneva"
+        "end": "/simulations/metadata/delft3d-flow/zurich"
     },
     "layers": [
         {
@@ -39,10 +39,10 @@
             "z-index": 1,
             "properties": {
                 "model": "delft3d-flow",
-                "lake": "geneva",
+                "lake": "zurich",
                 "parameter": "temperature",
-                "height": 182,
-                "width": 36,
+                "height": 212,
+                "width": 34,
                 "depths": [],
                 "display": "raster",
                 "options": {
@@ -57,14 +57,14 @@
             "z-index": 5,
             "properties": {
                 "model": "delft3d-flow",
-                "lake": "geneva",
+                "lake": "zurich",
                 "parameter": "velocity",
-                "height": 182,
-                "width": 36,
+                "height": 212,
+                "width": 34,
                 "depths": [],
                 "display": "streamlines",
                 "options": {
-                    "paths": 5000,
+                    "paths": 1000,
                     "color": "white",
                     "width": 0.5,
                     "fade": 0.97,

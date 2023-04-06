@@ -60,9 +60,8 @@ L.Streamlines = (L.Layer ? L.Layer : L.Class).extend({
     var quadtreedata = [];
     var x_array = [];
     var y_array = [];
-
-    for (var i = 0; i < this._dataHeight; i++) {
-      for (var j = 0; j < this._dataWidth; j++) {
+    for (let i = 0; i < this._dataHeight; i++) {
+      for (let j = 0; j < this._dataWidth; j++) {
         if (!isNaN(geometry[i][j])) {
           y_array.push(geometry[i][j]);
           x_array.push(geometry[i][j + this._dataWidth]);
@@ -75,20 +74,15 @@ L.Streamlines = (L.Layer ? L.Layer : L.Class).extend({
         }
       }
     }
-
     let xMin = Math.min(...x_array);
     let yMin = Math.min(...y_array);
     let xMax = Math.max(...x_array);
     let yMax = Math.max(...y_array);
-
     var nCols = this.options.nCols;
     var nRows = this.options.nRows;
-    
-
     let xSize = (xMax - xMin) / nCols;
     let ySize = (yMax - yMin) / nRows;
-    var radius = 300;
-
+    var radius = Math.max(xSize, ySize);
     let quadtree = d3
       .quadtree()
       .extent([
@@ -96,17 +90,15 @@ L.Streamlines = (L.Layer ? L.Layer : L.Class).extend({
         [xMax, yMax],
       ])
       .addAll(quadtreedata);
-
     var transformationMatrix = this._createAndFillTwoDArray({
       rows: nRows + 1,
       columns: nCols + 1,
       defaultValue: null,
     });
-
     var x, y;
-    for (var i = 0; i < nRows + 1; i++) {
+    for (let i = 0; i < nRows + 1; i++) {
       y = yMax - i * ySize;
-      for (var j = 0; j < nCols + 1; j++) {
+      for (let j = 0; j < nCols + 1; j++) {
         x = xMin + j * xSize;
         let f = quadtree.find(x, y, radius);
         if (f !== undefined) {
@@ -114,7 +106,6 @@ L.Streamlines = (L.Layer ? L.Layer : L.Class).extend({
         }
       }
     }
-
     var bounds = { xMin, xMax, yMin, yMax, xSize, ySize };
     return { bounds, transformationMatrix };
   },
@@ -193,10 +184,6 @@ L.Streamlines = (L.Layer ? L.Layer : L.Class).extend({
     this._ctx.clearRect(0, 0, this._width, this._height);
     this._paths = this._prepareParticlePaths();
     let self = this;
-    /**for (let i = 0; i < 10; i++) {
-      self._moveParticles();
-      self._drawParticles();
-    }**/
     this.timer = d3.timer(function () {
       self._moveParticles();
       self._drawParticles();
@@ -294,7 +281,7 @@ L.Streamlines = (L.Layer ? L.Layer : L.Class).extend({
     var j = Math.round((x - this._xMin) / this._xSize);
     if (i > -1 && i < this.options.nRows && j > -1 && j < this.options.nCols) {
       let t = this._transformationMatrix[i][j];
-      if (!isNaN(this._data[t[0]][t[1]])) {
+      if (t !== null && !isNaN(this._data[t[0]][t[1]])) {
         return [i, j];
       } else {
         return null;
@@ -330,7 +317,7 @@ L.Streamlines = (L.Layer ? L.Layer : L.Class).extend({
       let i = Math.ceil(Math.random() * this.options.nRows) - 1;
       let j = Math.ceil(Math.random() * this.options.nCols) - 1;
       let t = this._transformationMatrix[i][j];
-      if (!isNaN(this._data[t[0]][t[1]])) {
+      if (t !== null && !isNaN(this._data[t[0]][t[1]])) {
         o.x =
           this._xMin +
           j * this._xSize +
