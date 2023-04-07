@@ -44,6 +44,7 @@
                 "height": 182,
                 "width": 36,
                 "depths": [],
+                "depth": 0,
                 "display": "raster",
                 "options": {
                     "paletteName": "Balance"
@@ -62,6 +63,7 @@
                 "height": 182,
                 "width": 36,
                 "depths": [],
+                "depth": 0,
                 "display": "streamlines",
                 "options": {
                     "paths": 5000,

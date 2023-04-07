@@ -17,7 +17,8 @@
         "depth": 154,
         "elevation": 372,
         "latitude": 46.45,
-        "longitude": 6.5
+        "longitude": 6.5,
+        "flags": ["swiss", "french"]
     },
     {
         "key": "zurich",
@@ -37,7 +38,8 @@
         "depth": 49,
         "elevation": 406,
         "latitude": 47.24,
-        "longitude": 8.68
+        "longitude": 8.68,
+        "flags": ["swiss"]
     },
     {
         "key": "biel",
@@ -57,10 +59,11 @@
         "depth": 28,
         "elevation": 429,
         "latitude": 47.08,
-        "longitude": 7.17
+        "longitude": 7.17,
+        "flags": ["swiss"]
     },
     {
-        "key": "greifen",
+        "key": "greifensee",
         "name": {
             "EN": "Lake Greifen",
             "DE": "Greifensee",
@@ -77,6 +80,7 @@
         "depth": 18,
         "elevation": 435,
         "latitude": 47.36,
-        "longitude": 8.68
+        "longitude": 8.68,
+        "flags": ["swiss"]
     }
 ]

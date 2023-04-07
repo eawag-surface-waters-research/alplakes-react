@@ -1,14 +1,13 @@
 .language {
-  z-index: 9;
   position: fixed;
-  top: 32px;
-  right: 32px;
+  top: 24px;
+  right: 24px;
 }
 
 .language select {
-    padding: 4px;
-    border-radius: 5px;
-    color: white;
-    background-color: black;
-    border: none;
+  padding: 4px;
+  border-radius: 5px;
+  color: black;
+  background-color: transparent;
+  border: 1px solid black;
 }

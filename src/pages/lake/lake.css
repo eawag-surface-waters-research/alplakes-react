@@ -1,18 +1,106 @@
-.main .lake .map-component {
+.main .lake .content {
   position: fixed;
-  bottom: 64px;
-  left: 64px;
-  width: calc(100% - 496px);
-  height: calc(100% - 200px);
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.24);
+  left: 0;
+  top: 80px;
+  width: 100%;
+  height: calc(100% - 80px);
+  padding: 0 24px;
+  box-sizing: border-box;
 }
 
-.main .lake .map-component .viewport {
+.main .lake .content .primary {
+  width: calc(100% - 400px);
+  height: 100%;
+  display: inline-block;
+}
+
+.main .lake .content .secondary {
+  display: inline-block;
+  width: 400px;
+  height: 100%;
+  vertical-align: top;
+}
+
+.main .lake .content .primary .map-component {
+  width: calc(100% - 24px);
+  height: calc(100% - 72px);
+  margin-right: 24px;
+  margin-bottom: 72px;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.main .lake .content .primary .map-component.fullscreen {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 9999999;
+}
+
+.main .lake .content .primary .map-component .settings-modal {
+  position: absolute;
+  right: 12px;
+  bottom: 66px;
+  z-index: 9999;
+  background-color: rgba(28, 28, 28, 0.9);
+  padding: 12px 18px;
+  border-radius: 12px;
+  color: white;
+}
+
+.main .lake .content .primary .map-component .settings-modal .settings-input {
+  text-align: right;
+}
+
+.main
+  .lake
+  .content
+  .primary
+  .map-component
+  .settings-modal
+  .settings-input
+  input {
+  width: 80px;
+  padding: 5px;
+  box-sizing: border-box;
+  border-radius: 8px;
+  border: 1px solid white;
+  background-color: transparent;
+  color: white;
+  text-align: center;
+  margin: 5px 0 5px 20px;
+}
+
+.main
+  .lake
+  .content
+  .primary
+  .map-component
+  .settings-modal
+  .settings-input
+  select {
+  padding: 5px;
+  box-sizing: border-box;
+  border-radius: 8px;
+  border: 1px solid white;
+  background-color: transparent;
+  color: white;
+  text-align: center;
+  margin: 5px 0 5px 20px;
+}
+
+.main .lake .content .primary .map-component .settings-modal.hidden {
+  visibility: hidden;
+}
+
+.main .lake .content .primary .map-component .viewport {
   width: 100%;
   height: 100%;
 }
 
-.main .lake .map-component .controls .gradient {
+.main .lake .content .primary .map-component .gradient {
   position: absolute;
   bottom: 0;
   z-index: 999;
@@ -26,7 +114,7 @@
   pointer-events: none;
 }
 
-.main .lake .map-component .controls .playback {
+.main .lake .content .primary .map-component .playback {
   position: absolute;
   bottom: 0;
   left: 0;
@@ -34,7 +122,7 @@
   width: 100%;
 }
 
-.main .lake .map-component .controls .playback .slider {
+.main .lake .content .primary .map-component .playback .slider {
   width: calc(100% - 24px);
   box-sizing: border-box;
   position: absolute;
@@ -43,21 +131,28 @@
   z-index: 9999;
 }
 
-.main .lake .map-component .controls .playback .slider .slider-component {
+.main
+  .lake
+  .content
+  .primary
+  .map-component
+  .playback
+  .slider
+  .slider-component {
   width: 100%;
   cursor: pointer;
-  background: rgba(255, 255, 255, 0.5); /* Grey background */
+  background: rgba(255, 255, 255, 0.5);
   -webkit-appearance: none;
   width: 100%;
   height: 5px;
   background: #d3d3d3;
   outline: none;
   opacity: 0.7;
-  -webkit-transition: .2s;
-  transition: opacity .2s;
+  -webkit-transition: 0.2s;
+  transition: opacity 0.2s;
 }
 
-.main .lake .map-component .controls .playback .play-controls {
+.main .lake .content .primary .map-component .playback .play-controls {
   position: absolute;
   width: 100%;
   bottom: 0;
@@ -66,7 +161,80 @@
   box-sizing: border-box;
 }
 
-.main .lake .map-component .controls .playback .play-controls .play-pause-icon {
+.main
+  .lake
+  .content
+  .primary
+  .map-component
+  .playback
+  .play-controls
+  .clickable-button {
+  opacity: 0.9;
+}
+
+.main
+  .lake
+  .content
+  .primary
+  .map-component
+  .playback
+  .play-controls
+  .clickable-button:hover {
+  opacity: 1;
+}
+
+.main
+  .lake
+  .content
+  .primary
+  .map-component
+  .playback
+  .play-controls
+  .clickable-button
+  .tooltip {
+  visibility: hidden;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 12px;
+  position: absolute;
+  z-index: 1;
+  bottom: 150%;
+}
+
+.main
+  .lake
+  .content
+  .primary
+  .map-component
+  .playback
+  .play-controls
+  .clickable-button
+  .tooltip.right {
+  right: 10px;
+}
+
+.main
+  .lake
+  .content
+  .primary
+  .map-component
+  .playback
+  .play-controls
+  .clickable-button:hover
+  .tooltip {
+  visibility: visible;
+}
+
+.main
+  .lake
+  .content
+  .primary
+  .map-component
+  .playback
+  .play-controls
+  .play-pause-icon {
   border: 0;
   background: transparent;
   box-sizing: border-box;
@@ -82,8 +250,9 @@
 
 .main
   .lake
+  .content
+  .primary
   .map-component
-  .controls
   .playback
   .play-controls
   .play-pause-icon.paused {
@@ -93,22 +262,35 @@
 
 .main
   .lake
+  .content
+  .primary
   .map-component
-  .controls
   .playback
   .play-controls
   .current-datetime {
   display: inline-block;
+  padding-top: 16px;
+  vertical-align: top;
+  margin-left: 10px;
+  font-size: 14px;
 }
 
-.main .lake .map-component .controls .playback .play-controls .selected-period {
+.main
+  .lake
+  .content
+  .primary
+  .map-component
+  .playback
+  .play-controls
+  .selected-period {
   display: inline-block;
 }
 
 .main
   .lake
+  .content
+  .primary
   .map-component
-  .controls
   .playback
   .play-controls
   .clickable-button {
@@ -117,15 +299,63 @@
 
 .main
   .lake
+  .content
+  .primary
   .map-component
-  .controls
+  .playback
+  .play-controls
+  .clickable-button.tools {
+  float: right;
+}
+
+.main
+  .lake
+  .content
+  .primary
+  .map-component
   .playback
   .play-controls
   .clickable-button.settings {
   float: right;
 }
 
-.main .lake .map-component .controls .playback .play-controls button {
+.main
+  .lake
+  .content
+  .primary
+  .map-component
+  .playback
+  .play-controls
+  .clickable-button.fullscreen {
+  float: right;
+}
+
+.main
+  .lake
+  .content
+  .primary
+  .map-component
+  .playback
+  .play-controls
+  .clickable-button.fullscreen:hover
+  img {
+  animation: pulse 0.3s normal;
+  animation-timing-function: linear;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.main .lake .content .primary .map-component .playback .play-controls button {
   width: 46px;
   height: 48px;
   background-color: transparent;
@@ -134,19 +364,19 @@
   cursor: pointer;
 }
 
-.main .lake .map-component .controls .playback .play-controls button img {
+.main
+  .lake
+  .content
+  .primary
+  .map-component
+  .playback
+  .play-controls
+  button
+  img {
   width: 24px;
   height: 24px;
 }
 
-.main .lake .sidebar {
-  position: fixed;
-  bottom: 64px;
-  right: 64px;
-  height: calc(100% - 200px);
-  width: 336px;
-}
-
-.main .lake .sidebar .info .name {
-  font-size: 42px;
+.main .lake .content .secondary .info .name {
+  font-size: 32px;
 }

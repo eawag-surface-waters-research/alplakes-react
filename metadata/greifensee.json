@@ -1,10 +1,10 @@
 {
-    "lake_id": "zurich",
+    "key": "greifensee",
     "name": {
-        "EN": "Lake Zurich",
-        "DE": "Zürichsee",
-        "FR": "Lac de Zurich",
-        "IT": "Lago di Zurigo"
+        "EN": "Lake Greifen",
+        "DE": "Greifensee",
+        "FR": "Lac de Greifen",
+        "IT": "Lago di Greifen"
     },
     "type": {
         "EN": "Glacial lake",
@@ -12,24 +12,24 @@
         "FR": "Lac glaciaire",
         "IT": "Lago glaciale"
     },
-    "area": 89,
-    "depth": 49,
-    "max_depth": 143,
-    "elevation": 406,
+    "area": 8.45,
+    "depth": 18,
+    "elevation": 435,
+    "max_depth": 32,
     "bounds": {
         "southWest": [
-            47.19,
-            8.53
+            47.32,
+            8.65
         ],
         "northEast": [
-            47.37,
-            8.95
+            47.38,
+            8.71
         ]
     },
     "customPeriod": {
         "type": "alplakes_hydrodynamic",
         "start": -2,
-        "end": "/simulations/metadata/delft3d-flow/zurich"
+        "end": "/simulations/metadata/delft3d-flow/greifensee"
     },
     "layers": [
         {
@@ -39,12 +39,12 @@
             "z-index": 1,
             "properties": {
                 "model": "delft3d-flow",
-                "lake": "zurich",
+                "lake": "greifensee",
                 "parameter": "temperature",
-                "height": 212,
-                "width": 34,
+                "height": 28,
+                "width": 109,
                 "depths": [],
-                "depth": 1,
+                "depth": 0,
                 "display": "raster",
                 "options": {
                     "paletteName": "Balance"
@@ -58,21 +58,21 @@
             "z-index": 5,
             "properties": {
                 "model": "delft3d-flow",
-                "lake": "zurich",
+                "lake": "greifensee",
                 "parameter": "velocity",
-                "height": 212,
-                "width": 34,
+                "height": 28,
+                "width": 109,
                 "depths": [],
-                "depth": 1,
+                "depth": 0,
                 "display": "streamlines",
                 "options": {
-                    "paths": 1000,
+                    "paths": 500,
                     "color": "white",
                     "width": 0.5,
                     "fade": 0.97,
                     "duration": 10,
                     "maxAge": 80,
-                    "velocityScale": 0.01,
+                    "velocityScale": 0.001,
                     "opacity": 0.5
                 }
             }

@@ -1,28 +1,34 @@
 .main .home .content {
   position: fixed;
   left: 0;
-  bottom: 0;
-  height: calc(100% - 160px);
-  width: 50%;
+  top: 80px;
+  height: calc(100% - 80px);
+  width: 100%;
   z-index: 1;
   box-sizing: border-box;
   overflow: auto;
   -ms-overflow-style: none;
   scrollbar-width: none;
+  padding: 0 16px;
+  box-sizing: border-box;
+  padding-top: 56px;
 }
 
 .main .home .content::-webkit-scrollbar {
   display: none;
 }
 
-.main .home .background {
-  position: fixed;
-  left: 0;
-  top: 0;
+.main .home .content .products {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  max-width: 1200px;
   width: 100%;
-  height: 100%;
-  background-color: white;
-  z-index: 0;
+  margin: auto;
+}
+
+.main .home .content .products .lake {
+  padding: 0 8px 40px 8px;
+  aspect-ratio: 1 / 1;
 }
 
 .main .home .content .products a {
@@ -30,34 +36,51 @@
   text-decoration: none;
 }
 
-.main .home .content .products .lake {
-  background-color: white;
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
-  margin: 32px;
-  height: 180px;
-}
-
-.main .home .content .products .lake:hover {
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
-}
-
 .main .home .content .products .lake .image {
-  height: 100%;
+  width: 100%;
   display: inline-block;
   pointer-events: none;
 }
 
 .main .home .content .products .lake .image img {
-  height: 100%;
-  filter: brightness(1.5);
+  width: 100%;
+  border-radius: 12px;
+  aspect-ratio: 16 / 9;
+  -webkit-transition: border-radius 0.5s;
+    transition: border-radius 0.5s;
+}
+
+.main .home .content .products .lake:hover .image img {
+  border-radius: 0;
 }
 
 .main .home .content .products .lake .properties {
   display: inline-block;
   vertical-align: top;
-  padding: 16px;
+  padding-top: 8px;
+  width: 100%;
 }
 
+.main .home .content .products .lake .properties .left {
+  display: inline-block;
+  width: 36px;
+  vertical-align: top;
+}
+
+.main .home .content .products .lake .properties .left img {
+  width: 24px;
+  margin-top: 2px;
+}
+
+.main .home .content .products .lake .properties .right {
+  display: inline-block;
+  width: calc(100% - 36px);
+}
+
+
 .main .home .content .products .lake .properties .name {
-  font-size: 22px;
+  font-family: "Roboto", "Arial", sans-serif;
+  font-size: 16px;
+  line-height: 22px;
+  font-weight: 500;
 }

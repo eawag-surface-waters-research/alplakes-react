@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { NavLink } from "react-router-dom";
-import Translate from "../../translations.json";
 import NavBar from "../../components/navbar/navbar";
 import LakeMap from "../../components/leaflet/lakemap";
+import swiss from "../../img/swiss.png";
+import italian from "../../img/italian.png";
+import french from "../../img/french.png";
 import URLS from "../../urls.json";
 import { onMouseOver, onMouseOut } from "./functions";
 
@@ -13,6 +15,7 @@ import Loading from "../../components/loading/loading";
 class Lake extends Component {
   render() {
     var { lake, language } = this.props;
+    var flags = { swiss: swiss, italian: italian, french: french };
     return (
       <NavLink to={`/lake/${lake.key}`}>
         <div
@@ -28,8 +31,17 @@ class Lake extends Component {
             />
           </div>
           <div className="properties">
-            <div className="name">{lake.name[language]}</div>
-            <div className="parameters"></div>
+            <div className="left">
+              {lake.flags.map((f) => (
+                <img src={flags[f]} alt={f} key={f} />
+              ))}
+            </div>
+            <div className="right">
+              <div className="name">{lake.name[language]}</div>
+              <div className="parameters">Elevation {lake.elevation} mAOD</div>
+              <div className="parameters">Surface area {lake.area} km2</div>
+              <div className="parameters">Average depth {lake.depth} m</div>
+            </div>
           </div>
         </div>
       </NavLink>
@@ -48,7 +60,7 @@ class Home extends Component {
   render() {
     var { language } = this.props;
     var { list } = this.state;
-    document.title = Translate.title[language];
+    document.title = "Alplakes";
     return (
       <div className="home">
         <NavBar language={language} />
@@ -63,7 +75,7 @@ class Home extends Component {
             )}
           </div>
         </div>
-        <div className="background">
+        <div className="">
           <LakeMap lakes={list} language={language} />
         </div>
       </div>

@@ -1,10 +1,4 @@
 {
-    "title": {
-        "EN": "Alplakes - Real-time lake data from simulations, satellite data and insitu measurements.",
-        "DE": "Alplakes - Echtzeit-Seedaten aus Simulationen, Satellitendaten und In-situ-Messungen.",
-        "FR": "Alplakes - Données en temps réel sur les lacs à partir de simulations, de données satellitaires et de mesures in situ.",
-        "IT": "Alplakes - Dati del lago in tempo reale da simulazioni, dati satellitari e misurazioni in situ."
-    },
     "search": {
         "EN": "Search",
         "DE": "Suchen",

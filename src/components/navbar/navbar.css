@@ -1,14 +1,13 @@
 .navbar {
-  width: 70%;
+  width: 100%;
   position: fixed;
   left: 0;
   top: 0;
-  z-index: 1;
 }
 
 .navbar img.icon {
-  padding: 32px 32px 16px 32px;
-  height: 64px;
+  padding: 24px 24px;
+  height: 24px;
 }
 
 .navbar .desktop-nav {
@@ -47,7 +46,9 @@
 }
 
 .navbar .desktop-nav .nav-item .nav-text {
-  display: block;
+  display: inline-block;
+  padding: 2px 0px 2px 12px;
+  vertical-align: top;
 }
 
 .navbar .mobile-nav {

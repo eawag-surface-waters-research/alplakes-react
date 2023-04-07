@@ -1,10 +1,10 @@
 {
-    "lake_id": "zurich",
+    "key": "biel",
     "name": {
-        "EN": "Lake Zurich",
-        "DE": "Zürichsee",
-        "FR": "Lac de Zurich",
-        "IT": "Lago di Zurigo"
+        "EN": "Lake Biel",
+        "DE": "Bielersee",
+        "FR": "Lac de Bienne",
+        "IT": "Lago di Bienne"
     },
     "type": {
         "EN": "Glacial lake",
@@ -12,24 +12,24 @@
         "FR": "Lac glaciaire",
         "IT": "Lago glaciale"
     },
-    "area": 89,
-    "depth": 49,
-    "max_depth": 143,
-    "elevation": 406,
+    "area": 39.3,
+    "depth": 28,
+    "elevation": 429,
+    "max_depth": 74,
     "bounds": {
         "southWest": [
-            47.19,
-            8.53
+            47.03,
+            7.07
         ],
         "northEast": [
-            47.37,
-            8.95
+            47.14,
+            7.24
         ]
     },
     "customPeriod": {
         "type": "alplakes_hydrodynamic",
         "start": -2,
-        "end": "/simulations/metadata/delft3d-flow/zurich"
+        "end": "/simulations/metadata/delft3d-flow/biel"
     },
     "layers": [
         {
@@ -39,12 +39,12 @@
             "z-index": 1,
             "properties": {
                 "model": "delft3d-flow",
-                "lake": "zurich",
+                "lake": "biel",
                 "parameter": "temperature",
-                "height": 212,
-                "width": 34,
+                "height": 132,
+                "width": 28,
                 "depths": [],
-                "depth": 1,
+                "depth": 0,
                 "display": "raster",
                 "options": {
                     "paletteName": "Balance"
@@ -58,12 +58,12 @@
             "z-index": 5,
             "properties": {
                 "model": "delft3d-flow",
-                "lake": "zurich",
+                "lake": "biel",
                 "parameter": "velocity",
-                "height": 212,
-                "width": 34,
+                "height": 132,
+                "width": 28,
                 "depths": [],
-                "depth": 1,
+                "depth": 0,
                 "display": "streamlines",
                 "options": {
                     "paths": 1000,

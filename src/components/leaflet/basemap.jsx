@@ -50,8 +50,10 @@ class Basemap extends Component {
       center: center,
       zoom: zoom,
       minZoom: 5,
-      maxZoom: 15,
+      maxZoom: 17,
       maxBoundsViscosity: 0.5,
+      zoomSnap: 0.25,
+      zoomControl: false,
     });
 
     var basemap = L.tileLayer(

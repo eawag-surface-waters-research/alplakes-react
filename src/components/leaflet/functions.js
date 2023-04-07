@@ -171,7 +171,7 @@ const downloadAlplakesHydrodynamicParameter = async (
       layer.properties.model
     }/${layer.properties.lake}/${layer.properties.parameter}/${formatDate(
       start
-    )}/${formatDate(end)}/0`
+    )}/${formatDate(end)}/${layer.properties.depth}`
   );
   parameter = parameter
     .split("\n")

@@ -17,7 +17,8 @@
         "depth": 154,
         "elevation": 372,
         "latitude": 46.45,
-        "longitude": 6.5
+        "longitude": 6.5,
+        "flags": ["swiss", "french"]
     },
     {
         "key": "garda",
@@ -37,7 +38,8 @@
         "depth": 136,
         "elevation": 65,
         "latitude": 45.58,
-        "longitude": 10.63
+        "longitude": 10.63,
+        "flags": ["italian"]
     },
     {
         "key": "lugano",
@@ -57,7 +59,8 @@
         "depth": 134,
         "elevation": 271,
         "latitude": 45.99,
-        "longitude": 8.97
+        "longitude": 8.97,
+        "flags": ["swiss", "italian"]
     },
     {
         "key": "zurich",
@@ -77,7 +80,8 @@
         "depth": 49,
         "elevation": 406,
         "latitude": 47.24,
-        "longitude": 8.68
+        "longitude": 8.68,
+        "flags": ["swiss"]
     },
     {
         "key": "biel",
@@ -97,7 +101,8 @@
         "depth": 28,
         "elevation": 429,
         "latitude": 47.08,
-        "longitude": 7.17
+        "longitude": 7.17,
+        "flags": ["swiss"]
     },
     {
         "key": "murten",
@@ -117,10 +122,11 @@
         "depth": 24,
         "elevation": 429,
         "latitude": 46.93,
-        "longitude": 7.08
+        "longitude": 7.08,
+        "flags": ["swiss"]
     },
     {
-        "key": "greifen",
+        "key": "greifensee",
         "name": {
             "EN": "Lake Greifen",
             "DE": "Greifensee",
@@ -137,7 +143,8 @@
         "depth": 18,
         "elevation": 435,
         "latitude": 47.36,
-        "longitude": 8.68
+        "longitude": 8.68,
+        "flags": ["swiss"]
     },
     {
         "key": "caldonazzo",
@@ -157,7 +164,8 @@
         "depth": 26,
         "elevation": 449,
         "latitude": 46.02,
-        "longitude": 11.24
+        "longitude": 11.24,
+        "flags": ["italian"]
     },
     {
         "key": "ageri",
@@ -177,7 +185,8 @@
         "depth": 26,
         "elevation": 724,
         "latitude": 47.125,
-        "longitude": 8.62
+        "longitude": 8.62,
+        "flags": ["swiss"]
     },
     {
         "key": "joux",
@@ -197,7 +206,8 @@
         "depth": 15,
         "elevation": 1004,
         "latitude": 46.64,
-        "longitude": 6.29
+        "longitude": 6.29,
+        "flags": ["swiss"]
     },
     {
         "key": "stmoritz",
@@ -217,6 +227,7 @@
         "depth": 25,
         "elevation": 1800,
         "latitude": 46.495,
-        "longitude": 9.845
+        "longitude": 9.845,
+        "flags": ["swiss"]
     }
 ]
