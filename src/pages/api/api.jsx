@@ -1,17 +1,23 @@
 import React, { Component } from "react";
 import NavBar from "../../components/navbar/navbar";
+import SwaggerUI from "swagger-ui-react";
+import "swagger-ui-react/swagger-ui.css";
+import CONFIG from "../../config.json";
+import "./api.css";
 
 class API extends Component {
   render() {
     var { language } = this.props;
     return (
-      <div className="main">
+      <React.Fragment>
         <NavBar language={language} />
-        <div className="primary">
-          <div className="content"></div>
+        <div className="api-container">
+          <SwaggerUI
+            url={CONFIG.alplakes_api + "/openapi.json"}
+            docExpansion="list"
+          />
         </div>
-        <div className="secondary"></div>
-      </div>
+      </React.Fragment>
     );
   }
 }
