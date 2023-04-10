@@ -40,18 +40,39 @@
   width: 100%;
   display: inline-block;
   pointer-events: none;
+  position: relative;
 }
 
-.main .home .content .products .lake .image img {
+.main .home .content .products .lake .image img.core-image {
   width: 100%;
   border-radius: 12px;
   aspect-ratio: 16 / 9;
   -webkit-transition: border-radius 0.5s;
-    transition: border-radius 0.5s;
+  transition: border-radius 0.5s;
 }
 
 .main .home .content .products .lake:hover .image img {
   border-radius: 0;
+}
+
+.main .home .content .products .lake .image .tags {
+  position: absolute;
+  bottom: 12px;
+  width: 100%;
+  text-align: right;
+}
+
+.main .home .content .products .lake .image .tag {
+  background-color: rgba(28, 28, 28, 0.9);
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 8px;
+  margin-right: 8px;
+  pointer-events: all;
+}
+
+.main .home .content .products .lake .image .tags img {
+  height: 14px;
 }
 
 .main .home .content .products .lake .properties {
@@ -63,24 +84,35 @@
 
 .main .home .content .products .lake .properties .left {
   display: inline-block;
-  width: 36px;
+  width: 32px;
   vertical-align: top;
 }
 
 .main .home .content .products .lake .properties .left img {
-  width: 24px;
+  width: 22px;
   margin-top: 2px;
 }
 
 .main .home .content .products .lake .properties .right {
   display: inline-block;
-  width: calc(100% - 36px);
+  width: calc(100% - 32px);
 }
-
 
 .main .home .content .products .lake .properties .name {
   font-family: "Roboto", "Arial", sans-serif;
-  font-size: 16px;
+  font-size: 18px;
   line-height: 22px;
   font-weight: 500;
+}
+
+.main .home .content .products .lake .properties .parameters {
+  font-size: 15px;
+  color: #3f3f3f;
+  margin-top: 2px;
+}
+
+.main .home .content .products .lake .properties .parameters .stats {
+  display: inline-block;
+  color: black;
+  font-size: 16px;
 }

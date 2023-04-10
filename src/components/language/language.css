@@ -6,8 +6,9 @@
 
 .language select {
   padding: 4px;
-  border-radius: 5px;
+  border-radius: 8px;
   color: black;
   background-color: transparent;
   border: 1px solid black;
+  cursor: pointer;
 }

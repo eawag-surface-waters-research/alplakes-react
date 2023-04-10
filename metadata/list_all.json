@@ -18,7 +18,14 @@
         "elevation": 372,
         "latitude": 46.45,
         "longitude": 6.5,
-        "flags": ["swiss", "french"]
+        "flags": [
+            "swiss",
+            "french"
+        ],
+        "tags": [
+            "threed",
+            "satellite"
+        ]
     },
     {
         "key": "garda",
@@ -39,7 +46,13 @@
         "elevation": 65,
         "latitude": 45.58,
         "longitude": 10.63,
-        "flags": ["italian"]
+        "flags": [
+            "italian"
+        ],
+        "tags": [
+            "threed",
+            "satellite"
+        ]
     },
     {
         "key": "lugano",
@@ -60,7 +73,14 @@
         "elevation": 271,
         "latitude": 45.99,
         "longitude": 8.97,
-        "flags": ["swiss", "italian"]
+        "flags": [
+            "swiss",
+            "italian"
+        ],
+        "tags": [
+            "threed",
+            "satellite"
+        ]
     },
     {
         "key": "zurich",
@@ -81,7 +101,13 @@
         "elevation": 406,
         "latitude": 47.24,
         "longitude": 8.68,
-        "flags": ["swiss"]
+        "flags": [
+            "swiss"
+        ],
+        "tags": [
+            "threed",
+            "satellite"
+        ]
     },
     {
         "key": "biel",
@@ -102,7 +128,13 @@
         "elevation": 429,
         "latitude": 47.08,
         "longitude": 7.17,
-        "flags": ["swiss"]
+        "flags": [
+            "swiss"
+        ],
+        "tags": [
+            "threed",
+            "satellite"
+        ]
     },
     {
         "key": "murten",
@@ -123,7 +155,13 @@
         "elevation": 429,
         "latitude": 46.93,
         "longitude": 7.08,
-        "flags": ["swiss"]
+        "flags": [
+            "swiss"
+        ],
+        "tags": [
+            "threed",
+            "satellite"
+        ]
     },
     {
         "key": "greifensee",
@@ -144,7 +182,13 @@
         "elevation": 435,
         "latitude": 47.36,
         "longitude": 8.68,
-        "flags": ["swiss"]
+        "flags": [
+            "swiss"
+        ],
+        "tags": [
+            "threed",
+            "satellite"
+        ]
     },
     {
         "key": "caldonazzo",
@@ -165,7 +209,13 @@
         "elevation": 449,
         "latitude": 46.02,
         "longitude": 11.24,
-        "flags": ["italian"]
+        "flags": [
+            "italian"
+        ],
+        "tags": [
+            "threed",
+            "satellite"
+        ]
     },
     {
         "key": "ageri",
@@ -186,7 +236,13 @@
         "elevation": 724,
         "latitude": 47.125,
         "longitude": 8.62,
-        "flags": ["swiss"]
+        "flags": [
+            "swiss"
+        ],
+        "tags": [
+            "threed",
+            "satellite"
+        ]
     },
     {
         "key": "joux",
@@ -207,7 +263,13 @@
         "elevation": 1004,
         "latitude": 46.64,
         "longitude": 6.29,
-        "flags": ["swiss"]
+        "flags": [
+            "swiss"
+        ],
+        "tags": [
+            "threed",
+            "satellite"
+        ]
     },
     {
         "key": "stmoritz",
@@ -228,6 +290,12 @@
         "elevation": 1800,
         "latitude": 46.495,
         "longitude": 9.845,
-        "flags": ["swiss"]
+        "flags": [
+            "swiss"
+        ],
+        "tags": [
+            "threed",
+            "satellite"
+        ]
     }
 ]

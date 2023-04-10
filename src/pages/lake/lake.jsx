@@ -8,12 +8,14 @@ import settings_icon from "../../img/settings.svg";
 import tools_icon from "../../img/tools.png";
 import fullscreen_icon from "../../img/fullscreen.png";
 import normalscreen_icon from "../../img/normalscreen.png";
+import Translate from "../../translations.json";
 import URLS from "../../urls.json";
 import {
   formatDate,
   formatTime,
   relativeDate,
   setCustomPeriod,
+  formatDateLong,
 } from "./functions";
 import "./lake.css";
 
@@ -25,8 +27,10 @@ class LakeSidebar extends Component {
       <div className="info">
         <div className="name">{metadata.name[language]}</div>
         <div className="datetime">
-          <div className="date">{formatDate(this.props.datetime)}</div>
           <div className="time">{formatTime(this.props.datetime)}</div>
+          <div className="date">
+            {formatDateLong(this.props.datetime, Translate.month[language])}
+          </div>
         </div>
       </div>
     );
@@ -181,6 +185,7 @@ class Lake extends Component {
     play: false,
     timestep: 3600000,
     timeout: 100,
+    error: "",
   };
 
   updated = () => {
@@ -262,6 +267,7 @@ class Lake extends Component {
   async componentDidMount() {
     var { period } = this.state;
     const lake_id = window.location.href.split("/lake/")[1].split("?")[0];
+
     try {
       const { data: metadata } = await axios.get(
         URLS.metadata + `${lake_id}.json`
@@ -272,9 +278,15 @@ class Lake extends Component {
           updates.push({ event: "addLayer", id: layer.id });
         }
       }
-      if ("customPeriod" in metadata) {
-        period = await setCustomPeriod(metadata.customPeriod, period);
+      try {
+        if ("customPeriod" in metadata) {
+          period = await setCustomPeriod(metadata.customPeriod, period);
+        }
+      } catch (e) {
+        console.error(e);
+        this.setState({ error: "api", loading: false });
       }
+
       this.setState({
         metadata,
         loading: false,
@@ -283,7 +295,8 @@ class Lake extends Component {
         period,
       });
     } catch (e) {
-      console.log(e);
+      console.error(e);
+      this.setState({ error: "name" });
     }
   }
 

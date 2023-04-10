@@ -17,6 +17,12 @@
         "FR": "À propos",
         "IT": "Sopra"
     },
+    "month": {
+        "EN": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+        "DE": "",
+        "FR": "",
+        "IT": ""
+    },
     "demo": {
         "EN": "",
         "DE": "",

@@ -20,6 +20,15 @@ export const formatDate = (datetime) => {
   }.${String(year).slice(-2)}`;
 };
 
+export const formatDateLong = (datetime, months) => {
+  var a = new Date(datetime);
+  var year = a.getFullYear();
+  console.log(a.getMonth())
+  var month = months[a.getMonth()];
+  var date = a.getDate();
+  return `${date} ${month} ${String(year)}`;
+};
+
 export const formatTime = (datetime) => {
   var a = new Date(datetime);
   var hour = a.getHours();

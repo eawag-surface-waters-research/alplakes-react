@@ -1,5 +1,5 @@
 .navbar {
-  width: 100%;
+  width: calc(100% - 100px);
   position: fixed;
   left: 0;
   top: 0;

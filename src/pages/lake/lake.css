@@ -378,5 +378,21 @@
 }
 
 .main .lake .content .secondary .info .name {
-  font-size: 32px;
+  font-size: 60px;
+  text-align: center;
+}
+
+.main .lake .content .secondary .info .datetime {
+  font-size: 22px;
+  text-align: center;
+  margin-top: -5px;
+}
+
+.main .lake .content .secondary .info .datetime .time {
+  display: inline-block;
+}
+
+.main .lake .content .secondary .info .datetime .date {
+  display: inline-block;
+  margin-left: 12px;
 }
