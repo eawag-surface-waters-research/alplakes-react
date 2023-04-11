@@ -17,7 +17,7 @@ import "./home.css";
 
 class Lake extends Component {
   render() {
-    var { lake, language, animated } = this.props;
+    var { lake, language } = this.props;
     var flags = { swiss: swiss, italian: italian, french: french };
     var tags = {
       threed: { img: threed_icon, hover: "3D model available" },
@@ -26,7 +26,7 @@ class Lake extends Component {
     var desc = Translations.descriptions[language];
     var imgCore = `https://alplakes-eawag.s3.eu-central-1.amazonaws.com/static/website/images/lakes/${lake.key}.png`;
     var imgBehind = `https://alplakes-eawag.s3.eu-central-1.amazonaws.com/static/website/images/lakes/${lake.key}.png`;
-    if (animated) imgBehind.replace(".png", ".gif");
+    if (lake.animation) imgBehind = imgBehind.replace(".png", ".gif");
     return (
       <NavLink to={`/lake/${lake.key}`}>
         <div
@@ -134,12 +134,7 @@ class Home extends Component {
               <Loading marginTop={20} dark={true} />
             ) : (
               list.map((lake) => (
-                <Lake
-                  lake={lake}
-                  language={language}
-                  key={lake.key}
-                  animated={lake.animated}
-                />
+                <Lake lake={lake} language={language} key={lake.key} />
               ))
             )}
           </div>
