@@ -6,6 +6,7 @@
   height: calc(100% - 80px);
   padding: 0 24px;
   box-sizing: border-box;
+  z-index: 2;
 }
 
 .main .lake .content .primary {

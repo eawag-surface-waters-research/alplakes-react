@@ -1,8 +1,10 @@
 .navbar {
-  width: calc(100% - 100px);
+  width: 100%;
   position: fixed;
   left: 0;
   top: 0;
+  background-color: white;
+  z-index: 1;
 }
 
 .navbar img.icon {
@@ -53,4 +55,19 @@
 
 .navbar .mobile-nav {
   display: none;
+}
+
+.navbar .language {
+  position: fixed;
+  top: 24px;
+  right: 24px;
+}
+
+.navbar .language select {
+  padding: 4px;
+  border-radius: 8px;
+  color: black;
+  background-color: transparent;
+  border: 1px solid black;
+  cursor: pointer;
 }

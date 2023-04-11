@@ -2,26 +2,31 @@ import React, { Component } from "react";
 import axios from "axios";
 import { NavLink } from "react-router-dom";
 import NavBar from "../../components/navbar/navbar";
-import LakeMap from "../../components/leaflet/lakemap";
+import Loading from "../../components/loading/loading";
+import Translations from "../../translations.json";
 import swiss from "../../img/swiss.png";
 import italian from "../../img/italian.png";
 import french from "../../img/french.png";
 import threed_icon from "../../img/threed-icon.png";
 import satellite_icon from "../../img/satellite-icon.png";
-import URLS from "../../urls.json";
+import ascending_icon from "../../img/ascending.png";
+import descending_icon from "../../img/descending.png";
 import { onMouseOver, onMouseOut } from "./functions";
-
+import CONFIG from "../../config.json";
 import "./home.css";
-import Loading from "../../components/loading/loading";
 
 class Lake extends Component {
   render() {
-    var { lake, language } = this.props;
+    var { lake, language, animated } = this.props;
     var flags = { swiss: swiss, italian: italian, french: french };
     var tags = {
       threed: { img: threed_icon, hover: "3D model available" },
       satellite: { img: satellite_icon, hover: "Satellite imagery available" },
     };
+    var desc = Translations.descriptions[language];
+    var imgCore = `https://alplakes-eawag.s3.eu-central-1.amazonaws.com/static/website/images/lakes/${lake.key}.png`;
+    var imgBehind = `https://alplakes-eawag.s3.eu-central-1.amazonaws.com/static/website/images/lakes/${lake.key}.png`;
+    if (animated) imgBehind.replace(".png", ".gif");
     return (
       <NavLink to={`/lake/${lake.key}`}>
         <div
@@ -31,11 +36,8 @@ class Lake extends Component {
           onMouseOut={onMouseOut}
         >
           <div className="image">
-            <img
-              src={`https://alplakes-eawag.s3.eu-central-1.amazonaws.com/static/website/images/lakes/${lake.key}.png`}
-              alt="Lake"
-              className="core-image"
-            />
+            <img src={imgCore} alt="Lake" className="core-image" />
+            <img src={imgBehind} alt="Lake" className="behind-image" />
             <div className="tags">
               {lake.tags.map((t) => (
                 <div className="tag" key={t} title={tags[t].hover}>
@@ -53,10 +55,10 @@ class Lake extends Component {
             <div className="right">
               <div className="name">{lake.name[language]}</div>
               <div className="parameters">
-                Situated <div className="stats">{lake.elevation}m</div> above
-                sea level with a surface area of{" "}
-                <div className="stats">{lake.area}km&#178;</div> and an average
-                depth of <div className="stats">{lake.depth}m.</div>
+                {desc[0]} <div className="stats">{lake.elevation}m</div>
+                {desc[1]} <div className="stats">{lake.area}km&#178;</div>
+                {desc[2]} <div className="stats">{lake.depth}m</div>
+                {desc[3]} <div className="stats">{lake.maxdepth}m.</div>
               </div>
             </div>
           </div>
@@ -69,31 +71,78 @@ class Lake extends Component {
 class Home extends Component {
   state = {
     list: [],
+    sort: "sortby",
+    ascending: false,
+  };
+  setSort = (event) => {
+    this.setState({ sort: event.target.value });
+  };
+  sortList = (list, property, ascending) => {
+    var x = 1;
+    var y = -1;
+    if (ascending) {
+      x = -1;
+      y = 1;
+    }
+    return list.sort((a, b) => (a[property] > b[property] ? y : x));
+  };
+  toggleSort = () => {
+    this.setState({ ascending: !this.state.ascending });
   };
   async componentDidMount() {
-    const { data: list } = await axios.get(URLS.metadata + "list_all.json");
+    const { data: list } = await axios.get(
+      CONFIG.alplakes_bucket + "list_all.json"
+    );
     this.setState({ list });
   }
   render() {
-    var { language } = this.props;
-    var { list } = this.state;
     document.title = "Alplakes";
+    var { language } = this.props;
+    var { list, sort, ascending } = this.state;
+    if (sort !== "sortby") {
+      list = this.sortList(list, sort, ascending);
+    }
     return (
       <div className="home">
-        <NavBar language={language} />
+        <NavBar {...this.props} />
         <div className="content">
+          <div className="sorting">
+            <select onChange={this.setSort} value={sort}>
+              <option disabled value="sortby">
+                {Translations.sortby[language]}
+              </option>
+              <option value="elevation">
+                {Translations.elevation[language]}
+              </option>
+              <option value="area">{Translations.area[language]}</option>
+              <option value="depth">{Translations.depth[language]}</option>
+              <option value="maxdepth">
+                {Translations.maxdepth[language]}
+              </option>
+              <option value="latitude">Latitude</option>
+              <option value="longitude">Longitude</option>
+            </select>
+            <button onClick={this.toggleSort} title="Sort Order">
+              <img
+                src={ascending ? ascending_icon : descending_icon}
+                alt="Sort"
+              />
+            </button>
+          </div>
           <div className="products">
             {list.length === 0 ? (
               <Loading marginTop={20} dark={true} />
             ) : (
               list.map((lake) => (
-                <Lake lake={lake} language={language} key={lake.key} />
+                <Lake
+                  lake={lake}
+                  language={language}
+                  key={lake.key}
+                  animated={lake.animated}
+                />
               ))
             )}
           </div>
-        </div>
-        <div className="">
-          <LakeMap lakes={list} language={language} />
         </div>
       </div>
     );

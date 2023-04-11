@@ -6,7 +6,7 @@ class About extends Component {
     var { language } = this.props;
     return (
       <div className="main">
-        <NavBar language={language} />
+        <NavBar {...this.props} />
         <div className="primary">
           <div className="content"></div>
         </div>

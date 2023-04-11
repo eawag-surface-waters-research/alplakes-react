@@ -15,6 +15,7 @@
         },
         "area": 580,
         "depth": 154,
+        "maxdepth": 310,
         "elevation": 372,
         "latitude": 46.45,
         "longitude": 6.5,
@@ -25,62 +26,8 @@
         "tags": [
             "threed",
             "satellite"
-        ]
-    },
-    {
-        "key": "garda",
-        "name": {
-            "EN": "Lake Garda",
-            "DE": "Gardasee",
-            "FR": "Lac de Garde",
-            "IT": "Lago di Garda"
-        },
-        "type": {
-            "EN": "Glacial lake",
-            "DE": "Gletschersee",
-            "FR": "Lac glaciaire",
-            "IT": "Lago glaciale"
-        },
-        "area": 370,
-        "depth": 136,
-        "elevation": 65,
-        "latitude": 45.58,
-        "longitude": 10.63,
-        "flags": [
-            "italian"
         ],
-        "tags": [
-            "threed",
-            "satellite"
-        ]
-    },
-    {
-        "key": "lugano",
-        "name": {
-            "EN": "Lake Lugano",
-            "DE": "Luganersee",
-            "FR": "Lac de Lugano",
-            "IT": "Lago di Lugano"
-        },
-        "type": {
-            "EN": "Glacial lake",
-            "DE": "Gletschersee",
-            "FR": "Lac glaciaire",
-            "IT": "Lago glaciale"
-        },
-        "area": 48.7,
-        "depth": 134,
-        "elevation": 271,
-        "latitude": 45.99,
-        "longitude": 8.97,
-        "flags": [
-            "swiss",
-            "italian"
-        ],
-        "tags": [
-            "threed",
-            "satellite"
-        ]
+        "animation": true
     },
     {
         "key": "zurich",
@@ -98,6 +45,7 @@
         },
         "area": 89,
         "depth": 49,
+        "maxdepth": 104,
         "elevation": 406,
         "latitude": 47.24,
         "longitude": 8.68,
@@ -125,36 +73,10 @@
         },
         "area": 39.3,
         "depth": 28,
+        "maxdepth": 74,
         "elevation": 429,
         "latitude": 47.08,
         "longitude": 7.17,
-        "flags": [
-            "swiss"
-        ],
-        "tags": [
-            "threed",
-            "satellite"
-        ]
-    },
-    {
-        "key": "murten",
-        "name": {
-            "EN": "Lake Murten",
-            "DE": "Murtensee",
-            "FR": "Lac de Morat",
-            "IT": "Lago di Morat"
-        },
-        "type": {
-            "EN": "Glacial lake",
-            "DE": "Gletschersee",
-            "FR": "Lac glaciaire",
-            "IT": "Lago glaciale"
-        },
-        "area": 22.8,
-        "depth": 24,
-        "elevation": 429,
-        "latitude": 46.93,
-        "longitude": 7.08,
         "flags": [
             "swiss"
         ],
@@ -179,9 +101,95 @@
         },
         "area": 8.45,
         "depth": 18,
+        "maxdepth": 32,
         "elevation": 435,
         "latitude": 47.36,
         "longitude": 8.68,
+        "flags": [
+            "swiss"
+        ],
+        "tags": [
+            "threed",
+            "satellite"
+        ]
+    },
+    {
+        "key": "garda",
+        "name": {
+            "EN": "Lake Garda",
+            "DE": "Gardasee",
+            "FR": "Lac de Garde",
+            "IT": "Lago di Garda"
+        },
+        "type": {
+            "EN": "Glacial lake",
+            "DE": "Gletschersee",
+            "FR": "Lac glaciaire",
+            "IT": "Lago glaciale"
+        },
+        "area": 370,
+        "depth": 136,
+        "maxdepth": 346,
+        "elevation": 65,
+        "latitude": 45.58,
+        "longitude": 10.63,
+        "flags": [
+            "italian"
+        ],
+        "tags": [
+            "threed",
+            "satellite"
+        ]
+    },
+    {
+        "key": "lugano",
+        "name": {
+            "EN": "Lake Lugano",
+            "DE": "Luganersee",
+            "FR": "Lac de Lugano",
+            "IT": "Lago di Lugano"
+        },
+        "type": {
+            "EN": "Glacial lake",
+            "DE": "Gletschersee",
+            "FR": "Lac glaciaire",
+            "IT": "Lago glaciale"
+        },
+        "area": 48.7,
+        "depth": 134,
+        "maxdepth": 288,
+        "elevation": 271,
+        "latitude": 45.99,
+        "longitude": 8.97,
+        "flags": [
+            "swiss",
+            "italian"
+        ],
+        "tags": [
+            "threed",
+            "satellite"
+        ]
+    },
+    {
+        "key": "murten",
+        "name": {
+            "EN": "Lake Murten",
+            "DE": "Murtensee",
+            "FR": "Lac de Morat",
+            "IT": "Lago di Morat"
+        },
+        "type": {
+            "EN": "Glacial lake",
+            "DE": "Gletschersee",
+            "FR": "Lac glaciaire",
+            "IT": "Lago glaciale"
+        },
+        "area": 22.8,
+        "depth": 24,
+        "maxdepth": 45,
+        "elevation": 429,
+        "latitude": 46.93,
+        "longitude": 7.08,
         "flags": [
             "swiss"
         ],
@@ -206,6 +214,7 @@
         },
         "area": 5.38,
         "depth": 26,
+        "maxdepth": 49,
         "elevation": 449,
         "latitude": 46.02,
         "longitude": 11.24,
@@ -233,6 +242,7 @@
         },
         "area": 7.3,
         "depth": 26,
+        "maxdepth": 49,
         "elevation": 724,
         "latitude": 47.125,
         "longitude": 8.62,
@@ -260,6 +270,7 @@
         },
         "area": 9.5,
         "depth": 15,
+        "maxdepth": 32,
         "elevation": 1004,
         "latitude": 46.64,
         "longitude": 6.29,
@@ -287,6 +298,7 @@
         },
         "area": 0.78,
         "depth": 25,
+        "maxdepth": 44,
         "elevation": 1800,
         "latitude": 46.495,
         "longitude": 9.845,

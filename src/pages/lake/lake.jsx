@@ -9,7 +9,7 @@ import tools_icon from "../../img/tools.png";
 import fullscreen_icon from "../../img/fullscreen.png";
 import normalscreen_icon from "../../img/normalscreen.png";
 import Translate from "../../translations.json";
-import URLS from "../../urls.json";
+import CONFIG from "../../config.json";
 import {
   formatDate,
   formatTime,
@@ -266,11 +266,11 @@ class Lake extends Component {
 
   async componentDidMount() {
     var { period } = this.state;
-    const lake_id = window.location.href.split("/lake/")[1].split("?")[0];
-
+    const url = window.location.href.split("/");
+    const lake_id = url[url.length - 1].split("?")[0];
     try {
       const { data: metadata } = await axios.get(
-        URLS.metadata + `${lake_id}.json`
+        CONFIG.alplakes_bucket + `${lake_id}.json`
       );
       var updates = [{ event: "bounds" }];
       for (var layer of metadata.layers) {
@@ -307,7 +307,7 @@ class Lake extends Component {
       document.title = "Alplakes - " + metadata.name[language];
     return (
       <div className="lake">
-        <NavBar language={language} />
+        <NavBar {...this.props} />
         <div className="content">
           <div className="primary">
             <Media

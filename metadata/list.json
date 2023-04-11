@@ -7,8 +7,15 @@
             "FR": "Le Léman",
             "IT": "Lago Lemano"
         },
+        "type": {
+            "EN": "Glacial lake",
+            "DE": "Gletschersee",
+            "FR": "Lac glaciaire",
+            "IT": "Lago glaciale"
+        },
         "area": 580,
         "depth": 154,
+        "maxdepth": 310,
         "elevation": 372,
         "latitude": 46.45,
         "longitude": 6.5,
@@ -19,7 +26,8 @@
         "tags": [
             "threed",
             "satellite"
-        ]
+        ],
+        "animation": true
     },
     {
         "key": "zurich",
@@ -29,8 +37,15 @@
             "FR": "Lac de Zurich",
             "IT": "Lago di Zurigo"
         },
+        "type": {
+            "EN": "Glacial lake",
+            "DE": "Gletschersee",
+            "FR": "Lac glaciaire",
+            "IT": "Lago glaciale"
+        },
         "area": 89,
         "depth": 49,
+        "maxdepth": 104,
         "elevation": 406,
         "latitude": 47.24,
         "longitude": 8.68,
@@ -50,8 +65,15 @@
             "FR": "Lac de Bienne",
             "IT": "Lago di Bienne"
         },
+        "type": {
+            "EN": "Glacial lake",
+            "DE": "Gletschersee",
+            "FR": "Lac glaciaire",
+            "IT": "Lago glaciale"
+        },
         "area": 39.3,
         "depth": 28,
+        "maxdepth": 74,
         "elevation": 429,
         "latitude": 47.08,
         "longitude": 7.17,
@@ -71,8 +93,15 @@
             "FR": "Lac de Greifen",
             "IT": "Lago di Greifen"
         },
+        "type": {
+            "EN": "Glacial lake",
+            "DE": "Gletschersee",
+            "FR": "Lac glaciaire",
+            "IT": "Lago glaciale"
+        },
         "area": 8.45,
         "depth": 18,
+        "maxdepth": 32,
         "elevation": 435,
         "latitude": 47.36,
         "longitude": 8.68,

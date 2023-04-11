@@ -8,7 +8,7 @@ class About extends Component {
     document.title = Translate.title[language];
     return (
       <div className="main">
-        <NavBar language={language} />
+        <NavBar {...this.props} />
         <div className="primary">
           <div className="content"></div>
         </div>

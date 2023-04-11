@@ -1,29 +1,60 @@
 .main .home .content {
-  position: fixed;
-  left: 0;
-  top: 80px;
-  height: calc(100% - 80px);
-  width: 100%;
-  z-index: 1;
-  box-sizing: border-box;
-  overflow: auto;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-  padding: 0 16px;
-  box-sizing: border-box;
-  padding-top: 56px;
+  max-width: 1200px;
+  margin: auto;
+  margin-top: 120px;
 }
 
 .main .home .content::-webkit-scrollbar {
   display: none;
 }
 
+.main .home .content .sorting {
+  padding: 0 8px;
+  text-align: right;
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 12px;
+}
+.main .home .content .sorting select {
+  padding: 5px;
+  border-radius: 8px;
+  background-color: rgba(0, 0, 0, 0.05);
+  border: none;
+  font-size: 14px;
+  height: 30px;
+  transition: 500ms all ease;
+  cursor: pointer;
+}
+
+.main .home .content .sorting select:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.main .home .content .sorting button {
+  background-color: rgba(0, 0, 0, 0.05);
+  border: none;
+  border-radius: 8px;
+  padding: 0 12px;
+  margin-left: 12px;
+  transition: 500ms all ease;
+  cursor: pointer;
+  height: 30px;
+}
+
+.main .home .content .sorting button:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.main .home .content .sorting button img {
+  height: 16px;
+  vertical-align: bottom;
+  opacity: 0.9;
+}
+
 .main .home .content .products {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  max-width: 1200px;
   width: 100%;
-  margin: auto;
 }
 
 .main .home .content .products .lake {
@@ -47,12 +78,29 @@
   width: 100%;
   border-radius: 12px;
   aspect-ratio: 16 / 9;
-  -webkit-transition: border-radius 0.5s;
-  transition: border-radius 0.5s;
+  -webkit-transition: border-radius 1s, opacity 2s;
+  transition: border-radius 1s, opacity 2s;
+  opacity: 1;
+}
+
+.main .home .content .products .lake .image img.behind-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  border-radius: 12px;
+  aspect-ratio: 16 / 9;
+  -webkit-transition: all 1s;
+  transition: all 1s;
+  z-index: -1;
 }
 
 .main .home .content .products .lake:hover .image img {
   border-radius: 0;
+}
+
+.main .home .content .products .lake:hover .image img.core-image {
+  opacity: 0;
 }
 
 .main .home .content .products .lake .image .tags {
@@ -69,6 +117,11 @@
   border-radius: 8px;
   margin-right: 8px;
   pointer-events: all;
+  transition: 500ms all ease;
+}
+
+.main .home .content .products .lake .image .tag:hover {
+  background-color: rgba(28, 28, 28, 1);
 }
 
 .main .home .content .products .lake .image .tags img {

@@ -1,12 +1,10 @@
 import React, { Component } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import "./App.css";
-import Language from "./components/language/language";
 import Home from "./pages/home/home";
 import Lake from "./pages/lake/lake";
 import API from "./pages/api/api";
 import About from "./pages/about/about";
-import NotFound from "./pages/notfound/notfound";
+import "./App.css";
 
 class App extends Component {
   state = {
@@ -16,27 +14,65 @@ class App extends Component {
   setLanguage = (event) => {
     this.setState({ language: event.target.value });
   };
+  componentDidMount() {
+    var url = window.location.href;
+    var { languages } = this.state;
+    for (let language of languages) {
+      if (url.includes("?" + language.toLowerCase())) {
+        this.setState({ language });
+      }
+    }
+  }
   render() {
     var { language, languages } = this.state;
     return (
       <React.Fragment>
-        <Language
-          language={language}
-          languages={languages}
-          setLanguage={this.setLanguage}
-        />
         <div className="main">
           <BrowserRouter>
             <Routes>
-              <Route path="/" element={<Home language={language} />} exact />
-              <Route path="/lake/*" element={<Lake language={language} />} />
-              <Route path="/api" element={<API language={language} />} exact />
               <Route
-                path="/about"
-                element={<About language={language} />}
+                path="/"
+                element={
+                  <Home
+                    language={language}
+                    languages={languages}
+                    setLanguage={this.setLanguage}
+                  />
+                }
                 exact
               />
-              <Route path="/" element={<NotFound language={language} />} />
+              <Route
+                path="/api"
+                element={
+                  <API
+                    language={language}
+                    languages={languages}
+                    setLanguage={this.setLanguage}
+                  />
+                }
+                exact
+              />
+              <Route
+                path="/about"
+                element={
+                  <About
+                    language={language}
+                    languages={languages}
+                    setLanguage={this.setLanguage}
+                  />
+                }
+                exact
+              />
+              <Route
+                path="/*"
+                element={
+                  <Lake
+                    language={language}
+                    languages={languages}
+                    setLanguage={this.setLanguage}
+                  />
+                }
+              />
             </Routes>
           </BrowserRouter>
         </div>

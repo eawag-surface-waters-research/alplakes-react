@@ -12,7 +12,7 @@ class NavBar extends Component {
     var selected = "lakes";
     if (window.location.href.includes("/api")) selected = "api";
     if (window.location.href.includes("/about")) selected = "about";
-    var { language } = this.props;
+    var { language, languages, setLanguage } = this.props;
     return (
       <React.Fragment>
         <div className="navbar">
@@ -41,6 +41,15 @@ class NavBar extends Component {
               <img alt="About" src={about_img} />
               <div className="nav-text">{Translate.about[language]}</div>
             </NavLink>
+            <div className="language">
+              <select value={language} onChange={setLanguage}>
+                {languages.map((l) => (
+                  <option value={l} key={"language_" + l}>
+                    {l}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
 
           <div className="mobile-nav">

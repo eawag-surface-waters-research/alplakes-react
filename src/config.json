@@ -1,3 +1,4 @@
 {
-    "alplakes_api": "http://eaw-alplakes2:8000"
+    "alplakes_api": "http://eaw-alplakes2:8000",
+    "alplakes_bucket": "https://alplakes-eawag.s3.eu-central-1.amazonaws.com/static/website/metadata/"
 }

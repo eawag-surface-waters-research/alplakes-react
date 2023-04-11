@@ -10,7 +10,7 @@ class API extends Component {
     var { language } = this.props;
     return (
       <React.Fragment>
-        <NavBar language={language} />
+        <NavBar {...this.props} />
         <div className="api-container">
           <SwaggerUI
             url={CONFIG.alplakes_api + "/openapi.json"}
