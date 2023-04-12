@@ -55,14 +55,7 @@
   text-align: right;
 }
 
-.main
-  .lake
-  .content
-  .primary
-  .map-component
-  .settings-modal
-  .settings-input
-  input {
+.main .lake .content .primary .map-component .settings-modal .settings-input input {
   width: 80px;
   padding: 5px;
   box-sizing: border-box;
@@ -74,21 +67,13 @@
   margin: 5px 0 5px 20px;
 }
 
-.main
-  .lake
-  .content
-  .primary
-  .map-component
-  .settings-modal
-  .settings-input
-  select {
+.main .lake .content .primary .map-component .settings-modal .settings-input select {
   padding: 5px;
   box-sizing: border-box;
   border-radius: 8px;
   border: 1px solid white;
-  background-color: transparent;
+  background-color: #343434;
   color: white;
-  text-align: center;
   margin: 5px 0 5px 20px;
 }
 
@@ -107,11 +92,9 @@
   z-index: 999;
   width: 100%;
   height: 127px;
-  background-image: linear-gradient(
-    rgba(0, 0, 0, 0),
-    rgba(0, 0, 0, 0.2),
-    rgba(0, 0, 0, 0.7)
-  );
+  background-image: linear-gradient(rgba(0, 0, 0, 0),
+      rgba(0, 0, 0, 0.2),
+      rgba(0, 0, 0, 0.7));
   pointer-events: none;
 }
 
@@ -124,33 +107,12 @@
 }
 
 .main .lake .content .primary .map-component .playback .slider {
-  width: calc(100% - 24px);
+  width: calc(100% - 28px);
   box-sizing: border-box;
   position: absolute;
   bottom: 44px;
   left: 12px;
   z-index: 9999;
-}
-
-.main
-  .lake
-  .content
-  .primary
-  .map-component
-  .playback
-  .slider
-  .slider-component {
-  width: 100%;
-  cursor: pointer;
-  background: rgba(255, 255, 255, 0.5);
-  -webkit-appearance: none;
-  width: 100%;
-  height: 5px;
-  background: #d3d3d3;
-  outline: none;
-  opacity: 0.7;
-  -webkit-transition: 0.2s;
-  transition: opacity 0.2s;
 }
 
 .main .lake .content .primary .map-component .playback .play-controls {
@@ -162,37 +124,15 @@
   box-sizing: border-box;
 }
 
-.main
-  .lake
-  .content
-  .primary
-  .map-component
-  .playback
-  .play-controls
-  .clickable-button {
+.main .lake .content .primary .map-component .playback .play-controls .clickable-button {
   opacity: 0.9;
 }
 
-.main
-  .lake
-  .content
-  .primary
-  .map-component
-  .playback
-  .play-controls
-  .clickable-button:hover {
+.main .lake .content .primary .map-component .playback .play-controls .clickable-button:hover {
   opacity: 1;
 }
 
-.main
-  .lake
-  .content
-  .primary
-  .map-component
-  .playback
-  .play-controls
-  .clickable-button
-  .tooltip {
+.main .lake .content .primary .map-component .playback .play-controls .clickable-button .tooltip {
   visibility: hidden;
   background-color: rgba(0, 0, 0, 0.8);
   color: #fff;
@@ -204,38 +144,15 @@
   bottom: 150%;
 }
 
-.main
-  .lake
-  .content
-  .primary
-  .map-component
-  .playback
-  .play-controls
-  .clickable-button
-  .tooltip.right {
+.main .lake .content .primary .map-component .playback .play-controls .clickable-button .tooltip.right {
   right: 10px;
 }
 
-.main
-  .lake
-  .content
-  .primary
-  .map-component
-  .playback
-  .play-controls
-  .clickable-button:hover
-  .tooltip {
+.main .lake .content .primary .map-component .playback .play-controls .clickable-button:hover .tooltip {
   visibility: visible;
 }
 
-.main
-  .lake
-  .content
-  .primary
-  .map-component
-  .playback
-  .play-controls
-  .play-pause-icon {
+.main .lake .content .primary .map-component .playback .play-controls .play-pause-icon {
   border: 0;
   background: transparent;
   box-sizing: border-box;
@@ -249,26 +166,12 @@
   margin-left: 12px;
 }
 
-.main
-  .lake
-  .content
-  .primary
-  .map-component
-  .playback
-  .play-controls
-  .play-pause-icon.paused {
+.main .lake .content .primary .map-component .playback .play-controls .play-pause-icon.paused {
   border-style: double;
   border-width: 0px 0 0px 20px;
 }
 
-.main
-  .lake
-  .content
-  .primary
-  .map-component
-  .playback
-  .play-controls
-  .current-datetime {
+.main .lake .content .primary .map-component .playback .play-controls .current-datetime {
   display: inline-block;
   padding-top: 16px;
   vertical-align: top;
@@ -276,70 +179,27 @@
   font-size: 14px;
 }
 
-.main
-  .lake
-  .content
-  .primary
-  .map-component
-  .playback
-  .play-controls
-  .selected-period {
+.main .lake .content .primary .map-component .playback .play-controls .selected-period {
   display: inline-block;
 }
 
-.main
-  .lake
-  .content
-  .primary
-  .map-component
-  .playback
-  .play-controls
-  .clickable-button {
+.main .lake .content .primary .map-component .playback .play-controls .clickable-button {
   display: inline-block;
 }
 
-.main
-  .lake
-  .content
-  .primary
-  .map-component
-  .playback
-  .play-controls
-  .clickable-button.tools {
+.main .lake .content .primary .map-component .playback .play-controls .clickable-button.tools {
   float: right;
 }
 
-.main
-  .lake
-  .content
-  .primary
-  .map-component
-  .playback
-  .play-controls
-  .clickable-button.settings {
+.main .lake .content .primary .map-component .playback .play-controls .clickable-button.settings {
   float: right;
 }
 
-.main
-  .lake
-  .content
-  .primary
-  .map-component
-  .playback
-  .play-controls
-  .clickable-button.fullscreen {
+.main .lake .content .primary .map-component .playback .play-controls .clickable-button.fullscreen {
   float: right;
 }
 
-.main
-  .lake
-  .content
-  .primary
-  .map-component
-  .playback
-  .play-controls
-  .clickable-button.fullscreen:hover
-  img {
+.main .lake .content .primary .map-component .playback .play-controls .clickable-button.fullscreen:hover img {
   animation: pulse 0.3s normal;
   animation-timing-function: linear;
 }
@@ -348,9 +208,11 @@
   0% {
     transform: scale(1);
   }
+
   50% {
     transform: scale(1.1);
   }
+
   100% {
     transform: scale(1);
   }
@@ -365,15 +227,7 @@
   cursor: pointer;
 }
 
-.main
-  .lake
-  .content
-  .primary
-  .map-component
-  .playback
-  .play-controls
-  button
-  img {
+.main .lake .content .primary .map-component .playback .play-controls button img {
   width: 24px;
   height: 24px;
 }

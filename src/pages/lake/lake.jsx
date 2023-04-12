@@ -18,6 +18,7 @@ import {
   formatDateLong,
 } from "./functions";
 import "./lake.css";
+import Slider from "../../components/sliders/slider";
 
 class LakeSidebar extends Component {
   state = {};
@@ -57,11 +58,24 @@ class Media extends Component {
       });
     }
   };
+  closeWindows = (event) => {
+    var { settings } = this.state;
+    if (settings) {
+      if (
+        !document.getElementById("settings").contains(event.target) &&
+        !document.getElementById("settings-icon").contains(event.target)
+      ) {
+        this.setState({ settings: false });
+      }
+    }
+  };
   componentDidMount() {
     document.addEventListener("keydown", this.escFunction, false);
+    document.addEventListener("click", this.closeWindows);
   }
   componentWillUnmount() {
     document.removeEventListener("keydown", this.escFunction, false);
+    document.removeEventListener("click", this.closeWindows);
   }
   render() {
     var {
@@ -85,7 +99,10 @@ class Media extends Component {
           <Basemap {...this.props} />
         </div>
         <div className="gradient" />
-        <div className={settings ? "settings-modal" : "settings-modal hidden"}>
+        <div
+          className={settings ? "settings-modal" : "settings-modal hidden"}
+          id="settings"
+        >
           <table>
             <tbody>
               <tr>
@@ -112,14 +129,11 @@ class Media extends Component {
         </div>
         <div className="playback">
           <div className="slider">
-            <input
-              type="range"
-              min={period[0]}
-              max={period[1]}
-              step={timestep}
-              value={datetime}
-              className="slider-component"
-              onChange={setDatetime}
+            <Slider
+              period={period}
+              timestep={timestep}
+              datetime={datetime}
+              setDatetime={setDatetime}
             />
           </div>
           <div className="play-controls">
@@ -155,7 +169,7 @@ class Media extends Component {
                 />
               </button>
             </div>
-            <div className="settings clickable-button">
+            <div className="settings clickable-button" id="settings-icon">
               <span className="tooltip">Settings</span>
               <button onClick={this.toggleSettings}>
                 <img src={settings_icon} alt="settings" />
@@ -234,7 +248,7 @@ class Lake extends Component {
         updates.push({ event: "updateLayer", id: layer.id });
       }
     }
-    var datetime = parseInt(event.target.value);
+    var datetime = parseInt(event.target.getAttribute("alt"));
     this.setState({ datetime, updates });
   };
 

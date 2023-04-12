@@ -54,6 +54,7 @@ class Lake extends Component {
             </div>
             <div className="right">
               <div className="name">{lake.name[language]}</div>
+              <div className="location">{lake.latitude}, {lake.longitude}</div>
               <div className="parameters">
                 {desc[0]} <div className="stats">{lake.elevation}m</div>
                 {desc[1]} <div className="stats">{lake.area}km&#178;</div>

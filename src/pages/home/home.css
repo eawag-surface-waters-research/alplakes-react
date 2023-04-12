@@ -15,6 +15,7 @@
   box-sizing: border-box;
   margin-bottom: 12px;
 }
+
 .main .home .content .sorting select {
   padding: 5px;
   border-radius: 8px;
@@ -158,8 +159,14 @@
   font-weight: 500;
 }
 
+.main .home .content .products .lake .properties .location {
+  color: grey;
+  font-size: 13px;
+  margin-top: 3px;
+}
+
 .main .home .content .products .lake .properties .parameters {
-  font-size: 15px;
+  font-size: 14px;
   color: #3f3f3f;
   margin-top: 2px;
 }
