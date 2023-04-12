@@ -55,7 +55,8 @@
         "tags": [
             "threed",
             "satellite"
-        ]
+        ],
+        "animation": true
     },
     {
         "key": "biel",
@@ -111,7 +112,8 @@
         "tags": [
             "threed",
             "satellite"
-        ]
+        ],
+        "animation": true
     },
     {
         "key": "garda",

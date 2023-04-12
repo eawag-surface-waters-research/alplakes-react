@@ -28,7 +28,7 @@ class Lake extends Component {
     var imgBehind = `https://alplakes-eawag.s3.eu-central-1.amazonaws.com/static/website/images/lakes/${lake.key}.png`;
     if (lake.animation) imgBehind = imgBehind.replace(".png", ".gif");
     return (
-      <NavLink to={`/lake/${lake.key}`}>
+      <NavLink to={`/${lake.key}`}>
         <div
           className="lake"
           id={"list-" + lake.key}
