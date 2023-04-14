@@ -1,7 +1,6 @@
 @font-face {
   font-family: "exo";
-  src: url("fonts/exo/Exo-Italic-VariableFont_wght.ttf")
-    format("truetype-variations");
+  src: url("fonts/exo/Exo-Italic-VariableFont_wght.ttf") format("truetype-variations");
   font-weight: 1 999;
 }
 
@@ -9,9 +8,18 @@
   font-family: "Roboto", "Arial", sans-serif;
 }
 
-.dark-inset {
-  box-shadow: inset 2px 3px 5px #000000, 0px 1px 1px #333;
-  background-color: transparent;
+.background-color {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
+  top: 0;
+  left: 0;
+}
+
+.background-color.dark {
+  background-color: rgb(15, 15, 15);
 }
 
 .marker {
@@ -57,6 +65,7 @@
   border: 2px solid transparent;
   transition: 0.33s ease-in-out all;
 }
+
 .pin:after {
   content: "";
   width: 14px;

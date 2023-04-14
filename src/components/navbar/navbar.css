@@ -7,6 +7,10 @@
   z-index: 1;
 }
 
+.navbar.dark {
+  background-color: rgb(15, 15, 15);
+}
+
 .navbar img.icon {
   padding: 24px 24px;
   height: 24px;
@@ -22,6 +26,11 @@
 .navbar .desktop-nav a {
   text-decoration: none;
   color: black;
+}
+
+.navbar.dark .desktop-nav a {
+  text-decoration: none;
+  color: white;
 }
 
 .navbar .desktop-nav .nav-item {
@@ -40,6 +49,10 @@
 
 .navbar .desktop-nav .nav-item.active {
   border-top: 3px solid black;
+}
+
+.navbar.dark .desktop-nav .nav-item.active {
+  border-top: 3px solid white;
 }
 
 .navbar .desktop-nav .nav-item img {
@@ -70,4 +83,9 @@
   background-color: transparent;
   border: 1px solid black;
   cursor: pointer;
+}
+
+.navbar.dark .language select {
+  color: white;
+  border: 1px solid white;
 }

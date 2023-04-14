@@ -1,4 +1,5 @@
 import L from "leaflet";
+import * as d3 from "d3";
 import axios from "axios";
 import COLORS from "../colors/colors.json";
 import CONFIG from "../../config.json";
@@ -80,7 +81,8 @@ export const addLayer = async (
   dataStore,
   layerStore,
   map,
-  datetime
+  datetime,
+  setSimpleline
 ) => {
   if (layer.type === "alplakes_hydrodynamic")
     await addAlplakesHydrodynamic(
@@ -89,7 +91,8 @@ export const addLayer = async (
       dataStore,
       layerStore,
       map,
-      datetime
+      datetime,
+      setSimpleline
     );
 };
 
@@ -116,10 +119,18 @@ const addAlplakesHydrodynamic = async (
   dataStore,
   layerStore,
   map,
-  datetime
+  datetime,
+  setSimpleline
 ) => {
   await downloadAlplakesHydrodynamicGeometry(layer, period, dataStore);
-  await downloadAlplakesHydrodynamicParameter(layer, period, dataStore);
+  var simpleline = await downloadAlplakesHydrodynamicParameter(
+    layer,
+    period,
+    dataStore
+  );
+  if ("simpleline" in layer.properties) {
+    setSimpleline(simpleline);
+  }
   plotAlplakesHydrodynamic(layer, datetime, dataStore, layerStore, map);
 };
 
@@ -177,6 +188,8 @@ const downloadAlplakesHydrodynamicParameter = async (
     .split("\n")
     .map((g) => g.split(",").map((s) => parseFloat(s)));
 
+  var simpleline = { x: [], y: [] };
+
   for (
     var i = 0;
     i < Math.floor(parameter.length / (layer.properties.height + 1));
@@ -190,7 +203,12 @@ const downloadAlplakesHydrodynamicParameter = async (
       (i + 1) * (layer.properties.height + 1)
     );
     addToNested(dataStore, [...path, date], data);
+    if ("simpleline" in layer.properties) {
+      simpleline.y.push(d3.mean(data.flat()));
+      simpleline.x.push(parseInt(date));
+    }
   }
+  return simpleline;
 };
 
 const plotAlplakesHydrodynamic = (
@@ -288,7 +306,6 @@ const updateAlplakesHydrodynamic = (
     layer.properties.parameter,
   ];
 
-  
   var data = dataStore[layer.type][model][lake][parameter];
   var newData = data[closestDate(datetime, Object.keys(data))];
 

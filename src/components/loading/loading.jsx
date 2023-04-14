@@ -3,12 +3,14 @@ import "./loading.css";
 
 class Loading extends Component {
   render() {
-    var { marginTop, dark } = this.props;
+    var { marginTop } = this.props;
     return (
       <div
-        className={dark ? "box-loader dark" : "box-loader"}
+        className="loading-symbol"
         style={{ marginTop: marginTop ? marginTop : 0 }}
-      ></div>
+      >
+        <span className="loader"></span>
+      </div>
     );
   }
 }

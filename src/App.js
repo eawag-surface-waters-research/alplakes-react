@@ -10,6 +10,7 @@ class App extends Component {
   state = {
     languages: ["EN", "DE", "FR", "IT"],
     language: "EN",
+    dark: false,
   };
   setLanguage = (event) => {
     this.setState({ language: event.target.value });
@@ -24,53 +25,38 @@ class App extends Component {
     }
   }
   render() {
-    var { language, languages } = this.state;
+    var { dark } = this.state;
     return (
       <React.Fragment>
-        <div className="main">
+        <div className={dark ? "main dark" : "main"}>
+          <div
+            className={dark ? "background-color dark" : "background-color"}
+          />
           <BrowserRouter>
             <Routes>
               <Route
                 path="/"
                 element={
-                  <Home
-                    language={language}
-                    languages={languages}
-                    setLanguage={this.setLanguage}
-                  />
+                  <Home {...this.state} setLanguage={this.setLanguage} />
                 }
                 exact
               />
               <Route
                 path="/api"
-                element={
-                  <API
-                    language={language}
-                    languages={languages}
-                    setLanguage={this.setLanguage}
-                  />
-                }
+                element={<API {...this.state} setLanguage={this.setLanguage} />}
                 exact
               />
               <Route
                 path="/about"
                 element={
-                  <About
-                    language={language}
-                    languages={languages}
-                    setLanguage={this.setLanguage}
-                  />
+                  <About {...this.state} setLanguage={this.setLanguage} />
                 }
                 exact
               />
               <Route
                 path="/*"
                 element={
-                  <Lake
-                    language={language}
-                    languages={languages}
-                    setLanguage={this.setLanguage}
-                  />
+                  <Lake {...this.state} setLanguage={this.setLanguage} />
                 }
               />
             </Routes>

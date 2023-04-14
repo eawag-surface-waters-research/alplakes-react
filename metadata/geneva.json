@@ -46,6 +46,8 @@
                 "depths": [],
                 "depth": 0,
                 "display": "raster",
+                "simpleline": true,
+                "temperature": true,
                 "options": {
                     "paletteName": "Balance"
                 }

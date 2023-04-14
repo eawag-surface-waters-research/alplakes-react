@@ -1,9 +1,9 @@
 .main .lake .content {
   position: fixed;
   left: 0;
-  top: 80px;
+  top: 100px;
   width: 100%;
-  height: calc(100% - 80px);
+  height: calc(100% - 100px);
   padding: 0 24px;
   box-sizing: border-box;
   z-index: 2;
@@ -233,21 +233,49 @@
 }
 
 .main .lake .content .secondary .info .name {
-  font-size: 60px;
+  font-size: 36px;
   text-align: center;
+  color: #343434;
 }
 
-.main .lake .content .secondary .info .datetime {
-  font-size: 22px;
-  text-align: center;
-  margin-top: -5px;
-}
-
-.main .lake .content .secondary .info .datetime .time {
+.main .lake .content .secondary .info .data .temperature {
+  width: 200px;
   display: inline-block;
 }
 
-.main .lake .content .secondary .info .datetime .date {
+.main .lake .content .secondary .info .data .temperature .value {
+  font-size: 70px;
   display: inline-block;
-  margin-left: 12px;
+
+}
+
+.main .lake .content .secondary .info .data .temperature .details {
+  display: inline-block;
+}
+
+.main .lake .content .secondary .info .data .temperature .details .unit {
+  font-size: 35px;
+}
+
+.main .lake .content .secondary .info .data .temperature .details .average {
+  text-align: right;
+}
+
+.main .lake .content .secondary .info .data .datetime {
+  width: 200px;
+  display: inline-block;
+  text-align: right;
+}
+
+.main .lake .content .secondary .info .data .datetime .date {
+  font-size: 24px;
+}
+
+.main .lake .content .secondary .info .data .datetime .time {
+  font-size: 40px;
+}
+
+.main .lake .content .secondary .info .graph {
+  width: 100%;
+  height: 120px;
 }

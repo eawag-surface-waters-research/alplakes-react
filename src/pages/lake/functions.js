@@ -37,6 +37,42 @@ export const formatTime = (datetime) => {
   }`;
 };
 
+export const closestIndex = (num, arr) => {
+  let curr = arr[0],
+    diff = Math.abs(num - curr);
+  let index = 0;
+  for (let val = 0; val < arr.length; val++) {
+    let newdiff = Math.abs(num - arr[val]);
+    if (newdiff < diff) {
+      diff = newdiff;
+      curr = arr[val];
+      index = val;
+    }
+  }
+  return index;
+};
+
+export const interpolateData = (value, data) => {
+  if (value <= data.x[0]) {
+    return data.y[0];
+  } else if (value >= data.x[data.x.length - 1]) {
+    return data.y[data.y.length - 1];
+  } else {
+    for (let i = 0; i < data.x.length - 1; i++) {
+      if (value === data.x[i]) {
+        return data.y[i];
+      } else if (data.x[i] < value < data.x[i + 1]) {
+        return (
+          ((value - data.x[i]) / (data.x[i + 1] - data.x[i])) *
+            (data.y[i + 1] - data.y[i]) +
+          data.y[i]
+        );
+      }
+    }
+    return "--";
+  }
+};
+
 export const relativeDate = (days) => {
   var result = new Date();
   result.setHours(0, 0, 0, 0);

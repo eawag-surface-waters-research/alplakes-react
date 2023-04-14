@@ -1,7 +1,11 @@
 .main .home .content {
   max-width: 1200px;
   margin: auto;
-  margin-top: 120px;
+  margin-top: 100px;
+}
+
+.main .home.dark .content {
+  color: white;
 }
 
 .main .home .content::-webkit-scrollbar {
@@ -68,11 +72,24 @@
   text-decoration: none;
 }
 
+.main .home.dark .content .products a {
+  color: white;
+  text-decoration: none;
+}
+
 .main .home .content .products .lake .image {
   width: 100%;
   display: inline-block;
   pointer-events: none;
   position: relative;
+}
+
+.main .home .content .products .lake .placeholder-image {
+  width: 100%;
+  border-radius: 12px;
+  aspect-ratio: 16 / 9;
+  background-color: rgb(204, 204, 204);
+  margin-bottom: 2px;
 }
 
 .main .home .content .products .lake .image img.core-image {
@@ -81,6 +98,7 @@
   aspect-ratio: 16 / 9;
   -webkit-transition: border-radius 1s, opacity 2s;
   transition: border-radius 1s, opacity 2s;
+  background-color: rgb(204, 204, 204);
   opacity: 1;
 }
 
@@ -147,6 +165,13 @@
   margin-top: 2px;
 }
 
+.main .home .content .products .lake .properties .left .placeholder-flag {
+  width: 22px;
+  margin-top: 2px;
+  height: 16.5px;
+  background-color: rgb(227, 227, 227);
+}
+
 .main .home .content .products .lake .properties .right {
   display: inline-block;
   width: calc(100% - 32px);
@@ -175,4 +200,19 @@
   display: inline-block;
   color: black;
   font-size: 16px;
+}
+
+.main .home .content .products .lake .properties .right .placeholder-name {
+  width: 60%;
+  height: 16.5px;
+  background-color: rgb(227, 227, 227);
+  border-radius: 4px;
+}
+
+.main .home .content .products .lake .properties .right .placeholder-location {
+  width: 80px;
+  height: 15px;
+  background-color: rgb(227, 227, 227);
+  margin-top: 5px;
+  border-radius: 4px;
 }

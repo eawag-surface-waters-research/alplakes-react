@@ -1,192 +1,16 @@
 import React, { Component } from "react";
 import axios from "axios";
 import NavBar from "../../components/navbar/navbar";
-import Basemap from "../../components/leaflet/basemap";
-import Loading from "../../components/loading/loading";
-import next from "../../img/next.svg";
-import settings_icon from "../../img/settings.svg";
-import tools_icon from "../../img/tools.png";
-import fullscreen_icon from "../../img/fullscreen.png";
-import normalscreen_icon from "../../img/normalscreen.png";
-import Translate from "../../translations.json";
+import Sidebar from "./sidebar";
+import Media from "./media";
 import CONFIG from "../../config.json";
 import {
-  formatDate,
-  formatTime,
   relativeDate,
   setCustomPeriod,
-  formatDateLong,
+  closestIndex,
+  interpolateData,
 } from "./functions";
 import "./lake.css";
-import Slider from "../../components/sliders/slider";
-
-class LakeSidebar extends Component {
-  state = {};
-  render() {
-    var { metadata, language } = this.props;
-    return (
-      <div className="info">
-        <div className="name">{metadata.name[language]}</div>
-        <div className="datetime">
-          <div className="time">{formatTime(this.props.datetime)}</div>
-          <div className="date">
-            {formatDateLong(this.props.datetime, Translate.month[language])}
-          </div>
-        </div>
-      </div>
-    );
-  }
-}
-
-class Media extends Component {
-  state = {
-    fullscreen: false,
-    settings: false,
-  };
-  toggleFullscreen = () => {
-    this.setState({ fullscreen: !this.state.fullscreen }, () => {
-      window.dispatchEvent(new Event("resize"));
-    });
-  };
-  toggleSettings = () => {
-    this.setState({ settings: !this.state.settings });
-  };
-  escFunction = (event) => {
-    if (event.key === "Escape") {
-      this.setState({ fullscreen: false }, () => {
-        window.dispatchEvent(new Event("resize"));
-      });
-    }
-  };
-  closeWindows = (event) => {
-    var { settings } = this.state;
-    if (settings) {
-      if (
-        !document.getElementById("settings").contains(event.target) &&
-        !document.getElementById("settings-icon").contains(event.target)
-      ) {
-        this.setState({ settings: false });
-      }
-    }
-  };
-  componentDidMount() {
-    document.addEventListener("keydown", this.escFunction, false);
-    document.addEventListener("click", this.closeWindows);
-  }
-  componentWillUnmount() {
-    document.removeEventListener("keydown", this.escFunction, false);
-    document.removeEventListener("click", this.closeWindows);
-  }
-  render() {
-    var {
-      period,
-      play,
-      togglePlay,
-      setDatetime,
-      datetime,
-      timestep,
-      nextStep,
-      timeout,
-      setTimeout,
-      setTimestep,
-    } = this.props;
-    var { fullscreen, settings } = this.state;
-    return (
-      <div
-        className={fullscreen ? "map-component fullscreen" : "map-component"}
-      >
-        <div className="viewport">
-          <Basemap {...this.props} />
-        </div>
-        <div className="gradient" />
-        <div
-          className={settings ? "settings-modal" : "settings-modal hidden"}
-          id="settings"
-        >
-          <table>
-            <tbody>
-              <tr>
-                <td></td>
-                <td>Step Interval</td>
-                <td className="settings-input">
-                  <select value={timestep} onChange={setTimestep}>
-                    <option value={600000}>10 Mins</option>
-                    <option value={3600000}>1 Hour</option>
-                    <option value={10800000}>3 Hours</option>
-                    <option value={86400000}>1 Day</option>
-                  </select>
-                </td>
-              </tr>
-              <tr>
-                <td></td>
-                <td>Animation Speed</td>
-                <td className="settings-input">
-                  <input type="number" value={timeout} onChange={setTimeout} />
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <div className="playback">
-          <div className="slider">
-            <Slider
-              period={period}
-              timestep={timestep}
-              datetime={datetime}
-              setDatetime={setDatetime}
-            />
-          </div>
-          <div className="play-controls">
-            <div className="play-pause clickable-button">
-              <span className="tooltip">Play</span>
-              <button onClick={togglePlay}>
-                <div
-                  className={
-                    play ? "play-pause-icon paused" : "play-pause-icon"
-                  }
-                ></div>
-              </button>
-            </div>
-            <div className="next-frame clickable-button">
-              <span className="tooltip">Next</span>
-              <button onClick={nextStep}>
-                <img src={next} alt="next" />
-              </button>
-            </div>
-            <div className="current-datetime">
-              {formatTime(this.props.datetime) + " "}
-              {formatDate(this.props.datetime)}
-            </div>
-            <div className="selected-period"></div>
-            <div className="fullscreen clickable-button">
-              <span className="tooltip right">
-                {fullscreen ? "Exit full screen" : "Full screen"}
-              </span>
-              <button onClick={this.toggleFullscreen}>
-                <img
-                  src={fullscreen ? normalscreen_icon : fullscreen_icon}
-                  alt="full screen"
-                />
-              </button>
-            </div>
-            <div className="settings clickable-button" id="settings-icon">
-              <span className="tooltip">Settings</span>
-              <button onClick={this.toggleSettings}>
-                <img src={settings_icon} alt="settings" />
-              </button>
-            </div>
-            <div className="tools clickable-button">
-              <span className="tooltip">Tools</span>
-              <button>
-                <img src={tools_icon} alt="tools" />
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-}
 
 class Lake extends Component {
   state = {
@@ -200,6 +24,25 @@ class Lake extends Component {
     timestep: 3600000,
     timeout: 100,
     error: "",
+    temperature: "__",
+    average: true,
+    simpleline: { x: [0, 1], y: [0, 0] },
+    updateSimpleline: false,
+  };
+
+  setTemperature = (temperature) => {
+    this.setState({ temperature });
+  };
+
+  setSimpleline = (simpleline) => {
+    var { datetime } = this.state;
+    var index = closestIndex(datetime, simpleline.x);
+    this.setState({
+      simpleline,
+      updateSimpleline: true,
+      temperature: Math.round(simpleline.y[index] * 10) / 10,
+      datetime: simpleline.x[index],
+    });
   };
 
   updated = () => {
@@ -219,7 +62,8 @@ class Lake extends Component {
   };
 
   nextStep = () => {
-    var { play, timestep, datetime, period, updates, layers } = this.state;
+    var { play, timestep, datetime, period, updates, layers, simpleline } =
+      this.state;
     if (!play) {
       if (datetime >= period[1]) {
         datetime = period[0];
@@ -228,7 +72,9 @@ class Lake extends Component {
             updates.push({ event: "updateLayer", id: layer.id });
           }
         }
-        this.setState({ datetime, updates });
+        let temperature =
+          Math.round(interpolateData(datetime, simpleline) * 10) / 10;
+        this.setState({ datetime, updates, temperature });
       } else {
         datetime = datetime + timestep;
         for (let layer of layers) {
@@ -236,25 +82,37 @@ class Lake extends Component {
             updates.push({ event: "updateLayer", id: layer.id });
           }
         }
-        this.setState({ datetime, updates });
+        let temperature =
+          Math.round(interpolateData(datetime, simpleline) * 10) / 10;
+        this.setState({ datetime, updates, temperature });
       }
     }
   };
 
   setDatetime = (event) => {
-    var { updates, layers } = this.state;
+    var { updates, layers, simpleline } = this.state;
     for (var layer of layers) {
       if (layer.active === "true") {
         updates.push({ event: "updateLayer", id: layer.id });
       }
     }
     var datetime = parseInt(event.target.getAttribute("alt"));
-    this.setState({ datetime, updates });
+    var temperature =
+      Math.round(interpolateData(datetime, simpleline) * 10) / 10;
+    this.setState({ datetime, updates, temperature });
   };
 
   componentDidUpdate() {
-    var { play, timestep, datetime, timeout, period, updates, layers } =
-      this.state;
+    var {
+      play,
+      timestep,
+      datetime,
+      timeout,
+      period,
+      updates,
+      layers,
+      simpleline,
+    } = this.state;
     if (play) {
       if (datetime >= period[1]) {
         datetime = period[0];
@@ -263,7 +121,9 @@ class Lake extends Component {
             updates.push({ event: "updateLayer", id: layer.id });
           }
         }
-        this.setState({ datetime, updates });
+        var temperature =
+          Math.round(interpolateData(datetime, simpleline) * 10) / 10;
+        this.setState({ datetime, updates, temperature });
       } else {
         setTimeout(() => {
           datetime = datetime + timestep;
@@ -272,7 +132,9 @@ class Lake extends Component {
               updates.push({ event: "updateLayer", id: layer.id });
             }
           }
-          this.setState({ datetime, updates });
+          var temperature =
+            Math.round(interpolateData(datetime, simpleline) * 10) / 10;
+          this.setState({ datetime, updates, temperature });
         }, timeout);
       }
     }
@@ -317,8 +179,7 @@ class Lake extends Component {
   render() {
     var { metadata } = this.state;
     var { language } = this.props;
-    if ("name" in metadata)
-      document.title = "Alplakes - " + metadata.name[language];
+    if ("name" in metadata) document.title = metadata.name[language];
     return (
       <div className="lake">
         <NavBar {...this.props} />
@@ -332,14 +193,14 @@ class Lake extends Component {
               nextStep={this.nextStep}
               setTimeout={this.setTimeout}
               setTimestep={this.setTimestep}
+              setTemperature={this.setTemperature}
+              setSimpleline={this.setSimpleline}
               {...this.state}
             />
           </div>
           <div className="secondary">
-            {this.state.loading ? (
-              <Loading marginTop={100} />
-            ) : (
-              <LakeSidebar language={language} {...this.state} />
+            {!this.state.loading && (
+              <Sidebar language={language} {...this.state} />
             )}
           </div>
         </div>

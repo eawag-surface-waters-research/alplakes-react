@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import axios from "axios";
 import { NavLink } from "react-router-dom";
 import NavBar from "../../components/navbar/navbar";
-import Loading from "../../components/loading/loading";
 import Translations from "../../translations.json";
 import swiss from "../../img/swiss.png";
 import italian from "../../img/italian.png";
@@ -14,6 +13,31 @@ import descending_icon from "../../img/descending.png";
 import { onMouseOver, onMouseOut } from "./functions";
 import CONFIG from "../../config.json";
 import "./home.css";
+
+class PlaceHolder extends Component {
+  render() {
+    var { number } = this.props;
+    console.log();
+    return (
+      <React.Fragment>
+        {[...Array(number).keys()].map((a) => (
+          <div className="lake" key={a}>
+            <div className="placeholder-image"></div>
+            <div className="properties">
+              <div className="left">
+                <div className="placeholder-flag" />
+              </div>
+              <div className="right">
+                <div className="placeholder-name" />
+                <div className="placeholder-location" />
+              </div>
+            </div>
+          </div>
+        ))}
+      </React.Fragment>
+    );
+  }
+}
 
 class Lake extends Component {
   render() {
@@ -54,12 +78,14 @@ class Lake extends Component {
             </div>
             <div className="right">
               <div className="name">{lake.name[language]}</div>
-              <div className="location">{lake.latitude}, {lake.longitude}</div>
+              <div className="location">
+                {lake.latitude}, {lake.longitude}
+              </div>
               <div className="parameters">
-                {desc[0]} <div className="stats">{lake.elevation}m</div>
-                {desc[1]} <div className="stats">{lake.area}km&#178;</div>
-                {desc[2]} <div className="stats">{lake.depth}m</div>
-                {desc[3]} <div className="stats">{lake.maxdepth}m.</div>
+                {desc[0]} <div className="stats">{lake.elevation} m</div>
+                {desc[1]} <div className="stats">{lake.area} km&#178;</div>
+                {desc[2]} <div className="stats">{lake.depth} m</div>
+                {desc[3]} <div className="stats">{lake.maxdepth} m.</div>
               </div>
             </div>
           </div>
@@ -74,6 +100,7 @@ class Home extends Component {
     list: [],
     sort: "sortby",
     ascending: false,
+    defaultNumber: 12,
   };
   setSort = (event) => {
     this.setState({ sort: event.target.value });
@@ -98,13 +125,13 @@ class Home extends Component {
   }
   render() {
     document.title = "Alplakes";
-    var { language } = this.props;
-    var { list, sort, ascending } = this.state;
+    var { language, dark } = this.props;
+    var { list, sort, ascending, defaultNumber } = this.state;
     if (sort !== "sortby") {
       list = this.sortList(list, sort, ascending);
     }
     return (
-      <div className="home">
+      <div className={dark ? "home dark" : "home"}>
         <NavBar {...this.props} />
         <div className="content">
           <div className="sorting">
@@ -132,7 +159,7 @@ class Home extends Component {
           </div>
           <div className="products">
             {list.length === 0 ? (
-              <Loading marginTop={20} dark={true} />
+              <PlaceHolder number={defaultNumber} />
             ) : (
               list.map((lake) => (
                 <Lake lake={lake} language={language} key={lake.key} />

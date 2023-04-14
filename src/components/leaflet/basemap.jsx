@@ -13,7 +13,15 @@ class Basemap extends Component {
     return list.find((l) => l[parameter] === value);
   };
   async componentDidUpdate() {
-    const { updates, updated, metadata, layers, period, datetime } = this.props;
+    const {
+      updates,
+      updated,
+      metadata,
+      layers,
+      period,
+      datetime,
+      setSimpleline,
+    } = this.props;
     if (updates.length > 0) {
       for (var update of updates) {
         if (update.event === "bounds") {
@@ -25,7 +33,8 @@ class Basemap extends Component {
             this.dataStore,
             this.layerStore,
             this.map,
-            datetime
+            datetime,
+            setSimpleline
           );
         } else if (update.event === "updateLayer") {
           updateLayer(

@@ -12,10 +12,10 @@ class NavBar extends Component {
     var selected = "lakes";
     if (window.location.href.includes("/api")) selected = "api";
     if (window.location.href.includes("/about")) selected = "about";
-    var { language, languages, setLanguage } = this.props;
+    var { language, languages, setLanguage, dark } = this.props;
     return (
       <React.Fragment>
-        <div className="navbar">
+        <div className={dark ? "navbar dark" : "navbar"}>
           <NavLink to="/">
             <img src={textLogo} className="icon" alt="Alplakes logo" />
           </NavLink>
