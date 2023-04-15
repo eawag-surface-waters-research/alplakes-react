@@ -30,7 +30,7 @@
 
 .navbar.dark .desktop-nav a {
   text-decoration: none;
-  color: white;
+  color: #e5e5e5;
 }
 
 .navbar .desktop-nav .nav-item {
@@ -52,7 +52,7 @@
 }
 
 .navbar.dark .desktop-nav .nav-item.active {
-  border-top: 3px solid white;
+  border-top: 3px solid #e5e5e5;
 }
 
 .navbar .desktop-nav .nav-item img {
@@ -86,7 +86,7 @@
 }
 
 .navbar.dark .language select {
-  color: white;
-  border: 1px solid white;
+  color: #e5e5e5;
+  border: 1px solid #e5e5e5;
   background-color: rgb(15, 15, 15);
 }

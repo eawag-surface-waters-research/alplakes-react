@@ -1,16 +1,13 @@
 import React, { Component } from "react";
 import NavBar from "../../components/navbar/navbar";
+import "./about.css";
 
 class About extends Component {
   render() {
-    var { language } = this.props;
     return (
       <div className="main">
         <NavBar {...this.props} />
-        <div className="primary">
-          <div className="content"></div>
-        </div>
-        <div className="secondary"></div>
+        <div className="about">This page is under construction...</div>
       </div>
     );
   }

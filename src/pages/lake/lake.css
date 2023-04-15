@@ -233,7 +233,13 @@
 }
 
 .main .lake .content .secondary .info {
-  margin-top: -15px;
+  background-color: rgba(0, 0, 0, 0.05);
+  padding: 15px 22px;
+  border-radius: 12px;
+}
+
+.main.dark .lake .content .secondary .info {
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
 .main .lake .content .secondary .info .name {
@@ -248,7 +254,7 @@
 }
 
 .main .lake .content .secondary .info .data .temperature {
-  width: 200px;
+  width: 176px;
   display: inline-block;
 }
 
@@ -271,7 +277,7 @@
 }
 
 .main .lake .content .secondary .info .data .datetime {
-  width: 200px;
+  width: 176px;
   display: inline-block;
   text-align: right;
 }
@@ -287,20 +293,17 @@
 .main .lake .content .secondary .info .graph {
   width: 100%;
   height: 120px;
-  background-color: #f2f2f2;
   border-radius: 12px;
   position: relative;
-}
-
-.main.dark .lake .content .secondary .info .graph {
-  background-color: rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+  margin-bottom: 10px;
 }
 
 .main .lake .content .secondary .info .graph .graph-parameter {
   position: absolute;
-  bottom: 0;
-  color: white;
-  font-size: 26px;
+  bottom: -12px;
+  color: #b6afaf;
+  font-size: 18px;
   padding: 12px;
   text-align: center;
   width: 100%;
@@ -308,7 +311,29 @@
 }
 
 .main.dark .lake .content .secondary .info .graph .graph-parameter {
-  color: #4c4c4c;
+  color: rgb(68, 68, 68);
+}
+
+.main .lake .content .secondary .info .graph .period {
+  position: absolute;
+  top: 0;
+  width: calc(100% - 20px);
+  left: 10px;
+  color: #b6afaf;
+}
+
+.main.dark .lake .content .secondary .info .graph .period {
+  color: rgb(68, 68, 68);
+}
+
+.main .lake .content .secondary .info .graph .period .start {
+  display: inline-block;
+}
+
+.main .lake .content .secondary .info .graph .period .end {
+  text-align: right;
+  float: right;
+  display: inline-block;
 }
 
 .main .lake .content .secondary .error {
@@ -324,4 +349,96 @@
   font-weight: 500;
   padding: 20px 0;
   font-size: 40px;
+}
+
+.main .lake .content .secondary .menu {
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 12px;
+  margin-top: 24px;
+  position: relative;
+  padding: 12px;
+  box-sizing: border-box;
+}
+
+.main.dark .lake .content .secondary .menu {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.main .lake .content .secondary .menu .loaded {
+  padding: 12px 0px 25px;
+  margin: 6px;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.main .lake .content .secondary .menu .loaded .app {
+  display: inline-block;
+  font-size: 50px;
+  border: 2px solid #e5e5e5;
+  border-radius: 12px;
+  margin: 0 12px;
+  width: 60px;
+  height: 60px;
+  text-align: center;
+  color: #e5e5e5;
+  position: relative;
+}
+
+.main.dark .lake .content .secondary .menu .loaded .app {
+  border: 2px solid #545454;
+  color: #545454;
+}
+
+.main .lake .content .secondary .menu .loaded .app.filled {
+  background-color: #3a4251;
+  width: 62px;
+  height: 62px;
+  border: none;
+  vertical-align: top;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.main .lake .content .secondary .menu .loaded .app.filled:active {
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0.05);
+  margin-top: 1px;
+  margin-bottom: -1px;
+}
+
+.main .lake .content .secondary .menu .loaded .app .remove {
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  line-height: 10px;
+  padding: 2px;
+  background-color: #b6afaf;
+  border-radius: 22px;
+  text-align: center;
+  width: 20px;
+  height: 20px;
+  box-sizing: border-box;
+  font-size: 44px;
+}
+
+.main .lake .content .secondary .menu .loaded .app img {
+  padding-top: 9px;
+  max-width: 38px;
+  max-height: 44px;
+}
+
+
+.main .lake .content .secondary .menu .loaded .app span {
+  position: absolute;
+  bottom: -22px;
+  font-size: 14px;
+  left: -10px;
+  width: 84px;
+  text-align: center;
+  color: black;
+}
+
+.main.dark .lake .content .secondary .menu .loaded .app span {
+  color: #e5e5e5;
 }

@@ -10,7 +10,7 @@
 }
 
 .main.dark {
-  color: white;
+  color: #e5e5e5;
 }
 
 .background-color {
@@ -71,14 +71,14 @@
 }
 
 input:checked+.dark-slider {
-  border: 1px solid white;
+  border: 1px solid #e5e5e5;
 }
 
 input:checked+.dark-slider:before {
   -webkit-transform: translateX(11px);
   -ms-transform: translateX(11px);
   transform: translateX(11px);
-  background-color: white;
+  background-color: #e5e5e5;
 }
 
 .dark-slider.round {
