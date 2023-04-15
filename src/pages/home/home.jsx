@@ -10,6 +10,8 @@ import threed_icon from "../../img/threed-icon.png";
 import satellite_icon from "../../img/satellite-icon.png";
 import ascending_icon from "../../img/ascending.png";
 import descending_icon from "../../img/descending.png";
+import ascending_icon_dark from "../../img/ascending_dark.png";
+import descending_icon_dark from "../../img/descending_dark.png";
 import { onMouseOver, onMouseOut } from "./functions";
 import CONFIG from "../../config.json";
 import "./home.css";
@@ -152,7 +154,15 @@ class Home extends Component {
             </select>
             <button onClick={this.toggleSort} title="Sort Order">
               <img
-                src={ascending ? ascending_icon : descending_icon}
+                src={
+                  ascending
+                    ? dark
+                      ? ascending_icon_dark
+                      : ascending_icon
+                    : dark
+                    ? descending_icon_dark
+                    : descending_icon
+                }
                 alt="Sort"
               />
             </button>

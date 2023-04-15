@@ -1,10 +1,14 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 import Translate from "../../translations.json";
-import textLogo from "../../img/text-logo-black.png";
+import lightLogo from "../../img/text-logo-black.png";
+import darkLogo from "../../img/text-logo-white.png";
 import lakes_img from "../../img/lakes.png";
 import api_img from "../../img/api.png";
 import about_img from "../../img/about.png";
+import lakes_img_dark from "../../img/lakes_dark.png";
+import api_img_dark from "../../img/api_dark.png";
+import about_img_dark from "../../img/about_dark.png";
 import "./navbar.css";
 
 class NavBar extends Component {
@@ -17,28 +21,32 @@ class NavBar extends Component {
       <React.Fragment>
         <div className={dark ? "navbar dark" : "navbar"}>
           <NavLink to="/">
-            <img src={textLogo} className="icon" alt="Alplakes logo" />
+            <img
+              src={dark ? darkLogo : lightLogo}
+              className="icon"
+              alt="Alplakes logo"
+            />
           </NavLink>
           <div className="desktop-nav">
             <NavLink
               className={selected === "lakes" ? "nav-item active" : "nav-item"}
               to="/"
             >
-              <img alt="Lakes" src={lakes_img} />
+              <img alt="Lakes" src={dark ? lakes_img_dark : lakes_img} />
               <div className="nav-text">{Translate.lakes[language]}</div>
             </NavLink>
             <NavLink
               className={selected === "api" ? "nav-item active" : "nav-item"}
               to="/api"
             >
-              <img alt="API" src={api_img} />
+              <img alt="API" src={dark ? api_img_dark : api_img} />
               <div className="nav-text">API</div>
             </NavLink>
             <NavLink
               className={selected === "about" ? "nav-item active" : "nav-item"}
               to="/about"
             >
-              <img alt="About" src={about_img} />
+              <img alt="About" src={dark ? about_img_dark : about_img} />
               <div className="nav-text">{Translate.about[language]}</div>
             </NavLink>
             <div className="language">

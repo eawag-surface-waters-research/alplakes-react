@@ -1,140 +1,146 @@
 {
-    "search": {
-        "EN": "Search",
-        "DE": "Suchen",
-        "FR": "Recherche",
-        "IT": "Ricerca"
-    },
-    "lakes": {
-        "EN": "Lakes",
-        "DE": "Seen",
-        "FR": "Lacs",
-        "IT": "Laghi"
-    },
-    "about": {
-        "EN": "About",
-        "DE": "Über",
-        "FR": "À propos",
-        "IT": "Sopra"
-    },
-    "month": {
-        "EN": [
-            "January",
-            "February",
-            "March",
-            "April",
-            "May",
-            "June",
-            "July",
-            "August",
-            "September",
-            "October",
-            "November",
-            "December"
-        ],
-        "DE": [
-            "Januar",
-            "Februar",
-            "März",
-            "April",
-            "Mai",
-            "Juni",
-            "Juli",
-            "August",
-            "September",
-            "Oktober",
-            "November",
-            "Dezember"
-        ],
-        "FR": [
-            "janvier",
-            "février",
-            "mars",
-            "avril",
-            "mai",
-            "juin",
-            "juillet",
-            "août",
-            "septembre",
-            "octobre",
-            "novembre",
-            "décembre"
-        ],
-        "IT": [
-            "gennaio",
-            "febbraio",
-            "marzo",
-            "aprile",
-            "maggio",
-            "giugno",
-            "luglio",
-            "agosto",
-            "settembre",
-            "ottobre",
-            "novembre",
-            "dicembre"
-        ]
-    },
-    "descriptions": {
-        "EN": [
-            "Situated ",
-            " above sea level with a surface area of ",
-            ", an average depth of ",
-            ", and a maximum depth of "
-        ],
-        "DE": [
-            "",
-            " über dem Meeresspiegel gelegen, mit einer Fläche von ",
-            ", einer durchschnittlichen Tiefe von ",
-            " und einer maximalen Tiefe von "
-        ],
-        "FR": [
-            "Situé à ",
-            " d'altitude avec une superficie de ",
-            ", une profondeur moyenne de ",
-            " et une profondeur maximale de "
-        ],
-        "IT": [
-            "Situato a ",
-            " sul livello del mare con una superficie di ",
-            ", una profondità media di ",
-            " e una profondità massima di "
-        ]
-    },
-    "sortby": {
-        "EN": "Sort By",
-        "DE": "Sortieren nach",
-        "FR": "Trier par",
-        "IT": "Ordina per"
-    },
-    "elevation": {
-        "EN": "Elevation",
-        "DE": "Elevation",
-        "FR": "Élévation",
-        "IT": "Elevazione"
-    },
-    "area": {
-        "EN": "Surface Area",
-        "DE": "Oberfläche",
-        "FR": "Superficie",
-        "IT": "Superficie"
-    },
-    "depth": {
-        "EN": "Average Depth",
-        "DE": "Durchschnittliche Tiefe",
-        "FR": "Profondeur moyenne",
-        "IT": "Profondità media"
-    },
-    "maxdepth": {
-        "EN": "Maximum Depth",
-        "DE": "Maximale Tiefe",
-        "FR": "Profondeur maximale",
-        "IT": "Profondità massima"
-    },
-    "demo": {
-        "EN": "",
-        "DE": "",
-        "FR": "",
-        "IT": ""
-    }
+  "search": {
+    "EN": "Search",
+    "DE": "Suchen",
+    "FR": "Recherche",
+    "IT": "Ricerca"
+  },
+  "lakes": {
+    "EN": "Lakes",
+    "DE": "Seen",
+    "FR": "Lacs",
+    "IT": "Laghi"
+  },
+  "about": {
+    "EN": "About",
+    "DE": "Über",
+    "FR": "À propos",
+    "IT": "Sopra"
+  },
+  "month": {
+    "EN": [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December"
+    ],
+    "DE": [
+      "Januar",
+      "Februar",
+      "März",
+      "April",
+      "Mai",
+      "Juni",
+      "Juli",
+      "August",
+      "September",
+      "Oktober",
+      "November",
+      "Dezember"
+    ],
+    "FR": [
+      "janvier",
+      "février",
+      "mars",
+      "avril",
+      "mai",
+      "juin",
+      "juillet",
+      "août",
+      "septembre",
+      "octobre",
+      "novembre",
+      "décembre"
+    ],
+    "IT": [
+      "gennaio",
+      "febbraio",
+      "marzo",
+      "aprile",
+      "maggio",
+      "giugno",
+      "luglio",
+      "agosto",
+      "settembre",
+      "ottobre",
+      "novembre",
+      "dicembre"
+    ]
+  },
+  "descriptions": {
+    "EN": [
+      "Situated ",
+      " above sea level with a surface area of ",
+      ", an average depth of ",
+      ", and a maximum depth of "
+    ],
+    "DE": [
+      "",
+      " über dem Meeresspiegel gelegen, mit einer Fläche von ",
+      ", einer durchschnittlichen Tiefe von ",
+      " und einer maximalen Tiefe von "
+    ],
+    "FR": [
+      "Situé à ",
+      " d'altitude avec une superficie de ",
+      ", une profondeur moyenne de ",
+      " et une profondeur maximale de "
+    ],
+    "IT": [
+      "Situato a ",
+      " sul livello del mare con una superficie di ",
+      ", una profondità media di ",
+      " e una profondità massima di "
+    ]
+  },
+  "sortby": {
+    "EN": "Sort By",
+    "DE": "Sortieren nach",
+    "FR": "Trier par",
+    "IT": "Ordina per"
+  },
+  "elevation": {
+    "EN": "Elevation",
+    "DE": "Elevation",
+    "FR": "Élévation",
+    "IT": "Elevazione"
+  },
+  "area": {
+    "EN": "Surface Area",
+    "DE": "Oberfläche",
+    "FR": "Superficie",
+    "IT": "Superficie"
+  },
+  "depth": {
+    "EN": "Average Depth",
+    "DE": "Durchschnittliche Tiefe",
+    "FR": "Profondeur moyenne",
+    "IT": "Profondità media"
+  },
+  "maxdepth": {
+    "EN": "Maximum Depth",
+    "DE": "Maximale Tiefe",
+    "FR": "Profondeur maximale",
+    "IT": "Profondità massima"
+  },
+  "watertemperature": {
+    "EN": "Water temperature",
+    "DE": "Wassertemperatur",
+    "FR": "Température de l'eau",
+    "IT": "Temperatura dell'acqua"
+  },
+  "demo": {
+    "EN": "",
+    "DE": "",
+    "FR": "",
+    "IT": ""
+  }
 }

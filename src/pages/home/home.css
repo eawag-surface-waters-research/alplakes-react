@@ -31,8 +31,21 @@
   cursor: pointer;
 }
 
+.main.dark .home .content .sorting select {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+.main.dark .home .content .sorting option {
+  background-color: #333333;
+}
+
 .main .home .content .sorting select:hover {
   background-color: rgba(0, 0, 0, 0.1);
+}
+
+.main.dark .home .content .sorting select:hover {
+  background-color: rgba(255, 255, 255, 0.15);
 }
 
 .main .home .content .sorting button {
@@ -46,8 +59,17 @@
   height: 30px;
 }
 
+.main.dark .home .content .sorting button {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
 .main .home .content .sorting button:hover {
   background-color: rgba(0, 0, 0, 0.1);
+}
+
+.main.dark .home .content .sorting button:hover {
+  background-color: rgba(255, 255, 255, 0.15);
 }
 
 .main .home .content .sorting button img {
@@ -196,11 +218,21 @@
   margin-top: 2px;
 }
 
+.main.dark .home .content .products .lake .properties .parameters {
+  color: #c1c1c1;
+}
+
 .main .home .content .products .lake .properties .parameters .stats {
   display: inline-block;
   color: black;
   font-size: 16px;
 }
+
+.main.dark .home .content .products .lake .properties .parameters .stats {
+  color: white;
+}
+
+
 
 .main .home .content .products .lake .properties .right .placeholder-name {
   width: 60%;

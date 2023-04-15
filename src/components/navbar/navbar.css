@@ -13,7 +13,7 @@
 
 .navbar img.icon {
   padding: 24px 24px;
-  height: 24px;
+  height: 36px;
 }
 
 .navbar .desktop-nav {
@@ -62,7 +62,7 @@
 
 .navbar .desktop-nav .nav-item .nav-text {
   display: inline-block;
-  padding: 2px 0px 2px 12px;
+  padding: 6px 0px 2px 12px;
   vertical-align: top;
 }
 
@@ -88,4 +88,5 @@
 .navbar.dark .language select {
   color: white;
   border: 1px solid white;
+  background-color: rgb(15, 15, 15);
 }

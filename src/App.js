@@ -9,11 +9,22 @@ import "./App.css";
 class App extends Component {
   state = {
     languages: ["EN", "DE", "FR", "IT"],
-    language: "EN",
-    dark: false,
+    language:
+      JSON.parse(localStorage.getItem("language")) === null
+        ? "EN"
+        : JSON.parse(localStorage.getItem("language")),
+    dark:
+      JSON.parse(localStorage.getItem("dark")) === null
+        ? false
+        : JSON.parse(localStorage.getItem("dark")),
   };
   setLanguage = (event) => {
+    localStorage.setItem("language", JSON.stringify(event.target.value));
     this.setState({ language: event.target.value });
+  };
+  toggleDark = () => {
+    localStorage.setItem("dark", JSON.stringify(!this.state.dark));
+    this.setState({ dark: !this.state.dark });
   };
   componentDidMount() {
     var url = window.location.href;
@@ -32,6 +43,13 @@ class App extends Component {
           <div
             className={dark ? "background-color dark" : "background-color"}
           />
+          <label
+            className="dark-switch"
+            title={dark ? "Switch to light theme" : "Switch to dark theme"}
+          >
+            <input type="checkbox" onChange={this.toggleDark} checked={dark} />
+            <span className="dark-slider round"></span>
+          </label>
           <BrowserRouter>
             <Routes>
               <Route

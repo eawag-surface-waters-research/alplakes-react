@@ -14,6 +14,7 @@ import "./lake.css";
 
 class Lake extends Component {
   state = {
+    lake_id: "",
     datetime: Date.now(),
     period: [relativeDate(-2).getTime(), relativeDate(3).getTime()],
     loading: true,
@@ -24,7 +25,7 @@ class Lake extends Component {
     timestep: 3600000,
     timeout: 100,
     error: "",
-    temperature: "__",
+    temperature: 0,
     average: true,
     simpleline: { x: [0, 1], y: [0, 0] },
     updateSimpleline: false,
@@ -160,7 +161,7 @@ class Lake extends Component {
         }
       } catch (e) {
         console.error(e);
-        this.setState({ error: "api", loading: false });
+        this.setState({ error: "api", loading: false, lake_id });
       }
 
       this.setState({
@@ -169,16 +170,17 @@ class Lake extends Component {
         layers: metadata.layers,
         updates,
         period,
+        lake_id,
       });
     } catch (e) {
       console.error(e);
-      this.setState({ error: "name" });
+      this.setState({ error: "name", lake_id });
     }
   }
 
   render() {
-    var { metadata } = this.state;
-    var { language } = this.props;
+    var { metadata, lake_id } = this.state;
+    var { language, dark } = this.props;
     if ("name" in metadata) document.title = metadata.name[language];
     return (
       <div className="lake">
@@ -200,7 +202,14 @@ class Lake extends Component {
           </div>
           <div className="secondary">
             {!this.state.loading && (
-              <Sidebar language={language} {...this.state} />
+              <Sidebar language={language} {...this.state} dark={dark} />
+            )}
+            {this.state.error === "name" && (
+              <div className="error">
+                <div className="error-code">404</div>
+                Sorry the lake id
+                <div className="error-id">{lake_id} </div> could not be found.
+              </div>
             )}
           </div>
         </div>
