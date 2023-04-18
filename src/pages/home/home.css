@@ -64,6 +64,10 @@
   color: white;
 }
 
+.main .home .content .sorting button:active {
+  transform: scale(1.2);
+}
+
 .main .home .content .sorting button:hover {
   background-color: rgba(0, 0, 0, 0.1);
 }

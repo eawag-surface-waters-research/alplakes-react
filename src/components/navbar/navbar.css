@@ -56,13 +56,13 @@
 }
 
 .navbar .desktop-nav .nav-item img {
-  height: 24px;
+  height: 18px;
   margin-bottom: 2px;
 }
 
 .navbar .desktop-nav .nav-item .nav-text {
   display: inline-block;
-  padding: 6px 0px 2px 12px;
+  padding: 1px 0px 2px 12px;
   vertical-align: top;
 }
 
@@ -77,16 +77,28 @@
 }
 
 .navbar .language select {
-  padding: 4px;
+  padding: 5px;
   border-radius: 8px;
   color: black;
-  background-color: transparent;
-  border: 1px solid black;
+  background-color: rgba(0, 0, 0, 0.05);
+  border: none;
   cursor: pointer;
+  font-size: 14px
+}
+
+.navbar .language select:hover {
+  background-color: rgba(0, 0, 0, 0.1)
 }
 
 .navbar.dark .language select {
   color: #e5e5e5;
-  border: 1px solid #e5e5e5;
-  background-color: rgb(15, 15, 15);
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.navbar.dark .language option {
+  background-color: #333333;
+}
+
+.navbar.dark .language select:hover {
+  background-color: rgba(255, 255, 255, 0.15);
 }

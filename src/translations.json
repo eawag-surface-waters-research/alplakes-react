@@ -137,6 +137,18 @@
     "FR": "Température de l'eau",
     "IT": "Temperatura dell'acqua"
   },
+  "temperature": {
+    "EN": "Temperature",
+    "DE": "Temperatur",
+    "FR": "Température",
+    "IT": "Temperatura"
+  },
+  "velocity": {
+    "EN": "Velocity",
+    "DE": "Schnelle",
+    "FR": "Rapidité",
+    "IT": "Velocità"
+  },
   "demo": {
     "EN": "",
     "DE": "",

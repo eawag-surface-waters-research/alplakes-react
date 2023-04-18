@@ -6,6 +6,49 @@ import temperature_icon from "../../img/temperature.png";
 import velocity_icon from "../../img/velocity.png";
 import "./lake.css";
 
+class ActiveApps extends Component {
+  state = {};
+  render() {
+    var { language, layers } = this.props;
+    var extra = Math.max(1, 4 - layers.filter((l) => l.active).length);
+    var images = { temperature: temperature_icon, velocity: velocity_icon };
+    return (
+      <React.Fragment>
+        <div className="loaded">
+          {layers
+            .filter((l) => l.active)
+            .map((layer) => (
+              <div className={"app filled " + layer.type} key={layer.id}>
+                <div className="remove" title="Remove layer">
+                  -
+                </div>
+                <img
+                  src={images[layer.properties.parameter]}
+                  alt="layer.properites.parameter"
+                />
+                <span>
+                  {Translate[layer.properties.parameter][language]}
+                  <div className="type">{layer.properties.model}</div>
+                </span>
+              </div>
+            ))}
+          {[...Array(extra).keys()].map((p) => (
+            <div className="app" title="Add layer" key={p}>
+              +
+            </div>
+          ))}
+        </div>
+      </React.Fragment>
+    );
+  }
+}
+
+class Selection extends Component {
+  render() {
+    return <div className="selection-inner"></div>;
+  }
+}
+
 class Sidebar extends Component {
   state = {};
   render() {
@@ -18,7 +61,9 @@ class Sidebar extends Component {
       simpleline,
       dark,
       period,
+      layers,
     } = this.props;
+    console.log(layers);
     return (
       <React.Fragment>
         <div className="info">
@@ -68,30 +113,11 @@ class Sidebar extends Component {
           </div>
         </div>
         <div className="menu">
-          <div className="loaded">
-            <div className="app filled">
-              <div className="remove" title="Remove layer">
-                -
-              </div>
-              <img src={temperature_icon} alt="temperature" />
-              <span>Temperature</span>
-            </div>
-            <div className="app filled">
-              <div className="remove" title="Remove layer">
-                -
-              </div>
-              <img src={velocity_icon} alt="velocity" />
-              <span>Velocity</span>
-            </div>
-            <div className="app" title="Add layer">
-              +
-            </div>
-            <div className="app" title="Add layer">
-              +
-            </div>
-          </div>
+          <ActiveApps layers={layers} language={language} />
         </div>
-        <div className="selection"></div>
+        <div className="selection">
+          <Selection />
+        </div>
       </React.Fragment>
     );
   }
