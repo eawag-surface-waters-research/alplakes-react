@@ -113,6 +113,11 @@ export const updateLayer = async (
     );
 };
 
+export const removeLayer = (layer, layerStore, map) => {
+  if (layer.type === "alplakes_hydrodynamic")
+    removeAlplakesHydrodynamic(layer, layerStore, map);
+};
+
 const addAlplakesHydrodynamic = async (
   layer,
   period,
@@ -320,4 +325,15 @@ const updateAlplakesHydrodynamic = (
   }
   var leaflet_layer = getNested(layerStore, path);
   leaflet_layer.update(newData, options);
+};
+
+const removeAlplakesHydrodynamic = (layer, layerStore, map) => {
+  var path = [
+    layer.type,
+    layer.properties.model,
+    layer.properties.lake,
+    layer.properties.parameter,
+  ];
+  var leaflet_layer = getNested(layerStore, path);
+  map.removeLayer(leaflet_layer);
 };

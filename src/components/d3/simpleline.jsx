@@ -30,7 +30,7 @@ class SimpleLine extends Component {
       { x: 2, y: 1 },
     ];
     var div = d3.select("#simpleline");
-    var margin = { top: 10, right: 10, bottom: 10, left: 10 };
+    var margin = { top: 10, right: 10, bottom: 20, left: 40 };
     this.width =
       div.node().getBoundingClientRect().width - margin.left - margin.right;
     this.height =
@@ -45,7 +45,7 @@ class SimpleLine extends Component {
       .append("g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    var x = d3.scaleLinear().range([0, this.width]);
+    var x = d3.scaleTime().range([0, this.width]);
     var y = d3.scaleLinear().range([this.height, 0]);
 
     x.domain([0, 2]);
@@ -116,6 +116,22 @@ class SimpleLine extends Component {
 
     x.domain([xMin, xMax]);
     y.domain([yMin, yMax]);
+
+    this.yAxis = this.svg
+      .append("g")
+      .call(
+        d3
+          .axisLeft(y)
+          .ticks(2)
+          .tickFormat((d) => d + "°C")
+      )
+      .call((g) => g.select(".domain").remove());
+
+    this.xAxis = this.svg
+      .append("g")
+      .attr("transform", "translate(0," + this.height + ")")
+      .call(d3.axisBottom(x).ticks(2))
+      .call((g) => g.select(".domain").remove());
 
     var index = this.closestIndex(datetime, simpleline.x);
 

@@ -29,6 +29,11 @@ class Lake extends Component {
     average: true,
     simpleline: { x: [0, 1], y: [0, 0] },
     updateSimpleline: false,
+    selection: "add",
+  };
+
+  setSelection = (selection) => {
+    this.setState({ selection });
   };
 
   setTemperature = (temperature) => {
@@ -69,7 +74,7 @@ class Lake extends Component {
       if (datetime >= period[1]) {
         datetime = period[0];
         for (let layer of layers) {
-          if (layer.active === "true") {
+          if (layer.active) {
             updates.push({ event: "updateLayer", id: layer.id });
           }
         }
@@ -79,7 +84,7 @@ class Lake extends Component {
       } else {
         datetime = datetime + timestep;
         for (let layer of layers) {
-          if (layer.active === "true") {
+          if (layer.active) {
             updates.push({ event: "updateLayer", id: layer.id });
           }
         }
@@ -90,10 +95,48 @@ class Lake extends Component {
     }
   };
 
+  previousStep = () => {
+    var { play, timestep, datetime, period, updates, layers, simpleline } =
+      this.state;
+    if (!play) {
+      if (datetime <= period[0]) {
+        datetime = period[1];
+        for (let layer of layers) {
+          if (layer.active) {
+            updates.push({ event: "updateLayer", id: layer.id });
+          }
+        }
+        let temperature =
+          Math.round(interpolateData(datetime, simpleline) * 10) / 10;
+        this.setState({ datetime, updates, temperature });
+      } else {
+        datetime = datetime - timestep;
+        for (let layer of layers) {
+          if (layer.active) {
+            updates.push({ event: "updateLayer", id: layer.id });
+          }
+        }
+        let temperature =
+          Math.round(interpolateData(datetime, simpleline) * 10) / 10;
+        this.setState({ datetime, updates, temperature });
+      }
+    }
+  };
+
+  keyDown = (event) => {
+    if (event.key === " ") {
+      this.togglePlay();
+    } else if (event.key === "ArrowRight") {
+      this.nextStep();
+    } else if (event.key == "ArrowLeft") {
+      this.previousStep();
+    }
+  };
+
   setDatetime = (event) => {
     var { updates, layers, simpleline } = this.state;
     for (var layer of layers) {
-      if (layer.active === "true") {
+      if (layer.active) {
         updates.push({ event: "updateLayer", id: layer.id });
       }
     }
@@ -101,6 +144,16 @@ class Lake extends Component {
     var temperature =
       Math.round(interpolateData(datetime, simpleline) * 10) / 10;
     this.setState({ datetime, updates, temperature });
+  };
+
+  removeLayer = (id) => {
+    var { layers } = this.state;
+    var layer = layers.find((l) => l.id === id);
+    if (layer.active) {
+      layer.active = false;
+      var updates = [{ event: "removeLayer", id: id }];
+      this.setState({ layers, updates });
+    }
   };
 
   componentDidUpdate() {
@@ -118,7 +171,7 @@ class Lake extends Component {
       if (datetime >= period[1]) {
         datetime = period[0];
         for (var layer of layers) {
-          if (layer.active === "true") {
+          if (layer.active) {
             updates.push({ event: "updateLayer", id: layer.id });
           }
         }
@@ -129,7 +182,7 @@ class Lake extends Component {
         setTimeout(() => {
           datetime = datetime + timestep;
           for (var layer of layers) {
-            if (layer.active === "true") {
+            if (layer.active) {
               updates.push({ event: "updateLayer", id: layer.id });
             }
           }
@@ -142,6 +195,7 @@ class Lake extends Component {
   }
 
   async componentDidMount() {
+    document.addEventListener("keydown", this.keyDown, false);
     var { period } = this.state;
     const url = window.location.href.split("/");
     const lake_id = url[url.length - 1].split("?")[0];
@@ -151,7 +205,8 @@ class Lake extends Component {
       );
       var updates = [{ event: "bounds" }];
       for (var layer of metadata.layers) {
-        if (layer.active === "true") {
+        if (layer.active) {
+          layer.active = true;
           updates.push({ event: "addLayer", id: layer.id });
         }
       }
@@ -178,6 +233,10 @@ class Lake extends Component {
     }
   }
 
+  componentWillUnmount() {
+    document.removeEventListener("keydown", this.keyDown, false);
+  }
+
   render() {
     var { metadata, lake_id } = this.state;
     var { language, dark } = this.props;
@@ -202,7 +261,13 @@ class Lake extends Component {
           </div>
           <div className="secondary">
             {!this.state.loading && (
-              <Sidebar language={language} {...this.state} dark={dark} />
+              <Sidebar
+                language={language}
+                {...this.state}
+                dark={dark}
+                removeLayer={this.removeLayer}
+                setSelection={this.setSelection}
+              />
             )}
             {this.state.error === "name" && (
               <div className="error">

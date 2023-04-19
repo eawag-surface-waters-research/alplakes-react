@@ -114,7 +114,7 @@ class Media extends Component {
             </div>
             <div className="play-controls">
               <div className="play-pause clickable-button">
-                <span className="tooltip">Play</span>
+                <span className="tooltip">Play (Spacebar)</span>
                 <button onClick={togglePlay}>
                   <div
                     className={
@@ -124,7 +124,7 @@ class Media extends Component {
                 </button>
               </div>
               <div className="next-frame clickable-button">
-                <span className="tooltip">Next</span>
+                <span className="tooltip">Next (Right Arrow)</span>
                 <button onClick={nextStep}>
                   <img src={next} alt="next" />
                 </button>

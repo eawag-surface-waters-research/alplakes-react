@@ -8,8 +8,16 @@ import "./lake.css";
 
 class ActiveApps extends Component {
   state = {};
+  test = () => {
+    console.log("Firing");
+  };
+  removeLayer = (event) => {
+    event.stopPropagation();
+    var { removeLayer } = this.props;
+    removeLayer(parseInt(event.target.getAttribute("id")));
+  };
   render() {
-    var { language, layers } = this.props;
+    var { language, layers, setSelection } = this.props;
     var extra = Math.max(1, 4 - layers.filter((l) => l.active).length);
     var images = { temperature: temperature_icon, velocity: velocity_icon };
     return (
@@ -18,8 +26,17 @@ class ActiveApps extends Component {
           {layers
             .filter((l) => l.active)
             .map((layer) => (
-              <div className={"app filled " + layer.type} key={layer.id}>
-                <div className="remove" title="Remove layer">
+              <div
+                className={"app filled " + layer.type}
+                key={layer.id}
+                onClick={() => setSelection(layer.id)}
+              >
+                <div
+                  className="remove"
+                  title="Remove layer"
+                  id={layer.id}
+                  onClick={this.removeLayer}
+                >
                   -
                 </div>
                 <img
@@ -33,7 +50,7 @@ class ActiveApps extends Component {
               </div>
             ))}
           {[...Array(extra).keys()].map((p) => (
-            <div className="app" title="Add layer" key={p}>
+            <div className="app" title="Add layer" key={p} onClick={() => setSelection("add")}>
               +
             </div>
           ))}
@@ -45,7 +62,14 @@ class ActiveApps extends Component {
 
 class Selection extends Component {
   render() {
-    return <div className="selection-inner"></div>;
+    var { selection, layers, setSelection } = this.props;
+    if (selection === false) {
+      return;
+    } else if (selection === "add") {
+      return <div className="selection">Add new layer</div>;
+    } else if (Number.isInteger(selection)) {
+      return <div className="selection">Edit layer parameters</div>;
+    }
   }
 }
 
@@ -62,8 +86,10 @@ class Sidebar extends Component {
       dark,
       period,
       layers,
+      removeLayer,
+      selection,
+      setSelection,
     } = this.props;
-    console.log(layers);
     return (
       <React.Fragment>
         <div className="info">
@@ -86,7 +112,6 @@ class Sidebar extends Component {
               </div>
             </div>
           </div>
-          <div className="name">{metadata.name[language]}</div>
           <div className="graph">
             <SimpleLine
               simpleline={simpleline}
@@ -97,27 +122,27 @@ class Sidebar extends Component {
               language={language}
               dark={dark}
             />
-            <div className="period">
-              <div className="start">
-                <div className="date">{formatDate(period[0])}</div>
-                <div className="time">{formatTime(period[0])}</div>
-              </div>
-              <div className="end">
-                <div className="date">{formatDate(period[1])}</div>
-                <div className="time">{formatTime(period[1])}</div>
-              </div>
-            </div>
             <div className="graph-parameter">
               {Translate.watertemperature[language]}
             </div>
           </div>
         </div>
+        <div className="depth-period">
+          
+        </div>
         <div className="menu">
-          <ActiveApps layers={layers} language={language} />
+          <ActiveApps
+            layers={layers}
+            language={language}
+            removeLayer={removeLayer}
+            setSelection={setSelection}
+          />
         </div>
-        <div className="selection">
-          <Selection />
-        </div>
+        <Selection
+          selection={selection}
+          setSelection={setSelection}
+          layers={layers}
+        />
       </React.Fragment>
     );
   }

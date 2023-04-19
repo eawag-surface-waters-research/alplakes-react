@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import L from "leaflet";
-import { flyToBounds, addLayer, updateLayer } from "./functions";
+import { flyToBounds, addLayer, updateLayer, removeLayer } from "./functions";
 import "./leaflet_geotiff";
 import "./leaflet_floatgeotiff";
 import "./leaflet_colorpicker";
@@ -43,6 +43,12 @@ class Basemap extends Component {
             this.layerStore,
             this.map,
             datetime
+          );
+        } else if (update.event === "removeLayer") {
+          removeLayer(
+            this.find(layers, "id", update.id),
+            this.layerStore,
+            this.map
           );
         }
       }
