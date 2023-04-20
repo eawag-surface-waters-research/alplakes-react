@@ -17,7 +17,7 @@ class SimpleLine extends Component {
     } catch (e) {
       console.log(e);
     }
-    var { dark } = this.props;
+    var { dark, language } = this.props;
     var {
       color,
       thickness,
@@ -29,6 +29,7 @@ class SimpleLine extends Component {
       { x: 0, y: 1 },
       { x: 2, y: 1 },
     ];
+    d3.timeFormatDefaultLocale(Translate.axis[language]);
     var div = d3.select("#simpleline");
     var margin = { top: 10, right: 10, bottom: 20, left: 40 };
     this.width =
@@ -130,7 +131,7 @@ class SimpleLine extends Component {
     this.xAxis = this.svg
       .append("g")
       .attr("transform", "translate(0," + this.height + ")")
-      .call(d3.axisBottom(x).ticks(2))
+      .call(d3.axisBottom(x).ticks(4).tickFormat(d3.timeFormat("%a %d")))
       .call((g) => g.select(".domain").remove());
 
     var index = this.closestIndex(datetime, simpleline.x);
@@ -283,6 +284,9 @@ class SimpleLine extends Component {
     } else if (prevProps.datetime !== this.props.datetime) {
       this.updateTooltipDot();
     } else if (prevProps.dark !== this.props.dark) {
+      this.plot();
+      this.update(true);
+    } else if (prevProps.language !== this.props.language) {
       this.plot();
       this.update(true);
     }
