@@ -216,7 +216,7 @@
         "Friday",
         "Saturday"
       ],
-      "shortDays": ["Sun", "Mon", "Tues", "Weds", "Thurs", "Fri", "Sat"],
+      "shortDays": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
       "months": [
         "January",
         "February",

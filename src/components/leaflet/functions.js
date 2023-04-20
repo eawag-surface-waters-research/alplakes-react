@@ -6,7 +6,7 @@ import CONFIG from "../../config.json";
 import "./leaflet_raster";
 import "./leaflet_streamlines";
 
-const addToNested = (obj, args, value) => {
+const setNested = (obj, args, value) => {
   for (var i = 0; i < args.length; i++) {
     if (!obj || !obj.hasOwnProperty(args[i])) {
       if (i === args.length - 1) {
@@ -113,9 +113,9 @@ export const updateLayer = async (
     );
 };
 
-export const removeLayer = (layer, layerStore, map) => {
+export const removeLayer = async (layer, layerStore, map) => {
   if (layer.type === "alplakes_hydrodynamic")
-    removeAlplakesHydrodynamic(layer, layerStore, map);
+    await removeAlplakesHydrodynamic(layer, layerStore, map);
 };
 
 const addAlplakesHydrodynamic = async (
@@ -163,7 +163,7 @@ const downloadAlplakesHydrodynamicGeometry = async (
   geometry = geometry
     .split("\n")
     .map((g) => g.split(",").map((s) => parseFloat(s)));
-  addToNested(dataStore, path, geometry);
+  setNested(dataStore, path, geometry);
 };
 
 const downloadAlplakesHydrodynamicParameter = async (
@@ -207,7 +207,7 @@ const downloadAlplakesHydrodynamicParameter = async (
       i * (layer.properties.height + 1) + 1,
       (i + 1) * (layer.properties.height + 1)
     );
-    addToNested(dataStore, [...path, date], data);
+    setNested(dataStore, [...path, date], data);
     if ("simpleline" in layer.properties) {
       simpleline.y.push(d3.mean(data.flat()));
       simpleline.x.push(parseInt(date));
@@ -267,7 +267,7 @@ const plotAlplakesHydrodynamicRaster = (
     }
   }
   var leaflet_layer = new L.Raster(geometry, data, options).addTo(map);
-  addToNested(layerStore, path, leaflet_layer);
+  setNested(layerStore, path, leaflet_layer);
 };
 
 const plotAlplakesHydrodynamicStreamlines = (
@@ -293,7 +293,7 @@ const plotAlplakesHydrodynamicStreamlines = (
     }
   }
   var leaflet_layer = new L.Streamlines(geometry, data, options).addTo(map);
-  addToNested(layerStore, path, leaflet_layer);
+  setNested(layerStore, path, leaflet_layer);
 };
 
 const updateAlplakesHydrodynamic = (

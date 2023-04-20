@@ -18,6 +18,8 @@ class Lake extends Component {
     datetime: Date.now(),
     period: [relativeDate(-2).getTime(), relativeDate(3).getTime()],
     loading: true,
+    clickblock: true,
+    basemap: "default",
     metadata: {},
     layers: [],
     updates: [],
@@ -55,8 +57,20 @@ class Lake extends Component {
     this.setState({ updates: [] });
   };
 
+  unlock = () => {
+    this.setState({ clickblock: false });
+  };
+
   togglePlay = () => {
     this.setState({ play: !this.state.play });
+  };
+
+  setPeriod = (period) => {
+    this.setState({ period });
+  };
+
+  setBasemap = (event) => {
+    this.setState({ basemap: event.target.value });
   };
 
   setTimeout = (event) => {
@@ -128,7 +142,7 @@ class Lake extends Component {
       this.togglePlay();
     } else if (event.key === "ArrowRight") {
       this.nextStep();
-    } else if (event.key == "ArrowLeft") {
+    } else if (event.key === "ArrowLeft") {
       this.previousStep();
     }
   };
@@ -238,35 +252,39 @@ class Lake extends Component {
   }
 
   render() {
-    var { metadata, lake_id } = this.state;
+    var { metadata, lake_id, loading, clickblock } = this.state;
     var { language, dark } = this.props;
     if ("name" in metadata) document.title = metadata.name[language];
     return (
       <div className="lake">
         <NavBar {...this.props} />
         <div className="content">
+          {clickblock && <div className="click-block" />}
           <div className="primary">
             <Media
               language={language}
               togglePlay={this.togglePlay}
               setDatetime={this.setDatetime}
               updated={this.updated}
+              unlock={this.unlock}
               nextStep={this.nextStep}
               setTimeout={this.setTimeout}
               setTimestep={this.setTimestep}
               setTemperature={this.setTemperature}
               setSimpleline={this.setSimpleline}
+              setBasemap={this.setBasemap}
               {...this.state}
             />
           </div>
           <div className="secondary">
-            {!this.state.loading && (
+            {!loading && (
               <Sidebar
                 language={language}
                 {...this.state}
                 dark={dark}
                 removeLayer={this.removeLayer}
                 setSelection={this.setSelection}
+                setPeriod={this.setPeriod}
               />
             )}
             {this.state.error === "name" && (

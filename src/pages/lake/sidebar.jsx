@@ -1,23 +1,22 @@
 import React, { Component } from "react";
+import DatePicker from "react-datepicker";
 import SimpleLine from "../../components/d3/simpleline";
 import Translate from "../../translations.json";
-import { formatTime, formatDateLong, formatDate } from "./functions";
+import { formatTime, formatDateLong } from "./functions";
 import temperature_icon from "../../img/temperature.png";
 import velocity_icon from "../../img/velocity.png";
+import "react-datepicker/dist/react-datepicker.css";
 import "./lake.css";
 
 class ActiveApps extends Component {
   state = {};
-  test = () => {
-    console.log("Firing");
-  };
   removeLayer = (event) => {
     event.stopPropagation();
     var { removeLayer } = this.props;
     removeLayer(parseInt(event.target.getAttribute("id")));
   };
   render() {
-    var { language, layers, setSelection } = this.props;
+    var { language, layers, setSelection, selection } = this.props;
     var extra = Math.max(1, 4 - layers.filter((l) => l.active).length);
     var images = { temperature: temperature_icon, velocity: velocity_icon };
     return (
@@ -27,9 +26,14 @@ class ActiveApps extends Component {
             .filter((l) => l.active)
             .map((layer) => (
               <div
-                className={"app filled " + layer.type}
+                className={
+                  "app filled " +
+                  layer.type +
+                  (selection === layer.id ? " active" : "")
+                }
                 key={layer.id}
                 onClick={() => setSelection(layer.id)}
+                title="Edit settings"
               >
                 <div
                   className="remove"
@@ -50,7 +54,12 @@ class ActiveApps extends Component {
               </div>
             ))}
           {[...Array(extra).keys()].map((p) => (
-            <div className="app" title="Add layer" key={p} onClick={() => setSelection("add")}>
+            <div
+              className="app"
+              title="Add layer"
+              key={p}
+              onClick={() => setSelection("add")}
+            >
               +
             </div>
           ))}
@@ -62,7 +71,7 @@ class ActiveApps extends Component {
 
 class Selection extends Component {
   render() {
-    var { selection, layers, setSelection } = this.props;
+    var { selection } = this.props;
     if (selection === false) {
       return;
     } else if (selection === "add") {
@@ -75,9 +84,11 @@ class Selection extends Component {
 
 class Sidebar extends Component {
   state = {};
+  setDateRange = (event) => {
+    console.log(event);
+  };
   render() {
     var {
-      metadata,
       language,
       temperature,
       average,
@@ -90,6 +101,17 @@ class Sidebar extends Component {
       selection,
       setSelection,
     } = this.props;
+
+    const locale = {
+      localize: {
+        day: (n) => Translate.axis[language].shortDays[n],
+        month: (n) => Translate.axis[language].months[n],
+      },
+      formatLong: {
+        date: () => "dd/mm/yyyy",
+      },
+    };
+
     return (
       <React.Fragment>
         <div className="info">
@@ -128,11 +150,29 @@ class Sidebar extends Component {
           </div>
         </div>
         <div className="depth-period">
-          
+          <select title="Set depth">
+            <option>0.6m</option>
+          </select>
+          <DatePicker
+            selectsRange={true}
+            startDate={period[0]}
+            endDate={period[1]}
+            onChange={(update) => {
+              this.setDateRange(update);
+            }}
+            dateFormat="dd/MM/yyyy"
+            locale={locale}
+          />
+          <div className="labels">
+            <div className="depth">Depth</div>
+            <div className="start">Start</div>
+            <div className="end">End</div>
+          </div>
         </div>
         <div className="menu">
           <ActiveApps
             layers={layers}
+            selection={selection}
             language={language}
             removeLayer={removeLayer}
             setSelection={setSelection}

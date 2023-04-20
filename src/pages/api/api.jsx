@@ -7,7 +7,6 @@ import "./api.css";
 
 class API extends Component {
   render() {
-    var { language } = this.props;
     return (
       <React.Fragment>
         <NavBar {...this.props} />

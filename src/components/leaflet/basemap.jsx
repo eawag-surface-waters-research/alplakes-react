@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import L from "leaflet";
+import CONFIG from "../../config.json";
 import { flyToBounds, addLayer, updateLayer, removeLayer } from "./functions";
 import "./leaflet_geotiff";
 import "./leaflet_floatgeotiff";
@@ -12,7 +13,7 @@ class Basemap extends Component {
   find = (list, parameter, value) => {
     return list.find((l) => l[parameter] === value);
   };
-  async componentDidUpdate() {
+  async componentDidUpdate(prevProps) {
     const {
       updates,
       updated,
@@ -21,13 +22,15 @@ class Basemap extends Component {
       period,
       datetime,
       setSimpleline,
+      unlock,
     } = this.props;
     if (updates.length > 0) {
+      updated();
       for (var update of updates) {
         if (update.event === "bounds") {
           flyToBounds(metadata.bounds, this.map);
         } else if (update.event === "addLayer") {
-          addLayer(
+          await addLayer(
             this.find(layers, "id", update.id),
             period,
             this.dataStore,
@@ -52,7 +55,17 @@ class Basemap extends Component {
           );
         }
       }
-      updated();
+      unlock();
+    }
+    if (prevProps.basemap !== this.props.basemap) {
+      var basemap = L.tileLayer(CONFIG.basemaps[this.props.basemap].url, {
+        maxZoom: 19,
+        attribution: CONFIG.basemaps[this.props.basemap].attribution,
+      });
+      basemap.addTo(this.map);
+      var old_basemap = this.layerStore["basemap"];
+      this.map.removeLayer(old_basemap);
+      this.layerStore["basemap"] = basemap;
     }
   }
   async componentDidMount() {
@@ -71,14 +84,11 @@ class Basemap extends Component {
       zoomControl: false,
     });
 
-    var basemap = L.tileLayer(
-      "https://api.mapbox.com/styles/v1/jamesrunnalls/clg4u62lq009a01oa5z336xn7/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiamFtZXNydW5uYWxscyIsImEiOiJjazk0ZG9zd2kwM3M5M2hvYmk3YW0wdW9yIn0.uIJUZoDgaC2LfdGtgMz0cQ",
-      {
-        maxZoom: 19,
-        attribution: "&copy; <a href='https://www.mapbox.com/'>mapbox</a>",
-      }
-    );
-    basemap.addTo(this.map);
+    var basemap = L.tileLayer(CONFIG.basemaps["default"].url, {
+      maxZoom: 19,
+      attribution: CONFIG.basemaps["default"].attribution,
+    });
+    this.map.addLayer(basemap);
     this.layerStore["basemap"] = basemap;
   }
 

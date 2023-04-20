@@ -9,6 +9,15 @@
   z-index: 2;
 }
 
+.main .lake .content .click-block {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  cursor: wait;
+}
+
 .main .lake .content .primary {
   width: calc(100% - 400px);
   height: 100%;
@@ -29,6 +38,15 @@
   margin-bottom: 32px;
   box-sizing: border-box;
   position: relative;
+}
+
+.main .lake .content .primary .map-component .lake-name {
+  position: absolute;
+  left: 12px;
+  top: 12px;
+  font-size: 44px;
+  z-index: 999;
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .main .lake .content .primary .map-component.fullscreen {
@@ -301,7 +319,7 @@
 
 .main .lake .content .secondary .info .graph .graph-parameter {
   position: absolute;
-  top: -12px;
+  top: -16px;
   color: #b6afaf;
   font-size: 18px;
   z-index: 0;
@@ -354,12 +372,116 @@
   border-radius: 12px;
   margin-top: 24px;
   position: relative;
-  padding: 12px;
+  padding: 12px 12px 8px 12px;
   box-sizing: border-box;
 }
 
 .main.dark .lake .content .secondary .depth-period {
   background-color: rgba(255, 255, 255, 0.1);
+}
+
+.main .lake .content .secondary .depth-period select {
+  display: inline-block;
+  font-size: 20px;
+  width: 100px;
+  margin-right: 26px;
+  background-color: #e3e3e3;
+  border: none;
+  cursor: pointer;
+  border-radius: 8px;
+  padding: 4px 8px;
+  text-align: center;
+}
+
+.main.dark .lake .content .secondary .depth-period select {
+  background-color: rgb(30 30 30);
+  color: #e5e5e5;
+}
+
+.main .lake .content .secondary .depth-period .react-datepicker-wrapper {
+  display: inline-block;
+  width: auto;
+}
+
+.main .lake .content .secondary .depth-period .react-datepicker-wrapper input {
+  font-size: 20px;
+  width: 250px;
+  background-color: #e3e3e3;
+  border: none;
+  cursor: pointer;
+  border-radius: 8px;
+  padding: 4px 16px;
+  box-sizing: border-box;
+}
+
+.main.dark .lake .content .secondary .depth-period .react-datepicker-wrapper input {
+  background-color: rgb(30 30 30);
+  color: #e5e5e5;
+}
+
+.main .lake .content .secondary .depth-period .react-datepicker {
+  background-color: #f2f2f2;
+  border: none;
+  border-radius: 12px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.main.dark .lake .content .secondary .depth-period .react-datepicker {
+  background-color: #272727;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.main .lake .content .secondary .depth-period .react-datepicker .react-datepicker__header {
+  background-color: #e3e3e3;
+}
+
+.main.dark .lake .content .secondary .depth-period .react-datepicker .react-datepicker__header {
+  background-color: #1e1e1e;
+}
+
+.main.dark .lake .content .secondary .depth-period .react-datepicker .react-datepicker__day-name {
+  color: white;
+}
+
+.main.dark .lake .content .secondary .depth-period .react-datepicker .react-datepicker__day {
+  color: white;
+}
+
+.main.dark .lake .content .secondary .depth-period .react-datepicker .react-datepicker__current-month {
+  color: white;
+}
+
+.main .lake .content .secondary .depth-period .react-datepicker .react-datepicker__day:hover {
+  background-color: #e3e3e3;
+}
+
+.main .lake .content .secondary .depth-period .react-datepicker .react-datepicker__day:hover {
+  background-color: #1e1e1e;
+}
+
+.main .lake .content .secondary .depth-period .labels {
+  font-size: 12px;
+  padding-top: 5px;
+  color: rgb(101, 101, 101);
+}
+
+.main .lake .content .secondary .depth-period .labels .depth {
+  display: inline-block;
+  width: 100px;
+  text-align: center;
+  margin-right: 26px;
+}
+
+.main .lake .content .secondary .depth-period .labels .start {
+  display: inline-block;
+  width: 125px;
+  text-align: center;
+}
+
+.main .lake .content .secondary .depth-period .labels .end {
+  display: inline-block;
+  width: 125px;
+  text-align: center;
 }
 
 .main .lake .content .secondary .menu {
@@ -392,6 +514,7 @@
   text-align: center;
   color: #e5e5e5;
   position: relative;
+  cursor: pointer;
 }
 
 .main.dark .lake .content .secondary .menu .loaded .app {
@@ -407,8 +530,15 @@
   vertical-align: top;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   text-align: center;
-  cursor: pointer;
   margin: 16px 14px 34px 14px;
+}
+
+.main .lake .content .secondary .menu .loaded .app.filled.active {
+  box-shadow: #343434 0px 0px 12px;
+}
+
+.main.dark .lake .content .secondary .menu .loaded .app.filled.active {
+  box-shadow: white 0px 0px 8px;
 }
 
 .main .lake .content .secondary .menu .loaded .app.filled.alplakes_hydrodynamic {
