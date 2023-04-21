@@ -32,10 +32,17 @@ class Lake extends Component {
     simpleline: { x: [0, 1], y: [0, 0] },
     updateSimpleline: false,
     selection: "add",
+    fullscreen: false,
   };
 
   setSelection = (selection) => {
     this.setState({ selection });
+  };
+
+  toggleFullscreen = () => {
+    this.setState({ fullscreen: !this.state.fullscreen }, () => {
+      window.dispatchEvent(new Event("resize"));
+    });
   };
 
   setTemperature = (temperature) => {
@@ -252,7 +259,7 @@ class Lake extends Component {
   }
 
   render() {
-    var { metadata, lake_id, loading, clickblock } = this.state;
+    var { metadata, lake_id, loading, clickblock, fullscreen } = this.state;
     var { language, dark } = this.props;
     if ("name" in metadata) document.title = metadata.name[language];
     return (
@@ -260,7 +267,7 @@ class Lake extends Component {
         <NavBar {...this.props} />
         <div className="content">
           {clickblock && <div className="click-block" />}
-          <div className="primary">
+          <div className={fullscreen ? "primary fullscreen" : "primary"}>
             <Media
               language={language}
               togglePlay={this.togglePlay}
@@ -273,6 +280,7 @@ class Lake extends Component {
               setTemperature={this.setTemperature}
               setSimpleline={this.setSimpleline}
               setBasemap={this.setBasemap}
+              toggleFullscreen={this.toggleFullscreen}
               {...this.state}
             />
           </div>

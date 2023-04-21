@@ -16,9 +16,9 @@ class ActiveApps extends Component {
     removeLayer(parseInt(event.target.getAttribute("id")));
   };
   render() {
-    var { language, layers, setSelection, selection } = this.props;
+    var { language, layers, setSelection, selection, images } = this.props;
     var extra = Math.max(1, 4 - layers.filter((l) => l.active).length);
-    var images = { temperature: temperature_icon, velocity: velocity_icon };
+
     return (
       <React.Fragment>
         <div className="loaded">
@@ -45,7 +45,7 @@ class ActiveApps extends Component {
                 </div>
                 <img
                   src={images[layer.properties.parameter]}
-                  alt="layer.properites.parameter"
+                  alt={layer.properties.parameter}
                 />
                 <span>
                   {Translate[layer.properties.parameter][language]}
@@ -71,19 +71,50 @@ class ActiveApps extends Component {
 
 class Selection extends Component {
   render() {
-    var { selection } = this.props;
+    var { selection, layers, images } = this.props;
+    var parameters = [...new Set(layers.map((l) => l.properties.parameter))];
     if (selection === false) {
       return;
     } else if (selection === "add") {
-      return <div className="selection">Add new layer</div>;
+      return (
+        <div className="selection">
+          <div className="title">Add layers</div>
+          {parameters.map((p) => (
+            <div className="parameter" key={p}>
+              <div className="header">{p}</div>
+              <div className="layers">
+                {layers
+                  .filter((l) => l.properties.parameter === p)
+                  .map((l) => (
+                    <div className="layer" key={l.id}>
+                      <div className={"icon " + l.type}>
+                        <img
+                          src={images[l.properties.parameter]}
+                          alt={l.properties.parameter}
+                        />
+                      </div>
+                      Delft3D Hydrodynamic Simulation using MeteoSwiss COSMO data.
+                    </div>
+                  ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      );
     } else if (Number.isInteger(selection)) {
-      return <div className="selection">Edit layer parameters</div>;
+      return (
+        <div className="selection">
+          <div className="title">Layer settings</div>
+        </div>
+      );
     }
   }
 }
 
 class Sidebar extends Component {
-  state = {};
+  state = {
+    images: { temperature: temperature_icon, velocity: velocity_icon },
+  };
   setDateRange = (event) => {
     console.log(event);
   };
@@ -101,7 +132,7 @@ class Sidebar extends Component {
       selection,
       setSelection,
     } = this.props;
-
+    var { images } = this.state;
     const locale = {
       localize: {
         day: (n) => Translate.axis[language].shortDays[n],
@@ -176,12 +207,14 @@ class Sidebar extends Component {
             language={language}
             removeLayer={removeLayer}
             setSelection={setSelection}
+            images={images}
           />
         </div>
         <Selection
           selection={selection}
           setSelection={setSelection}
           layers={layers}
+          images={images}
         />
       </React.Fragment>
     );

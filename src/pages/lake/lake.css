@@ -1,12 +1,9 @@
 .main .lake .content {
-  position: fixed;
-  left: 0;
-  top: 100px;
+  position: relative;
   width: 100%;
-  height: calc(100% - 140px);
   padding: 0 24px;
   box-sizing: border-box;
-  z-index: 2;
+  margin-top: 100px;
 }
 
 .main .lake .content .click-block {
@@ -16,26 +13,36 @@
   height: 100%;
   z-index: 9999;
   cursor: wait;
+  z-index: 2;
 }
 
 .main .lake .content .primary {
-  width: calc(100% - 400px);
-  height: 100%;
+  width: calc(100% - 472px);
+  height: calc(100vh - 200px);
   display: inline-block;
+  position: fixed;
+  top: 100px;
+  left: 24px;
+  z-index: 1;
 }
 
 .main .lake .content .secondary {
-  display: inline-block;
   width: 400px;
   height: 100%;
   vertical-align: top;
+  margin-bottom: 24px;
+  margin-left: calc(100% - 400px)
+}
+
+
+
+.main .lake .content .secondary::-webkit-scrollbar {
+  display: none;
 }
 
 .main .lake .content .primary .map-component {
-  width: calc(100% - 24px);
-  height: calc(100% - 32px);
-  margin-right: 24px;
-  margin-bottom: 32px;
+  width: 100%;
+  height: 100%;
   box-sizing: border-box;
   position: relative;
 }
@@ -47,15 +54,6 @@
   font-size: 44px;
   z-index: 999;
   color: rgba(255, 255, 255, 0.8);
-}
-
-.main .lake .content .primary .map-component.fullscreen {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  z-index: 9999999;
 }
 
 .main .lake .content .primary .map-component .settings-modal {
@@ -541,15 +539,15 @@
   box-shadow: white 0px 0px 8px;
 }
 
-.main .lake .content .secondary .menu .loaded .app.filled.alplakes_hydrodynamic {
-  background-color: #2d2d2d;
+.main .lake .content .secondary .alplakes_hydrodynamic {
+  background-color: #2d2d2d !important;
   opacity: 1;
   background-image: linear-gradient(30deg, #3a4251 12%, transparent 12.5%, transparent 87%, #3a4251 87.5%, #3a4251), linear-gradient(150deg, #3a4251 12%, transparent 12.5%, transparent 87%, #3a4251 87.5%, #3a4251), linear-gradient(30deg, #3a4251 12%, transparent 12.5%, transparent 87%, #3a4251 87.5%, #3a4251), linear-gradient(150deg, #3a4251 12%, transparent 12.5%, transparent 87%, #3a4251 87.5%, #3a4251), linear-gradient(60deg, #3a425177 25%, transparent 25.5%, transparent 75%, #3a425177 75%, #3a425177), linear-gradient(60deg, #3a425177 25%, transparent 25.5%, transparent 75%, #3a425177 75%, #3a425177);
   background-size: 26px 46px;
   background-position: 0 0, 0 0, 13px 23px, 13px 23px, 0 0, 13px 23px;
 }
 
-.main .lake .content .secondary .menu .loaded .app.filled.satellite {
+.main .lake .content .secondary .satellite {
   background-color: #242424;
   opacity: 1;
   background-image: repeating-radial-gradient(circle at 0 0, transparent 0, #242424 15px), repeating-linear-gradient(#3a425155, #3a4251);
@@ -623,4 +621,58 @@
 
 .main.dark .lake .content .secondary .selection {
   background-color: rgba(255, 255, 255, 0.1);
+}
+
+.main .lake .content .secondary .selection .title {
+  text-align: right;
+  color: #b6afaf;
+  font-size: 18px;
+}
+
+.main .lake .content .secondary .selection .parameter {
+  border: 1px solid #b6afaf;
+  border-radius: 6px;
+  position: relative;
+  margin-top: 6px;
+  margin-bottom: 14px;
+  padding-top: 4px;
+}
+
+.main .lake .content .secondary .selection .parameter .header {
+  position: absolute;
+  top: -9px;
+  left: 12px;
+  background-color: #f2f2f2;
+  padding: 0 5px;
+  color: #b6afaf;
+}
+
+.main .lake .content .secondary .selection .parameter .layers .layer {
+  margin: 6px;
+  padding: 6px;
+  background-color: #e3e3e3;
+  border-radius: 8px;
+  width: calc(50% - 5px);
+  cursor: pointer;
+}
+
+.main .lake .content .secondary .selection .parameter .layers .layer:hover {
+  background-color: #d1d1d1;
+}
+
+.main .lake .content .secondary .selection .parameter .layers .layer .icon {
+  width: 50px;
+  height: 50px;
+  display: inline-block;
+  border-radius: 12px;
+  text-align: center;
+  position: relative;
+}
+
+.main .lake .content .secondary .selection .parameter .layers .layer img {
+  max-width: 28px;
+  max-height: 34px;
+  top: 50%;
+  transform: translateY(-50%);
+  position: relative;
 }

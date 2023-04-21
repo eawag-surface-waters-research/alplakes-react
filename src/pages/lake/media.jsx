@@ -12,14 +12,9 @@ import "./lake.css";
 
 class Media extends Component {
   state = {
-    fullscreen: false,
     settings: false,
   };
-  toggleFullscreen = () => {
-    this.setState({ fullscreen: !this.state.fullscreen }, () => {
-      window.dispatchEvent(new Event("resize"));
-    });
-  };
+
   toggleSettings = () => {
     this.setState({ settings: !this.state.settings });
   };
@@ -65,12 +60,12 @@ class Media extends Component {
       language,
       basemap,
       setBasemap,
+      fullscreen,
+      toggleFullscreen,
     } = this.props;
-    var { fullscreen, settings } = this.state;
+    var { settings } = this.state;
     return (
-      <div
-        className={fullscreen ? "map-component fullscreen" : "map-component"}
-      >
+      <div className="map-component">
         <div className="lake-name">
           {"name" in metadata && metadata.name[language]}
         </div>
@@ -153,7 +148,7 @@ class Media extends Component {
               <span className="tooltip right">
                 {fullscreen ? "Exit full screen" : "Full screen"}
               </span>
-              <button onClick={this.toggleFullscreen}>
+              <button onClick={toggleFullscreen}>
                 <img
                   src={fullscreen ? normalscreen_icon : fullscreen_icon}
                   alt="full screen"
