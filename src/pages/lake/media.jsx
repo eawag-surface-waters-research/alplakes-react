@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Basemap from "../../components/leaflet/basemap";
 import Slider from "../../components/sliders/slider";
+import Translate from "../../translations.json";
 import next from "../../img/next.svg";
 import settings_icon from "../../img/settings.svg";
 //import tools_icon from "../../img/tools.png";
@@ -125,7 +126,7 @@ class Media extends Component {
           </div>
           <div className="play-controls">
             <div className="play-pause clickable-button">
-              <span className="tooltip">Play (Spacebar)</span>
+              <span className="tooltip">{Translate.play[language]}</span>
               <button onClick={togglePlay}>
                 <div
                   className={
@@ -135,7 +136,7 @@ class Media extends Component {
               </button>
             </div>
             <div className="next-frame clickable-button">
-              <span className="tooltip">Next (Right Arrow)</span>
+              <span className="tooltip">{Translate.next[language]}</span>
               <button onClick={nextStep}>
                 <img src={next} alt="next" />
               </button>
@@ -146,7 +147,7 @@ class Media extends Component {
             </div>
             <div className="fullscreen clickable-button">
               <span className="tooltip right">
-                {fullscreen ? "Exit full screen" : "Full screen"}
+                {Translate.fullscreen[language]}
               </span>
               <button onClick={toggleFullscreen}>
                 <img
@@ -156,7 +157,7 @@ class Media extends Component {
               </button>
             </div>
             <div className="settings clickable-button" id="settings-icon">
-              <span className="tooltip">Settings</span>
+              <span className="tooltip">{Translate.settings[language]}</span>
               <button onClick={this.toggleSettings}>
                 <img src={settings_icon} alt="settings" />
               </button>

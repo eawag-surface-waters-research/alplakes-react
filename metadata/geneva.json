@@ -1,83 +1,76 @@
 {
-    "lake_id": "geneva",
-    "name": {
-        "EN": "Lake Geneva",
-        "DE": "Genfersee",
-        "FR": "Le Léman",
-        "IT": "Lago Lemano"
-    },
-    "type": {
-        "EN": "Glacial lake",
-        "DE": "Gletschersee",
-        "FR": "Lac glaciaire",
-        "IT": "Lago glaciale"
-    },
-    "area": 580,
-    "depth": 154,
-    "max_depth": 310,
-    "elevation": 372,
-    "bounds": {
-        "southWest": [
-            46.2,
-            6.147
-        ],
-        "northEast": [
-            46.52,
-            6.93
-        ]
-    },
-    "customPeriod": {
-        "type": "alplakes_hydrodynamic",
-        "start": -2,
-        "end": "/simulations/metadata/delft3d-flow/geneva"
-    },
-    "layers": [
-        {
-            "id": 0,
-            "type": "alplakes_hydrodynamic",
-            "active": "true",
-            "z-index": 1,
-            "properties": {
-                "model": "delft3d-flow",
-                "lake": "geneva",
-                "parameter": "temperature",
-                "height": 182,
-                "width": 36,
-                "depths": [],
-                "depth": 0,
-                "display": "raster",
-                "simpleline": true,
-                "temperature": true,
-                "options": {
-                    "paletteName": "Balance"
-                }
-            }
-        },
-        {
-            "id": 1,
-            "type": "alplakes_hydrodynamic",
-            "active": "true",
-            "z-index": 5,
-            "properties": {
-                "model": "delft3d-flow",
-                "lake": "geneva",
-                "parameter": "velocity",
-                "height": 182,
-                "width": 36,
-                "depths": [],
-                "depth": 0,
-                "display": "streamlines",
-                "options": {
-                    "paths": 5000,
-                    "color": "white",
-                    "width": 0.5,
-                    "fade": 0.97,
-                    "duration": 10,
-                    "maxAge": 80,
-                    "velocityScale": 0.01,
-                    "opacity": 0.5
-                }
-            }
+  "lake_id": "geneva",
+  "name": {
+    "EN": "Lake Geneva",
+    "DE": "Genfersee",
+    "FR": "Le Léman",
+    "IT": "Lago Lemano"
+  },
+  "type": {
+    "EN": "Glacial lake",
+    "DE": "Gletschersee",
+    "FR": "Lac glaciaire",
+    "IT": "Lago glaciale"
+  },
+  "area": 580,
+  "ave_depth": 154,
+  "max_depth": 310,
+  "elevation": 372,
+  "bounds": {
+    "southWest": [46.2, 6.147],
+    "northEast": [46.52, 6.93]
+  },
+  "customPeriod": {
+    "type": "alplakes_hydrodynamic",
+    "start": -2,
+    "end": "/simulations/metadata/delft3d-flow/geneva"
+  },
+  "depth": 0.7,
+  "layers": [
+    {
+      "id": 0,
+      "type": "alplakes_hydrodynamic",
+      "active": "true",
+      "z-index": 1,
+      "properties": {
+        "model": "delft3d-flow",
+        "lake": "geneva",
+        "parameter": "temperature",
+        "height": 182,
+        "width": 36,
+        "display": "raster",
+        "depth": true,
+        "simpleline": true,
+        "temperature": true,
+        "options": {
+          "paletteName": "Balance"
         }
-    ]
+      }
+    },
+    {
+      "id": 1,
+      "type": "alplakes_hydrodynamic",
+      "active": "true",
+      "z-index": 5,
+      "properties": {
+        "model": "delft3d-flow",
+        "lake": "geneva",
+        "parameter": "velocity",
+        "height": 182,
+        "width": 36,
+        "display": "streamlines",
+        "depth": true,
+        "options": {
+          "paths": 5000,
+          "color": "white",
+          "width": 0.5,
+          "fade": 0.97,
+          "duration": 10,
+          "maxAge": 80,
+          "velocityScale": 0.01,
+          "opacity": 0.5
+        }
+      }
+    }
+  ]
 }

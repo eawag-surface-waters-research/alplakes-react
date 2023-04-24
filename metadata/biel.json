@@ -13,7 +13,7 @@
         "IT": "Lago glaciale"
     },
     "area": 39.3,
-    "depth": 28,
+    "ave_depth": 28,
     "elevation": 429,
     "max_depth": 74,
     "bounds": {
@@ -31,6 +31,7 @@
         "start": -2,
         "end": "/simulations/metadata/delft3d-flow/biel"
     },
+    "depth": 0.7,
     "layers": [
         {
             "id": 0,
@@ -43,9 +44,8 @@
                 "parameter": "temperature",
                 "height": 132,
                 "width": 28,
-                "depths": [],
-                "depth": 0,
                 "display": "raster",
+                "depth": true,
                 "simpleline": true,
                 "temperature": true,
                 "options": {
@@ -64,9 +64,8 @@
                 "parameter": "velocity",
                 "height": 132,
                 "width": 28,
-                "depths": [],
-                "depth": 0,
                 "display": "streamlines",
+                "depth": true,
                 "options": {
                     "paths": 1000,
                     "color": "white",

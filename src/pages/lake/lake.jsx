@@ -15,7 +15,11 @@ import "./lake.css";
 class Lake extends Component {
   state = {
     lake_id: "",
+    depth: "",
+    depths: [],
     datetime: Date.now(),
+    maxDate: Date.now(),
+    minDate: new Date(2010),
     period: [relativeDate(-2).getTime(), relativeDate(3).getTime()],
     loading: true,
     clickblock: true,
@@ -73,7 +77,17 @@ class Lake extends Component {
   };
 
   setPeriod = (period) => {
-    this.setState({ period });
+    var { layers, updates } = this.state;
+    if (period !== this.state.period) {
+      var datetime = period[0];
+      for (let layer of layers) {
+        if (layer.active) {
+          updates.unshift({ event: "removeLayer", id: layer.id });
+          updates.push({ event: "addLayer", id: layer.id });
+        }
+      }
+      this.setState({ updates, datetime, clickblock: true, period });
+    }
   };
 
   setBasemap = (event) => {
@@ -167,6 +181,33 @@ class Lake extends Component {
     this.setState({ datetime, updates, temperature });
   };
 
+  setDepth = (event) => {
+    var { layers, depth, updates } = this.state;
+    if (
+      depth !== event.target.value &&
+      layers.filter((l) => l.properties.depth && l.active).length > 0
+    ) {
+      depth = event.target.value;
+      for (let layer of layers) {
+        if (layer.properties.depth && layer.active) {
+          updates.unshift({ event: "removeLayer", id: layer.id });
+          updates.push({ event: "addLayer", id: layer.id });
+        }
+      }
+      this.setState({ updates, depth, clickblock: true });
+    }
+  };
+
+  addLayer = (id) => {
+    var { layers, updates } = this.state;
+    var layer = layers.find((l) => l.id === id);
+    if (!layer.active) {
+      layer.active = true;
+      updates.push({ event: "addLayer", id: id });
+      this.setState({ layers, updates, clickblock: true });
+    }
+  };
+
   removeLayer = (id) => {
     var { layers } = this.state;
     var layer = layers.find((l) => l.id === id);
@@ -217,7 +258,7 @@ class Lake extends Component {
 
   async componentDidMount() {
     document.addEventListener("keydown", this.keyDown, false);
-    var { period } = this.state;
+    var { period, minDate, maxDate } = this.state;
     const url = window.location.href.split("/");
     const lake_id = url[url.length - 1].split("?")[0];
     try {
@@ -231,9 +272,18 @@ class Lake extends Component {
           updates.push({ event: "addLayer", id: layer.id });
         }
       }
+      var depth = metadata.depth;
+      var depths = [depth];
       try {
         if ("customPeriod" in metadata) {
-          period = await setCustomPeriod(metadata.customPeriod, period);
+          ({ period, minDate, maxDate, depth, depths } = await setCustomPeriod(
+            metadata.customPeriod,
+            period,
+            minDate,
+            maxDate,
+            depth,
+            depths
+          ));
         }
       } catch (e) {
         console.error(e);
@@ -247,6 +297,10 @@ class Lake extends Component {
         updates,
         period,
         lake_id,
+        depth,
+        minDate,
+        maxDate,
+        depths,
       });
     } catch (e) {
       console.error(e);
@@ -290,9 +344,11 @@ class Lake extends Component {
                 language={language}
                 {...this.state}
                 dark={dark}
+                addLayer={this.addLayer}
                 removeLayer={this.removeLayer}
                 setSelection={this.setSelection}
                 setPeriod={this.setPeriod}
+                setDepth={this.setDepth}
               />
             )}
             {this.state.error === "name" && (

@@ -80,14 +80,27 @@ export const relativeDate = (days) => {
   return result;
 };
 
-export const setCustomPeriod = async (customPeriod, period) => {
+export const setCustomPeriod = async (
+  customPeriod,
+  period,
+  minDate,
+  maxDate,
+  depth,
+  depths
+) => {
   if (customPeriod.type === "alplakes_hydrodynamic") {
-    var start = relativeDate(customPeriod.start);
+    var start = relativeDate(customPeriod.start).getTime();
     var { data } = await axios.get(CONFIG.alplakes_api + customPeriod.end);
-    var end = stringToDate(data.end_date);
-    return [start.getTime(), end.getTime()];
+    minDate = stringToDate(data.start_date).getTime();
+    maxDate = stringToDate(data.end_date).getTime();
+    if ("depths" in data) {
+      depths = data.depths;
+      let index = closestIndex(depth, depths);
+      depth = depths[index];
+    }
+    return { period: [start, maxDate], minDate, maxDate, depths, depth };
   } else {
     console.error("Custom period type not recognised.");
-    return period;
+    return { period, minDate, maxDate, depths, depth };
   }
 };

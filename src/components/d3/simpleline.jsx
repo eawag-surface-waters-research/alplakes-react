@@ -89,6 +89,8 @@ class SimpleLine extends Component {
   update(reset) {
     try {
       d3.select(`#simpleline_tooltip`).remove();
+      d3.select(`#simpleline_xAxis`).remove();
+      d3.select(`#simpleline_yAxis`).remove();
     } catch (e) {
       console.log(e);
     }
@@ -120,17 +122,19 @@ class SimpleLine extends Component {
 
     this.yAxis = this.svg
       .append("g")
+      .attr("id", "simpleline_yAxis")
       .call(
         d3
           .axisLeft(y)
           .ticks(2)
-          .tickFormat((d) => d + "°C")
+          .tickFormat((d) => d3.format(".2~f")(d) + "°C")
       )
       .call((g) => g.select(".domain").remove());
 
     this.xAxis = this.svg
       .append("g")
       .attr("transform", "translate(0," + this.height + ")")
+      .attr("id", "simpleline_xAxis")
       .call(d3.axisBottom(x).ticks(4).tickFormat(d3.timeFormat("%a %d")))
       .call((g) => g.select(".domain").remove());
 
@@ -156,7 +160,7 @@ class SimpleLine extends Component {
         );
         document.getElementById("date_value").innerHTML = formatDate(
           simpleline.x[indexHover],
-          Translate.month[language]
+          Translate.axis[language].months
         );
       })
       .on("mouseleave", function (event) {
@@ -168,7 +172,7 @@ class SimpleLine extends Component {
         document.getElementById("time_value").innerHTML = formatTime(datetime);
         document.getElementById("date_value").innerHTML = formatDate(
           datetime,
-          Translate.month[language]
+          Translate.axis[language].months
         );
       });
 

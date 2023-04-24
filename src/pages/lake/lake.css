@@ -250,7 +250,7 @@
 
 .main .lake .content .secondary .info {
   background-color: rgba(0, 0, 0, 0.05);
-  padding: 15px 22px 8px 22px;
+  padding: 8px 22px;
   border-radius: 12px;
 }
 
@@ -275,7 +275,7 @@
 }
 
 .main .lake .content .secondary .info .data .temperature .value {
-  font-size: 83px;
+  font-size: 68px;
   display: inline-block;
 
 }
@@ -285,7 +285,7 @@
 }
 
 .main .lake .content .secondary .info .data .temperature .details .unit {
-  font-size: 45px;
+  font-size: 34px;
 }
 
 .main .lake .content .secondary .info .data .temperature .details .average {
@@ -299,11 +299,11 @@
 }
 
 .main .lake .content .secondary .info .data .datetime .date {
-  font-size: 24px;
+  font-size: 22px;
 }
 
 .main .lake .content .secondary .info .data .datetime .time {
-  font-size: 40px;
+  font-size: 28px;
 }
 
 .main .lake .content .secondary .info .graph {
@@ -312,7 +312,7 @@
   border-radius: 12px;
   position: relative;
   cursor: pointer;
-  margin-bottom: 10px;
+  margin: 10px 0;
 }
 
 .main .lake .content .secondary .info .graph .graph-parameter {
@@ -418,7 +418,6 @@
 }
 
 .main .lake .content .secondary .depth-period .react-datepicker {
-  background-color: #f2f2f2;
   border: none;
   border-radius: 12px;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
@@ -427,10 +426,6 @@
 .main.dark .lake .content .secondary .depth-period .react-datepicker {
   background-color: #272727;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-}
-
-.main .lake .content .secondary .depth-period .react-datepicker .react-datepicker__header {
-  background-color: #e3e3e3;
 }
 
 .main.dark .lake .content .secondary .depth-period .react-datepicker .react-datepicker__header {
@@ -449,12 +444,8 @@
   color: white;
 }
 
-.main .lake .content .secondary .depth-period .react-datepicker .react-datepicker__day:hover {
-  background-color: #e3e3e3;
-}
-
-.main .lake .content .secondary .depth-period .react-datepicker .react-datepicker__day:hover {
-  background-color: #1e1e1e;
+.main.dark .lake .content .secondary .depth-period .react-datepicker .react-datepicker__day:hover {
+  background-color: #7b1414;
 }
 
 .main .lake .content .secondary .depth-period .labels {
@@ -529,6 +520,14 @@
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   text-align: center;
   margin: 16px 14px 34px 14px;
+}
+
+.main .lake .content .secondary .menu .loaded .app.filled:hover {
+  box-shadow: #343434 0px 0px 12px;
+}
+
+.main.dark .lake .content .secondary .menu .loaded .app.filled:hover {
+  box-shadow: white 0px 0px 8px;
 }
 
 .main .lake .content .secondary .menu .loaded .app.filled.active {
@@ -615,7 +614,7 @@
   border-radius: 12px;
   margin-top: 24px;
   position: relative;
-  padding: 12px;
+  padding: 12px 12px 1px 12px;
   box-sizing: border-box;
 }
 
@@ -647,13 +646,29 @@
   color: #b6afaf;
 }
 
+.main.dark .lake .content .secondary .selection .parameter .header {
+  background-color: #272727;
+  color: #b6afaf;
+}
+
 .main .lake .content .secondary .selection .parameter .layers .layer {
   margin: 6px;
   padding: 6px;
   background-color: #e3e3e3;
   border-radius: 8px;
-  width: calc(50% - 5px);
+  width: calc(50% - 24px);
   cursor: pointer;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.main.dark .lake .content .secondary .selection .parameter .layers .layer {
+  background-color: rgb(30 30 30);
+}
+
+.main .lake .content .secondary .selection .parameter .layers .layer.disabled {
+  opacity: 0.5;
+  pointer-events: none;
 }
 
 .main .lake .content .secondary .selection .parameter .layers .layer:hover {
@@ -675,4 +690,22 @@
   top: 50%;
   transform: translateY(-50%);
   position: relative;
+  display: inline-block;
+}
+
+.main .lake .content .secondary .selection .parameter .layers .layer .text {
+  display: inline-block;
+  margin-left: 8px;
+  vertical-align: bottom;
+  padding-bottom: 8px;
+  font-size: 14px;
+}
+
+.main .lake .content .secondary .selection .parameter .layers .layer .text .type {
+  color: #343434;
+  font-size: 12px;
+}
+
+.main.dark .lake .content .secondary .selection .parameter .layers .layer .text .type {
+  color: rgb(101, 101, 101);
 }

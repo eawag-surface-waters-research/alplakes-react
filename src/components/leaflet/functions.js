@@ -7,17 +7,13 @@ import "./leaflet_raster";
 import "./leaflet_streamlines";
 
 const setNested = (obj, args, value) => {
-  for (var i = 0; i < args.length; i++) {
+  for (var i = 0; i < args.length - 1; i++) {
     if (!obj || !obj.hasOwnProperty(args[i])) {
-      if (i === args.length - 1) {
-        obj[args[i]] = value;
-        return;
-      } else {
-        obj[args[i]] = {};
-      }
+      obj[args[i]] = {};
     }
     obj = obj[args[i]];
   }
+  obj[args[args.length - 1]] = value;
 };
 
 const checkNested = (obj, args) => {
@@ -82,6 +78,7 @@ export const addLayer = async (
   layerStore,
   map,
   datetime,
+  depth,
   setSimpleline
 ) => {
   if (layer.type === "alplakes_hydrodynamic")
@@ -92,6 +89,7 @@ export const addLayer = async (
       layerStore,
       map,
       datetime,
+      depth,
       setSimpleline
     );
 };
@@ -101,7 +99,8 @@ export const updateLayer = async (
   dataStore,
   layerStore,
   map,
-  datetime
+  datetime,
+  depth
 ) => {
   if (layer.type === "alplakes_hydrodynamic")
     await updateAlplakesHydrodynamic(
@@ -109,7 +108,8 @@ export const updateLayer = async (
       dataStore,
       layerStore,
       map,
-      datetime
+      datetime,
+      depth
     );
 };
 
@@ -125,18 +125,20 @@ const addAlplakesHydrodynamic = async (
   layerStore,
   map,
   datetime,
+  depth,
   setSimpleline
 ) => {
   await downloadAlplakesHydrodynamicGeometry(layer, period, dataStore);
   var simpleline = await downloadAlplakesHydrodynamicParameter(
     layer,
     period,
+    depth,
     dataStore
   );
   if ("simpleline" in layer.properties) {
     setSimpleline(simpleline);
   }
-  plotAlplakesHydrodynamic(layer, datetime, dataStore, layerStore, map);
+  plotAlplakesHydrodynamic(layer, datetime, depth, dataStore, layerStore, map);
 };
 
 const downloadAlplakesHydrodynamicGeometry = async (
@@ -169,6 +171,7 @@ const downloadAlplakesHydrodynamicGeometry = async (
 const downloadAlplakesHydrodynamicParameter = async (
   layer,
   period,
+  depth,
   dataStore
 ) => {
   var path = [
@@ -176,6 +179,7 @@ const downloadAlplakesHydrodynamicParameter = async (
     layer.properties.model,
     layer.properties.lake,
     layer.properties.parameter,
+    String(depth),
   ];
   var start = period[0];
   var end = period[1];
@@ -187,7 +191,7 @@ const downloadAlplakesHydrodynamicParameter = async (
       layer.properties.model
     }/${layer.properties.lake}/${layer.properties.parameter}/${formatDate(
       start
-    )}/${formatDate(end)}/${layer.properties.depth}`
+    )}/${formatDate(end)}/${depth}`
   );
   parameter = parameter
     .split("\n")
@@ -219,18 +223,33 @@ const downloadAlplakesHydrodynamicParameter = async (
 const plotAlplakesHydrodynamic = (
   layer,
   datetime,
+  depth,
   dataStore,
   layerStore,
   map
 ) => {
-  var { model, lake, parameter, display } = layer.properties;
-  var data = dataStore[layer.type][model][lake][parameter];
+  var path = [
+    layer.type,
+    layer.properties.model,
+    layer.properties.lake,
+    layer.properties.parameter,
+    String(depth),
+  ];
+  var geometry_path = [
+    layer.type,
+    layer.properties.model,
+    layer.properties.lake,
+    "geometry",
+  ];
+  var data = getNested(dataStore, path);
+  var geometry = getNested(dataStore, geometry_path);
+  var { display } = layer.properties;
   if (display === "raster") {
     plotAlplakesHydrodynamicRaster(
       layer,
       layerStore,
       map,
-      dataStore[layer.type][model][lake]["geometry"],
+      geometry,
       data[closestDate(datetime, Object.keys(data))]
     );
   } else if (display === "streamlines") {
@@ -238,7 +257,7 @@ const plotAlplakesHydrodynamic = (
       layer,
       layerStore,
       map,
-      dataStore[layer.type][model][lake]["geometry"],
+      geometry,
       data[closestDate(datetime, Object.keys(data))]
     );
   }
@@ -301,17 +320,24 @@ const updateAlplakesHydrodynamic = (
   dataStore,
   layerStore,
   map,
-  datetime
+  datetime,
+  depth
 ) => {
-  var { model, lake, parameter } = layer.properties;
-  var path = [
+  var layer_path = [
     layer.type,
     layer.properties.model,
     layer.properties.lake,
     layer.properties.parameter,
   ];
+  var data_path = [
+    layer.type,
+    layer.properties.model,
+    layer.properties.lake,
+    layer.properties.parameter,
+    String(depth),
+  ];
 
-  var data = dataStore[layer.type][model][lake][parameter];
+  var data = getNested(dataStore, data_path);
   var newData = data[closestDate(datetime, Object.keys(data))];
 
   var options = {};
@@ -323,7 +349,7 @@ const updateAlplakesHydrodynamic = (
       options["palette"] = COLORS[layer.properties.options.paletteName];
     }
   }
-  var leaflet_layer = getNested(layerStore, path);
+  var leaflet_layer = getNested(layerStore, layer_path);
   leaflet_layer.update(newData, options);
 };
 
@@ -336,4 +362,5 @@ const removeAlplakesHydrodynamic = (layer, layerStore, map) => {
   ];
   var leaflet_layer = getNested(layerStore, path);
   map.removeLayer(leaflet_layer);
+  setNested(layerStore, path, null);
 };

@@ -21,6 +21,7 @@ class Basemap extends Component {
       layers,
       period,
       datetime,
+      depth,
       setSimpleline,
       unlock,
     } = this.props;
@@ -37,6 +38,7 @@ class Basemap extends Component {
             this.layerStore,
             this.map,
             datetime,
+            depth,
             setSimpleline
           );
         } else if (update.event === "updateLayer") {
@@ -45,7 +47,8 @@ class Basemap extends Component {
             this.dataStore,
             this.layerStore,
             this.map,
-            datetime
+            datetime,
+            depth
           );
         } else if (update.event === "removeLayer") {
           removeLayer(

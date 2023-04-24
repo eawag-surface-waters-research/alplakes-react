@@ -17,63 +17,11 @@
     "FR": "À propos",
     "IT": "Sopra"
   },
-  "month": {
-    "EN": [
-      "January",
-      "February",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-      "August",
-      "September",
-      "October",
-      "November",
-      "December"
-    ],
-    "DE": [
-      "Januar",
-      "Februar",
-      "März",
-      "April",
-      "Mai",
-      "Juni",
-      "Juli",
-      "August",
-      "September",
-      "Oktober",
-      "November",
-      "Dezember"
-    ],
-    "FR": [
-      "janvier",
-      "février",
-      "mars",
-      "avril",
-      "mai",
-      "juin",
-      "juillet",
-      "août",
-      "septembre",
-      "octobre",
-      "novembre",
-      "décembre"
-    ],
-    "IT": [
-      "gennaio",
-      "febbraio",
-      "marzo",
-      "aprile",
-      "maggio",
-      "giugno",
-      "luglio",
-      "agosto",
-      "settembre",
-      "ottobre",
-      "novembre",
-      "dicembre"
-    ]
+  "addlayers": {
+    "EN": "Add Layers",
+    "DE": "Ebenen hinzufügen",
+    "FR": "Ajouter des calques",
+    "IT": "Aggiungi strati"
   },
   "descriptions": {
     "EN": [
@@ -120,16 +68,28 @@
     "IT": "Superficie"
   },
   "depth": {
-    "EN": "Average Depth",
-    "DE": "Durchschnittliche Tiefe",
-    "FR": "Profondeur moyenne",
-    "IT": "Profondità media"
+    "EN": "Depth",
+    "DE": "Tiefe",
+    "FR": "Profondeur",
+    "IT": "Profondità"
   },
   "maxdepth": {
     "EN": "Maximum Depth",
     "DE": "Maximale Tiefe",
     "FR": "Profondeur maximale",
     "IT": "Profondità massima"
+  },
+  "start": {
+    "EN": "Start",
+    "DE": "Start",
+    "FR": "Commencer",
+    "IT": "Inizio"
+  },
+  "end": {
+    "EN": "End",
+    "DE": "Ende",
+    "FR": "Fin",
+    "IT": "Termine"
   },
   "watertemperature": {
     "EN": "Water temperature",
@@ -148,6 +108,30 @@
     "DE": "Schnelle",
     "FR": "Rapidité",
     "IT": "Velocità"
+  },
+  "play": {
+    "EN": "Play (Spacebar)",
+    "DE": "Spielen (Leertaste)",
+    "FR": "Jouer (barre d'espace)",
+    "IT": "Riproduci (barra spaziatrice)"
+  },
+  "next": {
+    "EN": "Next (Right arrow)",
+    "DE": "Weiter (Pfeil nach rechts)",
+    "FR": "Suivant (Flèche droite)",
+    "IT": "Successivo (freccia destra)"
+  },
+  "settings": {
+    "EN": "Settings",
+    "DE": "Einstellungen",
+    "FR": "Paramètres",
+    "IT": "Impostazioni"
+  },
+  "fullscreen": {
+    "EN": "Full screen",
+    "DE": "Ganzer Bildschirm",
+    "FR": "Plein écran",
+    "IT": "A schermo intero"
   },
   "axis": {
     "DE": {

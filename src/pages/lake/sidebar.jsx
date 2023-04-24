@@ -8,6 +8,59 @@ import velocity_icon from "../../img/velocity.png";
 import "react-datepicker/dist/react-datepicker.css";
 import "./lake.css";
 
+class Period extends Component {
+  state = {
+    period: this.props.period,
+    maxPeriod: 21,
+  };
+  setDateRange = (period) => {
+    var { maxPeriod } = this.state;
+    var { setPeriod } = this.props;
+    if (period[0] !== null && period[1] !== null) {
+      if ((period[1] - period[0]) / 86400000 > maxPeriod) {
+        period = this.props.period;
+        window.alert(`Please select a maximum of ${maxPeriod} days.`);
+        this.setState({ period });
+      } else {
+        setPeriod([
+          Math.floor(period[0].getTime()),
+          Math.floor(period[1].getTime()),
+        ]);
+        this.setState({ period });
+      }
+    } else {
+      this.setState({ period });
+    }
+  };
+  render() {
+    var { language, minDate, maxDate } = this.props;
+    var { period } = this.state;
+    const locale = {
+      localize: {
+        day: (n) => Translate.axis[language].shortDays[n],
+        month: (n) => Translate.axis[language].months[n],
+      },
+      formatLong: {
+        date: () => "dd/mm/yyyy",
+      },
+    };
+    return (
+      <DatePicker
+        selectsRange={true}
+        startDate={period[0]}
+        endDate={period[1]}
+        onChange={(update) => {
+          this.setDateRange(update);
+        }}
+        minDate={minDate}
+        maxDate={maxDate}
+        dateFormat="dd/MM/yyyy"
+        locale={locale}
+      />
+    );
+  }
+}
+
 class ActiveApps extends Component {
   state = {};
   removeLayer = (event) => {
@@ -71,29 +124,36 @@ class ActiveApps extends Component {
 
 class Selection extends Component {
   render() {
-    var { selection, layers, images } = this.props;
+    var { selection, layers, images, language, addLayer } = this.props;
     var parameters = [...new Set(layers.map((l) => l.properties.parameter))];
     if (selection === false) {
       return;
     } else if (selection === "add") {
       return (
         <div className="selection">
-          <div className="title">Add layers</div>
+          <div className="title">{Translate.addlayers[language]}</div>
           {parameters.map((p) => (
             <div className="parameter" key={p}>
-              <div className="header">{p}</div>
+              <div className="header">{Translate[p][language]}</div>
               <div className="layers">
                 {layers
                   .filter((l) => l.properties.parameter === p)
                   .map((l) => (
-                    <div className="layer" key={l.id}>
+                    <div
+                      className={l.active ? "layer disabled" : "layer"}
+                      key={l.id}
+                      onClick={() => addLayer(l.id)}
+                    >
                       <div className={"icon " + l.type}>
                         <img
                           src={images[l.properties.parameter]}
                           alt={l.properties.parameter}
                         />
                       </div>
-                      Delft3D Hydrodynamic Simulation using MeteoSwiss COSMO data.
+                      <div className="text">
+                        3D Lake Model
+                        <div className="type">delft3d-flow</div>
+                      </div>
                     </div>
                   ))}
               </div>
@@ -104,7 +164,7 @@ class Selection extends Component {
     } else if (Number.isInteger(selection)) {
       return (
         <div className="selection">
-          <div className="title">Layer settings</div>
+          <div className="title">{Translate.settings[language]}</div>
         </div>
       );
     }
@@ -124,25 +184,22 @@ class Sidebar extends Component {
       temperature,
       average,
       datetime,
+      depth,
+      depths,
       simpleline,
       dark,
       period,
       layers,
       removeLayer,
       selection,
+      setDepth,
       setSelection,
+      setPeriod,
+      addLayer,
+      minDate,
+      maxDate,
     } = this.props;
     var { images } = this.state;
-    const locale = {
-      localize: {
-        day: (n) => Translate.axis[language].shortDays[n],
-        month: (n) => Translate.axis[language].months[n],
-      },
-      formatLong: {
-        date: () => "dd/mm/yyyy",
-      },
-    };
-
     return (
       <React.Fragment>
         <div className="info">
@@ -158,7 +215,7 @@ class Sidebar extends Component {
             </div>
             <div className="datetime">
               <div className="date" id="date_value">
-                {formatDateLong(datetime, Translate.month[language])}
+                {formatDateLong(datetime, Translate.axis[language].months)}
               </div>
               <div className="time" id="time_value">
                 {formatTime(datetime)}
@@ -181,23 +238,24 @@ class Sidebar extends Component {
           </div>
         </div>
         <div className="depth-period">
-          <select title="Set depth">
-            <option>0.6m</option>
+          <select value={depth} onChange={setDepth}>
+            {depths.map((d) => (
+              <option value={d} key={d}>
+                {d + " m"}
+              </option>
+            ))}
           </select>
-          <DatePicker
-            selectsRange={true}
-            startDate={period[0]}
-            endDate={period[1]}
-            onChange={(update) => {
-              this.setDateRange(update);
-            }}
-            dateFormat="dd/MM/yyyy"
-            locale={locale}
+          <Period
+            period={period}
+            setPeriod={setPeriod}
+            language={language}
+            minDate={minDate}
+            maxDate={maxDate}
           />
           <div className="labels">
-            <div className="depth">Depth</div>
-            <div className="start">Start</div>
-            <div className="end">End</div>
+            <div className="depth">{Translate.depth[language]}</div>
+            <div className="start">{Translate.start[language]}</div>
+            <div className="end">{Translate.end[language]}</div>
           </div>
         </div>
         <div className="menu">
@@ -215,6 +273,8 @@ class Sidebar extends Component {
           setSelection={setSelection}
           layers={layers}
           images={images}
+          language={language}
+          addLayer={addLayer}
         />
       </React.Fragment>
     );

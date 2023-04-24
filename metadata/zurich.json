@@ -13,7 +13,7 @@
         "IT": "Lago glaciale"
     },
     "area": 89,
-    "depth": 49,
+    "ave_depth": 49,
     "max_depth": 143,
     "elevation": 406,
     "bounds": {
@@ -31,6 +31,7 @@
         "start": -2,
         "end": "/simulations/metadata/delft3d-flow/zurich"
     },
+    "depth": 1,
     "layers": [
         {
             "id": 0,
@@ -43,9 +44,8 @@
                 "parameter": "temperature",
                 "height": 212,
                 "width": 34,
-                "depths": [],
-                "depth": 1,
                 "display": "raster",
+                "depth": true,
                 "simpleline": true,
                 "temperature": true,
                 "options": {
@@ -64,9 +64,8 @@
                 "parameter": "velocity",
                 "height": 212,
                 "width": 34,
-                "depths": [],
-                "depth": 1,
                 "display": "streamlines",
+                "depth": true,
                 "options": {
                     "paths": 1000,
                     "color": "white",
