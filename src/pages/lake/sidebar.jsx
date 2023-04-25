@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import DatePicker from "react-datepicker";
 import SimpleLine from "../../components/d3/simpleline";
+import LayerSettings from "./layersettings";
 import Translate from "../../translations.json";
 import { formatTime, formatDateLong } from "./functions";
 import temperature_icon from "../../img/temperature.png";
@@ -124,7 +125,8 @@ class ActiveApps extends Component {
 
 class Selection extends Component {
   render() {
-    var { selection, layers, images, language, addLayer } = this.props;
+    var { selection, layers, images, language, addLayer, updateOptions } =
+      this.props;
     var parameters = [...new Set(layers.map((l) => l.properties.parameter))];
     if (selection === false) {
       return;
@@ -151,8 +153,8 @@ class Selection extends Component {
                         />
                       </div>
                       <div className="text">
-                        3D Lake Model
-                        <div className="type">delft3d-flow</div>
+                        {Translate[l.type][language]}
+                        <div className="type">{l.properties.model}</div>
                       </div>
                     </div>
                   ))}
@@ -165,6 +167,10 @@ class Selection extends Component {
       return (
         <div className="selection">
           <div className="title">{Translate.settings[language]}</div>
+          <LayerSettings
+            layer={layers.find((l) => l.id === selection)}
+            updateOptions={updateOptions}
+          />
         </div>
       );
     }
@@ -198,6 +204,7 @@ class Sidebar extends Component {
       addLayer,
       minDate,
       maxDate,
+      updateOptions,
     } = this.props;
     var { images } = this.state;
     return (
@@ -275,6 +282,7 @@ class Sidebar extends Component {
           images={images}
           language={language}
           addLayer={addLayer}
+          updateOptions={updateOptions}
         />
       </React.Fragment>
     );

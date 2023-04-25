@@ -327,6 +327,12 @@
       ]
     }
   },
+  "alplakes_hydrodynamic": {
+    "EN": "3D Lake Model",
+    "DE": "3D-Modell des Sees",
+    "FR": "Modèle de lac 3D",
+    "IT": "Modello 3D del lago"
+  },
   "demo": {
     "EN": "",
     "DE": "",

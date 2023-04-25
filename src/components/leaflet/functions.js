@@ -198,6 +198,7 @@ const downloadAlplakesHydrodynamicParameter = async (
     .map((g) => g.split(",").map((s) => parseFloat(s)));
 
   var simpleline = { x: [], y: [] };
+  var bounds = { min: [], max: [] };
 
   for (
     var i = 0;
@@ -211,12 +212,17 @@ const downloadAlplakesHydrodynamicParameter = async (
       i * (layer.properties.height + 1) + 1,
       (i + 1) * (layer.properties.height + 1)
     );
+    var data_flat = data.flat();
+    bounds.min.push(d3.min(data_flat));
+    bounds.max.push(d3.max(data_flat));
     setNested(dataStore, [...path, date], data);
     if ("simpleline" in layer.properties) {
-      simpleline.y.push(d3.mean(data.flat()));
+      simpleline.y.push(d3.mean(data_flat));
       simpleline.x.push(parseInt(date));
     }
   }
+  layer.properties.options.min = d3.min(bounds.min);
+  layer.properties.options.max = d3.max(bounds.max);
   return simpleline;
 };
 
@@ -290,6 +296,11 @@ const plotAlplakesHydrodynamicRaster = (
     if ("unit" in layer.properties) {
       options["unit"] = layer.properties.unit;
     }
+    if ("opacity" in layer.properties.options) {
+      options["opacity"] = layer.properties.options.opacity;
+    } else {
+      options["opacity"] = 1;
+    }
   }
   var leaflet_layer = new L.Raster(geometry, data, options).addTo(map);
   setNested(layerStore, path, leaflet_layer);
@@ -321,6 +332,11 @@ const plotAlplakesHydrodynamicStreamlines = (
     }
     if ("unit" in layer.properties) {
       options["unit"] = layer.properties.unit;
+    }
+    if ("opacity" in layer.properties.options) {
+      options["opacity"] = layer.properties.options.opacity;
+    } else {
+      options["opacity"] = 1;
     }
   }
   var leaflet_layer = new L.Streamlines(geometry, data, options).addTo(map);

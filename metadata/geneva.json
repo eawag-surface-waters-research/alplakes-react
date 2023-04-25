@@ -70,7 +70,7 @@
           "duration": 10,
           "maxAge": 80,
           "velocityScale": 0.01,
-          "opacity": 0.5
+          "opacity": 0.7
         }
       }
     }

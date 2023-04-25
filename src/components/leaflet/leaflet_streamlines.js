@@ -400,11 +400,9 @@ L.Streamlines = (L.Layer ? L.Layer : L.Class).extend({
       return null;
     } else {
       let t = this._transformationMatrix[index[0]][index[1]];
-      var u = this._data[t[0]][t[1]]
-      var v = this._data[t[0]][t[1] + this._dataWidth]
-      var magnitude = Math.abs(
-        Math.sqrt(Math.pow(u, 2) + Math.pow(v, 2))
-      );
+      var u = this._data[t[0]][t[1]];
+      var v = this._data[t[0]][t[1] + this._dataWidth];
+      var magnitude = Math.abs(Math.sqrt(Math.pow(u, 2) + Math.pow(v, 2)));
       let deg = Math.round(
         (Math.atan2(u / magnitude, v / magnitude) * 180) / Math.PI
       );

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Basemap from "../../components/leaflet/basemap";
 import Slider from "../../components/sliders/slider";
+import Colorbar from "../../components/colors/colorbar";
 import Translate from "../../translations.json";
 import next from "../../img/next.svg";
 import settings_icon from "../../img/settings.svg";
@@ -11,13 +12,115 @@ import CONFIG from "../../config.json";
 import { formatDate, formatTime } from "./functions";
 import "./lake.css";
 
+class Legend extends Component {
+  render() {
+    var { layers } = this.props;
+    return (
+      <div className="legend">
+        {layers
+          .filter((l) =>
+            ["min", "max", "palette"].every((key) =>
+              Object.keys(l.properties.options).includes(key)
+            )
+          )
+          .map((l) => (
+            <Colorbar
+              min={l.properties.options.min}
+              max={l.properties.options.max}
+              palette={l.properties.options.palette}
+              unit={l.properties.unit}
+              key={l.id}
+            />
+          ))}
+      </div>
+    );
+  }
+}
+
+class Settings extends Component {
+  render() {
+    var {
+      settings,
+      timestep,
+      setTimestep,
+      timeout,
+      setTimeout,
+      basemap,
+      setBasemap,
+      legend,
+      toggleLegend,
+    } = this.props;
+    return (
+      <div
+        className={settings ? "settings-modal" : "settings-modal hidden"}
+        id="settings"
+      >
+        <table>
+          <tbody>
+            <tr>
+              <td></td>
+              <td>Step Interval</td>
+              <td className="settings-input">
+                <select value={timestep} onChange={setTimestep}>
+                  <option value={600000}>10 Mins</option>
+                  <option value={3600000}>1 Hour</option>
+                  <option value={10800000}>3 Hours</option>
+                  <option value={86400000}>1 Day</option>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td></td>
+              <td>Animation Speed</td>
+              <td className="settings-input">
+                <input type="number" value={timeout} onChange={setTimeout} />
+              </td>
+            </tr>
+            <tr>
+              <td></td>
+              <td>Basemap</td>
+              <td className="settings-input">
+                <select value={basemap} onChange={setBasemap}>
+                  {Object.keys(CONFIG.basemaps).map((b) => (
+                    <option value={b} key={b}>
+                      {CONFIG.basemaps[b].title}
+                    </option>
+                  ))}
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td></td>
+              <td>Legend</td>
+              <td className="settings-input">
+                <label className="switch">
+                  <input
+                    type="checkbox"
+                    checked={legend}
+                    onChange={toggleLegend}
+                  />
+                  <span className="slider round"></span>
+                </label>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    );
+  }
+}
+
 class Media extends Component {
   state = {
     settings: false,
+    legend: true,
   };
 
   toggleSettings = () => {
     this.setState({ settings: !this.state.settings });
+  };
+  toggleLegend = () => {
+    this.setState({ legend: !this.state.legend });
   };
   escFunction = (event) => {
     if (event.key === "Escape") {
@@ -63,58 +166,30 @@ class Media extends Component {
       setBasemap,
       fullscreen,
       toggleFullscreen,
+      layers,
     } = this.props;
-    var { settings } = this.state;
+    var { settings, legend } = this.state;
     return (
       <div className="map-component">
         <div className="lake-name">
           {"name" in metadata && metadata.name[language]}
         </div>
+        {legend && <Legend layers={layers} />}
         <div className="viewport">
           <Basemap {...this.props} />
         </div>
         <div className="gradient" />
-        <div
-          className={settings ? "settings-modal" : "settings-modal hidden"}
-          id="settings"
-        >
-          <table>
-            <tbody>
-              <tr>
-                <td></td>
-                <td>Step Interval</td>
-                <td className="settings-input">
-                  <select value={timestep} onChange={setTimestep}>
-                    <option value={600000}>10 Mins</option>
-                    <option value={3600000}>1 Hour</option>
-                    <option value={10800000}>3 Hours</option>
-                    <option value={86400000}>1 Day</option>
-                  </select>
-                </td>
-              </tr>
-              <tr>
-                <td></td>
-                <td>Animation Speed</td>
-                <td className="settings-input">
-                  <input type="number" value={timeout} onChange={setTimeout} />
-                </td>
-              </tr>
-              <tr>
-                <td></td>
-                <td>Basemap</td>
-                <td className="settings-input">
-                  <select value={basemap} onChange={setBasemap}>
-                    {Object.keys(CONFIG.basemaps).map((b) => (
-                      <option value={b} key={b}>
-                        {CONFIG.basemaps[b].title}
-                      </option>
-                    ))}
-                  </select>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+        <Settings
+          settings={settings}
+          timestep={timestep}
+          setTimestep={setTimestep}
+          timeout={timeout}
+          setTimeout={setTimeout}
+          basemap={basemap}
+          setBasemap={setBasemap}
+          legend={legend}
+          toggleLegend={this.toggleLegend}
+        />
         <div className="playback">
           <div className="slider">
             <Slider

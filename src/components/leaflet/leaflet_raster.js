@@ -8,7 +8,7 @@ L.Raster = L.Layer.extend({
     opacity: 1,
     min: "null",
     max: "null",
-    tooltipSensitivity: 1000,
+    tooltipSensitivity: 500,
     palette: [
       { color: [255, 255, 255], point: 0 },
       { color: [0, 0, 0], point: 1 },
@@ -24,6 +24,11 @@ L.Raster = L.Layer.extend({
   onAdd: function (map) {
     this._map = map;
     this._raster = L.layerGroup().addTo(map);
+    this._raster.on('layeradd', function (event) {
+      if (event.layer instanceof L.Canvas) {
+        this._canvas = event.layer._canvas;
+      }
+    });
     this.plotPolygons();
   },
   onRemove: function (map) {
@@ -32,6 +37,7 @@ L.Raster = L.Layer.extend({
   update: function (data, options) {
     this._data = data;
     L.Util.setOptions(this, options);
+    console.log(this._canvas)
     this._raster.clearLayers();
     this.plotPolygons();
     this._map.invalidateSize();

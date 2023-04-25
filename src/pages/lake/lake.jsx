@@ -218,6 +218,13 @@ class Lake extends Component {
     }
   };
 
+  updateOptions = (id, options) => {
+    var { layers, updates } = this.state;
+    updates.push({ event: "updateLayer", id: id });
+    layers.find((l) => l.id === id).properties.options = options;
+    this.setState({ layers, updates });
+  };
+
   componentDidUpdate() {
     var {
       play,
@@ -349,6 +356,7 @@ class Lake extends Component {
                 setSelection={this.setSelection}
                 setPeriod={this.setPeriod}
                 setDepth={this.setDepth}
+                updateOptions={this.updateOptions}
               />
             )}
             {this.state.error === "name" && (
