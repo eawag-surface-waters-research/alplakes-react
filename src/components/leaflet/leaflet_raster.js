@@ -3,9 +3,12 @@ import { min, max } from "d3";
 
 L.Raster = L.Layer.extend({
   options: {
+    parameter: "",
+    unit: "",
     opacity: 1,
     min: "null",
     max: "null",
+    tooltipSensitivity: 1000,
     palette: [
       { color: [255, 255, 255], point: 0 },
       { color: [0, 0, 0], point: 1 },
@@ -19,7 +22,7 @@ L.Raster = L.Layer.extend({
     if (isNaN(this.options.max)) this.options.max = max(data.flat());
   },
   onAdd: function (map) {
-    this._map = map
+    this._map = map;
     this._raster = L.layerGroup().addTo(map);
     this.plotPolygons();
   },
@@ -29,9 +32,26 @@ L.Raster = L.Layer.extend({
   update: function (data, options) {
     this._data = data;
     L.Util.setOptions(this, options);
-    this._raster.clearLayers()
+    this._raster.clearLayers();
     this.plotPolygons();
-    this._map.invalidateSize()
+    this._map.invalidateSize();
+  },
+  getFeatureValue: function (e) {
+    var latlng = e.latlng;
+    var closest = null;
+    var closestDistance = Infinity;
+    this._raster.eachLayer(function (polygon) {
+      var distance = latlng.distanceTo(polygon.getCenter());
+      if (distance < closestDistance) {
+        closest = polygon;
+        closestDistance = distance;
+      }
+    });
+    if (closest && closestDistance < this.options.tooltipSensitivity) {
+      return closest.options.title + this.options.unit;
+    } else {
+      return null;
+    }
   },
   plotPolygons: function () {
     var y = this._data.length;

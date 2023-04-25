@@ -284,6 +284,12 @@ const plotAlplakesHydrodynamicRaster = (
         COLORS[layer.properties.options.paletteName];
       options["palette"] = COLORS[layer.properties.options.paletteName];
     }
+    if ("parameter" in layer.properties) {
+      options["parameter"] = layer.properties.parameter;
+    }
+    if ("unit" in layer.properties) {
+      options["unit"] = layer.properties.unit;
+    }
   }
   var leaflet_layer = new L.Raster(geometry, data, options).addTo(map);
   setNested(layerStore, path, leaflet_layer);
@@ -309,6 +315,12 @@ const plotAlplakesHydrodynamicStreamlines = (
       layer.properties.options.palette =
         COLORS[layer.properties.options.paletteName];
       options["palette"] = COLORS[layer.properties.options.paletteName];
+    }
+    if ("parameter" in layer.properties) {
+      options["parameter"] = layer.properties.parameter;
+    }
+    if ("unit" in layer.properties) {
+      options["unit"] = layer.properties.unit;
     }
   }
   var leaflet_layer = new L.Streamlines(geometry, data, options).addTo(map);

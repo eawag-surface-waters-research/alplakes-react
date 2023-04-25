@@ -603,8 +603,9 @@ svg.leaflet-image-layer.leaflet-interactive path {
 .leaflet-tooltip {
   position: absolute;
   padding: 1px 5px;
-  font-size: 14px;
+  font-size: 12px;
   background-color: #fff;
+  text-align: center;
   /*border: 1px solid #fff;*/
   border-radius: 3px;
   color: #222;

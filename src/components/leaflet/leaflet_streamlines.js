@@ -13,6 +13,8 @@ L.Streamlines = (L.Layer ? L.Layer : L.Class).extend({
     opacity: 1,
     nCols: 200,
     nRows: 200,
+    parameter: "",
+    unit: "",
   },
   initialize: function (geometry, data, options) {
     L.Util.setOptions(this, options);
@@ -390,6 +392,26 @@ L.Streamlines = (L.Layer ? L.Layer : L.Class).extend({
       };
     }
     return click;
+  },
+
+  getFeatureValue: function (e) {
+    let index = this._getIndexAtPoint(e.latlng.lng, e.latlng.lat);
+    if (index === null) {
+      return null;
+    } else {
+      let t = this._transformationMatrix[index[0]][index[1]];
+      var u = this._data[t[0]][t[1]]
+      var v = this._data[t[0]][t[1] + this._dataWidth]
+      var magnitude = Math.abs(
+        Math.sqrt(Math.pow(u, 2) + Math.pow(v, 2))
+      );
+      let deg = Math.round(
+        (Math.atan2(u / magnitude, v / magnitude) * 180) / Math.PI
+      );
+      if (deg < 0) deg = 360 + deg;
+      var value = Math.round(magnitude * 1000) / 1000;
+      return `${value}m/s ${deg}°`;
+    }
   },
 });
 

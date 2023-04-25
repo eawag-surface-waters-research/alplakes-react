@@ -54,6 +54,7 @@
   font-size: 44px;
   z-index: 999;
   color: rgba(255, 255, 255, 0.8);
+  pointer-events: none;
 }
 
 .main .lake .content .primary .map-component .settings-modal {

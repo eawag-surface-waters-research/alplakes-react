@@ -7,6 +7,7 @@ import "./leaflet_floatgeotiff";
 import "./leaflet_colorpicker";
 import "./leaflet_streamlines";
 import "./leaflet_vectorfield";
+import "./leaflet_customtooltip";
 import "./css/leaflet.css";
 
 class Basemap extends Component {
@@ -85,6 +86,7 @@ class Basemap extends Component {
       maxBoundsViscosity: 0.5,
       zoomSnap: 0.25,
       zoomControl: false,
+      showCursorLocation: true
     });
 
     var basemap = L.tileLayer(CONFIG.basemaps["default"].url, {
