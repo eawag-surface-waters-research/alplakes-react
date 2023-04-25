@@ -23,21 +23,25 @@ L.Raster = L.Layer.extend({
   },
   onAdd: function (map) {
     this._map = map;
+    map.on("layeradd", this._addCanvasId, this);
     this._raster = L.layerGroup().addTo(map);
-    this._raster.on('layeradd', function (event) {
-      if (event.layer instanceof L.Canvas) {
-        this._canvas = event.layer._canvas;
-      }
-    });
     this.plotPolygons();
+  },
+  _addCanvasId: function (event) {
+    if (event.layer instanceof L.Canvas) {
+      this._canvas = event.layer._canvas;
+      event.layer._container.style.opacity = this.options.opacity;
+      event.layer._container.setAttribute("id", "leaflet_raster");
+    }
   },
   onRemove: function (map) {
     map.removeLayer(this._raster);
+    map.off("layeradd", this._addCanvasId, this);
   },
   update: function (data, options) {
     this._data = data;
     L.Util.setOptions(this, options);
-    console.log(this._canvas)
+    document.getElementById("leaflet_raster").style.opacity = options.opacity;
     this._raster.clearLayers();
     this.plotPolygons();
     this._map.invalidateSize();
