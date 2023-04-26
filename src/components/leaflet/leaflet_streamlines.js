@@ -112,8 +112,14 @@ L.Streamlines = (L.Layer ? L.Layer : L.Class).extend({
     return { bounds, transformationMatrix };
   },
   update: function (data, options) {
+    var reset = false;
+    if (options.paths !== this.options.paths) {
+      reset = true;
+    }
     L.Util.setOptions(this, options);
+    this._canvas.style["opacity"] = this.options.opacity;
     this._data = data;
+    if (reset) this._reset();
   },
   _reset: function (event) {
     this._stopAnimation();

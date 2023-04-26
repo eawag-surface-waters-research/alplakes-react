@@ -204,7 +204,7 @@ class Lake extends Component {
     if (!layer.active) {
       layer.active = true;
       updates.push({ event: "addLayer", id: id });
-      this.setState({ layers, updates, clickblock: true });
+      this.setState({ layers, updates, clickblock: true, selection: id });
     }
   };
 
@@ -214,7 +214,7 @@ class Lake extends Component {
     if (layer.active) {
       layer.active = false;
       var updates = [{ event: "removeLayer", id: id }];
-      this.setState({ layers, updates });
+      this.setState({ layers, updates, selection: "add" });
     }
   };
 

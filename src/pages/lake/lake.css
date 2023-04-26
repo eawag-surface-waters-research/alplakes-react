@@ -64,6 +64,7 @@
   z-index: 999;
   color: rgba(255, 255, 255, 0.8);
   pointer-events: none;
+  text-shadow: 0px 0px 8px #c1c1c1;
 }
 
 .main .lake .content .primary .map-component .legend {
@@ -410,6 +411,10 @@
   text-align: center;
 }
 
+.main .lake .content .secondary .depth-period select:hover {
+  background-color: #d1d0d0;
+}
+
 .main.dark .lake .content .secondary .depth-period select {
   background-color: rgb(30 30 30);
   color: #e5e5e5;
@@ -731,23 +736,71 @@
 .main .lake .content .secondary .selection .layer-settings {
   font-size: 14px;
   color: #b6afaf;
+  margin-top: 12px;
+}
+
+.main .lake .content .secondary .selection .layer-settings .switch {
+  margin-top: -25px;
+  margin-bottom: 18px;
 }
 
 .main .lake .content .secondary .selection .layer-settings .setting {
-  padding: 0px 0px 8px 0px;
+  padding: 0px 0px 18px 0px;
+  display: inline-block;
+  width: 96%;
+  margin: 0 2%;
+}
+
+.main .lake .content .secondary .selection .layer-settings .setting.half {
+  width: 46%;
+  margin: 0 2%;
+}
+
+.main .lake .content .secondary .selection .layer-settings .setting .label {
+  padding: 0px 0px 4px 0px;
 }
 
 .main .lake .content .secondary .selection .layer-settings input[type=number] {
   width: 100%;
   font-size: 16px;
-  border-radius: 16px;
+  border-radius: 8px;
   border: 1px solid #000;
-  padding: 2px 10px;
+  padding: 4px 10px;
   box-sizing: border-box;
+}
+
+.main .lake .content .secondary .selection .layer-settings input[type=number].with-button {
+  width: calc(100% - 70px);
+}
+
+.main .lake .content .secondary .selection .layer-settings input[type=color] {
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: 8px;
+  border: none;
+  padding: 0;
+  height: 24px;
+  background-color: #e3e3e3;
 }
 
 .main .lake .content .secondary .selection .layer-settings input[type=range] {
   width: 100%;
   padding: 2px 10px;
   box-sizing: border-box;
+}
+
+.main .lake .content .secondary .selection .layer-settings button {
+  display: inline-block;
+  margin-left: 8px;
+  border-radius: 8px;
+  transition: all .2s ease-in-out;
+  border: none;
+  background-color: #e3e3e3;
+  cursor: pointer;
+  padding: 5px 12px;
+  font-size: 14px;
+}
+
+.main .lake .content .secondary .selection .layer-settings button:hover {
+  background-color: #d1d0d0;
 }

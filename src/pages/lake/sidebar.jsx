@@ -164,13 +164,15 @@ class Selection extends Component {
         </div>
       );
     } else if (Number.isInteger(selection)) {
+      var layer = layers.find((l) => l.id === selection);
       return (
         <div className="selection">
-          <div className="title">{Translate.settings[language]}</div>
-          <LayerSettings
-            layer={layers.find((l) => l.id === selection)}
-            updateOptions={updateOptions}
-          />
+          <div className="title">
+            {Translate[layer.properties.parameter][language] +
+              " " +
+              Translate.settings[language]}
+          </div>
+          <LayerSettings layer={layer} updateOptions={updateOptions} />
         </div>
       );
     }

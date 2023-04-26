@@ -64,7 +64,7 @@
         "depth": true,
         "options": {
           "paths": 5000,
-          "color": "white",
+          "color": "#ffffff",
           "width": 0.5,
           "fade": 0.97,
           "duration": 10,

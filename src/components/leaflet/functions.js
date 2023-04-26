@@ -221,8 +221,12 @@ const downloadAlplakesHydrodynamicParameter = async (
       simpleline.x.push(parseInt(date));
     }
   }
-  layer.properties.options.min = d3.min(bounds.min);
-  layer.properties.options.max = d3.max(bounds.max);
+  var min = d3.min(bounds.min);
+  var max = d3.max(bounds.max);
+  layer.properties.options.min = min;
+  layer.properties.options.max = max;
+  layer.properties.options.dataMin = min;
+  layer.properties.options.dataMax = max;
   return simpleline;
 };
 
@@ -378,7 +382,9 @@ const updateAlplakesHydrodynamic = (
     }
   }
   var leaflet_layer = getNested(layerStore, layer_path);
-  leaflet_layer.update(newData, options);
+  if (leaflet_layer !== null) {
+    leaflet_layer.update(newData, options);
+  }
 };
 
 const removeAlplakesHydrodynamic = (layer, layerStore, map) => {

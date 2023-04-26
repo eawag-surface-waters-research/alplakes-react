@@ -28,13 +28,13 @@ class ColorRamp extends Component {
     }
   };
 
-  selectColorRamp = (index) => {
-    this.setState({ selected: index, open: false });
+  selectColorRamp = (selected) => {
+    this.setState({ selected, open: false });
     if ("onChange" in this.props) {
       var { palettes } = this.state;
       var { onChange } = this.props;
-      var ramp = JSON.parse(JSON.stringify(palettes[index].data));
-      onChange(ramp);
+      var palette = JSON.parse(JSON.stringify(palettes[selected]));
+      onChange({ name: selected, palette });
     }
   };
 
@@ -42,7 +42,9 @@ class ColorRamp extends Component {
     if (colors) {
       var lineargradient = [];
       for (var color of colors) {
-        lineargradient.push(`rgb(${color.color.join(",")}) ${color.point * 100}%`);
+        lineargradient.push(
+          `rgb(${color.color.join(",")}) ${color.point * 100}%`
+        );
       }
       return `linear-gradient(90deg, ${lineargradient.join(", ")})`;
     }
@@ -61,9 +63,9 @@ class ColorRamp extends Component {
     var selectStyle = {
       background: this.linearGradient(palettes[selected]),
     };
-    if ("palette" in this.props) {
+    if ("value" in this.props) {
       selectStyle = {
-        background: this.linearGradient(this.props.palette),
+        background: this.linearGradient(this.props.value),
       };
     }
 
@@ -73,9 +75,7 @@ class ColorRamp extends Component {
           className="colorramp-select"
           onClick={this.toggle}
           style={selectStyle}
-        >
-          <div className="colorramp-arrow">{open ? "<" : ">"}</div>
-        </div>
+        ></div>
         <div
           className={open ? "colorramp-dropdown" : "colorramp-dropdown hide"}
         >
