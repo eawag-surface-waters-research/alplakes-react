@@ -19,7 +19,6 @@ import "./home.css";
 class PlaceHolder extends Component {
   render() {
     var { number } = this.props;
-    console.log();
     return (
       <React.Fragment>
         {[...Array(number).keys()].map((a) => (
@@ -121,7 +120,7 @@ class Home extends Component {
   };
   async componentDidMount() {
     const { data: list } = await axios.get(
-      CONFIG.alplakes_bucket + "list_all.json"
+      CONFIG.alplakes_bucket + "list.json"
     );
     this.setState({ list });
   }

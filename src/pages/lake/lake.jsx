@@ -294,7 +294,15 @@ class Lake extends Component {
         }
       } catch (e) {
         console.error(e);
-        this.setState({ error: "api", loading: false, lake_id });
+        alert(
+          "Failed to collect data from the API, please check your internet connection."
+        );
+        this.setState({
+          error: "api",
+          loading: false,
+          lake_id,
+          clickblock: false,
+        });
       }
 
       this.setState({

@@ -656,9 +656,8 @@
   border: 1px solid #b6afaf;
   border-radius: 6px;
   position: relative;
-  margin-top: 6px;
-  margin-bottom: 14px;
   padding-top: 4px;
+  margin: 8px 6px 18px 8px;
 }
 
 .main .lake .content .secondary .selection .parameter .header {
@@ -676,7 +675,7 @@
 }
 
 .main .lake .content .secondary .selection .parameter .layers .layer {
-  margin: 6px;
+  margin: 12px;
   padding: 6px 10px 6px 6px;
   background-color: #e3e3e3;
   border-radius: 8px;
@@ -760,11 +759,15 @@
   padding: 0px 0px 4px 0px;
 }
 
+.main.dark .lake .content .secondary .selection .layer-settings input {
+color: white;
+background-color: rgb(30 30 30);
+}
+
 .main .lake .content .secondary .selection .layer-settings input[type=number] {
   width: 100%;
   font-size: 16px;
-  border-radius: 8px;
-  border: 1px solid #000;
+  border: none;
   padding: 4px 10px;
   box-sizing: border-box;
 }
@@ -776,7 +779,6 @@
 .main .lake .content .secondary .selection .layer-settings input[type=color] {
   width: 100%;
   box-sizing: border-box;
-  border-radius: 8px;
   border: none;
   padding: 0;
   height: 24px;
