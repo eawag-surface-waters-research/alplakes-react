@@ -71,9 +71,17 @@ class Settings extends Component {
             </tr>
             <tr>
               <td></td>
-              <td>Animation Speed</td>
+              <td>Playback Speed</td>
               <td className="settings-input">
-                <input type="number" value={timeout} onChange={setTimeout} />
+                <select value={timeout} onChange={setTimeout}>
+                  <option value={1000}>x 0.1</option>
+                  <option value={500}>x 0.2</option>
+                  <option value={200}>x 0.5</option>
+                  <option value={100}>Normal</option>
+                  <option value={50}>x 2</option>
+                  <option value={20}>x 5</option>
+                  <option value={10}>x 10</option>
+                </select>
               </td>
             </tr>
             <tr>

@@ -104,10 +104,10 @@
     "IT": "Temperatura"
   },
   "velocity": {
-    "EN": "Velocity",
-    "DE": "Schnelle",
-    "FR": "Rapidité",
-    "IT": "Velocità"
+    "EN": "Current",
+    "DE": "Strömung",
+    "FR": "Courant",
+    "IT": "Corrente"
   },
   "play": {
     "EN": "Play (Spacebar)",

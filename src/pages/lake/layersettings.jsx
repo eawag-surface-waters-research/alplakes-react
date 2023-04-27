@@ -90,35 +90,40 @@ class Raster extends Component {
 
   render() {
     var { _min, _max } = this.state;
-    var { palette, opacity } = this.props.options;
+    var { palette, paletteName, opacity } = this.props.options;
     return (
       <div className="layer-settings">
         <div className="setting half">
           <div className="label">Min</div>
-          <input
-            type="number"
-            className="with-button"
-            value={_min}
-            step="0.1"
-            onChange={this.setMin}
-            id="raster_min"
-          />
-          <button onClick={this.resetMin}>Reset</button>
+          <div>
+            <input
+              type="number"
+              className="with-button"
+              value={_min}
+              step="0.1"
+              onChange={this.setMin}
+              id="raster_min"
+            />
+            <button onClick={this.resetMin}>Reset</button>
+          </div>
         </div>
         <div className="setting half">
           <div className="label">Max</div>
-          <input
-            type="number"
-            className="with-button"
-            value={_max}
-            step="0.1"
-            onChange={this.setMax}
-            id="raster_max"
-          />
-          <button onClick={this.resetMax}>Reset</button>
+          <div>
+            <input
+              type="number"
+              className="with-button"
+              value={_max}
+              step="0.1"
+              onChange={this.setMax}
+              id="raster_max"
+            />
+            <button onClick={this.resetMax}>Reset</button>
+          </div>
         </div>
         <div className="setting">
           <div className="label">Opacity</div>
+          <div className="value">{opacity}</div>
           <input
             type="range"
             min="0"
@@ -130,6 +135,7 @@ class Raster extends Component {
         </div>
         <div className="setting">
           <div className="label">Palette</div>
+          <div className="value">{paletteName}</div>
           <ColorRamp onChange={this.setPalette} value={palette} />
         </div>
       </div>
@@ -203,6 +209,15 @@ class Streamlines extends Component {
     updateOptions(id, options);
   };
 
+  setBubble = (range, bubble) => {
+    const val = range.value;
+    const min = range.min ? range.min : 0;
+    const max = range.max ? range.max : 100;
+    const newVal = Number(((val - min) * 100) / (max - min));
+    bubble.innerHTML = val;
+    bubble.style.left = `calc(${newVal}% + (${8 - newVal * 0.15}px))`;
+  };
+
   componentDidMount() {
     window.addEventListener("click", this.updatePaths);
     document
@@ -241,6 +256,9 @@ class Streamlines extends Component {
         </div>
         <div className="setting half">
           <div className="label">Speed</div>
+          <div className="value">
+            x {parseInt(Math.round(velocityScale * 10 ** 4) * 1000)}
+          </div>
           <input
             type="range"
             min="0"
@@ -248,10 +266,11 @@ class Streamlines extends Component {
             max="1"
             value={this.convertSpeed(velocityScale)}
             onChange={this.setSpeed}
-          ></input>
+          />
         </div>
         <div className="setting half">
           <div className="label">Opacity</div>
+          <div className="value">{opacity}</div>
           <input
             type="range"
             min="0"

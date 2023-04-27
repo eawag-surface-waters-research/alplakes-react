@@ -13,29 +13,32 @@ class Period extends Component {
   state = {
     period: this.props.period,
     maxPeriod: 21,
+    maxPeriodDate: false,
+  };
+  addDays = (date, days) => {
+    var result = new Date(date);
+    result.setDate(result.getDate() + days);
+    return result;
   };
   setDateRange = (period) => {
     var { maxPeriod } = this.state;
     var { setPeriod } = this.props;
     if (period[0] !== null && period[1] !== null) {
-      if ((period[1] - period[0]) / 86400000 > maxPeriod) {
-        period = this.props.period;
-        window.alert(`Please select a maximum of ${maxPeriod} days.`);
-        this.setState({ period });
-      } else {
-        setPeriod([
-          Math.floor(period[0].getTime()),
-          Math.floor(period[1].getTime()),
-        ]);
-        this.setState({ period });
-      }
-    } else {
-      this.setState({ period });
+      setPeriod([
+        Math.floor(period[0].getTime()),
+        Math.floor(period[1].getTime()),
+      ]);
+      this.setState({ period, maxPeriodDate: false });
+    } else if (period[0] !== null && period[1] === null) {
+      this.setState({
+        period,
+        maxPeriodDate: this.addDays(period[0], maxPeriod),
+      });
     }
   };
   render() {
     var { language, minDate, maxDate } = this.props;
-    var { period } = this.state;
+    var { period, maxPeriodDate } = this.state;
     const locale = {
       localize: {
         day: (n) => Translate.axis[language].shortDays[n],
@@ -54,7 +57,7 @@ class Period extends Component {
           this.setDateRange(update);
         }}
         minDate={minDate}
-        maxDate={maxDate}
+        maxDate={maxPeriodDate ? maxPeriodDate : maxDate}
         dateFormat="dd/MM/yyyy"
         locale={locale}
       />
@@ -250,7 +253,7 @@ class Sidebar extends Component {
           <select value={depth} onChange={setDepth}>
             {depths.map((d) => (
               <option value={d} key={d}>
-                {d + " m"}
+                {d}
               </option>
             ))}
           </select>
@@ -262,7 +265,7 @@ class Sidebar extends Component {
             maxDate={maxDate}
           />
           <div className="labels">
-            <div className="depth">{Translate.depth[language]}</div>
+            <div className="depth">{Translate.depth[language]} (m)</div>
             <div className="start">{Translate.start[language]}</div>
             <div className="end">{Translate.end[language]}</div>
           </div>

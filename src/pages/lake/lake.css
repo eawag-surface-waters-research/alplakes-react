@@ -648,7 +648,6 @@
 
 .main .lake .content .secondary .selection .title {
   text-align: right;
-  color: #b6afaf;
   font-size: 18px;
 }
 
@@ -757,11 +756,16 @@
 
 .main .lake .content .secondary .selection .layer-settings .setting .label {
   padding: 0px 0px 4px 0px;
+  display: inline-block;
+}
+
+.main .lake .content .secondary .selection .layer-settings .setting .value {
+  float: right;
 }
 
 .main.dark .lake .content .secondary .selection .layer-settings input {
-color: white;
-background-color: rgb(30 30 30);
+  color: white;
+  background-color: rgb(30 30 30);
 }
 
 .main .lake .content .secondary .selection .layer-settings input[type=number] {
@@ -787,7 +791,7 @@ background-color: rgb(30 30 30);
 
 .main .lake .content .secondary .selection .layer-settings input[type=range] {
   width: 100%;
-  padding: 2px 10px;
+  padding: 2px 0px;
   box-sizing: border-box;
 }
 
