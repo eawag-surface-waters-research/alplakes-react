@@ -9,6 +9,7 @@ L.Raster = L.Layer.extend({
     min: "null",
     max: "null",
     tooltipSensitivity: 500,
+    interpolate: 0,
     palette: [
       { color: [255, 255, 255], point: 0 },
       { color: [0, 0, 0], point: 1 },

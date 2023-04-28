@@ -8,27 +8,34 @@
   width: 100%;
   height: 25px;
   text-align: center;
-  color: transparent;
   line-height: 25px;
   font-size: 12px;
   cursor: pointer;
   margin: 0 0 4px 0;
-  font-weight: 700;
+  text-shadow: 0px 0px 3px black;
+  color: white;
 }
 
 .colorramp-option:hover {
-  color: black;
+  font-size: 13px;
 }
 
 .colorramp-dropdown {
   width: 100%;
-  max-height: 100px;
+  max-height: 200px;
   overflow-y: auto;
-  background-color: transparent;
+  background-color: #f2f2f2;
+  position: absolute;
+  top: -207px;
+  transition: all .8s 0s ease;
+}
+
+.dark .colorramp-dropdown {
+  background-color: #272727;
 }
 
 .colorramp-dropdown.hide {
-  display: none;
+  display: none; 
 }
 
 .colorramp-select {
