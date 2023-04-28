@@ -1,14 +1,53 @@
 .main .about {
     width: 100%;
-    max-width: 1200px;
+    max-width: 700px;
     margin: auto;
-    margin-top: 100px;
-    background-color: rgba(0, 0, 0, 0.05);
+    margin-top: 170px;
+    padding: 18px 22px;
     border-radius: 12px;
-    padding: 24px 22px;
     box-sizing: border-box;
 }
 
 .main.dark .about {
     background-color: rgba(255, 255, 255, 0.1);
+}
+
+.main.dark .about {
+    color: #e5e5e5;
+}
+
+.main .about a {
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+}
+
+.main.dark .about a {
+    color: #e5e5e5;
+}
+
+.main .about p {
+    margin-bottom: 12px;
+}
+
+.main .about .title {
+    color: #3b4151;
+    font-family: sans-serif;
+    font-size: 36px;
+    font-weight: bold;
+    padding: 8px 0;
+}
+
+.main.dark .about .title {
+    color: #e5e5e5;
+}
+
+.main .about .text .repo {
+    padding: 8px 0;
+}
+
+.main .about .images img {
+    border-radius: 12px;
+    height: 63px;
+    padding: 12px;
 }

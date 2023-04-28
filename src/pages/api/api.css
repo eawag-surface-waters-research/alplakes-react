@@ -3,14 +3,9 @@
   max-width: 1200px;
   margin: auto;
   margin-top: 100px;
-  background-color: rgba(0, 0, 0, 0.05);
   border-radius: 12px;
   padding: 2px 22px;
   box-sizing: border-box;
-}
-
-.main.dark .api-container {
-  background-color: rgba(255, 255, 255, 0.1);
 }
 
 .main.dark .api-container .swagger-ui {
@@ -19,4 +14,8 @@
 
 .main.dark .api-container .swagger-ui .highlight-code {
   filter: invert(100%) hue-rotate(180deg);
+}
+
+.main.dark .api-container .swagger-ui .info {
+  margin: 18px 0;
 }
