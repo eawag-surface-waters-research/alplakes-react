@@ -16,6 +16,6 @@
   filter: invert(100%) hue-rotate(180deg);
 }
 
-.main.dark .api-container .swagger-ui .info {
+.main .api-container .swagger-ui .info {
   margin: 18px 0;
 }

@@ -7,15 +7,9 @@
             "FR": "Le Léman",
             "IT": "Lago Lemano"
         },
-        "type": {
-            "EN": "Glacial lake",
-            "DE": "Gletschersee",
-            "FR": "Lac glaciaire",
-            "IT": "Lago glaciale"
-        },
         "area": 580,
-        "depth": 154,
-        "maxdepth": 310,
+        "ave_depth": 154,
+        "max_depth": 310,
         "elevation": 372,
         "latitude": 46.45,
         "longitude": 6.5,
@@ -37,15 +31,9 @@
             "FR": "Lac de Zurich",
             "IT": "Lago di Zurigo"
         },
-        "type": {
-            "EN": "Glacial lake",
-            "DE": "Gletschersee",
-            "FR": "Lac glaciaire",
-            "IT": "Lago glaciale"
-        },
         "area": 89,
-        "depth": 49,
-        "maxdepth": 104,
+        "ave_depth": 49,
+        "max_depth": 104,
         "elevation": 406,
         "latitude": 47.24,
         "longitude": 8.68,
@@ -66,15 +54,9 @@
             "FR": "Lac de Bienne",
             "IT": "Lago di Bienne"
         },
-        "type": {
-            "EN": "Glacial lake",
-            "DE": "Gletschersee",
-            "FR": "Lac glaciaire",
-            "IT": "Lago glaciale"
-        },
         "area": 39.3,
-        "depth": 28,
-        "maxdepth": 74,
+        "ave_depth": 28,
+        "max_depth": 74,
         "elevation": 429,
         "latitude": 47.08,
         "longitude": 7.17,
@@ -95,15 +77,9 @@
             "FR": "Lac de Greifen",
             "IT": "Lago di Greifen"
         },
-        "type": {
-            "EN": "Glacial lake",
-            "DE": "Gletschersee",
-            "FR": "Lac glaciaire",
-            "IT": "Lago glaciale"
-        },
         "area": 8.45,
-        "depth": 18,
-        "maxdepth": 32,
+        "ave_depth": 18,
+        "max_depth": 32,
         "elevation": 435,
         "latitude": 47.36,
         "longitude": 8.68,
@@ -124,15 +100,9 @@
             "FR": "Lac de Garde",
             "IT": "Lago di Garda"
         },
-        "type": {
-            "EN": "Glacial lake",
-            "DE": "Gletschersee",
-            "FR": "Lac glaciaire",
-            "IT": "Lago glaciale"
-        },
         "area": 370,
-        "depth": 136,
-        "maxdepth": 346,
+        "ave_depth": 136,
+        "max_depth": 346,
         "elevation": 65,
         "latitude": 45.58,
         "longitude": 10.63,
@@ -152,15 +122,9 @@
             "FR": "Lac de Lugano",
             "IT": "Lago di Lugano"
         },
-        "type": {
-            "EN": "Glacial lake",
-            "DE": "Gletschersee",
-            "FR": "Lac glaciaire",
-            "IT": "Lago glaciale"
-        },
         "area": 48.7,
-        "depth": 134,
-        "maxdepth": 288,
+        "ave_depth": 134,
+        "max_depth": 288,
         "elevation": 271,
         "latitude": 45.99,
         "longitude": 8.97,
@@ -181,15 +145,9 @@
             "FR": "Lac de Morat",
             "IT": "Lago di Morat"
         },
-        "type": {
-            "EN": "Glacial lake",
-            "DE": "Gletschersee",
-            "FR": "Lac glaciaire",
-            "IT": "Lago glaciale"
-        },
         "area": 22.8,
-        "depth": 24,
-        "maxdepth": 45,
+        "ave_depth": 24,
+        "max_depth": 45,
         "elevation": 429,
         "latitude": 46.93,
         "longitude": 7.08,
@@ -209,15 +167,9 @@
             "FR": "Lac de Caldonazzo",
             "IT": "Lago di Caldonazzo"
         },
-        "type": {
-            "EN": "Glacial lake",
-            "DE": "Gletschersee",
-            "FR": "Lac glaciaire",
-            "IT": "Lago glaciale"
-        },
         "area": 5.38,
-        "depth": 26,
-        "maxdepth": 49,
+        "ave_depth": 26,
+        "max_depth": 49,
         "elevation": 449,
         "latitude": 46.02,
         "longitude": 11.24,
@@ -237,15 +189,9 @@
             "FR": "Lac d'Ägeri",
             "IT": "Lago di Ägeri"
         },
-        "type": {
-            "EN": "Glacial lake",
-            "DE": "Gletschersee",
-            "FR": "Lac glaciaire",
-            "IT": "Lago glaciale"
-        },
         "area": 7.3,
-        "depth": 26,
-        "maxdepth": 49,
+        "ave_depth": 26,
+        "max_depth": 49,
         "elevation": 724,
         "latitude": 47.125,
         "longitude": 8.62,
@@ -265,15 +211,9 @@
             "FR": "Lac de Joux",
             "IT": "Lago di Joux"
         },
-        "type": {
-            "EN": "Glacial lake",
-            "DE": "Gletschersee",
-            "FR": "Lac glaciaire",
-            "IT": "Lago glaciale"
-        },
         "area": 9.5,
-        "depth": 15,
-        "maxdepth": 32,
+        "ave_depth": 15,
+        "max_depth": 32,
         "elevation": 1004,
         "latitude": 46.64,
         "longitude": 6.29,
@@ -293,15 +233,9 @@
             "FR": "Lac de Saint-Moritz",
             "IT": "Lago di Sankt Moritz"
         },
-        "type": {
-            "EN": "Glacial lake",
-            "DE": "Gletschersee",
-            "FR": "Lac glaciaire",
-            "IT": "Lago glaciale"
-        },
         "area": 0.78,
-        "depth": 25,
-        "maxdepth": 44,
+        "ave_depth": 25,
+        "max_depth": 44,
         "elevation": 1800,
         "latitude": 46.495,
         "longitude": 9.845,

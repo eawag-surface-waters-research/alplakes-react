@@ -1,119 +1,108 @@
 [
-    {
-        "key": "geneva",
-        "name": {
-            "EN": "Lake Geneva",
-            "DE": "Genfersee",
-            "FR": "Le Léman",
-            "IT": "Lago Lemano"
-        },
-        "type": {
-            "EN": "Glacial lake",
-            "DE": "Gletschersee",
-            "FR": "Lac glaciaire",
-            "IT": "Lago glaciale"
-        },
-        "area": 580,
-        "depth": 154,
-        "maxdepth": 310,
-        "elevation": 372,
-        "latitude": 46.45,
-        "longitude": 6.5,
-        "flags": [
-            "swiss",
-            "french"
-        ],
-        "tags": [
-            "threed",
-            "satellite"
-        ],
-        "animation": true
+  {
+    "key": "geneva",
+    "name": {
+      "EN": "Lake Geneva",
+      "DE": "Genfersee",
+      "FR": "Le Léman",
+      "IT": "Lago Lemano"
     },
-    {
-        "key": "zurich",
-        "name": {
-            "EN": "Lake Zurich",
-            "DE": "Zürichsee",
-            "FR": "Lac de Zurich",
-            "IT": "Lago di Zurigo"
-        },
-        "type": {
-            "EN": "Glacial lake",
-            "DE": "Gletschersee",
-            "FR": "Lac glaciaire",
-            "IT": "Lago glaciale"
-        },
-        "area": 89,
-        "depth": 49,
-        "maxdepth": 104,
-        "elevation": 406,
-        "latitude": 47.24,
-        "longitude": 8.68,
-        "flags": [
-            "swiss"
-        ],
-        "tags": [
-            "threed",
-            "satellite"
-        ],
-        "animation": true
+    "area": 580,
+    "ave_depth": 154,
+    "max_depth": 310,
+    "elevation": 372,
+    "latitude": 46.45,
+    "longitude": 6.5,
+    "flags": ["swiss", "french"],
+    "tags": ["threed", "satellite"],
+    "animation": true
+  },
+  {
+    "key": "zurich",
+    "name": {
+      "EN": "Lake Zurich",
+      "DE": "Zürichsee",
+      "FR": "Lac de Zurich",
+      "IT": "Lago di Zurigo"
     },
-    {
-        "key": "biel",
-        "name": {
-            "EN": "Lake Biel",
-            "DE": "Bielersee",
-            "FR": "Lac de Bienne",
-            "IT": "Lago di Bienne"
-        },
-        "type": {
-            "EN": "Glacial lake",
-            "DE": "Gletschersee",
-            "FR": "Lac glaciaire",
-            "IT": "Lago glaciale"
-        },
-        "area": 39.3,
-        "depth": 28,
-        "maxdepth": 74,
-        "elevation": 429,
-        "latitude": 47.08,
-        "longitude": 7.17,
-        "flags": [
-            "swiss"
-        ],
-        "tags": [
-            "threed",
-            "satellite"
-        ],
-        "animation": true
+    "area": 89,
+    "ave_depth": 49,
+    "max_depth": 104,
+    "elevation": 406,
+    "latitude": 47.24,
+    "longitude": 8.68,
+    "flags": ["swiss"],
+    "tags": ["threed", "satellite"],
+    "animation": true
+  },
+  {
+    "key": "biel",
+    "name": {
+      "EN": "Lake Biel",
+      "DE": "Bielersee",
+      "FR": "Lac de Bienne",
+      "IT": "Lago di Bienne"
     },
-    {
-        "key": "greifensee",
-        "name": {
-            "EN": "Lake Greifen",
-            "DE": "Greifensee",
-            "FR": "Lac de Greifen",
-            "IT": "Lago di Greifen"
-        },
-        "type": {
-            "EN": "Glacial lake",
-            "DE": "Gletschersee",
-            "FR": "Lac glaciaire",
-            "IT": "Lago glaciale"
-        },
-        "area": 8.45,
-        "depth": 18,
-        "maxdepth": 32,
-        "elevation": 435,
-        "latitude": 47.36,
-        "longitude": 8.68,
-        "flags": [
-            "swiss"
-        ],
-        "tags": [
-            "threed",
-            "satellite"
-        ],
-        "animation": true
-    }
+    "area": 39.3,
+    "ave_depth": 28,
+    "max_depth": 74,
+    "elevation": 429,
+    "latitude": 47.08,
+    "longitude": 7.17,
+    "flags": ["swiss"],
+    "tags": ["threed", "satellite"],
+    "animation": true
+  },
+  {
+    "key": "greifensee",
+    "name": {
+      "EN": "Lake Greifen",
+      "DE": "Greifensee",
+      "FR": "Lac de Greifen",
+      "IT": "Lago di Greifen"
+    },
+    "area": 8.45,
+    "ave_depth": 18,
+    "max_depth": 32,
+    "elevation": 435,
+    "latitude": 47.36,
+    "longitude": 8.68,
+    "flags": ["swiss"],
+    "tags": ["threed", "satellite"],
+    "animation": true
+  },
+  {
+    "key": "joux",
+    "name": {
+      "EN": "Lac de Joux",
+      "DE": "Lac de Joux",
+      "FR": "Lac de Joux",
+      "IT": "Lago di Joux"
+    },
+    "area": 9.5,
+    "ave_depth": 15,
+    "max_depth": 32,
+    "elevation": 1004,
+    "latitude": 46.64,
+    "longitude": 6.29,
+    "flags": ["swiss"],
+    "tags": ["threed", "satellite"]
+  },
+  {
+    "key": "murten",
+    "name": {
+      "EN": "Lake Murten",
+      "DE": "Murtensee",
+      "FR": "Lac de Morat",
+      "IT": "Lago di Morat"
+    },
+    "area": 22.8,
+    "ave_depth": 24,
+    "max_depth": 45,
+    "elevation": 429,
+    "latitude": 46.93,
+    "longitude": 7.08,
+    "flags": ["swiss"],
+    "tags": ["threed", "satellite"]
+  }
 ]

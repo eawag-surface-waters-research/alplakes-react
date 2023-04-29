@@ -6,12 +6,6 @@
     "FR": "Le Léman",
     "IT": "Lago Lemano"
   },
-  "type": {
-    "EN": "Glacial lake",
-    "DE": "Gletschersee",
-    "FR": "Lac glaciaire",
-    "IT": "Lago glaciale"
-  },
   "area": 580,
   "ave_depth": 154,
   "max_depth": 310,

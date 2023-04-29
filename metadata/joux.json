@@ -1,29 +1,29 @@
 {
-    "key": "greifensee",
+    "key": "joux",
     "name": {
-        "EN": "Lake Greifen",
-        "DE": "Greifensee",
-        "FR": "Lac de Greifen",
-        "IT": "Lago di Greifen"
+        "EN": "Lac de Joux",
+        "DE": "Lac de Joux",
+        "FR": "Lac de Joux",
+        "IT": "Lago di Joux"
     },
-    "area": 8.45,
-    "ave_depth": 18,
-    "elevation": 435,
+    "area": 9.5,
+    "ave_depth": 15,
+    "elevation": 1004,
     "max_depth": 32,
     "bounds": {
         "southWest": [
-            47.32,
-            8.65
+            46.61,
+            6.23
         ],
         "northEast": [
-            47.38,
-            8.71
+            46.68,
+            6.34
         ]
     },
     "customPeriod": {
         "type": "alplakes_hydrodynamic",
         "start": -2,
-        "end": "/simulations/metadata/delft3d-flow/greifensee"
+        "end": "/simulations/metadata/delft3d-flow/joux"
     },
     "depth": 0.7,
     "layers": [
@@ -34,11 +34,11 @@
             "z-index": 1,
             "properties": {
                 "model": "delft3d-flow",
-                "lake": "greifensee",
+                "lake": "joux",
                 "parameter": "temperature",
                 "unit": "°C",
-                "height": 28,
-                "width": 109,
+                "height": 153,
+                "width": 22,
                 "display": "raster",
                 "depth": true,
                 "simpleline": true,
@@ -55,21 +55,21 @@
             "z-index": 5,
             "properties": {
                 "model": "delft3d-flow",
-                "lake": "greifensee",
+                "lake": "joux",
                 "parameter": "velocity",
                 "unit": "m/s",
-                "height": 28,
-                "width": 109,
+                "height": 153,
+                "width": 22,
                 "display": "streamlines",
                 "depth": true,
                 "options": {
-                    "paths": 500,
+                    "paths": 1000,
                     "color": "#ffffff",
                     "width": 0.5,
                     "fade": 0.97,
                     "duration": 10,
                     "maxAge": 80,
-                    "velocityScale": 0.001,
+                    "velocityScale": 0.01,
                     "opacity": 0.7
                 }
             }

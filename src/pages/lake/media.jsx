@@ -63,6 +63,7 @@ class Settings extends Component {
               <td className="settings-input">
                 <select value={timestep} onChange={setTimestep}>
                   <option value={600000}>10 Mins</option>
+                  <option value={1800000}>30 Mins</option>
                   <option value={3600000}>1 Hour</option>
                   <option value={10800000}>3 Hours</option>
                   <option value={86400000}>1 Day</option>

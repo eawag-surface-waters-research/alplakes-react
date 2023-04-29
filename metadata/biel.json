@@ -6,12 +6,6 @@
         "FR": "Lac de Bienne",
         "IT": "Lago di Bienne"
     },
-    "type": {
-        "EN": "Glacial lake",
-        "DE": "Gletschersee",
-        "FR": "Lac glaciaire",
-        "IT": "Lago glaciale"
-    },
     "area": 39.3,
     "ave_depth": 28,
     "elevation": 429,

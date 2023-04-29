@@ -6,12 +6,6 @@
         "FR": "Lac de Zurich",
         "IT": "Lago di Zurigo"
     },
-    "type": {
-        "EN": "Glacial lake",
-        "DE": "Gletschersee",
-        "FR": "Lac glaciaire",
-        "IT": "Lago glaciale"
-    },
     "area": 89,
     "ave_depth": 49,
     "max_depth": 143,

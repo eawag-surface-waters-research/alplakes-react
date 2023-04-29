@@ -65,6 +65,36 @@ const closestDate = (targetDate, dateList) => {
   return closestDate;
 };
 
+const getTimestepData = (data, datetime) => {
+  var keys = Object.keys(data)
+    .map((d) => parseInt(d))
+    .sort((a, b) => a - b);
+  var max = Math.max(...keys);
+  var min = Math.min(...keys);
+  if (datetime >= max) {
+    return {
+      interpolate: 0,
+      newData: [data[String(max)], data[String(max)]],
+    };
+  } else if (datetime <= min) {
+    return {
+      interpolate: 0,
+      newData: [data[String(min)], data[String(min)]],
+    };
+  } else {
+    var low, high;
+    for (let i = 0; i < keys.length - 1; i++) {
+      low = keys[i];
+      high = keys[i + 1];
+      if (high > datetime) break;
+    }
+    return {
+      interpolate: (datetime - low) / (high - low),
+      newData: [data[String(low)], data[String(high)]],
+    };
+  }
+};
+
 export const flyToBounds = (bounds, map) => {
   map.flyToBounds(
     L.latLngBounds(L.latLng(bounds.southWest), L.latLng(bounds.northEast))
@@ -255,12 +285,14 @@ const plotAlplakesHydrodynamic = (
   var geometry = getNested(dataStore, geometry_path);
   var { display } = layer.properties;
   if (display === "raster") {
+    var { interpolate, newData } = getTimestepData(data, datetime);
     plotAlplakesHydrodynamicRaster(
       layer,
       layerStore,
       map,
       geometry,
-      data[closestDate(datetime, Object.keys(data))]
+      newData,
+      interpolate
     );
   } else if (display === "streamlines") {
     plotAlplakesHydrodynamicStreamlines(
@@ -278,7 +310,8 @@ const plotAlplakesHydrodynamicRaster = (
   layerStore,
   map,
   geometry,
-  data
+  data,
+  interpolate
 ) => {
   var path = [
     layer.type,
@@ -286,7 +319,7 @@ const plotAlplakesHydrodynamicRaster = (
     layer.properties.lake,
     layer.properties.parameter,
   ];
-  var options = {};
+  var options = { interpolate };
   if ("options" in layer.properties) {
     options = layer.properties.options;
     if ("paletteName" in layer.properties.options) {
@@ -370,8 +403,7 @@ const updateAlplakesHydrodynamic = (
   ];
 
   var data = getNested(dataStore, data_path);
-  var newData = data[closestDate(datetime, Object.keys(data))];
-
+  
   var options = {};
   if ("options" in layer.properties) {
     options = layer.properties.options;
@@ -381,6 +413,16 @@ const updateAlplakesHydrodynamic = (
       options["palette"] = COLORS[layer.properties.options.paletteName];
     }
   }
+
+  var newData;
+  if (layer.properties.display === "raster") {
+    var out = getTimestepData(data, datetime);
+    options["interpolate"] = out.interpolate;
+    newData = out.newData;
+  } else {
+    newData = data[closestDate(datetime, Object.keys(data))];
+  }
+
   var leaflet_layer = getNested(layerStore, layer_path);
   if (leaflet_layer !== null) {
     leaflet_layer.update(newData, options);

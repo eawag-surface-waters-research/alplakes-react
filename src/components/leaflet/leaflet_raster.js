@@ -65,13 +65,23 @@ L.Raster = L.Layer.extend({
     }
   },
   plotPolygons: function () {
-    var y = this._data.length;
-    var x = this._data[0].length;
+    var start, end;
+    if (this._data.length === 2) {
+      start = this._data[0];
+      end = this._data[1];
+    } else {
+      start = this._data;
+      end = this._data;
+    }
+    var y = start.length;
+    var x = start[0].length;
     for (var i = 1; i < y - 1; i++) {
       for (var j = 1; j < x - 1; j++) {
-        if (!isNaN(this._data[i][j])) {
+        if (!isNaN(start[i][j])) {
+          var value =
+            start[i][j] + (end[i][j] - start[i][j]) * this.options.interpolate;
           let color = this._getColor(
-            this._data[i][j],
+            value,
             this.options.min,
             this.options.max,
             this.options.palette
@@ -82,7 +92,7 @@ L.Raster = L.Layer.extend({
               color: `rgb(${color.join(",")})`,
               fillColor: `rgb(${color.join(",")})`,
               fillOpacity: 1,
-              title: this._data[i][j],
+              title: Math.round(value * 100) / 100,
             })
           );
         }

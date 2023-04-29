@@ -85,8 +85,8 @@ class Lake extends Component {
               <div className="parameters">
                 {desc[0]} <div className="stats">{lake.elevation} m</div>
                 {desc[1]} <div className="stats">{lake.area} km&#178;</div>
-                {desc[2]} <div className="stats">{lake.depth} m</div>
-                {desc[3]} <div className="stats">{lake.maxdepth} m.</div>
+                {desc[2]} <div className="stats">{lake.ave_depth} m</div>
+                {desc[3]} <div className="stats">{lake.max_depth} m.</div>
               </div>
             </div>
           </div>
