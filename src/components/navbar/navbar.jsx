@@ -68,7 +68,7 @@ class NavBar extends Component {
                 <div className="bar"></div>
               </button>
               <div className="dropdown-content">
-                <NavLink to="/lakes">
+                <NavLink to="/">
                   <img alt="Lakes" src={dark ? lakes_img_dark : lakes_img} />
                   Lakes
                 </NavLink>
