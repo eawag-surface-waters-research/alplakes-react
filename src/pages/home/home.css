@@ -253,3 +253,9 @@
   margin-top: 5px;
   border-radius: 4px;
 }
+
+@media screen and (max-width: 646px) {
+  .main .home .content .products .lake {
+    padding: 0 8px;
+  }
+}

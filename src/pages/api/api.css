@@ -19,3 +19,7 @@
 .main .api-container .swagger-ui .info {
   margin: 18px 0;
 }
+
+.main .api-container .swagger-ui .wrapper {
+  padding: 0;
+}

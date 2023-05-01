@@ -27,6 +27,15 @@ class NavBar extends Component {
               alt="Alplakes logo"
             />
           </NavLink>
+          <div className="language">
+            <select value={language} onChange={setLanguage}>
+              {languages.map((l) => (
+                <option value={l} key={"language_" + l}>
+                  {l}
+                </option>
+              ))}
+            </select>
+          </div>
           <div className="desktop-nav">
             <NavLink
               className={selected === "lakes" ? "nav-item active" : "nav-item"}
@@ -49,28 +58,27 @@ class NavBar extends Component {
               <img alt="About" src={dark ? about_img_dark : about_img} />
               <div className="nav-text">{Translate.about[language]}</div>
             </NavLink>
-            <div className="language">
-              <select value={language} onChange={setLanguage}>
-                {languages.map((l) => (
-                  <option value={l} key={"language_" + l}>
-                    {l}
-                  </option>
-                ))}
-              </select>
-            </div>
           </div>
 
           <div className="mobile-nav">
-            <div className="mobile-navbar">
-              <div className="mobile-flex">
+            <div className="dropdown">
+              <button className="dropbtn">
+                <div className="bar"></div>
+                <div className="bar"></div>
+                <div className="bar"></div>
+              </button>
+              <div className="dropdown-content">
                 <NavLink to="/lakes">
-                  <img alt="Lakes" src={lakes_img} />
+                  <img alt="Lakes" src={dark ? lakes_img_dark : lakes_img} />
+                  Lakes
                 </NavLink>
                 <NavLink to="/api">
-                  <img alt="API" src={api_img} />
+                  <img alt="API" src={dark ? api_img_dark : api_img} />
+                  API
                 </NavLink>
                 <NavLink to="/about">
-                  <img alt="About" src={about_img} />
+                  <img alt="About" src={dark ? about_img_dark : about_img} />
+                  About
                 </NavLink>
               </div>
             </div>

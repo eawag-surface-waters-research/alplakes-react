@@ -51,3 +51,13 @@
     height: 63px;
     padding: 12px;
 }
+
+@media screen and (max-width: 500px) {
+    .main .about {
+        margin-top: 60px;
+    }
+
+    .main .about .images img {
+        height: 28px;
+    }
+}

@@ -40,7 +40,8 @@
   height: 100%;
   vertical-align: top;
   margin-bottom: 24px;
-  margin-left: calc(100% - 400px)
+  margin-left: calc(100% - 400px);
+  max-width: calc(100% - 24px);
 }
 
 
@@ -290,7 +291,7 @@
 }
 
 .main .lake .content .secondary .info .data .temperature {
-  width: 176px;
+  width: 50%;
   display: inline-block;
 }
 
@@ -313,7 +314,7 @@
 }
 
 .main .lake .content .secondary .info .data .datetime {
-  width: 176px;
+  width: 50%;
   display: inline-block;
   text-align: right;
 }
@@ -809,4 +810,39 @@
 
 .main .lake .content .secondary .selection .layer-settings button:hover {
   background-color: #d1d0d0;
+}
+
+@media screen and (max-width: 950px) {
+  .main .lake .content {
+    padding: 0;
+    margin-top: 60px;
+  }
+
+  .main .lake .content .primary {
+    width: 100%;
+    left: 0;
+    bottom: 0;
+    top: unset;
+    height: 50%;
+    z-index: 2;
+  }
+
+  .main .lake .content .primary .map-component .lake-name {
+    display: none
+  }
+
+  .main .lake .content .primary .map-component .legend {
+    top: 12px;
+  }
+
+  .main .lake .content .secondary {
+    margin: auto;
+    height: calc(50vh - 60px);
+    overflow-y: scroll;
+  }
+
+  .main .lake .content .secondary .info .data .temperature .value {
+    font-size: 52px;
+  }
+
 }
