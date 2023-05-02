@@ -255,7 +255,11 @@
 }
 
 @media screen and (max-width: 646px) {
+  .main .home .content {
+    padding: 0;
+    margin-top: 85px;
+  }
   .main .home .content .products .lake {
-    padding: 0 8px;
+    padding: 0 12px;
   }
 }

@@ -197,3 +197,17 @@
     display: none;
   }
 }
+
+@media screen and (max-width: 646px) {
+  .navbar .language {
+    right: 12px;
+  }
+
+  .navbar img.icon {
+    padding: 12px;
+  }
+
+  .navbar .mobile-nav {
+    right: 74px;
+  }
+}

@@ -226,6 +226,28 @@
         ]
     },
     {
+        "key": "hallwil",
+        "name": {
+            "EN": "Lake Hallwil",
+            "DE": "Hallwilersee",
+            "FR": "Lac de Hallwil",
+            "IT": "Lago di Hallwil"
+        },
+        "area": 10.3,
+        "ave_depth": 28,
+        "max_depth": 48,
+        "elevation": 449,
+        "latitude": 47.28,
+        "longitude": 8.22,
+        "flags": [
+            "swiss"
+        ],
+        "tags": [
+            "threed",
+            "satellite"
+        ]
+    },
+    {
         "key": "stmoritz",
         "name": {
             "EN": "Lake St Moritz",
