@@ -1,0 +1,72 @@
+{
+  "lake_id": "caldonazzo",
+  "name": {
+    "EN": "Lake Caldonazzo",
+    "DE": "Caldonazzosee",
+    "FR": "Lac de Caldonazzo",
+    "IT": "Lago di Caldonazzo"
+  },
+  "area": 5.38,
+  "ave_depth": 26,
+  "max_depth": 49,
+  "elevation": 449,
+  "bounds": {
+    "southWest": [46.00, 11.226],
+    "northEast": [46.04, 11.269]
+  },
+  "customPeriod": {
+    "type": "alplakes_hydrodynamic",
+    "start": -2,
+    "end": "/simulations/metadata/delft3d-flow/caldonazzo"
+  },
+  "depth": 1,
+  "layers": [
+    {
+      "id": 0,
+      "type": "alplakes_hydrodynamic",
+      "active": "true",
+      "z-index": 1,
+      "properties": {
+        "model": "delft3d-flow",
+        "lake": "caldonazzo",
+        "parameter": "temperature",
+        "unit": "°C",
+        "height": 42,
+        "width": 85,
+        "display": "raster",
+        "depth": true,
+        "simpleline": true,
+        "temperature": true,
+        "options": {
+          "paletteName": "Balance"
+        }
+      }
+    },
+    {
+      "id": 1,
+      "type": "alplakes_hydrodynamic",
+      "active": "true",
+      "z-index": 5,
+      "properties": {
+        "model": "delft3d-flow",
+        "lake": "caldonazzo",
+        "parameter": "velocity",
+        "unit": "m/s",
+        "height": 42,
+        "width": 85,
+        "display": "streamlines",
+        "depth": true,
+        "options": {
+          "paths": 1000,
+          "color": "#ffffff",
+          "width": 0.5,
+          "fade": 0.97,
+          "duration": 10,
+          "maxAge": 80,
+          "velocityScale": 0.01,
+          "opacity": 0.7
+        }
+      }
+    }
+  ]
+}

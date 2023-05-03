@@ -1,0 +1,72 @@
+{
+  "lake_id": "hallwil",
+  "name": {
+    "EN": "Lake Hallwil",
+    "DE": "Hallwilersee",
+    "FR": "Lac de Hallwil",
+    "IT": "Lago di Hallwil"
+  },
+  "area": 10.3,
+  "ave_depth": 28,
+  "max_depth": 48,
+  "elevation": 449,
+  "bounds": {
+    "southWest": [47.242, 8.193],
+    "northEast": [47.322, 8.242]
+  },
+  "customPeriod": {
+    "type": "alplakes_hydrodynamic",
+    "start": -2,
+    "end": "/simulations/metadata/delft3d-flow/hallwil"
+  },
+  "depth": 1,
+  "layers": [
+    {
+      "id": 0,
+      "type": "alplakes_hydrodynamic",
+      "active": "true",
+      "z-index": 1,
+      "properties": {
+        "model": "delft3d-flow",
+        "lake": "hallwil",
+        "parameter": "temperature",
+        "unit": "°C",
+        "height": 29,
+        "width": 143,
+        "display": "raster",
+        "depth": true,
+        "simpleline": true,
+        "temperature": true,
+        "options": {
+          "paletteName": "Balance"
+        }
+      }
+    },
+    {
+      "id": 1,
+      "type": "alplakes_hydrodynamic",
+      "active": "true",
+      "z-index": 5,
+      "properties": {
+        "model": "delft3d-flow",
+        "lake": "hallwil",
+        "parameter": "velocity",
+        "unit": "m/s",
+        "height": 29,
+        "width": 143,
+        "display": "streamlines",
+        "depth": true,
+        "options": {
+          "paths": 1000,
+          "color": "#ffffff",
+          "width": 0.5,
+          "fade": 0.97,
+          "duration": 10,
+          "maxAge": 80,
+          "velocityScale": 0.01,
+          "opacity": 0.7
+        }
+      }
+    }
+  ]
+}

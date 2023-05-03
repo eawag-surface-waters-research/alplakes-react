@@ -1,0 +1,72 @@
+{
+  "lake_id": "stmoritz",
+  "name": {
+    "EN": "Lake St Moritz",
+    "DE": "St. Moritzersee",
+    "FR": "Lac de Saint-Moritz",
+    "IT": "Lago di Sankt Moritz"
+  },
+  "area": 0.78,
+  "ave_depth": 25,
+  "max_depth": 44,
+  "elevation": 1800,
+  "bounds": {
+    "southWest": [46.486, 9.833],
+    "northEast": [46.499, 9.858]
+  },
+  "customPeriod": {
+    "type": "alplakes_hydrodynamic",
+    "start": -2,
+    "end": "/simulations/metadata/delft3d-flow/stmoritz"
+  },
+  "depth": 1,
+  "layers": [
+    {
+      "id": 0,
+      "type": "alplakes_hydrodynamic",
+      "active": "true",
+      "z-index": 1,
+      "properties": {
+        "model": "delft3d-flow",
+        "lake": "stmoritz",
+        "parameter": "temperature",
+        "unit": "°C",
+        "height": 85,
+        "width": 38,
+        "display": "raster",
+        "depth": true,
+        "simpleline": true,
+        "temperature": true,
+        "options": {
+          "paletteName": "Balance"
+        }
+      }
+    },
+    {
+      "id": 1,
+      "type": "alplakes_hydrodynamic",
+      "active": "true",
+      "z-index": 5,
+      "properties": {
+        "model": "delft3d-flow",
+        "lake": "stmoritz",
+        "parameter": "velocity",
+        "unit": "m/s",
+        "height": 85,
+        "width": 38,
+        "display": "streamlines",
+        "depth": true,
+        "options": {
+          "paths": 1000,
+          "color": "#ffffff",
+          "width": 0.5,
+          "fade": 0.97,
+          "duration": 10,
+          "maxAge": 80,
+          "velocityScale": 0.01,
+          "opacity": 0.7
+        }
+      }
+    }
+  ]
+}

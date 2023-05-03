@@ -1,0 +1,72 @@
+{
+  "lake_id": "garda",
+  "name": {
+    "EN": "Lake Garda",
+    "DE": "Gardasee",
+    "FR": "Lac de Garde",
+    "IT": "Lago di Garda"
+  },
+  "area": 370,
+  "ave_depth": 136,
+  "max_depth": 346,
+  "elevation": 65,
+  "bounds": {
+    "southWest": [45.435, 10.485],
+    "northEast": [45.903, 10.906]
+  },
+  "customPeriod": {
+    "type": "alplakes_hydrodynamic",
+    "start": -2,
+    "end": "/simulations/metadata/delft3d-flow/garda"
+  },
+  "depth": 1,
+  "layers": [
+    {
+      "id": 0,
+      "type": "alplakes_hydrodynamic",
+      "active": "true",
+      "z-index": 1,
+      "properties": {
+        "model": "delft3d-flow",
+        "lake": "garda",
+        "parameter": "temperature",
+        "unit": "°C",
+        "height": 64,
+        "width": 224,
+        "display": "raster",
+        "depth": true,
+        "simpleline": true,
+        "temperature": true,
+        "options": {
+          "paletteName": "Balance"
+        }
+      }
+    },
+    {
+      "id": 1,
+      "type": "alplakes_hydrodynamic",
+      "active": "true",
+      "z-index": 5,
+      "properties": {
+        "model": "delft3d-flow",
+        "lake": "garda",
+        "parameter": "velocity",
+        "unit": "m/s",
+        "height": 64,
+        "width": 224,
+        "display": "streamlines",
+        "depth": true,
+        "options": {
+          "paths": 1000,
+          "color": "#ffffff",
+          "width": 0.5,
+          "fade": 0.97,
+          "duration": 10,
+          "maxAge": 80,
+          "velocityScale": 0.01,
+          "opacity": 0.7
+        }
+      }
+    }
+  ]
+}

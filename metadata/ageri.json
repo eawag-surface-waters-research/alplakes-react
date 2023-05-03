@@ -1,0 +1,72 @@
+{
+  "lake_id": "ageri",
+  "name": {
+    "EN": "Lake Ageri",
+    "DE": "Ägerisee",
+    "FR": "Lac d'Ägeri",
+    "IT": "Lago di Ägeri"
+  },
+  "area": 7.3,
+  "ave_depth": 26,
+  "max_depth": 49,
+  "elevation": 724,
+  "bounds": {
+    "southWest": [47.099, 8.583],
+    "northEast": [47.141, 8.648]
+  },
+  "customPeriod": {
+    "type": "alplakes_hydrodynamic",
+    "start": -2,
+    "end": "/simulations/metadata/delft3d-flow/ageri"
+  },
+  "depth": 1,
+  "layers": [
+    {
+      "id": 0,
+      "type": "alplakes_hydrodynamic",
+      "active": "true",
+      "z-index": 1,
+      "properties": {
+        "model": "delft3d-flow",
+        "lake": "ageri",
+        "parameter": "temperature",
+        "unit": "°C",
+        "height": 39,
+        "width": 95,
+        "display": "raster",
+        "depth": true,
+        "simpleline": true,
+        "temperature": true,
+        "options": {
+          "paletteName": "Balance"
+        }
+      }
+    },
+    {
+      "id": 1,
+      "type": "alplakes_hydrodynamic",
+      "active": "true",
+      "z-index": 5,
+      "properties": {
+        "model": "delft3d-flow",
+        "lake": "ageri",
+        "parameter": "velocity",
+        "unit": "m/s",
+        "height": 39,
+        "width": 95,
+        "display": "streamlines",
+        "depth": true,
+        "options": {
+          "paths": 1000,
+          "color": "#ffffff",
+          "width": 0.5,
+          "fade": 0.97,
+          "duration": 10,
+          "maxAge": 80,
+          "velocityScale": 0.01,
+          "opacity": 0.7
+        }
+      }
+    }
+  ]
+}
