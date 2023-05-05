@@ -59,9 +59,10 @@ export const interpolateData = (value, data) => {
     return data.y[data.y.length - 1];
   } else {
     for (let i = 0; i < data.x.length - 1; i++) {
+      console.log("here")
       if (value === data.x[i]) {
         return data.y[i];
-      } else if (data.x[i] < value < data.x[i + 1]) {
+      } else if (data.x[i] < value && value < data.x[i + 1]) {
         return (
           ((value - data.x[i]) / (data.x[i + 1] - data.x[i])) *
             (data.y[i + 1] - data.y[i]) +
