@@ -6,13 +6,14 @@ L.Streamlines = (L.Layer ? L.Layer : L.Class).extend({
     paths: 800,
     color: "white",
     width: 0.5,
-    fade: 0.97,
+    fade: 1,
     duration: 10,
     maxAge: 50,
     velocityScale: 0.01,
     opacity: 1,
     nCols: 200,
     nRows: 200,
+    radiusFactor: 2,
     parameter: "",
     unit: "",
   },
@@ -84,7 +85,7 @@ L.Streamlines = (L.Layer ? L.Layer : L.Class).extend({
     var nRows = this.options.nRows;
     let xSize = (xMax - xMin) / nCols;
     let ySize = (yMax - yMin) / nRows;
-    var radius = Math.max(xSize, ySize);
+    var radius = Math.max(xSize, ySize) * this.options.radiusFactor;
     let quadtree = d3
       .quadtree()
       .extent([
