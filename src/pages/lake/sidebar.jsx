@@ -6,6 +6,7 @@ import Translate from "../../translations.json";
 import { formatTime, formatDateLong } from "./functions";
 import temperature_icon from "../../img/temperature.png";
 import velocity_icon from "../../img/velocity.png";
+import chla_icon from "../../img/chla.png";
 import "react-datepicker/dist/react-datepicker.css";
 import "./lake.css";
 
@@ -139,7 +140,7 @@ class Selection extends Component {
           <div className="title">{Translate.addlayers[language]}</div>
           {parameters.map((p) => (
             <div className="parameter" key={p}>
-              <div className="header">{Translate[p][language]}</div>
+              <div className="header">{p in Translate ? Translate[p][language] : ""}</div>
               <div className="layers">
                 {layers
                   .filter((l) => l.properties.parameter === p)
@@ -156,7 +157,7 @@ class Selection extends Component {
                         />
                       </div>
                       <div className="text">
-                        {Translate[l.type][language]}
+                        {l.type in Translate ? Translate[l.type][language] : ""}
                         <div className="type">{l.properties.model}</div>
                       </div>
                     </div>
@@ -184,7 +185,7 @@ class Selection extends Component {
 
 class Sidebar extends Component {
   state = {
-    images: { temperature: temperature_icon, velocity: velocity_icon },
+    images: { temperature: temperature_icon, velocity: velocity_icon, chla: chla_icon },
   };
   setDateRange = (event) => {
     console.log(event);

@@ -5,13 +5,16 @@ import * as GeoTIFF from "geotiff";
 L.FloatGeotiff = L.ImageOverlay.extend({
   options: {
     opacity: 1,
-    min: "null",
-    max: "null",
+    min: false,
+    max: false,
     palette: [
       { color: [255, 255, 255], point: 0 },
       { color: [0, 0, 0], point: 1 },
     ],
+    invalidpixel: 1,
     validpixelexpression: true,
+    heightOffset: 0, // Temporary fix
+    widthOffset: 0,
   },
   initialize: async function (data, options) {
     this._url = "geotiff.tif";
@@ -66,8 +69,13 @@ L.FloatGeotiff = L.ImageOverlay.extend({
     this.raster.data = await image.readRasters();
     this.raster.width = image.getWidth();
     this.raster.height = image.getHeight();
-    if (isNaN(this.options.min)) this.options.min = min(this.raster.data[0]);
-    if (isNaN(this.options.max)) this.options.max = max(this.raster.data[0]);
+    if (!this.options.min) this.options.min = min(this.raster.data[0]);
+    if (!this.options.max) this.options.max = max(this.raster.data[0]);
+    if (this.raster.data.length > 1) {
+      if (max(this.raster.data[1]) > 1) {
+        this.options.invalidpixel = 0;
+      }
+    }
     this._reset();
   },
   getValueAtLatLng: function (lat, lng) {
@@ -161,8 +169,8 @@ L.FloatGeotiff = L.ImageOverlay.extend({
         args.rasterPixelBounds.max.y < this.size.y
           ? args.rasterPixelBounds.max.y
           : this.size.y;
-      args.plotWidth = parseInt(args.xFinish - args.xStart);
-      args.plotHeight = parseInt(args.yFinish - args.yStart);
+      args.plotWidth = args.xFinish - args.xStart;
+      args.plotHeight = args.yFinish - args.yStart;
 
       if (args.plotWidth <= 0 || args.plotHeight <= 0) {
         let plotCanvas = document.createElement("canvas");
@@ -247,11 +255,13 @@ L.FloatGeotiff = L.ImageOverlay.extend({
       this.raster.data.length > 1 && this.options.validpixelexpression;
     for (let y = 0; y < args.plotHeight; y++) {
       let yy = Math.round(
-        ((y + n) / (args.plotHeight + n + s)) * raster.height
+        ((y + n) / (args.plotHeight + n + s)) *
+          (raster.height + this.options.heightOffset)
       );
       for (let x = 0; x < args.plotWidth; x++) {
         let xx = Math.round(
-          ((x + w) / (args.plotWidth + e + w)) * raster.width
+          ((x + w) / (args.plotWidth + e + w)) *
+            (raster.width + this.options.widthOffset)
         );
         let ii = yy * raster.width + xx;
         let i = y * args.plotWidth + x;
@@ -260,11 +270,11 @@ L.FloatGeotiff = L.ImageOverlay.extend({
           imgData.data[i * 4 + 0] = color[0];
           imgData.data[i * 4 + 1] = color[1];
           imgData.data[i * 4 + 2] = color[2];
-          if (validpixelexpression) {
-            imgData.data[i * 4 + 3] = (raster.data[1][ii] - 1) * -255;
-          } else {
-            imgData.data[i * 4 + 3] = 255;
-          }
+          imgData.data[i * 4 + 3] = validpixelexpression
+            ? raster.data[1][ii] === this.options.invalidpixel
+              ? 0
+              : 255
+            : 255;
         } else {
           imgData.data[i * 4 + 0] = 0;
           imgData.data[i * 4 + 1] = 0;

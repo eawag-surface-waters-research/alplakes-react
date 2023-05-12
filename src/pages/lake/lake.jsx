@@ -274,9 +274,11 @@ class Lake extends Component {
       );
       var updates = [{ event: "bounds" }];
       for (var layer of metadata.layers) {
-        if (layer.active) {
+        if (layer.active === "true") {
           layer.active = true;
           updates.push({ event: "addLayer", id: layer.id });
+        } else {
+          layer.active = false;
         }
       }
       var depth = metadata.depth;

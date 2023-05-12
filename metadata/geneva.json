@@ -67,6 +67,24 @@
           "opacity": 0.7
         }
       }
+    },
+    {
+      "id": 2,
+      "type": "sencast_tiff",
+      "active": "false",
+      "z-index": 5,
+      "properties": {
+        "model": "Sentinel3",
+        "lake": "geneva",
+        "parameter": "chla",
+        "metadata": "https://eawagrs.s3.eu-central-1.amazonaws.com/metadata/sentinel3/chla.json",
+        "unit": "mg m-3",
+        "display": "tiff",
+        "depth": false,
+        "options": {
+          "paletteName": "Balance"
+        }
+      }
     }
   ]
 }

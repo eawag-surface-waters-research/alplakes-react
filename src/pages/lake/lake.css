@@ -571,7 +571,7 @@
   background-position: 0 0, 0 0, 13px 23px, 13px 23px, 0 0, 13px 23px;
 }
 
-.main .lake .content .secondary .satellite {
+.main .lake .content .secondary .sencast_tiff {
   background-color: #242424;
   opacity: 1;
   background-image: repeating-radial-gradient(circle at 0 0, transparent 0, #242424 15px), repeating-linear-gradient(#3a425155, #3a4251);
