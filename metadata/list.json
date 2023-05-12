@@ -112,7 +112,8 @@
         "tags": [
             "threed",
             "satellite"
-        ]
+        ],
+        "animation": true
     },
     {
         "key": "lugano",
@@ -135,7 +136,8 @@
         "tags": [
             "threed",
             "satellite"
-        ]
+        ],
+        "animation": true
     },
     {
         "key": "murten",
@@ -157,7 +159,8 @@
         "tags": [
             "threed",
             "satellite"
-        ]
+        ],
+        "animation": true
     },
     {
         "key": "caldonazzo",
@@ -179,7 +182,8 @@
         "tags": [
             "threed",
             "satellite"
-        ]
+        ],
+        "animation": true
     },
     {
         "key": "ageri",
@@ -201,7 +205,8 @@
         "tags": [
             "threed",
             "satellite"
-        ]
+        ],
+        "animation": true
     },
     {
         "key": "joux",
@@ -223,7 +228,8 @@
         "tags": [
             "threed",
             "satellite"
-        ]
+        ],
+        "animation": true
     },
     {
         "key": "hallwil",
@@ -245,7 +251,8 @@
         "tags": [
             "threed",
             "satellite"
-        ]
+        ],
+        "animation": true
     },
     {
         "key": "stmoritz",
@@ -267,6 +274,7 @@
         "tags": [
             "threed",
             "satellite"
-        ]
+        ],
+        "animation": true
     }
 ]

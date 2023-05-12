@@ -101,7 +101,7 @@ class Home extends Component {
     list: [],
     sort: "sortby",
     ascending: false,
-    defaultNumber: 4,
+    defaultNumber: 12,
   };
   setSort = (event) => {
     this.setState({ sort: event.target.value });
