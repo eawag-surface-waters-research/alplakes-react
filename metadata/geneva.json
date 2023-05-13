@@ -25,7 +25,6 @@
       "id": 0,
       "type": "alplakes_hydrodynamic",
       "active": "true",
-      "z-index": 1,
       "properties": {
         "model": "delft3d-flow",
         "lake": "geneva",
@@ -38,7 +37,8 @@
         "simpleline": true,
         "temperature": true,
         "options": {
-          "paletteName": "Balance"
+          "paletteName": "Balance",
+          "z-index": 1
         }
       }
     },
@@ -46,7 +46,6 @@
       "id": 1,
       "type": "alplakes_hydrodynamic",
       "active": "true",
-      "z-index": 5,
       "properties": {
         "model": "delft3d-flow",
         "lake": "geneva",
@@ -64,7 +63,8 @@
           "duration": 10,
           "maxAge": 80,
           "velocityScale": 0.01,
-          "opacity": 0.7
+          "opacity": 0.7,
+          "z-index": 2
         }
       }
     },
@@ -72,7 +72,6 @@
       "id": 2,
       "type": "sencast_tiff",
       "active": "false",
-      "z-index": 5,
       "properties": {
         "model": "Sentinel3",
         "lake": "geneva",
@@ -82,7 +81,9 @@
         "display": "tiff",
         "depth": false,
         "options": {
-          "paletteName": "Balance"
+          "paletteName": "cc chl",
+          "z-index": 3,
+          "opacity": 1
         }
       }
     }

@@ -162,7 +162,7 @@ export const updateLayer = async (
   datetime,
   depth
 ) => {
-  if (layer.type === "alplakes_hydrodynamic")
+  if (layer.type === "alplakes_hydrodynamic") {
     await updateAlplakesHydrodynamic(
       layer,
       dataStore,
@@ -171,6 +171,9 @@ export const updateLayer = async (
       datetime,
       depth
     );
+  } else if (layer.type === "sencast_tiff") {
+    await updateSencastTiff(layer, dataStore, layerStore, map, datetime);
+  }
 };
 
 export const removeLayer = async (layer, layerStore, map) => {
@@ -487,6 +490,7 @@ const addSencastTiff = async (layer, dataStore, layerStore, datetime, map) => {
     metadata = metadata.map((m) => {
       m.unix = parseDate(m.dt).getTime();
       m.url = CONFIG.sencast_bucket + m.k;
+      m.time = parseDate(m.dt);
       return m;
     });
     setNested(dataStore, path, metadata);
@@ -495,6 +499,12 @@ const addSencastTiff = async (layer, dataStore, layerStore, datetime, map) => {
   }
 
   const image = findClosest(metadata, "unix", datetime);
+  layer.properties.options.includeDates = metadata.map((m) => m.time);
+  layer.properties.options.date = image.time;
+  layer.properties.options.min = 0
+  layer.properties.options.max = 20
+  layer.properties.options.dataMin = 0
+  layer.properties.options.dataMax = 20
   await plotSencastTiff(image.url, layer, layerStore, map);
 };
 
@@ -527,6 +537,51 @@ const plotSencastTiff = async (url, layer, layerStore, map) => {
   });
   var leaflet_layer = L.floatgeotiff(data, options).addTo(map).addTo(map);
   setNested(layerStore, path, leaflet_layer);
+};
+
+const updateSencastTiff = async (
+  layer,
+  dataStore,
+  layerStore,
+  map,
+  datetime
+) => {
+  var path = [
+    layer.type,
+    layer.properties.model,
+    layer.properties.lake,
+    layer.properties.parameter,
+  ];
+
+  var options = {};
+  if ("options" in layer.properties) {
+    options = layer.properties.options;
+    if ("paletteName" in layer.properties.options) {
+      layer.properties.options.palette =
+        COLORS[layer.properties.options.paletteName];
+      options["palette"] = COLORS[layer.properties.options.paletteName];
+    }
+  }
+
+  var metadata = getNested(dataStore, path);
+
+  var data = false;
+  if ("date" in layer.properties.options) {
+    const image = findClosest(
+      metadata,
+      "unix",
+      layer.properties.options.date.getTime()
+    );
+
+    var { data } = await axios.get(image.url, {
+      responseType: "arraybuffer",
+    });
+  } 
+
+  var leaflet_layer = getNested(layerStore, path);
+  if (leaflet_layer !== null && leaflet_layer !== undefined) {
+    leaflet_layer.update(data, options);
+  }
 };
 
 const removeSencastTiff = (layer, layerStore, map) => {

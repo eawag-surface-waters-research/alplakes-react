@@ -27,7 +27,8 @@ L.FloatGeotiff = L.ImageOverlay.extend({
     this._image.style.opacity = opacity;
     this.options.opacity = opacity;
   },
-  setData: function (newData) {
+  update: function (newData, options) {
+    L.Util.setOptions(this, options);
     this._data = newData;
     this._getData();
   },
@@ -351,6 +352,14 @@ L.FloatGeotiff = L.ImageOverlay.extend({
   _queryValue: function (click) {
     click["value"] = this.getValueAtLatLng(click.latlng.lat, click.latlng.lng);
     return click;
+  },
+  getFeatureValue: function (e) {
+    const value = this.getValueAtLatLng(e.latlng.lat, e.latlng.lng);
+    if (isFinite(value)) {
+      return `${Math.round(value * 100) / 100} ${this.options.unit}`;
+    } else {
+      return null;
+    }
   },
 });
 

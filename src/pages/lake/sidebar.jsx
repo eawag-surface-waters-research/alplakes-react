@@ -23,7 +23,7 @@ class Period extends Component {
   };
   setDateRange = (period) => {
     var { maxPeriod } = this.state;
-    var { setPeriod } = this.props;
+    var { setPeriod, maxDate } = this.props;
     if (period[0] !== null && period[1] !== null) {
       setPeriod([
         Math.floor(period[0].getTime()),
@@ -31,9 +31,10 @@ class Period extends Component {
       ]);
       this.setState({ period, maxPeriodDate: false });
     } else if (period[0] !== null && period[1] === null) {
+      var maxPeriodDate = this.addDays(period[0], maxPeriod);
       this.setState({
         period,
-        maxPeriodDate: this.addDays(period[0], maxPeriod),
+        maxPeriodDate: maxPeriodDate < maxDate ? maxPeriodDate : maxDate,
       });
     }
   };
@@ -82,6 +83,14 @@ class ActiveApps extends Component {
         <div className="loaded">
           {layers
             .filter((l) => l.active)
+            .sort((a, b) =>
+              a.properties.options["z-index"] > b.properties.options["z-index"]
+                ? -1
+                : b.properties.options["z-index"] >
+                  a.properties.options["z-index"]
+                ? 1
+                : 0
+            )
             .map((layer) => (
               <div
                 className={
@@ -140,7 +149,9 @@ class Selection extends Component {
           <div className="title">{Translate.addlayers[language]}</div>
           {parameters.map((p) => (
             <div className="parameter" key={p}>
-              <div className="header">{p in Translate ? Translate[p][language] : ""}</div>
+              <div className="header">
+                {p in Translate ? Translate[p][language] : ""}
+              </div>
               <div className="layers">
                 {layers
                   .filter((l) => l.properties.parameter === p)
@@ -176,7 +187,7 @@ class Selection extends Component {
               " " +
               Translate.settings[language]}
           </div>
-          <LayerSettings layer={layer} updateOptions={updateOptions} />
+          <LayerSettings layer={layer} updateOptions={updateOptions} language={language}/>
         </div>
       );
     }
@@ -185,10 +196,11 @@ class Selection extends Component {
 
 class Sidebar extends Component {
   state = {
-    images: { temperature: temperature_icon, velocity: velocity_icon, chla: chla_icon },
-  };
-  setDateRange = (event) => {
-    console.log(event);
+    images: {
+      temperature: temperature_icon,
+      velocity: velocity_icon,
+      chla: chla_icon,
+    },
   };
   render() {
     var {

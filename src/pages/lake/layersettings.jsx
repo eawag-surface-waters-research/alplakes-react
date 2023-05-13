@@ -1,5 +1,7 @@
 import React, { Component } from "react";
+import DatePicker from "react-datepicker";
 import ColorRamp from "../../components/colors/colorramp";
+import Translate from "../../translations.json";
 import "./lake.css";
 
 class Raster extends Component {
@@ -104,7 +106,9 @@ class Raster extends Component {
               onChange={this.setMin}
               id="raster_min"
             />
-            <button onClick={this.resetMin}>Reset</button>
+            <button onClick={this.resetMin} className="reset">
+              Reset
+            </button>
           </div>
         </div>
         <div className="setting half">
@@ -118,7 +122,9 @@ class Raster extends Component {
               onChange={this.setMax}
               id="raster_max"
             />
-            <button onClick={this.resetMax}>Reset</button>
+            <button onClick={this.resetMax} className="reset">
+              Reset
+            </button>
           </div>
         </div>
         <div className="setting">
@@ -285,9 +291,184 @@ class Streamlines extends Component {
   }
 }
 
+class Tiff extends Component {
+  state = {
+    _min: 0,
+    _max: 0,
+    dataMin: 0,
+    dataMax: 0,
+  };
+
+  setMin = (event) => {
+    this.setState({ _min: event.target.value });
+  };
+
+  setMax = (event) => {
+    this.setState({ _max: event.target.value });
+  };
+
+  setDate = (event) => {
+    var { id, updateOptions, options } = this.props;
+    options.date = event;
+    updateOptions(id, options);
+  };
+
+  updateMinMax = () => {
+    var { id, updateOptions, options } = this.props;
+    var { _min, _max } = this.state;
+    options["min"] = parseFloat(_min);
+    options["max"] = parseFloat(_max);
+    updateOptions(id, options);
+  };
+
+  enterMinMax = (event) => {
+    if (event.key === "Enter") {
+      this.updateMinMax();
+    }
+  };
+
+  setOpacity = (event) => {
+    var { id, updateOptions, options } = this.props;
+    var value = event.target.value;
+    options["opacity"] = value;
+    updateOptions(id, options);
+  };
+
+  setPalette = (event) => {
+    var { id, updateOptions, options } = this.props;
+    options["paletteName"] = event.name;
+    options["palette"] = event.palette;
+    updateOptions(id, options);
+  };
+
+  resetMin = () => {
+    this.setState({ _min: this.props.options.dataMin });
+  };
+
+  resetMax = () => {
+    this.setState({ _max: this.props.options.dataMax });
+  };
+
+  componentDidUpdate() {
+    if (
+      this.props.options.dataMin !== undefined &&
+      (this.state.dataMin !== this.props.options.dataMin ||
+        this.state.dataMax !== this.props.options.dataMax)
+    ) {
+      this.setState({
+        _min: this.props.options.dataMin,
+        _max: this.props.options.dataMax,
+        dataMin: this.props.options.dataMin,
+        dataMax: this.props.options.dataMax,
+      });
+    }
+  }
+
+  componentDidMount() {
+    window.addEventListener("click", this.updateMinMax);
+    document
+      .getElementById("tiff_min")
+      .addEventListener("keydown", this.enterMinMax);
+    document
+      .getElementById("tiff_max")
+      .addEventListener("keydown", this.enterMinMax);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("click", this.updateMinMax);
+    document
+      .getElementById("tiff_min")
+      .removeEventListener("keydown", this.enterMinMax);
+    document
+      .getElementById("tiff_max")
+      .removeEventListener("keydown", this.enterMinMax);
+  }
+
+  render() {
+    var { _min, _max } = this.state;
+    var { language } = this.props;
+    var { palette, paletteName, opacity, includeDates, date } =
+      this.props.options;
+    const locale = {
+      localize: {
+        day: (n) => Translate.axis[language].shortDays[n],
+        month: (n) => Translate.axis[language].months[n],
+      },
+      formatLong: {
+        date: () => "dd/mm/yyyy",
+      },
+    };
+    return (
+      <div className="layer-settings">
+        <div className="setting">
+          <DatePicker
+            dateFormat="dd/MM/yyyy"
+            locale={locale}
+            inline={true}
+            includeDates={includeDates}
+            selected={date ? date : false}
+            onChange={(update) => {
+              this.setDate(update);
+            }}
+          />
+        </div>
+        <div className="setting half">
+          <div className="label">Min</div>
+          <div>
+            <input
+              type="number"
+              className="with-button"
+              value={_min}
+              step="0.1"
+              onChange={this.setMin}
+              id="tiff_min"
+            />
+            <button onClick={this.resetMin} className="reset">
+              Reset
+            </button>
+          </div>
+        </div>
+        <div className="setting half">
+          <div className="label">Max</div>
+          <div>
+            <input
+              type="number"
+              className="with-button"
+              value={_max}
+              step="0.1"
+              onChange={this.setMax}
+              id="tiff_max"
+            />
+            <button onClick={this.resetMax} className="reset">
+              Reset
+            </button>
+          </div>
+        </div>
+        <div className="setting">
+          <div className="label">Opacity</div>
+          <div className="value">{opacity}</div>
+          <input
+            type="range"
+            min="0"
+            max="1"
+            step="0.1"
+            value={opacity}
+            onChange={this.setOpacity}
+          ></input>
+        </div>
+        <div className="setting">
+          <div className="label">Palette</div>
+          <div className="value">{paletteName}</div>
+          <ColorRamp onChange={this.setPalette} value={palette} />
+        </div>
+      </div>
+    );
+  }
+}
+
 class LayerSettings extends Component {
   render() {
-    var { layer, updateOptions } = this.props;
+    var { layer, updateOptions, language } = this.props;
     var type = layer.properties.display;
     if (type === "raster") {
       return (
@@ -295,6 +476,7 @@ class LayerSettings extends Component {
           id={layer.id}
           options={layer.properties.options}
           updateOptions={updateOptions}
+          language={language}
         />
       );
     } else if (type === "streamlines") {
@@ -303,10 +485,18 @@ class LayerSettings extends Component {
           id={layer.id}
           options={layer.properties.options}
           updateOptions={updateOptions}
+          language={language}
         />
       );
-    } else if (type === "vectorfield") {
-      return <div className="layer-settings">Vector field settings</div>;
+    } else if (type === "tiff") {
+      return (
+        <Tiff
+          id={layer.id}
+          options={layer.properties.options}
+          updateOptions={updateOptions}
+          language={language}
+        />
+      );
     } else {
       return (
         <div className="layer-settings">

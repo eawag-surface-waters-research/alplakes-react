@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import ErrorBoundary from "./components/errorboundary/errorboundary";
 import Home from "./pages/home/home";
 import Lake from "./pages/lake/lake";
 import API from "./pages/api/api";
@@ -55,26 +56,36 @@ class App extends Component {
               <Route
                 path="/"
                 element={
-                  <Home {...this.state} setLanguage={this.setLanguage} />
+                  <ErrorBoundary {...this.props} {...this.state}>
+                    <Home {...this.state} setLanguage={this.setLanguage} />
+                  </ErrorBoundary>
                 }
                 exact
               />
               <Route
                 path="/api"
-                element={<API {...this.state} setLanguage={this.setLanguage} />}
+                element={
+                  <ErrorBoundary {...this.props} {...this.state}>
+                    <API {...this.state} setLanguage={this.setLanguage} />
+                  </ErrorBoundary>
+                }
                 exact
               />
               <Route
                 path="/about"
                 element={
-                  <About {...this.state} setLanguage={this.setLanguage} />
+                  <ErrorBoundary {...this.props} {...this.state}>
+                    <About {...this.state} setLanguage={this.setLanguage} />
+                  </ErrorBoundary>
                 }
                 exact
               />
               <Route
                 path="/*"
                 element={
-                  <Lake {...this.state} setLanguage={this.setLanguage} />
+                  <ErrorBoundary {...this.props} {...this.state}>
+                    <Lake {...this.state} setLanguage={this.setLanguage} />
+                  </ErrorBoundary>
                 }
               />
             </Routes>

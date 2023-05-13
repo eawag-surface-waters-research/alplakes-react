@@ -796,7 +796,7 @@
   box-sizing: border-box;
 }
 
-.main .lake .content .secondary .selection .layer-settings button {
+.main .lake .content .secondary .selection .layer-settings button.reset {
   display: inline-block;
   margin-left: 8px;
   border-radius: 8px;
@@ -808,8 +808,57 @@
   font-size: 14px;
 }
 
-.main .lake .content .secondary .selection .layer-settings button:hover {
+.main .lake .content .secondary .selection .layer-settings button.reset:hover {
   background-color: #d1d0d0;
+}
+
+.main .lake .content .secondary .selection .layer-settings .react-datepicker {
+  background-color: transparent;
+  border: none;
+}
+
+.main .lake .content .secondary .selection .layer-settings .react-datepicker .react-datepicker__header {
+  background-color: transparent;
+}
+
+.main.dark .lake .content .secondary .selection .layer-settings .react-datepicker {
+  color: white;
+}
+
+.main .lake .content .secondary .selection .layer-settings .react-datepicker__day-name,
+.main .lake .content .secondary .selection .layer-settings .react-datepicker__day,
+.main .lake .content .secondary .selection .layer-settings .react-datepicker__time-name {
+  width: 2.7rem;
+  color: unset;
+  border: 1px solid transparent;
+  border-radius: 0.3rem;
+}
+
+.main .lake .content .secondary .selection .layer-settings .react-datepicker__day--selected {
+  border-color: unset;
+  font-weight: bold;
+  background-color: transparent;
+}
+
+.main .lake .content .secondary .selection .layer-settings .react-datepicker__current-month {
+  color: unset;
+}
+
+.main .lake .content .secondary .selection .layer-settings .react-datepicker__day--disabled {
+  opacity: 0.2;
+}
+
+.main .lake .content .secondary .selection .layer-settings .react-datepicker__day:hover {
+  font-weight: bold;
+  border-color: unset;
+}
+
+.main .lake .content .secondary .selection .layer-settings .react-datepicker__day--keyboard-selected {
+  background-color: transparent;
+}
+
+.main .lake .content .secondary .selection .layer-settings .react-datepicker__day--selected:hover {
+  background-color: transparent;
 }
 
 @media screen and (max-width: 950px) {
