@@ -8,6 +8,7 @@ L.Raster = L.Layer.extend({
     opacity: 1,
     min: "null",
     max: "null",
+    zIndex: 1,
     tooltipSensitivity: 500,
     interpolate: 0,
     palette: [
@@ -32,6 +33,7 @@ L.Raster = L.Layer.extend({
     if (event.layer instanceof L.Canvas) {
       this._canvas = event.layer._canvas;
       event.layer._container.style.opacity = this.options.opacity;
+      event.layer._container.style.zIndex = this.options.zIndex + 100;
       event.layer._container.setAttribute("id", "leaflet_raster");
     }
   },
@@ -42,7 +44,9 @@ L.Raster = L.Layer.extend({
   update: function (data, options) {
     this._data = data;
     L.Util.setOptions(this, options);
-    document.getElementById("leaflet_raster").style.opacity = options.opacity;
+    var div = document.getElementById("leaflet_raster");
+    div.style.opacity = this.options.opacity;
+    div.style.zIndex = this.options.zIndex + 100;
     this._raster.clearLayers();
     this.plotPolygons();
     this._map.invalidateSize();

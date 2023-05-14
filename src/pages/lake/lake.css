@@ -534,6 +534,13 @@
 .main.dark .lake .content .secondary .menu .loaded .app {
   border: 2px solid #545454;
   color: #545454;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
 }
 
 .main .lake .content .secondary .menu .loaded .app.filled {
@@ -607,6 +614,7 @@
   padding-top: 9px;
   max-width: 38px;
   max-height: 44px;
+  pointer-events: none;
 }
 
 
@@ -639,7 +647,7 @@
   border-radius: 12px;
   margin-top: 24px;
   position: relative;
-  padding: 12px 12px 1px 12px;
+  padding: 18px 18px 1px 18px;
   box-sizing: border-box;
 }
 
@@ -650,6 +658,14 @@
 .main .lake .content .secondary .selection .title {
   text-align: right;
   font-size: 18px;
+  padding-bottom: 8px;
+}
+
+.main .lake .content .secondary .selection .title-model {
+  position: absolute;
+  top: 42px;
+  font-size: 14px;
+  right: 18px;
 }
 
 .main .lake .content .secondary .selection .parameter {
@@ -695,6 +711,10 @@
 
 .main .lake .content .secondary .selection .parameter .layers .layer:hover {
   background-color: #d1d1d1;
+}
+
+.main.dark .lake .content .secondary .selection .parameter .layers .layer:hover {
+  background-color: rgb(15, 15, 15);
 }
 
 .main .lake .content .secondary .selection .parameter .layers .layer .icon {
@@ -828,7 +848,7 @@
 .main .lake .content .secondary .selection .layer-settings .react-datepicker__day-name,
 .main .lake .content .secondary .selection .layer-settings .react-datepicker__day,
 .main .lake .content .secondary .selection .layer-settings .react-datepicker__time-name {
-  width: 2.7rem;
+  width: 2.5rem;
   color: unset;
   border: 1px solid transparent;
   border-radius: 0.3rem;

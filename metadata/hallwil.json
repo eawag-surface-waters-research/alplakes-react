@@ -24,7 +24,7 @@
     {
       "id": 0,
       "type": "alplakes_hydrodynamic",
-      "active": "true",
+      "active": true,
       "z-index": 1,
       "properties": {
         "model": "delft3d-flow",
@@ -45,7 +45,7 @@
     {
       "id": 1,
       "type": "alplakes_hydrodynamic",
-      "active": "true",
+      "active": true,
       "z-index": 5,
       "properties": {
         "model": "delft3d-flow",

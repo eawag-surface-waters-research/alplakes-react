@@ -369,6 +369,9 @@ const plotAlplakesHydrodynamicRaster = (
     if ("unit" in layer.properties) {
       options["unit"] = layer.properties.unit;
     }
+    if ("zIndex" in layer.properties) {
+      options["zIndex"] = layer.properties.zIndex;
+    }
     if ("opacity" in layer.properties.options) {
       options["opacity"] = layer.properties.options.opacity;
     } else {
@@ -405,6 +408,9 @@ const plotAlplakesHydrodynamicStreamlines = (
     }
     if ("unit" in layer.properties) {
       options["unit"] = layer.properties.unit;
+    }
+    if ("zIndex" in layer.properties) {
+      options["zIndex"] = layer.properties.zIndex;
     }
     if ("opacity" in layer.properties.options) {
       options["opacity"] = layer.properties.options.opacity;
@@ -486,7 +492,7 @@ const addSencastTiff = async (layer, dataStore, layerStore, datetime, map) => {
   ];
   var metadata;
   if (!checkNested(dataStore, path)) {
-    var { data: metadata } = await axios.get(layer.properties.metadata);
+    ({ data: metadata } = await axios.get(layer.properties.metadata));
     metadata = metadata.map((m) => {
       m.unix = parseDate(m.dt).getTime();
       m.url = CONFIG.sencast_bucket + m.k;
@@ -501,10 +507,10 @@ const addSencastTiff = async (layer, dataStore, layerStore, datetime, map) => {
   const image = findClosest(metadata, "unix", datetime);
   layer.properties.options.includeDates = metadata.map((m) => m.time);
   layer.properties.options.date = image.time;
-  layer.properties.options.min = 0
-  layer.properties.options.max = 20
-  layer.properties.options.dataMin = 0
-  layer.properties.options.dataMax = 20
+  layer.properties.options.min = image.min;
+  layer.properties.options.max = image.max;
+  layer.properties.options.dataMin = image.min;
+  layer.properties.options.dataMax = image.max;
   await plotSencastTiff(image.url, layer, layerStore, map);
 };
 
@@ -526,6 +532,9 @@ const plotSencastTiff = async (url, layer, layerStore, map) => {
     if ("unit" in layer.properties) {
       options["unit"] = layer.properties.unit;
     }
+    if ("zIndex" in layer.properties) {
+      options["zIndex"] = layer.properties.zIndex;
+    }
     if ("opacity" in layer.properties.options) {
       options["opacity"] = layer.properties.options.opacity;
     } else {
@@ -535,6 +544,7 @@ const plotSencastTiff = async (url, layer, layerStore, map) => {
   var { data } = await axios.get(url, {
     responseType: "arraybuffer",
   });
+
   var leaflet_layer = L.floatgeotiff(data, options).addTo(map).addTo(map);
   setNested(layerStore, path, leaflet_layer);
 };
@@ -566,17 +576,27 @@ const updateSencastTiff = async (
   var metadata = getNested(dataStore, path);
 
   var data = false;
-  if ("date" in layer.properties.options) {
+  if (
+    "date" in layer.properties.options &&
+    "updateDate" in layer.properties.options &&
+    layer.properties.options.updateDate
+  ) {
     const image = findClosest(
       metadata,
       "unix",
       layer.properties.options.date.getTime()
     );
 
-    var { data } = await axios.get(image.url, {
+    layer.properties.options.min = image.min;
+    layer.properties.options.max = image.max;
+    layer.properties.options.dataMin = image.min;
+    layer.properties.options.dataMax = image.max;
+    layer.properties.options.updateDate = false;
+
+    ({ data } = await axios.get(image.url, {
       responseType: "arraybuffer",
-    });
-  } 
+    }));
+  }
 
   var leaflet_layer = getNested(layerStore, path);
   if (leaflet_layer !== null && leaflet_layer !== undefined) {

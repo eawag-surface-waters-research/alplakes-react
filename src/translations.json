@@ -115,6 +115,18 @@
     "FR": "Chl-A",
     "IT": "Clo-A"
   },
+  "secchi": {
+    "EN": "Secchi Depth",
+    "DE": "Chl-A",
+    "FR": "Chl-A",
+    "IT": "Clo-A"
+  },
+  "turbidity": {
+    "EN": "Turbidity",
+    "DE": "Chl-A",
+    "FR": "Chl-A",
+    "IT": "Clo-A"
+  },
   "play": {
     "EN": "Play (Spacebar)",
     "DE": "Spielen (Leertaste)",

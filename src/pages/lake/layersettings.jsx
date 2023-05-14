@@ -293,10 +293,10 @@ class Streamlines extends Component {
 
 class Tiff extends Component {
   state = {
-    _min: 0,
-    _max: 0,
-    dataMin: 0,
-    dataMax: 0,
+    _min: this.props.options.dataMin ? this.props.options.dataMin : 0,
+    _max: this.props.options.dataMax ? this.props.options.dataMax : 0,
+    dataMin: this.props.options.dataMin ? this.props.options.dataMin : 0,
+    dataMax: this.props.options.dataMax ? this.props.options.dataMax : 0,
   };
 
   setMin = (event) => {
@@ -310,15 +310,18 @@ class Tiff extends Component {
   setDate = (event) => {
     var { id, updateOptions, options } = this.props;
     options.date = event;
+    options.updateDate = true;
     updateOptions(id, options);
   };
 
   updateMinMax = () => {
     var { id, updateOptions, options } = this.props;
     var { _min, _max } = this.state;
-    options["min"] = parseFloat(_min);
-    options["max"] = parseFloat(_max);
-    updateOptions(id, options);
+    if (options["min"] !== _min || options["max"] !== _max) {
+      options["min"] = parseFloat(_min);
+      options["max"] = parseFloat(_max);
+      updateOptions(id, options);
+    }
   };
 
   enterMinMax = (event) => {
@@ -386,6 +389,7 @@ class Tiff extends Component {
 
   render() {
     var { _min, _max } = this.state;
+    console.log(_min, _max);
     var { language } = this.props;
     var { palette, paletteName, opacity, includeDates, date } =
       this.props.options;

@@ -81,7 +81,7 @@ class Lake extends Component {
     if (period !== this.state.period) {
       var datetime = period[0];
       for (let layer of layers) {
-        if (layer.active) {
+        if (layer.active && layer.properties.period) {
           updates.unshift({ event: "removeLayer", id: layer.id });
           updates.push({ event: "addLayer", id: layer.id });
         }
@@ -274,11 +274,9 @@ class Lake extends Component {
       );
       var updates = [{ event: "bounds" }];
       for (var layer of metadata.layers) {
-        if (layer.active === "true") {
+        if (layer.active) {
           layer.active = true;
           updates.push({ event: "addLayer", id: layer.id });
-        } else {
-          layer.active = false;
         }
       }
       var depth = metadata.depth;

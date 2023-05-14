@@ -6,13 +6,14 @@ L.Streamlines = (L.Layer ? L.Layer : L.Class).extend({
     paths: 800,
     color: "white",
     width: 0.5,
-    fade: 1,
+    fade: 0.97,
     duration: 10,
     maxAge: 50,
     velocityScale: 0.01,
     opacity: 1,
     nCols: 200,
     nRows: 200,
+    zIndex: 3,
     radiusFactor: 2,
     parameter: "",
     unit: "",
@@ -118,7 +119,8 @@ L.Streamlines = (L.Layer ? L.Layer : L.Class).extend({
       reset = true;
     }
     L.Util.setOptions(this, options);
-    this._canvas.style["opacity"] = this.options.opacity;
+    this._canvas.style.opacity = this.options.opacity;
+    this._canvas.style.zIndex = this.options.zIndex + 100;
     this._data = data;
     if (reset) this._reset();
   },
@@ -171,7 +173,8 @@ L.Streamlines = (L.Layer ? L.Layer : L.Class).extend({
       "msTransformOrigin",
     ]);
     canvas.style[originProp] = "50% 50%";
-    canvas.style["opacity"] = this.options.opacity;
+    canvas.style.opacity = this.options.opacity;
+    canvas.style.zIndex = this.options.zIndex + 100;
 
     var size = this._map.getSize();
     canvas.width = size.x;

@@ -24,7 +24,7 @@
     {
       "id": 0,
       "type": "alplakes_hydrodynamic",
-      "active": "true",
+      "active": true,
       "properties": {
         "model": "delft3d-flow",
         "lake": "geneva",
@@ -34,18 +34,19 @@
         "width": 36,
         "display": "raster",
         "depth": true,
+        "period": true,
         "simpleline": true,
         "temperature": true,
         "options": {
           "paletteName": "Balance",
-          "z-index": 1
+          "zIndex": 1
         }
       }
     },
     {
       "id": 1,
       "type": "alplakes_hydrodynamic",
-      "active": "true",
+      "active": true,
       "properties": {
         "model": "delft3d-flow",
         "lake": "geneva",
@@ -55,6 +56,7 @@
         "width": 36,
         "display": "streamlines",
         "depth": true,
+        "period": true,
         "options": {
           "paths": 5000,
           "color": "#ffffff",
@@ -64,14 +66,14 @@
           "maxAge": 80,
           "velocityScale": 0.01,
           "opacity": 0.7,
-          "z-index": 2
+          "zIndex": 3
         }
       }
     },
     {
       "id": 2,
       "type": "sencast_tiff",
-      "active": "false",
+      "active": false,
       "properties": {
         "model": "Sentinel3",
         "lake": "geneva",
@@ -80,9 +82,30 @@
         "unit": "mg m-3",
         "display": "tiff",
         "depth": false,
+        "period": false,
         "options": {
           "paletteName": "cc chl",
-          "z-index": 3,
+          "zIndex": 2,
+          "opacity": 1
+        }
+      }
+    },
+    {
+      "id": 3,
+      "type": "sencast_tiff",
+      "active": false,
+      "properties": {
+        "model": "Sentinel2",
+        "lake": "geneva",
+        "parameter": "secchi",
+        "metadata": "https://eawagrs.s3.eu-central-1.amazonaws.com/metadata/sentinel2/p3qaa_zSD.json",
+        "unit": "m",
+        "display": "tiff",
+        "depth": false,
+        "period": false,
+        "options": {
+          "paletteName": "Thermal",
+          "zIndex": 2,
           "opacity": 1
         }
       }

@@ -18,10 +18,11 @@ class Legend extends Component {
     return (
       <div className="legend">
         {layers
-          .filter((l) =>
-            ["min", "max", "palette"].every((key) =>
-              Object.keys(l.properties.options).includes(key)
-            )
+          .filter(
+            (l) =>
+              ["min", "max", "palette"].every((key) =>
+                Object.keys(l.properties.options).includes(key)
+              ) && l.active
           )
           .map((l) => (
             <Colorbar

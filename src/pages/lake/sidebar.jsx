@@ -7,6 +7,8 @@ import { formatTime, formatDateLong } from "./functions";
 import temperature_icon from "../../img/temperature.png";
 import velocity_icon from "../../img/velocity.png";
 import chla_icon from "../../img/chla.png";
+import secchi_icon from "../../img/secchi.png";
+import turbidity_icon from "../../img/turbidity.png";
 import "react-datepicker/dist/react-datepicker.css";
 import "./lake.css";
 
@@ -74,6 +76,18 @@ class ActiveApps extends Component {
     var { removeLayer } = this.props;
     removeLayer(parseInt(event.target.getAttribute("id")));
   };
+  handleDragStart = (event, index) => {
+    event.dataTransfer.setData("text/plain", index);
+    event.dataTransfer.dropEffect = "move";
+  };
+  handleDragOver = (event) => {
+    event.preventDefault();
+  };
+  handleDrop = (event, index) => {
+    console.log(event.dataTransfer);
+    const droppedIndex = event.dataTransfer.getData("text/plain");
+    console.log(droppedIndex);
+  };
   render() {
     var { language, layers, setSelection, selection, images } = this.props;
     var extra = Math.max(1, 4 - layers.filter((l) => l.active).length);
@@ -84,20 +98,24 @@ class ActiveApps extends Component {
           {layers
             .filter((l) => l.active)
             .sort((a, b) =>
-              a.properties.options["z-index"] > b.properties.options["z-index"]
+              a.properties.options["zIndex"] > b.properties.options["zIndex"]
                 ? -1
-                : b.properties.options["z-index"] >
-                  a.properties.options["z-index"]
+                : b.properties.options["zIndex"] >
+                  a.properties.options["zIndex"]
                 ? 1
                 : 0
             )
-            .map((layer) => (
+            .map((layer, index) => (
               <div
                 className={
                   "app filled " +
                   layer.type +
                   (selection === layer.id ? " active" : "")
                 }
+                draggable={true}
+                onDragStart={(event) => this.handleDragStart(event, index)}
+                onDragOver={this.handleDragOver}
+                onDrop={(event) => this.handleDrop(event, index)}
                 key={layer.id}
                 onClick={() => setSelection(layer.id)}
                 title="Edit settings"
@@ -115,7 +133,9 @@ class ActiveApps extends Component {
                   alt={layer.properties.parameter}
                 />
                 <span>
-                  {Translate[layer.properties.parameter][language]}
+                  {layer.properties.parameter in Translate
+                    ? Translate[layer.properties.parameter][language]
+                    : ""}
                   <div className="type">{layer.properties.model}</div>
                 </span>
               </div>
@@ -183,11 +203,16 @@ class Selection extends Component {
       return (
         <div className="selection">
           <div className="title">
-            {Translate[layer.properties.parameter][language] +
-              " " +
-              Translate.settings[language]}
+            {(layer.properties.parameter in Translate
+              ? Translate[layer.properties.parameter][language]
+              : "") + " " + Translate.settings[language]}
           </div>
-          <LayerSettings layer={layer} updateOptions={updateOptions} language={language}/>
+          <div className="title-model">{layer.properties.model}</div>
+          <LayerSettings
+            layer={layer}
+            updateOptions={updateOptions}
+            language={language}
+          />
         </div>
       );
     }
@@ -200,6 +225,8 @@ class Sidebar extends Component {
       temperature: temperature_icon,
       velocity: velocity_icon,
       chla: chla_icon,
+      secchi: secchi_icon,
+      turbidity_icon: turbidity_icon,
     },
   };
   render() {

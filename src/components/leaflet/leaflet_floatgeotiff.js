@@ -7,6 +7,7 @@ L.FloatGeotiff = L.ImageOverlay.extend({
     opacity: 1,
     min: false,
     max: false,
+    colorRampSteps: 2,
     palette: [
       { color: [255, 255, 255], point: 0 },
       { color: [0, 0, 0], point: 1 },
@@ -23,13 +24,9 @@ L.FloatGeotiff = L.ImageOverlay.extend({
     L.Util.setOptions(this, options);
     this._getData();
   },
-  changeOpacity: function (opacity) {
-    this._image.style.opacity = opacity;
-    this.options.opacity = opacity;
-  },
   update: function (newData, options) {
     L.Util.setOptions(this, options);
-    this._data = newData;
+    if (newData !== false) this._data = newData;
     this._getData();
   },
   onAdd: function (map) {
@@ -39,16 +36,16 @@ L.FloatGeotiff = L.ImageOverlay.extend({
     }
     map._panes.overlayPane.appendChild(this._image);
     map.on("click", this._onClick, this);
-    map.on("moveend", this._reset, this);
+    map.on("moveend", this._redraw, this);
     map.on("mousemove", this._onMousemove, this);
     if (map.options.zoomAnimation && L.Browser.any3d) {
       map.on("zoomanim", this._animateZoom, this);
     }
-    this._reset();
+    this._redraw();
   },
   onRemove: function (map) {
     map.getPanes().overlayPane.removeChild(this._image);
-    map.off("moveend", this._reset, this);
+    map.off("moveend", this._redraw, this);
     map.off("click", this._onClick, this);
     map.off("mousemove", this._onMousemove, this);
     if (map.options.zoomAnimation) {
@@ -70,14 +67,17 @@ L.FloatGeotiff = L.ImageOverlay.extend({
     this.raster.data = await image.readRasters();
     this.raster.width = image.getWidth();
     this.raster.height = image.getHeight();
-    if (!this.options.min) this.options.min = min(this.raster.data[0]);
-    if (!this.options.max) this.options.max = max(this.raster.data[0]);
+    if (this.options.min === undefined)
+      this.options.min = min(this.raster.data[0]);
+    if (this.options.min === undefined)
+      this.options.max = max(this.raster.data[0]);
     if (this.raster.data.length > 1) {
       if (max(this.raster.data[1]) > 1) {
         this.options.invalidpixel = 0;
       }
     }
-    this._reset();
+    this._colorRamp = this._createColorRamp();
+    this._redraw();
   },
   getValueAtLatLng: function (lat, lng) {
     try {
@@ -127,7 +127,8 @@ L.FloatGeotiff = L.ImageOverlay.extend({
         ") ";
     }
   },
-  _reset: function () {
+  _reset: function () {},
+  _redraw: function () {
     if (this.hasOwnProperty("_map")) {
       if (this._rasterBounds) {
         this.topLeft = this._map.latLngToLayerPoint(
@@ -205,7 +206,44 @@ L.FloatGeotiff = L.ImageOverlay.extend({
 
       this._image.src = String(plotCanvas.toDataURL());
       this._image.style.opacity = this.options.opacity;
+      this._image.style.zIndex = this.options.zIndex + 100;
     }
+  },
+  _createColorRamp: function () {
+    var _colorRamp = [];
+    var noSteps = 10 ** this.options.colorRampSteps;
+    var step = (this.options.max - this.options.min) / noSteps;
+    for (var i = 0; i < noSteps + 1; i++) {
+      let value = this.options.min + step * i;
+      var loc =
+        (value - this.options.min) / (this.options.max - this.options.min);
+
+      var index = 0;
+      for (var j = 0; j < this.options.palette.length - 1; j++) {
+        if (
+          loc >= this.options.palette[j].point &&
+          loc <= this.options.palette[j + 1].point
+        ) {
+          index = j;
+          break;
+        }
+      }
+
+      var color1 = this.options.palette[index].color;
+      var color2 = this.options.palette[index + 1].color;
+
+      var f =
+        (loc - this.options.palette[index].point) /
+        (this.options.palette[index + 1].point -
+          this.options.palette[index].point);
+
+      _colorRamp.push([
+        color1[0] + (color2[0] - color1[0]) * f,
+        color1[1] + (color2[1] - color1[1]) * f,
+        color1[2] + (color2[2] - color1[2]) * f,
+      ]);
+    }
+    return _colorRamp;
   },
   _getColor: function (value) {
     if (value === null || isNaN(value)) {
@@ -217,33 +255,13 @@ L.FloatGeotiff = L.ImageOverlay.extend({
     if (value < this.options.min) {
       return this.options.palette[0].color;
     }
-    var loc =
-      (value - this.options.min) / (this.options.max - this.options.min);
 
-    var index = 0;
-    for (var i = 0; i < this.options.palette.length - 1; i++) {
-      if (
-        loc >= this.options.palette[i].point &&
-        loc <= this.options.palette[i + 1].point
-      ) {
-        index = i;
-      }
-    }
-    var color1 = this.options.palette[index].color;
-    var color2 = this.options.palette[index + 1].color;
+    var index = Math.round(
+      ((value - this.options.min) / (this.options.max - this.options.min)) *
+        10 ** this.options.colorRampSteps
+    );
 
-    var f =
-      (loc - this.options.palette[index].point) /
-      (this.options.palette[index + 1].point -
-        this.options.palette[index].point);
-
-    var rgb = [
-      color1[0] + (color2[0] - color1[0]) * f,
-      color1[1] + (color2[1] - color1[1]) * f,
-      color1[2] + (color2[2] - color1[2]) * f,
-    ];
-
-    return rgb;
+    return this._colorRamp[index];
   },
   _render: function (raster, plotCanvas, ctx, args) {
     ctx.globalAlpha = this.options.opacity;
