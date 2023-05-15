@@ -276,7 +276,7 @@ L.FloatGeotiff = L.ImageOverlay.extend({
       let yy = Math.round(
         ((y + n) / (args.plotHeight + n + s)) *
           (raster.height + this.options.heightOffset)
-      );
+      )-5;
       for (let x = 0; x < args.plotWidth; x++) {
         let xx = Math.round(
           ((x + w) / (args.plotWidth + e + w)) *
