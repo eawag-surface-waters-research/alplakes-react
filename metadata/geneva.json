@@ -78,7 +78,7 @@
         "model": "Sentinel3",
         "lake": "geneva",
         "parameter": "chla",
-        "metadata": "https://eawagrs.s3.eu-central-1.amazonaws.com/metadata/sentinel3/chla.json",
+        "metadata": "https://eawagrs.s3.eu-central-1.amazonaws.com/metadata/sentinel3/geneva_chla.json",
         "unit": "mg m-3",
         "display": "tiff",
         "depth": false,
@@ -95,10 +95,70 @@
       "type": "sencast_tiff",
       "active": false,
       "properties": {
+        "model": "Sentinel3",
+        "lake": "geneva",
+        "parameter": "tsm",
+        "metadata": "https://eawagrs.s3.eu-central-1.amazonaws.com/metadata/sentinel3/geneva_tsm_binding754.json",
+        "unit": "g m-3",
+        "display": "tiff",
+        "depth": false,
+        "period": false,
+        "options": {
+          "paletteName": "cc chl",
+          "zIndex": 2,
+          "opacity": 1
+        }
+      }
+    },
+    {
+      "id": 4,
+      "type": "sencast_tiff",
+      "active": false,
+      "properties": {
+        "model": "Sentinel3",
+        "lake": "geneva",
+        "parameter": "secchi",
+        "metadata": "https://eawagrs.s3.eu-central-1.amazonaws.com/metadata/sentinel3/geneva_Zsd_lee.json",
+        "unit": "m",
+        "display": "tiff",
+        "depth": false,
+        "period": false,
+        "options": {
+          "paletteName": "cc chl",
+          "zIndex": 2,
+          "opacity": 1
+        }
+      }
+    },
+    {
+      "id": 5,
+      "type": "sencast_tiff",
+      "active": false,
+      "properties": {
         "model": "Sentinel2",
         "lake": "geneva",
         "parameter": "secchi",
-        "metadata": "https://eawagrs.s3.eu-central-1.amazonaws.com/metadata/sentinel2/p3qaa_zSD.json",
+        "metadata": "https://eawagrs.s3.eu-central-1.amazonaws.com/metadata/sentinel2/geneva_p3qaa_zSD.json",
+        "unit": "m",
+        "display": "tiff",
+        "depth": false,
+        "period": false,
+        "options": {
+          "paletteName": "Thermal",
+          "zIndex": 2,
+          "opacity": 1
+        }
+      }
+    },
+    {
+      "id": 6,
+      "type": "sencast_tiff",
+      "active": false,
+      "properties": {
+        "model": "Sentinel2",
+        "lake": "geneva",
+        "parameter": "turbidity",
+        "metadata": "https://eawagrs.s3.eu-central-1.amazonaws.com/metadata/sentinel2/geneva_TUR_Nechad2016_665.json",
         "unit": "m",
         "display": "tiff",
         "depth": false,

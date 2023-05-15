@@ -122,6 +122,10 @@ const getTimestepData = (data, datetime) => {
   }
 };
 
+const round = (value, decimals) => {
+  return Math.round(value * 10 ** decimals) / 10 ** decimals;
+};
+
 export const flyToBounds = (bounds, map) => {
   map.flyToBounds(
     L.latLngBounds(L.latLng(bounds.southWest), L.latLng(bounds.northEast))
@@ -506,11 +510,14 @@ const addSencastTiff = async (layer, dataStore, layerStore, datetime, map) => {
 
   const image = findClosest(metadata, "unix", datetime);
   layer.properties.options.includeDates = metadata.map((m) => m.time);
+  layer.properties.options.percentage = metadata.map((m) =>
+    Math.round((parseFloat(m.vp) / parseFloat(m.p)) * 100)
+  );
   layer.properties.options.date = image.time;
-  layer.properties.options.min = image.min;
-  layer.properties.options.max = image.max;
-  layer.properties.options.dataMin = image.min;
-  layer.properties.options.dataMax = image.max;
+  layer.properties.options.min = round(image.min, 2);
+  layer.properties.options.max = round(image.max, 2);
+  layer.properties.options.dataMin = round(image.min, 2);
+  layer.properties.options.dataMax = round(image.max, 2);
   await plotSencastTiff(image.url, layer, layerStore, map);
 };
 
@@ -587,10 +594,10 @@ const updateSencastTiff = async (
       layer.properties.options.date.getTime()
     );
 
-    layer.properties.options.min = image.min;
-    layer.properties.options.max = image.max;
-    layer.properties.options.dataMin = image.min;
-    layer.properties.options.dataMax = image.max;
+    layer.properties.options.min = round(image.min, 2);
+    layer.properties.options.max = round(image.max, 2);
+    layer.properties.options.dataMin = round(image.min, 2);
+    layer.properties.options.dataMax = round(image.max, 2);
     layer.properties.options.updateDate = false;
 
     ({ data } = await axios.get(image.url, {

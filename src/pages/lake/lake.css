@@ -75,6 +75,9 @@
   font-size: 14px;
   z-index: 999;
   pointer-events: none;
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 12px;
+  padding: 3px 9px;
 }
 
 .main .lake .content .primary .map-component .settings-modal {
@@ -647,7 +650,7 @@
   border-radius: 12px;
   margin-top: 24px;
   position: relative;
-  padding: 18px 18px 1px 18px;
+  padding: 18px;
   box-sizing: border-box;
 }
 
@@ -668,56 +671,37 @@
   right: 18px;
 }
 
-.main .lake .content .secondary .selection .parameter {
-  border: 1px solid #b6afaf;
-  border-radius: 6px;
-  position: relative;
-  padding-top: 4px;
-  margin: 8px 6px 18px 8px;
-}
-
-.main .lake .content .secondary .selection .parameter .header {
-  position: absolute;
-  top: -9px;
-  left: 12px;
-  background-color: #f2f2f2;
-  padding: 0 5px;
-  color: #b6afaf;
-}
-
-.main.dark .lake .content .secondary .selection .parameter .header {
-  background-color: #272727;
-  color: #b6afaf;
-}
-
-.main .lake .content .secondary .selection .parameter .layers .layer {
-  margin: 12px;
+.main .lake .content .secondary .selection .layers .layer {
+  margin: 6px;
   padding: 6px 10px 6px 6px;
   background-color: #e3e3e3;
   border-radius: 8px;
   cursor: pointer;
   display: inline-block;
   vertical-align: top;
+  width: calc(50% - 12px);
+  box-sizing: border-box;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
-.main.dark .lake .content .secondary .selection .parameter .layers .layer {
+.main.dark .lake .content .secondary .selection .layers .layer {
   background-color: rgb(30 30 30);
 }
 
-.main .lake .content .secondary .selection .parameter .layers .layer.disabled {
+.main .lake .content .secondary .selection .layers .layer.disabled {
   opacity: 0.5;
   pointer-events: none;
 }
 
-.main .lake .content .secondary .selection .parameter .layers .layer:hover {
+.main .lake .content .secondary .selection .layers .layer:hover {
   background-color: #d1d1d1;
 }
 
-.main.dark .lake .content .secondary .selection .parameter .layers .layer:hover {
+.main.dark .lake .content .secondary .selection .layers .layer:hover {
   background-color: rgb(15, 15, 15);
 }
 
-.main .lake .content .secondary .selection .parameter .layers .layer .icon {
+.main .lake .content .secondary .selection .layers .layer .icon {
   width: 50px;
   height: 50px;
   display: inline-block;
@@ -726,7 +710,7 @@
   position: relative;
 }
 
-.main .lake .content .secondary .selection .parameter .layers .layer img {
+.main .lake .content .secondary .selection .layers .layer img {
   max-width: 28px;
   max-height: 34px;
   top: 50%;
@@ -735,21 +719,28 @@
   display: inline-block;
 }
 
-.main .lake .content .secondary .selection .parameter .layers .layer .text {
+.main .lake .content .secondary .selection .layers .layer .text {
   display: inline-block;
   margin-left: 8px;
   vertical-align: bottom;
-  padding-bottom: 8px;
   font-size: 14px;
 }
 
-.main .lake .content .secondary .selection .parameter .layers .layer .text .type {
+.main .lake .content .secondary .selection .layers .layer .text .parameter {
+  font-size: 16px;
+}
+
+.main .lake .content .secondary .selection .layers .layer .text .type {
   color: #343434;
   font-size: 12px;
 }
 
-.main.dark .lake .content .secondary .selection .parameter .layers .layer .text .type {
+.main.dark .lake .content .secondary .selection .layers .layer .text .type {
   color: rgb(101, 101, 101);
+}
+
+.main .lake .content .secondary .selection .layers .layer .text .model {
+  font-size: 12px;
 }
 
 .main .lake .content .secondary .selection .layer-settings {
@@ -845,19 +836,25 @@
   color: white;
 }
 
+.main .lake .content .secondary .selection .layer-settings .react-datepicker__day {
+  border: 1px solid #f2f2f2;
+}
+
+.main.dark .lake .content .secondary .selection .layer-settings .react-datepicker__day {
+  border: 1px solid #272727;
+}
+
 .main .lake .content .secondary .selection .layer-settings .react-datepicker__day-name,
 .main .lake .content .secondary .selection .layer-settings .react-datepicker__day,
 .main .lake .content .secondary .selection .layer-settings .react-datepicker__time-name {
   width: 2.5rem;
   color: unset;
-  border: 1px solid transparent;
   border-radius: 0.3rem;
 }
 
 .main .lake .content .secondary .selection .layer-settings .react-datepicker__day--selected {
-  border-color: unset;
+  border-color: unset !important;
   font-weight: bold;
-  background-color: transparent;
 }
 
 .main .lake .content .secondary .selection .layer-settings .react-datepicker__current-month {
@@ -871,14 +868,6 @@
 .main .lake .content .secondary .selection .layer-settings .react-datepicker__day:hover {
   font-weight: bold;
   border-color: unset;
-}
-
-.main .lake .content .secondary .selection .layer-settings .react-datepicker__day--keyboard-selected {
-  background-color: transparent;
-}
-
-.main .lake .content .secondary .selection .layer-settings .react-datepicker__day--selected:hover {
-  background-color: transparent;
 }
 
 @media screen and (max-width: 950px) {

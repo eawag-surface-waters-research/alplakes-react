@@ -127,6 +127,12 @@
     "FR": "Chl-A",
     "IT": "Clo-A"
   },
+  "tsm": {
+    "EN": "Turbidity",
+    "DE": "Chl-A",
+    "FR": "Chl-A",
+    "IT": "Clo-A"
+  },
   "play": {
     "EN": "Play (Spacebar)",
     "DE": "Spielen (Leertaste)",
@@ -346,16 +352,16 @@
     }
   },
   "alplakes_hydrodynamic": {
-    "EN": "3D Lake Model",
-    "DE": "3D-Modell des Sees",
-    "FR": "Modèle de lac 3D",
-    "IT": "Modello 3D del lago"
+    "EN": "3D Model",
+    "DE": "3D-Modell",
+    "FR": "Modèle 3D",
+    "IT": "Modello 3D"
   },
   "sencast_tiff": {
-    "EN": "Satellite Image",
-    "DE": "Satellitenbild",
-    "FR": "Image satellite",
-    "IT": "Immagine satellitare"
+    "EN": "Satellite",
+    "DE": "Satelliten",
+    "FR": "Satellite",
+    "IT": "Satellitare"
   },
   "demo": {
     "EN": "",

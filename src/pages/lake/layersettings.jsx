@@ -297,6 +297,8 @@ class Tiff extends Component {
     _max: this.props.options.dataMax ? this.props.options.dataMax : 0,
     dataMin: this.props.options.dataMin ? this.props.options.dataMin : 0,
     dataMax: this.props.options.dataMax ? this.props.options.dataMax : 0,
+    style: false,
+    updateDatepicker: false,
   };
 
   setMin = (event) => {
@@ -309,6 +311,7 @@ class Tiff extends Component {
 
   setDate = (event) => {
     var { id, updateOptions, options } = this.props;
+    this.onMonthChange(event);
     options.date = event;
     options.updateDate = true;
     updateOptions(id, options);
@@ -352,6 +355,54 @@ class Tiff extends Component {
     this.setState({ _max: this.props.options.dataMax });
   };
 
+  onMonthChange = (event) => {
+    var { style } = this.state;
+    while (style.sheet.cssRules.length > 0) {
+      style.sheet.deleteRule(0);
+    }
+    this.addCssRules(event, style);
+  };
+
+  addCssRules = (date, style) => {
+    var { includeDates, percentage } = this.props.options;
+    var month = date.getMonth();
+    var rule;
+    for (let i = 0; i < includeDates.length; i++) {
+      let p = percentage[i];
+      if (includeDates[i].getMonth() === month) {
+        let day = includeDates[i].getDate();
+        rule = `.react-datepicker__day--0${
+          day < 10 ? "0" + day : day
+        }:not(.react-datepicker__day--outside-month) { background: linear-gradient(to right, red ${
+          p - 15
+        }%, transparent ${p + 15}%); }`;
+        style.sheet.insertRule(rule, 0);
+      } else if (
+        includeDates[i].getMonth() === month - 1 &&
+        includeDates[i].getDate() > 15
+      ) {
+        let day = includeDates[i].getDate();
+        rule = `.react-datepicker__day--0${
+          day < 10 ? "0" + day : day
+        }.react-datepicker__day--outside-month { background: linear-gradient(to right, red ${
+          p - 15
+        }%, transparent ${p + 15}%); }`;
+        style.sheet.insertRule(rule, 0);
+      } else if (
+        includeDates[i].getMonth() === month + 1 &&
+        includeDates[i].getDate() < 15
+      ) {
+        let day = includeDates[i].getDate();
+        rule = `.react-datepicker__day--0${
+          day < 10 ? "0" + day : day
+        }.react-datepicker__day--outside-month { background: linear-gradient(to right, red ${
+          p - 15
+        }%, transparent ${p + 15}%); }`;
+        style.sheet.insertRule(rule, 0);
+      }
+    }
+  };
+
   componentDidUpdate() {
     if (
       this.props.options.dataMin !== undefined &&
@@ -365,6 +416,10 @@ class Tiff extends Component {
         dataMax: this.props.options.dataMax,
       });
     }
+    if (this.state.updateDatepicker && "date" in this.props.options) {
+      this.addCssRules(this.props.options.date, this.state.style);
+      this.setState({ updateDatepicker: false });
+    }
   }
 
   componentDidMount() {
@@ -375,6 +430,14 @@ class Tiff extends Component {
     document
       .getElementById("tiff_max")
       .addEventListener("keydown", this.enterMinMax);
+    var style = document.createElement("style");
+    document.head.appendChild(style);
+    if ("date" in this.props.options) {
+      this.addCssRules(this.props.options.date, style);
+      this.setState({ style });
+    } else {
+      this.setState({ style, updateDatepicker: true });
+    }
   }
 
   componentWillUnmount() {
@@ -385,11 +448,14 @@ class Tiff extends Component {
     document
       .getElementById("tiff_max")
       .removeEventListener("keydown", this.enterMinMax);
+    var { style } = this.state;
+    while (style.sheet.cssRules.length > 0) {
+      style.sheet.deleteRule(0);
+    }
   }
 
   render() {
     var { _min, _max } = this.state;
-    console.log(_min, _max);
     var { language } = this.props;
     var { palette, paletteName, opacity, includeDates, date } =
       this.props.options;
@@ -414,6 +480,7 @@ class Tiff extends Component {
             onChange={(update) => {
               this.setDate(update);
             }}
+            onMonthChange={this.onMonthChange}
           />
         </div>
         <div className="setting half">

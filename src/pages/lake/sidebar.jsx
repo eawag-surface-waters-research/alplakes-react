@@ -160,42 +160,39 @@ class Selection extends Component {
   render() {
     var { selection, layers, images, language, addLayer, updateOptions } =
       this.props;
-    var parameters = [...new Set(layers.map((l) => l.properties.parameter))];
     if (selection === false) {
       return;
     } else if (selection === "add") {
       return (
         <div className="selection">
           <div className="title">{Translate.addlayers[language]}</div>
-          {parameters.map((p) => (
-            <div className="parameter" key={p}>
-              <div className="header">
-                {p in Translate ? Translate[p][language] : ""}
+          <div className="layers">
+            {layers.map((l) => (
+              <div
+                className={l.active ? "layer disabled" : "layer"}
+                key={l.id}
+                onClick={() => addLayer(l.id)}
+              >
+                <div className={"icon " + l.type}>
+                  <img
+                    src={images[l.properties.parameter]}
+                    alt={l.properties.parameter}
+                  />
+                </div>
+                <div className="text">
+                  <div className="parameter">
+                    {l.properties.parameter in Translate
+                      ? Translate[l.properties.parameter][language]
+                      : ""}
+                  </div>
+                  <div className="model">{l.properties.model}</div>
+                  <div className="type">
+                    {l.type in Translate ? Translate[l.type][language] : ""}
+                  </div>
+                </div>
               </div>
-              <div className="layers">
-                {layers
-                  .filter((l) => l.properties.parameter === p)
-                  .map((l) => (
-                    <div
-                      className={l.active ? "layer disabled" : "layer"}
-                      key={l.id}
-                      onClick={() => addLayer(l.id)}
-                    >
-                      <div className={"icon " + l.type}>
-                        <img
-                          src={images[l.properties.parameter]}
-                          alt={l.properties.parameter}
-                        />
-                      </div>
-                      <div className="text">
-                        {l.type in Translate ? Translate[l.type][language] : ""}
-                        <div className="type">{l.properties.model}</div>
-                      </div>
-                    </div>
-                  ))}
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       );
     } else if (Number.isInteger(selection)) {
@@ -205,7 +202,9 @@ class Selection extends Component {
           <div className="title">
             {(layer.properties.parameter in Translate
               ? Translate[layer.properties.parameter][language]
-              : "") + " " + Translate.settings[language]}
+              : "") +
+              " " +
+              Translate.settings[language]}
           </div>
           <div className="title-model">{layer.properties.model}</div>
           <LayerSettings
@@ -226,7 +225,8 @@ class Sidebar extends Component {
       velocity: velocity_icon,
       chla: chla_icon,
       secchi: secchi_icon,
-      turbidity_icon: turbidity_icon,
+      turbidity: turbidity_icon,
+      tsm: turbidity_icon,
     },
   };
   render() {
