@@ -6,6 +6,9 @@ import Translate from "../../translations.json";
 import { formatTime, formatDateLong } from "./functions";
 import temperature_icon from "../../img/temperature.png";
 import velocity_icon from "../../img/velocity.png";
+import chla_icon from "../../img/chla.png";
+import secchi_icon from "../../img/secchi.png";
+import turbidity_icon from "../../img/turbidity.png";
 import "react-datepicker/dist/react-datepicker.css";
 import "./lake.css";
 
@@ -22,7 +25,7 @@ class Period extends Component {
   };
   setDateRange = (period) => {
     var { maxPeriod } = this.state;
-    var { setPeriod } = this.props;
+    var { setPeriod, maxDate } = this.props;
     if (period[0] !== null && period[1] !== null) {
       setPeriod([
         Math.floor(period[0].getTime()),
@@ -30,9 +33,10 @@ class Period extends Component {
       ]);
       this.setState({ period, maxPeriodDate: false });
     } else if (period[0] !== null && period[1] === null) {
+      var maxPeriodDate = this.addDays(period[0], maxPeriod);
       this.setState({
         period,
-        maxPeriodDate: this.addDays(period[0], maxPeriod),
+        maxPeriodDate: maxPeriodDate < maxDate ? maxPeriodDate : maxDate,
       });
     }
   };
@@ -72,6 +76,18 @@ class ActiveApps extends Component {
     var { removeLayer } = this.props;
     removeLayer(parseInt(event.target.getAttribute("id")));
   };
+  handleDragStart = (event, index) => {
+    event.dataTransfer.setData("text/plain", index);
+    event.dataTransfer.dropEffect = "move";
+  };
+  handleDragOver = (event) => {
+    event.preventDefault();
+  };
+  handleDrop = (event, index) => {
+    console.log(event.dataTransfer);
+    const droppedIndex = event.dataTransfer.getData("text/plain");
+    console.log(droppedIndex);
+  };
   render() {
     var { language, layers, setSelection, selection, images } = this.props;
     var extra = Math.max(1, 4 - layers.filter((l) => l.active).length);
@@ -81,13 +97,25 @@ class ActiveApps extends Component {
         <div className="loaded">
           {layers
             .filter((l) => l.active)
-            .map((layer) => (
+            .sort((a, b) =>
+              a.properties.options["zIndex"] > b.properties.options["zIndex"]
+                ? -1
+                : b.properties.options["zIndex"] >
+                  a.properties.options["zIndex"]
+                ? 1
+                : 0
+            )
+            .map((layer, index) => (
               <div
                 className={
                   "app filled " +
                   layer.type +
                   (selection === layer.id ? " active" : "")
                 }
+                draggable={true}
+                onDragStart={(event) => this.handleDragStart(event, index)}
+                onDragOver={this.handleDragOver}
+                onDrop={(event) => this.handleDrop(event, index)}
                 key={layer.id}
                 onClick={() => setSelection(layer.id)}
                 title="Edit settings"
@@ -105,7 +133,9 @@ class ActiveApps extends Component {
                   alt={layer.properties.parameter}
                 />
                 <span>
-                  {Translate[layer.properties.parameter][language]}
+                  {layer.properties.parameter in Translate
+                    ? Translate[layer.properties.parameter][language]
+                    : ""}
                   <div className="type">{layer.properties.model}</div>
                 </span>
               </div>
@@ -130,40 +160,39 @@ class Selection extends Component {
   render() {
     var { selection, layers, images, language, addLayer, updateOptions } =
       this.props;
-    var parameters = [...new Set(layers.map((l) => l.properties.parameter))];
     if (selection === false) {
       return;
     } else if (selection === "add") {
       return (
         <div className="selection">
           <div className="title">{Translate.addlayers[language]}</div>
-          {parameters.map((p) => (
-            <div className="parameter" key={p}>
-              <div className="header">{Translate[p][language]}</div>
-              <div className="layers">
-                {layers
-                  .filter((l) => l.properties.parameter === p)
-                  .map((l) => (
-                    <div
-                      className={l.active ? "layer disabled" : "layer"}
-                      key={l.id}
-                      onClick={() => addLayer(l.id)}
-                    >
-                      <div className={"icon " + l.type}>
-                        <img
-                          src={images[l.properties.parameter]}
-                          alt={l.properties.parameter}
-                        />
-                      </div>
-                      <div className="text">
-                        {Translate[l.type][language]}
-                        <div className="type">{l.properties.model}</div>
-                      </div>
-                    </div>
-                  ))}
+          <div className="layers">
+            {layers.map((l) => (
+              <div
+                className={l.active ? "layer disabled" : "layer"}
+                key={l.id}
+                onClick={() => addLayer(l.id)}
+              >
+                <div className={"icon " + l.type}>
+                  <img
+                    src={images[l.properties.parameter]}
+                    alt={l.properties.parameter}
+                  />
+                </div>
+                <div className="text">
+                  <div className="parameter">
+                    {l.properties.parameter in Translate
+                      ? Translate[l.properties.parameter][language]
+                      : ""}
+                  </div>
+                  <div className="model">{l.properties.model}</div>
+                  <div className="type">
+                    {l.type in Translate ? Translate[l.type][language] : ""}
+                  </div>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       );
     } else if (Number.isInteger(selection)) {
@@ -171,11 +200,18 @@ class Selection extends Component {
       return (
         <div className="selection">
           <div className="title">
-            {Translate[layer.properties.parameter][language] +
+            {(layer.properties.parameter in Translate
+              ? Translate[layer.properties.parameter][language]
+              : "") +
               " " +
               Translate.settings[language]}
           </div>
-          <LayerSettings layer={layer} updateOptions={updateOptions} />
+          <div className="title-model">{layer.properties.model}</div>
+          <LayerSettings
+            layer={layer}
+            updateOptions={updateOptions}
+            language={language}
+          />
         </div>
       );
     }
@@ -184,10 +220,14 @@ class Selection extends Component {
 
 class Sidebar extends Component {
   state = {
-    images: { temperature: temperature_icon, velocity: velocity_icon },
-  };
-  setDateRange = (event) => {
-    console.log(event);
+    images: {
+      temperature: temperature_icon,
+      velocity: velocity_icon,
+      chla: chla_icon,
+      secchi: secchi_icon,
+      turbidity: turbidity_icon,
+      tsm: turbidity_icon,
+    },
   };
   render() {
     var {

@@ -1,0 +1,25 @@
+.errorboundary {
+  padding: 20% 10px 10px 10px;
+  font-size: 60px;
+  max-width: 800px;
+  margin: auto;
+}
+
+.errorboundary img {
+  z-index: -1;
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  filter: invert(0.1);
+}
+
+.errorboundary.dark img {
+  filter: invert(0.9);
+}
+
+.errorboundary .error-inner {
+  font-size: 30px;
+  color: grey;
+}

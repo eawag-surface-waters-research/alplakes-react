@@ -153,7 +153,7 @@
   z-index: -1;
 }
 
-.main .home .content .products .lake .image img.behind-image{
+.main .home .content .products .lake .image img.behind-image {
   background-color: rgb(204, 204, 204);
 }
 
@@ -191,7 +191,7 @@
 }
 
 .main .home .content .products .lake .image .tags img {
-  height: 14px;
+  height: 12px;
 }
 
 .main .home .content .products .lake .properties {
@@ -239,6 +239,10 @@
   color: grey;
   font-size: 13px;
   margin-top: 3px;
+}
+
+.main .home .content .products .lake .properties .location.hover {
+  text-decoration: underline;
 }
 
 .main .home .content .products .lake .properties .parameters {

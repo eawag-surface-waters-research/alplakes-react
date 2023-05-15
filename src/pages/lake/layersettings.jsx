@@ -1,5 +1,7 @@
 import React, { Component } from "react";
+import DatePicker from "react-datepicker";
 import ColorRamp from "../../components/colors/colorramp";
+import Translate from "../../translations.json";
 import "./lake.css";
 
 class Raster extends Component {
@@ -104,7 +106,9 @@ class Raster extends Component {
               onChange={this.setMin}
               id="raster_min"
             />
-            <button onClick={this.resetMin}>Reset</button>
+            <button onClick={this.resetMin} className="reset">
+              Reset
+            </button>
           </div>
         </div>
         <div className="setting half">
@@ -118,7 +122,9 @@ class Raster extends Component {
               onChange={this.setMax}
               id="raster_max"
             />
-            <button onClick={this.resetMax}>Reset</button>
+            <button onClick={this.resetMax} className="reset">
+              Reset
+            </button>
           </div>
         </div>
         <div className="setting">
@@ -285,9 +291,255 @@ class Streamlines extends Component {
   }
 }
 
+class Tiff extends Component {
+  state = {
+    _min: this.props.options.dataMin ? this.props.options.dataMin : 0,
+    _max: this.props.options.dataMax ? this.props.options.dataMax : 0,
+    dataMin: this.props.options.dataMin ? this.props.options.dataMin : 0,
+    dataMax: this.props.options.dataMax ? this.props.options.dataMax : 0,
+    style: false,
+    updateDatepicker: false,
+  };
+
+  setMin = (event) => {
+    this.setState({ _min: event.target.value });
+  };
+
+  setMax = (event) => {
+    this.setState({ _max: event.target.value });
+  };
+
+  setDate = (event) => {
+    var { id, updateOptions, options } = this.props;
+    this.onMonthChange(event);
+    options.date = event;
+    options.updateDate = true;
+    updateOptions(id, options);
+  };
+
+  updateMinMax = () => {
+    var { id, updateOptions, options } = this.props;
+    var { _min, _max } = this.state;
+    if (options["min"] !== _min || options["max"] !== _max) {
+      options["min"] = parseFloat(_min);
+      options["max"] = parseFloat(_max);
+      updateOptions(id, options);
+    }
+  };
+
+  enterMinMax = (event) => {
+    if (event.key === "Enter") {
+      this.updateMinMax();
+    }
+  };
+
+  setOpacity = (event) => {
+    var { id, updateOptions, options } = this.props;
+    var value = event.target.value;
+    options["opacity"] = value;
+    updateOptions(id, options);
+  };
+
+  setPalette = (event) => {
+    var { id, updateOptions, options } = this.props;
+    options["paletteName"] = event.name;
+    options["palette"] = event.palette;
+    updateOptions(id, options);
+  };
+
+  resetMin = () => {
+    this.setState({ _min: this.props.options.dataMin });
+  };
+
+  resetMax = () => {
+    this.setState({ _max: this.props.options.dataMax });
+  };
+
+  onMonthChange = (event) => {
+    var { style } = this.state;
+    while (style.sheet.cssRules.length > 0) {
+      style.sheet.deleteRule(0);
+    }
+    this.addCssRules(event, style);
+  };
+
+  addCssRules = (date, style) => {
+    var { includeDates, percentage } = this.props.options;
+    var month = date.getMonth();
+    var rule;
+    for (let i = 0; i < includeDates.length; i++) {
+      let p = percentage[i];
+      if (includeDates[i].getMonth() === month) {
+        let day = includeDates[i].getDate();
+        rule = `.react-datepicker__day--0${
+          day < 10 ? "0" + day : day
+        }:not(.react-datepicker__day--outside-month) { background: linear-gradient(to right, red ${
+          p - 15
+        }%, transparent ${p + 15}%); }`;
+        style.sheet.insertRule(rule, 0);
+      } else if (
+        includeDates[i].getMonth() === month - 1 &&
+        includeDates[i].getDate() > 15
+      ) {
+        let day = includeDates[i].getDate();
+        rule = `.react-datepicker__day--0${
+          day < 10 ? "0" + day : day
+        }.react-datepicker__day--outside-month { background: linear-gradient(to right, red ${
+          p - 15
+        }%, transparent ${p + 15}%); }`;
+        style.sheet.insertRule(rule, 0);
+      } else if (
+        includeDates[i].getMonth() === month + 1 &&
+        includeDates[i].getDate() < 15
+      ) {
+        let day = includeDates[i].getDate();
+        rule = `.react-datepicker__day--0${
+          day < 10 ? "0" + day : day
+        }.react-datepicker__day--outside-month { background: linear-gradient(to right, red ${
+          p - 15
+        }%, transparent ${p + 15}%); }`;
+        style.sheet.insertRule(rule, 0);
+      }
+    }
+  };
+
+  componentDidUpdate() {
+    if (
+      this.props.options.dataMin !== undefined &&
+      (this.state.dataMin !== this.props.options.dataMin ||
+        this.state.dataMax !== this.props.options.dataMax)
+    ) {
+      this.setState({
+        _min: this.props.options.dataMin,
+        _max: this.props.options.dataMax,
+        dataMin: this.props.options.dataMin,
+        dataMax: this.props.options.dataMax,
+      });
+    }
+    if (this.state.updateDatepicker && "date" in this.props.options) {
+      this.addCssRules(this.props.options.date, this.state.style);
+      this.setState({ updateDatepicker: false });
+    }
+  }
+
+  componentDidMount() {
+    window.addEventListener("click", this.updateMinMax);
+    document
+      .getElementById("tiff_min")
+      .addEventListener("keydown", this.enterMinMax);
+    document
+      .getElementById("tiff_max")
+      .addEventListener("keydown", this.enterMinMax);
+    var style = document.createElement("style");
+    document.head.appendChild(style);
+    if ("date" in this.props.options) {
+      this.addCssRules(this.props.options.date, style);
+      this.setState({ style });
+    } else {
+      this.setState({ style, updateDatepicker: true });
+    }
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("click", this.updateMinMax);
+    document
+      .getElementById("tiff_min")
+      .removeEventListener("keydown", this.enterMinMax);
+    document
+      .getElementById("tiff_max")
+      .removeEventListener("keydown", this.enterMinMax);
+    var { style } = this.state;
+    while (style.sheet.cssRules.length > 0) {
+      style.sheet.deleteRule(0);
+    }
+  }
+
+  render() {
+    var { _min, _max } = this.state;
+    var { language } = this.props;
+    var { palette, paletteName, opacity, includeDates, date } =
+      this.props.options;
+    const locale = {
+      localize: {
+        day: (n) => Translate.axis[language].shortDays[n],
+        month: (n) => Translate.axis[language].months[n],
+      },
+      formatLong: {
+        date: () => "dd/mm/yyyy",
+      },
+    };
+    return (
+      <div className="layer-settings">
+        <div className="setting">
+          <DatePicker
+            dateFormat="dd/MM/yyyy"
+            locale={locale}
+            inline={true}
+            includeDates={includeDates}
+            selected={date ? date : false}
+            onChange={(update) => {
+              this.setDate(update);
+            }}
+            onMonthChange={this.onMonthChange}
+          />
+        </div>
+        <div className="setting half">
+          <div className="label">Min</div>
+          <div>
+            <input
+              type="number"
+              className="with-button"
+              value={_min}
+              step="0.1"
+              onChange={this.setMin}
+              id="tiff_min"
+            />
+            <button onClick={this.resetMin} className="reset">
+              Reset
+            </button>
+          </div>
+        </div>
+        <div className="setting half">
+          <div className="label">Max</div>
+          <div>
+            <input
+              type="number"
+              className="with-button"
+              value={_max}
+              step="0.1"
+              onChange={this.setMax}
+              id="tiff_max"
+            />
+            <button onClick={this.resetMax} className="reset">
+              Reset
+            </button>
+          </div>
+        </div>
+        <div className="setting">
+          <div className="label">Opacity</div>
+          <div className="value">{opacity}</div>
+          <input
+            type="range"
+            min="0"
+            max="1"
+            step="0.1"
+            value={opacity}
+            onChange={this.setOpacity}
+          ></input>
+        </div>
+        <div className="setting">
+          <div className="label">Palette</div>
+          <div className="value">{paletteName}</div>
+          <ColorRamp onChange={this.setPalette} value={palette} />
+        </div>
+      </div>
+    );
+  }
+}
+
 class LayerSettings extends Component {
   render() {
-    var { layer, updateOptions } = this.props;
+    var { layer, updateOptions, language } = this.props;
     var type = layer.properties.display;
     if (type === "raster") {
       return (
@@ -295,6 +547,7 @@ class LayerSettings extends Component {
           id={layer.id}
           options={layer.properties.options}
           updateOptions={updateOptions}
+          language={language}
         />
       );
     } else if (type === "streamlines") {
@@ -303,10 +556,18 @@ class LayerSettings extends Component {
           id={layer.id}
           options={layer.properties.options}
           updateOptions={updateOptions}
+          language={language}
         />
       );
-    } else if (type === "vectorfield") {
-      return <div className="layer-settings">Vector field settings</div>;
+    } else if (type === "tiff") {
+      return (
+        <Tiff
+          id={layer.id}
+          options={layer.properties.options}
+          updateOptions={updateOptions}
+          language={language}
+        />
+      );
     } else {
       return (
         <div className="layer-settings">

@@ -17,21 +17,26 @@ class Legend extends Component {
     var { layers } = this.props;
     return (
       <div className="legend">
-        {layers
-          .filter((l) =>
-            ["min", "max", "palette"].every((key) =>
-              Object.keys(l.properties.options).includes(key)
-            )
-          )
-          .map((l) => (
-            <Colorbar
-              min={l.properties.options.min}
-              max={l.properties.options.max}
-              palette={l.properties.options.palette}
-              unit={l.properties.unit}
-              key={l.id}
-            />
-          ))}
+        <table>
+          <tbody>
+            {layers
+              .filter(
+                (l) =>
+                  ["min", "max", "palette"].every((key) =>
+                    Object.keys(l.properties.options).includes(key)
+                  ) && l.active
+              )
+              .map((l) => (
+                <Colorbar
+                  min={l.properties.options.min}
+                  max={l.properties.options.max}
+                  palette={l.properties.options.palette}
+                  unit={l.properties.unit}
+                  key={l.id}
+                />
+              ))}
+          </tbody>
+        </table>
       </div>
     );
   }

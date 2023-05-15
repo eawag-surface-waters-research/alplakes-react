@@ -30,7 +30,7 @@
         {
             "id": 0,
             "type": "alplakes_hydrodynamic",
-            "active": "true",
+            "active": true,
             "z-index": 1,
             "properties": {
                 "model": "delft3d-flow",
@@ -41,17 +41,19 @@
                 "width": 109,
                 "display": "raster",
                 "depth": true,
+                "period": true,
                 "simpleline": true,
                 "temperature": true,
                 "options": {
-                    "paletteName": "Balance"
+                    "paletteName": "Balance",
+                    "zIndex": 1
                 }
             }
         },
         {
             "id": 1,
             "type": "alplakes_hydrodynamic",
-            "active": "true",
+            "active": true,
             "z-index": 5,
             "properties": {
                 "model": "delft3d-flow",
@@ -62,6 +64,7 @@
                 "width": 109,
                 "display": "streamlines",
                 "depth": true,
+                "period": true,
                 "options": {
                     "paths": 500,
                     "color": "#ffffff",
@@ -70,9 +73,70 @@
                     "duration": 10,
                     "maxAge": 80,
                     "velocityScale": 0.001,
-                    "opacity": 0.7
+                    "opacity": 0.7,
+                    "zIndex": 3
                 }
             }
+        },
+        {
+          "id": 2,
+          "type": "sencast_tiff",
+          "active": false,
+          "properties": {
+            "model": "Sentinel3",
+            "lake": "greifensee",
+            "parameter": "chla",
+            "metadata": "https://eawagrs.s3.eu-central-1.amazonaws.com/metadata/sentinel3/greifensee_chla.json",
+            "unit": "mg m-3",
+            "display": "tiff",
+            "depth": false,
+            "period": false,
+            "options": {
+              "paletteName": "cc chl",
+              "zIndex": 2,
+              "opacity": 1
+            }
+          }
+        },
+        {
+          "id": 3,
+          "type": "sencast_tiff",
+          "active": false,
+          "properties": {
+            "model": "Sentinel3",
+            "lake": "greifensee",
+            "parameter": "tsm",
+            "metadata": "https://eawagrs.s3.eu-central-1.amazonaws.com/metadata/sentinel3/greifensee_tsm_binding754.json",
+            "unit": "g m-3",
+            "display": "tiff",
+            "depth": false,
+            "period": false,
+            "options": {
+              "paletteName": "cc chl",
+              "zIndex": 2,
+              "opacity": 1
+            }
+          }
+        },
+        {
+          "id": 4,
+          "type": "sencast_tiff",
+          "active": false,
+          "properties": {
+            "model": "Sentinel3",
+            "lake": "greifensee",
+            "parameter": "secchi",
+            "metadata": "https://eawagrs.s3.eu-central-1.amazonaws.com/metadata/sentinel3/greifensee_Zsd_lee.json",
+            "unit": "m",
+            "display": "tiff",
+            "depth": false,
+            "period": false,
+            "options": {
+              "paletteName": "cc chl",
+              "zIndex": 2,
+              "opacity": 1
+            }
+          }
         }
     ]
 }

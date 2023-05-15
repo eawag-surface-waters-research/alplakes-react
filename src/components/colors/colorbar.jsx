@@ -12,13 +12,17 @@ class Colorbar extends Component {
     }
     var background = `linear-gradient(90deg, ${colors.join(", ")})`;
     return (
-      <div className="colorbar">
-        {min}
-        {unit}
-        <div className="bar" style={{ background: background }} />
-        {max}
-        {unit}
-      </div>
+      <tr className="colorbar">
+        <td>
+          {min}
+          {unit}
+        </td>
+        <td className="bar" style={{ background: background }}></td>
+        <td>
+          {max}
+          {unit}
+        </td>
+      </tr>
     );
   }
 }

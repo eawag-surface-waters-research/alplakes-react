@@ -39,8 +39,13 @@ class Lake extends Component {
     fullscreen: false,
   };
 
-  setSelection = (selection) => {
-    this.setState({ selection });
+  setSelection = (newSelection) => {
+    var { selection } = this.state;
+    if (newSelection === selection) {
+      this.setState({ selection: "hidden" });
+    } else {
+      this.setState({ selection: newSelection });
+    }
   };
 
   toggleFullscreen = () => {
@@ -81,7 +86,7 @@ class Lake extends Component {
     if (period !== this.state.period) {
       var datetime = period[0];
       for (let layer of layers) {
-        if (layer.active) {
+        if (layer.active && layer.properties.period) {
           updates.unshift({ event: "removeLayer", id: layer.id });
           updates.push({ event: "addLayer", id: layer.id });
         }

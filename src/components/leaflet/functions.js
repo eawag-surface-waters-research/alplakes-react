@@ -5,6 +5,7 @@ import COLORS from "../colors/colors.json";
 import CONFIG from "../../config.json";
 import "./leaflet_raster";
 import "./leaflet_streamlines";
+import "./leaflet_floatgeotiff";
 
 const setNested = (obj, args, value) => {
   for (var i = 0; i < args.length - 1; i++) {
@@ -42,6 +43,17 @@ const formatDate = (datetime, offset = 0) => {
   }${hour < 10 ? "0" + hour : hour}`;
 };
 
+const parseDate = (dateString) => {
+  const year = dateString.slice(0, 4);
+  const month = parseInt(dateString.slice(4, 6)) - 1; // month is zero-indexed
+  const day = dateString.slice(6, 8);
+  const hour = dateString.slice(9, 11);
+  const minute = dateString.slice(11, 13);
+  const second = dateString.slice(13, 15);
+  const date = new Date(year, month, day, hour, minute, second);
+  return date;
+};
+
 const parseAlplakesDate = (str) => {
   const d = new Date(
     `${str.slice(0, 4)}-${str.slice(4, 6)}-${str.slice(6, 8)}T${str.slice(
@@ -50,6 +62,21 @@ const parseAlplakesDate = (str) => {
     )}:${str.slice(10, 12)}:00.000+00:00`
   );
   return String(d.getTime());
+};
+
+const findClosest = (array, key, value) => {
+  let closest = null;
+  let minDiff = Infinity;
+
+  for (let i = 0; i < array.length; i++) {
+    let diff = Math.abs(array[i][key] - value);
+    if (diff < minDiff) {
+      minDiff = diff;
+      closest = array[i];
+    }
+  }
+
+  return closest;
 };
 
 const closestDate = (targetDate, dateList) => {
@@ -95,6 +122,10 @@ const getTimestepData = (data, datetime) => {
   }
 };
 
+const round = (value, decimals) => {
+  return Math.round(value * 10 ** decimals) / 10 ** decimals;
+};
+
 export const flyToBounds = (bounds, map) => {
   map.flyToBounds(
     L.latLngBounds(L.latLng(bounds.southWest), L.latLng(bounds.northEast))
@@ -111,7 +142,7 @@ export const addLayer = async (
   depth,
   setSimpleline
 ) => {
-  if (layer.type === "alplakes_hydrodynamic")
+  if (layer.type === "alplakes_hydrodynamic") {
     await addAlplakesHydrodynamic(
       layer,
       period,
@@ -122,6 +153,9 @@ export const addLayer = async (
       depth,
       setSimpleline
     );
+  } else if (layer.type === "sencast_tiff") {
+    await addSencastTiff(layer, dataStore, layerStore, datetime, map);
+  }
 };
 
 export const updateLayer = async (
@@ -132,7 +166,7 @@ export const updateLayer = async (
   datetime,
   depth
 ) => {
-  if (layer.type === "alplakes_hydrodynamic")
+  if (layer.type === "alplakes_hydrodynamic") {
     await updateAlplakesHydrodynamic(
       layer,
       dataStore,
@@ -141,11 +175,17 @@ export const updateLayer = async (
       datetime,
       depth
     );
+  } else if (layer.type === "sencast_tiff") {
+    await updateSencastTiff(layer, dataStore, layerStore, map, datetime);
+  }
 };
 
 export const removeLayer = async (layer, layerStore, map) => {
-  if (layer.type === "alplakes_hydrodynamic")
+  if (layer.type === "alplakes_hydrodynamic") {
     await removeAlplakesHydrodynamic(layer, layerStore, map);
+  } else if (layer.type === "sencast_tiff") {
+    await removeSencastTiff(layer, layerStore, map);
+  }
 };
 
 const addAlplakesHydrodynamic = async (
@@ -333,6 +373,9 @@ const plotAlplakesHydrodynamicRaster = (
     if ("unit" in layer.properties) {
       options["unit"] = layer.properties.unit;
     }
+    if ("zIndex" in layer.properties) {
+      options["zIndex"] = layer.properties.zIndex;
+    }
     if ("opacity" in layer.properties.options) {
       options["opacity"] = layer.properties.options.opacity;
     } else {
@@ -370,6 +413,9 @@ const plotAlplakesHydrodynamicStreamlines = (
     if ("unit" in layer.properties) {
       options["unit"] = layer.properties.unit;
     }
+    if ("zIndex" in layer.properties) {
+      options["zIndex"] = layer.properties.zIndex;
+    }
     if ("opacity" in layer.properties.options) {
       options["opacity"] = layer.properties.options.opacity;
     } else {
@@ -403,7 +449,7 @@ const updateAlplakesHydrodynamic = (
   ];
 
   var data = getNested(dataStore, data_path);
-  
+
   var options = {};
   if ("options" in layer.properties) {
     options = layer.properties.options;
@@ -430,6 +476,142 @@ const updateAlplakesHydrodynamic = (
 };
 
 const removeAlplakesHydrodynamic = (layer, layerStore, map) => {
+  var path = [
+    layer.type,
+    layer.properties.model,
+    layer.properties.lake,
+    layer.properties.parameter,
+  ];
+  var leaflet_layer = getNested(layerStore, path);
+  map.removeLayer(leaflet_layer);
+  setNested(layerStore, path, null);
+};
+
+const addSencastTiff = async (layer, dataStore, layerStore, datetime, map) => {
+  var path = [
+    layer.type,
+    layer.properties.model,
+    layer.properties.lake,
+    layer.properties.parameter,
+  ];
+  var metadata;
+  if (!checkNested(dataStore, path)) {
+    ({ data: metadata } = await axios.get(layer.properties.metadata));
+    metadata = metadata.map((m) => {
+      m.unix = parseDate(m.dt).getTime();
+      m.url = CONFIG.sencast_bucket + m.k;
+      m.time = parseDate(m.dt);
+      return m;
+    });
+    setNested(dataStore, path, metadata);
+  } else {
+    metadata = getNested(dataStore, path);
+  }
+
+  const image = findClosest(metadata, "unix", datetime);
+  layer.properties.options.includeDates = metadata.map((m) => m.time);
+  layer.properties.options.percentage = metadata.map((m) =>
+    Math.round((parseFloat(m.vp) / parseFloat(m.p)) * 100)
+  );
+  layer.properties.options.date = image.time;
+  layer.properties.options.min = round(image.min, 2);
+  layer.properties.options.max = round(image.max, 2);
+  layer.properties.options.dataMin = round(image.min, 2);
+  layer.properties.options.dataMax = round(image.max, 2);
+  await plotSencastTiff(image.url, layer, layerStore, map);
+};
+
+const plotSencastTiff = async (url, layer, layerStore, map) => {
+  var path = [
+    layer.type,
+    layer.properties.model,
+    layer.properties.lake,
+    layer.properties.parameter,
+  ];
+  var options = {};
+  if ("options" in layer.properties) {
+    options = layer.properties.options;
+    if ("paletteName" in layer.properties.options) {
+      layer.properties.options.palette =
+        COLORS[layer.properties.options.paletteName];
+      options["palette"] = COLORS[layer.properties.options.paletteName];
+    }
+    if ("unit" in layer.properties) {
+      options["unit"] = layer.properties.unit;
+    }
+    if ("zIndex" in layer.properties) {
+      options["zIndex"] = layer.properties.zIndex;
+    }
+    if ("opacity" in layer.properties.options) {
+      options["opacity"] = layer.properties.options.opacity;
+    } else {
+      options["opacity"] = 1;
+    }
+  }
+  var { data } = await axios.get(url, {
+    responseType: "arraybuffer",
+  });
+
+  var leaflet_layer = L.floatgeotiff(data, options).addTo(map).addTo(map);
+  setNested(layerStore, path, leaflet_layer);
+};
+
+const updateSencastTiff = async (
+  layer,
+  dataStore,
+  layerStore,
+  map,
+  datetime
+) => {
+  var path = [
+    layer.type,
+    layer.properties.model,
+    layer.properties.lake,
+    layer.properties.parameter,
+  ];
+
+  var options = {};
+  if ("options" in layer.properties) {
+    options = layer.properties.options;
+    if ("paletteName" in layer.properties.options) {
+      layer.properties.options.palette =
+        COLORS[layer.properties.options.paletteName];
+      options["palette"] = COLORS[layer.properties.options.paletteName];
+    }
+  }
+
+  var metadata = getNested(dataStore, path);
+
+  var data = false;
+  if (
+    "date" in layer.properties.options &&
+    "updateDate" in layer.properties.options &&
+    layer.properties.options.updateDate
+  ) {
+    const image = findClosest(
+      metadata,
+      "unix",
+      layer.properties.options.date.getTime()
+    );
+
+    layer.properties.options.min = round(image.min, 2);
+    layer.properties.options.max = round(image.max, 2);
+    layer.properties.options.dataMin = round(image.min, 2);
+    layer.properties.options.dataMax = round(image.max, 2);
+    layer.properties.options.updateDate = false;
+
+    ({ data } = await axios.get(image.url, {
+      responseType: "arraybuffer",
+    }));
+  }
+
+  var leaflet_layer = getNested(layerStore, path);
+  if (leaflet_layer !== null && leaflet_layer !== undefined) {
+    leaflet_layer.update(data, options);
+  }
+};
+
+const removeSencastTiff = (layer, layerStore, map) => {
   var path = [
     layer.type,
     layer.properties.model,
