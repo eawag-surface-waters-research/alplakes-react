@@ -982,4 +982,8 @@
     font-size: 13px;
   }
 
+  .main .lake .content .primary .map-component .legend {
+    font-size: 10px;
+  }
+
 }

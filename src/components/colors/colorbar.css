@@ -10,3 +10,10 @@
     vertical-align: bottom;
     margin: 0 6px;
 }
+
+@media screen and (max-width: 500px) {
+    .colorbar .bar {
+        height: 12px;
+        width: 120px;
+    }
+}
