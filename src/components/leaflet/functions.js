@@ -43,6 +43,17 @@ const formatDate = (datetime, offset = 0) => {
   }${hour < 10 ? "0" + hour : hour}`;
 };
 
+const formatWmsDate = (datetime) => {
+  var year = datetime.getFullYear();
+  var month = datetime.getMonth() + 1;
+  var date = datetime.getDate();
+  return `${String(year)}-${month < 10 ? "0" + month : month}-${
+    date < 10 ? "0" + date : date
+  }/${String(year)}-${month < 10 ? "0" + month : month}-${
+    date < 10 ? "0" + date : date
+  }`;
+};
+
 const parseDate = (dateString) => {
   const year = dateString.slice(0, 4);
   const month = parseInt(dateString.slice(4, 6)) - 1; // month is zero-indexed
@@ -155,6 +166,8 @@ export const addLayer = async (
     );
   } else if (layer.type === "sencast_tiff") {
     await addSencastTiff(layer, dataStore, layerStore, datetime, map);
+  } else if (layer.type === "sentinel_hub_wms") {
+    await addSentinelHubWms(layer, dataStore, layerStore, datetime, map);
   }
 };
 
@@ -177,6 +190,8 @@ export const updateLayer = async (
     );
   } else if (layer.type === "sencast_tiff") {
     await updateSencastTiff(layer, dataStore, layerStore, map, datetime);
+  } else if (layer.type === "sentinel_hub_wms") {
+    await updateSentinelHubWms(layer, dataStore, layerStore, map, datetime);
   }
 };
 
@@ -185,6 +200,8 @@ export const removeLayer = async (layer, layerStore, map) => {
     await removeAlplakesHydrodynamic(layer, layerStore, map);
   } else if (layer.type === "sencast_tiff") {
     await removeSencastTiff(layer, layerStore, map);
+  } else if (layer.type === "sentinel_hub_wms") {
+    removeSentinelHubWms(layer, layerStore, map);
   }
 };
 
@@ -552,7 +569,7 @@ const plotSencastTiff = async (url, layer, layerStore, map) => {
     responseType: "arraybuffer",
   });
 
-  var leaflet_layer = L.floatgeotiff(data, options).addTo(map).addTo(map);
+  var leaflet_layer = L.floatgeotiff(data, options).addTo(map);
   setNested(layerStore, path, leaflet_layer);
 };
 
@@ -612,6 +629,99 @@ const updateSencastTiff = async (
 };
 
 const removeSencastTiff = (layer, layerStore, map) => {
+  var path = [
+    layer.type,
+    layer.properties.model,
+    layer.properties.lake,
+    layer.properties.parameter,
+  ];
+  var leaflet_layer = getNested(layerStore, path);
+  map.removeLayer(leaflet_layer);
+  setNested(layerStore, path, null);
+};
+
+const addSentinelHubWms = async (
+  layer,
+  dataStore,
+  layerStore,
+  datetime,
+  map
+) => {
+  var path = [
+    layer.type,
+    layer.properties.model,
+    layer.properties.lake,
+    layer.properties.parameter,
+  ];
+  var metadata;
+  if (!checkNested(dataStore, path)) {
+    ({ data: metadata } = await axios.get(layer.properties.metadata));
+    metadata = metadata.map((m) => {
+      m.unix = parseDate(m.dt).getTime();
+      m.url = CONFIG.sencast_bucket + m.k;
+      m.time = parseDate(m.dt);
+      return m;
+    });
+    setNested(dataStore, path, metadata);
+  } else {
+    metadata = getNested(dataStore, path);
+  }
+
+  const image = findClosest(metadata, "unix", datetime);
+  layer.properties.options.includeDates = metadata.map((m) => m.time);
+  layer.properties.options.percentage = metadata.map((m) =>
+    Math.round((parseFloat(m.vp) / parseFloat(m.p)) * 100)
+  );
+  layer.properties.options.date = image.time;
+
+  var leaflet_layer = L.tileLayer
+    .wms(layer.properties.wms, {
+      tileSize: 512,
+      attribution:
+        '&copy; <a href="http://www.sentinel-hub.com/" target="_blank">Sentinel Hub</a>',
+      minZoom: 6,
+      maxZoom: 16,
+      preset: layer.properties.options.layer,
+      layers: layer.properties.options.layer,
+      time: formatWmsDate(layer.properties.options.date),
+      gain: layer.properties.options.gain,
+      gamma: layer.properties.options.gamma,
+    })
+    .addTo(map);
+  setNested(layerStore, path, leaflet_layer);
+};
+
+const updateSentinelHubWms = async (
+  layer,
+  dataStore,
+  layerStore,
+  map,
+  datetime
+) => {
+  var path = [
+    layer.type,
+    layer.properties.model,
+    layer.properties.lake,
+    layer.properties.parameter,
+  ];
+  var metadata = getNested(dataStore, path);
+  var leaflet_layer = getNested(layerStore, path);
+
+  const image = findClosest(
+    metadata,
+    "unix",
+    layer.properties.options.date.getTime()
+  );
+  layer.properties.options.updateDate = false;
+
+  leaflet_layer.setParams({
+    time: formatWmsDate(image.time),
+    gain: layer.properties.options.gain,
+    gamma: layer.properties.options.gamma,
+  });
+};
+
+const removeSentinelHubWms = (layer, layerStore, map) => {
   var path = [
     layer.type,
     layer.properties.model,

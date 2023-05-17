@@ -9,6 +9,7 @@ import velocity_icon from "../../img/velocity.png";
 import chla_icon from "../../img/chla.png";
 import secchi_icon from "../../img/secchi.png";
 import turbidity_icon from "../../img/turbidity.png";
+import satellite_icon from "../../img/satellite-icon.png";
 import "react-datepicker/dist/react-datepicker.css";
 import "./lake.css";
 
@@ -227,6 +228,7 @@ class Sidebar extends Component {
       secchi: secchi_icon,
       turbidity: turbidity_icon,
       tsm: turbidity_icon,
+      realcolor: satellite_icon,
     },
   };
   render() {

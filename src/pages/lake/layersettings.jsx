@@ -360,47 +360,7 @@ class Tiff extends Component {
     while (style.sheet.cssRules.length > 0) {
       style.sheet.deleteRule(0);
     }
-    this.addCssRules(event, style);
-  };
-
-  addCssRules = (date, style) => {
-    var { includeDates, percentage } = this.props.options;
-    var month = date.getMonth();
-    var rule;
-    for (let i = 0; i < includeDates.length; i++) {
-      let p = percentage[i];
-      if (includeDates[i].getMonth() === month) {
-        let day = includeDates[i].getDate();
-        rule = `.react-datepicker__day--0${
-          day < 10 ? "0" + day : day
-        }:not(.react-datepicker__day--outside-month) { background: linear-gradient(to right, red ${
-          p - 15
-        }%, transparent ${p + 15}%); }`;
-        style.sheet.insertRule(rule, 0);
-      } else if (
-        includeDates[i].getMonth() === month - 1 &&
-        includeDates[i].getDate() > 15
-      ) {
-        let day = includeDates[i].getDate();
-        rule = `.react-datepicker__day--0${
-          day < 10 ? "0" + day : day
-        }.react-datepicker__day--outside-month { background: linear-gradient(to right, red ${
-          p - 15
-        }%, transparent ${p + 15}%); }`;
-        style.sheet.insertRule(rule, 0);
-      } else if (
-        includeDates[i].getMonth() === month + 1 &&
-        includeDates[i].getDate() < 15
-      ) {
-        let day = includeDates[i].getDate();
-        rule = `.react-datepicker__day--0${
-          day < 10 ? "0" + day : day
-        }.react-datepicker__day--outside-month { background: linear-gradient(to right, red ${
-          p - 15
-        }%, transparent ${p + 15}%); }`;
-        style.sheet.insertRule(rule, 0);
-      }
-    }
+    this.props.addCssRules(event, style, this.props.options);
   };
 
   componentDidUpdate() {
@@ -417,7 +377,11 @@ class Tiff extends Component {
       });
     }
     if (this.state.updateDatepicker && "date" in this.props.options) {
-      this.addCssRules(this.props.options.date, this.state.style);
+      this.props.addCssRules(
+        this.props.options.date,
+        this.state.style,
+        this.props.options
+      );
       this.setState({ updateDatepicker: false });
     }
   }
@@ -433,7 +397,11 @@ class Tiff extends Component {
     var style = document.createElement("style");
     document.head.appendChild(style);
     if ("date" in this.props.options) {
-      this.addCssRules(this.props.options.date, style);
+      this.props.addCssRules(
+        this.props.options.date,
+        style,
+        this.props.options
+      );
       this.setState({ style });
     } else {
       this.setState({ style, updateDatepicker: true });
@@ -537,7 +505,171 @@ class Tiff extends Component {
   }
 }
 
+class WMS extends Component {
+  state = {
+    style: false,
+    updateDatepicker: false,
+  };
+
+  setGain = (event) => {
+    var { id, updateOptions, options } = this.props;
+    var value = event.target.value;
+    options["gain"] = value;
+    updateOptions(id, options);
+  };
+
+  setGamma = (event) => {
+    var { id, updateOptions, options } = this.props;
+    var value = event.target.value;
+    options["gamma"] = value;
+    updateOptions(id, options);
+  };
+
+  setDate = (event) => {
+    var { id, updateOptions, options } = this.props;
+    this.onMonthChange(event);
+    options.date = event;
+    options.updateDate = true;
+    updateOptions(id, options);
+  };
+
+  onMonthChange = (event) => {
+    var { style } = this.state;
+    while (style.sheet.cssRules.length > 0) {
+      style.sheet.deleteRule(0);
+    }
+    this.props.addCssRules(event, style, this.props.options);
+  };
+
+  componentDidUpdate() {
+    if (this.state.updateDatepicker && "date" in this.props.options) {
+      this.props.addCssRules(
+        this.props.options.date,
+        this.state.style,
+        this.props.options
+      );
+      this.setState({ updateDatepicker: false });
+    }
+  }
+
+  componentDidMount() {
+    var style = document.createElement("style");
+    document.head.appendChild(style);
+    if ("date" in this.props.options) {
+      this.props.addCssRules(
+        this.props.options.date,
+        style,
+        this.props.options
+      );
+      this.setState({ style });
+    } else {
+      this.setState({ style, updateDatepicker: true });
+    }
+  }
+
+  componentWillUnmount() {
+    var { style } = this.state;
+    while (style.sheet.cssRules.length > 0) {
+      style.sheet.deleteRule(0);
+    }
+  }
+
+  render() {
+    var { language } = this.props;
+    var { includeDates, date, gain, gamma } = this.props.options;
+    const locale = {
+      localize: {
+        day: (n) => Translate.axis[language].shortDays[n],
+        month: (n) => Translate.axis[language].months[n],
+      },
+      formatLong: {
+        date: () => "dd/mm/yyyy",
+      },
+    };
+    return (
+      <div className="layer-settings">
+        <div className="setting">
+          <DatePicker
+            dateFormat="dd/MM/yyyy"
+            locale={locale}
+            inline={true}
+            includeDates={includeDates}
+            selected={date ? date : false}
+            onChange={(update) => {
+              this.setDate(update);
+            }}
+            onMonthChange={this.onMonthChange}
+          />
+        </div>
+        <div className="setting half">
+          <div className="label">Gain</div>
+          <div className="value">{gain}</div>
+          <input
+            type="range"
+            min="0.5"
+            max="3"
+            step="0.1"
+            value={gain}
+            onChange={this.setGain}
+          ></input>
+        </div>
+        <div className="setting half">
+          <div className="label">Gamma</div>
+          <div className="value">{gamma}</div>
+          <input
+            type="range"
+            min="0.5"
+            max="2"
+            step="0.1"
+            value={gamma}
+            onChange={this.setGamma}
+          ></input>
+        </div>
+      </div>
+    );
+  }
+}
+
 class LayerSettings extends Component {
+  addCssRules = (date, style, options) => {
+    var { includeDates, percentage } = options;
+    var month = date.getMonth();
+    var rule;
+    for (let i = 0; i < includeDates.length; i++) {
+      let p = percentage[i];
+      if (includeDates[i].getMonth() === month) {
+        let day = includeDates[i].getDate();
+        rule = `.react-datepicker__day--0${
+          day < 10 ? "0" + day : day
+        }:not(.react-datepicker__day--outside-month) { background: linear-gradient(to right, red ${
+          p - 15
+        }%, transparent ${p + 15}%); }`;
+        style.sheet.insertRule(rule, 0);
+      } else if (
+        includeDates[i].getMonth() === month - 1 &&
+        includeDates[i].getDate() > 15
+      ) {
+        let day = includeDates[i].getDate();
+        rule = `.react-datepicker__day--0${
+          day < 10 ? "0" + day : day
+        }.react-datepicker__day--outside-month { background: linear-gradient(to right, red ${
+          p - 15
+        }%, transparent ${p + 15}%); }`;
+        style.sheet.insertRule(rule, 0);
+      } else if (
+        includeDates[i].getMonth() === month + 1 &&
+        includeDates[i].getDate() < 15
+      ) {
+        let day = includeDates[i].getDate();
+        rule = `.react-datepicker__day--0${
+          day < 10 ? "0" + day : day
+        }.react-datepicker__day--outside-month { background: linear-gradient(to right, red ${
+          p - 15
+        }%, transparent ${p + 15}%); }`;
+        style.sheet.insertRule(rule, 0);
+      }
+    }
+  };
   render() {
     var { layer, updateOptions, language } = this.props;
     var type = layer.properties.display;
@@ -566,6 +698,17 @@ class LayerSettings extends Component {
           options={layer.properties.options}
           updateOptions={updateOptions}
           language={language}
+          addCssRules={this.addCssRules}
+        />
+      );
+    } else if (type === "wms") {
+      return (
+        <WMS
+          id={layer.id}
+          options={layer.properties.options}
+          updateOptions={updateOptions}
+          language={language}
+          addCssRules={this.addCssRules}
         />
       );
     } else {

@@ -131,6 +131,28 @@
           "opacity": 1
         }
       }
+    },
+    {
+      "id": 8,
+      "type": "sentinel_hub_wms",
+      "active": false,
+      "properties": {
+        "model": "Sentinel3",
+        "lake": "ageri",
+        "parameter": "realcolor",
+        "metadata": "https://eawagrs.s3.eu-central-1.amazonaws.com/metadata/sentinel3/ageri_tsm_binding754.json",
+        "wms": "https://creodias.sentinel-hub.com/ogc/wms/fea4245d-9a3b-4337-8cc2-9bbdbd22ff1a",
+        "unit": "",
+        "display": "wms",
+        "depth": false,
+        "period": false,
+        "options": {
+          "layer": "TRUE-COLOR",
+          "gain": 1,
+          "gamma": 1,
+          "zIndex": 0
+        }
+      }
     }
   ]
 }

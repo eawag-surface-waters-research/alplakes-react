@@ -117,21 +117,27 @@
   },
   "secchi": {
     "EN": "Secchi Depth",
-    "DE": "Chl-A",
-    "FR": "Chl-A",
-    "IT": "Clo-A"
+    "DE": "Secchi-Tiefe",
+    "FR": "Secchi",
+    "IT": "Secchi"
   },
   "turbidity": {
     "EN": "Turbidity",
-    "DE": "Chl-A",
-    "FR": "Chl-A",
-    "IT": "Clo-A"
+    "DE": "Trübung",
+    "FR": "Turbidité",
+    "IT": "Torbidità"
   },
   "tsm": {
     "EN": "Turbidity",
-    "DE": "Chl-A",
-    "FR": "Chl-A",
-    "IT": "Clo-A"
+    "DE": "Trübung",
+    "FR": "Turbidité",
+    "IT": "Torbidità"
+  },
+  "realcolor": {
+    "EN": "Real Color",
+    "DE": "Echte Farbe",
+    "FR": "Couleur réelle",
+    "IT": "Colore reale"
   },
   "play": {
     "EN": "Play (Spacebar)",
@@ -358,6 +364,12 @@
     "IT": "Modello 3D"
   },
   "sencast_tiff": {
+    "EN": "Satellite",
+    "DE": "Satelliten",
+    "FR": "Satellite",
+    "IT": "Satellitare"
+  },
+  "sentinel_hub_wms": {
     "EN": "Satellite",
     "DE": "Satelliten",
     "FR": "Satellite",
