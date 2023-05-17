@@ -879,9 +879,8 @@
   .main .lake .content .primary {
     width: 100%;
     left: 0;
-    bottom: 0;
-    top: unset;
-    height: 50%;
+    top: 62px;
+    height: 40%;
     z-index: 2;
   }
 
@@ -895,12 +894,92 @@
 
   .main .lake .content .secondary {
     margin: auto;
-    height: calc(50vh - 60px);
+    height: calc(60vh - 72px);
     overflow-y: scroll;
+    margin-top: calc(40vh + 72px);
+    padding-bottom: 18px;
   }
 
   .main .lake .content .secondary .info .data .temperature .value {
     font-size: 52px;
+  }
+
+}
+
+@media screen and (max-width: 500px) {
+  .main .lake .content .secondary .info {
+    padding: 8px 12px;
+  }
+
+  .main .lake .content .secondary .info .data .temperature .value {
+    font-size: 40px;
+  }
+
+  .main .lake .content .secondary .info .data .temperature .details .unit {
+    font-size: 14px;
+  }
+
+  .main .lake .content .secondary .info .data .datetime .date {
+    font-size: 16px;
+  }
+
+  .main .lake .content .secondary .info .data .datetime .time {
+    font-size: 18px;
+  }
+
+  .main .lake .content .secondary .info .graph .graph-parameter {
+    font-size: 14px;
+  }
+
+  .main .lake .content .secondary .info .graph {
+    height: 80px;
+  }
+
+  .main .lake .content .secondary .depth-period select {
+    font-size: 18px;
+    width: 80px;
+  }
+
+  .main .lake .content .secondary .depth-period .labels .depth {
+    width: 80px;
+  }
+
+  .main .lake .content .secondary .depth-period .react-datepicker-wrapper input {
+    width: 214px;
+    padding: 4px 8px;
+    font-size: 18px;
+  }
+
+  .main .lake .content .secondary .depth-period .labels .start {
+    width: 110px;
+  }
+
+  .main .lake .content .secondary .depth-period .labels .end {
+    width: 110px;
+  }
+
+  .main .lake .content .secondary .depth-period {
+    margin-top: 12px;
+  }
+
+  .main .lake .content .secondary .menu {
+    margin-top: 12px;
+  }
+
+  .main .lake .content .secondary .menu .loaded .app {
+    margin: 14px 7px
+  }
+
+  .main .lake .content .secondary .menu .loaded .app.filled {
+    margin: 16px 8px 34px 8px;
+  }
+
+  .main .lake .content .secondary .selection {
+    padding: 12px
+  }
+
+  .main .lake .content .secondary .selection .layers .layer .text .parameter {
+    font-size: 13px;
   }
 
 }
