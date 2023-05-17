@@ -384,18 +384,7 @@ const plotAlplakesHydrodynamicRaster = (
         COLORS[layer.properties.options.paletteName];
       options["palette"] = COLORS[layer.properties.options.paletteName];
     }
-    if ("parameter" in layer.properties) {
-      options["parameter"] = layer.properties.parameter;
-    }
-    if ("unit" in layer.properties) {
-      options["unit"] = layer.properties.unit;
-    }
-    if ("zIndex" in layer.properties) {
-      options["zIndex"] = layer.properties.zIndex;
-    }
-    if ("opacity" in layer.properties.options) {
-      options["opacity"] = layer.properties.options.opacity;
-    } else {
+    if (!("opacity" in layer.properties.options)) {
       options["opacity"] = 1;
     }
   }
@@ -424,18 +413,7 @@ const plotAlplakesHydrodynamicStreamlines = (
         COLORS[layer.properties.options.paletteName];
       options["palette"] = COLORS[layer.properties.options.paletteName];
     }
-    if ("parameter" in layer.properties) {
-      options["parameter"] = layer.properties.parameter;
-    }
-    if ("unit" in layer.properties) {
-      options["unit"] = layer.properties.unit;
-    }
-    if ("zIndex" in layer.properties) {
-      options["zIndex"] = layer.properties.zIndex;
-    }
-    if ("opacity" in layer.properties.options) {
-      options["opacity"] = layer.properties.options.opacity;
-    } else {
+    if (!("opacity" in layer.properties.options)) {
       options["opacity"] = 1;
     }
   }
@@ -530,6 +508,7 @@ const addSencastTiff = async (layer, dataStore, layerStore, datetime, map) => {
   layer.properties.options.percentage = metadata.map((m) =>
     Math.round((parseFloat(m.vp) / parseFloat(m.p)) * 100)
   );
+  layer.properties.options.validpixelexpression = true;
   layer.properties.options.date = image.time;
   layer.properties.options.min = round(image.min, 2);
   layer.properties.options.max = round(image.max, 2);
@@ -553,15 +532,7 @@ const plotSencastTiff = async (url, layer, layerStore, map) => {
         COLORS[layer.properties.options.paletteName];
       options["palette"] = COLORS[layer.properties.options.paletteName];
     }
-    if ("unit" in layer.properties) {
-      options["unit"] = layer.properties.unit;
-    }
-    if ("zIndex" in layer.properties) {
-      options["zIndex"] = layer.properties.zIndex;
-    }
-    if ("opacity" in layer.properties.options) {
-      options["opacity"] = layer.properties.options.opacity;
-    } else {
+    if (!("opacity" in layer.properties.options)) {
       options["opacity"] = 1;
     }
   }

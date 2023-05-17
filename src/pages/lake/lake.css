@@ -590,8 +590,8 @@
 .main .lake .content .secondary .sentinel_hub_wms {
   background-color: #242424;
   opacity: 1;
-  background-image:  linear-gradient(135deg, #3a4251 25%, transparent 25%), linear-gradient(225deg, #3a4251 25%, transparent 25%), linear-gradient(45deg, #3a4251 25%, transparent 25%), linear-gradient(315deg, #3a4251 25%, #242424 25%);
-  background-position:  15px 0, 15px 0, 0 0, 0 0;
+  background-image: linear-gradient(135deg, #3a4251 25%, transparent 25%), linear-gradient(225deg, #3a4251 25%, transparent 25%), linear-gradient(45deg, #3a4251 25%, transparent 25%), linear-gradient(315deg, #3a4251 25%, #242424 25%);
+  background-position: 15px 0, 15px 0, 0 0, 0 0;
   background-size: 15px 15px;
   background-repeat: repeat;
 }
@@ -808,6 +808,10 @@
   padding: 0;
   height: 24px;
   background-color: #e3e3e3;
+}
+
+.main .lake .content .secondary .selection .layer-settings input[type=checkbox] {
+  margin-left: 12px;
 }
 
 .main .lake .content .secondary .selection .layer-settings input[type=range] {

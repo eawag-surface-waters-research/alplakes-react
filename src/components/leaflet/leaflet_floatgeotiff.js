@@ -14,8 +14,6 @@ L.FloatGeotiff = L.ImageOverlay.extend({
     ],
     invalidpixel: 1,
     validpixelexpression: true,
-    heightOffset: 0, // Temporary fix
-    widthOffset: 0,
   },
   initialize: async function (data, options) {
     this._url = "geotiff.tif";
@@ -273,14 +271,11 @@ L.FloatGeotiff = L.ImageOverlay.extend({
     var validpixelexpression =
       this.raster.data.length > 1 && this.options.validpixelexpression;
     for (let y = 0; y < args.plotHeight; y++) {
-      let yy = Math.round(
-        ((y + n) / (args.plotHeight + n + s)) *
-          (raster.height + this.options.heightOffset)
-      )-5;
+      let yy =
+        Math.round(((y + n) / (args.plotHeight + n + s)) * raster.height) - 5; // Needs fixing
       for (let x = 0; x < args.plotWidth; x++) {
         let xx = Math.round(
-          ((x + w) / (args.plotWidth + e + w)) *
-            (raster.width + this.options.widthOffset)
+          ((x + w) / (args.plotWidth + e + w)) * raster.width
         );
         let ii = yy * raster.width + xx;
         let i = y * args.plotWidth + x;

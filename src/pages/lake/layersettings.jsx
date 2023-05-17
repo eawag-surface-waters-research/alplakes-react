@@ -340,6 +340,12 @@ class Tiff extends Component {
     updateOptions(id, options);
   };
 
+  setValidpixelexpression = (event) => {
+    var { id, updateOptions, options } = this.props;
+    options["validpixelexpression"] = !options.validpixelexpression;
+    updateOptions(id, options);
+  };
+
   setPalette = (event) => {
     var { id, updateOptions, options } = this.props;
     options["paletteName"] = event.name;
@@ -425,8 +431,14 @@ class Tiff extends Component {
   render() {
     var { _min, _max } = this.state;
     var { language } = this.props;
-    var { palette, paletteName, opacity, includeDates, date } =
-      this.props.options;
+    var {
+      palette,
+      paletteName,
+      opacity,
+      includeDates,
+      date,
+      validpixelexpression,
+    } = this.props.options;
     const locale = {
       localize: {
         day: (n) => Translate.axis[language].shortDays[n],
@@ -499,6 +511,16 @@ class Tiff extends Component {
           <div className="label">Palette</div>
           <div className="value">{paletteName}</div>
           <ColorRamp onChange={this.setPalette} value={palette} />
+        </div>
+        <div className="setting">
+          Valid Pixel Expression
+          <input
+            type="checkbox"
+            checked={
+              validpixelexpression === undefined ? true : validpixelexpression
+            }
+            onChange={this.setValidpixelexpression}
+          />
         </div>
       </div>
     );
