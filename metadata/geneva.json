@@ -169,6 +169,50 @@
           "opacity": 1
         }
       }
+    },
+    {
+      "id": 7,
+      "type": "sentinel_hub_wms",
+      "active": false,
+      "properties": {
+        "model": "Sentinel2",
+        "lake": "geneva",
+        "parameter": "realcolor",
+        "metadata": "https://eawagrs.s3.eu-central-1.amazonaws.com/metadata/sentinel2/geneva_p3qaa_zSD.json",
+        "wms": "https://services.sentinel-hub.com/ogc/wms/a595b5c3-8963-4076-98ad-5cbe7e9d7999",
+        "unit": "",
+        "display": "wms",
+        "depth": false,
+        "period": false,
+        "options": {
+          "layer": "TRUE_COLOR",
+          "gain": 1,
+          "gamma": 1,
+          "zIndex": 0
+        }
+      }
+    },
+    {
+      "id": 8,
+      "type": "sentinel_hub_wms",
+      "active": false,
+      "properties": {
+        "model": "Sentinel3",
+        "lake": "geneva",
+        "parameter": "realcolor",
+        "metadata": "https://eawagrs.s3.eu-central-1.amazonaws.com/metadata/sentinel3/geneva_tsm_binding754.json",
+        "wms": "https://creodias.sentinel-hub.com/ogc/wms/fea4245d-9a3b-4337-8cc2-9bbdbd22ff1a",
+        "unit": "",
+        "display": "wms",
+        "depth": false,
+        "period": false,
+        "options": {
+          "layer": "TRUE-COLOR",
+          "gain": 1,
+          "gamma": 1,
+          "zIndex": 0
+        }
+      }
     }
   ]
 }
