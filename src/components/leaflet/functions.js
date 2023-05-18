@@ -387,6 +387,9 @@ const plotAlplakesHydrodynamicRaster = (
     if (!("opacity" in layer.properties.options)) {
       options["opacity"] = 1;
     }
+    if ("unit" in layer.properties) {
+      options["unit"] = layer.properties.unit;
+    }
   }
   var leaflet_layer = new L.Raster(geometry, data, options).addTo(map);
   setNested(layerStore, path, leaflet_layer);
@@ -415,6 +418,9 @@ const plotAlplakesHydrodynamicStreamlines = (
     }
     if (!("opacity" in layer.properties.options)) {
       options["opacity"] = 1;
+    }
+    if ("unit" in layer.properties) {
+      options["unit"] = layer.properties.unit;
     }
   }
   var leaflet_layer = new L.Streamlines(geometry, data, options).addTo(map);
@@ -565,6 +571,9 @@ const updateSencastTiff = async (
       layer.properties.options.palette =
         COLORS[layer.properties.options.paletteName];
       options["palette"] = COLORS[layer.properties.options.paletteName];
+    }
+    if ("unit" in layer.properties) {
+      options["unit"] = layer.properties.unit;
     }
   }
 

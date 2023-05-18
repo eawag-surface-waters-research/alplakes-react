@@ -7,6 +7,7 @@ L.FloatGeotiff = L.ImageOverlay.extend({
     opacity: 1,
     min: false,
     max: false,
+    unit: "",
     colorRampSteps: 2,
     palette: [
       { color: [255, 255, 255], point: 0 },

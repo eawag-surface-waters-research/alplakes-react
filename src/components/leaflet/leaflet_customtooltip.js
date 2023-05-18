@@ -27,7 +27,7 @@ L.Map.include({
     }
 
     if (content !== "") {
-      this._tooltip = L.tooltip({ direction: "top", opacity: 0.7 })
+      this._tooltip = L.tooltip({ direction: "top", opacity: 1 })
         .setLatLng(e.latlng)
         .setContent(content)
         .addTo(this);

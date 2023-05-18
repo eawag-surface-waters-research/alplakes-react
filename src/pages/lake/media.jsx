@@ -174,7 +174,6 @@ class Media extends Component {
       timeout,
       setTimeout,
       setTimestep,
-      metadata,
       language,
       basemap,
       setBasemap,
@@ -185,9 +184,6 @@ class Media extends Component {
     var { settings, legend } = this.state;
     return (
       <div className="map-component">
-        <div className="lake-name">
-          {"name" in metadata && metadata.name[language]}
-        </div>
         {legend && <Legend layers={layers} />}
         <div className="viewport">
           <Basemap {...this.props} />
