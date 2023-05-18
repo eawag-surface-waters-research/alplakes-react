@@ -69,6 +69,27 @@
   padding: 3px 9px;
 }
 
+.main .lake .content .primary .map-component .controls {
+  position: absolute;
+  left: 12px;
+  top: 84px;
+}
+
+.main .lake .content .primary .map-component .controls a img {
+  height: 16px;
+  vertical-align: middle;
+  margin: auto;
+  opacity: 0.5;
+}
+
+.main .lake .content .primary .map-component .controls a.active img {
+  opacity: 1;
+}
+
+.main .lake .content .primary .map-component .controls a:hover img {
+  opacity: 1;
+}
+
 .main .lake .content .primary .map-component .settings-modal {
   position: absolute;
   right: 12px;

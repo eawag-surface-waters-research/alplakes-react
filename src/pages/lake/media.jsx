@@ -6,6 +6,9 @@ import Translate from "../../translations.json";
 import next from "../../img/next.svg";
 import settings_icon from "../../img/settings.svg";
 //import tools_icon from "../../img/tools.png";
+import hand_icon from "../../img/hand.png";
+import point_icon from "../../img/point.png";
+import transect_icon from "../../img/transect.png";
 import fullscreen_icon from "../../img/fullscreen.png";
 import normalscreen_icon from "../../img/normalscreen.png";
 import CONFIG from "../../config.json";
@@ -42,6 +45,27 @@ class Legend extends Component {
               ))}
           </tbody>
         </table>
+      </div>
+    );
+  }
+}
+
+class Controls extends Component {
+  render() {
+    var { layers, language, cursor } = this.props;
+    return (
+      <div className="controls leaflet-touch">
+        <div className="leaflet-control-zoom leaflet-bar leaflet-control">
+          <a href="#" className={cursor === "hand" ? "active" : ""}>
+            <img src={hand_icon} />
+          </a>
+          <a href="#" className={cursor === "point" ? "active" : ""}>
+            <img src={point_icon} />
+          </a>
+          <a href="#" className={cursor === "transect" ? "active" : ""}>
+            <img src={transect_icon} />
+          </a>
+        </div>
       </div>
     );
   }
@@ -133,6 +157,8 @@ class Media extends Component {
   state = {
     settings: false,
     legend: true,
+    controls: true,
+    cursor: "point",
   };
 
   toggleSettings = () => {
@@ -185,12 +211,15 @@ class Media extends Component {
       fullscreen,
       toggleFullscreen,
       layers,
-      language
+      language,
     } = this.props;
-    var { settings, legend } = this.state;
+    var { settings, legend, controls, cursor } = this.state;
     return (
       <div className="map-component">
         {legend && <Legend layers={layers} language={language} />}
+        {controls && (
+          <Controls layers={layers} language={language} cursor={cursor} />
+        )}
         <div className="viewport">
           <Basemap {...this.props} />
         </div>
