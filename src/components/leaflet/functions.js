@@ -496,6 +496,7 @@ const addSencastTiff = async (layer, dataStore, layerStore, datetime, map) => {
     layer.properties.parameter,
   ];
   var metadata;
+  var image;
   if (!checkNested(dataStore, path)) {
     ({ data: metadata } = await axios.get(layer.properties.metadata));
     metadata = metadata.map((m) => {
@@ -505,21 +506,23 @@ const addSencastTiff = async (layer, dataStore, layerStore, datetime, map) => {
       return m;
     });
     setNested(dataStore, path, metadata);
+    image = findClosest(metadata, "unix", datetime);
+    layer.properties.options.date = image.time;
+    layer.properties.options.includeDates = metadata.map((m) => m.time);
+    layer.properties.options.percentage = metadata.map((m) =>
+      Math.round((parseFloat(m.vp) / parseFloat(m.p)) * 100)
+    );
+    layer.properties.options.validpixelexpression = true;
+
+    layer.properties.options.min = round(image.min, 2);
+    layer.properties.options.max = round(image.max, 2);
+    layer.properties.options.dataMin = round(image.min, 2);
+    layer.properties.options.dataMax = round(image.max, 2);
   } else {
     metadata = getNested(dataStore, path);
+    image = findClosest(metadata, "unix", layer.properties.options.date);
   }
 
-  const image = findClosest(metadata, "unix", datetime);
-  layer.properties.options.includeDates = metadata.map((m) => m.time);
-  layer.properties.options.percentage = metadata.map((m) =>
-    Math.round((parseFloat(m.vp) / parseFloat(m.p)) * 100)
-  );
-  layer.properties.options.validpixelexpression = true;
-  layer.properties.options.date = image.time;
-  layer.properties.options.min = round(image.min, 2);
-  layer.properties.options.max = round(image.max, 2);
-  layer.properties.options.dataMin = round(image.min, 2);
-  layer.properties.options.dataMax = round(image.max, 2);
   await plotSencastTiff(image.url, layer, layerStore, map);
 };
 
@@ -634,6 +637,7 @@ const addSentinelHubWms = async (
     layer.properties.parameter,
   ];
   var metadata;
+  var image;
   if (!checkNested(dataStore, path)) {
     ({ data: metadata } = await axios.get(layer.properties.metadata));
     metadata = metadata.map((m) => {
@@ -643,16 +647,16 @@ const addSentinelHubWms = async (
       return m;
     });
     setNested(dataStore, path, metadata);
+    image = findClosest(metadata, "unix", datetime);
+    layer.properties.options.includeDates = metadata.map((m) => m.time);
+    layer.properties.options.percentage = metadata.map((m) =>
+      Math.round((parseFloat(m.vp) / parseFloat(m.p)) * 100)
+    );
+    layer.properties.options.date = image.time;
   } else {
     metadata = getNested(dataStore, path);
+    image = findClosest(metadata, "unix", layer.properties.options.date);
   }
-
-  const image = findClosest(metadata, "unix", datetime);
-  layer.properties.options.includeDates = metadata.map((m) => m.time);
-  layer.properties.options.percentage = metadata.map((m) =>
-    Math.round((parseFloat(m.vp) / parseFloat(m.p)) * 100)
-  );
-  layer.properties.options.date = image.time;
 
   var leaflet_layer = L.tileLayer
     .wms(layer.properties.wms, {

@@ -9,6 +9,9 @@
     display: inline-block;
     vertical-align: bottom;
     margin: 0 6px;
+    text-align: center;
+    text-shadow: 0px 2px 5px #ffffff8c;
+    color: #3534349a;
 }
 
 @media screen and (max-width: 500px) {

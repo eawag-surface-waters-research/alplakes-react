@@ -14,7 +14,7 @@ import "./lake.css";
 
 class Legend extends Component {
   render() {
-    var { layers } = this.props;
+    var { layers, language } = this.props;
     return (
       <div className="legend">
         <table>
@@ -33,6 +33,11 @@ class Legend extends Component {
                   palette={l.properties.options.palette}
                   unit={l.properties.unit}
                   key={l.id}
+                  text={
+                    l.properties.parameter in Translate
+                      ? Translate[l.properties.parameter][language]
+                      : ""
+                  }
                 />
               ))}
           </tbody>
@@ -180,11 +185,12 @@ class Media extends Component {
       fullscreen,
       toggleFullscreen,
       layers,
+      language
     } = this.props;
     var { settings, legend } = this.state;
     return (
       <div className="map-component">
-        {legend && <Legend layers={layers} />}
+        {legend && <Legend layers={layers} language={language} />}
         <div className="viewport">
           <Basemap {...this.props} />
         </div>

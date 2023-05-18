@@ -3,7 +3,7 @@ import "./colorbar.css";
 
 class Colorbar extends Component {
   render() {
-    var { min, max, palette, unit } = this.props;
+    var { min, max, palette, unit, text } = this.props;
     var colors = [];
     for (let p of palette) {
       colors.push(
@@ -17,7 +17,7 @@ class Colorbar extends Component {
           {min}
           {unit}
         </td>
-        <td className="bar" style={{ background: background }}></td>
+        <td className="bar" style={{ background: background }}>{text}</td>
         <td>
           {max}
           {unit}
