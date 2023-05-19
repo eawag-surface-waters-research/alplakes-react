@@ -1,0 +1,37 @@
+<svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="50mm"
+      height="50mm"
+      version="1.1"
+      viewBox="0 0 50 50"
+    >
+      <g transform="translate(-152.217 -111.792)">
+        <g
+          fillOpacity="1"
+          fillRule="evenodd"
+          stroke="none"
+          strokeDasharray="none"
+          strokeMiterlimit="4"
+          strokeOpacity="1"
+          strokeWidth="0"
+          transform="translate(115.246 63.618)"
+        >
+          <path fill="#de001e" d="M49.471 48.173H61.971V60.673H49.471z"></path>
+          <path fill="#d2001e" d="M61.971 48.173H74.471V60.673H61.971z"></path>
+          <path fill="#d2001e" d="M36.971 48.173H49.471V60.673H36.971z"></path>
+          <path fill="#f4001e" d="M74.471 48.173H86.971V60.673H74.471z"></path>
+          <path fill="#d200a0" d="M49.471 60.673H61.971V73.173H49.471z"></path>
+          <path fill="#d20093" d="M61.971 60.673H74.471V73.173H61.971z"></path>
+          <path fill="#d200b9" d="M36.971 60.673H49.471V73.173H36.971z"></path>
+          <path fill="#d200a0" d="M74.471 60.673H86.971V73.173H74.471z"></path>
+          <path fill="#6b00ff" d="M49.471 73.173H61.971V85.673H49.471z"></path>
+          <path fill="#8100ff" d="M61.971 73.173H74.471V85.673H61.971z"></path>
+          <path fill="#8100ff" d="M36.971 73.173H49.471V85.673H36.971z"></path>
+          <path fill="#90f" d="M74.471 73.173H86.971V85.673H74.471z"></path>
+          <path fill="#1237ff" d="M49.471 85.673H61.971V98.173H49.471z"></path>
+          <path fill="#1d37ff" d="M61.971 85.673H74.471V98.173H61.971z"></path>
+          <path fill="#0042ff" d="M36.971 85.673H49.471V98.173H36.971z"></path>
+          <path fill="#0057ff" d="M74.471 85.673H86.971V98.173H74.471z"></path>
+        </g>
+      </g>
+    </svg>

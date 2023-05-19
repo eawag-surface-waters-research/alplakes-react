@@ -1,0 +1,70 @@
+<svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="189.317"
+      height="189.141"
+      version="1.1"
+      viewBox="0 0 50.09 50.044"
+    >
+      <g transform="translate(-142.093 -186.197)">
+        <path
+          fill="none"
+          stroke="#28b5f5"
+          strokeDasharray="none"
+          strokeLinecap="butt"
+          strokeLinejoin="miter"
+          strokeMiterlimit="4"
+          strokeOpacity="1"
+          strokeWidth="4.94"
+          d="M144.485 235.623l5.64-21.842 23.69-3.134 16.264-22.919"
+        ></path>
+        <text
+          xmlSpace="preserve"
+          x="153.862"
+          y="231.295"
+          fill="#f90000"
+          fillOpacity="1"
+          stroke="none"
+          strokeWidth="1.208"
+          fontFamily="Roboto"
+          fontSize="48.331"
+          fontStretch="normal"
+          fontStyle="normal"
+          fontVariant="normal"
+          fontWeight="normal"
+          letterSpacing="0"
+          wordSpacing="0"
+        >
+          <tspan
+            x="153.862"
+            y="231.295"
+            fill="#f90000"
+            fillOpacity="1"
+            strokeWidth="1.208"
+          >
+            Y
+          </tspan>
+        </text>
+        <path
+          fill="#000"
+          fillOpacity="1"
+          fillRule="evenodd"
+          stroke="none"
+          strokeDasharray="none"
+          strokeMiterlimit="4"
+          strokeOpacity="1"
+          strokeWidth="0"
+          d="M142.183 231.197v5h50v-5z"
+        ></path>
+        <path
+          fill="#000"
+          fillOpacity="1"
+          fillRule="evenodd"
+          stroke="none"
+          strokeDasharray="none"
+          strokeMiterlimit="4"
+          strokeOpacity="1"
+          strokeWidth="0"
+          d="M147.183 186.197h-5v50h5z"
+        ></path>
+      </g>
+    </svg>

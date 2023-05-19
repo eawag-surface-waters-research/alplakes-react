@@ -57,6 +57,19 @@
   position: relative;
 }
 
+.main .lake .content .primary .map-component .graph {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  width: calc(100% - 24px);
+  height: 60%;
+  box-sizing: border-box;
+  padding: 24px;
+  background-color: white;
+  z-index: 9999;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
 .main .lake .content .primary .map-component .legend {
   position: absolute;
   right: 12px;

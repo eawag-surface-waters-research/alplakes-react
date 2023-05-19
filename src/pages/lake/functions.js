@@ -10,6 +10,15 @@ const stringToDate = (date) => {
   );
 };
 
+export const parseAPITime = (date) => {
+  return new Date(
+    `${date.slice(0, 4)}-${date.slice(4, 6)}-${date.slice(6, 8)}T${date.slice(
+      8,
+      10
+    )}:${date.slice(10, 12)}:00.000+00:00`
+  );
+};
+
 export const formatDate = (datetime) => {
   var a = new Date(datetime);
   var year = a.getFullYear();
@@ -18,6 +27,16 @@ export const formatDate = (datetime) => {
   return `${date < 10 ? "0" + date : date}.${
     month < 10 ? "0" + month : month
   }.${String(year).slice(-2)}`;
+};
+
+export const formatAPIDate = (datetime) => {
+  var a = new Date(datetime);
+  var year = a.getFullYear();
+  var month = a.getMonth() + 1;
+  var date = a.getDate();
+  return `${String(year)}${month < 10 ? "0" + month : month}${
+    date < 10 ? "0" + date : date
+  }`;
 };
 
 export const formatDateLong = (datetime, months) => {
@@ -102,5 +121,24 @@ export const setCustomPeriod = async (
   } else {
     console.error("Custom period type not recognised.");
     return { period, minDate, maxDate, depths, depth };
+  }
+};
+
+export const getProfileAlplakesHydrodynamic = async (
+  api,
+  model,
+  lake,
+  period,
+  latlng
+) => {
+  const url = `${api}/simulations/depthtime/${model}/${lake}/${formatAPIDate(
+    period[0]
+  )}0000/${formatAPIDate(period[1])}2359/${latlng.lat}/${latlng.lng}`;
+  try {
+    const { data } = await axios.get(url);
+    return data;
+  } catch (e) {
+    console.error(e);
+    return false;
   }
 };

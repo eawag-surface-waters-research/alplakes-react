@@ -2,17 +2,19 @@ import React, { Component } from "react";
 import Basemap from "../../components/leaflet/basemap";
 import Slider from "../../components/sliders/slider";
 import Colorbar from "../../components/colors/colorbar";
+import Graphs from "./graphs";
 import Translate from "../../translations.json";
 import next from "../../img/next.svg";
 import settings_icon from "../../img/settings.svg";
 //import tools_icon from "../../img/tools.png";
-import hand_icon from "../../img/hand.png";
-import point_icon from "../../img/point.png";
-import transect_icon from "../../img/transect.png";
 import fullscreen_icon from "../../img/fullscreen.png";
 import normalscreen_icon from "../../img/normalscreen.png";
 import CONFIG from "../../config.json";
-import { formatDate, formatTime } from "./functions";
+import {
+  formatDate,
+  formatTime,
+  getProfileAlplakesHydrodynamic,
+} from "./functions";
 import "./lake.css";
 
 class Legend extends Component {
@@ -45,27 +47,6 @@ class Legend extends Component {
               ))}
           </tbody>
         </table>
-      </div>
-    );
-  }
-}
-
-class Controls extends Component {
-  render() {
-    var { layers, language, cursor } = this.props;
-    return (
-      <div className="controls leaflet-touch">
-        <div className="leaflet-control-zoom leaflet-bar leaflet-control">
-          <a href="#" className={cursor === "hand" ? "active" : ""}>
-            <img src={hand_icon} />
-          </a>
-          <a href="#" className={cursor === "point" ? "active" : ""}>
-            <img src={point_icon} />
-          </a>
-          <a href="#" className={cursor === "transect" ? "active" : ""}>
-            <img src={transect_icon} />
-          </a>
-        </div>
       </div>
     );
   }
@@ -159,6 +140,33 @@ class Media extends Component {
     legend: true,
     controls: true,
     cursor: "point",
+    graphs: false,
+    graphData: false,
+  };
+
+  getProfile = async (latlng) => {
+    var { graphData } = this.state;
+    var { metadata, period } = this.props;
+    if ("profile" in metadata) {
+      await this.props.lock();
+      for (var source of metadata.profile) {
+        if (source.type === "alplakes_hydrodynamic") {
+          graphData = await getProfileAlplakesHydrodynamic(
+            CONFIG.alplakes_api,
+            source.model,
+            source.lake,
+            period,
+            latlng
+          );
+        }
+      }
+      this.props.unlock();
+      this.setState({ graphData, graphs: true });
+    }
+  };
+
+  getTransect = (latlng) => {
+    console.log(this.props.metadata);
   };
 
   toggleSettings = () => {
@@ -213,15 +221,18 @@ class Media extends Component {
       layers,
       language,
     } = this.props;
-    var { settings, legend, controls, cursor } = this.state;
+    var { settings, legend, graphData, graphs } = this.state;
     return (
       <div className="map-component">
         {legend && <Legend layers={layers} language={language} />}
-        {controls && (
-          <Controls layers={layers} language={language} cursor={cursor} />
-        )}
+
+        {graphs && <Graphs data={graphData} />}
         <div className="viewport">
-          <Basemap {...this.props} />
+          <Basemap
+            {...this.props}
+            getProfile={this.getProfile}
+            getTransect={this.getTransect}
+          />
         </div>
         <div className="gradient" />
         <Settings

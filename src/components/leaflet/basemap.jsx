@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import L from "leaflet";
 import CONFIG from "../../config.json";
 import { flyToBounds, addLayer, updateLayer, removeLayer } from "./functions";
+import leaflet_marker from "../../img/leaflet_marker.png";
 import "./leaflet_geotiff";
 import "./leaflet_floatgeotiff";
 import "./leaflet_colorpicker";
@@ -9,6 +10,8 @@ import "./leaflet_streamlines";
 import "./leaflet_vectorfield";
 import "./leaflet_customtooltip";
 import "./leaflet_customcontrol";
+import "./leaflet_polylinedraw";
+import "./leaflet_markerdraw";
 import "./css/leaflet.css";
 
 class Basemap extends Component {
@@ -87,8 +90,9 @@ class Basemap extends Component {
       maxBoundsViscosity: 0.5,
       zoomSnap: 0.25,
       zoomControl: true,
-      showCursorLocation: true
+      showCursorLocation: true,
     });
+    this.map.doubleClickZoom.disable();
 
     var basemap = L.tileLayer(CONFIG.basemaps["default"].url, {
       maxZoom: 19,
@@ -96,6 +100,14 @@ class Basemap extends Component {
     });
     this.map.addLayer(basemap);
     this.layerStore["basemap"] = basemap;
+
+    L.control
+      .markerDraw({
+        markerIconUrl: leaflet_marker,
+        fire: this.props.getProfile,
+      })
+      .addTo(this.map);
+    L.control.polylineDraw({ fire: this.props.getTransect }).addTo(this.map);
   }
 
   render() {

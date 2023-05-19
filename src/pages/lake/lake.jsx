@@ -73,6 +73,10 @@ class Lake extends Component {
     this.setState({ updates: [] });
   };
 
+  lock = () => {
+    this.setState({ clickblock: true });
+  };
+
   unlock = () => {
     this.setState({ clickblock: false });
   };
@@ -347,6 +351,7 @@ class Lake extends Component {
               togglePlay={this.togglePlay}
               setDatetime={this.setDatetime}
               updated={this.updated}
+              lock={this.lock}
               unlock={this.unlock}
               nextStep={this.nextStep}
               setTimeout={this.setTimeout}
