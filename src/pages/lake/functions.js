@@ -39,6 +39,18 @@ export const formatAPIDate = (datetime) => {
   }`;
 };
 
+export const formatAPIDatetime = (datetime) => {
+  var a = new Date(datetime);
+  var year = a.getFullYear();
+  var month = a.getMonth() + 1;
+  var date = a.getDate();
+  var hour = a.getHours();
+  var minute = a.getMinutes();
+  return `${String(year)}${month < 10 ? "0" + month : month}${
+    date < 10 ? "0" + date : date
+  }${hour < 10 ? "0" + hour : hour}${minute < 10 ? "0" + minute : minute}`;
+};
+
 export const formatDateLong = (datetime, months) => {
   var a = new Date(datetime);
   var year = a.getFullYear();
@@ -134,6 +146,32 @@ export const getProfileAlplakesHydrodynamic = async (
   const url = `${api}/simulations/depthtime/${model}/${lake}/${formatAPIDate(
     period[0]
   )}0000/${formatAPIDate(period[1])}2359/${latlng.lat}/${latlng.lng}`;
+  try {
+    const { data } = await axios.get(url);
+    if (data.distance > 500) {
+      alert("Point outside of lake.");
+      return false;
+    }
+    return data;
+  } catch (e) {
+    console.error(e);
+    return false;
+  }
+};
+
+export const getTransectAlplakesHydrodynamic = async (
+  api,
+  model,
+  lake,
+  datetime,
+  latlng
+) => {
+  latlng.pop();
+  const url = `${api}/simulations/transect/${model}/${lake}/${formatAPIDatetime(
+    datetime
+  )}/${latlng.map((l) => l.lat).join(",")}/${latlng
+    .map((l) => l.lng)
+    .join(",")}`;
   try {
     const { data } = await axios.get(url);
     return data;

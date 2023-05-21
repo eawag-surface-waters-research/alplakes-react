@@ -207,6 +207,12 @@ class Lake extends Component {
     }
   };
 
+  clearOverlays = () => {
+    var { updates } = this.state;
+    updates.push({ event: "clear" });
+    this.setState({ updates });
+  };
+
   addLayer = (id) => {
     var { layers, updates } = this.state;
     var layer = layers.find((l) => l.id === id);
@@ -360,6 +366,7 @@ class Lake extends Component {
               setSimpleline={this.setSimpleline}
               setBasemap={this.setBasemap}
               toggleFullscreen={this.toggleFullscreen}
+              clearOverlays={this.clearOverlays}
               {...this.state}
             />
           </div>

@@ -14,6 +14,7 @@ import {
   formatDate,
   formatTime,
   getProfileAlplakesHydrodynamic,
+  getTransectAlplakesHydrodynamic
 } from "./functions";
 import "./lake.css";
 
@@ -161,12 +162,42 @@ class Media extends Component {
         }
       }
       this.props.unlock();
-      this.setState({ graphData, graphs: true });
+      if (graphData === false) {
+        this.closeGraph();
+      } else {
+        this.setState({ graphData, graphs: true });
+      }
     }
   };
 
-  getTransect = (latlng) => {
-    console.log(this.props.metadata);
+  closeGraph = () => {
+    this.setState({ graphData: false, graphs: false });
+    this.props.clearOverlays();
+  };
+
+  getTransect = async (latlng) => {
+    var { graphData } = this.state;
+    var { metadata, datetime } = this.props;
+    if ("transect" in metadata) {
+      await this.props.lock();
+      for (var source of metadata.transect) {
+        if (source.type === "alplakes_hydrodynamic") {
+          graphData = await getTransectAlplakesHydrodynamic(
+            CONFIG.alplakes_api,
+            source.model,
+            source.lake,
+            datetime,
+            latlng
+          );
+        }
+      }
+      this.props.unlock();
+      if (graphData === false) {
+        this.closeGraph();
+      } else {
+        this.setState({ graphData, graphs: true });
+      }
+    }
   };
 
   toggleSettings = () => {
@@ -225,8 +256,7 @@ class Media extends Component {
     return (
       <div className="map-component">
         {legend && <Legend layers={layers} language={language} />}
-
-        {graphs && <Graphs data={graphData} />}
+        {graphs && <Graphs data={graphData} close={this.closeGraph} />}
         <div className="viewport">
           <Basemap
             {...this.props}

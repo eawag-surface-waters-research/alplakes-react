@@ -4,6 +4,7 @@ L.Control.PolylineDraw = L.Control.extend({
   options: {
     position: "topleft",
     fire: false,
+    layer: false,
   },
 
   onAdd: function (map) {
@@ -52,7 +53,12 @@ L.Control.PolylineDraw = L.Control.extend({
     this._previewPolyline = L.polyline([], {
       color: "red",
       opacity: 0.7,
-    }).addTo(this._map);
+    });
+    if (this.options.layer) {
+      this.options.layer.addLayer(this._previewPolyline);
+    } else {
+      this._previewPolyline.addTo(this._map);
+    }
   },
 
   _disableDrawing: function () {
@@ -80,10 +86,15 @@ L.Control.PolylineDraw = L.Control.extend({
   },
 
   _createPolyline: function () {
-    var polyline = L.polyline(this._polylinePoints, { color: "red" }).addTo(
-      this._map
-    );
-    this._map.fire("polyline:created", { layer: polyline });
+    var polyline = L.polyline(this._polylinePoints, { color: "red" });
+    if (this.options.layer) {
+      this.options.layer.addLayer(polyline);
+    } else {
+      polyline.addTo(this._map);
+    }
+    if (typeof this.options.fire === "function") {
+      this.options.fire(this._polylinePoints);
+    }
   },
   _finishDrawingOnKeyPress: function (e) {
     if (

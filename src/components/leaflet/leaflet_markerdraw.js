@@ -5,6 +5,7 @@ L.Control.MarkerDraw = L.Control.extend({
     position: "topleft",
     markerIconUrl: "marker-icon.png",
     fire: false,
+    layer: false,
   },
 
   onAdd: function (map) {
@@ -61,16 +62,17 @@ L.Control.MarkerDraw = L.Control.extend({
       iconAnchor: [12, 41],
       popupAnchor: [1, -34],
     });
-    this._marker = L.marker(e.latlng, { icon: markerIcon }).addTo(this._map);
+    this._marker = L.marker(e.latlng, { icon: markerIcon });
+    if (this.options.layer) {
+      this.options.layer.addLayer(this._marker);
+    } else {
+      this._marker.addTo(this._map);
+    }
+
     if (typeof this.options.fire === "function") {
       this.options.fire(e.latlng);
     }
     this._disableAdding();
-  },
-  removeMarker: function () {
-    if (this._marker != undefined) {
-      this.map.removeLayer(this._marker);
-    }
   },
 });
 

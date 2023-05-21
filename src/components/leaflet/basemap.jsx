@@ -33,7 +33,9 @@ class Basemap extends Component {
     if (updates.length > 0) {
       updated();
       for (var update of updates) {
-        if (update.event === "bounds") {
+        if (update.event === "clear") {
+          this.layer.clearLayers();
+        } else if (update.event === "bounds") {
           flyToBounds(metadata.bounds, this.map);
         } else if (update.event === "addLayer") {
           await addLayer(
@@ -101,13 +103,17 @@ class Basemap extends Component {
     this.map.addLayer(basemap);
     this.layerStore["basemap"] = basemap;
 
+    this.layer = L.layerGroup([]).addTo(this.map);
     L.control
       .markerDraw({
         markerIconUrl: leaflet_marker,
         fire: this.props.getProfile,
+        layer: this.layer,
       })
       .addTo(this.map);
-    L.control.polylineDraw({ fire: this.props.getTransect }).addTo(this.map);
+    this.polylineDraw = L.control
+      .polylineDraw({ fire: this.props.getTransect, layer: this.layer })
+      .addTo(this.map);
   }
 
   render() {
