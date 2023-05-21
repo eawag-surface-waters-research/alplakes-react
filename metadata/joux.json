@@ -25,6 +25,18 @@
         "start": -2,
         "end": "/simulations/metadata/delft3d-flow/joux"
     },
+    "profile": {
+      "type": "alplakes_hydrodynamic",
+      "model": "delft3d-flow",
+      "lake": "joux",
+      "parameters": ["temperature", "u", "v"]
+    },
+    "transect": {
+      "type": "alplakes_hydrodynamic",
+      "model": "delft3d-flow",
+      "lake": "joux",
+      "parameters": ["temperature", "u", "v"]
+    },
     "depth": 0.7,
     "layers": [
         {

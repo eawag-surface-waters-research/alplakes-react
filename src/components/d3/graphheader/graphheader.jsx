@@ -1,13 +1,13 @@
 import React, { Component } from "react";
-import downloadIcon from "./img/download.svg";
-import heatIcon from "./img/heat.svg";
-import contourIcon from "./img/contour.svg";
-import helpIcon from "./img/info.svg";
-import shrinkIcon from "./img/shrink.svg";
-import fullscreenIcon from "./img/fullscreen.svg";
-import fontsizeIcon from "./img/fontsize.svg";
-import xgraphIcon from "./img/xgraph.svg";
-import ygraphIcon from "./img/ygraph.svg";
+import downloadIcon from "../../../img/download.png";
+import heatIcon from "../../../img/heat.png";
+import contourIcon from "../../../img/contour.png";
+import helpIcon from "../../../img/info.png";
+import shrinkIcon from "../../../img/shrink.png";
+import fullscreenIcon from "../../../img/full.png";
+import fontsizeIcon from "../../../img/fontsize.png";
+import xgraphIcon from "../../../img/xgraph.png";
+import ygraphIcon from "../../../img/ygraph.png";
 import "./graphheader.css";
 
 class GraphHeader extends Component {

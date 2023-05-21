@@ -211,7 +211,6 @@ class D3LineGraph extends Component {
       ymin,
       xscale,
       yscale,
-      bcolor,
       lcolor,
       lweight,
       title,
@@ -243,7 +242,6 @@ class D3LineGraph extends Component {
     }
     var options = {
       language,
-      backgroundColor: bcolor,
       xLog: xscale === "Log",
       yLog: yscale === "Log",
       border: box,

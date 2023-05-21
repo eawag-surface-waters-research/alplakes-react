@@ -14,7 +14,7 @@ import {
   formatDate,
   formatTime,
   getProfileAlplakesHydrodynamic,
-  getTransectAlplakesHydrodynamic
+  getTransectAlplakesHydrodynamic,
 } from "./functions";
 import "./lake.css";
 
@@ -150,16 +150,15 @@ class Media extends Component {
     var { metadata, period } = this.props;
     if ("profile" in metadata) {
       await this.props.lock();
-      for (var source of metadata.profile) {
-        if (source.type === "alplakes_hydrodynamic") {
-          graphData = await getProfileAlplakesHydrodynamic(
-            CONFIG.alplakes_api,
-            source.model,
-            source.lake,
-            period,
-            latlng
-          );
-        }
+      if (metadata.profile.type === "alplakes_hydrodynamic") {
+        graphData = await getProfileAlplakesHydrodynamic(
+          CONFIG.alplakes_api,
+          metadata.profile.model,
+          metadata.profile.lake,
+          period,
+          latlng
+        );
+        graphData["type"] = "profile";
       }
       this.props.unlock();
       if (graphData === false) {
@@ -167,6 +166,9 @@ class Media extends Component {
       } else {
         this.setState({ graphData, graphs: true });
       }
+    } else {
+      alert("Profiles not available for this lake.");
+      this.closeGraph();
     }
   };
 
@@ -180,16 +182,15 @@ class Media extends Component {
     var { metadata, datetime } = this.props;
     if ("transect" in metadata) {
       await this.props.lock();
-      for (var source of metadata.transect) {
-        if (source.type === "alplakes_hydrodynamic") {
-          graphData = await getTransectAlplakesHydrodynamic(
-            CONFIG.alplakes_api,
-            source.model,
-            source.lake,
-            datetime,
-            latlng
-          );
-        }
+      if (metadata.transect.type === "alplakes_hydrodynamic") {
+        graphData = await getTransectAlplakesHydrodynamic(
+          CONFIG.alplakes_api,
+          metadata.transect.model,
+          metadata.transect.lake,
+          datetime,
+          latlng
+        );
+        graphData["type"] = "transect";
       }
       this.props.unlock();
       if (graphData === false) {
@@ -197,6 +198,9 @@ class Media extends Component {
       } else {
         this.setState({ graphData, graphs: true });
       }
+    } else {
+      alert("Transects not available for this lake.");
+      this.closeGraph();
     }
   };
 
@@ -246,17 +250,23 @@ class Media extends Component {
       setTimestep,
       language,
       basemap,
+      metadata,
       setBasemap,
       fullscreen,
       toggleFullscreen,
-      layers,
-      language,
+      layers
     } = this.props;
     var { settings, legend, graphData, graphs } = this.state;
     return (
       <div className="map-component">
         {legend && <Legend layers={layers} language={language} />}
-        {graphs && <Graphs data={graphData} close={this.closeGraph} />}
+        {graphs && (
+          <Graphs
+            data={graphData}
+            close={this.closeGraph}
+            metadata={metadata}
+          />
+        )}
         <div className="viewport">
           <Basemap
             {...this.props}

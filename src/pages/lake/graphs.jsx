@@ -6,12 +6,13 @@ import "./lake.css";
 class Graphs extends Component {
   state = {
     data: false,
-    ylabel: "Depth",
-    xlabel: "Time",
-    zlabel: "Temperature",
-    yunits: "m",
-    xunits: "m",
-    zunits: "°C",
+    parameters: [],
+    ylabel: "",
+    xlabel: "",
+    zlabel: "",
+    yunits: "",
+    xunits: "",
+    zunits: "",
     colors: [
       { color: "#000080", point: 0 },
       { color: "#3366FF", point: 0.142857142857143 },
@@ -26,26 +27,43 @@ class Graphs extends Component {
     yReverse: true,
     xReverse: false,
     display: "heatmap",
-    type: "profile",
   };
   componentDidMount() {
-    if ("time" in this.props.data) {
-      // Profile plot
-      var z = this.props.data.temperature.data;
-      var y = this.props.data.depth.data;
-      var x = this.props.data.time.map((t) => parseAPITime(t));
-      this.setState({ data: { x, y, z }, type: "profile" });
-    } else if ("distance" in this.props.data) {
-      // Transect plot
-      var z = this.props.data.temperature.data;
-      var y = this.props.data.depth.data;
-      var x = this.props.data.distance.map((t) => t / 1000);
+    var { metadata } = this.props;
+    if (this.props.data.type === "profile") {
+      let parameters = metadata.profile.parameters;
+      let parameter = parameters[0];
+      let z = this.props.data[parameter].data;
+      let zlabel = parameter.charAt(0).toUpperCase() + parameter.slice(1);
+      let zunits = this.props.data[parameter].unit;
+      let y = this.props.data.depth.data;
+      let ylabel = "Depth";
+      let yunits = this.props.data.depth.unit;
+      let x = this.props.data.time.map((t) => parseAPITime(t));
+      this.setState({ data: { x, y, z }, zlabel, zunits, ylabel, yunits });
+    } else if (this.props.data.type === "transect") {
+      let parameters = metadata.profile.parameters;
+      let parameter = parameters[0];
+      let z = this.props.data[parameter].data;
+      let zlabel = parameter.charAt(0).toUpperCase() + parameter.slice(1);
+      let zunits = this.props.data[parameter].unit;
+      let y = this.props.data.depth.data;
+      let ylabel = "Depth";
+      let yunits = this.props.data.depth.unit;
+      let x = this.props.data.distance.map((t) => t / 1000);
+      let xlabel = "Distance along transect";
+      let xunits = "km";
       this.setState({
         data: { x, y, z },
-        type: "profile",
-        xlabel: "Distance along transect",
-        xunits: "km",
+        zlabel,
+        zunits,
+        ylabel,
+        yunits,
+        xlabel,
+        xunits,
       });
+    } else {
+      console.error("Graph type not recognised.");
     }
   }
   render() {
