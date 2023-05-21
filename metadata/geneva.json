@@ -19,8 +19,17 @@
     "start": -2,
     "end": "/simulations/metadata/delft3d-flow/geneva"
   },
-  "slicing": {
-    "type": "alplakes_hydrodynamic"
+  "profile": {
+    "type": "alplakes_hydrodynamic",
+    "model": "delft3d-flow",
+    "lake": "geneva",
+    "parameters": ["temperature", "u", "v"]
+  },
+  "transect": {
+    "type": "alplakes_hydrodynamic",
+    "model": "delft3d-flow",
+    "lake": "geneva",
+    "parameters": ["temperature", "u", "v"]
   },
   "depth": 0.7,
   "layers": [

@@ -31,9 +31,6 @@ L.Map.include({
         .setLatLng(e.latlng)
         .setContent(content)
         .addTo(this);
-      document.getElementById("map").style.cursor = "crosshair";
-    } else {
-      document.getElementById("map").style.removeProperty("cursor");
     }
   },
 });

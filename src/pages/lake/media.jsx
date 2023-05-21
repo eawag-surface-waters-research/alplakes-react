@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Basemap from "../../components/leaflet/basemap";
 import Slider from "../../components/sliders/slider";
 import Colorbar from "../../components/colors/colorbar";
+import Graphs from "./graphs";
 import Translate from "../../translations.json";
 import next from "../../img/next.svg";
 import settings_icon from "../../img/settings.svg";
@@ -9,7 +10,12 @@ import settings_icon from "../../img/settings.svg";
 import fullscreen_icon from "../../img/fullscreen.png";
 import normalscreen_icon from "../../img/normalscreen.png";
 import CONFIG from "../../config.json";
-import { formatDate, formatTime } from "./functions";
+import {
+  formatDate,
+  formatTime,
+  getProfileAlplakesHydrodynamic,
+  getTransectAlplakesHydrodynamic,
+} from "./functions";
 import "./lake.css";
 
 class Legend extends Component {
@@ -133,6 +139,69 @@ class Media extends Component {
   state = {
     settings: false,
     legend: true,
+    controls: true,
+    cursor: "point",
+    graphs: false,
+    graphData: false,
+  };
+
+  getProfile = async (latlng) => {
+    var { graphData } = this.state;
+    var { metadata, period } = this.props;
+    if ("profile" in metadata) {
+      await this.props.lock();
+      if (metadata.profile.type === "alplakes_hydrodynamic") {
+        graphData = await getProfileAlplakesHydrodynamic(
+          CONFIG.alplakes_api,
+          metadata.profile.model,
+          metadata.profile.lake,
+          period,
+          latlng
+        );
+        graphData["type"] = "profile";
+      }
+      this.props.unlock();
+      if (graphData === false) {
+        this.closeGraph();
+      } else {
+        this.setState({ graphData, graphs: true });
+      }
+    } else {
+      alert("Profiles not available for this lake.");
+      this.closeGraph();
+    }
+  };
+
+  closeGraph = () => {
+    this.setState({ graphData: false, graphs: false });
+    this.props.clearOverlays();
+  };
+
+  getTransect = async (latlng) => {
+    var { graphData } = this.state;
+    var { metadata, datetime } = this.props;
+    if ("transect" in metadata) {
+      await this.props.lock();
+      if (metadata.transect.type === "alplakes_hydrodynamic") {
+        graphData = await getTransectAlplakesHydrodynamic(
+          CONFIG.alplakes_api,
+          metadata.transect.model,
+          metadata.transect.lake,
+          datetime,
+          latlng
+        );
+        graphData["type"] = "transect";
+      }
+      this.props.unlock();
+      if (graphData === false) {
+        this.closeGraph();
+      } else {
+        this.setState({ graphData, graphs: true });
+      }
+    } else {
+      alert("Transects not available for this lake.");
+      this.closeGraph();
+    }
   };
 
   toggleSettings = () => {
@@ -181,18 +250,29 @@ class Media extends Component {
       setTimestep,
       language,
       basemap,
+      metadata,
       setBasemap,
       fullscreen,
       toggleFullscreen,
-      layers,
-      language
+      layers
     } = this.props;
-    var { settings, legend } = this.state;
+    var { settings, legend, graphData, graphs } = this.state;
     return (
       <div className="map-component">
         {legend && <Legend layers={layers} language={language} />}
+        {graphs && (
+          <Graphs
+            data={graphData}
+            close={this.closeGraph}
+            metadata={metadata}
+          />
+        )}
         <div className="viewport">
-          <Basemap {...this.props} />
+          <Basemap
+            {...this.props}
+            getProfile={this.getProfile}
+            getTransect={this.getTransect}
+          />
         </div>
         <div className="gradient" />
         <Settings

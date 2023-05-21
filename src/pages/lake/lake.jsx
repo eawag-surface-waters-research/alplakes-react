@@ -73,6 +73,10 @@ class Lake extends Component {
     this.setState({ updates: [] });
   };
 
+  lock = () => {
+    this.setState({ clickblock: true });
+  };
+
   unlock = () => {
     this.setState({ clickblock: false });
   };
@@ -201,6 +205,12 @@ class Lake extends Component {
       }
       this.setState({ updates, depth, clickblock: true });
     }
+  };
+
+  clearOverlays = () => {
+    var { updates } = this.state;
+    updates.push({ event: "clear" });
+    this.setState({ updates });
   };
 
   addLayer = (id) => {
@@ -347,6 +357,7 @@ class Lake extends Component {
               togglePlay={this.togglePlay}
               setDatetime={this.setDatetime}
               updated={this.updated}
+              lock={this.lock}
               unlock={this.unlock}
               nextStep={this.nextStep}
               setTimeout={this.setTimeout}
@@ -355,6 +366,7 @@ class Lake extends Component {
               setSimpleline={this.setSimpleline}
               setBasemap={this.setBasemap}
               toggleFullscreen={this.toggleFullscreen}
+              clearOverlays={this.clearOverlays}
               {...this.state}
             />
           </div>

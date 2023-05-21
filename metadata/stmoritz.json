@@ -19,6 +19,18 @@
     "start": -2,
     "end": "/simulations/metadata/delft3d-flow/stmoritz"
   },
+  "profile": {
+    "type": "alplakes_hydrodynamic",
+    "model": "delft3d-flow",
+    "lake": "stmoritz",
+    "parameters": ["temperature", "u", "v"]
+  },
+  "transect": {
+    "type": "alplakes_hydrodynamic",
+    "model": "delft3d-flow",
+    "lake": "stmoritz",
+    "parameters": ["temperature", "u", "v"]
+  },
   "depth": 1,
   "layers": [
     {

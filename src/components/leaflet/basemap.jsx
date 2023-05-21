@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import L from "leaflet";
 import CONFIG from "../../config.json";
 import { flyToBounds, addLayer, updateLayer, removeLayer } from "./functions";
+import leaflet_marker from "../../img/leaflet_marker.png";
 import "./leaflet_geotiff";
 import "./leaflet_floatgeotiff";
 import "./leaflet_colorpicker";
@@ -9,6 +10,8 @@ import "./leaflet_streamlines";
 import "./leaflet_vectorfield";
 import "./leaflet_customtooltip";
 import "./leaflet_customcontrol";
+import "./leaflet_polylinedraw";
+import "./leaflet_markerdraw";
 import "./css/leaflet.css";
 
 class Basemap extends Component {
@@ -30,7 +33,9 @@ class Basemap extends Component {
     if (updates.length > 0) {
       updated();
       for (var update of updates) {
-        if (update.event === "bounds") {
+        if (update.event === "clear") {
+          this.layer.clearLayers();
+        } else if (update.event === "bounds") {
           flyToBounds(metadata.bounds, this.map);
         } else if (update.event === "addLayer") {
           await addLayer(
@@ -87,8 +92,9 @@ class Basemap extends Component {
       maxBoundsViscosity: 0.5,
       zoomSnap: 0.25,
       zoomControl: true,
-      showCursorLocation: true
+      showCursorLocation: true,
     });
+    this.map.doubleClickZoom.disable();
 
     var basemap = L.tileLayer(CONFIG.basemaps["default"].url, {
       maxZoom: 19,
@@ -97,37 +103,17 @@ class Basemap extends Component {
     this.map.addLayer(basemap);
     this.layerStore["basemap"] = basemap;
 
-    L.control.custom({
-      position: 'topleft',
-      content : '<button type="button" class="btn btn-default">'+
-                '    <i class="fa fa-crosshairs"></i>'+
-                '</button>'+
-                '<button type="button" class="btn btn-info">'+
-                '    <i class="fa fa-compass"></i>'+
-                '</button>'+
-                '<button type="button" class="btn btn-primary">'+
-                '    <i class="fa fa-spinner fa-pulse fa-fw"></i>'+
-                '</button>'+
-                '<button type="button" class="btn btn-danger">'+
-                '    <i class="fa fa-times"></i>'+
-                '</button>'+
-                '<button type="button" class="btn btn-success">'+
-                '    <i class="fa fa-check"></i>'+
-                '</button>'+
-                '<button type="button" class="btn btn-warning">'+
-                '    <i class="fa fa-exclamation-triangle"></i>'+
-                '</button>',
-      classes : 'btn-group-vertical btn-group-sm',
-      events:
-      {
-          click: function(data)
-          {
-              console.log('wrapper div element clicked');
-              console.log(data);
-          },
-      }
-  })
-  .addTo(this.map);
+    this.layer = L.layerGroup([]).addTo(this.map);
+    L.control
+      .markerDraw({
+        markerIconUrl: leaflet_marker,
+        fire: this.props.getProfile,
+        layer: this.layer,
+      })
+      .addTo(this.map);
+    this.polylineDraw = L.control
+      .polylineDraw({ fire: this.props.getTransect, layer: this.layer })
+      .addTo(this.map);
   }
 
   render() {
