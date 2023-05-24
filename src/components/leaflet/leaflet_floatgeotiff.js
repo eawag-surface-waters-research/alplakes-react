@@ -72,44 +72,8 @@ L.FloatGeotiff = L.ImageOverlay.extend({
     }
     this.raster.width = image.getWidth();
     this.raster.height = image.getHeight();
-
     if (this.options.convolve > 0) {
-      var matrix = this._createConvolutionMatrix(2 * this.options.convolve + 1);
-      for (
-        var h = this.options.convolve;
-        h < this.raster.height - this.options.convolve;
-        h++
-      ) {
-        for (
-          var w = this.options.convolve;
-          w < this.raster.width - this.options.convolve;
-          w++
-        ) {
-          let index = h * this.raster.width + w;
-          if (
-            !isNaN(this.raster.data[0][index]) &&
-            this.raster.data[1][index] !== this.options.invalidpixel
-          ) {
-            var values = [];
-            for (var i = 0; i < matrix.length; i++) {
-              for (var j = 0; j < matrix.length; j++) {
-                let wi = w + matrix[i][j][0];
-                let hi = h + matrix[i][j][1];
-                let ii = hi * this.raster.width + wi;
-                if (
-                  !isNaN(this.raster.data[0][ii]) &&
-                  this.raster.data[1][ii] !== this.options.invalidpixel
-                ) {
-                  values.push(this.raster.data[0][ii]);
-                }
-              }
-            }
-            if (values.length > 0) {
-              this.raster.data[0][index] = mean(values);
-            }
-          }
-        }
-      }
+      this._convolve();
     }
     if (this.options.min === undefined)
       this.options.min = min(this.raster.data[0]);
@@ -131,6 +95,44 @@ L.FloatGeotiff = L.ImageOverlay.extend({
     }
 
     return matrix;
+  },
+  _convolve: function () {
+    var matrix = this._createConvolutionMatrix(2 * this.options.convolve + 1);
+    for (
+      var h = this.options.convolve;
+      h < this.raster.height - this.options.convolve;
+      h++
+    ) {
+      for (
+        var w = this.options.convolve;
+        w < this.raster.width - this.options.convolve;
+        w++
+      ) {
+        let index = h * this.raster.width + w;
+        if (
+          !isNaN(this.raster.data[0][index]) &&
+          this.raster.data[1][index] !== this.options.invalidpixel
+        ) {
+          var values = [];
+          for (var i = 0; i < matrix.length; i++) {
+            for (var j = 0; j < matrix.length; j++) {
+              let wi = w + matrix[i][j][0];
+              let hi = h + matrix[i][j][1];
+              let ii = hi * this.raster.width + wi;
+              if (
+                !isNaN(this.raster.data[0][ii]) &&
+                this.raster.data[1][ii] !== this.options.invalidpixel
+              ) {
+                values.push(this.raster.data[0][ii]);
+              }
+            }
+          }
+          if (values.length > 0) {
+            this.raster.data[0][index] = mean(values);
+          }
+        }
+      }
+    }
   },
   getValueAtLatLng: function (lat, lng) {
     try {

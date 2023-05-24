@@ -446,6 +446,7 @@ class Tiff extends Component {
       includeDates,
       date,
       validpixelexpression,
+      url,
     } = this.props.options;
     const locale = {
       localize: {
@@ -456,6 +457,14 @@ class Tiff extends Component {
         date: () => "dd/mm/yyyy",
       },
     };
+    var ncUrl = false
+    if (url && url.includes("S3")) {
+      let p = url.split("/")
+      let f = p[p.length - 1].split("_")
+      let n = `${f[0]}_${f[f.length - 3]}_${f[f.length - 2]}.nc`
+      p[p.length - 1] = n
+      ncUrl = p.join("/")
+    }
     return (
       <div className="layer-settings">
         <div className="setting">
@@ -532,7 +541,7 @@ class Tiff extends Component {
           <div className="value">{paletteName}</div>
           <ColorRamp onChange={this.setPalette} value={palette} />
         </div>
-        <div className="setting">
+        <div className="setting half">
           Valid Pixel Expression
           <input
             type="checkbox"
@@ -541,6 +550,15 @@ class Tiff extends Component {
             }
             onChange={this.setValidpixelexpression}
           />
+        </div>
+        <div className="setting">
+          Download
+          <a href={url}>
+            <button className="tiff">TIFF</button>
+          </a>
+          {ncUrl && <a href={ncUrl}>
+            <button className="tiff">NetCDF</button>
+          </a>}
         </div>
       </div>
     );

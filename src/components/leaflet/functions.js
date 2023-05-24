@@ -508,6 +508,7 @@ const addSencastTiff = async (layer, dataStore, layerStore, datetime, map) => {
     setNested(dataStore, path, metadata);
     image = findClosest(metadata, "unix", datetime);
     layer.properties.options.date = image.time;
+    layer.properties.options.url = image.url;
     layer.properties.options.includeDates = metadata.map((m) => m.time);
     layer.properties.options.percentage = metadata.map((m) =>
       Math.round((parseFloat(m.vp) / parseFloat(m.p)) * 100)
@@ -597,6 +598,7 @@ const updateSencastTiff = async (
       layer.properties.options.date.getTime()
     );
 
+    layer.properties.options.url = image.url;
     layer.properties.options.min = round(image.min, 2);
     layer.properties.options.max = round(image.max, 2);
     layer.properties.options.dataMin = round(image.min, 2);
