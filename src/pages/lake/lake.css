@@ -891,6 +891,22 @@
   background-color: #d1d0d0;
 }
 
+.main .lake .content .secondary .selection .layer-settings select {
+  display: inline-block;
+  font-size: 16px;
+  margin-left: 8px;
+  background-color: #e3e3e3;
+  border: none;
+  cursor: pointer;
+  padding: 4px 8px;
+  text-align: left;
+}
+
+.main.dark .lake .content .secondary .selection .layer-settings select {
+  background-color: rgb(30 30 30);
+  color: #e5e5e5;
+}
+
 .main .lake .content .secondary .selection .layer-settings .react-datepicker {
   background-color: transparent;
   border: none;

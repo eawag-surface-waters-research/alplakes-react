@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import DatePicker from "react-datepicker";
 import ColorRamp from "../../components/colors/colorramp";
 import Translate from "../../translations.json";
+import CONFIG from "../../config.json";
+import { formatAPIDate, formatDateLong } from "./functions";
 import "./lake.css";
 
 class Raster extends Component {
@@ -39,6 +41,35 @@ class Raster extends Component {
     var value = event.target.value;
     options["opacity"] = value;
     updateOptions(id, options);
+  };
+
+  downloadFile = (event) => {
+    var data = event.target.value.split("?");
+    const link = document.createElement("a");
+    link.href = data[0];
+    link.setAttribute("download", data[1]);
+    document.body.appendChild(link);
+    link.click();
+    link.parentNode.removeChild(link);
+  };
+
+  downloadDates = (model, lake, minDate, maxDate, months) => {
+    var dates = [];
+    var url = `${CONFIG.alplakes_api}/simulations/file/${model}/${lake}`;
+    const targetDate = new Date(minDate);
+    const endDate = new Date(maxDate);
+    const daysToSubtract = (targetDate.getDay() + 7) % 7;
+    targetDate.setDate(targetDate.getDate() - daysToSubtract);
+    while (targetDate <= endDate) {
+      dates.push({
+        url: `${url}/${formatAPIDate(
+          targetDate
+        )}?${model}_${lake}_${formatAPIDate(targetDate)}.nc`,
+        date: formatDateLong(targetDate, months),
+      });
+      targetDate.setDate(targetDate.getDate() + 7);
+    }
+    return dates;
   };
 
   setPalette = (event) => {
@@ -92,7 +123,16 @@ class Raster extends Component {
 
   render() {
     var { _min, _max } = this.state;
+    var { minDate, maxDate, language, layer } = this.props;
     var { palette, paletteName, opacity } = this.props.options;
+
+    var downloadDates = this.downloadDates(
+      layer.properties.model,
+      layer.properties.lake,
+      minDate,
+      maxDate,
+      Translate.axis[language].months
+    );
     return (
       <div className="layer-settings">
         <div className="setting half">
@@ -144,6 +184,19 @@ class Raster extends Component {
           <div className="value">{paletteName}</div>
           <ColorRamp onChange={this.setPalette} value={palette} />
         </div>
+        <div className="setting">
+          Download NetCDF
+          <select defaultValue="" onChange={this.downloadFile}>
+            <option disabled value="">
+              Select week
+            </option>
+            {downloadDates.map((d) => (
+              <option key={d.url} value={d.url}>
+                {d.date}
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
     );
   }
@@ -180,6 +233,35 @@ class Streamlines extends Component {
     if (event.key === "Enter") {
       this.updatePaths();
     }
+  };
+
+  downloadFile = (event) => {
+    var data = event.target.value.split("?");
+    const link = document.createElement("a");
+    link.href = data[0];
+    link.setAttribute("download", data[1]);
+    document.body.appendChild(link);
+    link.click();
+    link.parentNode.removeChild(link);
+  };
+
+  downloadDates = (model, lake, minDate, maxDate, months) => {
+    var dates = [];
+    var url = `${CONFIG.alplakes_api}/simulations/file/${model}/${lake}`;
+    const targetDate = new Date(minDate);
+    const endDate = new Date(maxDate);
+    const daysToSubtract = (targetDate.getDay() + 7) % 7;
+    targetDate.setDate(targetDate.getDate() - daysToSubtract);
+    while (targetDate <= endDate) {
+      dates.push({
+        url: `${url}/${formatAPIDate(
+          targetDate
+        )}?${model}_${lake}_${formatAPIDate(targetDate)}.nc`,
+        date: formatDateLong(targetDate, months),
+      });
+      targetDate.setDate(targetDate.getDate() + 7);
+    }
+    return dates;
   };
 
   setOpacity = (event) => {
@@ -239,8 +321,17 @@ class Streamlines extends Component {
   }
 
   render() {
-    var { color, opacity, velocityScale } = this.props.options;
     var { _paths } = this.state;
+    var { minDate, maxDate, language, layer } = this.props;
+    var { color, opacity, velocityScale } = this.props.options;
+
+    var downloadDates = this.downloadDates(
+      layer.properties.model,
+      layer.properties.lake,
+      minDate,
+      maxDate,
+      Translate.axis[language].months
+    );
     return (
       <div className="layer-settings">
         {/*<div className="switch">
@@ -285,6 +376,19 @@ class Streamlines extends Component {
             value={opacity}
             onChange={this.setOpacity}
           ></input>
+        </div>
+        <div className="setting">
+          Download NetCDF
+          <select defaultValue="" onChange={this.downloadFile}>
+            <option disabled value="">
+              Select week
+            </option>
+            {downloadDates.map((d) => (
+              <option key={d.url} value={d.url}>
+                {d.date}
+              </option>
+            ))}
+          </select>
         </div>
       </div>
     );
@@ -457,13 +561,13 @@ class Tiff extends Component {
         date: () => "dd/mm/yyyy",
       },
     };
-    var ncUrl = false
+    var ncUrl = false;
     if (url && url.includes("S3")) {
-      let p = url.split("/")
-      let f = p[p.length - 1].split("_")
-      let n = `${f[0]}_${f[f.length - 3]}_${f[f.length - 2]}.nc`
-      p[p.length - 1] = n
-      ncUrl = p.join("/")
+      let p = url.split("/");
+      let f = p[p.length - 1].split("_");
+      let n = `${f[0]}_${f[f.length - 3]}_${f[f.length - 2]}.nc`;
+      p[p.length - 1] = n;
+      ncUrl = p.join("/");
     }
     return (
       <div className="layer-settings">
@@ -556,9 +660,11 @@ class Tiff extends Component {
           <a href={url}>
             <button className="tiff">TIFF</button>
           </a>
-          {ncUrl && <a href={ncUrl}>
-            <button className="tiff">NetCDF</button>
-          </a>}
+          {ncUrl && (
+            <a href={ncUrl}>
+              <button className="tiff">NetCDF</button>
+            </a>
+          )}
         </div>
       </div>
     );
@@ -731,7 +837,7 @@ class LayerSettings extends Component {
     }
   };
   render() {
-    var { layer, updateOptions, language } = this.props;
+    var { layer, updateOptions, language, minDate, maxDate } = this.props;
     var type = layer.properties.display;
     if (type === "raster") {
       return (
@@ -740,6 +846,9 @@ class LayerSettings extends Component {
           options={layer.properties.options}
           updateOptions={updateOptions}
           language={language}
+          minDate={minDate}
+          maxDate={maxDate}
+          layer={layer}
         />
       );
     } else if (type === "streamlines") {
@@ -749,6 +858,9 @@ class LayerSettings extends Component {
           options={layer.properties.options}
           updateOptions={updateOptions}
           language={language}
+          minDate={minDate}
+          maxDate={maxDate}
+          layer={layer}
         />
       );
     } else if (type === "tiff") {
@@ -759,6 +871,7 @@ class LayerSettings extends Component {
           updateOptions={updateOptions}
           language={language}
           addCssRules={this.addCssRules}
+          layer={layer}
         />
       );
     } else if (type === "wms") {
@@ -769,6 +882,7 @@ class LayerSettings extends Component {
           updateOptions={updateOptions}
           language={language}
           addCssRules={this.addCssRules}
+          layer={layer}
         />
       );
     } else {

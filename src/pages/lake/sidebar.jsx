@@ -159,8 +159,16 @@ class ActiveApps extends Component {
 
 class Selection extends Component {
   render() {
-    var { selection, layers, images, language, addLayer, updateOptions } =
-      this.props;
+    var {
+      selection,
+      layers,
+      images,
+      language,
+      addLayer,
+      updateOptions,
+      minDate,
+      maxDate,
+    } = this.props;
     if (selection === false) {
       return;
     } else if (selection === "add") {
@@ -212,6 +220,8 @@ class Selection extends Component {
             layer={layer}
             updateOptions={updateOptions}
             language={language}
+            minDate={minDate}
+            maxDate={maxDate}
           />
         </div>
       );
@@ -330,6 +340,8 @@ class Sidebar extends Component {
           language={language}
           addLayer={addLayer}
           updateOptions={updateOptions}
+          minDate={minDate}
+          maxDate={maxDate}
         />
       </React.Fragment>
     );
