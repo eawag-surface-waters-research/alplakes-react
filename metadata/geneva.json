@@ -98,7 +98,8 @@
         "options": {
           "paletteName": "cc chl",
           "zIndex": 2,
-          "opacity": 1
+          "opacity": 1,
+          "convolve": 2
         }
       }
     },
@@ -118,7 +119,8 @@
         "options": {
           "paletteName": "cc chl",
           "zIndex": 2,
-          "opacity": 1
+          "opacity": 1,
+          "convolve": 2
         }
       }
     },
@@ -138,7 +140,8 @@
         "options": {
           "paletteName": "cc chl",
           "zIndex": 2,
-          "opacity": 1
+          "opacity": 1,
+          "convolve": 2
         }
       }
     },
@@ -158,7 +161,8 @@
         "options": {
           "paletteName": "Thermal",
           "zIndex": 2,
-          "opacity": 1
+          "opacity": 1,
+          "convolve": 2
         }
       }
     },
@@ -171,14 +175,15 @@
         "lake": "geneva",
         "parameter": "turbidity",
         "metadata": "https://eawagrs.s3.eu-central-1.amazonaws.com/metadata/sentinel2/geneva_TUR_Nechad2016_665.json",
-        "unit": "m",
+        "unit": "g m-3",
         "display": "tiff",
         "depth": false,
         "period": false,
         "options": {
           "paletteName": "Thermal",
           "zIndex": 2,
-          "opacity": 1
+          "opacity": 1,
+          "convolve": 2
         }
       }
     },

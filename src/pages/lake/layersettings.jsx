@@ -340,6 +340,13 @@ class Tiff extends Component {
     updateOptions(id, options);
   };
 
+  setConvolve = (event) => {
+    var { id, updateOptions, options } = this.props;
+    var value = event.target.value;
+    options["convolve"] = value;
+    updateOptions(id, options);
+  };
+
   setValidpixelexpression = (event) => {
     var { id, updateOptions, options } = this.props;
     options["validpixelexpression"] = !options.validpixelexpression;
@@ -435,6 +442,7 @@ class Tiff extends Component {
       palette,
       paletteName,
       opacity,
+      convolve,
       includeDates,
       date,
       validpixelexpression,
@@ -495,7 +503,7 @@ class Tiff extends Component {
             </button>
           </div>
         </div>
-        <div className="setting">
+        <div className="setting half">
           <div className="label">Opacity</div>
           <div className="value">{opacity}</div>
           <input
@@ -505,6 +513,18 @@ class Tiff extends Component {
             step="0.1"
             value={opacity}
             onChange={this.setOpacity}
+          ></input>
+        </div>
+        <div className="setting half">
+          <div className="label">Smoothing</div>
+          <div className="value">{convolve}</div>
+          <input
+            type="range"
+            min="0"
+            max="5"
+            step="1"
+            value={convolve}
+            onChange={this.setConvolve}
           ></input>
         </div>
         <div className="setting">

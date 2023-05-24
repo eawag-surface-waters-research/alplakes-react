@@ -106,7 +106,8 @@
             "options": {
               "paletteName": "cc chl",
               "zIndex": 2,
-              "opacity": 1
+              "opacity": 1,
+              "convolve": 2
             }
           }
         },
@@ -126,7 +127,8 @@
             "options": {
               "paletteName": "cc chl",
               "zIndex": 2,
-              "opacity": 1
+              "opacity": 1,
+              "convolve": 2
             }
           }
         },
@@ -146,7 +148,8 @@
             "options": {
               "paletteName": "cc chl",
               "zIndex": 2,
-              "opacity": 1
+              "opacity": 1,
+              "convolve": 2
             }
           }
         },

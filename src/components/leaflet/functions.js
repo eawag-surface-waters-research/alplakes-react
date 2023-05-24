@@ -544,6 +544,9 @@ const plotSencastTiff = async (url, layer, layerStore, map) => {
     if (!("opacity" in layer.properties.options)) {
       options["opacity"] = 1;
     }
+    if (!("convolve" in layer.properties.options)) {
+      options["convolve"] = 0;
+    }
   }
   var { data } = await axios.get(url, {
     responseType: "arraybuffer",
