@@ -6,6 +6,7 @@ import CONFIG from "../../config.json";
 import "./leaflet_raster";
 import "./leaflet_streamlines";
 import "./leaflet_floatgeotiff";
+import "./leaflet_particles";
 
 const setNested = (obj, args, value) => {
   for (var i = 0; i < args.length - 1; i++) {
@@ -168,6 +169,16 @@ export const addLayer = async (
     await addSencastTiff(layer, dataStore, layerStore, datetime, map);
   } else if (layer.type === "sentinel_hub_wms") {
     await addSentinelHubWms(layer, dataStore, layerStore, datetime, map);
+  } else if (layer.type === "alplakes_particles") {
+    await addAlplakesParticles(
+      layer,
+      period,
+      dataStore,
+      layerStore,
+      map,
+      datetime,
+      depth
+    );
   }
 };
 
@@ -231,14 +242,16 @@ const addAlplakesHydrodynamic = async (
 const downloadAlplakesHydrodynamicGeometry = async (
   layer,
   period,
-  dataStore
+  dataStore,
+  overwrite = false
 ) => {
-  var path = [
-    layer.type,
-    layer.properties.model,
-    layer.properties.lake,
-    "geometry",
-  ];
+  var type = layer.type;
+  if (typeof overwrite === "object") {
+    if ("type" in overwrite) type = overwrite.type;
+  }
+
+  var path = [type, layer.properties.model, layer.properties.lake, "geometry"];
+
   if (checkNested(dataStore, path)) {
     return;
   }
@@ -259,43 +272,50 @@ const downloadAlplakesHydrodynamicParameter = async (
   layer,
   period,
   depth,
-  dataStore
+  dataStore,
+  overwrite = false
 ) => {
+  var type = layer.type;
+  var parameter = layer.properties.parameter;
+  if (typeof overwrite === "object") {
+    if ("type" in overwrite) type = overwrite.type;
+    if ("parameter" in overwrite) parameter = overwrite.parameter;
+  }
+
   var path = [
-    layer.type,
+    type,
     layer.properties.model,
     layer.properties.lake,
-    layer.properties.parameter,
+    parameter,
     String(depth),
   ];
+
   var start = period[0];
   var end = period[1];
   if (checkNested(dataStore, path)) {
     console.log("Check downloaded to avoid repeat downloads");
   }
-  var { data: parameter } = await axios.get(
+  var { data: par } = await axios.get(
     `${CONFIG.alplakes_api}/simulations/layer_alplakes/${
       layer.properties.model
-    }/${layer.properties.lake}/${layer.properties.parameter}/${formatDate(
-      start
-    )}/${formatDate(end)}/${depth}`
+    }/${layer.properties.lake}/${parameter}/${formatDate(start)}/${formatDate(
+      end
+    )}/${depth}`
   );
-  parameter = parameter
-    .split("\n")
-    .map((g) => g.split(",").map((s) => parseFloat(s)));
+  par = par.split("\n").map((g) => g.split(",").map((s) => parseFloat(s)));
 
   var simpleline = { x: [], y: [] };
   var bounds = { min: [], max: [] };
 
   for (
     var i = 0;
-    i < Math.floor(parameter.length / (layer.properties.height + 1));
+    i < Math.floor(par.length / (layer.properties.height + 1));
     i++
   ) {
     var date = parseAlplakesDate(
-      String(parameter[i * (layer.properties.height + 1)][0])
+      String(par[i * (layer.properties.height + 1)][0])
     );
-    var data = parameter.slice(
+    var data = par.slice(
       i * (layer.properties.height + 1) + 1,
       (i + 1) * (layer.properties.height + 1)
     );
@@ -720,4 +740,71 @@ const removeSentinelHubWms = (layer, layerStore, map) => {
   var leaflet_layer = getNested(layerStore, path);
   map.removeLayer(leaflet_layer);
   setNested(layerStore, path, null);
+};
+
+const addAlplakesParticles = async (
+  layer,
+  period,
+  dataStore,
+  layerStore,
+  map,
+  datetime,
+  depth
+) => {
+  const overwrite = { parameter: "velocity", type: "alplakes_hydrodynamic" };
+  await downloadAlplakesHydrodynamicGeometry(
+    layer,
+    period,
+    dataStore,
+    overwrite
+  );
+  await downloadAlplakesHydrodynamicParameter(
+    layer,
+    period,
+    depth,
+    dataStore,
+    overwrite
+  );
+  plotAlplakesParticles(layer, datetime, depth, dataStore, layerStore, map);
+};
+
+const plotAlplakesParticles = (layer, datetime, depth, dataStore, layerStore, map) => {
+  var path = [
+    "alplakes_hydrodynamic",
+    layer.properties.model,
+    layer.properties.lake,
+    "velocity",
+    String(depth),
+  ];
+  var geometry_path = [
+    "alplakes_hydrodynamic",
+    layer.properties.model,
+    layer.properties.lake,
+    "geometry",
+  ];
+  var layer_path = [
+    layer.type,
+    layer.properties.model,
+    layer.properties.lake,
+    "velocity",
+  ];
+  var data = getNested(dataStore, path);
+  var geometry = getNested(dataStore, geometry_path);
+  var options = {};
+  if ("options" in layer.properties) {
+    options = layer.properties.options;
+    if ("paletteName" in layer.properties.options) {
+      layer.properties.options.palette =
+        COLORS[layer.properties.options.paletteName];
+      options["palette"] = COLORS[layer.properties.options.paletteName];
+    }
+    if (!("opacity" in layer.properties.options)) {
+      options["opacity"] = 1;
+    }
+    if ("unit" in layer.properties) {
+      options["unit"] = layer.properties.unit;
+    }
+  }
+  var leaflet_layer = new L.Particles(geometry, data, options).addTo(map);
+  setNested(layerStore, layer_path, leaflet_layer);
 };

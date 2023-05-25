@@ -58,7 +58,7 @@
     {
       "id": 1,
       "type": "alplakes_hydrodynamic",
-      "active": true,
+      "active": false,
       "properties": {
         "model": "delft3d-flow",
         "lake": "geneva",
@@ -84,6 +84,27 @@
     },
     {
       "id": 2,
+      "type": "alplakes_particles",
+      "active": true,
+      "properties": {
+        "model": "delft3d-flow",
+        "lake": "geneva",
+        "parameter": "particles",
+        "unit": "m/s",
+        "height": 182,
+        "width": 36,
+        "display": "particles",
+        "depth": true,
+        "period": true,
+        "options": {
+          "paths": 10,
+          "radius": 100,
+          "zIndex": 4
+        }
+      }
+    },
+    {
+      "id": 3,
       "type": "sencast_tiff",
       "active": false,
       "properties": {
@@ -104,7 +125,7 @@
       }
     },
     {
-      "id": 3,
+      "id": 4,
       "type": "sencast_tiff",
       "active": false,
       "properties": {
@@ -125,7 +146,7 @@
       }
     },
     {
-      "id": 4,
+      "id": 5,
       "type": "sencast_tiff",
       "active": false,
       "properties": {
@@ -146,7 +167,7 @@
       }
     },
     {
-      "id": 5,
+      "id": 6,
       "type": "sencast_tiff",
       "active": false,
       "properties": {
@@ -167,7 +188,7 @@
       }
     },
     {
-      "id": 6,
+      "id": 7,
       "type": "sencast_tiff",
       "active": false,
       "properties": {
@@ -188,7 +209,7 @@
       }
     },
     {
-      "id": 7,
+      "id": 8,
       "type": "sentinel_hub_wms",
       "active": false,
       "properties": {
@@ -210,7 +231,7 @@
       }
     },
     {
-      "id": 8,
+      "id": 9,
       "type": "sentinel_hub_wms",
       "active": false,
       "properties": {
