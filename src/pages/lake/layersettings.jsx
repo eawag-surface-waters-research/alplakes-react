@@ -800,39 +800,47 @@ class LayerSettings extends Component {
   addCssRules = (date, style, options) => {
     var { includeDates, percentage } = options;
     var month = date.getMonth();
-    var rule;
+    var rule, className;
     for (let i = 0; i < includeDates.length; i++) {
       let p = percentage[i];
+      let day = includeDates[i].getDate();
+      let element = [];
       if (includeDates[i].getMonth() === month) {
-        let day = includeDates[i].getDate();
-        rule = `.react-datepicker__day--0${
+        className = `.react-datepicker__day--0${
           day < 10 ? "0" + day : day
-        }:not(.react-datepicker__day--outside-month) { background: linear-gradient(to right, red ${
+        }:not(.react-datepicker__day--outside-month)`;
+        rule = `${className} { background: linear-gradient(to right, green ${
           p - 15
         }%, transparent ${p + 15}%); }`;
         style.sheet.insertRule(rule, 0);
+        element = document.querySelectorAll(className);
       } else if (
         includeDates[i].getMonth() === month - 1 &&
         includeDates[i].getDate() > 15
       ) {
-        let day = includeDates[i].getDate();
-        rule = `.react-datepicker__day--0${
+        className = `.react-datepicker__day--0${
           day < 10 ? "0" + day : day
-        }.react-datepicker__day--outside-month { background: linear-gradient(to right, red ${
+        }.react-datepicker__day--outside-month`;
+        rule = `${className} { background: linear-gradient(to right, green ${
           p - 15
         }%, transparent ${p + 15}%); }`;
         style.sheet.insertRule(rule, 0);
+        element = document.querySelectorAll(className);
       } else if (
         includeDates[i].getMonth() === month + 1 &&
         includeDates[i].getDate() < 15
       ) {
-        let day = includeDates[i].getDate();
-        rule = `.react-datepicker__day--0${
+        className = `.react-datepicker__day--0${
           day < 10 ? "0" + day : day
-        }.react-datepicker__day--outside-month { background: linear-gradient(to right, red ${
+        }.react-datepicker__day--outside-month`;
+        rule = `${className} { background: linear-gradient(to right, green ${
           p - 15
         }%, transparent ${p + 15}%); }`;
         style.sheet.insertRule(rule, 0);
+        element = document.querySelectorAll(className);
+      }
+      if (element.length > 0) {
+        element[0].title = `${p}% pixel coverage`;
       }
     }
   };
