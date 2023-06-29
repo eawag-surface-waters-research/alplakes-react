@@ -19,24 +19,25 @@
     "start": -2,
     "end": "/simulations/metadata/delft3d-flow/geneva"
   },
-  "profile": {
-    "type": "alplakes_hydrodynamic",
-    "model": "delft3d-flow",
-    "lake": "geneva",
-    "parameters": ["temperature", "u", "v"]
-  },
-  "transect": {
-    "type": "alplakes_hydrodynamic",
-    "model": "delft3d-flow",
-    "lake": "geneva",
-    "parameters": ["temperature", "u", "v"]
-  },
   "depth": 0.7,
   "layers": [
     {
       "id": 0,
       "type": "alplakes_hydrodynamic",
       "active": true,
+      "description": "Water temperatures are hindcasted and forecasted using the 3D hydrodynamic model @3@. Meteorological forcing data is produced from the @1@ products, hincasts use the Cosmo-1e 1 day deterministic product (VNXQ34) and forecasts use the Cosmo-2e 5 day ensemble forecast (VNXZ32). Where rivers inputs are used this data is sourced from @4@. The scripts used to generate model input, along with the full model setup are avaiable @2@. This model is calibrated using in-situ measuresuments collected by a number of 3rd parties.",
+      "links": {
+        "1": [
+          "MeteoSwiss COSMO",
+          "https://www.meteoswiss.admin.ch/weather/warning-and-forecasting-systems/cosmo-forecasting-system.html"
+        ],
+        "2": [
+          "here",
+          "https://github.com/eawag-surface-waters-research/alplakes-simulations"
+        ],
+        "3": ["Delft3D", "https://oss.deltares.nl/web/delft3d"],
+        "4": ["BAFU Hydrodaten", "https://www.hydrodaten.admin.ch/en"]
+      },
       "properties": {
         "model": "delft3d-flow",
         "lake": "geneva",
@@ -59,6 +60,19 @@
       "id": 1,
       "type": "alplakes_hydrodynamic",
       "active": true,
+      "description": "Lake currents are hindcasted and forecasted using the 3D hydrodynamic model @3@. Meteorological forcing data is produced from the @1@ products, hincasts use the Cosmo-1e 1 day deterministic product (VNXQ34) and forecasts use the Cosmo-2e 5 day ensemble forecast (VNXZ32). Where rivers inputs are used this data is sourced from @4@. The scripts used to generate model input, along with the full model setup are avaiable @2@. This model is calibrated using in-situ measuresuments collected by a number of 3rd parties.",
+      "links": {
+        "1": [
+          "MeteoSwiss COSMO",
+          "https://www.meteoswiss.admin.ch/weather/warning-and-forecasting-systems/cosmo-forecasting-system.html"
+        ],
+        "2": [
+          "here",
+          "https://github.com/eawag-surface-waters-research/alplakes-simulations"
+        ],
+        "3": ["Delft3D", "https://oss.deltares.nl/web/delft3d"],
+        "4": ["BAFU Hydrodaten", "https://www.hydrodaten.admin.ch/en"]
+      },
       "properties": {
         "model": "delft3d-flow",
         "lake": "geneva",
@@ -86,6 +100,14 @@
       "id": 2,
       "type": "sencast_tiff",
       "active": false,
+      "description": "Surface chlorophyll concentration processed from Sentinel 3 data using the @1@ python package. Retrievals are based on a locally adjusted version of @2@.",
+      "links": {
+        "1": [
+          "SenCast",
+          "https://github.com/eawag-surface-waters-research/sencast"
+        ],
+        "2": ["OC3", "https://oceancolor.gsfc.nasa.gov/atbd/chlor_a/"]
+      },
       "properties": {
         "model": "Sentinel3",
         "lake": "geneva",
@@ -107,6 +129,14 @@
       "id": 3,
       "type": "sencast_tiff",
       "active": false,
+      "description": "Surface total suspended matter processed from Sentinel 3 data using the @1@ python package. See @2@ by HYGEOS.",
+      "links": {
+        "1": [
+          "SenCast",
+          "https://github.com/eawag-surface-waters-research/sencast"
+        ],
+        "2": ["POLYMER", "https://www.hygeos.com/polymer"]
+      },
       "properties": {
         "model": "Sentinel3",
         "lake": "geneva",
@@ -128,6 +158,13 @@
       "id": 4,
       "type": "sencast_tiff",
       "active": false,
+      "description": "Secchi depth processed from Sentinel 3 data using the @1@ python package. See the QAA algorithm by Lee et al. for details.",
+      "links": {
+        "1": [
+          "SenCast",
+          "https://github.com/eawag-surface-waters-research/sencast"
+        ]
+      },
       "properties": {
         "model": "Sentinel3",
         "lake": "geneva",
@@ -149,6 +186,14 @@
       "id": 5,
       "type": "sencast_tiff",
       "active": false,
+      "description": "Secchi depth with bias removed from the QAA-RGB (Pitarch and Vanhellemont, 2021) from Sentinel 2 data using the @1@ python package and @2@.",
+      "links": {
+        "1": [
+          "SenCast",
+          "https://github.com/eawag-surface-waters-research/sencast"
+        ],
+        "2": ["Acolite", "https://github.com/acolite/acolite"]
+      },
       "properties": {
         "model": "Sentinel2",
         "lake": "geneva",
@@ -170,6 +215,14 @@
       "id": 6,
       "type": "sencast_tiff",
       "active": false,
+      "description": "Turbidity (FNU) using the algorithm of Nechad et al. (2009) recalibrated by Bouchra Nechad in September 2016 from Sentinel 2 data using the @1@ python package and @2@.",
+      "links": {
+        "1": [
+          "SenCast",
+          "https://github.com/eawag-surface-waters-research/sencast"
+        ],
+        "2": ["Acolite", "https://github.com/acolite/acolite"]
+      },
       "properties": {
         "model": "Sentinel2",
         "lake": "geneva",
@@ -191,6 +244,10 @@
       "id": 7,
       "type": "sentinel_hub_wms",
       "active": false,
+      "description": "RGB real color Sentinel 2 images provided by @1@.",
+      "links": {
+        "1": ["Sentinel-Hub", "https://www.sentinel-hub.com/"]
+      },
       "properties": {
         "model": "Sentinel2",
         "lake": "geneva",
@@ -213,6 +270,10 @@
       "id": 8,
       "type": "sentinel_hub_wms",
       "active": false,
+      "description": "RGB real color Sentinel 3 images provided by @1@.",
+      "links": {
+        "1": ["Sentinel-Hub", "https://www.sentinel-hub.com/"]
+      },
       "properties": {
         "model": "Sentinel3",
         "lake": "geneva",

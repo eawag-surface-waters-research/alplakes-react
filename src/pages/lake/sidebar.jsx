@@ -13,6 +13,52 @@ import satellite_icon from "../../img/satellite-icon.png";
 import "react-datepicker/dist/react-datepicker.css";
 import "./lake.css";
 
+class ShowMoreText extends Component {
+  state = {
+    showFullText: false,
+  };
+
+  toggleText = () => {
+    this.setState({
+      showFullText: !this.state.showFullText,
+    });
+  };
+
+  render() {
+    const { text, links, maxLength } = this.props;
+    const { showFullText } = this.state;
+
+    const truncatedText =
+      text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
+
+    var show = showFullText ? text : truncatedText;
+
+    return (
+      <div onClick={this.toggleText}>
+        <p>
+          {show.split("@").map((t) =>
+            t in links ? (
+              <a
+                href={links[t][1]}
+                target="_blank"
+                rel="noopener noreferrer"
+                key={t}
+              >
+                {links[t][0]}
+              </a>
+            ) : (
+              t
+            )
+          )}
+        </p>
+        {text.length > maxLength && (
+          <button>{showFullText ? "Show less" : "Show more"}</button>
+        )}
+      </div>
+    );
+  }
+}
+
 class Period extends Component {
   state = {
     period: this.props.period,
@@ -208,14 +254,13 @@ class Selection extends Component {
       var layer = layers.find((l) => l.id === selection);
       return (
         <div className="selection">
-          <div className="title">
-            {(layer.properties.parameter in Translate
-              ? Translate[layer.properties.parameter][language]
-              : "") +
-              " " +
-              Translate.settings[language]}
+          <div className="layer-description">
+            <ShowMoreText
+              text={layer.description ? layer.description : ""}
+              links={layer.links ? layer.links : {}}
+              maxLength={130}
+            />
           </div>
-          <div className="title-model">{layer.properties.model}</div>
           <LayerSettings
             layer={layer}
             updateOptions={updateOptions}

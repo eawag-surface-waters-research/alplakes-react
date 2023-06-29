@@ -19,25 +19,25 @@
     "start": -2,
     "end": "/simulations/metadata/delft3d-flow/stmoritz"
   },
-  "profile": {
-    "type": "alplakes_hydrodynamic",
-    "model": "delft3d-flow",
-    "lake": "stmoritz",
-    "parameters": ["temperature", "u", "v"]
-  },
-  "transect": {
-    "type": "alplakes_hydrodynamic",
-    "model": "delft3d-flow",
-    "lake": "stmoritz",
-    "parameters": ["temperature", "u", "v"]
-  },
   "depth": 1,
   "layers": [
     {
       "id": 0,
       "type": "alplakes_hydrodynamic",
       "active": true,
-      "z-index": 1,
+      "description": "Water temperatures are hindcasted and forecasted using the 3D hydrodynamic model @3@. Meteorological forcing data is produced from the @1@ products, hincasts use the Cosmo-1e 1 day deterministic product (VNXQ34) and forecasts use the Cosmo-2e 5 day ensemble forecast (VNXZ32). Where rivers inputs are used this data is sourced from @4@. The scripts used to generate model input, along with the full model setup are avaiable @2@. This model is calibrated using in-situ measuresuments collected by a number of 3rd parties.",
+      "links": {
+        "1": [
+          "MeteoSwiss COSMO",
+          "https://www.meteoswiss.admin.ch/weather/warning-and-forecasting-systems/cosmo-forecasting-system.html"
+        ],
+        "2": [
+          "here",
+          "https://github.com/eawag-surface-waters-research/alplakes-simulations"
+        ],
+        "3": ["Delft3D", "https://oss.deltares.nl/web/delft3d"],
+        "4": ["BAFU Hydrodaten", "https://www.hydrodaten.admin.ch/en"]
+      },
       "properties": {
         "model": "delft3d-flow",
         "lake": "stmoritz",
@@ -60,7 +60,19 @@
       "id": 1,
       "type": "alplakes_hydrodynamic",
       "active": true,
-      "z-index": 5,
+      "description": "Lake currents are hindcasted and forecasted using the 3D hydrodynamic model @3@. Meteorological forcing data is produced from the @1@ products, hincasts use the Cosmo-1e 1 day deterministic product (VNXQ34) and forecasts use the Cosmo-2e 5 day ensemble forecast (VNXZ32). Where rivers inputs are used this data is sourced from @4@. The scripts used to generate model input, along with the full model setup are avaiable @2@. This model is calibrated using in-situ measuresuments collected by a number of 3rd parties.",
+      "links": {
+        "1": [
+          "MeteoSwiss COSMO",
+          "https://www.meteoswiss.admin.ch/weather/warning-and-forecasting-systems/cosmo-forecasting-system.html"
+        ],
+        "2": [
+          "here",
+          "https://github.com/eawag-surface-waters-research/alplakes-simulations"
+        ],
+        "3": ["Delft3D", "https://oss.deltares.nl/web/delft3d"],
+        "4": ["BAFU Hydrodaten", "https://www.hydrodaten.admin.ch/en"]
+      },
       "properties": {
         "model": "delft3d-flow",
         "lake": "stmoritz",

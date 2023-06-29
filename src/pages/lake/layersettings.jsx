@@ -135,6 +135,7 @@ class Raster extends Component {
     );
     return (
       <div className="layer-settings">
+        <div className="layer-section">{Translate.settings[language]}</div>
         <div className="setting half">
           <div className="label">Min</div>
           <div>
@@ -184,13 +185,15 @@ class Raster extends Component {
           <div className="value">{paletteName}</div>
           <ColorRamp onChange={this.setPalette} value={palette} />
         </div>
-        <div className="setting">
-          Download NetCDF
+        <div className="layer-section">{Translate.downloads[language]}</div>
+        <div className="setting half">
+          <div className="label">Results</div>
+          <div className="value"></div>
           <select defaultValue="" onChange={this.downloadFile}>
             <option disabled value="">
               Select week
             </option>
-            {downloadDates.map((d) => (
+            {downloadDates.reverse().map((d) => (
               <option key={d.url} value={d.url}>
                 {d.date}
               </option>
@@ -334,6 +337,7 @@ class Streamlines extends Component {
     );
     return (
       <div className="layer-settings">
+        <div className="layer-section">{Translate.settings[language]}</div>
         {/*<div className="switch">
           <button>Directional Arrows</button>
         </div>*/}
@@ -377,13 +381,15 @@ class Streamlines extends Component {
             onChange={this.setOpacity}
           ></input>
         </div>
-        <div className="setting">
-          Download NetCDF
+        <div className="layer-section">{Translate.downloads[language]}</div>
+        <div className="setting half">
+          <div className="label">Results</div>
+          <div className="value"></div>
           <select defaultValue="" onChange={this.downloadFile}>
             <option disabled value="">
               Select week
             </option>
-            {downloadDates.map((d) => (
+            {downloadDates.reverse().map((d) => (
               <option key={d.url} value={d.url}>
                 {d.date}
               </option>
@@ -571,6 +577,7 @@ class Tiff extends Component {
     }
     return (
       <div className="layer-settings">
+        <div className="layer-section">{Translate.settings[language]}</div>
         <div className="setting">
           <DatePicker
             dateFormat="dd/MM/yyyy"
@@ -655,14 +662,14 @@ class Tiff extends Component {
             onChange={this.setValidpixelexpression}
           />
         </div>
+        <div className="layer-section">{Translate.downloads[language]}</div>
         <div className="setting">
-          Download
           <a href={url}>
-            <button className="tiff">TIFF</button>
+            <button className="tiff">Image (.tif)</button>
           </a>
           {ncUrl && (
             <a href={ncUrl}>
-              <button className="tiff">NetCDF</button>
+              <button className="tiff">File (.nc)</button>
             </a>
           )}
         </div>
@@ -754,6 +761,7 @@ class WMS extends Component {
     };
     return (
       <div className="layer-settings">
+        <div className="layer-section">{Translate.settings[language]}</div>
         <div className="setting">
           <DatePicker
             dateFormat="dd/MM/yyyy"

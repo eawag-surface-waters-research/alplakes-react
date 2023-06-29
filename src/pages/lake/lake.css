@@ -791,10 +791,58 @@
   font-size: 12px;
 }
 
+.main .lake .content .secondary .selection .layer-description {
+  color: black;
+  font-size: 16px;
+  cursor: pointer;
+  margin-bottom: 18px;
+}
+
+.main .lake .content .secondary .selection .layer-description a {
+  color: black;
+  font-weight: bold;
+  text-decoration: none;
+  transition: all .2s ease-in-out;
+}
+
+.main.dark .lake .content .secondary .selection .layer-description a {
+  color: #e5e5e5;
+}
+
+.main .lake .content .secondary .selection .layer-description a:hover {
+  color: green;
+}
+
+.main .lake .content .secondary .selection .layer-description button {
+  background-color: transparent;
+  color: black;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+}
+
+.main.dark .lake .content .secondary .selection .layer-description {
+  color: #e5e5e5;
+}
+
+.main.dark .lake .content .secondary .selection .layer-description button {
+  color: #e5e5e5;
+}
+
 .main .lake .content .secondary .selection .layer-settings {
   font-size: 14px;
   color: #b6afaf;
-  margin-top: 12px;
+}
+
+.main .lake .content .secondary .selection .layer-settings .layer-section {
+  border-bottom: 2px solid #0000000f;
+  margin-bottom: 18px;
+  font-size: 16px;
+  padding-bottom: 4px;
+}
+
+.main.dark .lake .content .secondary .selection .layer-settings .layer-section {
+  border-bottom: 2px solid #ffffff1f;
 }
 
 .main .lake .content .secondary .selection .layer-settings .switch {
@@ -877,8 +925,8 @@
 
 .main .lake .content .secondary .selection .layer-settings button.tiff {
   display: inline-block;
-  margin-left: 8px;
   border-radius: 8px;
+  margin-right: 18px;
   transition: all .2s ease-in-out;
   border: none;
   background-color: #e3e3e3;
@@ -894,7 +942,7 @@
 .main .lake .content .secondary .selection .layer-settings select {
   display: inline-block;
   font-size: 16px;
-  margin-left: 8px;
+  width: 100%;
   background-color: #e3e3e3;
   border: none;
   cursor: pointer;
@@ -914,6 +962,7 @@
 
 .main .lake .content .secondary .selection .layer-settings .react-datepicker .react-datepicker__header {
   background-color: transparent;
+  border: none;
 }
 
 .main.dark .lake .content .secondary .selection .layer-settings .react-datepicker {
