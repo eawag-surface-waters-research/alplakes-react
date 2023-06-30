@@ -620,6 +620,22 @@
   background-position: 0 0, 0 0, 13px 23px, 13px 23px, 0 0, 13px 23px;
 }
 
+.main .lake .content .secondary .alplakes_transect {
+  background-color: #2d2d2d !important;
+  opacity: 1;
+  background-image: linear-gradient(30deg, #3a4251 12%, transparent 12.5%, transparent 87%, #3a4251 87.5%, #3a4251), linear-gradient(150deg, #3a4251 12%, transparent 12.5%, transparent 87%, #3a4251 87.5%, #3a4251), linear-gradient(30deg, #3a4251 12%, transparent 12.5%, transparent 87%, #3a4251 87.5%, #3a4251), linear-gradient(150deg, #3a4251 12%, transparent 12.5%, transparent 87%, #3a4251 87.5%, #3a4251), linear-gradient(60deg, #3a425177 25%, transparent 25.5%, transparent 75%, #3a425177 75%, #3a425177), linear-gradient(60deg, #3a425177 25%, transparent 25.5%, transparent 75%, #3a425177 75%, #3a425177);
+  background-size: 26px 46px;
+  background-position: 0 0, 0 0, 13px 23px, 13px 23px, 0 0, 13px 23px;
+}
+
+.main .lake .content .secondary .alplakes_profile {
+  background-color: #2d2d2d !important;
+  opacity: 1;
+  background-image: linear-gradient(30deg, #3a4251 12%, transparent 12.5%, transparent 87%, #3a4251 87.5%, #3a4251), linear-gradient(150deg, #3a4251 12%, transparent 12.5%, transparent 87%, #3a4251 87.5%, #3a4251), linear-gradient(30deg, #3a4251 12%, transparent 12.5%, transparent 87%, #3a4251 87.5%, #3a4251), linear-gradient(150deg, #3a4251 12%, transparent 12.5%, transparent 87%, #3a4251 87.5%, #3a4251), linear-gradient(60deg, #3a425177 25%, transparent 25.5%, transparent 75%, #3a425177 75%, #3a425177), linear-gradient(60deg, #3a425177 25%, transparent 25.5%, transparent 75%, #3a425177 75%, #3a425177);
+  background-size: 26px 46px;
+  background-position: 0 0, 0 0, 13px 23px, 13px 23px, 0 0, 13px 23px;
+}
+
 .main .lake .content .secondary .sencast_tiff {
   background-color: #242424;
   opacity: 1;
@@ -759,7 +775,7 @@
 }
 
 .main .lake .content .secondary .selection .layers .layer img {
-  max-width: 28px;
+  max-width: 32px;
   max-height: 34px;
   top: 50%;
   transform: translateY(-50%);

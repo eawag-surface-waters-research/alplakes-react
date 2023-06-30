@@ -1,6 +1,6 @@
 {
   "alplakes_api": "https://alplakes-api.eawag.ch",
-  "alplakes_bucket": "https://alplakes-eawag.s3.eu-central-1.amazonaws.com/static/website/metadata/",
+  "alplakes_bucket": "https://alplakes-eawag.s3.eu-central-1.amazonaws.com/static/website/metadata/dev/",
   "sencast_bucket": "https://eawagrs.s3.eu-central-1.amazonaws.com/",
   "basemaps": {
     "default": {

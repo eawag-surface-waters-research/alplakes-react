@@ -139,6 +139,18 @@
     "FR": "Couleur réelle",
     "IT": "Colore reale"
   },
+  "transect": {
+    "EN": "Transect",
+    "DE": "Transekt",
+    "FR": "Transetto",
+    "IT": "Transect"
+  },
+  "profile": {
+    "EN": "Profile",
+    "DE": "Profil",
+    "FR": "Profil",
+    "IT": "Profilo"
+  },
   "play": {
     "EN": "Play (Spacebar)",
     "DE": "Spielen (Leertaste)",
@@ -364,6 +376,18 @@
     }
   },
   "alplakes_hydrodynamic": {
+    "EN": "3D Model",
+    "DE": "3D-Modell",
+    "FR": "Modèle 3D",
+    "IT": "Modello 3D"
+  },
+  "alplakes_transect": {
+    "EN": "3D Model",
+    "DE": "3D-Modell",
+    "FR": "Modèle 3D",
+    "IT": "Modello 3D"
+  },
+  "alplakes_profile": {
     "EN": "3D Model",
     "DE": "3D-Modell",
     "FR": "Modèle 3D",
