@@ -6,6 +6,9 @@
     "FR": "Lac de Joux",
     "IT": "Lago di Joux"
   },
+  "latitude": 46.64,
+  "longitude": 6.29,
+  "flags": ["swiss"],
   "area": 9.5,
   "ave_depth": 15,
   "elevation": 1004,

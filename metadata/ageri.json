@@ -6,6 +6,9 @@
     "FR": "Lac d'Ägeri",
     "IT": "Lago di Ägeri"
   },
+  "latitude": 47.125,
+  "longitude": 8.62,
+  "flags": ["swiss"],
   "area": 7.3,
   "ave_depth": 26,
   "max_depth": 49,

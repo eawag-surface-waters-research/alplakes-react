@@ -12,8 +12,8 @@
 }
 
 .navbar img.icon {
-  padding: 12px 24px;
-  height: 34px;
+  padding: 24px 0 20px 24px;
+  height: 24px;
 }
 
 .navbar .desktop-nav {
@@ -70,7 +70,7 @@
   display: none;
   position: fixed;
   top: 18px;
-  right: 86px;
+  right: 114px;
   border-radius: 8px;
 }
 
@@ -85,6 +85,7 @@
 
 .navbar.dark .mobile-nav .dropbtn {
   background-color: rgba(255, 255, 255, 0.1);
+  opacity: 0.9;
 }
 
 .navbar .mobile-nav .dropbtn .bar {
@@ -161,7 +162,17 @@
   right: 24px;
 }
 
-.navbar .language select {
+.navbar .language button {
+  width: 24px;
+  margin-right: 8px;
+}
+
+.navbar .language button img {
+  height: 14px;
+}
+
+.navbar .language select,
+.navbar .language button {
   padding: 5px;
   border-radius: 8px;
   color: black;
@@ -171,11 +182,13 @@
   font-size: 14px
 }
 
-.navbar .language select:hover {
+.navbar .language select:hover,
+.navbar .language button:hover {
   background-color: rgba(0, 0, 0, 0.1)
 }
 
-.navbar.dark .language select {
+.navbar.dark .language select,
+.navbar.dark .language button {
   color: #e5e5e5;
   background-color: rgba(255, 255, 255, 0.1);
 }
@@ -184,7 +197,8 @@
   background-color: #333333;
 }
 
-.navbar.dark .language select:hover {
+.navbar.dark .language select:hover,
+.navbar.dark .language button:hover {
   background-color: rgba(255, 255, 255, 0.15);
 }
 
@@ -208,6 +222,6 @@
   }
 
   .navbar .mobile-nav {
-    right: 74px;
+    right: 102px;
   }
 }

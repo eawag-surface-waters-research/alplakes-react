@@ -6,6 +6,9 @@
     "FR": "Lac de Zurich",
     "IT": "Lago di Zurigo"
   },
+  "latitude": 47.24,
+  "longitude": 8.68,
+  "flags": ["swiss"],
   "area": 89,
   "ave_depth": 49,
   "max_depth": 143,

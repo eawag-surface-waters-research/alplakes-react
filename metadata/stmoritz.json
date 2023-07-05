@@ -6,6 +6,9 @@
     "FR": "Lac de Saint-Moritz",
     "IT": "Lago di Sankt Moritz"
   },
+  "latitude": 46.495,
+  "longitude": 9.845,
+  "flags": ["swiss"],
   "area": 0.78,
   "ave_depth": 25,
   "max_depth": 44,

@@ -9,6 +9,8 @@ import about_img from "../../img/about.png";
 import lakes_img_dark from "../../img/lakes_dark.png";
 import api_img_dark from "../../img/api_dark.png";
 import about_img_dark from "../../img/about_dark.png";
+import dark_icon from "../../img/dark.png";
+import light_icon from "../../img/light.png";
 import "./navbar.css";
 
 class NavBar extends Component {
@@ -16,7 +18,7 @@ class NavBar extends Component {
     var selected = "lakes";
     if (window.location.href.includes("/api")) selected = "api";
     if (window.location.href.includes("/about")) selected = "about";
-    var { language, languages, setLanguage, dark } = this.props;
+    var { language, languages, setLanguage, dark, toggleDark } = this.props;
     return (
       <React.Fragment>
         <div className={dark ? "navbar dark" : "navbar"}>
@@ -28,7 +30,14 @@ class NavBar extends Component {
             />
           </NavLink>
           <div className="language">
-            <select value={language} onChange={setLanguage}>
+            <button
+              className="dark-switch"
+              onClick={toggleDark}
+              title={dark ? "Switch to light theme" : "Switch to dark theme"}
+            >
+              <img src={dark ? light_icon : dark_icon} alt="Light switch" />
+            </button>
+            <select value={language} onChange={setLanguage} title="Switch language">
               {languages.map((l) => (
                 <option value={l} key={"language_" + l}>
                   {l}

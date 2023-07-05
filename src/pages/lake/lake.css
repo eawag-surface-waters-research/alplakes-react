@@ -3,7 +3,7 @@
   width: 100%;
   padding: 0 24px;
   box-sizing: border-box;
-  margin-top: 100px;
+  margin-top: 72px;
 }
 
 .main .lake .content .click-block {
@@ -18,10 +18,10 @@
 
 .main .lake .content .primary {
   width: calc(100% - 472px);
-  height: calc(100vh - 200px);
+  height: calc(100vh - 220px);
   display: inline-block;
   position: fixed;
-  top: 100px;
+  top: 72px;
   left: 24px;
   z-index: 1;
 }
@@ -309,6 +309,101 @@
 .main .lake .content .primary .map-component .playback .play-controls button img {
   width: 24px;
   height: 24px;
+}
+
+.main .lake .content .primary .map-component .properties {
+  display: inline-block;
+  vertical-align: top;
+  padding-top: 8px;
+  width: 100%;
+}
+
+.main .lake .content .primary .map-component .properties .left {
+  display: inline-block;
+  width: 32px;
+  vertical-align: top;
+}
+
+.main .lake .content .primary .map-component .properties .left img {
+  width: 22px;
+  margin-top: 2px;
+}
+
+.main .lake .content .primary .map-component .properties .left .placeholder-flag {
+  width: 22px;
+  margin-top: 2px;
+  height: 16.5px;
+  background-color: rgb(227, 227, 227);
+}
+
+.main.dark .lake .content .primary .map-component .properties .left .placeholder-flag {
+  background-color: #474747;
+}
+
+.main .lake .content .primary .map-component .properties .right {
+  display: inline-block;
+  width: calc(100% - 32px);
+}
+
+.main .lake .content .primary .map-component .properties .name {
+  font-family: "Roboto", "Arial", sans-serif;
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.main .lake .content .primary .map-component .properties .location {
+  color: grey;
+  font-size: 13px;
+  margin-top: 3px;
+}
+
+.main .lake .content .primary .map-component .properties .location.hover {
+  text-decoration: underline;
+}
+
+.main .lake .content .primary .map-component .properties .parameters {
+  font-size: 14px;
+  color: #3f3f3f;
+  margin-top: 2px;
+}
+
+.main.dark .lake .content .primary .map-component .properties .parameters {
+  color: #c1c1c1;
+}
+
+.main .lake .content .primary .map-component .properties .parameters .stats {
+  display: inline-block;
+  color: black;
+  font-size: 16px;
+}
+
+.main.dark .lake .content .primary .map-component .properties .parameters .stats {
+  color: white;
+}
+
+
+
+.main .lake .content .primary .map-component .properties .right .placeholder-name {
+  width: 60%;
+  height: 16.5px;
+  background-color: rgb(227, 227, 227);
+  border-radius: 4px;
+}
+
+.main.dark .lake .content .primary .map-component .properties .right .placeholder-name {
+  background-color: #474747;
+}
+
+.main .lake .content .primary .map-component .properties .right .placeholder-location {
+  width: 80px;
+  height: 15px;
+  background-color: rgb(227, 227, 227);
+  margin-top: 5px;
+  border-radius: 4px;
+}
+
+.main.dark .lake .content .primary .map-component .properties .right .placeholder-location {
+  background-color: #474747;
 }
 
 .main .lake .content .secondary .info {
@@ -1012,16 +1107,15 @@
   .main .lake .content .primary {
     width: 100%;
     left: 0;
-    top: 62px;
     height: 40%;
     z-index: 2;
   }
 
   .main .lake .content .secondary {
     margin: auto;
-    height: calc(60vh - 72px);
+    height: calc(60vh - 191px);
     overflow-y: scroll;
-    margin-top: calc(40vh + 72px);
+    margin-top: calc(40vh + 191px);
     padding-bottom: 18px;
   }
 

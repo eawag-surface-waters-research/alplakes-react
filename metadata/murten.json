@@ -6,6 +6,9 @@
     "FR": "Lac de Morat",
     "IT": "Lago di Morat"
   },
+  "latitude": 46.93,
+  "longitude": 7.08,
+  "flags": ["swiss"],
   "area": 22.8,
   "ave_depth": 24,
   "max_depth": 45,

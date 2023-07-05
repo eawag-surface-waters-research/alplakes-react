@@ -6,6 +6,9 @@
     "FR": "Lac de Hallwil",
     "IT": "Lago di Hallwil"
   },
+  "latitude": 47.28,
+  "longitude": 8.22,
+  "flags": ["swiss"],
   "area": 10.3,
   "ave_depth": 28,
   "max_depth": 48,
