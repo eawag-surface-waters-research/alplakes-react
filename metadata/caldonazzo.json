@@ -6,6 +6,9 @@
     "FR": "Lac de Caldonazzo",
     "IT": "Lago di Caldonazzo"
   },
+  "latitude": 46.02,
+  "longitude": 11.24,
+  "flags": ["italian"],
   "area": 5.38,
   "ave_depth": 26,
   "max_depth": 49,

@@ -6,6 +6,9 @@
     "FR": "Lac de Bienne",
     "IT": "Lago di Bienne"
   },
+  "latitude": 47.08,
+  "longitude": 7.17,
+  "flags": ["swiss"],
   "area": 39.3,
   "ave_depth": 28,
   "elevation": 429,

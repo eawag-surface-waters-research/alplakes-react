@@ -6,6 +6,9 @@
     "FR": "Le Léman",
     "IT": "Lago Lemano"
   },
+  "latitude": 46.45,
+  "longitude": 6.5,
+  "flags": ["swiss", "french"],
   "area": 580,
   "ave_depth": 154,
   "max_depth": 310,

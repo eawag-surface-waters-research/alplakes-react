@@ -6,6 +6,9 @@
     "FR": "Lac de Lugano",
     "IT": "Lago di Lugano"
   },
+  "latitude": 45.99,
+  "longitude": 8.97,
+  "flags": ["swiss"],
   "area": 48.7,
   "ave_depth": 134,
   "max_depth": 288,

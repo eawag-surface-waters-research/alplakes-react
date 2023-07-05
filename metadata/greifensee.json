@@ -6,6 +6,9 @@
     "FR": "Lac de Greifen",
     "IT": "Lago di Greifen"
   },
+  "latitude": 47.36,
+  "longitude": 8.68,
+  "flags": ["swiss"],
   "area": 8.45,
   "ave_depth": 18,
   "elevation": 435,

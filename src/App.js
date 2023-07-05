@@ -44,20 +44,17 @@ class App extends Component {
           <div
             className={dark ? "background-color dark" : "background-color"}
           />
-          <label
-            className="dark-switch"
-            title={dark ? "Switch to light theme" : "Switch to dark theme"}
-          >
-            <input type="checkbox" onChange={this.toggleDark} checked={dark} />
-            <span className="dark-slider round"></span>
-          </label>
           <BrowserRouter>
             <Routes>
               <Route
                 path="/"
                 element={
                   <ErrorBoundary {...this.props} {...this.state}>
-                    <Home {...this.state} setLanguage={this.setLanguage} />
+                    <Home
+                      {...this.state}
+                      setLanguage={this.setLanguage}
+                      toggleDark={this.toggleDark}
+                    />
                   </ErrorBoundary>
                 }
                 exact
@@ -66,7 +63,11 @@ class App extends Component {
                 path="/api"
                 element={
                   <ErrorBoundary {...this.props} {...this.state}>
-                    <API {...this.state} setLanguage={this.setLanguage} />
+                    <API
+                      {...this.state}
+                      setLanguage={this.setLanguage}
+                      toggleDark={this.toggleDark}
+                    />
                   </ErrorBoundary>
                 }
                 exact
@@ -75,7 +76,11 @@ class App extends Component {
                 path="/about"
                 element={
                   <ErrorBoundary {...this.props} {...this.state}>
-                    <About {...this.state} setLanguage={this.setLanguage} />
+                    <About
+                      {...this.state}
+                      setLanguage={this.setLanguage}
+                      toggleDark={this.toggleDark}
+                    />
                   </ErrorBoundary>
                 }
                 exact
@@ -84,7 +89,11 @@ class App extends Component {
                 path="/*"
                 element={
                   <ErrorBoundary {...this.props} {...this.state}>
-                    <Lake {...this.state} setLanguage={this.setLanguage} />
+                    <Lake
+                      {...this.state}
+                      setLanguage={this.setLanguage}
+                      toggleDark={this.toggleDark}
+                    />
                   </ErrorBoundary>
                 }
               />

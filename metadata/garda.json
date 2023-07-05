@@ -6,6 +6,9 @@
     "FR": "Lac de Garde",
     "IT": "Lago di Garda"
   },
+  "latitude": 45.58,
+  "longitude": 10.63,
+  "flags": ["italian"],
   "area": 370,
   "ave_depth": 136,
   "max_depth": 346,
