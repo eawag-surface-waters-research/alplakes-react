@@ -168,6 +168,8 @@ export const addLayer = async (
     await addSencastTiff(layer, dataStore, layerStore, datetime, map);
   } else if (layer.type === "sentinel_hub_wms") {
     await addSentinelHubWms(layer, dataStore, layerStore, datetime, map);
+  } else if (layer.type === "alplakes_transect") {
+    await addAlplakesTransect(layer, dataStore, layerStore, datetime, map);
   }
 };
 
@@ -202,6 +204,8 @@ export const removeLayer = async (layer, layerStore, map) => {
     await removeSencastTiff(layer, layerStore, map);
   } else if (layer.type === "sentinel_hub_wms") {
     removeSentinelHubWms(layer, layerStore, map);
+  } else if (layer.type === "alplakes_transect") {
+    removeAlplakesTransect(layer, layerStore, map);
   }
 };
 
@@ -720,4 +724,36 @@ const removeSentinelHubWms = (layer, layerStore, map) => {
   var leaflet_layer = getNested(layerStore, path);
   map.removeLayer(leaflet_layer);
   setNested(layerStore, path, null);
+};
+
+const addAlplakesTransect = async (
+  layer,
+  dataStore,
+  layerStore,
+  datetime,
+  map
+) => {
+  console.log(layer)
+  var path = [layer.type, layer.properties.model, layer.properties.lake];
+  var leaflet_layer = L.layerGroup([]).addTo(map);
+  leaflet_layer.setZIndex(999)
+  var leaflet_control = L.control
+    .polylineDraw({ fire: getTransect, leaflet_layer })
+    .addTo(map);
+  setNested(layerStore, path, {
+    layer: leaflet_layer,
+    control: leaflet_control,
+  });
+};
+
+const removeAlplakesTransect = (layer, layerStore, map) => {
+  var path = [layer.type, layer.properties.model, layer.properties.lake];
+  var leaflet = getNested(layerStore, path);
+  leaflet.control.remove(map);
+  map.removeLayer(leaflet.layer);
+  setNested(layerStore, path, null);
+};
+
+const getTransect = async (latLng) => {
+  console.log(latLng);
 };

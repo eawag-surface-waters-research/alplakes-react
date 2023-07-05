@@ -106,6 +106,7 @@
         "model": "delft3d-flow",
         "lake": "geneva",
         "parameter": "transect",
+        "display": "transect",
         "variables": ["temperature", "u", "v"],
         "options": {
           "paletteName": "Balance",
@@ -123,6 +124,7 @@
         "model": "delft3d-flow",
         "lake": "geneva",
         "parameter": "profile",
+        "display": "profile",
         "variables": ["temperature", "u", "v"],
         "options": {
           "paletteName": "Balance",

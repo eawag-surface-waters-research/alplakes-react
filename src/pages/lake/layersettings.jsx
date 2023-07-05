@@ -804,6 +804,52 @@ class WMS extends Component {
   }
 }
 
+class Transect extends Component {
+  state = {};
+
+  componentDidMount() {}
+
+  componentWillUnmount() {}
+
+  render() {
+    var { language } = this.props;
+    return (
+      <div className="layer-settings">
+        <div className="layer-section">{Translate.settings[language]}</div>
+        <div className="setting"></div>
+        <div className="setting half">
+          <div className="label">Something</div>
+          <div className="value">Something</div>
+          <input type="range" min="0.5" max="3" step="0.1"></input>
+        </div>
+      </div>
+    );
+  }
+}
+
+class Profile extends Component {
+  state = {};
+
+  componentDidMount() {}
+
+  componentWillUnmount() {}
+
+  render() {
+    var { language } = this.props;
+    return (
+      <div className="layer-settings">
+        <div className="layer-section">{Translate.settings[language]}</div>
+        <div className="setting"></div>
+        <div className="setting half">
+          <div className="label">Something</div>
+          <div className="value">Something</div>
+          <input type="range" min="0.5" max="3" step="0.1"></input>
+        </div>
+      </div>
+    );
+  }
+}
+
 class LayerSettings extends Component {
   addCssRules = (date, style, options) => {
     var { includeDates, percentage } = options;
@@ -898,6 +944,30 @@ class LayerSettings extends Component {
           updateOptions={updateOptions}
           language={language}
           addCssRules={this.addCssRules}
+          layer={layer}
+        />
+      );
+    } else if (type === "transect") {
+      return (
+        <Transect
+          id={layer.id}
+          options={layer.properties.options}
+          updateOptions={updateOptions}
+          language={language}
+          minDate={minDate}
+          maxDate={maxDate}
+          layer={layer}
+        />
+      );
+    } else if (type === "profile") {
+      return (
+        <Profile
+          id={layer.id}
+          options={layer.properties.options}
+          updateOptions={updateOptions}
+          language={language}
+          minDate={minDate}
+          maxDate={maxDate}
           layer={layer}
         />
       );
