@@ -91,7 +91,7 @@ class Basemap extends Component {
       maxZoom: 17,
       maxBoundsViscosity: 0.5,
       zoomSnap: 0.25,
-      zoomControl: true,
+      zoomControl: false,
       showCursorLocation: true,
     });
     this.map.doubleClickZoom.disable();

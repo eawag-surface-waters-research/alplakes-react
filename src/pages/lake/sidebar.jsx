@@ -12,6 +12,7 @@ import profile_icon from "../../img/profile.png";
 import secchi_icon from "../../img/secchi.png";
 import turbidity_icon from "../../img/turbidity.png";
 import satellite_icon from "../../img/satellite-icon.png";
+import options_icon from "../../img/options.png";
 import "react-datepicker/dist/react-datepicker.css";
 import "./lake.css";
 
@@ -229,6 +230,7 @@ class Selection extends Component {
                 className={l.active ? "layer disabled" : "layer"}
                 key={l.id}
                 onClick={() => addLayer(l.id)}
+                title={l.active ? "" : "Add to map"}
               >
                 <div className={"icon " + l.type}>
                   <img
@@ -289,6 +291,10 @@ class Sidebar extends Component {
       transect: transect_icon,
       profile: profile_icon,
     },
+    settings: false,
+  };
+  toggleSettings = () => {
+    this.setState({ settings: !this.state.settings });
   };
   render() {
     var {
@@ -312,7 +318,7 @@ class Sidebar extends Component {
       maxDate,
       updateOptions,
     } = this.props;
-    var { images } = this.state;
+    var { images, settings } = this.state;
     return (
       <React.Fragment>
         <div className="info">
@@ -350,48 +356,57 @@ class Sidebar extends Component {
             </div>
           </div>
         </div>
-        <div className="depth-period">
-          <select value={depth} onChange={setDepth}>
-            {depths.map((d) => (
-              <option value={d} key={d}>
-                {d}
-              </option>
-            ))}
-          </select>
-          <Period
-            period={period}
-            setPeriod={setPeriod}
+        <div
+          className="settings-icon"
+          title="Show settings"
+          onClick={this.toggleSettings}
+        >
+          <img src={options_icon} alt="Settings" />
+        </div>
+        <div className={settings ? "settings" : "settings hide"}>
+          <div className="depth-period">
+            <select value={depth} onChange={setDepth}>
+              {depths.map((d) => (
+                <option value={d} key={d}>
+                  {d}
+                </option>
+              ))}
+            </select>
+            <Period
+              period={period}
+              setPeriod={setPeriod}
+              language={language}
+              minDate={minDate}
+              maxDate={maxDate}
+            />
+            <div className="labels">
+              <div className="depth">{Translate.depth[language]} (m)</div>
+              <div className="start">{Translate.start[language]}</div>
+              <div className="end">{Translate.end[language]}</div>
+            </div>
+          </div>
+          <div className="menu">
+            <ActiveApps
+              layers={layers}
+              selection={selection}
+              language={language}
+              removeLayer={removeLayer}
+              setSelection={setSelection}
+              images={images}
+            />
+          </div>
+          <Selection
+            selection={selection}
+            setSelection={setSelection}
+            layers={layers}
+            images={images}
             language={language}
+            addLayer={addLayer}
+            updateOptions={updateOptions}
             minDate={minDate}
             maxDate={maxDate}
           />
-          <div className="labels">
-            <div className="depth">{Translate.depth[language]} (m)</div>
-            <div className="start">{Translate.start[language]}</div>
-            <div className="end">{Translate.end[language]}</div>
-          </div>
         </div>
-        <div className="menu">
-          <ActiveApps
-            layers={layers}
-            selection={selection}
-            language={language}
-            removeLayer={removeLayer}
-            setSelection={setSelection}
-            images={images}
-          />
-        </div>
-        <Selection
-          selection={selection}
-          setSelection={setSelection}
-          layers={layers}
-          images={images}
-          language={language}
-          addLayer={addLayer}
-          updateOptions={updateOptions}
-          minDate={minDate}
-          maxDate={maxDate}
-        />
       </React.Fragment>
     );
   }
