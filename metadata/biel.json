@@ -1,179 +1,215 @@
 {
-    "key": "biel",
-    "name": {
-        "EN": "Lake Biel",
-        "DE": "Bielersee",
-        "FR": "Lac de Bienne",
-        "IT": "Lago di Bienne"
-    },
-    "area": 39.3,
-    "ave_depth": 28,
-    "elevation": 429,
-    "max_depth": 74,
-    "bounds": {
-        "southWest": [
-            47.03,
-            7.07
+  "key": "biel",
+  "name": {
+    "EN": "Lake Biel",
+    "DE": "Bielersee",
+    "FR": "Lac de Bienne",
+    "IT": "Lago di Bienne"
+  },
+  "latitude": 47.08,
+  "longitude": 7.17,
+  "flags": ["swiss"],
+  "area": 39.3,
+  "ave_depth": 28,
+  "elevation": 429,
+  "max_depth": 74,
+  "bounds": {
+    "southWest": [47.03, 7.07],
+    "northEast": [47.14, 7.24]
+  },
+  "customPeriod": {
+    "type": "alplakes_hydrodynamic",
+    "start": -2,
+    "end": "/simulations/metadata/delft3d-flow/biel"
+  },
+  "depth": 0.7,
+  "layers": [
+    {
+      "id": 0,
+      "type": "alplakes_hydrodynamic",
+      "active": true,
+      "description": "Water temperatures are hindcasted and forecasted using the 3D hydrodynamic model @3@. Meteorological forcing data is produced from the @1@ products, hincasts use the Cosmo-1e 1 day deterministic product (VNXQ34) and forecasts use the Cosmo-2e 5 day ensemble forecast (VNXZ32). Where rivers inputs are used this data is sourced from @4@. The scripts used to generate model input, along with the full model setup are avaiable @2@. This model is calibrated using in-situ measuresuments collected by a number of 3rd parties.",
+      "links": {
+        "1": [
+          "MeteoSwiss COSMO",
+          "https://www.meteoswiss.admin.ch/weather/warning-and-forecasting-systems/cosmo-forecasting-system.html"
         ],
-        "northEast": [
-            47.14,
-            7.24
-        ]
-    },
-    "customPeriod": {
-        "type": "alplakes_hydrodynamic",
-        "start": -2,
-        "end": "/simulations/metadata/delft3d-flow/biel"
-    },
-    "profile": {
-      "type": "alplakes_hydrodynamic",
-      "model": "delft3d-flow",
-      "lake": "biel",
-      "parameters": ["temperature", "u", "v"]
-    },
-    "transect": {
-      "type": "alplakes_hydrodynamic",
-      "model": "delft3d-flow",
-      "lake": "biel",
-      "parameters": ["temperature", "u", "v"]
-    },
-    "depth": 0.7,
-    "layers": [
-        {
-            "id": 0,
-            "type": "alplakes_hydrodynamic",
-            "active": true,
-            "z-index": 1,
-            "properties": {
-                "model": "delft3d-flow",
-                "lake": "biel",
-                "parameter": "temperature",
-                "unit": "°C",
-                "height": 132,
-                "width": 28,
-                "display": "raster",
-                "depth": true,
-                "period": true,
-                "simpleline": true,
-                "temperature": true,
-                "options": {
-                    "paletteName": "Balance",
-                    "zIndex": 1
-                }
-            }
-        },
-        {
-            "id": 1,
-            "type": "alplakes_hydrodynamic",
-            "active": true,
-            "z-index": 5,
-            "properties": {
-                "model": "delft3d-flow",
-                "lake": "biel",
-                "parameter": "velocity",
-                "unit": "m/s",
-                "height": 132,
-                "width": 28,
-                "display": "streamlines",
-                "depth": true,
-                "period": true,
-                "options": {
-                    "paths": 1000,
-                    "color": "#ffffff",
-                    "width": 0.5,
-                    "fade": 0.97,
-                    "duration": 10,
-                    "maxAge": 80,
-                    "velocityScale": 0.01,
-                    "opacity": 0.7,
-                    "zIndex": 3
-                }
-            }
-        },
-        {
-          "id": 2,
-          "type": "sencast_tiff",
-          "active": false,
-          "properties": {
-            "model": "Sentinel3",
-            "lake": "biel",
-            "parameter": "chla",
-            "metadata": "https://eawagrs.s3.eu-central-1.amazonaws.com/metadata/sentinel3/biel_chla.json",
-            "unit": "mg m-3",
-            "display": "tiff",
-            "depth": false,
-            "period": false,
-            "options": {
-              "paletteName": "cc chl",
-              "zIndex": 2,
-              "opacity": 1,
-              "convolve": 2
-            }
-          }
-        },
-        {
-          "id": 3,
-          "type": "sencast_tiff",
-          "active": false,
-          "properties": {
-            "model": "Sentinel3",
-            "lake": "biel",
-            "parameter": "tsm",
-            "metadata": "https://eawagrs.s3.eu-central-1.amazonaws.com/metadata/sentinel3/biel_tsm_binding754.json",
-            "unit": "g m-3",
-            "display": "tiff",
-            "depth": false,
-            "period": false,
-            "options": {
-              "paletteName": "cc chl",
-              "zIndex": 2,
-              "opacity": 1,
-              "convolve": 2
-            }
-          }
-        },
-        {
-          "id": 4,
-          "type": "sencast_tiff",
-          "active": false,
-          "properties": {
-            "model": "Sentinel3",
-            "lake": "biel",
-            "parameter": "secchi",
-            "metadata": "https://eawagrs.s3.eu-central-1.amazonaws.com/metadata/sentinel3/biel_Zsd_lee.json",
-            "unit": "m",
-            "display": "tiff",
-            "depth": false,
-            "period": false,
-            "options": {
-              "paletteName": "cc chl",
-              "zIndex": 2,
-              "opacity": 1,
-              "convolve": 2
-            }
-          }
-        },
-        {
-          "id": 8,
-          "type": "sentinel_hub_wms",
-          "active": false,
-          "properties": {
-            "model": "Sentinel3",
-            "lake": "biel",
-            "parameter": "realcolor",
-            "metadata": "https://eawagrs.s3.eu-central-1.amazonaws.com/metadata/sentinel3/biel_tsm_binding754.json",
-            "wms": "https://creodias.sentinel-hub.com/ogc/wms/fea4245d-9a3b-4337-8cc2-9bbdbd22ff1a",
-            "unit": "",
-            "display": "wms",
-            "depth": false,
-            "period": false,
-            "options": {
-              "layer": "TRUE-COLOR",
-              "gain": 1,
-              "gamma": 1,
-              "zIndex": 0
-            }
-          }
+        "2": [
+          "here",
+          "https://github.com/eawag-surface-waters-research/alplakes-simulations"
+        ],
+        "3": ["Delft3D", "https://oss.deltares.nl/web/delft3d"],
+        "4": ["BAFU Hydrodaten", "https://www.hydrodaten.admin.ch/en"]
+      },
+      "properties": {
+        "model": "delft3d-flow",
+        "lake": "biel",
+        "parameter": "temperature",
+        "unit": "°C",
+        "height": 132,
+        "width": 28,
+        "display": "raster",
+        "depth": true,
+        "period": true,
+        "simpleline": true,
+        "temperature": true,
+        "options": {
+          "paletteName": "Balance",
+          "zIndex": 1
         }
-    ]
+      }
+    },
+    {
+      "id": 1,
+      "type": "alplakes_hydrodynamic",
+      "active": true,
+      "description": "Lake currents are hindcasted and forecasted using the 3D hydrodynamic model @3@. Meteorological forcing data is produced from the @1@ products, hincasts use the Cosmo-1e 1 day deterministic product (VNXQ34) and forecasts use the Cosmo-2e 5 day ensemble forecast (VNXZ32). Where rivers inputs are used this data is sourced from @4@. The scripts used to generate model input, along with the full model setup are avaiable @2@. This model is calibrated using in-situ measuresuments collected by a number of 3rd parties.",
+      "links": {
+        "1": [
+          "MeteoSwiss COSMO",
+          "https://www.meteoswiss.admin.ch/weather/warning-and-forecasting-systems/cosmo-forecasting-system.html"
+        ],
+        "2": [
+          "here",
+          "https://github.com/eawag-surface-waters-research/alplakes-simulations"
+        ],
+        "3": ["Delft3D", "https://oss.deltares.nl/web/delft3d"],
+        "4": ["BAFU Hydrodaten", "https://www.hydrodaten.admin.ch/en"]
+      },
+      "properties": {
+        "model": "delft3d-flow",
+        "lake": "biel",
+        "parameter": "velocity",
+        "unit": "m/s",
+        "height": 132,
+        "width": 28,
+        "display": "streamlines",
+        "depth": true,
+        "period": true,
+        "options": {
+          "paths": 1000,
+          "color": "#ffffff",
+          "width": 0.5,
+          "fade": 0.97,
+          "duration": 10,
+          "maxAge": 80,
+          "velocityScale": 0.01,
+          "opacity": 0.7,
+          "zIndex": 3
+        }
+      }
+    },
+    {
+      "id": 2,
+      "type": "sencast_tiff",
+      "active": false,
+      "description": "Surface chlorophyll concentration processed from Sentinel 3 data using the @1@ python package. Retrievals are based on a locally adjusted version of @2@.",
+      "links": {
+        "1": [
+          "SenCast",
+          "https://github.com/eawag-surface-waters-research/sencast"
+        ],
+        "2": ["OC3", "https://oceancolor.gsfc.nasa.gov/atbd/chlor_a/"]
+      },
+      "properties": {
+        "model": "Sentinel3",
+        "lake": "biel",
+        "parameter": "chla",
+        "metadata": "https://eawagrs.s3.eu-central-1.amazonaws.com/metadata/sentinel3/biel_chla.json",
+        "unit": "mg m-3",
+        "display": "tiff",
+        "depth": false,
+        "period": false,
+        "options": {
+          "paletteName": "cc chl",
+          "zIndex": 2,
+          "opacity": 1,
+          "convolve": 2
+        }
+      }
+    },
+    {
+      "id": 3,
+      "type": "sencast_tiff",
+      "active": false,
+      "description": "Surface total suspended matter processed from Sentinel 3 data using the @1@ python package. See @2@ by HYGEOS.",
+      "links": {
+        "1": [
+          "SenCast",
+          "https://github.com/eawag-surface-waters-research/sencast"
+        ],
+        "2": ["POLYMER", "https://www.hygeos.com/polymer"]
+      },
+      "properties": {
+        "model": "Sentinel3",
+        "lake": "biel",
+        "parameter": "tsm",
+        "metadata": "https://eawagrs.s3.eu-central-1.amazonaws.com/metadata/sentinel3/biel_tsm_binding754.json",
+        "unit": "g m-3",
+        "display": "tiff",
+        "depth": false,
+        "period": false,
+        "options": {
+          "paletteName": "cc chl",
+          "zIndex": 2,
+          "opacity": 1,
+          "convolve": 2
+        }
+      }
+    },
+    {
+      "id": 4,
+      "type": "sencast_tiff",
+      "active": false,
+      "description": "Secchi depth processed from Sentinel 3 data using the @1@ python package. See the QAA algorithm by Lee et al. for details.",
+      "links": {
+        "1": [
+          "SenCast",
+          "https://github.com/eawag-surface-waters-research/sencast"
+        ]
+      },
+      "properties": {
+        "model": "Sentinel3",
+        "lake": "biel",
+        "parameter": "secchi",
+        "metadata": "https://eawagrs.s3.eu-central-1.amazonaws.com/metadata/sentinel3/biel_Zsd_lee.json",
+        "unit": "m",
+        "display": "tiff",
+        "depth": false,
+        "period": false,
+        "options": {
+          "paletteName": "cc chl",
+          "zIndex": 2,
+          "opacity": 1,
+          "convolve": 2
+        }
+      }
+    },
+    {
+      "id": 8,
+      "type": "sentinel_hub_wms",
+      "active": false,
+      "description": "RGB real color Sentinel 3 images provided by @1@.",
+      "links": {
+        "1": ["Sentinel-Hub", "https://www.sentinel-hub.com/"]
+      },
+      "properties": {
+        "model": "Sentinel3",
+        "lake": "biel",
+        "parameter": "realcolor",
+        "metadata": "https://eawagrs.s3.eu-central-1.amazonaws.com/metadata/sentinel3/biel_tsm_binding754.json",
+        "wms": "https://creodias.sentinel-hub.com/ogc/wms/fea4245d-9a3b-4337-8cc2-9bbdbd22ff1a",
+        "unit": "",
+        "display": "wms",
+        "depth": false,
+        "period": false,
+        "options": {
+          "layer": "TRUE-COLOR",
+          "gain": 1,
+          "gamma": 1,
+          "zIndex": 0
+        }
+      }
+    }
+  ]
 }

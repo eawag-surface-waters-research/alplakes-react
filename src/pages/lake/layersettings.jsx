@@ -135,6 +135,7 @@ class Raster extends Component {
     );
     return (
       <div className="layer-settings">
+        <div className="layer-section">{Translate.settings[language]}</div>
         <div className="setting half">
           <div className="label">Min</div>
           <div>
@@ -184,13 +185,15 @@ class Raster extends Component {
           <div className="value">{paletteName}</div>
           <ColorRamp onChange={this.setPalette} value={palette} />
         </div>
-        <div className="setting">
-          Download NetCDF
+        <div className="layer-section">{Translate.downloads[language]}</div>
+        <div className="setting half">
+          <div className="label">Results</div>
+          <div className="value"></div>
           <select defaultValue="" onChange={this.downloadFile}>
             <option disabled value="">
               Select week
             </option>
-            {downloadDates.map((d) => (
+            {downloadDates.reverse().map((d) => (
               <option key={d.url} value={d.url}>
                 {d.date}
               </option>
@@ -334,6 +337,7 @@ class Streamlines extends Component {
     );
     return (
       <div className="layer-settings">
+        <div className="layer-section">{Translate.settings[language]}</div>
         {/*<div className="switch">
           <button>Directional Arrows</button>
         </div>*/}
@@ -377,13 +381,15 @@ class Streamlines extends Component {
             onChange={this.setOpacity}
           ></input>
         </div>
-        <div className="setting">
-          Download NetCDF
+        <div className="layer-section">{Translate.downloads[language]}</div>
+        <div className="setting half">
+          <div className="label">Results</div>
+          <div className="value"></div>
           <select defaultValue="" onChange={this.downloadFile}>
             <option disabled value="">
               Select week
             </option>
-            {downloadDates.map((d) => (
+            {downloadDates.reverse().map((d) => (
               <option key={d.url} value={d.url}>
                 {d.date}
               </option>
@@ -571,6 +577,7 @@ class Tiff extends Component {
     }
     return (
       <div className="layer-settings">
+        <div className="layer-section">{Translate.settings[language]}</div>
         <div className="setting">
           <DatePicker
             dateFormat="dd/MM/yyyy"
@@ -655,14 +662,14 @@ class Tiff extends Component {
             onChange={this.setValidpixelexpression}
           />
         </div>
+        <div className="layer-section">{Translate.downloads[language]}</div>
         <div className="setting">
-          Download
           <a href={url}>
-            <button className="tiff">TIFF</button>
+            <button className="tiff">Image (.tif)</button>
           </a>
           {ncUrl && (
             <a href={ncUrl}>
-              <button className="tiff">NetCDF</button>
+              <button className="tiff">File (.nc)</button>
             </a>
           )}
         </div>
@@ -754,6 +761,7 @@ class WMS extends Component {
     };
     return (
       <div className="layer-settings">
+        <div className="layer-section">{Translate.settings[language]}</div>
         <div className="setting">
           <DatePicker
             dateFormat="dd/MM/yyyy"
@@ -800,39 +808,47 @@ class LayerSettings extends Component {
   addCssRules = (date, style, options) => {
     var { includeDates, percentage } = options;
     var month = date.getMonth();
-    var rule;
+    var rule, className;
     for (let i = 0; i < includeDates.length; i++) {
       let p = percentage[i];
+      let day = includeDates[i].getDate();
+      let element = [];
       if (includeDates[i].getMonth() === month) {
-        let day = includeDates[i].getDate();
-        rule = `.react-datepicker__day--0${
+        className = `.react-datepicker__day--0${
           day < 10 ? "0" + day : day
-        }:not(.react-datepicker__day--outside-month) { background: linear-gradient(to right, red ${
+        }:not(.react-datepicker__day--outside-month)`;
+        rule = `${className} { background: linear-gradient(to right, green ${
           p - 15
         }%, transparent ${p + 15}%); }`;
         style.sheet.insertRule(rule, 0);
+        element = document.querySelectorAll(className);
       } else if (
         includeDates[i].getMonth() === month - 1 &&
         includeDates[i].getDate() > 15
       ) {
-        let day = includeDates[i].getDate();
-        rule = `.react-datepicker__day--0${
+        className = `.react-datepicker__day--0${
           day < 10 ? "0" + day : day
-        }.react-datepicker__day--outside-month { background: linear-gradient(to right, red ${
+        }.react-datepicker__day--outside-month`;
+        rule = `${className} { background: linear-gradient(to right, green ${
           p - 15
         }%, transparent ${p + 15}%); }`;
         style.sheet.insertRule(rule, 0);
+        element = document.querySelectorAll(className);
       } else if (
         includeDates[i].getMonth() === month + 1 &&
         includeDates[i].getDate() < 15
       ) {
-        let day = includeDates[i].getDate();
-        rule = `.react-datepicker__day--0${
+        className = `.react-datepicker__day--0${
           day < 10 ? "0" + day : day
-        }.react-datepicker__day--outside-month { background: linear-gradient(to right, red ${
+        }.react-datepicker__day--outside-month`;
+        rule = `${className} { background: linear-gradient(to right, green ${
           p - 15
         }%, transparent ${p + 15}%); }`;
         style.sheet.insertRule(rule, 0);
+        element = document.querySelectorAll(className);
+      }
+      if (element.length > 0) {
+        element[0].title = `${p}% pixel coverage`;
       }
     }
   };

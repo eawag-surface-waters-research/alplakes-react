@@ -9,6 +9,9 @@ import settings_icon from "../../img/settings.svg";
 //import tools_icon from "../../img/tools.png";
 import fullscreen_icon from "../../img/fullscreen.png";
 import normalscreen_icon from "../../img/normalscreen.png";
+import swiss from "../../img/swiss.png";
+import italian from "../../img/italian.png";
+import french from "../../img/french.png";
 import CONFIG from "../../config.json";
 import {
   formatDate,
@@ -254,9 +257,12 @@ class Media extends Component {
       setBasemap,
       fullscreen,
       toggleFullscreen,
-      layers
+      layers,
     } = this.props;
     var { settings, legend, graphData, graphs } = this.state;
+    var descriptions = Translate.descriptions[language];
+    var flags = { swiss: swiss, italian: italian, french: french };
+    console.log(metadata)
     return (
       <div className="map-component">
         {legend && <Legend layers={layers} language={language} />}
@@ -339,6 +345,31 @@ class Media extends Component {
                 <img src={tools_icon} alt="tools" />
               </button>
             </div>**/}
+          </div>
+        </div>
+        <div className="properties">
+          <div className="left">
+            {"flags" in metadata ? metadata.flags.map((f) => (
+              <img src={flags[f]} alt={f} key={f} />
+            )) : <div className="placeholder-flag" />}
+          </div>
+          <div className="right">
+            <div className="name">
+              {"name" in metadata ? metadata.name[language] : "Lake loading..."}
+            </div>
+            <div className="location">
+              {metadata.latitude}, {metadata.longitude}
+            </div>
+            <div className="parameters">
+              {descriptions[0]}{" "}
+              <div className="stats">{metadata.elevation} m</div>
+              {descriptions[1]}{" "}
+              <div className="stats">{metadata.area} km&#178;</div>
+              {descriptions[2]}{" "}
+              <div className="stats">{metadata.ave_depth} m</div>
+              {descriptions[3]}{" "}
+              <div className="stats">{metadata.max_depth} m.</div>
+            </div>
           </div>
         </div>
       </div>

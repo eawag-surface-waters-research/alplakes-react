@@ -10,8 +10,55 @@ import chla_icon from "../../img/chla.png";
 import secchi_icon from "../../img/secchi.png";
 import turbidity_icon from "../../img/turbidity.png";
 import satellite_icon from "../../img/satellite-icon.png";
+import options_icon from "../../img/options.png";
 import "react-datepicker/dist/react-datepicker.css";
 import "./lake.css";
+
+class ShowMoreText extends Component {
+  state = {
+    showFullText: false,
+  };
+
+  toggleText = () => {
+    this.setState({
+      showFullText: !this.state.showFullText,
+    });
+  };
+
+  render() {
+    const { text, links, maxLength } = this.props;
+    const { showFullText } = this.state;
+
+    const truncatedText =
+      text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
+
+    var show = showFullText ? text : truncatedText;
+
+    return (
+      <div onClick={this.toggleText}>
+        <p>
+          {show.split("@").map((t) =>
+            t in links ? (
+              <a
+                href={links[t][1]}
+                target="_blank"
+                rel="noopener noreferrer"
+                key={t}
+              >
+                {links[t][0]}
+              </a>
+            ) : (
+              t
+            )
+          )}
+        </p>
+        {text.length > maxLength && (
+          <button>{showFullText ? "Show less" : "Show more"}</button>
+        )}
+      </div>
+    );
+  }
+}
 
 class Period extends Component {
   state = {
@@ -181,6 +228,7 @@ class Selection extends Component {
                 className={l.active ? "layer disabled" : "layer"}
                 key={l.id}
                 onClick={() => addLayer(l.id)}
+                title={l.active ? "" : "Add to map"}
               >
                 <div className={"icon " + l.type}>
                   <img
@@ -208,14 +256,13 @@ class Selection extends Component {
       var layer = layers.find((l) => l.id === selection);
       return (
         <div className="selection">
-          <div className="title">
-            {(layer.properties.parameter in Translate
-              ? Translate[layer.properties.parameter][language]
-              : "") +
-              " " +
-              Translate.settings[language]}
+          <div className="layer-description">
+            <ShowMoreText
+              text={layer.description ? layer.description : ""}
+              links={layer.links ? layer.links : {}}
+              maxLength={130}
+            />
           </div>
-          <div className="title-model">{layer.properties.model}</div>
           <LayerSettings
             layer={layer}
             updateOptions={updateOptions}
@@ -240,6 +287,10 @@ class Sidebar extends Component {
       tsm: turbidity_icon,
       realcolor: satellite_icon,
     },
+    settings: false,
+  };
+  toggleSettings = () => {
+    this.setState({ settings: !this.state.settings });
   };
   render() {
     var {
@@ -263,7 +314,7 @@ class Sidebar extends Component {
       maxDate,
       updateOptions,
     } = this.props;
-    var { images } = this.state;
+    var { images, settings } = this.state;
     return (
       <React.Fragment>
         <div className="info">
@@ -301,48 +352,57 @@ class Sidebar extends Component {
             </div>
           </div>
         </div>
-        <div className="depth-period">
-          <select value={depth} onChange={setDepth}>
-            {depths.map((d) => (
-              <option value={d} key={d}>
-                {d}
-              </option>
-            ))}
-          </select>
-          <Period
-            period={period}
-            setPeriod={setPeriod}
+        <div
+          className="settings-icon"
+          title="Show settings"
+          onClick={this.toggleSettings}
+        >
+          <img src={options_icon} alt="Settings" />
+        </div>
+        <div className={settings ? "settings" : "settings hide"}>
+          <div className="depth-period">
+            <select value={depth} onChange={setDepth}>
+              {depths.map((d) => (
+                <option value={d} key={d}>
+                  {d}
+                </option>
+              ))}
+            </select>
+            <Period
+              period={period}
+              setPeriod={setPeriod}
+              language={language}
+              minDate={minDate}
+              maxDate={maxDate}
+            />
+            <div className="labels">
+              <div className="depth">{Translate.depth[language]} (m)</div>
+              <div className="start">{Translate.start[language]}</div>
+              <div className="end">{Translate.end[language]}</div>
+            </div>
+          </div>
+          <div className="menu">
+            <ActiveApps
+              layers={layers}
+              selection={selection}
+              language={language}
+              removeLayer={removeLayer}
+              setSelection={setSelection}
+              images={images}
+            />
+          </div>
+          <Selection
+            selection={selection}
+            setSelection={setSelection}
+            layers={layers}
+            images={images}
             language={language}
+            addLayer={addLayer}
+            updateOptions={updateOptions}
             minDate={minDate}
             maxDate={maxDate}
           />
-          <div className="labels">
-            <div className="depth">{Translate.depth[language]} (m)</div>
-            <div className="start">{Translate.start[language]}</div>
-            <div className="end">{Translate.end[language]}</div>
-          </div>
         </div>
-        <div className="menu">
-          <ActiveApps
-            layers={layers}
-            selection={selection}
-            language={language}
-            removeLayer={removeLayer}
-            setSelection={setSelection}
-            images={images}
-          />
-        </div>
-        <Selection
-          selection={selection}
-          setSelection={setSelection}
-          layers={layers}
-          images={images}
-          language={language}
-          addLayer={addLayer}
-          updateOptions={updateOptions}
-          minDate={minDate}
-          maxDate={maxDate}
-        />
       </React.Fragment>
     );
   }

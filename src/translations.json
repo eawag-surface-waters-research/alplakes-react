@@ -163,6 +163,12 @@
     "FR": "Paramètres",
     "IT": "Impostazioni"
   },
+  "downloads": {
+    "EN": "Downloads",
+    "DE": "Downloads",
+    "FR": "Téléchargements",
+    "IT": "Downloads"
+  },
   "fullscreen": {
     "EN": "Full screen",
     "DE": "Ganzer Bildschirm",
