@@ -202,7 +202,7 @@
   background-color: rgba(255, 255, 255, 0.15);
 }
 
-@media screen and (max-width: 850px) {
+@media screen and (max-width: 950px) {
   .navbar .mobile-nav {
     display: block;
   }
@@ -210,11 +210,10 @@
   .navbar .desktop-nav {
     display: none;
   }
-}
 
-@media screen and (max-width: 646px) {
   .navbar .language {
     right: 12px;
+    top: 12px;
   }
 
   .navbar img.icon {
@@ -223,5 +222,6 @@
 
   .navbar .mobile-nav {
     right: 102px;
+    top: 12px;
   }
 }

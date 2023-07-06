@@ -314,7 +314,7 @@
 .main .lake .content .primary .map-component .properties {
   display: inline-block;
   vertical-align: top;
-  padding-top: 8px;
+  padding-top: 16px;
   width: 100%;
 }
 
@@ -520,6 +520,42 @@
   font-weight: 500;
   padding: 20px 0;
   font-size: 40px;
+}
+
+.main .lake .content .secondary .settings.hide {
+  display: block;
+}
+
+.main .lake .content .secondary .settings-icon {
+  display: none;
+  position: fixed;
+  left: 8px;
+  top: 205px;
+  z-index: 200;
+  background-color: white;
+  border-radius: 12px;
+  padding: 8px 8px 6px 8px;
+  border: 2px solid red;
+  cursor: pointer;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+
+.main.dark .lake .content .secondary .settings-icon {
+  background-color: rgba(15, 15, 15);
+}
+
+.main .lake .content .secondary .settings-icon img {
+  width: 28px;
+  transition: 0.5s;
+}
+
+.main .lake .content .secondary .settings-icon:hover img {
+  transform: scale(1.1);
+}
+
+.main.dark .lake .content .secondary .settings-icon img {
+  -webkit-filter: invert(100%);
+  filter: invert(100%);
 }
 
 .main .lake .content .secondary .depth-period {
@@ -1107,16 +1143,9 @@
   .main .lake .content .primary {
     width: 100%;
     left: 0;
-    height: 40%;
+    height: calc(100% - 315px);
     z-index: 2;
-  }
-
-  .main .lake .content .secondary {
-    margin: auto;
-    height: calc(60vh - 191px);
-    overflow-y: scroll;
-    margin-top: calc(40vh + 191px);
-    padding-bottom: 18px;
+    top: 197px;
   }
 
   .main .lake .content .secondary .info .data .temperature .value {
@@ -1128,11 +1157,64 @@
     height: 100%;
   }
 
-}
+  .main .lake .content .primary .map-component .properties {
+    padding: 8px;
+  }
 
-@media screen and (max-width: 500px) {
   .main .lake .content .secondary .info {
-    padding: 8px 12px;
+    padding: 0px 12px;
+    background-color: transparent !important;
+    position: fixed;
+    top: 52px;
+    width: 100%;
+    box-sizing: border-box;
+    left: 0;
+  }
+
+  .main .lake .content .secondary .settings {
+    z-index: 190;
+    position: fixed;
+    left: 8px;
+    top: 264px;
+    background-color: rgba(255, 255, 255, 0.95);
+    width: 400px;
+    padding: 12px 20px 20px 20px;
+    box-sizing: border-box;
+    max-width: calc(100% - 16px);
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    border: 2px solid red;
+    border-radius: 12px;
+    height: calc(100% - 390px);
+    overflow: auto;
+  }
+
+  .main.dark .lake .content .secondary .settings {
+    background-color: rgba(15, 15, 15, 0.95);
+  }
+
+  .main .lake .content .secondary .settings::-webkit-scrollbar {
+    display: none;
+  }
+
+  .main .lake .content .secondary .settings.hide {
+    display: none;
+  }
+
+  .main .lake .content .secondary .settings-icon {
+    display: block;
+  }
+
+  .main .lake .content .secondary .settings .settings-close {
+    position: absolute;
+    top: -3px;
+    right: 5px;
+    font-size: 35px;
+    color: red;
+    cursor: pointer;
+  }
+
+  .main .lake .content .secondary .settings .settings-close.hide {
+    display: none;
   }
 
   .main .lake .content .secondary .info .data .temperature .value {
@@ -1210,4 +1292,25 @@
     font-size: 10px;
   }
 
+}
+
+@media screen and (max-width: 450px) {
+  .main .lake .content .secondary .depth-period .react-datepicker-wrapper input {
+    width: 190px;
+    padding: 4px 8px;
+    font-size: 16px;
+  }
+
+  .main .lake .content .secondary .depth-period select {
+    font-size: 16px;
+    width: 80px;
+  }
+
+  .main .lake .content .secondary .depth-period .labels .start {
+    width: 95px;
+  }
+
+  .main .lake .content .secondary .depth-period .labels .end {
+    width: 95px;
+  }
 }

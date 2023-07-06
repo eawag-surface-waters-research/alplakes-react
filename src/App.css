@@ -27,6 +27,50 @@
   background-color: rgb(15, 15, 15);
 }
 
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #aaa;
+}
+
+::-moz-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+::-moz-scrollbar-thumb:hover {
+  background: #aaa;
+}
+
+::-ms-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+::-ms-scrollbar-thumb:hover {
+  background: #aaa;
+}
+
+::-webkit-scrollbar-track {
+  background: rgb(15, 15, 15);
+}
+
+::-moz-scrollbar-track {
+  background: rgb(15, 15, 15);
+}
+
+::-ms-scrollbar-track {
+  background: rgb(15, 15, 15);
+}
+
 .marker {
   position: absolute;
   top: 40%;
