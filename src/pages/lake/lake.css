@@ -1184,7 +1184,7 @@
     box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
     border: 2px solid red;
     border-radius: 12px;
-    height: calc(100% - 390px);
+    height: calc(100% - 272px);
     overflow: auto;
   }
 
@@ -1295,6 +1295,22 @@
 }
 
 @media screen and (max-width: 450px) {
+  .main .lake .content .secondary .settings {
+    padding: 4px;
+  }
+
+  .main .lake .content .secondary .depth-period {
+    margin-top: 0px;
+  }
+
+  .main .lake .content .secondary .depth-period select {
+    margin-right: 8px;
+  }
+
+  .main .lake .content .secondary .depth-period .labels .depth {
+    margin-right: 8px;
+  }
+
   .main .lake .content .secondary .depth-period .react-datepicker-wrapper input {
     width: 190px;
     padding: 4px 8px;
