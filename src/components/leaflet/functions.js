@@ -733,7 +733,6 @@ const addAlplakesTransect = async (
   datetime,
   map
 ) => {
-  console.log(layer)
   var path = [layer.type, layer.properties.model, layer.properties.lake];
   var leaflet_layer = L.layerGroup([]).addTo(map);
   leaflet_layer.setZIndex(999)

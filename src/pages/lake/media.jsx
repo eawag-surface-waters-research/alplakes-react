@@ -262,7 +262,6 @@ class Media extends Component {
     var { settings, legend, graphData, graphs } = this.state;
     var descriptions = Translate.descriptions[language];
     var flags = { swiss: swiss, italian: italian, french: french };
-    console.log(metadata)
     return (
       <div className="map-component">
         {legend && <Legend layers={layers} language={language} />}
