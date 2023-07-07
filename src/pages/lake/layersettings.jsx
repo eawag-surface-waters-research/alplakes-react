@@ -813,17 +813,7 @@ class Transect extends Component {
 
   render() {
     var { language } = this.props;
-    return (
-      <div className="layer-settings">
-        <div className="layer-section">{Translate.settings[language]}</div>
-        <div className="setting"></div>
-        <div className="setting half">
-          <div className="label">Something</div>
-          <div className="value">Something</div>
-          <input type="range" min="0.5" max="3" step="0.1"></input>
-        </div>
-      </div>
-    );
+    return <div className="layer-settings"></div>;
   }
 }
 
@@ -836,17 +826,7 @@ class Profile extends Component {
 
   render() {
     var { language } = this.props;
-    return (
-      <div className="layer-settings">
-        <div className="layer-section">{Translate.settings[language]}</div>
-        <div className="setting"></div>
-        <div className="setting half">
-          <div className="label">Something</div>
-          <div className="value">Something</div>
-          <input type="range" min="0.5" max="3" step="0.1"></input>
-        </div>
-      </div>
-    );
+    return <div className="layer-settings"></div>;
   }
 }
 

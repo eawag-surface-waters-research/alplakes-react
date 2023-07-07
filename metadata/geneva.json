@@ -62,7 +62,7 @@
     {
       "id": 1,
       "type": "alplakes_hydrodynamic",
-      "active": false,
+      "active": true,
       "description": "Lake currents are hindcasted and forecasted using the 3D hydrodynamic model @3@. Meteorological forcing data is produced from the @1@ products, hincasts use the Cosmo-1e 1 day deterministic product (VNXQ34) and forecasts use the Cosmo-2e 5 day ensemble forecast (VNXZ32). Where rivers inputs are used this data is sourced from @4@. The scripts used to generate model input, along with the full model setup are avaiable @2@. This model is calibrated using in-situ measuresuments collected by a number of 3rd parties.",
       "links": {
         "1": [
@@ -103,7 +103,7 @@
       "id": 9,
       "type": "alplakes_transect",
       "active": false,
-      "description": "Plot a transect using the alplakes 3D hydrodynamic model.",
+      "description": "Plot a transect using the alplakes 3D hydrodynamic model. Click the edit button (top right) to draw your first transect.",
       "links": {},
       "properties": {
         "model": "delft3d-flow",
@@ -113,7 +113,7 @@
         "variables": ["temperature", "u", "v"],
         "options": {
           "paletteName": "Balance",
-          "zIndex": 1
+          "zIndex": 11
         }
       }
     },
@@ -121,7 +121,7 @@
       "id": 10,
       "type": "alplakes_profile",
       "active": false,
-      "description": "Plot a profile using the alplakes 3D hydrodynamic model.",
+      "description": "Plot a profile using the alplakes 3D hydrodynamic model.Click the marker button (top right) to plot your first profile.",
       "links": {},
       "properties": {
         "model": "delft3d-flow",

@@ -155,7 +155,7 @@
 }
 
 .leaflet-map-pane canvas {
-  z-index: 100;
+  z-index: 199;
 }
 
 .leaflet-map-pane svg {
@@ -499,28 +499,51 @@ svg.leaflet-image-layer.leaflet-interactive path {
 
 /* Other controls */
 
+.leaflet-polyline-draw-toolbar {
+  padding: 8px 6px 4px 6px;
+  border: 2px solid red;
+  background-color: #272727;
+}
+
+.leaflet-marker-draw-toolbar {
+  padding: 4px 7px 8px 5px;
+  border: 2px solid red;
+  background-color: #272727;
+}
+
 .leaflet-marker-draw-toolbar svg {
-  opacity: 0.7;
+  opacity: 1;
 }
 
 .leaflet-marker-draw-toolbar.leaflet-marker-draw-enabled svg {
-  opacity: 1;
-}
-
-.leaflet-marker-draw-toolbar:hover svg {
-  opacity: 1;
-}
-
-.leaflet-polyline-draw-toolbar svg {
   opacity: 0.7;
 }
 
-.leaflet-polyline-draw-toolbar.leaflet-polyline-draw-enabled svg {
+.leaflet-marker-draw-toolbar:hover svg {
+  transform: scale(1.1);
+}
+
+.leaflet-polyline-draw-toolbar svg {
   opacity: 1;
 }
 
+.leaflet-polyline-draw-toolbar.leaflet-polyline-draw-enabled svg {
+  opacity: 0.7;
+}
+
 .leaflet-polyline-draw-toolbar:hover svg {
-  opacity: 1;
+  transform: scale(1.1);
+}
+
+.leaflet-polyline-draw-textbox {
+  display: none;
+  position: absolute;
+  background-color: white;
+  color: black;
+  z-index: 999;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  padding: 2px 8px;
+  border-radius: 8px;
 }
 
 /* Default icon URLs */

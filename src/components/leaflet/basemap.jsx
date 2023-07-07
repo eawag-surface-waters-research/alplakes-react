@@ -2,16 +2,10 @@ import React, { Component } from "react";
 import L from "leaflet";
 import CONFIG from "../../config.json";
 import { flyToBounds, addLayer, updateLayer, removeLayer } from "./functions";
-// import leaflet_marker from "../../img/leaflet_marker.png";
 import "./leaflet_geotiff";
-import "./leaflet_floatgeotiff";
 import "./leaflet_colorpicker";
-import "./leaflet_streamlines";
-import "./leaflet_vectorfield";
 import "./leaflet_customtooltip";
 import "./leaflet_customcontrol";
-import "./leaflet_polylinedraw";
-import "./leaflet_markerdraw";
 import "./css/leaflet.css";
 
 class Basemap extends Component {
@@ -29,6 +23,8 @@ class Basemap extends Component {
       depth,
       setSimpleline,
       unlock,
+      getTransect,
+      getProfile,
     } = this.props;
     if (updates.length > 0) {
       updated();
@@ -46,7 +42,9 @@ class Basemap extends Component {
             this.map,
             datetime,
             depth,
-            setSimpleline
+            setSimpleline,
+            getTransect,
+            getProfile
           );
         } else if (update.event === "updateLayer") {
           updateLayer(
