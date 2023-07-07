@@ -100,6 +100,42 @@
       }
     },
     {
+      "id": 9,
+      "type": "alplakes_transect",
+      "active": false,
+      "description": "Plot a transect using the alplakes 3D hydrodynamic model. Click the edit button (top right) to draw your first transect.",
+      "links": {},
+      "properties": {
+        "model": "delft3d-flow",
+        "lake": "joux",
+        "parameter": "transect",
+        "display": "transect",
+        "variables": ["temperature", "u", "v"],
+        "options": {
+          "paletteName": "Balance",
+          "zIndex": 11
+        }
+      }
+    },
+    {
+      "id": 10,
+      "type": "alplakes_profile",
+      "active": false,
+      "description": "Plot a profile using the alplakes 3D hydrodynamic model.Click the marker button (top right) to plot your first profile.",
+      "links": {},
+      "properties": {
+        "model": "delft3d-flow",
+        "lake": "joux",
+        "parameter": "profile",
+        "display": "profile",
+        "variables": ["temperature", "u", "v"],
+        "options": {
+          "paletteName": "Balance",
+          "zIndex": 1
+        }
+      }
+    },
+    {
       "id": 2,
       "type": "sencast_tiff",
       "active": false,
