@@ -7,12 +7,9 @@ import leaflet_marker from "../../img/leaflet_marker.png";
 import "./leaflet_raster";
 import "./leaflet_streamlines";
 import "./leaflet_floatgeotiff";
-<<<<<<< HEAD
 import "./leaflet_particles";
-=======
 import "./leaflet_polylinedraw";
 import "./leaflet_markerdraw";
->>>>>>> master
 
 const setNested = (obj, args, value) => {
   for (var i = 0; i < args.length - 1; i++) {
@@ -177,7 +174,6 @@ export const addLayer = async (
     await addSencastTiff(layer, dataStore, layerStore, datetime, map);
   } else if (layer.type === "sentinel_hub_wms") {
     await addSentinelHubWms(layer, dataStore, layerStore, datetime, map);
-<<<<<<< HEAD
   } else if (layer.type === "alplakes_particles") {
     await addAlplakesParticles(
       layer,
@@ -187,7 +183,7 @@ export const addLayer = async (
       map,
       datetime,
       depth
-=======
+    );
   } else if (layer.type === "alplakes_transect") {
     await addAlplakesTransect(
       layer,
@@ -205,7 +201,6 @@ export const addLayer = async (
       datetime,
       map,
       getProfile
->>>>>>> master
     );
   }
 };
@@ -800,7 +795,14 @@ const addAlplakesParticles = async (
   plotAlplakesParticles(layer, datetime, depth, dataStore, layerStore, map);
 };
 
-const plotAlplakesParticles = (layer, datetime, depth, dataStore, layerStore, map) => {
+const plotAlplakesParticles = (
+  layer,
+  datetime,
+  depth,
+  dataStore,
+  layerStore,
+  map
+) => {
   var path = [
     "alplakes_hydrodynamic",
     layer.properties.model,
@@ -839,6 +841,8 @@ const plotAlplakesParticles = (layer, datetime, depth, dataStore, layerStore, ma
   }
   var leaflet_layer = new L.Particles(geometry, data, options).addTo(map);
   setNested(layerStore, layer_path, leaflet_layer);
+};
+
 const addAlplakesTransect = async (
   layer,
   dataStore,
