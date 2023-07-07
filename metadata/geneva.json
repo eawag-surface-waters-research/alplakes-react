@@ -100,7 +100,7 @@
       }
     },
     {
-      "id": 9,
+      "id": 10,
       "type": "alplakes_transect",
       "active": false,
       "description": "Plot a transect using the alplakes 3D hydrodynamic model. Click the edit button (top right) to draw your first transect.",
@@ -118,7 +118,7 @@
       }
     },
     {
-      "id": 10,
+      "id": 11,
       "type": "alplakes_profile",
       "active": false,
       "description": "Plot a profile using the alplakes 3D hydrodynamic model.Click the marker button (top right) to plot your first profile.",
@@ -136,7 +136,7 @@
       }
     },
     {
-      "id": 2,
+      "id": 12,
       "type": "alplakes_particles",
       "active": true,
       "properties": {
