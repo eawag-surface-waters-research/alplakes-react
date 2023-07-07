@@ -7,6 +7,8 @@ import { formatTime, formatDateLong } from "./functions";
 import temperature_icon from "../../img/temperature.png";
 import velocity_icon from "../../img/velocity.png";
 import chla_icon from "../../img/chla.png";
+import transect_icon from "../../img/transect.png";
+import profile_icon from "../../img/profile.png";
 import secchi_icon from "../../img/secchi.png";
 import turbidity_icon from "../../img/turbidity.png";
 import satellite_icon from "../../img/satellite-icon.png";
@@ -286,6 +288,8 @@ class Sidebar extends Component {
       turbidity: turbidity_icon,
       tsm: turbidity_icon,
       realcolor: satellite_icon,
+      transect: transect_icon,
+      profile: profile_icon,
     },
     settings: false,
   };

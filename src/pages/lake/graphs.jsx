@@ -29,28 +29,28 @@ class Graphs extends Component {
     display: "heatmap",
   };
   componentDidMount() {
-    var { metadata } = this.props;
-    if (this.props.data.type === "profile") {
-      let parameters = metadata.profile.parameters;
+    var { data } = this.props;
+    if (data.type === "profile") {
+      let parameters = data.layer.properties.variables;
       let parameter = parameters[0];
-      let z = this.props.data[parameter].data;
+      let z = data[parameter].data;
       let zlabel = parameter.charAt(0).toUpperCase() + parameter.slice(1);
-      let zunits = this.props.data[parameter].unit;
-      let y = this.props.data.depth.data;
+      let zunits = data[parameter].unit;
+      let y = data.depth.data;
       let ylabel = "Depth";
-      let yunits = this.props.data.depth.unit;
-      let x = this.props.data.time.map((t) => parseAPITime(t));
+      let yunits = data.depth.unit;
+      let x = data.time.map((t) => parseAPITime(t));
       this.setState({ data: { x, y, z }, zlabel, zunits, ylabel, yunits });
-    } else if (this.props.data.type === "transect") {
-      let parameters = metadata.profile.parameters;
+    } else if (data.type === "transect") {
+      let parameters = data.layer.properties.variables;
       let parameter = parameters[0];
-      let z = this.props.data[parameter].data;
+      let z = data[parameter].data;
       let zlabel = parameter.charAt(0).toUpperCase() + parameter.slice(1);
-      let zunits = this.props.data[parameter].unit;
-      let y = this.props.data.depth.data;
+      let zunits = data[parameter].unit;
+      let y = data.depth.data;
       let ylabel = "Depth";
-      let yunits = this.props.data.depth.unit;
-      let x = this.props.data.distance.map((t) => t / 1000);
+      let yunits = data.depth.unit;
+      let x = data.distance.map((t) => t / 1000);
       let xlabel = "Distance along transect";
       let xunits = "km";
       this.setState({

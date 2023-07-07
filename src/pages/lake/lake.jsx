@@ -282,7 +282,7 @@ class Lake extends Component {
     document.addEventListener("keydown", this.keyDown, false);
     var { period, minDate, maxDate } = this.state;
     const url = window.location.href.split("/");
-    const lake_id = url[url.length - 1].split("?")[0];
+    const lake_id = url[url.length - 1].split("?")[0].replace(/[^a-zA-Z ]/g, "");
     try {
       const { data: metadata } = await axios.get(
         CONFIG.alplakes_bucket + `${lake_id}.json`
