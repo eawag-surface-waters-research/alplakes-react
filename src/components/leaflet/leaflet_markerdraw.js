@@ -25,7 +25,7 @@ L.Control.MarkerDraw = L.Control.extend({
     button.innerHTML = svgIcon;
 
     L.DomEvent.on(button, "click", this._toggleAdding, this);
-
+    this._enableDrawing()
     return this._container;
   },
 

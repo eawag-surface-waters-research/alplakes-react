@@ -27,6 +27,7 @@ L.Control.PolylineDraw = L.Control.extend({
 
     L.DomEvent.on(button, "click", this._toggleDrawing, this);
     map.on("dblclick", this._disableDrawing, this);
+    this._enableDrawing()
     return this._container;
   },
 
