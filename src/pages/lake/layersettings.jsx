@@ -804,6 +804,32 @@ class WMS extends Component {
   }
 }
 
+class Transect extends Component {
+  state = {};
+
+  componentDidMount() {}
+
+  componentWillUnmount() {}
+
+  render() {
+    var { language } = this.props;
+    return <div className="layer-settings"></div>;
+  }
+}
+
+class Profile extends Component {
+  state = {};
+
+  componentDidMount() {}
+
+  componentWillUnmount() {}
+
+  render() {
+    var { language } = this.props;
+    return <div className="layer-settings"></div>;
+  }
+}
+
 class LayerSettings extends Component {
   addCssRules = (date, style, options) => {
     var { includeDates, percentage } = options;
@@ -898,6 +924,30 @@ class LayerSettings extends Component {
           updateOptions={updateOptions}
           language={language}
           addCssRules={this.addCssRules}
+          layer={layer}
+        />
+      );
+    } else if (type === "transect") {
+      return (
+        <Transect
+          id={layer.id}
+          options={layer.properties.options}
+          updateOptions={updateOptions}
+          language={language}
+          minDate={minDate}
+          maxDate={maxDate}
+          layer={layer}
+        />
+      );
+    } else if (type === "profile") {
+      return (
+        <Profile
+          id={layer.id}
+          options={layer.properties.options}
+          updateOptions={updateOptions}
+          language={language}
+          minDate={minDate}
+          maxDate={maxDate}
           layer={layer}
         />
       );

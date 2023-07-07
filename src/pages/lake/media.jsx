@@ -148,30 +148,28 @@ class Media extends Component {
     graphData: false,
   };
 
-  getProfile = async (latlng) => {
+  getProfile = async (latlng, layer) => {
     var { graphData } = this.state;
-    var { metadata, period } = this.props;
-    if ("profile" in metadata) {
-      await this.props.lock();
-      if (metadata.profile.type === "alplakes_hydrodynamic") {
-        graphData = await getProfileAlplakesHydrodynamic(
-          CONFIG.alplakes_api,
-          metadata.profile.model,
-          metadata.profile.lake,
-          period,
-          latlng
-        );
+    var { period } = this.props;
+    await this.props.lock();
+    if (layer.type === "alplakes_profile") {
+      graphData = await getProfileAlplakesHydrodynamic(
+        CONFIG.alplakes_api,
+        layer.properties.model,
+        layer.properties.lake,
+        period,
+        latlng
+      );
+      if (graphData) {
         graphData["type"] = "profile";
+        graphData["layer"] = layer;
       }
-      this.props.unlock();
-      if (graphData === false) {
-        this.closeGraph();
-      } else {
-        this.setState({ graphData, graphs: true });
-      }
-    } else {
-      alert("Profiles not available for this lake.");
+    }
+    this.props.unlock();
+    if (graphData === false) {
       this.closeGraph();
+    } else {
+      this.setState({ graphData, graphs: true });
     }
   };
 
@@ -180,30 +178,26 @@ class Media extends Component {
     this.props.clearOverlays();
   };
 
-  getTransect = async (latlng) => {
+  getTransect = async (latlng, layer) => {
     var { graphData } = this.state;
-    var { metadata, datetime } = this.props;
-    if ("transect" in metadata) {
-      await this.props.lock();
-      if (metadata.transect.type === "alplakes_hydrodynamic") {
-        graphData = await getTransectAlplakesHydrodynamic(
-          CONFIG.alplakes_api,
-          metadata.transect.model,
-          metadata.transect.lake,
-          datetime,
-          latlng
-        );
-        graphData["type"] = "transect";
-      }
-      this.props.unlock();
-      if (graphData === false) {
-        this.closeGraph();
-      } else {
-        this.setState({ graphData, graphs: true });
-      }
-    } else {
-      alert("Transects not available for this lake.");
+    var { datetime } = this.props;
+    await this.props.lock();
+    if (layer.type === "alplakes_transect") {
+      graphData = await getTransectAlplakesHydrodynamic(
+        CONFIG.alplakes_api,
+        layer.properties.model,
+        layer.properties.lake,
+        datetime,
+        latlng
+      );
+      graphData["type"] = "transect";
+      graphData["layer"] = layer;
+    }
+    this.props.unlock();
+    if (graphData === false) {
       this.closeGraph();
+    } else {
+      this.setState({ graphData, graphs: true });
     }
   };
 
@@ -262,7 +256,6 @@ class Media extends Component {
     var { settings, legend, graphData, graphs } = this.state;
     var descriptions = Translate.descriptions[language];
     var flags = { swiss: swiss, italian: italian, french: french };
-    console.log(metadata)
     return (
       <div className="map-component">
         {legend && <Legend layers={layers} language={language} />}
@@ -349,9 +342,11 @@ class Media extends Component {
         </div>
         <div className="properties">
           <div className="left">
-            {"flags" in metadata ? metadata.flags.map((f) => (
-              <img src={flags[f]} alt={f} key={f} />
-            )) : <div className="placeholder-flag" />}
+            {"flags" in metadata ? (
+              metadata.flags.map((f) => <img src={flags[f]} alt={f} key={f} />)
+            ) : (
+              <div className="placeholder-flag" />
+            )}
           </div>
           <div className="right">
             <div className="name">

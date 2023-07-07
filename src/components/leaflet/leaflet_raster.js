@@ -19,56 +19,84 @@ L.Raster = L.Layer.extend({
   initialize: function (geometry, data, options) {
     this._geometry = geometry;
     this._data = data;
+    this._grid_vertices();
     L.Util.setOptions(this, options);
     if (isNaN(this.options.min)) this.options.min = min(data.flat());
     if (isNaN(this.options.max)) this.options.max = max(data.flat());
+    this._values = [];
+    this._points = [];
   },
   onAdd: function (map) {
     this._map = map;
-    map.on("layeradd", this._addCanvasId, this);
-    this._raster = L.layerGroup().addTo(map);
-    this.plotPolygons();
-  },
-  _addCanvasId: function (event) {
-    if (event.layer instanceof L.Canvas) {
-      this._canvas = event.layer._canvas;
-      event.layer._container.style.opacity = this.options.opacity;
-      event.layer._container.style.zIndex = this.options.zIndex + 100;
-      event.layer._container.setAttribute("id", "leaflet_raster");
+
+    if (!this._canvas) {
+      this._initCanvas();
     }
+
+    if (this.options.pane) {
+      this.getPane().appendChild(this._canvas);
+    } else {
+      map._panes.overlayPane.appendChild(this._canvas);
+    }
+    map.on("click", this._onClick, this);
+    map.on("moveend", this._reset, this);
+    map.on("mousemove", this._onMousemove, this);
+    if (map.options.zoomAnimation && L.Browser.any3d) {
+      map.on("zoomanim", this._animateZoom, this);
+    }
+    this._reset();
+  },
+  _initCanvas: function () {
+    var canvas = (this._canvas = L.DomUtil.create(
+      "canvas",
+      "leaflet-raster-layer leaflet-layer"
+    ));
+
+    var originProp = L.DomUtil.testProp([
+      "transformOrigin",
+      "WebkitTransformOrigin",
+      "msTransformOrigin",
+    ]);
+    canvas.style[originProp] = "50% 50%";
+    canvas.style.opacity = this.options.opacity;
+    canvas.style.zIndex = this.options.zIndex + 100;
+
+    var size = this._map.getSize();
+    canvas.width = size.x;
+    canvas.height = size.y;
+
+    var animated = this._map.options.zoomAnimation && L.Browser.any3d;
+    L.DomUtil.addClass(
+      canvas,
+      "leaflet-zoom-" + (animated ? "animated" : "hide")
+    );
+
+    this._canvas = canvas;
+    this._ctx = canvas.getContext("2d");
+    this._width = canvas.width;
+    this._height = canvas.height;
   },
   onRemove: function (map) {
-    map.removeLayer(this._raster);
-    map.off("layeradd", this._addCanvasId, this);
+    if (this.options.pane) {
+      this.getPane().removeChild(this._canvas);
+    } else {
+      map.getPanes().overlayPane.removeChild(this._canvas);
+    }
+    map.off("click", this._onClick, this);
+    map.off("moveend", this._reset, this);
+    map.off("mousemove", this._onMousemove, this);
+    if (map.options.zoomAnimation) {
+      map.off("zoomanim", this._animateZoom, this);
+    }
   },
   update: function (data, options) {
     this._data = data;
     L.Util.setOptions(this, options);
-    var div = document.getElementById("leaflet_raster");
-    div.style.opacity = this.options.opacity;
-    div.style.zIndex = this.options.zIndex + 100;
-    this._raster.clearLayers();
-    this.plotPolygons();
-    this._map.invalidateSize();
+    this._canvas.style.opacity = this.options.opacity;
+    this._canvas.style.zIndex = this.options.zIndex + 100;
+    this._reset();
   },
-  getFeatureValue: function (e) {
-    var latlng = e.latlng;
-    var closest = null;
-    var closestDistance = Infinity;
-    this._raster.eachLayer(function (polygon) {
-      var distance = latlng.distanceTo(polygon.getCenter());
-      if (distance < closestDistance) {
-        closest = polygon;
-        closestDistance = distance;
-      }
-    });
-    if (closest && closestDistance < this.options.tooltipSensitivity) {
-      return closest.options.title + this.options.unit;
-    } else {
-      return null;
-    }
-  },
-  plotPolygons: function () {
+  _grid_vertices: function () {
     var start, end;
     if (this._data.length === 2) {
       start = this._data[0];
@@ -79,6 +107,55 @@ L.Raster = L.Layer.extend({
     }
     var y = start.length;
     var x = start[0].length;
+    var vertices = [];
+    for (var i = 1; i < y - 1; i++) {
+      for (var j = 1; j < x - 1; j++) {
+        if (!isNaN(start[i][j])) {
+          let coords = this._getCellCorners(this._geometry, i, j, x);
+          vertices.push(coords);
+        }
+      }
+    }
+    this._vertices = vertices;
+  },
+  _reset: function (event) {
+    var topLeft = this._map.containerPointToLayerPoint([0, 0]);
+    var size = this._map.getSize();
+    this._canvas.width = size.x;
+    this._canvas.height = size.y;
+    this._width = size.x;
+    this._height = size.y;
+    L.DomUtil.setPosition(this._canvas, topLeft);
+    this._drawLayer();
+  },
+  _animateZoom: function (e) {
+    var scale = this._map.getZoomScale(e.zoom),
+      offset = this._map
+        ._getCenterOffset(e.center)
+        ._multiplyBy(-scale)
+        .subtract(this._map._getMapPanePos());
+    if (L.DomUtil.setTransform) {
+      L.DomUtil.setTransform(this._canvas, offset, scale);
+    } else {
+      this._canvas.style[L.DomUtil.TRANSFORM] =
+        L.DomUtil.getTranslateString(offset) + " scale(" + scale + ")";
+    }
+  },
+  _drawLayer: function () {
+    this._ctx.clearRect(0, 0, this._width, this._height);
+    var start, end;
+    if (this._data.length === 2) {
+      start = this._data[0];
+      end = this._data[1];
+    } else {
+      start = this._data;
+      end = this._data;
+    }
+    var y = start.length;
+    var x = start[0].length;
+    var cell = 0;
+    var values = [];
+    var points = [];
     for (var i = 1; i < y - 1; i++) {
       for (var j = 1; j < x - 1; j++) {
         if (!isNaN(start[i][j])) {
@@ -90,18 +167,33 @@ L.Raster = L.Layer.extend({
             this.options.max,
             this.options.palette
           );
-          let coords = this._getCellCorners(this._geometry, i, j, x);
-          this._raster.addLayer(
-            L.polygon(coords, {
-              color: `rgb(${color.join(",")})`,
-              fillColor: `rgb(${color.join(",")})`,
-              fillOpacity: 1,
-              title: Math.round(value * 100) / 100,
-            })
+          values.push(value);
+          points.push(
+            L.latLng([this._geometry[i][j], this._geometry[i][j + x]])
           );
+          let coords = this._vertices[cell];
+          this._drawCell(this._ctx, coords, `rgb(${color.join(",")})`);
+          cell++;
         }
       }
     }
+    this._points = points;
+    this._values = values;
+  },
+  _drawCell: function (ctx, coords, color) {
+    ctx.strokeStyle = color;
+    ctx.fillStyle = color;
+    ctx.beginPath();
+    let p = this._map.latLngToContainerPoint(coords[0]);
+    ctx.moveTo(p.x, p.y);
+    ctx.lineTo(p.x, p.y);
+    for (var i = 1; i < coords.length; i++) {
+      let p = this._map.latLngToContainerPoint(coords[i]);
+      ctx.lineTo(p.x, p.y);
+    }
+    ctx.closePath();
+    ctx.stroke();
+    ctx.fill();
   },
   _getCellCorners: function (data, i, j, x) {
     function cellCorner(center, opposite, left, right) {
@@ -180,7 +272,7 @@ L.Raster = L.Layer.extend({
     if (!br && tl) br = oppositePoint([data[i][j], data[i][j + x]], tl);
     if (!tr && bl) tr = oppositePoint([data[i][j], data[i][j + x]], bl);
     if (tl && bl && br && tr) {
-      return [tl, bl, br, tr];
+      return [L.latLng(tl), L.latLng(bl), L.latLng(br), L.latLng(tr)];
     } else {
       return false;
     }
@@ -217,6 +309,49 @@ L.Raster = L.Layer.extend({
     ];
 
     return rgb;
+  },
+  _onMousemove: function (t) {
+    try {
+      var e = this._queryValue(t);
+      this.fire("mousemove", e);
+    } catch (e) {
+      console.error("Leaflet raster mousemove event failed.", e);
+    }
+  },
+  _onClick: function (t) {
+    try {
+      var e = this._queryValue(t);
+      this.fire("click", e);
+    } catch (e) {
+      console.error("Leaflet raster click event failed.", e);
+    }
+  },
+  getFeatureValue: function (t) {
+    try {
+      return this._getValue(t.latlng);
+    } catch (e) {
+      console.error("Leaflet raster getFeatureValue event failed.", e);
+    }
+  },
+  _queryValue: function (e) {
+    e["value"] = this._getValue(e.latlng);
+    return e;
+  },
+  _getValue: function (latlng) {
+    var closest = null;
+    var closestDistance = Infinity;
+    for (var i = 0; i < this._points.length; i++) {
+      let distance = latlng.distanceTo(this._points[i]);
+      if (distance < closestDistance) {
+        closest = i;
+        closestDistance = distance;
+      }
+    }
+    if (closest && closestDistance < this.options.tooltipSensitivity) {
+      return Math.round(this._values[closest] * 100) / 100 + this.options.unit;
+    } else {
+      return null;
+    }
   },
 });
 
