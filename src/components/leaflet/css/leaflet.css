@@ -500,14 +500,14 @@ svg.leaflet-image-layer.leaflet-interactive path {
 /* Other controls */
 
 .leaflet-polyline-draw-toolbar {
-  padding: 8px 6px 4px 6px;
-  border: 2px solid red;
+  padding: 6px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px!important;
   background-color: #272727;
 }
 
 .leaflet-marker-draw-toolbar {
-  padding: 4px 7px 8px 5px;
-  border: 2px solid red;
+  padding: 6px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px!important;
   background-color: #272727;
 }
 
