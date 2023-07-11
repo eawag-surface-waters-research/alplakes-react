@@ -830,6 +830,19 @@ class Profile extends Component {
   }
 }
 
+class Particles extends Component {
+  state = {};
+
+  componentDidMount() {}
+
+  componentWillUnmount() {}
+
+  render() {
+    var { language } = this.props;
+    return <div className="layer-settings"></div>;
+  }
+}
+
 class LayerSettings extends Component {
   addCssRules = (date, style, options) => {
     var { includeDates, percentage } = options;
@@ -942,6 +955,18 @@ class LayerSettings extends Component {
     } else if (type === "profile") {
       return (
         <Profile
+          id={layer.id}
+          options={layer.properties.options}
+          updateOptions={updateOptions}
+          language={language}
+          minDate={minDate}
+          maxDate={maxDate}
+          layer={layer}
+        />
+      );
+    } else if (type === "particles") {
+      return (
+        <Particles
           id={layer.id}
           options={layer.properties.options}
           updateOptions={updateOptions}

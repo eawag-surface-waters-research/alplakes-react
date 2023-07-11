@@ -12,10 +12,10 @@ L.Control.MarkerDraw = L.Control.extend({
     this._map = map;
     this._container = L.DomUtil.create(
       "div",
-      "leaflet-bar leaflet-marker-draw-toolbar"
+      "leaflet-bar leaflet-draw-toolbar"
     );
 
-    var button = L.DomUtil.create("a", "leaflet-marker-draw", this._container);
+    var button = L.DomUtil.create("a", "leaflet-draw", this._container);
     button.href = "#";
     button.title = "Profile";
 
@@ -26,6 +26,11 @@ L.Control.MarkerDraw = L.Control.extend({
 
     L.DomEvent.on(button, "click", this._toggleAdding, this);
     return this._container;
+  },
+
+  onRemove: function (map) {
+    L.DomUtil.removeClass(this._container, "leaflet-draw-enabled");
+    document.getElementById("map").style.removeProperty("cursor");
   },
 
   _toggleAdding: function (e) {
@@ -41,7 +46,7 @@ L.Control.MarkerDraw = L.Control.extend({
   _enableDrawing: function () {
     this._isAdding = true;
     this._map.dragging.disable();
-    L.DomUtil.addClass(this._container, "leaflet-marker-draw-enabled");
+    L.DomUtil.addClass(this._container, "leaflet-draw-enabled");
     document.getElementById("map").style.cursor = "crosshair";
     this._map.on("click", this._addMarker, this);
     if (this._marker) {
@@ -52,7 +57,7 @@ L.Control.MarkerDraw = L.Control.extend({
   _disableDrawing: function () {
     this._isAdding = false;
     this._map.dragging.enable();
-    L.DomUtil.removeClass(this._container, "leaflet-marker-draw-enabled");
+    L.DomUtil.removeClass(this._container, "leaflet-draw-enabled");
     document.getElementById("map").style.removeProperty("cursor");
     this._map.off("click", this._addMarker, this);
   },

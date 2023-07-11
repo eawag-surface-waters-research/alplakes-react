@@ -7,7 +7,7 @@ import leaflet_marker from "../../img/leaflet_marker.png";
 import "./leaflet_raster";
 import "./leaflet_streamlines";
 import "./leaflet_floatgeotiff";
-import "./leaflet_particles";
+import "./leaflet_particletracking";
 import "./leaflet_polylinedraw";
 import "./leaflet_markerdraw";
 
@@ -240,6 +240,8 @@ export const removeLayer = async (layer, layerStore, map) => {
     removeAlplakesTransect(layer, layerStore, map);
   } else if (layer.type === "alplakes_profile") {
     removeAlplakesProfile(layer, layerStore, map);
+  } else if (layer.type === "alplakes_particles") {
+    removeAlplakesParticles(layer, layerStore, map);
   }
 };
 
@@ -819,8 +821,7 @@ const plotAlplakesParticles = (
   var layer_path = [
     layer.type,
     layer.properties.model,
-    layer.properties.lake,
-    "velocity",
+    layer.properties.lake
   ];
   var data = getNested(dataStore, path);
   var geometry = getNested(dataStore, geometry_path);
@@ -839,9 +840,16 @@ const plotAlplakesParticles = (
       options["unit"] = layer.properties.unit;
     }
   }
-  var leaflet_layer = new L.Particles(geometry, data, options).addTo(map);
+  var leaflet_layer = L.control.particleTracking(geometry, data, options).addTo(map);
   setNested(layerStore, layer_path, leaflet_layer);
 };
+
+const removeAlplakesParticles = (layer, layerStore, map) => {
+  var path = [layer.type, layer.properties.model, layer.properties.lake];
+  var leaflet = getNested(layerStore, path);
+  leaflet.remove(map);
+  setNested(layerStore, path, null);
+}
 
 const addAlplakesTransect = async (
   layer,

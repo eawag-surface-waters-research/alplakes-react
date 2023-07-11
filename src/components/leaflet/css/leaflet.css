@@ -499,43 +499,25 @@ svg.leaflet-image-layer.leaflet-interactive path {
 
 /* Other controls */
 
-.leaflet-polyline-draw-toolbar {
+.leaflet-draw-toolbar {
   padding: 6px;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px!important;
   background-color: #272727;
 }
 
-.leaflet-marker-draw-toolbar {
-  padding: 6px;
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px!important;
-  background-color: #272727;
-}
-
-.leaflet-marker-draw-toolbar svg {
+.leaflet-draw-toolbar svg {
   opacity: 1;
 }
 
-.leaflet-marker-draw-toolbar.leaflet-marker-draw-enabled svg {
+.leaflet-draw-toolbar.leaflet-draw-enabled svg {
   opacity: 0.7;
 }
 
-.leaflet-marker-draw-toolbar:hover svg {
+.leaflet-draw-toolbar:hover svg {
   transform: scale(1.1);
 }
 
-.leaflet-polyline-draw-toolbar svg {
-  opacity: 1;
-}
-
-.leaflet-polyline-draw-toolbar.leaflet-polyline-draw-enabled svg {
-  opacity: 0.7;
-}
-
-.leaflet-polyline-draw-toolbar:hover svg {
-  transform: scale(1.1);
-}
-
-.leaflet-polyline-draw-textbox {
+.leaflet-draw-textbox {
   display: none;
   position: absolute;
   background-color: white;

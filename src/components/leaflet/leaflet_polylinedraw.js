@@ -11,12 +11,12 @@ L.Control.PolylineDraw = L.Control.extend({
     this._map = map;
     this._container = L.DomUtil.create(
       "div",
-      "leaflet-bar leaflet-polyline-draw-toolbar"
+      "leaflet-bar leaflet-draw-toolbar"
     );
 
     var button = L.DomUtil.create(
       "a",
-      "leaflet-polyline-draw",
+      "leaflet-draw",
       this._container
     );
     button.href = "#";
@@ -33,7 +33,7 @@ L.Control.PolylineDraw = L.Control.extend({
   onRemove: function (map) {
     this._isDrawing = false;
     this._map.dragging.enable();
-    L.DomUtil.removeClass(this._container, "leaflet-polyline-draw-enabled");
+    L.DomUtil.removeClass(this._container, "leaflet-draw-enabled");
     document.getElementById("map").style.removeProperty("cursor");
     this._map.off("click", this._addPoint, this);
     this._map.off("mousemove", this._updatePreview, this);
@@ -64,7 +64,7 @@ L.Control.PolylineDraw = L.Control.extend({
   _enableDrawing: function () {
     this._isDrawing = true;
     this._map.dragging.disable();
-    L.DomUtil.addClass(this._container, "leaflet-polyline-draw-enabled");
+    L.DomUtil.addClass(this._container, "leaflet-draw-enabled");
     document.getElementById("map").style.cursor = "crosshair";
     this._map.on("click", this._addPoint, this);
     this._map.on("mousemove", this._updatePreview, this);
@@ -88,7 +88,7 @@ L.Control.PolylineDraw = L.Control.extend({
       this._previewPolyline.addTo(this._map);
     }
 
-    this._textbox = L.DomUtil.create("div", "leaflet-polyline-draw-textbox");
+    this._textbox = L.DomUtil.create("div", "leaflet-draw-textbox");
     this._textbox.innerHTML = "Add first point";
     this._map.getContainer().appendChild(this._textbox);
     this._map.on("mousemove", this._updateTextboxPosition, this);
@@ -97,7 +97,7 @@ L.Control.PolylineDraw = L.Control.extend({
   _disableDrawing: function () {
     this._isDrawing = false;
     this._map.dragging.enable();
-    L.DomUtil.removeClass(this._container, "leaflet-polyline-draw-enabled");
+    L.DomUtil.removeClass(this._container, "leaflet-draw-enabled");
     document.getElementById("map").style.removeProperty("cursor");
     this._map.off("click", this._addPoint, this);
     this._map.off("mousemove", this._updatePreview, this);
