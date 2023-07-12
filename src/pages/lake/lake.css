@@ -342,7 +342,7 @@
 
 .main .lake .content .primary .map-component .properties .right {
   display: inline-block;
-  width: calc(100% - 32px);
+  width: calc(100% - 48px);
 }
 
 .main .lake .content .primary .map-component .properties .name {
@@ -530,10 +530,10 @@
   display: none;
   position: fixed;
   left: 0px;
-  top: 197px;
+  top: 200px;
   z-index: 200;
   background-color: white;
-  border-radius: 0px 0 12px 0;
+  border-radius: 0px 12px 12px 0;
   padding: 10px 10px 8px 10px;
   cursor: pointer;
   box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
@@ -541,6 +541,7 @@
 
 .main.dark .lake .content .secondary .settings-icon {
   background-color: rgba(15, 15, 15);
+  box-shadow: #ffffff8a 0 2px 1px 0px;
 }
 
 .main .lake .content .secondary .settings-icon img {
@@ -1185,19 +1186,24 @@
     z-index: 190;
     position: fixed;
     left: 0px;
-    top: 197px;
-    background-color: rgb(255, 255, 255);
+    top: 240px;
+    background-color: rgba(255, 255, 255, 0.95);
     width: 400px;
-    padding: 45px 20px 20px 20px;
+    padding: 20px;
     box-sizing: border-box;
     max-width: 100%;
     box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
-    height: calc(100% - 197px);
+    height: calc(100% - 240px);
     overflow: auto;
+    -webkit-transition: all 0.7s ease-out;
+    -moz-transition: all 0.7s ease-out;
+    -ms-transition: all 0.7s ease-out;
+    -o-transition: all 0.7s ease-out;
+    transition: all 0.7s ease-out;
   }
 
   .main.dark .lake .content .secondary .settings {
-    background-color: rgb(15, 15, 15);
+    background-color: rgba(15, 15, 15, 0.97);
   }
 
   .main .lake .content .secondary .settings::-webkit-scrollbar {
@@ -1205,7 +1211,7 @@
   }
 
   .main .lake .content .secondary .settings.hide {
-    display: none;
+    left: -400px;
   }
 
   .main .lake .content .secondary .settings-icon {
@@ -1304,37 +1310,6 @@
 
 @media screen and (max-width: 450px) {
   .main .lake .content .secondary .settings {
-    padding: 54px 4px 4px 4px;
-  }
-
-  .main .lake .content .secondary .depth-period {
-    margin-top: 0px;
-  }
-
-  .main .lake .content .secondary .depth-period select {
-    margin-right: 8px;
-  }
-
-  .main .lake .content .secondary .depth-period .labels .depth {
-    margin-right: 8px;
-  }
-
-  .main .lake .content .secondary .depth-period .react-datepicker-wrapper input {
-    width: 190px;
-    padding: 4px 8px;
-    font-size: 16px;
-  }
-
-  .main .lake .content .secondary .depth-period select {
-    font-size: 16px;
-    width: 80px;
-  }
-
-  .main .lake .content .secondary .depth-period .labels .start {
-    width: 95px;
-  }
-
-  .main .lake .content .secondary .depth-period .labels .end {
-    width: 95px;
+    padding: 4px;
   }
 }
