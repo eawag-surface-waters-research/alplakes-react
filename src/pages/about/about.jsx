@@ -11,8 +11,11 @@ class About extends Component {
       <div className="main">
         <NavBar {...this.props} />
         <div className="about">
+          <div className="header">
+            Monitoring and forecasting of lakes across the European alpine
+            region.
+          </div>
           <div className="text">
-            <div className="title">About</div>
             <p>
               Alplakes is an open-source{" "}
               <a href="https://eo4society.esa.int/projects/alplakes/">esa</a>{" "}
@@ -25,30 +28,46 @@ class About extends Component {
               <a href="https://www.eawag.ch/">Eawag</a> and the{" "}
               <a href="https://www.unitn.it/">Università di Trento</a>.
             </p>
-            <div className="repo">
-              Simulations:{" "}
+            <div className="sub-header">Hydrodynamic Models</div>
+
+            <p>
+              Model specifications, including the model and forcing data, can be
+              found in the layer information tab for each lake. The model
+              set-ups and calibrations can be found in the following{" "}
               <a href="https://github.com/eawag-surface-waters-research/alplakes-simulations">
-                Delft3D
-              </a>
-            </div>
-            <div className="repo">
-              Orchestrator:{" "}
+                repository
+              </a>{" "}
+              The models are run using an Apache Airflow deployment, the source
+              code can be accessed{" "}
               <a href="https://github.com/eawag-surface-waters-research/airflow">
-                Airflow
+                here
               </a>
-            </div>
-            <div className="repo">
-              API:{" "}
-              <a href="https://github.com/eawag-surface-waters-research/alplakes-fastapi">
-                FastAPI
+              .
+            </p>
+
+            <div className="sub-header">Remote Sensing</div>
+
+            <p>
+              Remote sensing products are generated using{" "}
+              <a href="https://github.com/eawag-surface-waters-research/sencast">
+                Sencast
               </a>
-            </div>
-            <div className="repo">
-              Front end:{" "}
+              , a python toolbox that collates a number of methods for deriving
+              water quality parameters from satellite data. Images from esa's
+              Sentinel-3 are available daily at 300m resolution and Sentinel-2
+              images are available every 5 days at 10m resolution.
+            </p>
+
+            <div className="sub-header">Website</div>
+            <p>
+              This website is developed using{" "}
+              <a href="https://react.dev/">React</a> and the open source code is
+              available{" "}
               <a href="https://github.com/eawag-surface-waters-research/alplakes-react">
-                React
+                here
               </a>
-            </div>
+              .
+            </p>
           </div>
           <div className="images">
             <img src={eawag_logo} alt="Eawag" />
