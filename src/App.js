@@ -19,6 +19,7 @@ class App extends Component {
         ? false
         : JSON.parse(localStorage.getItem("dark")),
   };
+  delectLighting = () => {};
   setLanguage = (event) => {
     localStorage.setItem("language", JSON.stringify(event.target.value));
     this.setState({ language: event.target.value });
@@ -35,6 +36,15 @@ class App extends Component {
         this.setState({ language });
       }
     }
+    if (
+      JSON.parse(localStorage.getItem("dark")) === null &&
+      window.matchMedia
+    ) {
+      if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+        this.setState({ dark: true });
+      }
+    }
+    return "light";
   }
   render() {
     var { dark } = this.state;
