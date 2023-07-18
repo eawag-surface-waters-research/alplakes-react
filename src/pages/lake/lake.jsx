@@ -3,6 +3,7 @@ import axios from "axios";
 import NavBar from "../../components/navbar/navbar";
 import Sidebar from "./sidebar";
 import Media from "./media";
+import ReportIssue from "./reportissue";
 import CONFIG from "../../config.json";
 import {
   relativeDate,
@@ -352,6 +353,7 @@ class Lake extends Component {
         <div className="content">
           {clickblock && <div className="click-block" />}
           <div className={fullscreen ? "primary fullscreen" : "primary"}>
+            <ReportIssue metadata={metadata}/>
             <Media
               language={language}
               togglePlay={this.togglePlay}
