@@ -353,7 +353,7 @@ class Lake extends Component {
         <div className="content">
           {clickblock && <div className="click-block" />}
           <div className={fullscreen ? "primary fullscreen" : "primary"}>
-            <ReportIssue metadata={metadata}/>
+            <ReportIssue metadata={metadata} language={language}/>
             <Media
               language={language}
               togglePlay={this.togglePlay}

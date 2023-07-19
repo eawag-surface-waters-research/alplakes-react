@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Translate from "../../translations.json";
 import axios from "axios";
 import "./lake.css";
 
@@ -29,7 +30,7 @@ class ReportIssue extends Component {
 
   submitReport = async () => {
     var { message, email } = this.state;
-    var { metadata } = this.props
+    var { metadata } = this.props;
     var content = {
       from: {
         email: "runnalls.james@gmail.com",
@@ -62,9 +63,12 @@ class ReportIssue extends Component {
 
   render() {
     const { open, reported, error } = this.state;
+    const { language } = this.props;
     return (
       <div className="report-issue">
-        <button onClick={this.openModal}>Report Issue</button>
+        <button onClick={this.openModal}>
+          {Translate["reportissue"][language]}
+        </button>
         <div
           className={open ? "report-issue-modal" : "report-issue-modal hide"}
         >
@@ -72,7 +76,7 @@ class ReportIssue extends Component {
             <div className="close" onClick={this.closeModal}>
               &#215;
             </div>
-            <h2>Report Issue</h2>
+            <h2>{Translate["reportissue"][language]}</h2>
             <p>
               Thanks for filling out an issue report, please add a message
               describing the issue and include your email address if you are
