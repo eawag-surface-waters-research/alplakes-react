@@ -238,6 +238,15 @@ export const updateLayer = async (
     await updateSencastTiff(layer, dataStore, layerStore, map, datetime);
   } else if (layer.type === "sentinel_hub_wms") {
     await updateSentinelHubWms(layer, dataStore, layerStore, map, datetime);
+  } else if (layer.type === "alplakes_particles") {
+    await updateAlplakesParticles(
+      layer,
+      dataStore,
+      layerStore,
+      map,
+      datetime,
+      depth
+    );
   }
 };
 
@@ -830,21 +839,12 @@ const plotAlplakesParticles = (
     layer.properties.lake,
     "geometry",
   ];
-  var layer_path = [
-    layer.type,
-    layer.properties.model,
-    layer.properties.lake
-  ];
+  var layer_path = [layer.type, layer.properties.model, layer.properties.lake];
   var data = getNested(dataStore, path);
   var geometry = getNested(dataStore, geometry_path);
   var options = {};
   if ("options" in layer.properties) {
     options = layer.properties.options;
-    if ("paletteName" in layer.properties.options) {
-      layer.properties.options.palette =
-        COLORS[layer.properties.options.paletteName];
-      options["palette"] = COLORS[layer.properties.options.paletteName];
-    }
     if (!("opacity" in layer.properties.options)) {
       options["opacity"] = 1;
     }
@@ -852,8 +852,35 @@ const plotAlplakesParticles = (
       options["unit"] = layer.properties.unit;
     }
   }
-  var leaflet_layer = L.control.particleTracking(geometry, data, options).addTo(map);
+  var leaflet_layer = L.control
+    .particleTracking(geometry, data, datetime, options)
+    .addTo(map);
   setNested(layerStore, layer_path, leaflet_layer);
+};
+
+const updateAlplakesParticles = (
+  layer,
+  dataStore,
+  layerStore,
+  map,
+  datetime,
+  depth
+) => {
+  var layer_path = [layer.type, layer.properties.model, layer.properties.lake];
+
+  var options = {};
+  if ("options" in layer.properties) {
+    options = layer.properties.options;
+  }
+
+  var leaflet_layer = getNested(layerStore, layer_path);
+  if (leaflet_layer !== null) {
+    if ("remove" in options && options.remove) {
+      leaflet_layer.clear();
+      options.remove = false;
+    }
+    leaflet_layer.update(datetime, options);
+  }
 };
 
 const removeAlplakesParticles = (layer, layerStore, map) => {
@@ -861,7 +888,7 @@ const removeAlplakesParticles = (layer, layerStore, map) => {
   var leaflet = getNested(layerStore, path);
   leaflet.remove(map);
   setNested(layerStore, path, null);
-}
+};
 
 const addAlplakesTransect = async (
   layer,

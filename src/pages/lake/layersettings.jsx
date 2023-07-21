@@ -831,15 +831,82 @@ class Profile extends Component {
 }
 
 class Particles extends Component {
-  state = {};
+  setPaths = (event) => {
+    var { id, updateOptions, options } = this.props;
+    var value = event.target.value;
+    options["paths"] = value;
+    updateOptions(id, options);
+  };
 
-  componentDidMount() {}
+  setSpread = (event) => {
+    var { id, updateOptions, options } = this.props;
+    var value = event.target.value;
+    options["spread"] = 10 ** value;
+    updateOptions(id, options);
+  };
 
-  componentWillUnmount() {}
+  setOpacity = (event) => {
+    var { id, updateOptions, options } = this.props;
+    var value = event.target.value;
+    options["opacity"] = value;
+    updateOptions(id, options);
+  };
+
+  removeParticles = () => {
+    var { id, updateOptions, options } = this.props;
+    options["remove"] = true;
+    updateOptions(id, options);
+  };
 
   render() {
     var { language } = this.props;
-    return <div className="layer-settings"></div>;
+    var { paths, spread, opacity } = this.props.options;
+    return (
+      <div className="layer-settings">
+        <div className="layer-section">{Translate.settings[language]}</div>
+        <div className="setting half">
+          <div className="label">Particles</div>
+          <div className="value">{paths}</div>
+          <input
+            type="range"
+            min="0"
+            max="50"
+            step="5"
+            value={paths}
+            onChange={this.setPaths}
+          ></input>
+        </div>
+        <div className="setting half">
+          <div className="label">Spread</div>
+          <div className="value">{Math.ceil(spread)}</div>
+          <input
+            type="range"
+            min="0"
+            max="4"
+            step="0.1"
+            value={Math.log10(spread)}
+            onChange={this.setSpread}
+          ></input>
+        </div>
+        <div className="setting">
+          <div className="label">Opacity</div>
+          <div className="value">{opacity}</div>
+          <input
+            type="range"
+            min="0"
+            max="1"
+            step="0.1"
+            value={opacity}
+            onChange={this.setOpacity}
+          ></input>
+        </div>
+        <div className="setting">
+          <button className="remove" onClick={this.removeParticles}>
+            Remove Particles
+          </button>
+        </div>
+      </div>
+    );
   }
 }
 

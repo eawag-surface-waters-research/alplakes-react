@@ -139,7 +139,7 @@
       "id": 12,
       "type": "alplakes_particles",
       "active": true,
-      "description": "Track particles using the alplakes 3D hydrodynamic model. Click the particles button (top right) to add some particles.",
+      "description": "Track particles using the alplakes 3D hydrodynamic model. Click the particles button (top right) to add some particles. Press play to see where the particles go.",
       "properties": {
         "model": "delft3d-flow",
         "lake": "geneva",
@@ -152,7 +152,7 @@
         "period": true,
         "options": {
           "paths": 10,
-          "radius": 100,
+          "spread": 1500,
           "zIndex": 4
         }
       }

@@ -420,6 +420,7 @@
   color: white;
   padding: 4px 8px;
   cursor: pointer;
+  transition: all .2s ease-in-out;
 }
 
 .main .lake .content .primary .report-issue button:hover {
@@ -1142,6 +1143,22 @@
   width: 100%;
   padding: 2px 0px;
   box-sizing: border-box;
+}
+
+.main .lake .content .secondary .selection .layer-settings button.remove {
+  display: inline-block;
+  border-radius: 8px;
+  transition: all .2s ease-in-out;
+  border: none;
+  color: #e3e3e3;
+  background-color: #720000;
+  cursor: pointer;
+  padding: 5px 12px;
+  font-size: 14px;
+}
+
+.main .lake .content .secondary .selection .layer-settings button.remove:hover {
+  background-color: red;
 }
 
 .main .lake .content .secondary .selection .layer-settings button.reset {

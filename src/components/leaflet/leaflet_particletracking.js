@@ -3,16 +3,17 @@ import * as d3 from "d3";
 
 L.Control.ParticleTracking = L.Control.extend({
   options: {
-    position: "topright",
-    paths: 10,
-    radius: 600,
-    opacity: 1,
-    zIndex: 300,
-    nCols: 200,
-    nRows: 200,
-    radiusFactor: 2,
+    position: "topright", // location of control button
+    paths: 10, // number of paths to add with each click
+    spread: 100, // spread of the added paths
+    opacity: 1, // opacity of the canvas
+    zIndex: 300, // z-index of the canvas
+    nCols: 200, // number of columns in interpolated velocity grid
+    nRows: 200, // number of rows in inperpolated velcity grid
+    radiusFactor: 2, // search radius for quadtree search
+    dt: 3, // number of compuation timesteps between each data timestep
   },
-  initialize: function (geometry, data, options) {
+  initialize: function (geometry, data, datetime, options) {
     L.Util.setOptions(this, options);
     this._points = [];
     this._dataWidth = geometry[0].length / 2;
@@ -24,7 +25,28 @@ L.Control.ParticleTracking = L.Control.extend({
     this._xSize = bounds.xSize;
     this._ySize = bounds.ySize;
     this._data = data;
+    this._datetime = parseFloat(datetime);
     this._transformationMatrix = transformationMatrix;
+    this._interpolateTimeseries();
+  },
+  _interpolateTimeseries: function () {
+    var times = Object.keys(this._data).map((d) => parseFloat(d));
+    times.sort(function (a, b) {
+      return a - b;
+    });
+    var interpolated_times = [];
+    for (let i = 1; i < times.length; i++) {
+      var timestep = (times[i] - times[i - 1]) / this.options.dt;
+      for (let j = 0; j < this.options.dt; j++) {
+        interpolated_times.push(times[i - 1] + timestep * j);
+      }
+    }
+    this._times = times;
+    this._interpolated_times = interpolated_times;
+    this._time_index = this._findClosestIndex(
+      this._interpolated_times,
+      this._datetime
+    );
   },
   onAdd: function (map) {
     this._map = map;
@@ -60,7 +82,6 @@ L.Control.ParticleTracking = L.Control.extend({
 
     return this._container;
   },
-
   onRemove: function (map) {
     if (this.options.pane) {
       this.getPane().removeChild(this._canvas);
@@ -73,8 +94,8 @@ L.Control.ParticleTracking = L.Control.extend({
     if (map.options.zoomAnimation) {
       map.off("zoomanim", this._animateZoom, this);
     }
+    this._map.off("click", this._addPoints, this);
   },
-
   _initCanvas: function () {
     var canvas = (this._canvas = L.DomUtil.create(
       "canvas",
@@ -105,7 +126,6 @@ L.Control.ParticleTracking = L.Control.extend({
     this._width = canvas.width;
     this._height = canvas.height;
   },
-
   _animateZoom: function (e) {
     var scale = this._map.getZoomScale(e.zoom),
       offset = this._map
@@ -119,9 +139,23 @@ L.Control.ParticleTracking = L.Control.extend({
         L.DomUtil.getTranslateString(offset) + " scale(" + scale + ")";
     }
   },
+  update: function (datetime, options) {
+    L.Util.setOptions(this, options);
+    this._canvas.style.opacity = this.options.opacity;
+    this._canvas.style.zIndex = this.options.zIndex + 100;
+    this._datetime = parseFloat(datetime);
+    this._time_index = this._findClosestIndex(
+      this._interpolated_times,
+      this._datetime
+    );
+    this._reset();
+  },
+  clear: function () {
+    this._points = [];
+    this._reset();
+  },
   _reset: function () {
     var topLeft = this._map.containerPointToLayerPoint([0, 0]);
-    console.log(topLeft)
     var size = this._map.getSize();
     this._canvas.width = size.x;
     this._canvas.height = size.y;
@@ -139,7 +173,6 @@ L.Control.ParticleTracking = L.Control.extend({
       this._enableDrawing();
     }
   },
-
   _generateTransformationMatrix: function (geometry) {
     var quadtreedata = [];
     var x_array = [];
@@ -193,27 +226,40 @@ L.Control.ParticleTracking = L.Control.extend({
     var bounds = { xMin, xMax, yMin, yMax, xSize, ySize };
     return { bounds, transformationMatrix };
   },
-
   _createAndFillTwoDArray: function ({ rows, columns, defaultValue }) {
     return Array.from({ length: rows }, () =>
       Array.from({ length: columns }, () => defaultValue)
     );
   },
+  _findClosestIndex(arr, target) {
+    if (!Array.isArray(arr) || arr.length === 0) {
+      return false;
+    }
 
+    let closestIndex = 0;
+    let closestDifference = Math.abs(target - arr[0]);
+
+    for (let i = 1; i < arr.length; i++) {
+      const difference = Math.abs(target - arr[i]);
+      if (difference < closestDifference) {
+        closestIndex = i;
+        closestDifference = difference;
+      }
+    }
+    return closestIndex;
+  },
   _enableDrawing: function () {
     this._isAdding = true;
     L.DomUtil.addClass(this._container, "leaflet-draw-enabled");
     document.getElementById("map").style.cursor = "crosshair";
     this._map.on("click", this._addPoints, this);
   },
-
   _disableDrawing: function () {
     this._isAdding = false;
     L.DomUtil.removeClass(this._container, "leaflet-draw-enabled");
     document.getElementById("map").style.removeProperty("cursor");
     this._map.off("click", this._addPoints, this);
   },
-
   _getIndexAtPoint(x, y) {
     var i = this.options.nRows - Math.round((y - this._yMin) / this._ySize);
     var j = Math.round((x - this._xMin) / this._xSize);
@@ -228,39 +274,136 @@ L.Control.ParticleTracking = L.Control.extend({
       return null;
     }
   },
-
+  _getRandomColor() {
+    const r = Math.floor(Math.random() * 256);
+    const g = Math.floor(Math.random() * 256);
+    const b = Math.floor(Math.random() * 256);
+    return [r, g, b];
+  },
   _addPoints: function (e) {
-    var paths = this.options.paths;
-    var radius = this.options.radius;
     var latlng = e.latlng;
     if (this._getIndexAtPoint(e.latlng.lng, e.latlng.lat) !== null) {
-      for (var i = 0; i < paths; i++) {
+      var color = this._getRandomColor();
+      for (var i = 0; i < this.options.paths; i++) {
         var angle = Math.random() * Math.PI * 2;
-        var randomRadius = Math.random() * radius;
+        var randomRadius = Math.random() * this.options.spread;
         var dx = randomRadius * Math.cos(angle);
         var dy = randomRadius * Math.sin(angle);
         var pointLatLng = L.latLng(
           latlng.lat + dy / 111320,
           latlng.lng + dx / (111320 * Math.cos((latlng.lat * Math.PI) / 180))
         );
-        this._points.push(pointLatLng);
+        if (this._getIndexAtPoint(pointLatLng.lng, pointLatLng.lat) !== null) {
+          this._points.push({
+            seed: {
+              latlng: pointLatLng,
+              datetime: this._datetime,
+              index: this._time_index,
+            },
+            path: this._calculatePath(pointLatLng),
+            color,
+          });
+        }
       }
       this._plotPoints();
     }
   },
+  _calculatePath: function (latlng) {
+    var path = new Array(this._interpolated_times.length).fill(null);
+    path[this._time_index] = {
+      latlng,
+      velocity: this._getVelocity(latlng, this._time_index),
+    };
+    for (
+      let i = this._time_index + 1;
+      i < this._interpolated_times.length;
+      i++
+    ) {
+      let timestep =
+        (this._interpolated_times[i] - this._interpolated_times[i - 1]) / 1000;
+      let new_latlng = this._moveLocation(
+        path[i - 1].latlng,
+        path[i - 1].velocity,
+        timestep
+      );
+      let new_velocity = this._getVelocity(new_latlng, i);
+
+      if (new_velocity !== null) {
+        path[i] = {
+          latlng: new_latlng,
+          velocity: new_velocity,
+        };
+      } else {
+        path[i] = {
+          latlng: path[i - 1].latlng,
+          velocity: path[i - 1].velocity,
+        };
+      }
+    }
+    return path;
+  },
+  _getVelocity: function (latlng, time_index) {
+    var i =
+      this.options.nRows - Math.round((latlng.lat - this._yMin) / this._ySize);
+    var j = Math.round((latlng.lng - this._xMin) / this._xSize);
+    let t = this._transformationMatrix[i][j];
+    let ti = Math.floor(
+      (time_index / (this._interpolated_times.length - 1)) *
+        (this._times.length - 1)
+    );
+    var x = this._data[String(this._times[ti])][t[0]][t[1]];
+    var y = this._data[String(this._times[ti])][t[0]][t[1] + this._dataWidth];
+    if (isNaN(x) || isNaN(y)) {
+      return null;
+    } else {
+      return { x, y };
+    }
+  },
+  _moveLocation: function (latlng, velocity, time) {
+    var new_lat =
+      latlng.lat + ((velocity.y * time) / 6378137) * (180 / Math.PI);
+    var new_lng =
+      latlng.lng +
+      (((velocity.x * time) / 6378137) * (180 / Math.PI)) /
+        Math.cos((latlng.lat * Math.PI) / 180);
+    return L.latLng(new_lat, new_lng);
+  },
   _plotPoints: function () {
-    console.log(this._points)
     this._ctx.clearRect(0, 0, this._width, this._height);
-    this._ctx.fillStyle = this.options.color || "red";
+    this._ctx.lineWidth = 2;
     this._points.forEach(function (point) {
-      var pointLayerPoint = this._map.latLngToLayerPoint(point);
-      this._ctx.beginPath();
-      this._ctx.arc(pointLayerPoint.x, pointLayerPoint.y, 4, 0, Math.PI * 2);
-      this._ctx.fill();
+      if (point.path[this._time_index] !== null) {
+        var idx = point.seed.index;
+        var arc = this._map.latLngToContainerPoint(
+          point.path[this._time_index].latlng
+        );
+        var start = this._map.latLngToContainerPoint(point.path[idx].latlng);
+        var rgb = `${point.color[0]}, ${point.color[1]}, ${point.color[2]}`;
+        this._ctx.beginPath();
+        this._ctx.moveTo(start.x, start.y);
+        //let path_length = this._time_index - idx;
+        for (let i = idx; i < this._time_index; i++) {
+          let p = this._map.latLngToContainerPoint(point.path[i].latlng);
+          this._ctx.strokeStyle = `rgba(${rgb}, ${0.4})`;
+          /*this._ctx.strokeStyle = `rgba(${rgb}, ${(
+            (i - idx) /
+            path_length
+          ).toFixed(2)})`;*/
+          this._ctx.lineTo(p.x, p.y);
+        }
+        this._ctx.lineTo(arc.x, arc.y);
+        this._ctx.stroke();
+
+        this._ctx.fillStyle = `rgb(${rgb})`;
+        this._ctx.beginPath();
+        this._ctx.arc(arc.x, arc.y, 4, 0, Math.PI * 2);
+        this._ctx.fill();
+        this._ctx.closePath();
+      }
     }, this);
   },
 });
 
-L.control.particleTracking = function (geometry, data, options) {
-  return new L.Control.ParticleTracking(geometry, data, options);
+L.control.particleTracking = function (geometry, data, datetime, options) {
+  return new L.Control.ParticleTracking(geometry, data, datetime, options);
 };
