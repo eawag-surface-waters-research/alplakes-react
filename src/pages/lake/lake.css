@@ -342,7 +342,7 @@
 
 .main .lake .content .primary .map-component .properties .right {
   display: inline-block;
-  width: calc(100% - 32px);
+  width: calc(100% - 48px);
 }
 
 .main .lake .content .primary .map-component .properties .name {
@@ -404,6 +404,85 @@
 
 .main.dark .lake .content .primary .map-component .properties .right .placeholder-location {
   background-color: #474747;
+}
+
+.main .lake .content .primary .report-issue {
+  z-index: 9999;
+  position: absolute;
+  bottom: -31px;
+  right: 0;
+}
+
+.main .lake .content .primary .report-issue button {
+  background-color: #720000;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  padding: 4px 8px;
+  cursor: pointer;
+}
+
+.main .lake .content .primary .report-issue button:hover {
+  background-color: red;
+}
+
+.main .lake .content .primary .report-issue .report-issue-modal {
+  display: block;
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(255, 255, 255, 0.5);
+  left: 0;
+  top: 0;
+}
+
+.main.dark .lake .content .primary .report-issue .report-issue-modal {
+  background-color: rgba(0, 0, 0, 0.85);
+}
+
+.main .lake .content .primary .report-issue .report-issue-modal.hide {
+  display: none;
+}
+
+.main .lake .content .primary .report-issue .report-issue-modal .report-issue-modal-inner {
+  width: 600px;
+  max-width: 100%;
+  background-color: white;
+  margin: auto;
+  margin-top: 120px;
+  color: black;
+  position: relative;
+  padding: 24px;
+  border-radius: 16px;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  box-sizing: border-box;
+}
+
+.main .lake .content .primary .report-issue .report-issue-modal .report-issue-modal-inner .close {
+  position: absolute;
+  right: 12px;
+  top: 0;
+  font-size: 45px;
+  cursor: pointer;
+}
+
+.main .lake .content .primary .report-issue .report-issue-modal .report-issue-modal-inner textarea {
+  width: 100%;
+  min-height: 200px;
+  margin: 8px 0;
+  padding: 8px;
+  box-sizing: border-box;
+}
+
+.main .lake .content .primary .report-issue .report-issue-modal .report-issue-modal-inner input {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+  margin: 8px 0 16px 0;
+}
+
+.main .lake .content .primary .report-issue .report-issue-modal .report-issue-modal-inner p {
+  margin: 8px 0;
 }
 
 .main .lake .content .secondary .info {
@@ -530,10 +609,10 @@
   display: none;
   position: fixed;
   left: 0px;
-  top: 197px;
+  top: 200px;
   z-index: 200;
   background-color: white;
-  border-radius: 0px 0 12px 0;
+  border-radius: 0px 12px 12px 0;
   padding: 10px 10px 8px 10px;
   cursor: pointer;
   box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
@@ -541,6 +620,7 @@
 
 .main.dark .lake .content .secondary .settings-icon {
   background-color: rgba(15, 15, 15);
+  box-shadow: #ffffff8a 0 2px 1px 0px;
 }
 
 .main .lake .content .secondary .settings-icon img {
@@ -1174,6 +1254,10 @@
     top: 197px;
   }
 
+  .main .lake .content .primary .report-issue {
+    right: 8px;
+  }
+
   .main .lake .content .secondary .info .data .temperature .value {
     font-size: 52px;
   }
@@ -1196,19 +1280,24 @@
     z-index: 190;
     position: fixed;
     left: 0px;
-    top: 197px;
-    background-color: rgb(255, 255, 255);
+    top: 240px;
+    background-color: rgba(255, 255, 255, 0.95);
     width: 400px;
-    padding: 45px 20px 20px 20px;
+    padding: 20px;
     box-sizing: border-box;
     max-width: 100%;
     box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
-    height: calc(100% - 197px);
+    height: calc(100% - 240px);
     overflow: auto;
+    -webkit-transition: all 0.7s ease-out;
+    -moz-transition: all 0.7s ease-out;
+    -ms-transition: all 0.7s ease-out;
+    -o-transition: all 0.7s ease-out;
+    transition: all 0.7s ease-out;
   }
 
   .main.dark .lake .content .secondary .settings {
-    background-color: rgb(15, 15, 15);
+    background-color: rgba(15, 15, 15, 0.97);
   }
 
   .main .lake .content .secondary .settings::-webkit-scrollbar {
@@ -1216,7 +1305,7 @@
   }
 
   .main .lake .content .secondary .settings.hide {
-    display: none;
+    left: -400px;
   }
 
   .main .lake .content .secondary .settings-icon {
@@ -1315,37 +1404,6 @@
 
 @media screen and (max-width: 450px) {
   .main .lake .content .secondary .settings {
-    padding: 54px 4px 4px 4px;
-  }
-
-  .main .lake .content .secondary .depth-period {
-    margin-top: 0px;
-  }
-
-  .main .lake .content .secondary .depth-period select {
-    margin-right: 8px;
-  }
-
-  .main .lake .content .secondary .depth-period .labels .depth {
-    margin-right: 8px;
-  }
-
-  .main .lake .content .secondary .depth-period .react-datepicker-wrapper input {
-    width: 190px;
-    padding: 4px 8px;
-    font-size: 16px;
-  }
-
-  .main .lake .content .secondary .depth-period select {
-    font-size: 16px;
-    width: 80px;
-  }
-
-  .main .lake .content .secondary .depth-period .labels .start {
-    width: 95px;
-  }
-
-  .main .lake .content .secondary .depth-period .labels .end {
-    width: 95px;
+    padding: 4px;
   }
 }

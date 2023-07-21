@@ -9,11 +9,17 @@
 }
 
 .main.dark .about {
-    background-color: rgba(255, 255, 255, 0.1);
+    color: #e5e5e5;
 }
 
-.main.dark .about {
-    color: #e5e5e5;
+.main .about .header {
+    font-size: 28px;
+    margin-bottom: 8px;
+}
+
+.main .about .sub-header {
+    font-size: 18px;
+    margin-bottom: 8px;
 }
 
 .main .about a {
@@ -28,6 +34,7 @@
 
 .main .about p {
     margin-bottom: 12px;
+    font-family: monospace;
 }
 
 .main .about .title {
@@ -46,18 +53,28 @@
     padding: 8px 0;
 }
 
+.main .about .images {
+    background-color: white;
+    margin-top: 16px;
+}
+
 .main .about .images img {
     border-radius: 12px;
-    height: 63px;
-    padding: 12px;
+    height: 50px;
+    padding: 12px 34px;
+}
+
+
+@media screen and (max-width: 700px) {
+    .main .about .images img {
+        height: 28px;
+        padding: 12px;
+    }
 }
 
 @media screen and (max-width: 500px) {
     .main .about {
         margin-top: 60px;
-    }
-
-    .main .about .images img {
-        height: 28px;
+        padding: 8px;
     }
 }

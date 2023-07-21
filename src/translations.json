@@ -187,6 +187,12 @@
     "FR": "Plein écran",
     "IT": "A schermo intero"
   },
+  "reportissue": {
+    "EN": "Report Issue",
+    "DE": "Melde Probleme",
+    "FR": "Signaler un problème",
+    "IT": "Rapporto"
+  },
   "axis": {
     "DE": {
       "decimal": ",",
