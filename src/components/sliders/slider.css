@@ -21,10 +21,6 @@
     color: white;
 }
 
-.slider-container:hover .slider-label {
-    visibility: visible;
-}
-
 .slider-container .slider-label-arrow {
     visibility: hidden;
     bottom: 20px;
@@ -34,10 +30,6 @@
     border-top: solid 10px rgba(0, 0, 0, 0.8);
     border-left: solid 10px transparent;
     border-right: solid 10px transparent;
-}
-
-.slider-container:hover .slider-label-arrow {
-    visibility: visible;
 }
 
 .slider-container .slider-bar {

@@ -17,7 +17,8 @@ class Slider extends Component {
     div.innerHTML =
       this.formatTime(valueHover) + " " + this.formatDate(valueHover);
     e.target.setAttribute("alt", valueHover);
-    document.getElementById("input-range-label-arrow").style.left =
+    var arrow = document.getElementById("input-range-label-arrow");
+    arrow.style.left =
       Math.min(
         Math.max(4, offset * e.target.clientWidth - 5),
         e.target.clientWidth - 24
@@ -27,6 +28,14 @@ class Slider extends Component {
         Math.max(0, offset * e.target.clientWidth),
         e.target.clientWidth
       ) + "px";
+    div.style.visibility = "visible";
+    arrow.style.visibility = "visible";
+  };
+
+  hideHover = () => {
+    document.getElementById("input-range-label").style.visibility = "hidden";
+    document.getElementById("input-range-label-arrow").style.visibility =
+      "hidden";
   };
 
   formatDate = (datetime) => {
@@ -52,12 +61,18 @@ class Slider extends Component {
     document
       .getElementById("input-range")
       .addEventListener("mousemove", this.inputHover);
+    document
+      .getElementById("input-range")
+      .addEventListener("mouseout", this.hideHover);
   }
 
   componentWillUnmount() {
     document
       .getElementById("input-range")
       .removeEventListener("mousemove", this.inputHover);
+    document
+      .getElementById("input-range")
+      .removeEventListener("mouseout", this.hideHover);
   }
 
   componentDidUpdate() {

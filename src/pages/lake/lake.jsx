@@ -179,16 +179,25 @@ class Lake extends Component {
   };
 
   setDatetime = (event) => {
-    var { updates, layers, simpleline } = this.state;
-    for (var layer of layers) {
-      if (layer.active) {
-        updates.push({ event: "updateLayer", id: layer.id });
+    var int = parseInt(JSON.parse(JSON.stringify(event.target.value)));
+    var play = JSON.parse(JSON.stringify(this.state.play));
+    this.setState({ play: false }, () => {
+      var { updates, layers, simpleline } = this.state;
+      for (var layer of layers) {
+        if (layer.active) {
+          updates.push({ event: "updateLayer", id: layer.id });
+        }
       }
-    }
-    var datetime = parseInt(event.target.getAttribute("alt"));
-    var temperature =
-      Math.round(interpolateData(datetime, simpleline) * 10) / 10;
-    this.setState({ datetime, updates, temperature });
+      var datetime;
+      if (play) {
+        datetime = int;
+      } else {
+        datetime = parseInt(event.target.getAttribute("alt"));
+      }
+      var temperature =
+        Math.round(interpolateData(datetime, simpleline) * 10) / 10;
+      this.setState({ datetime, updates, temperature });
+    });
   };
 
   setDepth = (event) => {
@@ -265,15 +274,17 @@ class Lake extends Component {
         this.setState({ datetime, updates, temperature });
       } else {
         setTimeout(() => {
-          datetime = datetime + timestep;
-          for (var layer of layers) {
-            if (layer.active) {
-              updates.push({ event: "updateLayer", id: layer.id });
+          if (this.state.play) {
+            datetime = datetime + timestep;
+            for (var layer of layers) {
+              if (layer.active) {
+                updates.push({ event: "updateLayer", id: layer.id });
+              }
             }
+            var temperature =
+              Math.round(interpolateData(datetime, simpleline) * 10) / 10;
+            this.setState({ datetime, updates, temperature });
           }
-          var temperature =
-            Math.round(interpolateData(datetime, simpleline) * 10) / 10;
-          this.setState({ datetime, updates, temperature });
         }, timeout);
       }
     }
@@ -283,7 +294,9 @@ class Lake extends Component {
     document.addEventListener("keydown", this.keyDown, false);
     var { period, minDate, maxDate } = this.state;
     const url = window.location.href.split("/");
-    const lake_id = url[url.length - 1].split("?")[0].replace(/[^a-zA-Z ]/g, "");
+    const lake_id = url[url.length - 1]
+      .split("?")[0]
+      .replace(/[^a-zA-Z ]/g, "");
     try {
       const { data: metadata } = await axios.get(
         CONFIG.alplakes_bucket + `${lake_id}.json`
@@ -353,7 +366,7 @@ class Lake extends Component {
         <div className="content">
           {clickblock && <div className="click-block" />}
           <div className={fullscreen ? "primary fullscreen" : "primary"}>
-            <ReportIssue metadata={metadata} language={language}/>
+            <ReportIssue metadata={metadata} language={language} />
             <Media
               language={language}
               togglePlay={this.togglePlay}

@@ -499,22 +499,27 @@ svg.leaflet-image-layer.leaflet-interactive path {
 
 /* Other controls */
 
+.leaflet-draw {
+  border: none!important;
+}
+
 .leaflet-draw-toolbar {
   padding: 6px;
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px!important;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px !important;
   background-color: #272727;
 }
 
 .leaflet-draw-toolbar svg {
-  opacity: 1;
+  opacity: 0.7;
+  transition: 0.2s ease-in-out all;
 }
 
 .leaflet-draw-toolbar.leaflet-draw-enabled svg {
-  opacity: 0.7;
+  opacity: 1;
 }
 
 .leaflet-draw-toolbar:hover svg {
-  transform: scale(1.1);
+  transform: scale(1.05);
 }
 
 .leaflet-draw-textbox {
@@ -526,6 +531,27 @@ svg.leaflet-image-layer.leaflet-interactive path {
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
   padding: 2px 8px;
   border-radius: 8px;
+}
+
+.leaflet-draw-label {
+  position: absolute;
+  left: -128px;
+  background-color: #720000;
+  padding: 4px 8px;
+  top: 0;
+  width: 94px;
+  border-radius: 8px;
+}
+
+.leaflet-draw-label:before {
+  content: "";
+  position: absolute;
+  height: 0;
+  width: 0;
+  left: 100%;
+  top: 14px;
+  border: 8px solid transparent;
+  border-left: 10px solid #720000;
 }
 
 /* Default icon URLs */
