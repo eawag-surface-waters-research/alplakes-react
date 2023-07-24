@@ -716,6 +716,32 @@
 
 .main.dark .lake .content .secondary .depth-period .react-datepicker .react-datepicker__day {
   color: white;
+  border: 1px solid transparent;
+}
+
+.main .lake .content .secondary .depth-period .react-datepicker .react-datepicker__day {
+  border: 1px solid transparent;
+  color: black;
+}
+
+.main .lake .content .secondary .depth-period .react-datepicker .react-datepicker__day--in-range {
+  background-color: #e0e0e0;
+}
+
+.main.dark .lake .content .secondary .depth-period .react-datepicker .react-datepicker__day--in-range {
+  background-color: #1e1e1e;
+}
+
+.main.dark .lake .content .secondary .depth-period .react-datepicker .react-datepicker__day--keyboard-selected {
+  background-color: #3e3e3e;
+}
+
+.main.dark .lake .content .secondary .depth-period .react-datepicker .react-datepicker__day--disabled {
+  color: #484848;
+}
+
+.main .lake .content .secondary .depth-period .react-datepicker .react-datepicker__day--disabled {
+  color: #d1cfcf;
 }
 
 .main.dark .lake .content .secondary .depth-period .react-datepicker .react-datepicker__current-month {
@@ -723,7 +749,13 @@
 }
 
 .main.dark .lake .content .secondary .depth-period .react-datepicker .react-datepicker__day:hover {
-  background-color: #7b1414;
+  border: 1px solid white;
+  background-color: transparent;
+}
+
+.main .lake .content .secondary .depth-period .react-datepicker .react-datepicker__day:hover {
+  border: 1px solid black;
+  background-color: transparent;
 }
 
 .main .lake .content .secondary .depth-period .labels {
@@ -797,7 +829,6 @@
 }
 
 .main .lake .content .secondary .menu .loaded .app.filled {
-  background-color: #3a4251;
   width: 62px;
   height: 62px;
   border: none;
@@ -900,10 +931,17 @@
 }
 
 .main .lake .content .secondary .menu .loaded .app img {
-  padding-top: 9px;
   max-width: 38px;
   max-height: 44px;
   pointer-events: none;
+  width: auto;
+  height: auto;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
 }
 
 

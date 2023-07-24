@@ -579,17 +579,19 @@ class Tiff extends Component {
       <div className="layer-settings">
         <div className="layer-section">{Translate.settings[language]}</div>
         <div className="setting">
-          <DatePicker
-            dateFormat="dd/MM/yyyy"
-            locale={locale}
-            inline={true}
-            includeDates={includeDates}
-            selected={date ? date : false}
-            onChange={(update) => {
-              this.setDate(update);
-            }}
-            onMonthChange={this.onMonthChange}
-          />
+          <div className="custom-css-datepicker">
+            <DatePicker
+              dateFormat="dd/MM/yyyy"
+              locale={locale}
+              inline={true}
+              includeDates={includeDates}
+              selected={date ? date : false}
+              onChange={(update) => {
+                this.setDate(update);
+              }}
+              onMonthChange={this.onMonthChange}
+            />
+          </div>
         </div>
         <div className="setting half">
           <div className="label">Min</div>
@@ -763,17 +765,19 @@ class WMS extends Component {
       <div className="layer-settings">
         <div className="layer-section">{Translate.settings[language]}</div>
         <div className="setting">
-          <DatePicker
-            dateFormat="dd/MM/yyyy"
-            locale={locale}
-            inline={true}
-            includeDates={includeDates}
-            selected={date ? date : false}
-            onChange={(update) => {
-              this.setDate(update);
-            }}
-            onMonthChange={this.onMonthChange}
-          />
+          <div className="custom-css-datepicker">
+            <DatePicker
+              dateFormat="dd/MM/yyyy"
+              locale={locale}
+              inline={true}
+              includeDates={includeDates}
+              selected={date ? date : false}
+              onChange={(update) => {
+                this.setDate(update);
+              }}
+              onMonthChange={this.onMonthChange}
+            />
+          </div>
         </div>
         <div className="setting half">
           <div className="label">Gain</div>
@@ -920,7 +924,7 @@ class LayerSettings extends Component {
       let day = includeDates[i].getDate();
       let element = [];
       if (includeDates[i].getMonth() === month) {
-        className = `.react-datepicker__day--0${
+        className = `.custom-css-datepicker .react-datepicker__day--0${
           day < 10 ? "0" + day : day
         }:not(.react-datepicker__day--outside-month)`;
         rule = `${className} { background: linear-gradient(to right, green ${
@@ -932,7 +936,7 @@ class LayerSettings extends Component {
         includeDates[i].getMonth() === month - 1 &&
         includeDates[i].getDate() > 15
       ) {
-        className = `.react-datepicker__day--0${
+        className = `.custom-css-datepicker .react-datepicker__day--0${
           day < 10 ? "0" + day : day
         }.react-datepicker__day--outside-month`;
         rule = `${className} { background: linear-gradient(to right, green ${
@@ -944,7 +948,7 @@ class LayerSettings extends Component {
         includeDates[i].getMonth() === month + 1 &&
         includeDates[i].getDate() < 15
       ) {
-        className = `.react-datepicker__day--0${
+        className = `.custom-css-datepicker .react-datepicker__day--0${
           day < 10 ? "0" + day : day
         }.react-datepicker__day--outside-month`;
         rule = `${className} { background: linear-gradient(to right, green ${
