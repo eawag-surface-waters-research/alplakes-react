@@ -11,7 +11,7 @@ import transect_icon from "../../img/transect.png";
 import profile_icon from "../../img/profile.png";
 import secchi_icon from "../../img/secchi.png";
 import turbidity_icon from "../../img/turbidity.png";
-import satellite_icon from "../../img/satellite-icon.png";
+import rgb_icon from "../../img/rgb.png";
 import particles_icon from "../../img/particles.png";
 import options_icon from "../../img/options.png";
 import "react-datepicker/dist/react-datepicker.css";
@@ -288,7 +288,7 @@ class Sidebar extends Component {
       secchi: secchi_icon,
       turbidity: turbidity_icon,
       tsm: turbidity_icon,
-      realcolor: satellite_icon,
+      realcolor: rgb_icon,
       transect: transect_icon,
       profile: profile_icon,
       particles: particles_icon,

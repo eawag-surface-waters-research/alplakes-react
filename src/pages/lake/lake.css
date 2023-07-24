@@ -744,6 +744,16 @@
   color: #d1cfcf;
 }
 
+.main.dark .lake .content .secondary .depth-period .react-datepicker .react-datepicker__day--in-selecting-range {
+  background-color: #1e1e1e;
+  border: 1px solid white;
+}
+
+.main .lake .content .secondary .depth-period .react-datepicker .react-datepicker__day--in-selecting-range {
+  background-color: #eeeeee;
+  border: 1px solid black;
+}
+
 .main.dark .lake .content .secondary .depth-period .react-datepicker .react-datepicker__current-month {
   color: white;
 }
@@ -942,6 +952,11 @@
   left: 0;
   right: 0;
   margin: auto;
+  transition: 0.15s ease-in-out all;
+}
+
+.main .lake .content .secondary .menu .loaded .app:hover img {
+  transform: scale(1.05);
 }
 
 

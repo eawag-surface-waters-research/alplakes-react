@@ -90,13 +90,15 @@ class Lake extends Component {
     var { layers, updates } = this.state;
     if (period !== this.state.period) {
       var datetime = period[0];
+      var clickblock;
       for (let layer of layers) {
         if (layer.active && layer.properties.period) {
+          clickblock = true;
           updates.unshift({ event: "removeLayer", id: layer.id });
           updates.push({ event: "addLayer", id: layer.id });
         }
       }
-      this.setState({ updates, datetime, clickblock: true, period });
+      this.setState({ updates, datetime, clickblock, period });
     }
   };
 
