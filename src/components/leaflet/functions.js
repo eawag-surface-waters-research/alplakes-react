@@ -9,6 +9,7 @@ import "./leaflet_streamlines";
 import "./leaflet_floatgeotiff";
 import "./leaflet_particletracking";
 import "./leaflet_polylinedraw";
+import "./leaflet_vectorfield"
 import "./leaflet_markerdraw";
 
 const setNested = (obj, args, value) => {
@@ -493,7 +494,7 @@ const plotAlplakesHydrodynamicStreamlines = (
       options["unit"] = layer.properties.unit;
     }
   }
-  var leaflet_layer = new L.Streamlines(geometry, data, options).addTo(map);
+  var leaflet_layer = L.vectorfield(geometry, data, options).addTo(map);
   setNested(layerStore, path, leaflet_layer);
 };
 

@@ -5,8 +5,8 @@ L.VectorField = (L.Layer ? L.Layer : L.Class).extend({
   options: {
     vectorArrowColor: false,
     size: 20,
-    min: false,
-    max: false,
+    min: "null",
+    max: "null",
     palette: [
       { color: [68, 1, 84], point: 0 },
       { color: [59, 82, 139], point: 0.25 },
@@ -15,45 +15,15 @@ L.VectorField = (L.Layer ? L.Layer : L.Class).extend({
       { color: [253, 231, 37], point: 1 },
     ],
   },
-  initialize: function (data, options) {
+  initialize: function (geometry, data, options) {
+    L.Util.setOptions(this, options);
+    this._dataWidth = geometry[0].length / 2;
+    this._dataHeight = geometry.length;
+    this._geometry = geometry;
     this._data = data;
-    if (!("min" in options) || !("min" in options)) {
-      let arr = data
-        .flat()
-        .filter((d) => d != null)
-        .map((d) => Math.abs(Math.sqrt(Math.pow(d[3], 2) + Math.pow(d[4], 2))));
-      if (!("min" in options)) {
-        options["min"] = min(arr);
-      }
-      if (!("max" in options)) {
-        options["max"] = max(arr);
-      }
-    }
-    L.setOptions(this, options);
+    if (isNaN(this.options.min)) this.options.min = min(data.flat());
+    if (isNaN(this.options.max)) this.options.max = max(data.flat());
   },
-
-  setdata: function (data) {
-    this._data = data;
-    return this.redraw();
-  },
-
-  adddata: function (data) {
-    this._data.push(data);
-    return this.redraw();
-  },
-
-  setOptions: function (options) {
-    L.setOptions(this, options);
-    return this.redraw();
-  },
-
-  redraw: function () {
-    if (!this._frame && this._map && !this._map._animating) {
-      this._frame = L.Util.requestAnimFrame(this._redraw, this);
-    }
-    return this;
-  },
-
   onAdd: function (map) {
     this._map = map;
 
@@ -72,30 +42,8 @@ L.VectorField = (L.Layer ? L.Layer : L.Class).extend({
     if (map.options.zoomAnimation && L.Browser.any3d) {
       map.on("zoomanim", this._animateZoom, this);
     }
-
     this._reset();
   },
-
-  onRemove: function (map) {
-    if (this.options.pane) {
-      this.getPane().removeChild(this._canvas);
-    } else {
-      map.getPanes().overlayPane.removeChild(this._canvas);
-    }
-    map.off("click", this._onClick, this);
-    map.off("moveend", this._reset, this);
-    map.off("mousemove", this._onMousemove, this);
-
-    if (map.options.zoomAnimation) {
-      map.off("zoomanim", this._animateZoom, this);
-    }
-  },
-
-  addTo: function (map) {
-    map.addLayer(this);
-    return this;
-  },
-
   _initCanvas: function () {
     var canvas = (this._canvas = L.DomUtil.create(
       "canvas",
@@ -124,7 +72,26 @@ L.VectorField = (L.Layer ? L.Layer : L.Class).extend({
     this._width = canvas.width;
     this._height = canvas.height;
   },
+  onRemove: function (map) {
+    if (this.options.pane) {
+      this.getPane().removeChild(this._canvas);
+    } else {
+      map.getPanes().overlayPane.removeChild(this._canvas);
+    }
+    map.off("click", this._onClick, this);
+    map.off("moveend", this._reset, this);
+    map.off("mousemove", this._onMousemove, this);
 
+    if (map.options.zoomAnimation) {
+      map.off("zoomanim", this._animateZoom, this);
+    }
+  },
+  redraw: function () {
+    if (!this._frame && this._map && !this._map._animating) {
+      this._frame = L.Util.requestAnimFrame(this._redraw, this);
+    }
+    return this;
+  },
   _reset: function () {
     var topLeft = this._map.containerPointToLayerPoint([0, 0]);
     var size = this._map.getSize();
@@ -136,80 +103,43 @@ L.VectorField = (L.Layer ? L.Layer : L.Class).extend({
     this._redraw();
   },
 
-  _CHtolatlng: function (yx) {
-    var y_aux = (yx[0] - 600000) / 1000000;
-    var x_aux = (yx[1] - 200000) / 1000000;
-    var lat =
-      16.9023892 +
-      3.238272 * x_aux -
-      0.270978 * Math.pow(y_aux, 2) -
-      0.002528 * Math.pow(x_aux, 2) -
-      0.0447 * Math.pow(y_aux, 2) * x_aux -
-      0.014 * Math.pow(x_aux, 3);
-    var lng =
-      2.6779094 +
-      4.728982 * y_aux +
-      0.791484 * y_aux * x_aux +
-      0.1306 * y_aux * Math.pow(x_aux, 2) -
-      0.0436 * Math.pow(y_aux, 3);
-    lat = (lat * 100) / 36;
-    lng = (lng * 100) / 36;
-
-    return [lat, lng];
-  },
-  _WGSlatlngtoCH: function (lat, lng) {
-    lat = lat * 3600;
-    lng = lng * 3600;
-    var lat_aux = (lat - 169028.66) / 10000;
-    var lng_aux = (lng - 26782.5) / 10000;
-    var y =
-      2600072.37 +
-      211455.93 * lng_aux -
-      10938.51 * lng_aux * lat_aux -
-      0.36 * lng_aux * lat_aux ** 2 -
-      44.54 * lng_aux ** 3 -
-      2000000;
-    var x =
-      1200147.07 +
-      308807.95 * lat_aux +
-      3745.25 * lng_aux ** 2 +
-      76.63 * lat_aux ** 2 -
-      194.56 * lng_aux ** 2 * lat_aux +
-      119.79 * lat_aux ** 3 -
-      1000000;
-    return { x, y };
-  },
-  _pixelSize: function () {
-    var d = this._data;
-    var nRows = d.length;
-    var nCols = d[0].length;
-    var i, j;
-    var abort = false;
-
-    for (i = 0; i < nRows - 1 && !abort; i++) {
-      for (j = 0; j < nCols - 1 && !abort; j++) {
+  _firstPixel: function () {
+    for (var i = 0; i < this._dataWidth - 1; i++) {
+      for (var j = 0; j < this._dataHeight - 1; j++) {
         if (
-          d[i][j] !== null &&
-          d[i + 1][j] !== null &&
-          d[i][j + 1] !== null &&
-          d[i + 1][j + 1] !== null
+          !isNaN(this._geometry[i][j]) &&
+          !isNaN(this._geometry[i + 1][j]) &&
+          !isNaN(this._geometry[i][j + 1]) &&
+          !isNaN(this._geometry[i + 1][j + 1])
         ) {
-          abort = true;
-          break;
+          return { i, j };
         }
       }
     }
+  },
+
+  _pixelSize: function () {
+    var { i, j } = this._firstPixel();
     var i0j0 = this._map.latLngToContainerPoint(
-      this._CHtolatlng([d[i][j][0], d[i][j][1]])
+      L.latLng(this._geometry[i][j], this._geometry[i][j + this._dataWidth])
     );
     var i1j0 = this._map.latLngToContainerPoint(
-      this._CHtolatlng([d[i + 1][j][0], d[i + 1][j][1]])
+      L.latLng(
+        this._geometry[i + 1][j],
+        this._geometry[i + 1][j + this._dataWidth]
+      )
     );
     var i0j1 = this._map.latLngToContainerPoint(
-      this._CHtolatlng([d[i][j + 1][0], d[i][j + 1][1]])
+      L.latLng(
+        this._geometry[i][j + 1],
+        this._geometry[i][j + 1 + this._dataWidth]
+      )
     );
     var i1j1 = this._map.latLngToContainerPoint(
-      this._CHtolatlng([d[i + 1][j + 1][0], d[i + 1][j + 1][1]])
+      L.latLng(
+        this._geometry[i + 1][j + 1],
+        this._geometry[i + 1][j + 1 + this._dataWidth]
+      )
     );
     var apixelx = [i0j0.x, i1j0.x, i0j1.x, i1j1.x];
     var apixely = [i0j0.x, i1j0.x, i0j1.x, i1j1.x];
@@ -245,7 +175,7 @@ L.VectorField = (L.Layer ? L.Layer : L.Class).extend({
 
     // Set other properties
     ctx.globalAlpha = 1;
-    ctx.lineWidth = 2;
+    ctx.lineWidth = 1;
 
     // Draw Path
     if (value === 0) {
@@ -267,30 +197,13 @@ L.VectorField = (L.Layer ? L.Layer : L.Class).extend({
       ctx.restore();
     }
   },
-
-  getBounds: function () {
-    var noNan = this._data.flat().filter((i) => isNaN(i));
-    var lat = noNan.map((n) => n[0]);
-    var lng = noNan.map((n) => n[1]);
-    var southWest = L.latLng(
-      this._CHtolatlng([Math.min(...lat), Math.min(...lng)])
-    );
-    var northEast = L.latLng(
-      this._CHtolatlng([Math.max(...lat), Math.max(...lng)])
-    );
-    return L.latLngBounds(southWest, northEast);
-  },
-
   _drawArrows: function () {
     var ctx = this._ctx;
     ctx.clearRect(0, 0, this._width, this._height);
 
     var i, j, k, l, latlng, p, value, rotation, cell;
     var lat, lng, vx, vy, alat, alng, avx, avy;
-
-    var nRows = this._data.length;
-    var nCols = this._data[0].length;
-    var size = this.options.size;
+    var { size } = this.options;
 
     var pixelSize = this._pixelSize();
 
@@ -300,8 +213,8 @@ L.VectorField = (L.Layer ? L.Layer : L.Class).extend({
       size = pixelSize * 0.5;
     }
 
-    var maxRow = (Math.floor(nRows / stride) - 1) * stride + 1;
-    var maxCol = (Math.floor(nCols / stride) - 1) * stride + 1;
+    var maxRow = (Math.floor(this._dataHeight / stride) - 1) * stride + 1;
+    var maxCol = (Math.floor(this._dataWidth / stride) - 1) * stride + 1;
 
     for (i = 0; i < maxRow; i += stride) {
       for (j = 0; j < maxCol; j += stride) {
@@ -311,11 +224,11 @@ L.VectorField = (L.Layer ? L.Layer : L.Class).extend({
         avy = [];
         for (k = 0; k < stride; k++) {
           for (l = 0; l < stride; l++) {
-            if (this._data[i + k][j + l] !== null) {
-              alat.push(this._data[i + k][j + l][0]);
-              alng.push(this._data[i + k][j + l][1]);
-              avx.push(this._data[i + k][j + l][3]);
-              avy.push(this._data[i + k][j + l][4]);
+            if (!isNaN(this._data[i + k][j + l])) {
+              alat.push(this._geometry[i + k][j + l]);
+              alng.push(this._geometry[i + k][j + l + this._dataWidth]);
+              avx.push(this._data[i + k][j + l]);
+              avy.push(this._data[i + k][j + l + this._dataWidth]);
             }
           }
         }
@@ -326,11 +239,9 @@ L.VectorField = (L.Layer ? L.Layer : L.Class).extend({
           vx = this._getAve(avx);
           vy = this._getAve(avy);
 
-          latlng = this._CHtolatlng([lat, lng]);
+          latlng = L.latLng(lat, lng);
           p = this._map.latLngToContainerPoint(latlng);
-
           value = Math.abs(Math.sqrt(Math.pow(vx, 2) + Math.pow(vy, 2)));
-
           rotation = Math.atan2(vx, vy) - Math.PI / 2;
 
           cell = { center: p, value: value, rotation: rotation };
@@ -431,14 +342,15 @@ L.VectorField = (L.Layer ? L.Layer : L.Class).extend({
   },
 
   _onMousemove: function (t) {
-    var e = this._queryValue(t);
-    this.fire("mousemove", e);
+    //var e = this._queryValue(t);
+    this.fire("mousemove", t);
   },
 
   _onClick: function (t) {
     var e = this._queryValue(t);
     this.fire("click", e);
   },
+
   _queryValue: function (click) {
     let point = this._WGSlatlngtoCH(click.latlng.lat, click.latlng.lng);
     let data = this._data.flat().filter((i) => i !== null);
