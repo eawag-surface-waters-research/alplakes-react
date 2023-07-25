@@ -38,6 +38,7 @@ class Lake extends Component {
     updateSimpleline: false,
     selection: "add",
     fullscreen: false,
+    sidebarOpen: false,
   };
 
   setSelection = (newSelection) => {
@@ -47,6 +48,14 @@ class Lake extends Component {
     } else {
       this.setState({ selection: newSelection });
     }
+  };
+
+  openSidebar = () => {
+    this.setState({ sidebarOpen: true });
+  };
+
+  closeSidebar = () => {
+    this.setState({ sidebarOpen: false });
   };
 
   toggleFullscreen = () => {
@@ -359,7 +368,8 @@ class Lake extends Component {
   }
 
   render() {
-    var { metadata, lake_id, loading, clickblock, fullscreen } = this.state;
+    var { metadata, lake_id, loading, clickblock, fullscreen, sidebarOpen } =
+      this.state;
     var { language, dark } = this.props;
     if ("name" in metadata) document.title = metadata.name[language];
     return (
@@ -384,6 +394,7 @@ class Lake extends Component {
               setBasemap={this.setBasemap}
               toggleFullscreen={this.toggleFullscreen}
               clearOverlays={this.clearOverlays}
+              openSidebar={this.openSidebar}
               {...this.state}
             />
           </div>
@@ -399,6 +410,8 @@ class Lake extends Component {
                 setPeriod={this.setPeriod}
                 setDepth={this.setDepth}
                 updateOptions={this.updateOptions}
+                closeSidebar={this.closeSidebar}
+                sidebarOpen={sidebarOpen}
               />
             )}
             {this.state.error === "name" && (

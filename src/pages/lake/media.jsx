@@ -252,6 +252,7 @@ class Media extends Component {
       fullscreen,
       toggleFullscreen,
       layers,
+      openSiderbar,
     } = this.props;
     var { settings, legend, graphData, graphs } = this.state;
     var descriptions = Translate.descriptions[language];
@@ -271,6 +272,7 @@ class Media extends Component {
             {...this.props}
             getProfile={this.getProfile}
             getTransect={this.getTransect}
+            openSiderbar={openSiderbar}
           />
         </div>
         <div className="gradient" />

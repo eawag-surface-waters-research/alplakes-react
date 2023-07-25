@@ -406,6 +406,10 @@
   background-color: #474747;
 }
 
+.main .lake .content .primary .map-component .leaflet-settings-control {
+  display: none;
+}
+
 .main .lake .content .primary .report-issue {
   z-index: 9999;
   position: absolute;
@@ -618,6 +622,29 @@
   cursor: pointer;
   box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 }
+
+.main .lake .content .secondary .settings .settings-close {
+  display: none;
+  position: absolute;
+  top: 8px;
+  right: 20px;
+  color: black;
+  cursor: pointer;
+  border-radius: 8px;
+  height: 36px;
+}
+
+.main.dark .lake .content .secondary .settings .settings-close {
+  color: white;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.main .lake .content .secondary .settings .settings-close .settings-close-inner {
+  font-size: 36px;
+  margin-top: -9px;
+}
+
+
 
 .main.dark .lake .content .secondary .settings-icon {
   background-color: rgba(15, 15, 15);
@@ -1346,19 +1373,22 @@
     left: 0;
   }
 
+  .main .lake .content .primary .map-component .leaflet-settings-control {
+    display: block;
+  }
+
   .main .lake .content .secondary .settings {
     z-index: 190;
     position: fixed;
     left: 0px;
-    top: 240px;
+    top: 0px;
     background-color: rgba(255, 255, 255, 0.95);
     width: 400px;
-    padding: 20px;
+    padding: 52px 20px 8px 20px;
     box-sizing: border-box;
     max-width: 100%;
     box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
-    height: calc(100% - 240px);
-    overflow: auto;
+    height: 100%;
     -webkit-transition: all 0.7s ease-out;
     -moz-transition: all 0.7s ease-out;
     -ms-transition: all 0.7s ease-out;
@@ -1366,16 +1396,25 @@
     transition: all 0.7s ease-out;
   }
 
-  .main.dark .lake .content .secondary .settings {
-    background-color: rgba(15, 15, 15, 0.97);
+  .main .lake .content .secondary .settings .settings-buffer {
+    overflow: auto;
+    height: 100%;
+    width: 100%;
   }
 
-  .main .lake .content .secondary .settings::-webkit-scrollbar {
+  .main.dark .lake .content .secondary .settings {
+    background-color: rgba(15, 15, 15, 0.97);
+    box-shadow: #a4a4a4ed 0px 0px 8px;
+
+  }
+
+  .main .lake .content .secondary .settings .settings-buffer::-webkit-scrollbar {
     display: none;
   }
 
   .main .lake .content .secondary .settings.hide {
     left: -400px;
+    box-shadow: none;
   }
 
   .main .lake .content .secondary .settings-icon {
@@ -1383,12 +1422,7 @@
   }
 
   .main .lake .content .secondary .settings .settings-close {
-    position: absolute;
-    top: -3px;
-    right: 5px;
-    font-size: 35px;
-    color: red;
-    cursor: pointer;
+    display: block;
   }
 
   .main .lake .content .secondary .settings .settings-close.hide {
@@ -1443,7 +1477,7 @@
   }
 
   .main .lake .content .secondary .depth-period {
-    margin-top: 12px;
+    margin-top: 0;
   }
 
   .main .lake .content .secondary .menu {
@@ -1472,8 +1506,12 @@
 
 }
 
-@media screen and (max-width: 450px) {
+@media screen and (max-width: 400px) {
   .main .lake .content .secondary .settings {
-    padding: 4px;
+    padding: 52px 8px 8px 8px;
+  }
+
+  .main .lake .content .secondary .settings .settings-close {
+    right: 8px;
   }
 }

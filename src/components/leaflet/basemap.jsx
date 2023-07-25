@@ -77,6 +77,7 @@ class Basemap extends Component {
     }
   }
   async componentDidMount() {
+    var { openSidebar } = this.props;
     this.dataStore = {};
     this.layerStore = {};
     var center = [46.9, 8.2];
@@ -102,6 +103,30 @@ class Basemap extends Component {
     this.layerStore["basemap"] = basemap;
 
     this.layer = L.layerGroup([]).addTo(this.map);
+
+    L.control
+      .custom({
+        position: "topleft",
+        content: `<div class="bar-container">
+                    <div class="bar"></div>
+                    <div class="ball ball1"></div>
+                  </div>
+                  <div class="bar-container">
+                    <div class="bar"></div>
+                    <div class="ball ball2"></div>
+                  </div>
+                  <div class="bar-container">
+                    <div class="bar"></div>
+                    <div class="ball ball3"></div>
+                  </div>`,
+        classes: "leaflet-settings-control",
+        events: {
+          click: function () {
+            openSidebar();
+          },
+        },
+      })
+      .addTo(this.map);
   }
 
   render() {

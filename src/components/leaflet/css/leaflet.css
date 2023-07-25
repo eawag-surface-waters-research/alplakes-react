@@ -500,7 +500,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
 /* Other controls */
 
 .leaflet-draw {
-  border: none!important;
+  border: none !important;
 }
 
 .leaflet-draw-toolbar {
@@ -632,6 +632,58 @@ svg.leaflet-image-layer.leaflet-interactive path {
 .leaflet-touch .leaflet-control-layers,
 .leaflet-touch .leaflet-bar {
   background-clip: padding-box;
+}
+
+.leaflet-settings-control {
+  padding: 4px 7px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px !important;
+  background-color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 28px;
+}
+
+.leaflet-settings-control .bar-container {
+  position: relative;
+  height: 2px;
+  background-color: #333;
+  margin: 7px 0;
+}
+
+.leaflet-settings-control .ball {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #333;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  transition: left 0.5s ease;
+}
+
+.leaflet-settings-control .ball1 {
+  left: 65%;
+}
+
+.leaflet-settings-control .ball2 {
+  left: 25%;
+}
+
+.leaflet-settings-control .ball3 {
+  left: 50%;
+}
+
+.leaflet-settings-control:hover .ball1 {
+  left: 30%;
+}
+
+.leaflet-settings-control:hover .ball2 {
+  left: 65%;
+}
+
+.leaflet-settings-control:hover .ball3 {
+  left: 40%;
 }
 
 /* popup */
