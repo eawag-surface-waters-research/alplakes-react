@@ -83,19 +83,25 @@
         "unit": "m/s",
         "height": 41,
         "width": 88,
-        "display": "streamlines",
+        "display": "current",
         "depth": true,
         "period": true,
         "options": {
+          "raster": false,
+          "streamlines": false,
+          "arrows": true,
+          "vector": true,
           "paths": 1000,
-          "color": "#ffffff",
+          "streamlinesColor": "#ffffff",
+          "arrowsColor": "#000000",
           "width": 0.5,
           "fade": 0.97,
           "duration": 10,
           "maxAge": 80,
           "velocityScale": 0.01,
-          "opacity": 0.7,
-          "zIndex": 3
+          "opacity": 0.8,
+          "zIndex": 3,
+          "paletteName": "Thermal"
         }
       }
     },

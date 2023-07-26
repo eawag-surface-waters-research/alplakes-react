@@ -4,7 +4,7 @@ import * as d3 from "d3";
 L.Streamlines = (L.Layer ? L.Layer : L.Class).extend({
   options: {
     paths: 800,
-    color: "white",
+    streamColor: "white",
     width: 0.5,
     fade: 0.97,
     duration: 10,
@@ -238,7 +238,7 @@ L.Streamlines = (L.Layer ? L.Layer : L.Class).extend({
     // fading paths...
     ctx.fillStyle = `rgba(0, 0, 0, ${this.options.fade})`;
     ctx.lineWidth = this.options.width;
-    ctx.strokeStyle = this.options.color;
+    ctx.strokeStyle = this.options.streamColor;
 
     // New paths
     let self = this;
@@ -269,7 +269,7 @@ L.Streamlines = (L.Layer ? L.Layer : L.Class).extend({
         par.v = par.vt;
 
         // colormap vs. simple color
-        let color = this.options.color;
+        let color = this.options.streamColor;
         if (typeof color === "function") {
           let mag = Math.sqrt(par.u ** 2 + par.v ** 2);
           ctx.strokeStyle = color(mag);

@@ -205,17 +205,37 @@ class Raster extends Component {
   }
 }
 
-class Streamlines extends Component {
+class Current extends Component {
   state = {
     minVelocityScale: 0.0001,
     maxVelocityScale: 0.2,
     _paths: this.props.options.paths,
   };
 
-  setColor = (event) => {
+  setPalette = (event) => {
+    var { id, updateOptions, options } = this.props;
+    options["paletteName"] = event.name;
+    options["palette"] = event.palette;
+    updateOptions(id, options);
+  };
+
+  setStreamlinesColor = (event) => {
     var { id, updateOptions, options } = this.props;
     var value = event.target.value;
-    options["color"] = value;
+    options["streamlinesColor"] = value;
+    updateOptions(id, options);
+  };
+
+  setArrowsColor = (event) => {
+    var { id, updateOptions, options } = this.props;
+    var value = event.target.value;
+    options["arrowsColor"] = value;
+    updateOptions(id, options);
+  };
+
+  toggleDisplay = (type) => {
+    var { id, updateOptions, options } = this.props;
+    options[type] = !options[type];
     updateOptions(id, options);
   };
 
@@ -326,7 +346,17 @@ class Streamlines extends Component {
   render() {
     var { _paths } = this.state;
     var { minDate, maxDate, language, layer } = this.props;
-    var { color, opacity, velocityScale } = this.props.options;
+    var {
+      opacity,
+      velocityScale,
+      palette,
+      paletteName,
+      arrows,
+      streamlines,
+      raster,
+      arrowsColor,
+      streamlinesColor,
+    } = this.props.options;
 
     var downloadDates = this.downloadDates(
       layer.properties.model,
@@ -338,9 +368,49 @@ class Streamlines extends Component {
     return (
       <div className="layer-settings">
         <div className="layer-section">{Translate.settings[language]}</div>
-        {/*<div className="switch">
-          <button>Directional Arrows</button>
-        </div>*/}
+
+        <div className="layer-sub-section">
+          Arrows
+          <label className="switch">
+            <input
+              type="checkbox"
+              checked={arrows}
+              onChange={() => this.toggleDisplay("arrows")}
+            />
+            <span className="slider round"></span>
+          </label>
+        </div>
+        <div className="setting half">
+          <div className="label">Color</div>
+          <input
+            type="color"
+            value={arrowsColor}
+            onChange={this.setArrowsColor}
+          ></input>
+        </div>
+        <div className="setting half">
+          <div className="label">Opacity</div>
+          <div className="value">{opacity}</div>
+          <input
+            type="range"
+            min="0"
+            max="1"
+            step="0.1"
+            value={opacity}
+            onChange={this.setOpacity}
+          ></input>
+        </div>
+        <div className="layer-sub-section">
+          Streamlines
+          <label className="switch">
+            <input
+              type="checkbox"
+              checked={streamlines}
+              onChange={() => this.toggleDisplay("streamlines")}
+            />
+            <span className="slider round"></span>
+          </label>
+        </div>
         <div className="setting half">
           <div className="label">Paths</div>
           <input
@@ -353,7 +423,11 @@ class Streamlines extends Component {
         </div>
         <div className="setting half">
           <div className="label">Color</div>
-          <input type="color" value={color} onChange={this.setColor}></input>
+          <input
+            type="color"
+            value={streamlinesColor}
+            onChange={this.setStreamlinesColor}
+          ></input>
         </div>
         <div className="setting half">
           <div className="label">Speed</div>
@@ -368,6 +442,34 @@ class Streamlines extends Component {
             value={this.convertSpeed(velocityScale)}
             onChange={this.setSpeed}
           />
+        </div>
+        <div className="setting half">
+          <div className="label">Opacity</div>
+          <div className="value">{opacity}</div>
+          <input
+            type="range"
+            min="0"
+            max="1"
+            step="0.1"
+            value={opacity}
+            onChange={this.setOpacity}
+          ></input>
+        </div>
+        <div className="layer-sub-section">
+          Raster
+          <label className="switch">
+            <input
+              type="checkbox"
+              checked={raster}
+              onChange={() => this.toggleDisplay("raster")}
+            />
+            <span className="slider round"></span>
+          </label>
+        </div>
+        <div className="setting">
+          <div className="label">Palette</div>
+          <div className="value">{paletteName}</div>
+          <ColorRamp onChange={this.setPalette} value={palette} />
         </div>
         <div className="setting half">
           <div className="label">Opacity</div>
@@ -816,7 +918,6 @@ class Transect extends Component {
   componentWillUnmount() {}
 
   render() {
-    var { language } = this.props;
     return <div className="layer-settings"></div>;
   }
 }
@@ -829,7 +930,6 @@ class Profile extends Component {
   componentWillUnmount() {}
 
   render() {
-    var { language } = this.props;
     return <div className="layer-settings"></div>;
   }
 }
@@ -977,9 +1077,9 @@ class LayerSettings extends Component {
           layer={layer}
         />
       );
-    } else if (type === "streamlines") {
+    } else if (type === "current") {
       return (
-        <Streamlines
+        <Current
           id={layer.id}
           options={layer.properties.options}
           updateOptions={updateOptions}

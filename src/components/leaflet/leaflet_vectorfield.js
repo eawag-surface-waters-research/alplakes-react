@@ -4,7 +4,8 @@ import { min, max } from "d3";
 L.VectorField = (L.Layer ? L.Layer : L.Class).extend({
   options: {
     vectorArrowColor: false,
-    size: 20,
+    arrowsColor: "black",
+    size: 15,
     min: "null",
     max: "null",
     palette: [
@@ -21,8 +22,10 @@ L.VectorField = (L.Layer ? L.Layer : L.Class).extend({
     this._dataHeight = geometry.length;
     this._geometry = geometry;
     this._data = data;
-    if (isNaN(this.options.min)) this.options.min = min(data.flat());
-    if (isNaN(this.options.max)) this.options.max = max(data.flat());
+    if (isNaN(this.options.min))
+      this.options.min = min(data.flat().map((d) => Math.abs(d)));
+    if (isNaN(this.options.max))
+      this.options.max = max(data.flat().map((d) => Math.abs(d)));
   },
   onAdd: function (map) {
     this._map = map;
@@ -56,6 +59,8 @@ L.VectorField = (L.Layer ? L.Layer : L.Class).extend({
       "msTransformOrigin",
     ]);
     canvas.style[originProp] = "50% 50%";
+    canvas.style.opacity = this.options.opacity;
+    canvas.style.zIndex = this.options.zIndex + 100;
 
     var size = this._map.getSize();
     canvas.width = size.x;
@@ -102,7 +107,13 @@ L.VectorField = (L.Layer ? L.Layer : L.Class).extend({
     L.DomUtil.setPosition(this._canvas, topLeft);
     this._redraw();
   },
-
+  update: function (data, options) {
+    L.Util.setOptions(this, options);
+    this._canvas.style.opacity = this.options.opacity;
+    this._canvas.style.zIndex = this.options.zIndex + 100;
+    this._data = data;
+    this._reset();
+  },
   _firstPixel: function () {
     for (var i = 0; i < this._dataWidth - 1; i++) {
       for (var j = 0; j < this._dataHeight - 1; j++) {
@@ -117,7 +128,6 @@ L.VectorField = (L.Layer ? L.Layer : L.Class).extend({
       }
     }
   },
-
   _pixelSize: function () {
     var { i, j } = this._firstPixel();
     var i0j0 = this._map.latLngToContainerPoint(
@@ -149,25 +159,24 @@ L.VectorField = (L.Layer ? L.Layer : L.Class).extend({
 
     return Math.max(pixelx, pixely);
   },
-
   _drawArrow: function (cell, ctx, size) {
     var { center, value, rotation } = cell;
-
-    size =
-      size * 0.5 +
-      (size * (value - this.options.min)) /
-        (this.options.max - this.options.min);
+    var scaledArrow =
+      size * 0.2 +
+      size *
+        2 *
+        ((value - this.options.min) / (this.options.max - this.options.min));
 
     // Arrow Center
     ctx.save();
     ctx.translate(center.x, center.y);
 
     // Arrow Color
-    var color = [0, 0, 0];
+    var color = this.options.arrowsColor;
     if (this.options.vectorArrowColor) {
       color = this._getColor(value);
     }
-    ctx.strokeStyle = `rgb(${color.join(",")})`;
+    ctx.strokeStyle = color;
 
     // Arrow Rotation
     if (value === 0) rotation = Math.PI / 4;
@@ -180,19 +189,22 @@ L.VectorField = (L.Layer ? L.Layer : L.Class).extend({
     // Draw Path
     if (value === 0) {
       ctx.beginPath();
-      ctx.moveTo(-size / 4, 0);
-      ctx.lineTo(+size / 4, 0);
-      ctx.moveTo(0, -size / 4);
-      ctx.lineTo(0, +size / 4);
+      ctx.moveTo(-scaledArrow / 4, 0);
+      ctx.lineTo(+scaledArrow / 4, 0);
+      ctx.moveTo(0, -scaledArrow / 4);
+      ctx.lineTo(0, +scaledArrow / 4);
       ctx.stroke();
       ctx.restore();
     } else {
       ctx.beginPath();
-      ctx.moveTo(-size / 2, 0);
-      ctx.lineTo(+size / 2, 0);
-      ctx.moveTo(size * 0.15, -size * 0.15);
-      ctx.lineTo(+size / 2, 0);
-      ctx.lineTo(size * 0.15, size * 0.15);
+      ctx.moveTo(-scaledArrow / 2, 0);
+      ctx.lineTo((scaledArrow * 9) / 20, 0);
+      ctx.moveTo(scaledArrow * 0.25, -scaledArrow * 0.15);
+      ctx.lineTo(+scaledArrow / 2, 0);
+      ctx.lineTo(scaledArrow * 0.25, scaledArrow * 0.15);
+      ctx.lineTo((scaledArrow * 9) / 20, 0);
+      ctx.lineTo(scaledArrow * 0.25, -scaledArrow * 0.15);
+      ctx.fill();
       ctx.stroke();
       ctx.restore();
     }
@@ -207,7 +219,7 @@ L.VectorField = (L.Layer ? L.Layer : L.Class).extend({
 
     var pixelSize = this._pixelSize();
 
-    var stride = Math.max(1, Math.floor((1.2 * size) / pixelSize));
+    var stride = Math.max(1, Math.ceil((1.1 * size) / pixelSize));
 
     if (stride === 1) {
       size = pixelSize * 0.5;
@@ -372,6 +384,6 @@ L.VectorField = (L.Layer ? L.Layer : L.Class).extend({
   },
 });
 
-L.vectorfield = function (data, options) {
-  return new L.VectorField(data, options);
+L.vectorfield = function (geometry, data, options) {
+  return new L.VectorField(geometry, data, options);
 };

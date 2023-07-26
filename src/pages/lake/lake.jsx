@@ -395,6 +395,7 @@ class Lake extends Component {
               toggleFullscreen={this.toggleFullscreen}
               clearOverlays={this.clearOverlays}
               openSidebar={this.openSidebar}
+              clickblock={clickblock}
               {...this.state}
             />
           </div>

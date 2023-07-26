@@ -18,6 +18,8 @@ L.Raster = L.Layer.extend({
   },
   initialize: function (geometry, data, options) {
     this._geometry = geometry;
+    this._dataWidth = geometry[0].length / 2;
+    this._dataHeight = geometry.length;
     this._data = data;
     this._grid_vertices();
     L.Util.setOptions(this, options);
@@ -97,21 +99,22 @@ L.Raster = L.Layer.extend({
     this._reset();
   },
   _grid_vertices: function () {
-    var start, end;
+    var start;
     if (this._data.length === 2) {
       start = this._data[0];
-      end = this._data[1];
     } else {
       start = this._data;
-      end = this._data;
     }
-    var y = start.length;
-    var x = start[0].length;
     var vertices = [];
-    for (var i = 1; i < y - 1; i++) {
-      for (var j = 1; j < x - 1; j++) {
+    for (var i = 1; i < this._dataHeight - 1; i++) {
+      for (var j = 1; j < this._dataWidth - 1; j++) {
         if (!isNaN(start[i][j])) {
-          let coords = this._getCellCorners(this._geometry, i, j, x);
+          let coords = this._getCellCorners(
+            this._geometry,
+            i,
+            j,
+            this._dataWidth
+          );
           vertices.push(coords);
         }
       }
@@ -151,16 +154,21 @@ L.Raster = L.Layer.extend({
       start = this._data;
       end = this._data;
     }
-    var y = start.length;
-    var x = start[0].length;
     var cell = 0;
     var values = [];
     var points = [];
-    for (var i = 1; i < y - 1; i++) {
-      for (var j = 1; j < x - 1; j++) {
+    for (var i = 1; i < this._dataHeight - 1; i++) {
+      for (var j = 1; j < this._dataWidth - 1; j++) {
         if (!isNaN(start[i][j])) {
           var value =
             start[i][j] + (end[i][j] - start[i][j]) * this.options.interpolate;
+          if ("vector" in this.options && this.options.vector) {
+            let value2 =
+              start[i][j + this._dataWidth] +
+              (end[i][j + this._dataWidth] - start[i][j + this._dataWidth]) *
+                this.options.interpolate;
+            value = Math.sqrt(value ** 2 + value2 ** 2);
+          }
           let color = this._getColor(
             value,
             this.options.min,
@@ -169,7 +177,10 @@ L.Raster = L.Layer.extend({
           );
           values.push(value);
           points.push(
-            L.latLng([this._geometry[i][j], this._geometry[i][j + x]])
+            L.latLng([
+              this._geometry[i][j],
+              this._geometry[i][j + this._dataWidth],
+            ])
           );
           let coords = this._vertices[cell];
           this._drawCell(this._ctx, coords, `rgb(${color.join(",")})`);

@@ -9,7 +9,7 @@ import "./leaflet_streamlines";
 import "./leaflet_floatgeotiff";
 import "./leaflet_particletracking";
 import "./leaflet_polylinedraw";
-import "./leaflet_vectorfield"
+import "./leaflet_vectorfield";
 import "./leaflet_markerdraw";
 
 const setNested = (obj, args, value) => {
@@ -371,6 +371,9 @@ const downloadAlplakesHydrodynamicParameter = async (
       (i + 1) * (layer.properties.height + 1)
     );
     var data_flat = data.flat();
+    if (parameter === "velocity") {
+      data_flat = data_flat.map((d) => Math.abs(d));
+    }
     bounds.min.push(d3.min(data_flat));
     bounds.max.push(d3.max(data_flat));
     setNested(dataStore, [...path, date], data);
@@ -422,8 +425,8 @@ const plotAlplakesHydrodynamic = (
       newData,
       interpolate
     );
-  } else if (display === "streamlines") {
-    plotAlplakesHydrodynamicStreamlines(
+  } else if (display === "current") {
+    plotAlplakesHydrodynamicCurrent(
       layer,
       layerStore,
       map,
@@ -466,7 +469,7 @@ const plotAlplakesHydrodynamicRaster = (
   setNested(layerStore, path, leaflet_layer);
 };
 
-const plotAlplakesHydrodynamicStreamlines = (
+const plotAlplakesHydrodynamicCurrent = (
   layer,
   layerStore,
   map,
@@ -494,7 +497,19 @@ const plotAlplakesHydrodynamicStreamlines = (
       options["unit"] = layer.properties.unit;
     }
   }
-  var leaflet_layer = L.vectorfield(geometry, data, options).addTo(map);
+  var leaflet_layer = { arrows: false, streamlines: false, raster: false };
+
+  if ("arrows" in options && options.arrows) {
+    leaflet_layer.arrows = L.vectorfield(geometry, data, options).addTo(map);
+  }
+  if ("streamlines" in options && options.streamlines) {
+    leaflet_layer.streamlines = L.streamlines(geometry, data, options).addTo(
+      map
+    );
+  }
+  if ("raster" in options && options.raster) {
+    leaflet_layer.raster = L.raster(geometry, data, options).addTo(map);
+  }
   setNested(layerStore, path, leaflet_layer);
 };
 
@@ -519,8 +534,15 @@ const updateAlplakesHydrodynamic = (
     layer.properties.parameter,
     String(depth),
   ];
+  var geometry_path = [
+    layer.type,
+    layer.properties.model,
+    layer.properties.lake,
+    "geometry",
+  ];
 
   var data = getNested(dataStore, data_path);
+  var geometry = getNested(dataStore, geometry_path);
 
   var options = {};
   if ("options" in layer.properties) {
@@ -542,7 +564,36 @@ const updateAlplakesHydrodynamic = (
   }
 
   var leaflet_layer = getNested(layerStore, layer_path);
-  if (leaflet_layer !== null) {
+  if (layer.properties.parameter === "velocity") {
+    for (var key of Object.keys(leaflet_layer)) {
+      if (leaflet_layer[key] && options[key]) {
+        leaflet_layer[key].update(newData, options);
+      } else if (leaflet_layer[key] && !options[key]) {
+        map.removeLayer(leaflet_layer[key]);
+        leaflet_layer[key] = false;
+      } else if (!leaflet_layer[key] && options[key]) {
+        if (key === "arrows") {
+          leaflet_layer.arrows = L.vectorfield(
+            geometry,
+            newData,
+            options
+          ).addTo(map);
+        }
+        if (key === "streamlines") {
+          leaflet_layer.streamlines = L.streamlines(
+            geometry,
+            newData,
+            options
+          ).addTo(map);
+        }
+        if (key === "raster") {
+          leaflet_layer.raster = L.raster(geometry, newData, options).addTo(
+            map
+          );
+        }
+      }
+    }
+  } else if (leaflet_layer !== null) {
     leaflet_layer.update(newData, options);
   }
 };
@@ -555,7 +606,17 @@ const removeAlplakesHydrodynamic = (layer, layerStore, map) => {
     layer.properties.parameter,
   ];
   var leaflet_layer = getNested(layerStore, path);
-  map.removeLayer(leaflet_layer);
+  if (leaflet_layer) {
+    if (layer.properties.parameter === "velocity" && leaflet_layer) {
+      for (var key of Object.keys(leaflet_layer)) {
+        if (leaflet_layer[key]) {
+          map.removeLayer(leaflet_layer[key]);
+        }
+      }
+    } else {
+      map.removeLayer(leaflet_layer);
+    }
+  }
   setNested(layerStore, path, null);
 };
 

@@ -253,6 +253,7 @@ class Media extends Component {
       toggleFullscreen,
       layers,
       openSiderbar,
+      clickblock,
     } = this.props;
     var { settings, legend, graphData, graphs } = this.state;
     var descriptions = Translate.descriptions[language];
@@ -260,6 +261,18 @@ class Media extends Component {
     return (
       <div className="map-component">
         {legend && <Legend layers={layers} language={language} />}
+        {clickblock && (
+          <div className="data-loading">
+            <div className="sk-chase">
+              <div className="sk-chase-dot"></div>
+              <div className="sk-chase-dot"></div>
+              <div className="sk-chase-dot"></div>
+              <div className="sk-chase-dot"></div>
+              <div className="sk-chase-dot"></div>
+              <div className="sk-chase-dot"></div>
+            </div>
+          </div>
+        )}
         {graphs && (
           <Graphs
             data={graphData}
