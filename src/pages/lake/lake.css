@@ -1680,6 +1680,10 @@
     font-size: 10px;
   }
 
+  .main .lake .content .primary .map-component .playback .play-controls .clickable-button .tooltip {
+    display: none;
+  }
+
 }
 
 @media screen and (max-width: 400px) {

@@ -25,6 +25,7 @@ class Basemap extends Component {
       unlock,
       getTransect,
       getProfile,
+      startAnimation,
     } = this.props;
     if (updates.length > 0) {
       updated();
@@ -61,6 +62,8 @@ class Basemap extends Component {
             this.layerStore,
             this.map
           );
+        } else if (update.event === "play") {
+          startAnimation();
         }
       }
       unlock();

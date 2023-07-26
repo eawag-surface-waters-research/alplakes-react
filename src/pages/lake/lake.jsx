@@ -95,6 +95,12 @@ class Lake extends Component {
     this.setState({ play: !this.state.play });
   };
 
+  startAnimation = () => {
+    setTimeout(() => {
+      this.setState({ play: true });
+    }, 2000);
+  };
+
   setPeriod = (period) => {
     var { layers, updates } = this.state;
     if (period !== this.state.period) {
@@ -319,6 +325,7 @@ class Lake extends Component {
           updates.push({ event: "addLayer", id: layer.id });
         }
       }
+      updates.push({ event: "play" });
       var depth = metadata.depth;
       var depths = [depth];
       try {
@@ -396,6 +403,7 @@ class Lake extends Component {
               clearOverlays={this.clearOverlays}
               openSidebar={this.openSidebar}
               clickblock={clickblock}
+              startAnimation={this.startAnimation}
               {...this.state}
             />
           </div>
