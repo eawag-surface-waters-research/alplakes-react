@@ -228,6 +228,64 @@
       }
     },
     {
+      "id": 6,
+      "type": "sencast_tiff",
+      "active": false,
+      "description": "Secchi depth with bias removed from the QAA-RGB (Pitarch and Vanhellemont, 2021) from Sentinel 2 data using the @1@ python package and @2@.",
+      "links": {
+        "1": [
+          "SenCast",
+          "https://github.com/eawag-surface-waters-research/sencast"
+        ],
+        "2": ["Acolite", "https://github.com/acolite/acolite"]
+      },
+      "properties": {
+        "model": "Sentinel2",
+        "lake": "biel",
+        "parameter": "secchi",
+        "metadata": "https://eawagrs.s3.eu-central-1.amazonaws.com/metadata/sentinel2/biel_p3qaa_zSD.json",
+        "unit": "m",
+        "display": "tiff",
+        "depth": false,
+        "period": false,
+        "options": {
+          "paletteName": "Thermal",
+          "zIndex": 2,
+          "opacity": 1,
+          "convolve": 2
+        }
+      }
+    },
+    {
+      "id": 7,
+      "type": "sencast_tiff",
+      "active": false,
+      "description": "Turbidity (FNU) using the algorithm of Nechad et al. (2009) recalibrated by Bouchra Nechad in September 2016 from Sentinel 2 data using the @1@ python package and @2@.",
+      "links": {
+        "1": [
+          "SenCast",
+          "https://github.com/eawag-surface-waters-research/sencast"
+        ],
+        "2": ["Acolite", "https://github.com/acolite/acolite"]
+      },
+      "properties": {
+        "model": "Sentinel2",
+        "lake": "biel",
+        "parameter": "turbidity",
+        "metadata": "https://eawagrs.s3.eu-central-1.amazonaws.com/metadata/sentinel2/biel_TUR_Nechad2016_665.json",
+        "unit": "g m-3",
+        "display": "tiff",
+        "depth": false,
+        "period": false,
+        "options": {
+          "paletteName": "Thermal",
+          "zIndex": 2,
+          "opacity": 1,
+          "convolve": 2
+        }
+      }
+    },
+    {
       "id": 8,
       "type": "sentinel_hub_wms",
       "active": false,
@@ -247,6 +305,32 @@
         "period": false,
         "options": {
           "layer": "TRUE-COLOR",
+          "gain": 1,
+          "gamma": 1,
+          "zIndex": 0
+        }
+      }
+    },
+    {
+      "id": 20,
+      "type": "sentinel_hub_wms",
+      "active": false,
+      "description": "RGB real color Sentinel 2 images provided by @1@.",
+      "links": {
+        "1": ["Sentinel-Hub", "https://www.sentinel-hub.com/"]
+      },
+      "properties": {
+        "model": "Sentinel2",
+        "lake": "biel",
+        "parameter": "realcolor",
+        "metadata": "https://eawagrs.s3.eu-central-1.amazonaws.com/metadata/sentinel2/biel_p3qaa_zSD.json",
+        "wms": "https://services.sentinel-hub.com/ogc/wms/a595b5c3-8963-4076-98ad-5cbe7e9d7999",
+        "unit": "",
+        "display": "wms",
+        "depth": false,
+        "period": false,
+        "options": {
+          "layer": "TRUE_COLOR",
           "gain": 1,
           "gamma": 1,
           "zIndex": 0
