@@ -211,7 +211,7 @@
         "model": "Sentinel2",
         "lake": "stmoritz",
         "parameter": "realcolor",
-        "metadata": "https://eawagrs.s3.eu-central-1.amazonaws.com/metadata/sentinel2/stmortiz_p3qaa_zSD.json",
+        "metadata": "https://eawagrs.s3.eu-central-1.amazonaws.com/metadata/sentinel2/stmoritz_p3qaa_zSD.json",
         "wms": "https://services.sentinel-hub.com/ogc/wms/a595b5c3-8963-4076-98ad-5cbe7e9d7999",
         "unit": "",
         "display": "wms",
