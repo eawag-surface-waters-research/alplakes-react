@@ -354,32 +354,24 @@ L.VectorField = (L.Layer ? L.Layer : L.Class).extend({
   },
 
   _onMousemove: function (t) {
-    //var e = this._queryValue(t);
-    this.fire("mousemove", t);
+    try {
+      var e = this._queryValue(t);
+      this.fire("click", e);
+    } catch (e) {
+      console.error("Leaflet vectorfield mousemove event failed.", e);
+    }
   },
 
   _onClick: function (t) {
-    var e = this._queryValue(t);
-    this.fire("click", e);
+    try {
+      var e = this._queryValue(t);
+      this.fire("click", e);
+    } catch (e) {
+      console.error("Leaflet vectorfield click event failed.", e);
+    }
   },
 
   _queryValue: function (click) {
-    let point = this._WGSlatlngtoCH(click.latlng.lat, click.latlng.lng);
-    let data = this._data.flat().filter((i) => i !== null);
-    data = data.map((d) => {
-      return {
-        data: d,
-        dist: Math.sqrt((d[0] - point.y) ** 2 + (d[1] - point.x) ** 2),
-      };
-    });
-    data.sort((a, b) => (a.dist > b.dist ? 1 : -1));
-    let u = null;
-    let v = null;
-    if (data[0].dist < 300) {
-      u = data[0].data[3];
-      v = data[0].data[4];
-    }
-    click["value"] = { u, v };
     return click;
   },
 });
