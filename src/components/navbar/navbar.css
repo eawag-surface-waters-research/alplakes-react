@@ -3,23 +3,24 @@
   position: fixed;
   left: 0;
   top: 0;
-  background-color: rgba(255, 255, 255, 0.95);
+  background-color: rgba(255, 255, 255, 1);
   z-index: 3;
+  height: 66px;
 }
 
 .navbar.dark {
-  background-color: rgba(15, 15, 15, 0.9);
+  background-color: rgba(15, 15, 15, 1);
 }
 
 .navbar img.icon {
-  padding: 24px 0 20px 24px;
-  height: 24px;
+  margin: 18px 0 0 24px;
+  height: 30px;
 }
 
 .navbar .desktop-nav {
   position: absolute;
-  top: 0;
-  left: 40%;
+  top: 18px;
+  right: 110px;
   text-align: center;
 }
 
@@ -35,25 +36,31 @@
 
 .navbar .desktop-nav .nav-item {
   display: inline-block;
-  padding: 21px 0 24px 0;
-  width: 128px;
+  padding: 6px 18px;
+  width: 92px;
   transition: 0.2s ease-in-out all;
   box-sizing: border-box;
-  margin: 0 4px;
-  border-top: 3px solid transparent;
+  margin: 0 8px;
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 8px;
+}
+
+.navbar.dark .desktop-nav .nav-item {
+  background: radial-gradient(circle, rgb(255 255 255 / 0%) 0%, rgba(37, 37, 37, 1) 100%);
 }
 
 .navbar .desktop-nav .nav-item:hover {
-  border-top: 3px solid grey;
+  background-color: #e3e3e3;
 }
 
-.navbar .desktop-nav .nav-item.active {
-  border-top: 3px solid black;
+
+.navbar.dark .desktop-nav .nav-item:hover {
+  background-color: rgba(255, 255, 255, 0.15);
 }
 
-.navbar.dark .desktop-nav .nav-item.active {
-  border-top: 3px solid #e5e5e5;
-}
+.navbar .desktop-nav .nav-item.active {}
+
+.navbar.dark .desktop-nav .nav-item.active {}
 
 .navbar .desktop-nav .nav-item img {
   height: 18px;
@@ -62,7 +69,6 @@
 
 .navbar .desktop-nav .nav-item .nav-text {
   display: inline-block;
-  padding: 1px 0px 2px 12px;
   vertical-align: top;
 }
 
@@ -76,7 +82,7 @@
 
 .navbar .mobile-nav .dropbtn {
   background-color: #f2f2f2;
-  padding: 3px 12px;
+  padding: 4px 12px;
   font-size: 16px;
   border: none;
   cursor: pointer;
@@ -168,12 +174,12 @@
 }
 
 .navbar .language button img {
-  height: 14px;
+  height: 15px;
 }
 
 .navbar .language select,
 .navbar .language button {
-  padding: 5px;
+  padding: 6px;
   border-radius: 8px;
   color: black;
   background-color: rgba(0, 0, 0, 0.05);
@@ -217,11 +223,16 @@
   }
 
   .navbar img.icon {
-    padding: 12px;
+    margin: 18px 12px;
+    height: 18px;
   }
 
   .navbar .mobile-nav {
     right: 102px;
     top: 12px;
+  }
+
+  .navbar {
+    height: 54px;
   }
 }

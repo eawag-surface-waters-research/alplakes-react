@@ -1,6 +1,6 @@
 .main .home .content {
   margin: auto;
-  margin-top: 100px;
+  margin-top: 66px;
   padding: 0 16px;
 }
 
@@ -289,10 +289,14 @@
   background-color: #474747;
 }
 
-@media screen and (max-width: 610px) {
+@media screen and (max-width: 950px) {
   .main .home .content {
-    padding: 0;
-    margin-top: 60px;
+    padding: 0px;
+    margin-top: 54px;
+  }
+
+  .main .home .content .sorting {
+    padding: 0 12px;
   }
 
   .main .home .content .products .lake {

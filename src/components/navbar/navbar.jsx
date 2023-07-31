@@ -37,7 +37,11 @@ class NavBar extends Component {
             >
               <img src={dark ? light_icon : dark_icon} alt="Light switch" />
             </button>
-            <select value={language} onChange={setLanguage} title="Switch language">
+            <select
+              value={language}
+              onChange={setLanguage}
+              title="Switch language"
+            >
               {languages.map((l) => (
                 <option value={l} key={"language_" + l}>
                   {l}
@@ -50,21 +54,18 @@ class NavBar extends Component {
               className={selected === "lakes" ? "nav-item active" : "nav-item"}
               to="/"
             >
-              <img alt="Lakes" src={dark ? lakes_img_dark : lakes_img} />
               <div className="nav-text">{Translate.lakes[language]}</div>
             </NavLink>
             <NavLink
               className={selected === "api" ? "nav-item active" : "nav-item"}
               to="/api"
             >
-              <img alt="API" src={dark ? api_img_dark : api_img} />
               <div className="nav-text">API</div>
             </NavLink>
             <NavLink
               className={selected === "about" ? "nav-item active" : "nav-item"}
               to="/about"
             >
-              <img alt="About" src={dark ? about_img_dark : about_img} />
               <div className="nav-text">{Translate.about[language]}</div>
             </NavLink>
           </div>

@@ -102,7 +102,7 @@ class Lake extends Component {
   };
 
   setPeriod = (period) => {
-    var { layers, updates } = this.state;
+    var { layers, updates, play } = this.state;
     if (period !== this.state.period) {
       var datetime = period[0];
       var clickblock;
@@ -111,9 +111,12 @@ class Lake extends Component {
           clickblock = true;
           updates.unshift({ event: "removeLayer", id: layer.id });
           updates.push({ event: "addLayer", id: layer.id });
+          if (play) {
+            updates.push({ event: "play" });
+          }
         }
       }
-      this.setState({ updates, datetime, clickblock, period });
+      this.setState({ play: false, updates, datetime, clickblock, period });
     }
   };
 
@@ -218,7 +221,7 @@ class Lake extends Component {
   };
 
   setDepth = (event) => {
-    var { layers, depth, updates } = this.state;
+    var { layers, depth, updates, play } = this.state;
     if (
       depth !== event.target.value &&
       layers.filter((l) => l.properties.depth && l.active).length > 0
@@ -228,9 +231,12 @@ class Lake extends Component {
         if (layer.properties.depth && layer.active) {
           updates.unshift({ event: "removeLayer", id: layer.id });
           updates.push({ event: "addLayer", id: layer.id });
+          if (play) {
+            updates.push({ event: "play" });
+          }
         }
       }
-      this.setState({ updates, depth, clickblock: true });
+      this.setState({ play: false, updates, depth, clickblock: true });
     }
   };
 
@@ -246,7 +252,7 @@ class Lake extends Component {
     if (!layer.active) {
       layer.active = true;
       updates.push({ event: "addLayer", id: id });
-      this.setState({ layers, updates, clickblock: true, selection: id });
+      this.setState({ play: false, layers, updates, clickblock: true, selection: id });
     }
   };
 

@@ -3,7 +3,7 @@
   width: 100%;
   padding: 0 24px;
   box-sizing: border-box;
-  margin-top: 72px;
+  margin-top: 66px;
 }
 
 .main .lake .content .click-block {
@@ -119,7 +119,7 @@
   height: calc(100vh - 220px);
   display: inline-block;
   position: fixed;
-  top: 72px;
+  top: 66px;
   left: 24px;
   z-index: 1;
 }
@@ -602,7 +602,7 @@
 }
 
 .main.dark .lake .content .secondary .info {
-  background-color: rgba(255, 255, 255, 0.1);
+  background: radial-gradient(circle, rgb(255 255 255 / 0%) 0%, rgb(50 50 50) 100%);
 }
 
 .main .lake .content .secondary .info .name {
@@ -781,7 +781,7 @@
 }
 
 .main.dark .lake .content .secondary .depth-period {
-  background-color: rgba(255, 255, 255, 0.1);
+  background: radial-gradient(circle, rgb(255 255 255 / 0%) 0%, rgb(50 50 50) 100%);
 }
 
 .main .lake .content .secondary .depth-period select {
@@ -936,7 +936,7 @@
 }
 
 .main.dark .lake .content .secondary .menu {
-  background-color: rgba(255, 255, 255, 0.1);
+  background: radial-gradient(circle, rgb(255 255 255 / 0%) 0%, rgb(50 50 50) 100%);
 }
 
 .main .lake .content .secondary .menu .loaded {
@@ -1126,7 +1126,7 @@
 }
 
 .main.dark .lake .content .secondary .selection {
-  background-color: rgba(255, 255, 255, 0.1);
+  background: radial-gradient(circle, rgb(255 255 255 / 0%) 0%, rgb(50 50 50) 100%);
 }
 
 .main .lake .content .secondary .selection .title {
@@ -1543,7 +1543,7 @@
     padding: 0px 12px;
     background-color: transparent !important;
     position: fixed;
-    top: 52px;
+    top: 54px;
     width: 100%;
     box-sizing: border-box;
     left: 0;
