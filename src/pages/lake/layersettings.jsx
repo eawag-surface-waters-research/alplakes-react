@@ -965,6 +965,7 @@ class Particles extends Component {
   render() {
     var { language } = this.props;
     var { paths, spread, opacity } = this.props.options;
+    if (opacity === undefined) opacity = 1;
     return (
       <div className="layer-settings">
         <div className="layer-section">{Translate.settings[language]}</div>

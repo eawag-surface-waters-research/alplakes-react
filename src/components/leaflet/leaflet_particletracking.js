@@ -299,7 +299,10 @@ L.Control.ParticleTracking = L.Control.extend({
           latlng.lat + dy / 111320,
           latlng.lng + dx / (111320 * Math.cos((latlng.lat * Math.PI) / 180))
         );
-        if (this._getIndexAtPoint(pointLatLng.lng, pointLatLng.lat) !== null) {
+        if (
+          this._getIndexAtPoint(pointLatLng.lng, pointLatLng.lat) !== null &&
+          this._getVelocity(pointLatLng, this._time_index) !== null
+        ) {
           this._points.push({
             seed: {
               latlng: pointLatLng,
@@ -353,6 +356,9 @@ L.Control.ParticleTracking = L.Control.extend({
       this.options.nRows - Math.round((latlng.lat - this._yMin) / this._ySize);
     var j = Math.round((latlng.lng - this._xMin) / this._xSize);
     let t = this._transformationMatrix[i][j];
+    if (t == null) {
+      return null;
+    }
     let ti = Math.floor(
       (time_index / (this._interpolated_times.length - 1)) *
         (this._times.length - 1)

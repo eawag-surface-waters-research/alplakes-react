@@ -140,6 +140,28 @@
           "zIndex": 1
         }
       }
+    },
+    {
+      "id": 12,
+      "type": "alplakes_particles",
+      "active": false,
+      "description": "Track particles using the alplakes 3D hydrodynamic model. Click the particles button (top right) to add some particles. Press play to see where the particles go.",
+      "properties": {
+        "model": "delft3d-flow",
+        "lake": "garda",
+        "parameter": "particles",
+        "unit": "m/s",
+        "height": 64,
+        "width": 224,
+        "display": "particles",
+        "depth": true,
+        "period": true,
+        "options": {
+          "paths": 10,
+          "spread": 1500,
+          "zIndex": 4
+        }
+      }
     }
   ]
 }

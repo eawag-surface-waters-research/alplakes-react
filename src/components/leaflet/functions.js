@@ -936,7 +936,7 @@ const updateAlplakesParticles = (
   }
 
   var leaflet_layer = getNested(layerStore, layer_path);
-  if (leaflet_layer !== null) {
+  if (leaflet_layer && leaflet_layer !== null) {
     if ("remove" in options && options.remove) {
       leaflet_layer.clear();
       options.remove = false;
