@@ -185,7 +185,8 @@
   background-color: rgba(0, 0, 0, 0.05);
   border: none;
   cursor: pointer;
-  font-size: 14px
+  font-size: 14px;
+  height: 30px;
 }
 
 .navbar .language select:hover,
