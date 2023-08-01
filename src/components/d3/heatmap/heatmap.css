@@ -1,3 +1,7 @@
+.main.dark .vis-main {
+  fill: white;
+}
+
 .heatmap-main {
   height: 100%;
   width: 100%;
@@ -31,6 +35,10 @@
   font-size: 12px;
 }
 
+.main.dark .heatmap-main .heatmap-graphs .heatmap-right .tooltip {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
 .heatmap-main .heatmap-graphs .heatmap-right .tooltip:after {
   content: " ";
   position: absolute;
@@ -41,6 +49,10 @@
   box-shadow: 0 7px 29px 0 rgb(100 100 111 / 20%);
   border-left: none;
   border-bottom: 10px solid transparent;
+}
+
+.main.dark .heatmap-main .heatmap-graphs .heatmap-right .tooltip:after {
+  border-right: 10px solid rgba(0, 0, 0, 0.7);
 }
 
 .heatmap-main .heatmap-graphs .heatmap-right .tooltip tr {

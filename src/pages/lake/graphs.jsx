@@ -1,6 +1,10 @@
 import React, { Component } from "react";
 import D3HeatMap from "../../components/d3/heatmap/heatmap";
 import { parseAPITime } from "./functions";
+import {
+  extent,
+} from "d3";
+
 import "./lake.css";
 
 class Graphs extends Component {
@@ -27,9 +31,23 @@ class Graphs extends Component {
     yReverse: true,
     xReverse: false,
     display: "heatmap",
+    minvalue: undefined,
+    maxvalue: undefined,
+  };
+  closestDate = (arr, target) => {
+    let minDiff = Infinity;
+    let closestIndex = null;
+    for (let i = 0; i < arr.length; i++) {
+      const diff = Math.abs(target - arr[i]);
+      if (diff < minDiff) {
+        minDiff = diff;
+        closestIndex = i;
+      }
+    }
+    return closestIndex;
   };
   componentDidMount() {
-    var { data } = this.props;
+    var { data, datetime } = this.props;
     if (data.type === "profile") {
       let parameters = data.layer.properties.variables;
       let parameter = parameters[0];
@@ -44,7 +62,8 @@ class Graphs extends Component {
     } else if (data.type === "transect") {
       let parameters = data.layer.properties.variables;
       let parameter = parameters[0];
-      let z = data[parameter].data;
+      let z = data[parameter].data[this.closestDate(data.time, datetime)];
+      let bounds = extent(data[parameter].data.flat(2)) 
       let zlabel = parameter.charAt(0).toUpperCase() + parameter.slice(1);
       let zunits = data[parameter].unit;
       let y = data.depth.data;
@@ -61,9 +80,23 @@ class Graphs extends Component {
         yunits,
         xlabel,
         xunits,
+        maxvalue: bounds[1],
+        minvalue: bounds[0],
       });
     } else {
       console.error("Graph type not recognised.");
+    }
+  }
+  componentDidUpdate(prevProps) {
+    var { data, datetime } = this.props;
+    var { x, y } = this.state.data;
+    if (data.type === "transect") {
+      if (prevProps.datetime !== datetime) {
+        let parameters = data.layer.properties.variables;
+        let parameter = parameters[0];
+        let z = data[parameter].data[this.closestDate(data.time, datetime)];
+        this.setState({ data: { x, y, z } });
+      }
     }
   }
   render() {
@@ -80,6 +113,8 @@ class Graphs extends Component {
       yReverse,
       xReverse,
       display,
+      minvalue,
+      maxvalue,
     } = this.state;
     return (
       <div className="graph">
@@ -100,6 +135,8 @@ class Graphs extends Component {
             yReverse={yReverse}
             xReverse={xReverse}
             display={display}
+            minvalue={minvalue}
+            maxvalue={maxvalue}
           />
         )}
       </div>

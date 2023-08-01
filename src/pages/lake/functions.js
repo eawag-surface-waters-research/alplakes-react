@@ -163,20 +163,33 @@ export const getTransectAlplakesHydrodynamic = async (
   api,
   model,
   lake,
-  datetime,
+  period,
   latlng
 ) => {
   latlng.pop();
   const url = `${api}/simulations/transect/${model}/${lake}/${formatAPIDatetime(
-    datetime
+    period[0]
+  )}/${formatAPIDatetime(
+    period[1]
   )}/${latlng.map((l) => l.lat).join(",")}/${latlng
     .map((l) => l.lng)
     .join(",")}`;
   try {
     const { data } = await axios.get(url);
+    data.time = data.time.map(d => parseDate(d))
     return data;
   } catch (e) {
     console.error(e);
     return false;
   }
+};
+
+const parseDate = (str) => {
+  const d = new Date(
+    `${str.slice(0, 4)}-${str.slice(4, 6)}-${str.slice(6, 8)}T${str.slice(
+      8,
+      10
+    )}:${str.slice(10, 12)}:00.000+00:00`
+  );
+  return d.getTime();
 };

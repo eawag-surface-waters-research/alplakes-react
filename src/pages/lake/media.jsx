@@ -29,11 +29,14 @@ class Legend extends Component {
         <table>
           <tbody>
             {layers
-              .filter(
-                (l) =>
-                  ["min", "max", "palette"].every((key) =>
-                    Object.keys(l.properties.options).includes(key)
-                  ) && l.active
+              .filter((l) =>
+                ["min", "max", "palette"].every((key) =>
+                  Object.keys(l.properties.options).includes(key)
+                ) &&
+                l.active &&
+                ("raster" in l.properties.options
+                  ? l.properties.options.raster
+                  : true)
               )
               .map((l) => (
                 <Colorbar
@@ -180,14 +183,14 @@ class Media extends Component {
 
   getTransect = async (latlng, layer) => {
     var { graphData } = this.state;
-    var { datetime } = this.props;
+    var { period } = this.props;
     await this.props.lock();
     if (layer.type === "alplakes_transect") {
       graphData = await getTransectAlplakesHydrodynamic(
         CONFIG.alplakes_api,
         layer.properties.model,
         layer.properties.lake,
-        datetime,
+        period,
         latlng
       );
       graphData["type"] = "transect";
@@ -278,6 +281,7 @@ class Media extends Component {
             data={graphData}
             close={this.closeGraph}
             metadata={metadata}
+            datetime={datetime}
           />
         )}
         <div className="viewport">

@@ -50,6 +50,10 @@
   cursor: pointer;
 }
 
+.main.dark .vis-header img {
+  filter: invert(88%) hue-rotate(180deg);
+}
+
 .vis-header .downloadbar {
   position: absolute;
   top: 30px;
@@ -92,6 +96,7 @@
   border-radius: 4px;
   z-index: 999999;
 }
+
 .fontsize .fontsize-dropdown div:hover {
   font-weight: bold;
 }

@@ -45,12 +45,9 @@ class GraphHeader extends Component {
       download,
       fullscreen,
       display,
-      fontSize,
-      editFontSize,
       toggleXgraph,
       toggleYgraph,
       toggleDownload,
-      toggleFullscreen,
       toggleDisplay,
       downloadJSON,
       downloadCSV,
@@ -132,66 +129,6 @@ class GraphHeader extends Component {
                     >
                       CSV
                     </button>
-                  </div>
-                </td>
-                {fontSize && (
-                  <td className="fontsize" style={{ width: "25px" }}>
-                    <img
-                      src={fontsizeIcon}
-                      alt="Font Size"
-                      onClick={toggleDisplay}
-                      title="Edit font size"
-                    />
-                    <div className="fontsize-dropdown">
-                      {[8, 10, 12, 14, 16, 18, 20, 22, 24].map((item) => (
-                        <div
-                          key={"fontsize" + item}
-                          className={fontSize === item ? "sel" : ""}
-                          onClick={() => editFontSize(item)}
-                        >
-                          {item}
-                        </div>
-                      ))}
-                    </div>
-                  </td>
-                )}
-                <td style={{ width: "25px" }}>
-                  <img
-                    src={fullicon}
-                    alt="Toggle fullscreen"
-                    onClick={toggleFullscreen}
-                    title={fulllabel}
-                  />
-                </td>
-                <td style={{ width: "25px" }}>
-                  <div title="Help" className="graphhelpbar">
-                    <img
-                      src={helpIcon}
-                      alt="help icon"
-                      title={"How to use this graph"}
-                    />
-                    <div className="graphhelp">
-                      <table>
-                        <tbody>
-                          <tr>
-                            <th>Zoom X & Y</th>
-                            <td>Scroll with mouse over plot area</td>
-                          </tr>
-                          <tr>
-                            <th>Zoom X axis</th>
-                            <td>Scroll with mouse over X axis</td>
-                          </tr>
-                          <tr>
-                            <th>Zoom Y axis</th>
-                            <td>Scroll with mouse over Y axis</td>
-                          </tr>
-                          <tr>
-                            <th>Reset</th>
-                            <td>Double click on plot area</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
                   </div>
                 </td>
               </tr>

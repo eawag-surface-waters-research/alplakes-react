@@ -337,14 +337,14 @@ const addCanvas = (div, options) => {
 
 const addXAxis = (svg, xDomain, x2Domain, options) => {
   var axisObj = {};
-  axisObj.x = addBottonAxis(svg, xDomain, options);
+  axisObj.x = addBottomAxis(svg, xDomain, options);
   if (options.dualaxis === "x2") {
     axisObj.x2 = addTopAxis(svg, x2Domain, options);
   }
   return axisObj;
 };
 
-const addBottonAxis = (svg, xDomain, options) => {
+const addBottomAxis = (svg, xDomain, options) => {
   var ax;
   var xrange = [0, options.canvasWidth];
   var xAxisLabel =
