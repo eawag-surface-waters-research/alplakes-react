@@ -1290,13 +1290,21 @@
   margin-top: -2px;
 }
 
-.main .lake .content .secondary .selection .layer-settings .layer-sub-section .switch input {
+.main .lake .content .secondary .selection .layer-settings .switch {
+  display: inline-block;
+  position: relative;
+  float: right;
+  width: 38px;
+  height: 20px;
+}
+
+.main .lake .content .secondary .selection .layer-settings .switch input {
   opacity: 0;
   width: 0;
   height: 0;
 }
 
-.main .lake .content .secondary .selection .layer-settings .layer-sub-section .slider {
+.main .lake .content .secondary .selection .layer-settings .slider {
   position: absolute;
   cursor: pointer;
   top: 0;
@@ -1308,7 +1316,7 @@
   transition: .4s;
 }
 
-.main .lake .content .secondary .selection .layer-settings .layer-sub-section .slider:before {
+.main .lake .content .secondary .selection .layer-settings .slider:before {
   position: absolute;
   content: "";
   height: 14px;
@@ -1320,25 +1328,25 @@
   transition: .4s;
 }
 
-.main .lake .content .secondary .selection .layer-settings .layer-sub-section input:checked+.slider {
+.main .lake .content .secondary .selection .layer-settings input:checked+.slider {
   background-color: #2196F3;
 }
 
-.main .lake .content .secondary .selection .layer-settings .layer-sub-section input:focus+.slider {
+.main .lake .content .secondary .selection .layer-settings input:focus+.slider {
   box-shadow: 0 0 1px #2196F3;
 }
 
-.main .lake .content .secondary .selection .layer-settings .layer-sub-section input:checked+.slider:before {
+.main .lake .content .secondary .selection .layer-settings input:checked+.slider:before {
   -webkit-transform: translateX(16px);
   -ms-transform: translateX(16px);
   transform: translateX(16px);
 }
 
-.main .lake .content .secondary .selection .layer-settings .layer-sub-section .slider.round {
+.main .lake .content .secondary .selection .layer-settings .slider.round {
   border-radius: 34px;
 }
 
-.main .lake .content .secondary .selection .layer-settings .layer-sub-section .slider.round:before {
+.main .lake .content .secondary .selection .layer-settings .slider.round:before {
   border-radius: 50%;
 }
 

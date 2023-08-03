@@ -41,6 +41,12 @@
         "3": ["Delft3D", "https://oss.deltares.nl/web/delft3d"],
         "4": ["BAFU Hydrodaten", "https://www.hydrodaten.admin.ch/en"]
       },
+      "labels": [
+        { "name": "Lausanne", "latlng": [46.50995, 6.61172] },
+        { "name": "Geneva", "latlng": [46.22034, 6.1564] },
+        { "name": "Thonon", "latlng": [46.37547, 6.47259] },
+        { "name": "Vevey", "latlng": [46.45841, 6.84158] }
+      ],
       "properties": {
         "model": "delft3d-flow",
         "lake": "geneva",
@@ -55,7 +61,8 @@
         "temperature": true,
         "options": {
           "paletteName": "Balance",
-          "zIndex": 1
+          "zIndex": 1,
+          "labels": true
         }
       }
     },

@@ -156,7 +156,8 @@ const round = (value, decimals) => {
 
 export const flyToBounds = (bounds, map) => {
   map.flyToBounds(
-    L.latLngBounds(L.latLng(bounds.southWest), L.latLng(bounds.northEast))
+    L.latLngBounds(L.latLng(bounds.southWest), L.latLng(bounds.northEast)),
+    { padding: [20, 20] }
   );
 };
 
@@ -412,6 +413,7 @@ const plotAlplakesHydrodynamic = (
     layer.properties.lake,
     "geometry",
   ];
+
   var data = getNested(dataStore, path);
   var geometry = getNested(dataStore, geometry_path);
   var { display } = layer.properties;
@@ -466,6 +468,26 @@ const plotAlplakesHydrodynamicRaster = (
     }
   }
   var leaflet_layer = new L.Raster(geometry, data, options).addTo(map);
+  if ("labels" in layer && layer.properties.options.labels) {
+    layer.labels.map((p) =>
+      L.marker(p.latlng, {
+        icon: L.divIcon({
+          className: "leaflet-mouse-marker",
+          iconAnchor: [20, 20],
+          iconSize: [40, 40],
+        }),
+      })
+        .bindTooltip(
+          `${p.name}<br>${leaflet_layer._getValue(L.latLng(p.latlng))}`,
+          {
+            permanent: true,
+            direction: "top",
+            offset: L.point(0, 0),
+          }
+        )
+        .addTo(layerStore["labels"])
+    );
+  }
   setNested(layerStore, path, leaflet_layer);
 };
 
@@ -595,6 +617,29 @@ const updateAlplakesHydrodynamic = (
     }
   } else if (leaflet_layer !== null) {
     leaflet_layer.update(newData, options);
+    if ("labels" in layer) {
+      layerStore["labels"].clearLayers();
+      if (layer.properties.options.labels) {
+        layer.labels.map((p) =>
+          L.marker(p.latlng, {
+            icon: L.divIcon({
+              className: "leaflet-mouse-marker",
+              iconAnchor: [20, 20],
+              iconSize: [40, 40],
+            }),
+          })
+            .bindTooltip(
+              `${p.name}<br>${leaflet_layer._getValue(L.latLng(p.latlng))}`,
+              {
+                permanent: true,
+                direction: "top",
+                offset: L.point(0, 0),
+              }
+            )
+            .addTo(layerStore["labels"])
+        );
+      }
+    }
   }
 };
 
@@ -616,6 +661,9 @@ const removeAlplakesHydrodynamic = (layer, layerStore, map) => {
     } else {
       map.removeLayer(leaflet_layer);
     }
+  }
+  if ("labels" in layer) {
+    layerStore["labels"].clearLayers();
   }
   setNested(layerStore, path, null);
 };

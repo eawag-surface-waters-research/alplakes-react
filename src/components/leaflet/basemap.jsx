@@ -104,6 +104,7 @@ class Basemap extends Component {
     });
     this.map.addLayer(basemap);
     this.layerStore["basemap"] = basemap;
+    this.layerStore["labels"] = L.layerGroup([]).addTo(this.map);
 
     this.layer = L.layerGroup([]).addTo(this.map);
 

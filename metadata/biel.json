@@ -41,6 +41,11 @@
         "3": ["Delft3D", "https://oss.deltares.nl/web/delft3d"],
         "4": ["BAFU Hydrodaten", "https://www.hydrodaten.admin.ch/en"]
       },
+      "labels": [
+        { "name": "Biel", "latlng": [47.13198, 7.23017] },
+        { "name": "Le Landeron", "latlng": [47.05558, 7.07925] },
+        { "name": "Täuffelen", "latlng": [47.06735, 7.18258] }
+      ],
       "properties": {
         "model": "delft3d-flow",
         "lake": "biel",
@@ -55,7 +60,8 @@
         "temperature": true,
         "options": {
           "paletteName": "Balance",
-          "zIndex": 1
+          "zIndex": 1,
+          "labels": true
         }
       }
     },

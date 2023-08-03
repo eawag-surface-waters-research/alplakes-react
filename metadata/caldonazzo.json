@@ -41,6 +41,10 @@
         "3": ["Delft3D", "https://oss.deltares.nl/web/delft3d"],
         "4": ["BAFU Hydrodaten", "https://www.hydrodaten.admin.ch/en"]
       },
+      "labels": [
+        { "name": "San Cristoforo", "latlng": [46.0356, 11.2343] },
+        { "name": "Caldonazzo", "latlng": [46.0055, 11.2569] }
+      ],
       "properties": {
         "model": "delft3d-flow",
         "lake": "caldonazzo",
@@ -55,7 +59,8 @@
         "temperature": true,
         "options": {
           "paletteName": "Balance",
-          "zIndex": 1
+          "zIndex": 1,
+          "labels": true
         }
       }
     },

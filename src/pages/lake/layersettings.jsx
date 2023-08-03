@@ -43,6 +43,12 @@ class Raster extends Component {
     updateOptions(id, options);
   };
 
+  setLabels = () => {
+    var { id, updateOptions, options } = this.props;
+    options["labels"] = !options["labels"];
+    updateOptions(id, options);
+  };
+
   downloadFile = (event) => {
     var data = event.target.value.split("?");
     const link = document.createElement("a");
@@ -124,7 +130,7 @@ class Raster extends Component {
   render() {
     var { _min, _max } = this.state;
     var { minDate, maxDate, language, layer } = this.props;
-    var { palette, paletteName, opacity } = this.props.options;
+    var { palette, paletteName, opacity, labels } = this.props.options;
 
     var downloadDates = this.downloadDates(
       layer.properties.model,
@@ -168,7 +174,7 @@ class Raster extends Component {
             </button>
           </div>
         </div>
-        <div className="setting">
+        <div className="setting half">
           <div className="label">Opacity</div>
           <div className="value">{opacity}</div>
           <input
@@ -179,6 +185,17 @@ class Raster extends Component {
             value={opacity}
             onChange={this.setOpacity}
           ></input>
+        </div>
+        <div className="setting half">
+          <div className="label">Labels</div>
+          <label className="switch">
+            <input
+              type="checkbox"
+              checked={labels}
+              onChange={this.setLabels}
+            ></input>
+            <span className="slider round"></span>
+          </label>
         </div>
         <div className="setting">
           <div className="label">Palette</div>

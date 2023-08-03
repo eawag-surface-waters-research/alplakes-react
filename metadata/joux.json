@@ -41,6 +41,11 @@
         "3": ["Delft3D", "https://oss.deltares.nl/web/delft3d"],
         "4": ["BAFU Hydrodaten", "https://www.hydrodaten.admin.ch/en"]
       },
+      "labels": [
+        { "name": "Le Pont", "latlng": [46.66445, 6.32636] },
+        { "name": "Le Sentier", "latlng": [46.61460, 6.24543] },
+        { "name": "Le Lieu", "latlng": [46.64388, 6.28509] }
+      ],
       "properties": {
         "model": "delft3d-flow",
         "lake": "joux",
@@ -55,7 +60,8 @@
         "temperature": true,
         "options": {
           "paletteName": "Balance",
-          "zIndex": 1
+          "zIndex": 1,
+          "labels": true
         }
       }
     },

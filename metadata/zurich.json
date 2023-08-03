@@ -41,6 +41,11 @@
         "3": ["Delft3D", "https://oss.deltares.nl/web/delft3d"],
         "4": ["BAFU Hydrodaten", "https://www.hydrodaten.admin.ch/en"]
       },
+      "labels": [
+        { "name": "Zürich", "latlng": [47.36226, 8.54151] },
+        { "name": "Wädenswil", "latlng": [47.23185, 8.68063] },
+        { "name": "Schmerikon", "latlng": [47.22305, 8.94109] }
+      ],
       "properties": {
         "model": "delft3d-flow",
         "lake": "zurich",
@@ -55,7 +60,8 @@
         "temperature": true,
         "options": {
           "paletteName": "Balance",
-          "zIndex": 1
+          "zIndex": 1,
+          "labels": true
         }
       }
     },

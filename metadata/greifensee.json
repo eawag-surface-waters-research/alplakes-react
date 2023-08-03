@@ -41,6 +41,10 @@
         "3": ["Delft3D", "https://oss.deltares.nl/web/delft3d"],
         "4": ["BAFU Hydrodaten", "https://www.hydrodaten.admin.ch/en"]
       },
+      "labels": [
+        { "name": "Schwerzenbach", "latlng": [47.37124, 8.65935] },
+        { "name": "Riedikon", "latlng": [47.33170, 8.70492] }
+      ],
       "properties": {
         "model": "delft3d-flow",
         "lake": "greifensee",
@@ -55,7 +59,8 @@
         "temperature": true,
         "options": {
           "paletteName": "Balance",
-          "zIndex": 1
+          "zIndex": 1,
+          "labels": true
         }
       }
     },

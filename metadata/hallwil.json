@@ -41,6 +41,10 @@
         "3": ["Delft3D", "https://oss.deltares.nl/web/delft3d"],
         "4": ["BAFU Hydrodaten", "https://www.hydrodaten.admin.ch/en"]
       },
+      "labels": [
+        { "name": "Boniswil", "latlng": [47.31477, 8.20381] },
+        { "name": "Mosen", "latlng": [47.25079, 8.22446] }
+      ],
       "properties": {
         "model": "delft3d-flow",
         "lake": "hallwil",
@@ -55,7 +59,8 @@
         "temperature": true,
         "options": {
           "paletteName": "Balance",
-          "zIndex": 1
+          "zIndex": 1,
+          "labels": true
         }
       }
     },

@@ -29,14 +29,15 @@ class Legend extends Component {
         <table>
           <tbody>
             {layers
-              .filter((l) =>
-                ["min", "max", "palette"].every((key) =>
-                  Object.keys(l.properties.options).includes(key)
-                ) &&
-                l.active &&
-                ("raster" in l.properties.options
-                  ? l.properties.options.raster
-                  : true)
+              .filter(
+                (l) =>
+                  ["min", "max", "palette"].every((key) =>
+                    Object.keys(l.properties.options).includes(key)
+                  ) &&
+                  l.active &&
+                  ("raster" in l.properties.options
+                    ? l.properties.options.raster
+                    : true)
               )
               .map((l) => (
                 <Colorbar
@@ -170,6 +171,7 @@ class Media extends Component {
     }
     this.props.unlock();
     if (graphData === false) {
+      window.alert("Failed to collect profile please try again.")
       this.closeGraph();
     } else {
       this.setState({ graphData, graphs: true });
@@ -193,11 +195,14 @@ class Media extends Component {
         period,
         latlng
       );
-      graphData["type"] = "transect";
-      graphData["layer"] = layer;
+      if (graphData) {
+        graphData["type"] = "transect";
+        graphData["layer"] = layer;
+      }
     }
     this.props.unlock();
     if (graphData === false) {
+      window.alert("Failed to collect transect please try again.")
       this.closeGraph();
     } else {
       this.setState({ graphData, graphs: true });

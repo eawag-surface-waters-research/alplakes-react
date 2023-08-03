@@ -41,6 +41,12 @@
         "3": ["Delft3D", "https://oss.deltares.nl/web/delft3d"],
         "4": ["BAFU Hydrodaten", "https://www.hydrodaten.admin.ch/en"]
       },
+      "labels": [
+        { "name": "Desenzano", "latlng": [45.46958, 10.55326] },
+        { "name": "Salò", "latlng": [45.60311, 10.53594] },
+        { "name": "Riva del Garda", "latlng": [45.87679, 10.84608] },
+        { "name": "Garda", "latlng": [45.56890, 10.69423] }
+      ],
       "properties": {
         "model": "delft3d-flow",
         "lake": "garda",
@@ -55,7 +61,8 @@
         "temperature": true,
         "options": {
           "paletteName": "Balance",
-          "zIndex": 1
+          "zIndex": 1,
+          "labels": true
         }
       }
     },
