@@ -481,7 +481,7 @@ const plotAlplakesHydrodynamicRaster = (
           `${p.name}<br>${leaflet_layer._getValue(L.latLng(p.latlng))}`,
           {
             permanent: true,
-            direction: "top",
+            direction: p.direction ? p.direction : "top",
             offset: L.point(0, 0),
           }
         )
@@ -624,15 +624,15 @@ const updateAlplakesHydrodynamic = (
           L.marker(p.latlng, {
             icon: L.divIcon({
               className: "leaflet-mouse-marker",
-              iconAnchor: [20, 20],
-              iconSize: [40, 40],
+              iconAnchor: [0, 0],
+              iconSize: [0, 0],
             }),
           })
             .bindTooltip(
               `${p.name}<br>${leaflet_layer._getValue(L.latLng(p.latlng))}`,
               {
                 permanent: true,
-                direction: "top",
+                direction: p.direction ? p.direction : "top",
                 offset: L.point(0, 0),
               }
             )
@@ -683,12 +683,16 @@ const addSencastTiff = async (layer, dataStore, layerStore, datetime, map) => {
       m.unix = parseDate(m.dt).getTime();
       m.url = CONFIG.sencast_bucket + m.k;
       m.time = parseDate(m.dt);
+      let split = m.k.split("_");
+      m.tile = split[split.length - 1].split(".")[0];
+      m.satellite = split[0].split("/")[2];
+      m.percent = Math.round((parseFloat(m.vp) / parseFloat(m.p)) * 100);
       return m;
     });
     setNested(dataStore, path, metadata);
     image = findClosest(metadata, "unix", datetime);
-    layer.properties.options.date = image.time;
-    layer.properties.options.url = image.url;
+    layer.properties.options.image = image;
+    layer.properties.options.images = metadata;
     layer.properties.options.includeDates = metadata.map((m) => m.time);
     layer.properties.options.percentage = metadata.map((m) =>
       Math.round((parseFloat(m.vp) / parseFloat(m.p)) * 100)
@@ -778,12 +782,29 @@ const updateSencastTiff = async (
       layer.properties.options.date.getTime()
     );
 
-    layer.properties.options.url = image.url;
+    layer.properties.options.image = image;
     layer.properties.options.min = round(image.min, 2);
     layer.properties.options.max = round(image.max, 2);
     layer.properties.options.dataMin = round(image.min, 2);
     layer.properties.options.dataMax = round(image.max, 2);
     layer.properties.options.updateDate = false;
+
+    ({ data } = await axios.get(image.url, {
+      responseType: "arraybuffer",
+    }));
+  }
+
+  if (
+    "image" in layer.properties.options &&
+    "updateImage" in layer.properties.options &&
+    layer.properties.options.updateImage
+  ) {
+    const image = layer.properties.options.image;
+    layer.properties.options.min = round(image.min, 2);
+    layer.properties.options.max = round(image.max, 2);
+    layer.properties.options.dataMin = round(image.min, 2);
+    layer.properties.options.dataMax = round(image.max, 2);
+    layer.properties.options.updateImage = false;
 
     ({ data } = await axios.get(image.url, {
       responseType: "arraybuffer",

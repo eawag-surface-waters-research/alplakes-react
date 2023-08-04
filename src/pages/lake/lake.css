@@ -1272,6 +1272,47 @@
   padding-bottom: 4px;
 }
 
+
+
+
+.main .lake .content .secondary .selection .layer-settings .setting .tiff-image {
+  background-color: white;
+  border: 1px solid white;
+  padding: 5px;
+  border-radius: 8px;
+  margin-top: 8px;
+  cursor: pointer;
+}
+
+.main.dark .lake .content .secondary .selection .layer-settings .setting .tiff-image {
+  background-color: #000000;
+  border: 1px solid black;
+}
+
+.main .lake .content .secondary .selection .layer-settings .setting .tiff-image.active {
+  color: #767676;
+  border: 1px solid #767676;
+}
+
+.main.dark .lake .content .secondary .selection .layer-settings .setting .tiff-image.active {
+  color: white;
+  border: 1px solid white;
+}
+
+.main .lake .content .secondary .selection .layer-settings .setting .tiff-image:hover {
+  color: #767676;
+}
+
+.main.dark .lake .content .secondary .selection .layer-settings .setting .tiff-image:hover {
+  color: white;
+}
+
+.main .lake .content .secondary .selection .layer-settings .setting .tiff-image div {
+  display: inline-block;
+  margin-left: 16px;
+}
+
+
 .main .lake .content .secondary .selection .layer-settings .layer-sub-section {
   font-size: 15px;
   padding: 6px 4px 6px 6px;

@@ -43,8 +43,8 @@
       },
       "labels": [
         { "name": "Lausanne", "latlng": [46.50995, 6.61172] },
-        { "name": "Geneva", "latlng": [46.22034, 6.1564] },
-        { "name": "Thonon", "latlng": [46.37547, 6.47259] },
+        { "name": "Geneva", "latlng": [46.22034, 6.1564], "direction": "right" },
+        { "name": "Thonon", "latlng": [46.37547, 6.47259], "direction": "bottom" },
         { "name": "Vevey", "latlng": [46.45841, 6.84158] }
       ],
       "properties": {

@@ -546,6 +546,13 @@ class Tiff extends Component {
     updateOptions(id, options);
   };
 
+  setImage = (event) => {
+    var { id, updateOptions, options } = this.props;
+    options.image = event;
+    options.updateImage = true;
+    updateOptions(id, options);
+  };
+
   updateMinMax = () => {
     var { id, updateOptions, options } = this.props;
     var { _min, _max } = this.state;
@@ -605,6 +612,23 @@ class Tiff extends Component {
     this.props.addCssRules(event, style, this.props.options);
   };
 
+  isSameDay = (date1, date2) => {
+    return (
+      date1.getFullYear() === date2.getFullYear() &&
+      date1.getMonth() === date2.getMonth() &&
+      date1.getDate() === date2.getDate()
+    );
+  };
+
+  formatDateToCustomString = (date) => {
+    const hours = String(date.getHours()).padStart(2, "0");
+    const minutes = String(date.getMinutes()).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, "0"); // Month is 0-based
+    const year = date.getFullYear();
+    return `${hours}:${minutes} ${day}-${month}-${year}`;
+  };
+
   componentDidUpdate() {
     if (
       this.props.options.dataMin !== undefined &&
@@ -618,9 +642,9 @@ class Tiff extends Component {
         dataMax: this.props.options.dataMax,
       });
     }
-    if (this.state.updateDatepicker && "date" in this.props.options) {
+    if (this.state.updateDatepicker && "image" in this.props.options) {
       this.props.addCssRules(
-        this.props.options.date,
+        this.props.options.image.time,
         this.state.style,
         this.props.options
       );
@@ -638,9 +662,9 @@ class Tiff extends Component {
       .addEventListener("keydown", this.enterMinMax);
     var style = document.createElement("style");
     document.head.appendChild(style);
-    if ("date" in this.props.options) {
+    if ("image" in this.props.options) {
       this.props.addCssRules(
-        this.props.options.date,
+        this.props.options.image.time,
         style,
         this.props.options
       );
@@ -673,9 +697,9 @@ class Tiff extends Component {
       opacity,
       convolve,
       includeDates,
-      date,
       validpixelexpression,
-      url,
+      image,
+      images,
     } = this.props.options;
     const locale = {
       localize: {
@@ -687,13 +711,14 @@ class Tiff extends Component {
       },
     };
     var ncUrl = false;
-    if (url && url.includes("S3")) {
-      let p = url.split("/");
+    if (image && image.url.includes("S3")) {
+      let p = image.url.split("/");
       let f = p[p.length - 1].split("_");
       let n = `${f[0]}_${f[f.length - 3]}_${f[f.length - 2]}.nc`;
       p[p.length - 1] = n;
       ncUrl = p.join("/");
     }
+
     return (
       <div className="layer-settings">
         <div className="layer-section">{Translate.settings[language]}</div>
@@ -704,13 +729,32 @@ class Tiff extends Component {
               locale={locale}
               inline={true}
               includeDates={includeDates}
-              selected={date ? date : false}
+              selected={image ? image.time : false}
               onChange={(update) => {
                 this.setDate(update);
               }}
               onMonthChange={this.onMonthChange}
             />
           </div>
+          {image &&
+            images
+              .filter((m) => this.isSameDay(image.time, m.time))
+              .map((i) => (
+                <div
+                  className={
+                    image.k === i.k ? "tiff-image active" : "tiff-image"
+                  }
+                  onClick={() => this.setImage(i)}
+                  key={i.k}
+                >
+                  <div className="image-satellite">{i.satellite}</div>
+                  <div className="image-time">
+                    {this.formatDateToCustomString(i.time)}
+                  </div>
+                  <div className="image-tile">{i.tile}</div>
+                  <div className="image-percent">{i.percent}%</div>
+                </div>
+              ))}
         </div>
         <div className="setting half">
           <div className="label">Min</div>
@@ -785,7 +829,7 @@ class Tiff extends Component {
         </div>
         <div className="layer-section">{Translate.downloads[language]}</div>
         <div className="setting">
-          <a href={url}>
+          <a href={image ? image.url : ""}>
             <button className="tiff">Image (.tif)</button>
           </a>
           {ncUrl && (
