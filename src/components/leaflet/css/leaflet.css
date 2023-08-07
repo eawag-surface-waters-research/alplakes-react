@@ -798,7 +798,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
 /* Base styles for the element that has a tooltip */
 .leaflet-tooltip {
   position: absolute;
-  padding: 1px 5px;
+  padding: 2px 8px;
   font-size: 12px;
   background-color: #272727;
   text-align: center;
@@ -847,16 +847,16 @@ svg.leaflet-image-layer.leaflet-interactive path {
 }
 
 .leaflet-tooltip-top:before {
-  /* bottom: 0;*/
-  /*margin-bottom: -12px;
-	border-top-color: #fff;*/
+  bottom: 0;
+  margin-bottom: -12px;
+	border-top-color: #272727;
 }
 
 .leaflet-tooltip-bottom:before {
   top: 0;
   margin-top: -12px;
   margin-left: -6px;
-  border-bottom-color: #fff;
+  border-bottom-color: #272727;
 }
 
 .leaflet-tooltip-left {
@@ -876,11 +876,11 @@ svg.leaflet-image-layer.leaflet-interactive path {
 .leaflet-tooltip-left:before {
   right: 0;
   margin-right: -12px;
-  border-left-color: #fff;
+  border-left-color: #272727;
 }
 
 .leaflet-tooltip-right:before {
   left: 0;
   margin-left: -12px;
-  border-right-color: #fff;
+  border-right-color: #272727;
 }

@@ -90,7 +90,6 @@
 
 .main .home .content .products .lake {
   padding: 0 8px 40px 8px;
-  aspect-ratio: 1 / 1;
 }
 
 .main .home .content .products a {
@@ -300,6 +299,12 @@
   }
 
   .main .home .content .products .lake {
-    padding: 0 12px;
+    padding: 0 8px 20px 8px;
+  }
+}
+
+@media screen and (min-width: 1600px) {
+  .main .home .content .products {
+    grid-template-columns: repeat(auto-fit, minmax(20%, 1fr));
   }
 }
