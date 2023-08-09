@@ -527,7 +527,6 @@ class Tiff extends Component {
     dataMin: this.props.options.dataMin ? this.props.options.dataMin : 0,
     dataMax: this.props.options.dataMax ? this.props.options.dataMax : 0,
     style: false,
-    updateDatepicker: false,
   };
 
   setMin = (event) => {
@@ -642,13 +641,12 @@ class Tiff extends Component {
         dataMax: this.props.options.dataMax,
       });
     }
-    if (this.state.updateDatepicker && "image" in this.props.options) {
+    if ("image" in this.props.options) {
       this.props.addCssRules(
         this.props.options.image.time,
         this.state.style,
         this.props.options
       );
-      this.setState({ updateDatepicker: false });
     }
   }
 
@@ -668,10 +666,8 @@ class Tiff extends Component {
         style,
         this.props.options
       );
-      this.setState({ style });
-    } else {
-      this.setState({ style, updateDatepicker: true });
     }
+    this.setState({ style });
   }
 
   componentWillUnmount() {
@@ -701,6 +697,7 @@ class Tiff extends Component {
       image,
       images,
     } = this.props.options;
+    var { unit } = this.props.layer.properties;
     const locale = {
       localize: {
         day: (n) => Translate.axis[language].shortDays[n],
@@ -747,12 +744,22 @@ class Tiff extends Component {
                   onClick={() => this.setImage(i)}
                   key={i.k}
                 >
-                  <div className="image-satellite">{i.satellite}</div>
+                  <div className="image-satellite" title="Satellite">
+                    {i.satellite}
+                  </div>
                   <div className="image-time">
                     {this.formatDateToCustomString(i.time)}
                   </div>
-                  <div className="image-tile">{i.tile}</div>
-                  <div className="image-percent">{i.percent}%</div>
+                  <div className="image-tile" title="Tile">
+                    {i.tile}
+                  </div>
+                  <div className="image-percent" title="Pixel Coverage">
+                    {i.percent}%
+                  </div>
+                  <div className="image-ave" title="Mean Value">
+                    {i.ave}
+                    {unit}
+                  </div>
                 </div>
               ))}
         </div>
@@ -846,7 +853,6 @@ class Tiff extends Component {
 class WMS extends Component {
   state = {
     style: false,
-    updateDatepicker: false,
   };
 
   setGain = (event) => {
@@ -880,13 +886,12 @@ class WMS extends Component {
   };
 
   componentDidUpdate() {
-    if (this.state.updateDatepicker && "date" in this.props.options) {
+    if ("date" in this.props.options) {
       this.props.addCssRules(
         this.props.options.date,
         this.state.style,
         this.props.options
       );
-      this.setState({ updateDatepicker: false });
     }
   }
 
@@ -899,10 +904,8 @@ class WMS extends Component {
         style,
         this.props.options
       );
-      this.setState({ style });
-    } else {
-      this.setState({ style, updateDatepicker: true });
     }
+    this.setState({ style });
   }
 
   componentWillUnmount() {

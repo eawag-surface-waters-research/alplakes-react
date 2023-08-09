@@ -154,6 +154,23 @@ const round = (value, decimals) => {
   return Math.round(value * 10 ** decimals) / 10 ** decimals;
 };
 
+const keepDuplicatesWithHighestValue = (list, dateKey, valueKey) => {
+  const uniqueObjects = {};
+  for (const obj of list) {
+    const currentDate = obj[dateKey];
+    const currentValue = obj[valueKey];
+
+    if (
+      !uniqueObjects[currentDate] ||
+      uniqueObjects[currentDate][valueKey] < currentValue
+    ) {
+      uniqueObjects[currentDate] = obj;
+    }
+  }
+
+  return Object.values(uniqueObjects);
+};
+
 export const flyToBounds = (bounds, map) => {
   map.flyToBounds(
     L.latLngBounds(L.latLng(bounds.southWest), L.latLng(bounds.northEast)),
@@ -679,24 +696,26 @@ const addSencastTiff = async (layer, dataStore, layerStore, datetime, map) => {
   var image;
   if (!checkNested(dataStore, path)) {
     ({ data: metadata } = await axios.get(layer.properties.metadata));
+    var max_pixels = d3.max(metadata.map((m) => parseFloat(m.p)));
     metadata = metadata.map((m) => {
       m.unix = parseDate(m.dt).getTime();
+      m.date = m.dt.slice(0, 8);
       m.url = CONFIG.sencast_bucket + m.k;
       m.time = parseDate(m.dt);
       let split = m.k.split("_");
       m.tile = split[split.length - 1].split(".")[0];
       m.satellite = split[0].split("/")[2];
-      m.percent = Math.round((parseFloat(m.vp) / parseFloat(m.p)) * 100);
+      m.percent = Math.round((parseFloat(m.vp) / max_pixels) * 100);
+      m.ave = Math.round(parseFloat(m.mean) * 100) / 100;
       return m;
     });
     setNested(dataStore, path, metadata);
     image = findClosest(metadata, "unix", datetime);
     layer.properties.options.image = image;
     layer.properties.options.images = metadata;
-    layer.properties.options.includeDates = metadata.map((m) => m.time);
-    layer.properties.options.percentage = metadata.map((m) =>
-      Math.round((parseFloat(m.vp) / parseFloat(m.p)) * 100)
-    );
+    var dates = keepDuplicatesWithHighestValue(metadata, "date", "percent");
+    layer.properties.options.includeDates = dates.map((m) => m.time);
+    layer.properties.options.percentage = dates.map((m) => m.percent);
     layer.properties.options.validpixelexpression = true;
 
     layer.properties.options.min = round(image.min, 2);
@@ -846,18 +865,20 @@ const addSentinelHubWms = async (
   var image;
   if (!checkNested(dataStore, path)) {
     ({ data: metadata } = await axios.get(layer.properties.metadata));
+    var max_pixels = d3.max(metadata.map((m) => parseFloat(m.p)));
     metadata = metadata.map((m) => {
       m.unix = parseDate(m.dt).getTime();
+      m.date = m.dt.slice(0, 8);
       m.url = CONFIG.sencast_bucket + m.k;
       m.time = parseDate(m.dt);
+      m.percent = Math.round((parseFloat(m.vp) / max_pixels) * 100);
       return m;
     });
     setNested(dataStore, path, metadata);
     image = findClosest(metadata, "unix", datetime);
-    layer.properties.options.includeDates = metadata.map((m) => m.time);
-    layer.properties.options.percentage = metadata.map((m) =>
-      Math.round((parseFloat(m.vp) / parseFloat(m.p)) * 100)
-    );
+    var dates = keepDuplicatesWithHighestValue(metadata, "date", "percent");
+    layer.properties.options.includeDates = dates.map((m) => m.time);
+    layer.properties.options.percentage = dates.map((m) => m.percent);
     layer.properties.options.date = image.time;
   } else {
     metadata = getNested(dataStore, path);

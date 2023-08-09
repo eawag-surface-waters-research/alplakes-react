@@ -1287,6 +1287,9 @@
 .main.dark .lake .content .secondary .selection .layer-settings .setting .tiff-image {
   background-color: #000000;
   border: 1px solid black;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
 }
 
 .main .lake .content .secondary .selection .layer-settings .setting .tiff-image.active {
@@ -1309,7 +1312,6 @@
 
 .main .lake .content .secondary .selection .layer-settings .setting .tiff-image div {
   display: inline-block;
-  margin-left: 16px;
 }
 
 
