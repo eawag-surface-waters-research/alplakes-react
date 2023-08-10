@@ -42,12 +42,7 @@ class Lake extends Component {
   };
 
   setSelection = (newSelection) => {
-    var { selection } = this.state;
-    if (newSelection === selection) {
-      this.setState({ selection: "hidden" });
-    } else {
-      this.setState({ selection: newSelection });
-    }
+    this.setState({ selection: newSelection });
   };
 
   openSidebar = () => {
@@ -252,7 +247,13 @@ class Lake extends Component {
     if (!layer.active) {
       layer.active = true;
       updates.push({ event: "addLayer", id: id });
-      this.setState({ play: false, layers, updates, clickblock: true, selection: id });
+      this.setState({
+        play: false,
+        layers,
+        updates,
+        clickblock: true,
+        selection: id,
+      });
     }
   };
 
