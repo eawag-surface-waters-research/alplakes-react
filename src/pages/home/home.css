@@ -125,10 +125,10 @@
   width: 100%;
   border-radius: 12px;
   aspect-ratio: 16 / 9;
-  -webkit-transition: border-radius 1s, opacity 2s;
-  transition: border-radius 1s, opacity 2s;
-
-  opacity: 1;
+  -webkit-transition: all 1s;
+  transition: all 1s;
+  -webkit-filter: grayscale(100%);
+  filter: grayscale(100%);
 }
 
 .main .home .content .products .lake .image img.core-image {
@@ -137,18 +137,6 @@
 
 .main.dark .home .content .products .lake .image img.core-image {
   background-color: #272727;
-}
-
-.main .home .content .products .lake .image img.behind-image {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  border-radius: 12px;
-  aspect-ratio: 16 / 9;
-  -webkit-transition: all 1s;
-  transition: all 1s;
-  z-index: -1;
 }
 
 .main .home .content .products .lake .image img.behind-image {
@@ -164,12 +152,13 @@
 }
 
 .main .home .content .products .lake:hover .image img.core-image {
-  opacity: 0;
+  -webkit-filter: none;
+  filter: none;
 }
 
 .main .home .content .products .lake .image .tags {
   position: absolute;
-  bottom: 12px;
+  top: 12px;
   width: 100%;
   text-align: right;
 }
