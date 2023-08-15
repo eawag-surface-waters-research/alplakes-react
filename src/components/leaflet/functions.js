@@ -43,10 +43,10 @@ const addMinutes = (date, minutes) => {
 const formatDate = (datetime, offset = 0) => {
   var a = new Date(datetime).getTime();
   a = new Date(a + offset);
-  var year = a.getFullYear();
-  var month = a.getMonth() + 1;
-  var date = a.getDate();
-  var hour = a.getHours();
+  var year = a.getUTCFullYear();
+  var month = a.getUTCMonth() + 1;
+  var date = a.getUTCDate();
+  var hour = a.getUTCHours();
   return `${String(year)}${month < 10 ? "0" + month : month}${
     date < 10 ? "0" + date : date
   }${hour < 10 ? "0" + hour : hour}`;
