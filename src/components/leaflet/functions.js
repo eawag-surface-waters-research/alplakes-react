@@ -336,18 +336,20 @@ const downloadAlplakesHydrodynamicGeometry = async (
     return;
   }
 
+  var geometry;
+
   try {
-    var { data: geometry } = await axios.get(
+    ({ data: geometry } = await axios.get(
       `${CONFIG.alplakes_bucket}/simulations/${layer.properties.model}/metadata/${layer.properties.lake}/geometry.txt`
-    );
+    ));
   } catch (e) {
-    var { data: geometry } = await axios.get(
+    ({ data: geometry } = await axios.get(
       `${CONFIG.alplakes_api}/simulations/layer_alplakes/${
         layer.properties.model
       }/${layer.properties.lake}/geometry/${formatDate(period[0])}/${formatDate(
         period[1]
       )}/0`
-    );
+    ));
   }
 
   geometry = geometry
@@ -384,30 +386,31 @@ const downloadAlplakesHydrodynamicParameter = async (
   if (checkNested(dataStore, path)) {
     console.log("Check downloaded to avoid repeat downloads");
   }
+  var par;
   if (bucket) {
     try {
-      var { data: par } = await axios.get(
+      ({ data: par } = await axios.get(
         `${CONFIG.alplakes_bucket}/simulations/${layer.properties.model}/data/${
           layer.properties.lake
         }/${parameter}_${formatDate(start)}_${formatDate(end)}_${depth}.txt`
-      );
+      ));
     } catch (e) {
-      var { data: par } = await axios.get(
+      ({ data: par } = await axios.get(
         `${CONFIG.alplakes_api}/simulations/layer_alplakes/${
           layer.properties.model
         }/${layer.properties.lake}/${parameter}/${formatDate(
           start
         )}/${formatDate(end)}/${depth}`
-      );
+      ));
     }
   } else {
-    var { data: par } = await axios.get(
+    ({ data: par } = await axios.get(
       `${CONFIG.alplakes_api}/simulations/layer_alplakes/${
         layer.properties.model
       }/${layer.properties.lake}/${parameter}/${formatDate(start)}/${formatDate(
         end
       )}/${depth}`
-    );
+    ));
   }
 
   par = par.split("\n").map((g) => g.split(",").map((s) => parseFloat(s)));

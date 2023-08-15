@@ -120,19 +120,21 @@ export const setCustomPeriod = async (
   depths
 ) => {
   if (customPeriod.type === "alplakes_hydrodynamic") {
+    var data;
     if ("bucket" in customPeriod) {
       try {
-        var { data } = await axios.get(CONFIG.alplakes_bucket + customPeriod.bucket);
+        ({ data } = await axios.get(
+          CONFIG.alplakes_bucket + customPeriod.bucket
+        ));
       } catch (e) {
-        console.error(e)
-        var { data } = await axios.get(CONFIG.alplakes_api + customPeriod.end);
+        ({ data } = await axios.get(CONFIG.alplakes_api + customPeriod.end));
       }
     } else {
-      var { data } = await axios.get(CONFIG.alplakes_api + customPeriod.end);
+      ({ data } = await axios.get(CONFIG.alplakes_api + customPeriod.end));
     }
     minDate = stringToDate(data.start_date).getTime();
     maxDate = stringToDate(data.end_date).getTime();
-    var startDate = maxDate + (customPeriod.start * 8.64e+7)
+    var startDate = maxDate + customPeriod.start * 8.64e7;
     if ("depths" in data) {
       depths = data.depths;
       let index = closestIndex(depth, depths);
@@ -178,14 +180,12 @@ export const getTransectAlplakesHydrodynamic = async (
   latlng.pop();
   const url = `${api}/simulations/transect/${model}/${lake}/${formatAPIDatetime(
     period[0]
-  )}/${formatAPIDatetime(
-    period[1]
-  )}/${latlng.map((l) => l.lat).join(",")}/${latlng
-    .map((l) => l.lng)
-    .join(",")}`;
+  )}/${formatAPIDatetime(period[1])}/${latlng
+    .map((l) => l.lat)
+    .join(",")}/${latlng.map((l) => l.lng).join(",")}`;
   try {
     const { data } = await axios.get(url);
-    data.time = data.time.map(d => parseDate(d))
+    data.time = data.time.map((d) => parseDate(d));
     return data;
   } catch (e) {
     console.error(e);
