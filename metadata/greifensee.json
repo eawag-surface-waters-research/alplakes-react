@@ -19,8 +19,9 @@
   },
   "customPeriod": {
     "type": "alplakes_hydrodynamic",
-    "start": -2,
-    "end": "/simulations/metadata/delft3d-flow/greifensee"
+    "start": -7,
+    "end": "/simulations/metadata/delft3d-flow/greifensee",
+    "bucket": "/simulations/delft3d-flow/metadata/greifensee/metadata.json"
   },
   "depth": 0.7,
   "layers": [

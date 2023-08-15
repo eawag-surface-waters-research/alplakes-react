@@ -26,6 +26,7 @@ class Basemap extends Component {
       getTransect,
       getProfile,
       startAnimation,
+      bucket
     } = this.props;
     if (updates.length > 0) {
       updated();
@@ -33,7 +34,7 @@ class Basemap extends Component {
         if (update.event === "clear") {
           this.layer.clearLayers();
         } else if (update.event === "bounds") {
-          flyToBounds(metadata.bounds, this.map);
+          await flyToBounds(metadata.bounds, this.map);
         } else if (update.event === "addLayer") {
           await addLayer(
             this.find(layers, "id", update.id),
@@ -45,7 +46,8 @@ class Basemap extends Component {
             depth,
             setSimpleline,
             getTransect,
-            getProfile
+            getProfile,
+            bucket
           );
         } else if (update.event === "updateLayer") {
           updateLayer(
@@ -95,6 +97,7 @@ class Basemap extends Component {
       zoomSnap: 0.25,
       zoomControl: false,
       showCursorLocation: true,
+      zoomAnimation: true,
     });
     this.map.doubleClickZoom.disable();
 

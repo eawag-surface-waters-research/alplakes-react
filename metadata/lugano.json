@@ -19,8 +19,9 @@
   },
   "customPeriod": {
     "type": "alplakes_hydrodynamic",
-    "start": -2,
-    "end": "/simulations/metadata/delft3d-flow/lugano"
+    "start": -7,
+    "end": "/simulations/metadata/delft3d-flow/lugano",
+    "bucket": "/simulations/delft3d-flow/metadata/lugano/metadata.json"
   },
   "depth": 1,
   "layers": [

@@ -120,7 +120,7 @@ class Home extends Component {
   };
   async componentDidMount() {
     const { data: list } = await axios.get(
-      CONFIG.alplakes_bucket + "list.json"
+      CONFIG.alplakes_bucket + "/static/website/metadata/list.json"
     );
     this.setState({ list });
   }

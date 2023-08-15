@@ -19,8 +19,9 @@
   },
   "customPeriod": {
     "type": "alplakes_hydrodynamic",
-    "start": -2,
-    "end": "/simulations/metadata/delft3d-flow/hallwil"
+    "start": -7,
+    "end": "/simulations/metadata/delft3d-flow/hallwil",
+    "bucket": "/simulations/delft3d-flow/metadata/hallwil/metadata.json"
   },
   "depth": 1,
   "layers": [
