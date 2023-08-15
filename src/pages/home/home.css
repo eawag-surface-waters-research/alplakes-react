@@ -131,6 +131,20 @@
   filter: grayscale(100%);
 }
 
+.main .home .content .products .lake .image img.overlay-image {
+  width: 100%;
+  border-radius: 12px;
+  aspect-ratio: 16 / 9;
+  -webkit-transition: all 1s;
+  transition: all 1s;
+  -webkit-filter: grayscale(100%);
+  filter: grayscale(100%);
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+}
+
 .main .home .content .products .lake .image img.core-image {
   background-color: rgb(204, 204, 204);
 }

@@ -50,6 +50,7 @@ class Lake extends Component {
     };
     var desc = Translations.descriptions[language];
     var imgCore = `https://alplakes-eawag.s3.eu-central-1.amazonaws.com/static/website/images/lakes/${lake.key}.png`;
+    var imgOverlay = `https://alplakes-eawag.s3.eu-central-1.amazonaws.com/static/website/images/lakes/${lake.key}_overlay.png`;
     return (
       <NavLink to={`/${lake.key}`}>
         <div
@@ -60,6 +61,7 @@ class Lake extends Component {
         >
           <div className="image">
             <img src={imgCore} alt="Lake" className="core-image" />
+            <img src={imgOverlay} alt="Lake" className="overlay-image" />
             <div className="tags">
               {lake.tags.map((t) => (
                 <div className="tag" key={t} title={tags[t].hover}>
