@@ -19,8 +19,9 @@
   },
   "customPeriod": {
     "type": "alplakes_hydrodynamic",
-    "start": -2,
-    "end": "/simulations/metadata/delft3d-flow/joux"
+    "start": -7,
+    "end": "/simulations/metadata/delft3d-flow/joux",
+    "bucket": "/simulations/delft3d-flow/metadata/joux/metadata.json"
   },
   "depth": 0.7,
   "layers": [

@@ -120,16 +120,27 @@ export const setCustomPeriod = async (
   depths
 ) => {
   if (customPeriod.type === "alplakes_hydrodynamic") {
-    var start = relativeDate(customPeriod.start).getTime();
-    var { data } = await axios.get(CONFIG.alplakes_api + customPeriod.end);
+    var data;
+    if ("bucket" in customPeriod) {
+      try {
+        ({ data } = await axios.get(
+          CONFIG.alplakes_bucket + customPeriod.bucket
+        ));
+      } catch (e) {
+        ({ data } = await axios.get(CONFIG.alplakes_api + customPeriod.end));
+      }
+    } else {
+      ({ data } = await axios.get(CONFIG.alplakes_api + customPeriod.end));
+    }
     minDate = stringToDate(data.start_date).getTime();
     maxDate = stringToDate(data.end_date).getTime();
+    var startDate = maxDate + customPeriod.start * 8.64e7;
     if ("depths" in data) {
       depths = data.depths;
       let index = closestIndex(depth, depths);
       depth = depths[index];
     }
-    return { period: [start, maxDate], minDate, maxDate, depths, depth };
+    return { period: [startDate, maxDate], minDate, maxDate, depths, depth };
   } else {
     console.error("Custom period type not recognised.");
     return { period, minDate, maxDate, depths, depth };
@@ -169,14 +180,12 @@ export const getTransectAlplakesHydrodynamic = async (
   latlng.pop();
   const url = `${api}/simulations/transect/${model}/${lake}/${formatAPIDatetime(
     period[0]
-  )}/${formatAPIDatetime(
-    period[1]
-  )}/${latlng.map((l) => l.lat).join(",")}/${latlng
-    .map((l) => l.lng)
-    .join(",")}`;
+  )}/${formatAPIDatetime(period[1])}/${latlng
+    .map((l) => l.lat)
+    .join(",")}/${latlng.map((l) => l.lng).join(",")}`;
   try {
     const { data } = await axios.get(url);
-    data.time = data.time.map(d => parseDate(d))
+    data.time = data.time.map((d) => parseDate(d));
     return data;
   } catch (e) {
     console.error(e);

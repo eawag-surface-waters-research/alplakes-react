@@ -43,10 +43,10 @@ const addMinutes = (date, minutes) => {
 const formatDate = (datetime, offset = 0) => {
   var a = new Date(datetime).getTime();
   a = new Date(a + offset);
-  var year = a.getFullYear();
-  var month = a.getMonth() + 1;
-  var date = a.getDate();
-  var hour = a.getHours();
+  var year = a.getUTCFullYear();
+  var month = a.getUTCMonth() + 1;
+  var date = a.getUTCDate();
+  var hour = a.getUTCHours();
   return `${String(year)}${month < 10 ? "0" + month : month}${
     date < 10 ? "0" + date : date
   }${hour < 10 ? "0" + hour : hour}`;
@@ -171,11 +171,18 @@ const keepDuplicatesWithHighestValue = (list, dateKey, valueKey) => {
   return Object.values(uniqueObjects);
 };
 
-export const flyToBounds = (bounds, map) => {
-  map.flyToBounds(
-    L.latLngBounds(L.latLng(bounds.southWest), L.latLng(bounds.northEast)),
-    { padding: [20, 20] }
-  );
+export const flyToBounds = async (bounds, map) => {
+  return new Promise((resolve) => {
+    function flyEnd() {
+      resolve();
+      map.off("zoomend", flyEnd);
+    }
+    map.on("zoomend", flyEnd);
+    map.flyToBounds(
+      L.latLngBounds(L.latLng(bounds.southWest), L.latLng(bounds.northEast)),
+      { padding: [20, 20] }
+    );
+  });
 };
 
 export const addLayer = async (
@@ -188,7 +195,8 @@ export const addLayer = async (
   depth,
   setSimpleline,
   getTransect,
-  getProfile
+  getProfile,
+  bucket
 ) => {
   if (layer.type === "alplakes_hydrodynamic") {
     await addAlplakesHydrodynamic(
@@ -199,7 +207,8 @@ export const addLayer = async (
       map,
       datetime,
       depth,
-      setSimpleline
+      setSimpleline,
+      bucket
     );
   } else if (layer.type === "sencast_tiff") {
     await addSencastTiff(layer, dataStore, layerStore, datetime, map);
@@ -293,14 +302,16 @@ const addAlplakesHydrodynamic = async (
   map,
   datetime,
   depth,
-  setSimpleline
+  setSimpleline,
+  bucket
 ) => {
   await downloadAlplakesHydrodynamicGeometry(layer, period, dataStore);
   var simpleline = await downloadAlplakesHydrodynamicParameter(
     layer,
     period,
     depth,
-    dataStore
+    dataStore,
+    bucket
   );
   if ("simpleline" in layer.properties) {
     setSimpleline(simpleline);
@@ -324,13 +335,23 @@ const downloadAlplakesHydrodynamicGeometry = async (
   if (checkNested(dataStore, path)) {
     return;
   }
-  var { data: geometry } = await axios.get(
-    `${CONFIG.alplakes_api}/simulations/layer_alplakes/${
-      layer.properties.model
-    }/${layer.properties.lake}/geometry/${formatDate(period[0])}/${formatDate(
-      period[1]
-    )}/0`
-  );
+
+  var geometry;
+
+  try {
+    ({ data: geometry } = await axios.get(
+      `${CONFIG.alplakes_bucket}/simulations/${layer.properties.model}/metadata/${layer.properties.lake}/geometry.txt`
+    ));
+  } catch (e) {
+    ({ data: geometry } = await axios.get(
+      `${CONFIG.alplakes_api}/simulations/layer_alplakes/${
+        layer.properties.model
+      }/${layer.properties.lake}/geometry/${formatDate(period[0])}/${formatDate(
+        period[1]
+      )}/0`
+    ));
+  }
+
   geometry = geometry
     .split("\n")
     .map((g) => g.split(",").map((s) => parseFloat(s)));
@@ -342,6 +363,7 @@ const downloadAlplakesHydrodynamicParameter = async (
   period,
   depth,
   dataStore,
+  bucket,
   overwrite = false
 ) => {
   var type = layer.type;
@@ -364,13 +386,33 @@ const downloadAlplakesHydrodynamicParameter = async (
   if (checkNested(dataStore, path)) {
     console.log("Check downloaded to avoid repeat downloads");
   }
-  var { data: par } = await axios.get(
-    `${CONFIG.alplakes_api}/simulations/layer_alplakes/${
-      layer.properties.model
-    }/${layer.properties.lake}/${parameter}/${formatDate(start)}/${formatDate(
-      end
-    )}/${depth}`
-  );
+  var par;
+  if (bucket) {
+    try {
+      ({ data: par } = await axios.get(
+        `${CONFIG.alplakes_bucket}/simulations/${layer.properties.model}/data/${
+          layer.properties.lake
+        }/${parameter}_${formatDate(start)}_${formatDate(end)}_${depth}.txt`
+      ));
+    } catch (e) {
+      ({ data: par } = await axios.get(
+        `${CONFIG.alplakes_api}/simulations/layer_alplakes/${
+          layer.properties.model
+        }/${layer.properties.lake}/${parameter}/${formatDate(
+          start
+        )}/${formatDate(end)}/${depth}`
+      ));
+    }
+  } else {
+    ({ data: par } = await axios.get(
+      `${CONFIG.alplakes_api}/simulations/layer_alplakes/${
+        layer.properties.model
+      }/${layer.properties.lake}/${parameter}/${formatDate(start)}/${formatDate(
+        end
+      )}/${depth}`
+    ));
+  }
+
   par = par.split("\n").map((g) => g.split(",").map((s) => parseFloat(s)));
 
   var simpleline = { x: [], y: [] };
@@ -700,7 +742,7 @@ const addSencastTiff = async (layer, dataStore, layerStore, datetime, map) => {
     metadata = metadata.map((m) => {
       m.unix = parseDate(m.dt).getTime();
       m.date = m.dt.slice(0, 8);
-      m.url = CONFIG.sencast_bucket + m.k;
+      m.url = CONFIG.sencast_bucket + "/" + m.k;
       m.time = parseDate(m.dt);
       let split = m.k.split("_");
       m.tile = split[split.length - 1].split(".")[0];
@@ -869,7 +911,7 @@ const addSentinelHubWms = async (
     metadata = metadata.map((m) => {
       m.unix = parseDate(m.dt).getTime();
       m.date = m.dt.slice(0, 8);
-      m.url = CONFIG.sencast_bucket + m.k;
+      m.url = CONFIG.sencast_bucket + "/" + m.k;
       m.time = parseDate(m.dt);
       m.percent = Math.round((parseFloat(m.vp) / max_pixels) * 100);
       return m;

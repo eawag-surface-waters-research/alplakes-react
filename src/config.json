@@ -1,7 +1,7 @@
 {
   "alplakes_api": "https://alplakes-api.eawag.ch",
-  "alplakes_bucket": "https://alplakes-eawag.s3.eu-central-1.amazonaws.com/static/website/metadata/",
-  "sencast_bucket": "https://eawagrs.s3.eu-central-1.amazonaws.com/",
+  "alplakes_bucket": "https://alplakes-eawag.s3.eu-central-1.amazonaws.com",
+  "sencast_bucket": "https://eawagrs.s3.eu-central-1.amazonaws.com",
   "basemaps": {
     "default": {
       "url": "https://api.mapbox.com/styles/v1/jamesrunnalls/clg4u62lq009a01oa5z336xn7/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiamFtZXNydW5uYWxscyIsImEiOiJjazk0ZG9zd2kwM3M5M2hvYmk3YW0wdW9yIn0.uIJUZoDgaC2LfdGtgMz0cQ",
