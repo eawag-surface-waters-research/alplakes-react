@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import { NavLink } from "react-router-dom";
 import NavBar from "../../components/navbar/navbar";
+import SummaryGraph from "../../components/d3/summarygraph/summarygraph";
 import Translations from "../../translations.json";
 import swiss from "../../img/swiss.png";
 import italian from "../../img/italian.png";
@@ -40,9 +41,79 @@ class PlaceHolder extends Component {
   }
 }
 
+class SummaryTable extends Component {
+  parseDate = (date) => {
+    return "Weds";
+  };
+  formatDate = (date) => {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${year}${month}${day}`;
+  };
+  dayName = (YYYYMMDD) => {
+    var { language } = this.props;
+    const year = parseInt(YYYYMMDD.substr(0, 4), 10);
+    const month = parseInt(YYYYMMDD.substr(4, 2), 10) - 1; // Subtracting 1 to make it zero-based
+    const day = parseInt(YYYYMMDD.substr(6, 2), 10);
+    const daysOfWeekNames = Translations.axis[language].shortDays;
+    const date = new Date(year, month, day);
+    const dayOfWeekNumber = date.getDay();
+    return daysOfWeekNames[dayOfWeekNumber];
+  };
+  mean = (numbers) => {
+    if (numbers.length === 0) {
+      return 0;
+    }
+    const sum = numbers.reduce((acc, num) => acc + num, 0);
+    const mean = Math.round((sum * 10) / numbers.length) / 10;
+
+    return mean;
+  };
+  render() {
+    var { forecast } = this.props;
+    var now = new Date();
+    now.setHours(0, 0, 0, 0);
+    var dt = [];
+    var value = [];
+    var summary = {};
+    for (let i = 0; i < forecast.date.length; i++) {
+      let d = new Date(forecast.date[i]);
+      if (d > now) {
+        let day = this.formatDate(d);
+        let v = forecast.value[i];
+        dt.push(d);
+        value.push(v);
+        if (day in summary) {
+          summary[day].push(v);
+        } else {
+          summary[day] = [v];
+        }
+      }
+    }
+    return (
+      <React.Fragment>
+        {Object.keys(summary).map((day, i, arr) => (
+          <div
+            key={day}
+            className={i == arr.length - 1 ? "inner end" : "inner"}
+          >
+            <div className="value">
+              {this.mean(summary[day])}
+              <div className="unit">°C</div>
+            </div>
+            <div className="day">{this.dayName(day)}</div>
+          </div>
+        ))}
+        <SummaryGraph dt={dt} value={value} />
+      </React.Fragment>
+    );
+  }
+}
+
 class Lake extends Component {
   render() {
-    var { lake, language } = this.props;
+    var { lake, language, forecast } = this.props;
     var flags = { swiss: swiss, italian: italian, french: french };
     var tags = {
       threed: { img: threed_icon, hover: "3D model available" },
@@ -50,8 +121,6 @@ class Lake extends Component {
     };
     var desc = Translations.descriptions[language];
     var imgCore = `https://alplakes-eawag.s3.eu-central-1.amazonaws.com/static/website/images/lakes/${lake.key}.png`;
-    var imgBehind = `https://alplakes-eawag.s3.eu-central-1.amazonaws.com/static/website/images/lakes/${lake.key}.png`;
-    if (lake.animation) imgBehind = imgBehind.replace(".png", ".gif");
     return (
       <NavLink to={`/${lake.key}`}>
         <div
@@ -62,7 +131,6 @@ class Lake extends Component {
         >
           <div className="image">
             <img src={imgCore} alt="Lake" className="core-image" />
-            <img src={imgBehind} alt="Lake" className="behind-image" />
             <div className="tags">
               {lake.tags.map((t) => (
                 <div className="tag" key={t} title={tags[t].hover}>
@@ -70,6 +138,11 @@ class Lake extends Component {
                 </div>
               ))}
             </div>
+            {forecast !== undefined && (
+              <div className="summary-table">
+                <SummaryTable forecast={forecast} language={language} />
+              </div>
+            )}
           </div>
           <div className="properties">
             <div className="left">
@@ -102,6 +175,7 @@ class Home extends Component {
     sort: "sortby",
     ascending: false,
     defaultNumber: 12,
+    forecast: {},
   };
   setSort = (event) => {
     this.setState({ sort: event.target.value });
@@ -119,15 +193,22 @@ class Home extends Component {
     this.setState({ ascending: !this.state.ascending });
   };
   async componentDidMount() {
+    var { forecast } = this.state;
     const { data: list } = await axios.get(
       CONFIG.alplakes_bucket + "/static/website/metadata/list.json"
     );
-    this.setState({ list });
+    try {
+      ({ data: forecast } = await axios.get(
+        CONFIG.alplakes_bucket +
+          `/simulations/forecast.json?timestamp=${new Date().getTime()}`
+      ));
+    } catch (e) {}
+    this.setState({ list, forecast });
   }
   render() {
     document.title = "Alplakes";
     var { language, dark } = this.props;
-    var { list, sort, ascending, defaultNumber } = this.state;
+    var { list, sort, ascending, defaultNumber, forecast } = this.state;
     if (sort !== "sortby") {
       list = this.sortList(list, sort, ascending);
     }
@@ -171,7 +252,12 @@ class Home extends Component {
               <PlaceHolder number={defaultNumber} />
             ) : (
               list.map((lake) => (
-                <Lake lake={lake} language={language} key={lake.key} />
+                <Lake
+                  lake={lake}
+                  language={language}
+                  key={lake.key}
+                  forecast={forecast[lake.key]}
+                />
               ))
             )}
           </div>

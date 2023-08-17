@@ -1312,6 +1312,7 @@
 
 .main .lake .content .secondary .selection .layer-settings .setting .tiff-image div {
   display: inline-block;
+  margin: 0 6px;
 }
 
 

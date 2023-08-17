@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Translate from "../../translations.json";
+import Translate from "../../../translations.json";
 import * as d3 from "d3";
 import "./simpleline.css";
 

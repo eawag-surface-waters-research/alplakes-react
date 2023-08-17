@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import DatePicker from "react-datepicker";
-import SimpleLine from "../../components/d3/simpleline";
+import SimpleLine from "../../components/d3/simpleline/simpleline";
 import LayerSettings from "./layersettings";
 import Translate from "../../translations.json";
 import { formatTime, formatDateLong } from "./functions";
