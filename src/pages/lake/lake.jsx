@@ -65,7 +65,6 @@ class Lake extends Component {
   };
 
   setSimpleline = (simpleline) => {
-    console.log(simpleline)
     var { datetime } = this.state;
     var index = closestIndex(datetime, simpleline.x);
     this.setState({

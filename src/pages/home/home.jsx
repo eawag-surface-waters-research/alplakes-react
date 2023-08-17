@@ -17,7 +17,6 @@ import { onMouseOver, onMouseOut } from "./functions";
 import CONFIG from "../../config.json";
 import "./home.css";
 
-
 class PlaceHolder extends Component {
   render() {
     var { number } = this.props;
@@ -141,7 +140,7 @@ class Lake extends Component {
             </div>
             {forecast !== undefined && (
               <div className="summary-table">
-                <SummaryTable forecast={forecast} language={language}/>
+                <SummaryTable forecast={forecast} language={language} />
               </div>
             )}
           </div>
@@ -200,7 +199,8 @@ class Home extends Component {
     );
     try {
       ({ data: forecast } = await axios.get(
-        CONFIG.alplakes_bucket + "/simulations/forecast.json"
+        CONFIG.alplakes_bucket +
+          `/simulations/forecast.json?timestamp=${new Date().getTime()}`
       ));
     } catch (e) {}
     this.setState({ list, forecast });

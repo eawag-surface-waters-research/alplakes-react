@@ -230,7 +230,8 @@ export const addLayer = async (
       layerStore,
       map,
       datetime,
-      depth
+      depth,
+      bucket
     );
   } else if (layer.type === "alplakes_transect") {
     await addAlplakesTransect(
@@ -1003,7 +1004,8 @@ const addAlplakesParticles = async (
   layerStore,
   map,
   datetime,
-  depth
+  depth,
+  bucket
 ) => {
   const overwrite = { parameter: "velocity", type: "alplakes_hydrodynamic" };
   await downloadAlplakesHydrodynamicGeometry(
@@ -1017,6 +1019,7 @@ const addAlplakesParticles = async (
     period,
     depth,
     dataStore,
+    bucket,
     overwrite
   );
   plotAlplakesParticles(layer, datetime, depth, dataStore, layerStore, map);
