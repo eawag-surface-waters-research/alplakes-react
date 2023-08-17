@@ -170,6 +170,20 @@
   filter: none;
 }
 
+.main .home .content .products .lake .image .summary-table {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  padding: 4px;
+  box-sizing: border-box;
+  font-size: 12px;
+  text-align: left;
+}
+
+.main .home .content .products .lake .image .summary-table table {
+  width: 100%;
+}
+
 .main .home .content .products .lake .image .tags {
   position: absolute;
   top: 12px;
