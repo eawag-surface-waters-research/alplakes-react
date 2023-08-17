@@ -186,7 +186,7 @@ export const flyToBounds = async (bounds, map) => {
       map.off("zoomend", flyEnd);
     }
     map.on("zoomend", flyEnd);
-    map.flyToBounds(
+    map.fitBounds(
       L.latLngBounds(L.latLng(bounds.southWest), L.latLng(bounds.northEast)),
       { padding: [20, 20] }
     );
