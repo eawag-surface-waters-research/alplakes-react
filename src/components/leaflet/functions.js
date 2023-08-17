@@ -40,6 +40,14 @@ const addMinutes = (date, minutes) => {
   return new Date(date.getTime() + minutes * 60000);
 };
 
+const formatDepth = (number) => {
+  const stringNumber = number.toString();
+  if (!stringNumber.includes(".")) {
+    return stringNumber + ".0";
+  }
+  return stringNumber;
+};
+
 const formatDate = (datetime, offset = 0) => {
   var a = new Date(datetime).getTime();
   a = new Date(a + offset);
@@ -178,7 +186,7 @@ export const flyToBounds = async (bounds, map) => {
       map.off("zoomend", flyEnd);
     }
     map.on("zoomend", flyEnd);
-    map.flyToBounds(
+    map.fitBounds(
       L.latLngBounds(L.latLng(bounds.southWest), L.latLng(bounds.northEast)),
       { padding: [20, 20] }
     );
@@ -392,7 +400,9 @@ const downloadAlplakesHydrodynamicParameter = async (
       ({ data: par } = await axios.get(
         `${CONFIG.alplakes_bucket}/simulations/${layer.properties.model}/data/${
           layer.properties.lake
-        }/${parameter}_${formatDate(start)}_${formatDate(end)}_${depth}.txt`
+        }/${parameter}_${formatDate(start)}_${formatDate(end)}_${formatDepth(
+          depth
+        )}.txt`
       ));
     } catch (e) {
       ({ data: par } = await axios.get(
@@ -400,7 +410,7 @@ const downloadAlplakesHydrodynamicParameter = async (
           layer.properties.model
         }/${layer.properties.lake}/${parameter}/${formatDate(
           start
-        )}/${formatDate(end)}/${depth}`
+        )}/${formatDate(end)}/${formatDepth(depth)}`
       ));
     }
   } else {
