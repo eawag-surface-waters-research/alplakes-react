@@ -7,8 +7,6 @@ import Translations from "../../translations.json";
 import swiss from "../../img/swiss.png";
 import italian from "../../img/italian.png";
 import french from "../../img/french.png";
-import threed_icon from "../../img/threed-icon.png";
-import satellite_icon from "../../img/satellite-icon.png";
 import ascending_icon from "../../img/ascending.png";
 import descending_icon from "../../img/descending.png";
 import ascending_icon_dark from "../../img/ascending_dark.png";
@@ -115,10 +113,6 @@ class Lake extends Component {
   render() {
     var { lake, language, forecast } = this.props;
     var flags = { swiss: swiss, italian: italian, french: french };
-    var tags = {
-      threed: { img: threed_icon, hover: "3D model available" },
-      satellite: { img: satellite_icon, hover: "Satellite imagery available" },
-    };
     var desc = Translations.descriptions[language];
     var imgCore = `https://alplakes-eawag.s3.eu-central-1.amazonaws.com/static/website/images/lakes/${lake.key}.png`;
     return (
@@ -133,8 +127,8 @@ class Lake extends Component {
             <img src={imgCore} alt="Lake" className="core-image" />
             <div className="tags">
               {lake.tags.map((t) => (
-                <div className="tag" key={t} title={tags[t].hover}>
-                  <img src={tags[t].img} alt={t} />
+                <div className="tag" key={t}>
+                  {t}
                 </div>
               ))}
             </div>

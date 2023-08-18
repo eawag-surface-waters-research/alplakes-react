@@ -84,7 +84,7 @@
 
 .main .home .content .products {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
   width: 100%;
 }
 
@@ -170,7 +170,7 @@
   opacity: 0.8;
   -webkit-transition: all 1s;
   transition: all 1s;
-  background-image: linear-gradient(transparent,rgba(0,0,0,.2),rgba(0,0,0,.7));
+  background-image: linear-gradient(transparent, rgba(0, 0, 0, .2), rgba(0, 0, 0, .7));
   border-radius: 0 0 12px 12px;
 }
 
@@ -217,17 +217,30 @@
 
 .main .home .content .products .lake .image .tags {
   position: absolute;
-  top: 12px;
+  top: 0px;
   width: 100%;
   text-align: right;
+  font-size: 14px;
+  opacity: 0;
+  transition: 1s all ease;
+  padding-left: 8px;
+  padding-top: 6px;
+  box-sizing: border-box;
+  max-height: calc(100% - 77px);
+  overflow: hidden;
+}
+
+.main .home .content .products .lake:hover .image .tags {
+  opacity: 1;
 }
 
 .main .home .content .products .lake .image .tag {
   background-color: rgba(28, 28, 28, 0.9);
   display: inline-block;
-  padding: 3px 10px;
+  padding: 2px 8px;
   border-radius: 8px;
   margin-right: 8px;
+  margin-top: 6px;
   pointer-events: all;
   transition: 500ms all ease;
 }
@@ -237,7 +250,8 @@
 }
 
 .main .home .content .products .lake .image .tags img {
-  height: 12px;
+  height: 18px;
+  margin-bottom: -4px;
 }
 
 .main .home .content .products .lake .properties {
@@ -351,7 +365,7 @@
   }
 }
 
-@media screen and (min-width: 1600px) {
+@media screen and (min-width: 2100px) {
   .main .home .content .products {
     grid-template-columns: repeat(auto-fit, minmax(20%, 1fr));
   }
