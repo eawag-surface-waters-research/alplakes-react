@@ -96,7 +96,7 @@ class SummaryTable extends Component {
         {Object.keys(summary).map((day, i, arr) => (
           <div
             key={day}
-            className={i == arr.length - 1 ? "inner end" : "inner"}
+            className={i === arr.length - 1 ? "inner end" : "inner"}
           >
             <div className="value">
               {this.mean(summary[day])}

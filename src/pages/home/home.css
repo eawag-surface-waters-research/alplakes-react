@@ -128,6 +128,7 @@
   -webkit-transition: all 1s;
   transition: all 1s;
   overflow: hidden;
+  filter: saturate(120%);
 }
 
 .main .home .content .products .lake .image img.core-image {
@@ -169,11 +170,14 @@
   opacity: 0.8;
   -webkit-transition: all 1s;
   transition: all 1s;
+  background-image: linear-gradient(transparent,rgba(0,0,0,.2),rgba(0,0,0,.7));
+  border-radius: 0 0 12px 12px;
 }
 
 .main .home .content .products .lake:hover .image .summary-table {
   opacity: 1;
   background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 0;
 }
 
 .main .home .content .products .lake .image .summary-table .inner {
