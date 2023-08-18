@@ -221,6 +221,7 @@
   width: 100%;
   text-align: right;
   font-size: 14px;
+  color: white;
   opacity: 0;
   transition: 1s all ease;
   padding-left: 8px;
@@ -231,7 +232,7 @@
 }
 
 .main .home .content .products .lake:hover .image .tags {
-  opacity: 1;
+  opacity: 0.8;
 }
 
 .main .home .content .products .lake .image .tag {
