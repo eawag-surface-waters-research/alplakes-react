@@ -65,8 +65,13 @@ class SummaryTable extends Component {
     }
     const sum = numbers.reduce((acc, num) => acc + num, 0);
     const mean = Math.round((sum * 10) / numbers.length) / 10;
-
     return mean;
+  };
+  min = (numbers) => {
+    return Math.round(Math.min(...numbers) * 10) / 10;
+  };
+  max = (numbers) => {
+    return Math.round(Math.max(...numbers) * 10) / 10;
   };
   render() {
     var { forecast } = this.props;
@@ -96,10 +101,8 @@ class SummaryTable extends Component {
             key={day}
             className={i === arr.length - 1 ? "inner end" : "inner"}
           >
-            <div className="value">
-              {this.mean(summary[day])}
-              <div className="unit">°C</div>
-            </div>
+            <div className="max">{this.max(summary[day])}°</div>
+            <div className="min">{this.min(summary[day])}°</div>
             <div className="day">{this.dayName(day)}</div>
           </div>
         ))}

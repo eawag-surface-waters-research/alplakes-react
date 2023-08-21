@@ -185,25 +185,25 @@
   width: 100%;
   text-align: center;
   border-right: 1px solid grey;
+  position: relative;
+  z-index: 1;
 }
 
 .main .home .content .products .lake .image .summary-table .inner.end {
   border: none;
 }
 
-.main .home .content .products .lake .image .summary-table .inner .value {
-  font-size: 18px;
-  padding-top: 8px;
+.main .home .content .products .lake .image .summary-table .inner .min {
+  font-size: 12px;
 }
 
-.main .home .content .products .lake .image .summary-table .inner .unit {
-  display: inline-block;
-  font-size: 14px;
+.main .home .content .products .lake .image .summary-table .inner .max {
+  font-size: 20px;
 }
 
 .main .home .content .products .lake .image .summary-table .inner .day {
   font-size: 12px;
-  margin-top: 32px;
+  margin-top: 18px;
   padding-bottom: 2px;
 }
 
@@ -260,6 +260,7 @@
   vertical-align: top;
   padding-top: 8px;
   width: 100%;
+  box-sizing: border-box;
 }
 
 .main .home .content .products .lake .properties .left {
@@ -363,6 +364,21 @@
 
   .main .home .content .products .lake {
     padding: 0 8px 20px 8px;
+  }
+}
+
+@media screen and (max-width: 707px) {
+  .main .home .content .products .lake .image img.core-image {
+    border-radius: 0;
+  }
+
+  .main .home .content .products .lake {
+    padding: 0 0 20px 0;
+  }
+
+  .main .home .content .products .lake .properties {
+    padding: 8px;
+    padding: 8px 8px 0 8px;
   }
 }
 
