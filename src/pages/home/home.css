@@ -30,6 +30,7 @@
   transition: 500ms all ease;
   cursor: pointer;
   text-decoration: none;
+  color: black;
 }
 
 .main.dark .home .content .sorting select {
