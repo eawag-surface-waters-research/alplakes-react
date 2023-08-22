@@ -1756,3 +1756,24 @@
     right: 8px;
   }
 }
+
+@media screen and (max-height: 520px) {
+  .main .lake .content .secondary .info {
+    display: none;
+  }
+
+  .main .lake .content .primary {
+    height: calc(100% - 176px);
+    top: 58px;
+  }
+}
+
+@media screen and (max-height: 500px) {
+  .main .lake .content .primary .map-component .properties {
+    display: none;
+  }
+
+  .main .lake .content .primary {
+    height: calc(100% - 58px);
+  }
+}
