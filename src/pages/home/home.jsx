@@ -11,6 +11,7 @@ import ascending_icon from "../../img/ascending.png";
 import descending_icon from "../../img/descending.png";
 import ascending_icon_dark from "../../img/ascending_dark.png";
 import descending_icon_dark from "../../img/descending_dark.png";
+import ice from "../../img/ice.png";
 import { onMouseOver, onMouseOut } from "./functions";
 import CONFIG from "../../config.json";
 import "./home.css";
@@ -40,9 +41,6 @@ class PlaceHolder extends Component {
 }
 
 class SummaryTable extends Component {
-  parseDate = (date) => {
-    return "Weds";
-  };
   formatDate = (date) => {
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, "0");
@@ -80,17 +78,24 @@ class SummaryTable extends Component {
     var dt = [];
     var value = [];
     var summary = {};
-    for (let i = 0; i < forecast.date.length; i++) {
-      let d = new Date(forecast.date[i]);
-      if (d > now) {
-        let day = this.formatDate(d);
-        let v = forecast.value[i];
-        dt.push(d);
-        value.push(v);
-        if (day in summary) {
-          summary[day].push(v);
-        } else {
-          summary[day] = [v];
+    if (
+      "date" in forecast &&
+      Array.isArray(forecast.date) &&
+      "value" in forecast &&
+      Array.isArray(forecast.value)
+    ) {
+      for (let i = 0; i < forecast.date.length; i++) {
+        let d = new Date(forecast.date[i]);
+        if (d > now) {
+          let day = this.formatDate(d);
+          let v = forecast.value[i];
+          dt.push(d);
+          value.push(v);
+          if (day in summary) {
+            summary[day].push(v);
+          } else {
+            summary[day] = [v];
+          }
         }
       }
     }
@@ -118,6 +123,7 @@ class Lake extends Component {
     var flags = { swiss: swiss, italian: italian, french: french };
     var desc = Translations.descriptions[language];
     var imgCore = `https://alplakes-eawag.s3.eu-central-1.amazonaws.com/static/website/images/lakes/${lake.key}.png`;
+    var frozen = "frozen" in forecast && forecast.frozen;
     return (
       <NavLink to={`/${lake.key}`}>
         <div
@@ -127,6 +133,7 @@ class Lake extends Component {
           onMouseOut={onMouseOut}
         >
           <div className="image">
+            {frozen && <img src={ice} alt="Ice" className="frozen-image" />}
             <img src={imgCore} alt="Lake" className="core-image" />
             <div className="tags">
               {lake.tags.map((t) => (
@@ -148,7 +155,10 @@ class Lake extends Component {
               ))}
             </div>
             <div className="right">
-              <div className="name">{lake.name[language]}</div>
+              <div className="name">
+                {lake.name[language]}
+                {frozen && <div className="frozen">(Ice Covered)</div>}
+              </div>
               <div className="location">
                 {lake.latitude}, {lake.longitude}
               </div>

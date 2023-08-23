@@ -171,7 +171,7 @@ class Media extends Component {
     }
     this.props.unlock();
     if (graphData === false) {
-      window.alert("Failed to collect profile please try again.")
+      window.alert("Failed to collect profile please try again.");
       this.closeGraph();
     } else {
       this.setState({ graphData, graphs: true });
@@ -202,7 +202,7 @@ class Media extends Component {
     }
     this.props.unlock();
     if (graphData === false) {
-      window.alert("Failed to collect transect please try again.")
+      window.alert("Failed to collect transect please try again.");
       this.closeGraph();
     } else {
       this.setState({ graphData, graphs: true });
@@ -262,12 +262,24 @@ class Media extends Component {
       layers,
       openSiderbar,
       clickblock,
+      frozen,
+      closeFrozen,
     } = this.props;
     var { settings, legend, graphData, graphs } = this.state;
     var descriptions = Translate.descriptions[language];
     var flags = { swiss: swiss, italian: italian, french: french };
     return (
       <div className="map-component">
+        {frozen && (
+          <div className="frozen">
+            Lake is currently ice covered, simulations are paused during this
+            period and will restart when the ice melts. Historical conditions
+            can still be accessed.
+            <div className="close" onClick={closeFrozen}>
+              &#215;
+            </div>
+          </div>
+        )}
         {legend && <Legend layers={layers} language={language} />}
         {clickblock && (
           <div className="data-loading">

@@ -40,6 +40,7 @@ class Lake extends Component {
     fullscreen: false,
     sidebarOpen: false,
     bucket: true,
+    frozen: false,
   };
 
   setSelection = (newSelection) => {
@@ -85,6 +86,10 @@ class Lake extends Component {
 
   unlock = () => {
     this.setState({ clickblock: false, bucket: false });
+  };
+
+  closeFrozen = () => {
+    this.setState({ frozen: false });
   };
 
   togglePlay = () => {
@@ -317,7 +322,7 @@ class Lake extends Component {
 
   async componentDidMount() {
     document.addEventListener("keydown", this.keyDown, false);
-    var { period, minDate, maxDate } = this.state;
+    var { period, minDate, maxDate, frozen } = this.state;
     const url = window.location.href.split("/");
     const lake_id = url[url.length - 1]
       .split("?")[0]
@@ -338,14 +343,15 @@ class Lake extends Component {
       var depths = [depth];
       try {
         if ("customPeriod" in metadata) {
-          ({ period, minDate, maxDate, depth, depths } = await setCustomPeriod(
-            metadata.customPeriod,
-            period,
-            minDate,
-            maxDate,
-            depth,
-            depths
-          ));
+          ({ period, minDate, maxDate, depth, depths, frozen } =
+            await setCustomPeriod(
+              metadata.customPeriod,
+              period,
+              minDate,
+              maxDate,
+              depth,
+              depths
+            ));
         }
       } catch (e) {
         console.error(e);
@@ -371,6 +377,7 @@ class Lake extends Component {
         minDate,
         maxDate,
         depths,
+        frozen,
       });
     } catch (e) {
       console.error(e);
@@ -412,6 +419,7 @@ class Lake extends Component {
               openSidebar={this.openSidebar}
               clickblock={clickblock}
               startAnimation={this.startAnimation}
+              closeFrozen={this.closeFrozen}
               {...this.state}
             />
           </div>

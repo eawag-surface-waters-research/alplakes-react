@@ -119,6 +119,7 @@ export const setCustomPeriod = async (
   depth,
   depths
 ) => {
+  var frozen = false;
   if (customPeriod.type === "alplakes_hydrodynamic") {
     var data;
     if ("bucket" in customPeriod) {
@@ -140,10 +141,20 @@ export const setCustomPeriod = async (
       let index = closestIndex(depth, depths);
       depth = depths[index];
     }
-    return { period: [startDate, maxDate], minDate, maxDate, depths, depth };
+    if ("frozen" in data) {
+      frozen = data.frozen;
+    }
+    return {
+      period: [startDate, maxDate],
+      minDate,
+      maxDate,
+      depths,
+      depth,
+      frozen,
+    };
   } else {
     console.error("Custom period type not recognised.");
-    return { period, minDate, maxDate, depths, depth };
+    return { period, minDate, maxDate, depths, depth, frozen };
   }
 };
 

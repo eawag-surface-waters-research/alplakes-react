@@ -141,6 +141,18 @@
   background-color: #272727;
 }
 
+.main .home .content .products .lake .image img.frozen-image {
+  width: 100%;
+  border-radius: 12px;
+  aspect-ratio: 16 / 9;
+  -webkit-transition: all 1s;
+  transition: all 1s;
+  overflow: hidden;
+  filter: saturate(120%);
+  position: absolute;
+  z-index: 1;
+}
+
 .main .home .content .products .lake .image img.behind-image {
   background-color: rgb(204, 204, 204);
 }
@@ -231,6 +243,7 @@
   box-sizing: border-box;
   max-height: calc(100% - 77px);
   overflow: hidden;
+  z-index: 2;
 }
 
 .main .home .content .products .lake:hover .image .tags {
@@ -297,6 +310,15 @@
   font-size: 18px;
   line-height: 22px;
   font-weight: 500;
+}
+
+.main .home .content .products .lake .properties .name .frozen {
+  font-family: "Roboto", "Arial", sans-serif;
+  font-size: 14px;
+  line-height: 22px;
+  font-weight: 500;
+  display: inline-block;
+  margin-left: 8px;
 }
 
 .main .home .content .products .lake .properties .location {

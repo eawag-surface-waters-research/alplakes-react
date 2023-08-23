@@ -132,7 +132,6 @@ L.Raster = L.Layer.extend({
     this._drawLayer();
   },
   _animateZoom: function (e) {
-    console.log("Firing", e)
     var scale = this._map.getZoomScale(e.zoom),
       offset = this._map
         ._getCenterOffset(e.center)
