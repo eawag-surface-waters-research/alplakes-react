@@ -56,6 +56,10 @@ L.Control.MarkerDraw = L.Control.extend({
     if (this._marker) {
       this._marker.remove();
     }
+    this._textbox = L.DomUtil.create("div", "leaflet-draw-textbox");
+    this._textbox.innerHTML = "Add first point";
+    this._map.getContainer().appendChild(this._textbox);
+    this._map.on("mousemove", this._updateTextboxPosition, this);
     document.getElementById("leaflet-draw-label-profile").style.display =
       "none";
   },
@@ -66,6 +70,23 @@ L.Control.MarkerDraw = L.Control.extend({
     L.DomUtil.removeClass(this._container, "leaflet-draw-enabled");
     document.getElementById("map").style.removeProperty("cursor");
     this._map.off("click", this._addMarker, this);
+    if (this._textbox) {
+      this._map.getContainer().removeChild(this._textbox);
+      this._map.off("mousemove", this._updateTextboxPosition, this);
+      this._textbox = null;
+    }
+  },
+
+  _updateTextboxPosition: function (e) {
+    var pos = this._map.mouseEventToContainerPoint(e.originalEvent);
+    if (this._textbox) {
+      this._textbox.innerHTML = `Add profile <br> (${
+        Math.round(e.latlng.lat * 1000) / 1000
+      }, ${Math.round(e.latlng.lng * 1000) / 1000})`;
+      this._textbox.style.display = "block";
+      this._textbox.style.left = pos.x + 5 + "px";
+      this._textbox.style.top = pos.y + 5 + "px";
+    }
   },
 
   _addMarker: function (e) {

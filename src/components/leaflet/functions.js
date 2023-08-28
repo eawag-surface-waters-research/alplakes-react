@@ -550,6 +550,7 @@ const plotAlplakesHydrodynamicRaster = (
         .bindTooltip(
           `${p.name}<br>${leaflet_layer._getValue(L.latLng(p.latlng))}`,
           {
+            id: p.name,
             permanent: true,
             direction: p.direction ? p.direction : "top",
             offset: L.point(0, 0),
@@ -688,8 +689,10 @@ const updateAlplakesHydrodynamic = (
   } else if (leaflet_layer !== null) {
     leaflet_layer.update(newData, options);
     if ("labels" in layer) {
-      layerStore["labels"].clearLayers();
-      if (layer.properties.options.labels) {
+      if (
+        layerStore["labels"].getLayers().length === 0 &&
+        layer.properties.options.labels
+      ) {
         layer.labels.map((p) =>
           L.marker(p.latlng, {
             icon: L.divIcon({
@@ -701,13 +704,25 @@ const updateAlplakesHydrodynamic = (
             .bindTooltip(
               `${p.name}<br>${leaflet_layer._getValue(L.latLng(p.latlng))}`,
               {
+                id: p.name,
                 permanent: true,
+                sticky: true,
                 direction: p.direction ? p.direction : "top",
                 offset: L.point(0, 0),
               }
             )
             .addTo(layerStore["labels"])
         );
+      } else if (layer.properties.options.labels) {
+        layerStore["labels"].getLayers().forEach((m) => {
+          let old = m.getTooltip();
+          let p = layer.labels.find((p) => p.name === old.options.id);
+          m.getTooltip().setContent(
+            `${p.name}<br>${leaflet_layer._getValue(L.latLng(p.latlng))}`
+          );
+        });
+      } else {
+        layerStore["labels"].clearLayers();
       }
     }
   }

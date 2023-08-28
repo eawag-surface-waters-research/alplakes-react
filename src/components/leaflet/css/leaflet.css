@@ -525,12 +525,20 @@ svg.leaflet-image-layer.leaflet-interactive path {
 .leaflet-draw-textbox {
   display: none;
   position: absolute;
-  background-color: white;
-  color: black;
-  z-index: 999;
-  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
   padding: 2px 8px;
+  font-size: 12px;
+  background-color: #272727;
+  text-align: center;
   border-radius: 8px;
+  color: rgb(229, 229, 229);
+  white-space: nowrap;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  z-index: 999;
 }
 
 .leaflet-draw-label {
@@ -849,7 +857,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
 .leaflet-tooltip-top:before {
   bottom: 0;
   margin-bottom: -12px;
-	border-top-color: #272727;
+  border-top-color: #272727;
 }
 
 .leaflet-tooltip-bottom:before {

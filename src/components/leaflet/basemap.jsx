@@ -26,7 +26,7 @@ class Basemap extends Component {
       getTransect,
       getProfile,
       startAnimation,
-      bucket
+      bucket,
     } = this.props;
     if (updates.length > 0) {
       updated();
@@ -69,6 +69,7 @@ class Basemap extends Component {
         }
       }
       unlock();
+      this.map.triggerLayersUpdate();
     }
     if (prevProps.basemap !== this.props.basemap) {
       var basemap = L.tileLayer(CONFIG.basemaps[this.props.basemap].url, {
