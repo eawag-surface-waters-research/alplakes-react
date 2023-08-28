@@ -284,6 +284,11 @@ L.Control.ParticleTracking = L.Control.extend({
     const r = Math.floor(Math.random() * 256);
     const g = Math.floor(Math.random() * 256);
     const b = Math.floor(Math.random() * 256);
+    const l = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+    const contrastThreshold = 0.5;
+    if (Math.abs(1 - l) < contrastThreshold) {
+      return this._getRandomColor();
+    }
     return [r, g, b];
   },
   _addPoints: function (e) {

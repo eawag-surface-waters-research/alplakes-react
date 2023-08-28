@@ -2,10 +2,6 @@ import React, { Component } from "react";
 import downloadIcon from "../../../img/download.png";
 import heatIcon from "../../../img/heat.png";
 import contourIcon from "../../../img/contour.png";
-import helpIcon from "../../../img/info.png";
-import shrinkIcon from "../../../img/shrink.png";
-import fullscreenIcon from "../../../img/full.png";
-import fontsizeIcon from "../../../img/fontsize.png";
 import xgraphIcon from "../../../img/xgraph.png";
 import ygraphIcon from "../../../img/ygraph.png";
 import "./graphheader.css";
@@ -43,7 +39,6 @@ class GraphHeader extends Component {
       id,
       title,
       download,
-      fullscreen,
       display,
       toggleXgraph,
       toggleYgraph,
@@ -52,12 +47,6 @@ class GraphHeader extends Component {
       downloadJSON,
       downloadCSV,
     } = this.props;
-    var fulllabel = "Fullscreen";
-    var fullicon = fullscreenIcon;
-    if (fullscreen) {
-      fulllabel = "Shrink Map";
-      fullicon = shrinkIcon;
-    }
     var displaylabel = "View as heat map";
     var displayicon = heatIcon;
     if (display === "heatmap") {
