@@ -20,7 +20,7 @@
 .navbar .desktop-nav {
   position: absolute;
   top: 18px;
-  right: 110px;
+  right: 117px;
   text-align: center;
 }
 
@@ -37,10 +37,10 @@
 .navbar .desktop-nav .nav-item {
   display: inline-block;
   padding: 6px 0;
-  width: 92px;
+  width: 94px;
   transition: 0.2s ease-in-out all;
   box-sizing: border-box;
-  margin: 0 8px;
+  margin-right: 8px;
   background-color: rgba(0, 0, 0, 0.05);
   border-radius: 8px;
 }
@@ -169,7 +169,7 @@
 }
 
 .navbar .language button {
-  width: 24px;
+  width: 30px;
   margin-right: 8px;
 }
 
@@ -179,7 +179,7 @@
 
 .navbar .language select,
 .navbar .language button {
-  padding: 6px;
+  padding: 7.5px;
   border-radius: 8px;
   color: black;
   background-color: rgba(0, 0, 0, 0.05);
@@ -229,7 +229,7 @@
   }
 
   .navbar .mobile-nav {
-    right: 102px;
+    right: 112px;
     top: 12px;
   }
 

@@ -1,4 +1,4 @@
-import L, { latLng } from "leaflet";
+import L from "leaflet";
 
 L.Map.mergeOptions({
   showCursorLocation: false,
