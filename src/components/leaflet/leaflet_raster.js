@@ -10,7 +10,7 @@ L.Raster = L.Layer.extend({
     max: "null",
     zIndex: 1,
     tooltipSensitivity: 500,
-    interpolate: 0,
+    interpolate: false,
     palette: [
       { color: [255, 255, 255], point: 0 },
       { color: [0, 0, 0], point: 1 },
@@ -146,45 +146,70 @@ L.Raster = L.Layer.extend({
   },
   _drawLayer: function () {
     this._ctx.clearRect(0, 0, this._width, this._height);
-    var start, end;
-    if (this._data.length === 2) {
-      start = this._data[0];
-      end = this._data[1];
-    } else {
-      start = this._data;
-      end = this._data;
-    }
     var cell = 0;
     var values = [];
     var points = [];
-    for (var i = 1; i < this._dataHeight - 1; i++) {
-      for (var j = 1; j < this._dataWidth - 1; j++) {
-        if (!isNaN(start[i][j])) {
-          var value =
-            start[i][j] + (end[i][j] - start[i][j]) * this.options.interpolate;
-          if ("vector" in this.options && this.options.vector) {
-            let value2 =
-              start[i][j + this._dataWidth] +
-              (end[i][j + this._dataWidth] - start[i][j + this._dataWidth]) *
-                this.options.interpolate;
-            value = Math.sqrt(value ** 2 + value2 ** 2);
+    if (this.options.interpolate && this._data.length === 2) {
+      var start = this._data[0];
+      var end = this._data[1];
+      for (var i = 1; i < this._dataHeight - 1; i++) {
+        for (var j = 1; j < this._dataWidth - 1; j++) {
+          if (!isNaN(start[i][j])) {
+            var value =
+              start[i][j] +
+              (end[i][j] - start[i][j]) * this.options.interpolate;
+            if ("vector" in this.options && this.options.vector) {
+              let value2 =
+                start[i][j + this._dataWidth] +
+                (end[i][j + this._dataWidth] - start[i][j + this._dataWidth]) *
+                  this.options.interpolate;
+              value = Math.sqrt(value ** 2 + value2 ** 2);
+            }
+            let color = this._getColor(
+              value,
+              this.options.min,
+              this.options.max,
+              this.options.palette
+            );
+            values.push(value);
+            points.push(
+              L.latLng([
+                this._geometry[i][j],
+                this._geometry[i][j + this._dataWidth],
+              ])
+            );
+            let coords = this._vertices[cell];
+            this._drawCell(this._ctx, coords, `rgb(${color.join(",")})`);
+            cell++;
           }
-          let color = this._getColor(
-            value,
-            this.options.min,
-            this.options.max,
-            this.options.palette
-          );
-          values.push(value);
-          points.push(
-            L.latLng([
-              this._geometry[i][j],
-              this._geometry[i][j + this._dataWidth],
-            ])
-          );
-          let coords = this._vertices[cell];
-          this._drawCell(this._ctx, coords, `rgb(${color.join(",")})`);
-          cell++;
+        }
+      }
+    } else {
+      for (var i = 1; i < this._dataHeight - 1; i++) {
+        for (var j = 1; j < this._dataWidth - 1; j++) {
+          if (!isNaN(this._data[i][j])) {
+            var value = this._data[i][j];
+            if ("vector" in this.options && this.options.vector) {
+              let value2 = this._data[i][j + this._dataWidth];
+              value = Math.sqrt(value ** 2 + value2 ** 2);
+            }
+            let color = this._getColor(
+              value,
+              this.options.min,
+              this.options.max,
+              this.options.palette
+            );
+            values.push(value);
+            points.push(
+              L.latLng([
+                this._geometry[i][j],
+                this._geometry[i][j + this._dataWidth],
+              ])
+            );
+            let coords = this._vertices[cell];
+            this._drawCell(this._ctx, coords, `rgb(${color.join(",")})`);
+            cell++;
+          }
         }
       }
     }

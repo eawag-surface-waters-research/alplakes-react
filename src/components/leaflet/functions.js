@@ -459,6 +459,7 @@ const downloadAlplakesHydrodynamicParameter = async (
   layer.properties.options.max = max;
   layer.properties.options.dataMin = min;
   layer.properties.options.dataMax = max;
+  console.log("Here1")
   return simpleline;
 };
 
@@ -486,17 +487,28 @@ const plotAlplakesHydrodynamic = (
 
   var data = getNested(dataStore, path);
   var geometry = getNested(dataStore, geometry_path);
-  var { display } = layer.properties;
+  var { display, interpolate } = layer.properties;
   if (display === "raster") {
-    var { interpolate, newData } = getTimestepData(data, datetime);
-    plotAlplakesHydrodynamicRaster(
-      layer,
-      layerStore,
-      map,
-      geometry,
-      newData,
-      interpolate
-    );
+    if (interpolate) {
+      var { interpolate, newData } = getTimestepData(data, datetime);
+      plotAlplakesHydrodynamicRaster(
+        layer,
+        layerStore,
+        map,
+        geometry,
+        newData,
+        interpolate
+      );
+    } else {
+      plotAlplakesHydrodynamicRaster(
+        layer,
+        layerStore,
+        map,
+        geometry,
+        data[closestDate(datetime, Object.keys(data))],
+        false
+      );
+    }
   } else if (display === "current") {
     plotAlplakesHydrodynamicCurrent(
       layer,
@@ -648,7 +660,7 @@ const updateAlplakesHydrodynamic = (
   }
 
   var newData;
-  if (layer.properties.display === "raster") {
+  if (layer.properties.interpolate) {
     var out = getTimestepData(data, datetime);
     options["interpolate"] = out.interpolate;
     newData = out.newData;

@@ -139,6 +139,7 @@ class Raster extends Component {
       maxDate,
       Translate.axis[language].months
     );
+    console.log("Here2")
     return (
       <div className="layer-settings">
         <div className="layer-section">{Translate.settings[language]}</div>
@@ -186,17 +187,19 @@ class Raster extends Component {
             onChange={this.setOpacity}
           ></input>
         </div>
-        <div className="setting half">
-          <div className="label">Labels</div>
-          <label className="switch">
-            <input
-              type="checkbox"
-              checked={labels}
-              onChange={this.setLabels}
-            ></input>
-            <span className="slider round"></span>
-          </label>
-        </div>
+        {labels && (
+          <div className="setting half">
+            <div className="label">Labels</div>
+            <label className="switch">
+              <input
+                type="checkbox"
+                checked={labels}
+                onChange={this.setLabels}
+              ></input>
+              <span className="slider round"></span>
+            </label>
+          </div>
+        )}
         <div className="setting">
           <div className="label">Palette</div>
           <div className="value">{paletteName}</div>

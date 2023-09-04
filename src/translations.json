@@ -157,6 +157,12 @@
     "FR": "Profil",
     "IT": "Profilo"
   },
+  "thermocline": {
+    "EN": "Thermocline",
+    "DE": "Thermokline",
+    "FR": "Thermocline",
+    "IT": "termoclino"
+  },
   "play": {
     "EN": "Play (Spacebar)",
     "DE": "Spielen (Leertaste)",
