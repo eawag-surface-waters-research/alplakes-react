@@ -54,6 +54,7 @@
         "height": 28,
         "width": 109,
         "display": "raster",
+        "interpolate": true,
         "depth": true,
         "period": true,
         "simpleline": true,
@@ -108,6 +109,40 @@
           "opacity": 0.8,
           "zIndex": 3,
           "paletteName": "Thermal"
+        }
+      }
+    },
+    {
+      "id": 11,
+      "type": "alplakes_hydrodynamic",
+      "active": false,
+      "description": "Thermocline depth calculated using @5@ using the 3D hydrodynamic model @3@. Meteorological forcing data is produced from the @1@ products, hincasts use the Cosmo-1e 1 day deterministic product (VNXQ34) and forecasts use the Cosmo-2e 5 day ensemble forecast (VNXZ32). Where rivers inputs are used this data is sourced from @4@. The scripts used to generate model input, along with the full model setup are avaiable @2@. This model is calibrated using in-situ measuresuments collected by a number of 3rd parties.",
+      "links": {
+        "1": [
+          "MeteoSwiss COSMO",
+          "https://www.meteoswiss.admin.ch/weather/warning-and-forecasting-systems/cosmo-forecasting-system.html"
+        ],
+        "2": [
+          "here",
+          "https://github.com/eawag-surface-waters-research/alplakes-simulations"
+        ],
+        "3": ["Delft3D", "https://oss.deltares.nl/web/delft3d"],
+        "4": ["BAFU Hydrodaten", "https://www.hydrodaten.admin.ch/en"],
+        "5": ["PyLake", "https://github.com/hugocruzz/pylake"]
+      },
+      "properties": {
+        "model": "delft3d-flow",
+        "lake": "greifensee",
+        "parameter": "thermocline",
+        "unit": "m",
+        "height": 28,
+        "width": 109,
+        "display": "raster",
+        "depth": true,
+        "period": true,
+        "options": {
+          "paletteName": "navia reverse",
+          "zIndex": 2
         }
       }
     },

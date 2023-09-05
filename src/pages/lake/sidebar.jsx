@@ -13,6 +13,7 @@ import secchi_icon from "../../img/secchi.png";
 import turbidity_icon from "../../img/turbidity.png";
 import rgb_icon from "../../img/rgb.png";
 import particles_icon from "../../img/particles.png";
+import thermocline_icon from "../../img/thermocline.png";
 import "react-datepicker/dist/react-datepicker.css";
 import "./lake.css";
 
@@ -291,6 +292,7 @@ class Sidebar extends Component {
       transect: transect_icon,
       profile: profile_icon,
       particles: particles_icon,
+      thermocline: thermocline_icon,
     },
   };
   render() {

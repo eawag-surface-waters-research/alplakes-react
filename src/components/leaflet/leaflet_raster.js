@@ -99,24 +99,16 @@ L.Raster = L.Layer.extend({
     this._reset();
   },
   _grid_vertices: function () {
-    var start;
-    if (this._data.length === 2) {
-      start = this._data[0];
-    } else {
-      start = this._data;
-    }
     var vertices = [];
     for (var i = 1; i < this._dataHeight - 1; i++) {
       for (var j = 1; j < this._dataWidth - 1; j++) {
-        if (!isNaN(start[i][j])) {
-          let coords = this._getCellCorners(
-            this._geometry,
-            i,
-            j,
-            this._dataWidth
-          );
-          vertices.push(coords);
-        }
+        let coords = this._getCellCorners(
+          this._geometry,
+          i,
+          j,
+          this._dataWidth
+        );
+        vertices.push(coords);
       }
     }
     this._vertices = vertices;
@@ -149,13 +141,14 @@ L.Raster = L.Layer.extend({
     var cell = 0;
     var values = [];
     var points = [];
-    if (this.options.interpolate && this._data.length === 2) {
+    var i, j, value;
+    if (this.options.interpolate !== false && this._data.length === 2) {
       var start = this._data[0];
       var end = this._data[1];
-      for (var i = 1; i < this._dataHeight - 1; i++) {
-        for (var j = 1; j < this._dataWidth - 1; j++) {
+      for (i = 1; i < this._dataHeight - 1; i++) {
+        for (j = 1; j < this._dataWidth - 1; j++) {
           if (!isNaN(start[i][j])) {
-            var value =
+            value =
               start[i][j] +
               (end[i][j] - start[i][j]) * this.options.interpolate;
             if ("vector" in this.options && this.options.vector) {
@@ -180,15 +173,15 @@ L.Raster = L.Layer.extend({
             );
             let coords = this._vertices[cell];
             this._drawCell(this._ctx, coords, `rgb(${color.join(",")})`);
-            cell++;
           }
+          cell++;
         }
       }
     } else {
-      for (var i = 1; i < this._dataHeight - 1; i++) {
-        for (var j = 1; j < this._dataWidth - 1; j++) {
+      for (i = 1; i < this._dataHeight - 1; i++) {
+        for (j = 1; j < this._dataWidth - 1; j++) {
           if (!isNaN(this._data[i][j])) {
-            var value = this._data[i][j];
+            value = this._data[i][j];
             if ("vector" in this.options && this.options.vector) {
               let value2 = this._data[i][j + this._dataWidth];
               value = Math.sqrt(value ** 2 + value2 ** 2);
@@ -208,8 +201,8 @@ L.Raster = L.Layer.extend({
             );
             let coords = this._vertices[cell];
             this._drawCell(this._ctx, coords, `rgb(${color.join(",")})`);
-            cell++;
           }
+          cell++;
         }
       }
     }

@@ -19,7 +19,7 @@
   },
   "customPeriod": {
     "type": "alplakes_hydrodynamic",
-    "start": -2,
+    "start": -7,
     "end": "/simulations/metadata/delft3d-flow/joux",
     "bucket": "/simulations/delft3d-flow/metadata/joux/metadata.json"
   },
@@ -55,6 +55,7 @@
         "height": 153,
         "width": 22,
         "display": "raster",
+        "interpolate": true,
         "depth": true,
         "period": true,
         "simpleline": true,
@@ -137,13 +138,12 @@
         "unit": "m",
         "height": 153,
         "width": 22,
-        "interpolate": false,
         "display": "raster",
         "depth": true,
         "period": true,
         "options": {
-          "paletteName": "Balance",
-          "zIndex": 1
+          "paletteName": "navia reverse",
+          "zIndex": 2
         }
       }
     },

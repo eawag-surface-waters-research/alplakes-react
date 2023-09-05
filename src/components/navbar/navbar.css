@@ -229,8 +229,9 @@
   }
 
   .navbar .mobile-nav {
-    right: 112px;
+    right: 105px;
     top: 12px;
+    margin-right: 8px;
   }
 
   .navbar {

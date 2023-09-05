@@ -136,12 +136,12 @@ const getTimestepData = (data, datetime) => {
   var min = Math.min(...keys);
   if (datetime >= max) {
     return {
-      interpolate: 0,
+      interpolateValue: 0,
       newData: [data[String(max)], data[String(max)]],
     };
   } else if (datetime <= min) {
     return {
-      interpolate: 0,
+      interpolateValue: 0,
       newData: [data[String(min)], data[String(min)]],
     };
   } else {
@@ -152,7 +152,7 @@ const getTimestepData = (data, datetime) => {
       if (high > datetime) break;
     }
     return {
-      interpolate: (datetime - low) / (high - low),
+      interpolateValue: (datetime - low) / (high - low),
       newData: [data[String(low)], data[String(high)]],
     };
   }
@@ -459,7 +459,6 @@ const downloadAlplakesHydrodynamicParameter = async (
   layer.properties.options.max = max;
   layer.properties.options.dataMin = min;
   layer.properties.options.dataMax = max;
-  console.log("Here1")
   return simpleline;
 };
 
@@ -490,14 +489,14 @@ const plotAlplakesHydrodynamic = (
   var { display, interpolate } = layer.properties;
   if (display === "raster") {
     if (interpolate) {
-      var { interpolate, newData } = getTimestepData(data, datetime);
+      var { interpolateValue, newData } = getTimestepData(data, datetime);
       plotAlplakesHydrodynamicRaster(
         layer,
         layerStore,
         map,
         geometry,
         newData,
-        interpolate
+        interpolateValue
       );
     } else {
       plotAlplakesHydrodynamicRaster(
@@ -534,7 +533,7 @@ const plotAlplakesHydrodynamicRaster = (
     layer.properties.lake,
     layer.properties.parameter,
   ];
-  var options = { interpolate };
+  var options = {};
   if ("options" in layer.properties) {
     options = layer.properties.options;
     if ("paletteName" in layer.properties.options) {
@@ -549,6 +548,7 @@ const plotAlplakesHydrodynamicRaster = (
       options["unit"] = layer.properties.unit;
     }
   }
+  options["interpolate"] = interpolate
   var leaflet_layer = new L.Raster(geometry, data, options).addTo(map);
   if ("labels" in layer && layer.properties.options.labels) {
     layer.labels.map((p) =>
@@ -662,7 +662,7 @@ const updateAlplakesHydrodynamic = (
   var newData;
   if (layer.properties.interpolate) {
     var out = getTimestepData(data, datetime);
-    options["interpolate"] = out.interpolate;
+    options["interpolate"] = out.interpolateValue;
     newData = out.newData;
   } else {
     newData = data[closestDate(datetime, Object.keys(data))];

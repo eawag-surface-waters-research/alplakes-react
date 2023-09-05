@@ -8,10 +8,10 @@ import "./lake.css";
 
 class Raster extends Component {
   state = {
-    _min: this.props.options.dataMin,
-    _max: this.props.options.dataMax,
-    dataMin: this.props.options.dataMin,
-    dataMax: this.props.options.dataMax,
+    _min: 0,
+    _max: 1,
+    dataMin: false,
+    dataMax: false,
   };
 
   setMin = (event) => {
@@ -24,10 +24,12 @@ class Raster extends Component {
 
   updateMinMax = () => {
     var { id, updateOptions, options } = this.props;
-    var { _min, _max } = this.state;
-    options["min"] = parseFloat(_min);
-    options["max"] = parseFloat(_max);
-    updateOptions(id, options);
+    var { _min, _max, dataMin } = this.state;
+    if (dataMin) {
+      options["min"] = parseFloat(_min);
+      options["max"] = parseFloat(_max);
+      updateOptions(id, options);
+    }
   };
 
   enterMinMax = (event) => {
@@ -95,8 +97,10 @@ class Raster extends Component {
 
   componentDidUpdate() {
     if (
-      this.state.dataMin !== this.props.options.dataMin ||
-      this.state.dataMax !== this.props.options.dataMax
+      (this.state.dataMin !== this.props.options.dataMin ||
+        this.state.dataMax !== this.props.options.dataMax) &&
+      this.props.options.dataMin !== undefined &&
+      this.props.options.dataMax !== undefined
     ) {
       this.setState({
         _min: this.props.options.dataMin,
@@ -132,6 +136,8 @@ class Raster extends Component {
     var { minDate, maxDate, language, layer } = this.props;
     var { palette, paletteName, opacity, labels } = this.props.options;
 
+    if (opacity === undefined) opacity = 1;
+
     var downloadDates = this.downloadDates(
       layer.properties.model,
       layer.properties.lake,
@@ -139,7 +145,7 @@ class Raster extends Component {
       maxDate,
       Translate.axis[language].months
     );
-    console.log("Here2")
+
     return (
       <div className="layer-settings">
         <div className="layer-section">{Translate.settings[language]}</div>

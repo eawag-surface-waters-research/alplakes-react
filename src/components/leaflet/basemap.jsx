@@ -36,19 +36,25 @@ class Basemap extends Component {
         } else if (update.event === "bounds") {
           await flyToBounds(metadata.bounds, this.map);
         } else if (update.event === "addLayer") {
-          await addLayer(
-            this.find(layers, "id", update.id),
-            period,
-            this.dataStore,
-            this.layerStore,
-            this.map,
-            datetime,
-            depth,
-            setSimpleline,
-            getTransect,
-            getProfile,
-            bucket
-          );
+          try {
+            await addLayer(
+              this.find(layers, "id", update.id),
+              period,
+              this.dataStore,
+              this.layerStore,
+              this.map,
+              datetime,
+              depth,
+              setSimpleline,
+              getTransect,
+              getProfile,
+              bucket
+            );
+          } catch (e) {
+            console.error("Failed to add layer", this.find(layers, "id", update.id))
+            console.error(e)
+            window.alert("Failed to add layer, try a different time period.")
+          }
         } else if (update.event === "updateLayer") {
           updateLayer(
             this.find(layers, "id", update.id),
