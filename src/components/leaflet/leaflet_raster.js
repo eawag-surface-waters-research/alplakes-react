@@ -229,14 +229,8 @@ L.Raster = L.Layer.extend({
       if (isNaN(center[0])) {
         return false;
       } else if (!isNaN(opposite[0]) && !isNaN(left[0]) && !isNaN(right[0])) {
-        var m1 = (center[1] - opposite[1]) / (center[0] - opposite[0]);
-        var m2 = (left[1] - right[1]) / (left[0] - right[0]);
-        m1 = isFinite(m1) ? m1 : 0.0;
-        m2 = isFinite(m2) ? m2 : 0.0;
-        var c1 = opposite[1] - m1 * opposite[0];
-        var c2 = right[1] - m2 * right[0];
-        var x = (c2 - c1) / (m1 - m2);
-        var y = m1 * x + c1;
+        var x = ( opposite[0] + left[0] + right[0] + center[0] ) / 4
+        var y = ( opposite[1] + left[1] + right[1] + center[1] ) / 4
         return [x, y];
       } else if (!isNaN(opposite[0])) {
         let x = center[0] + (opposite[0] - center[0]) / 2;

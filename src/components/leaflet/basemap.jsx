@@ -53,7 +53,7 @@ class Basemap extends Component {
           } catch (e) {
             console.error("Failed to add layer", this.find(layers, "id", update.id))
             console.error(e)
-            window.alert("Failed to add layer, try a different time period.")
+            window.alert(`Failed to add layer ${this.find(layers, "id", update.id).properties.parameter}, try a different time period.`)
           }
         } else if (update.event === "updateLayer") {
           updateLayer(
