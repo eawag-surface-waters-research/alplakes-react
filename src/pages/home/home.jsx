@@ -89,12 +89,14 @@ class SummaryTable extends Component {
         if (d > now) {
           let day = this.formatDate(d);
           let v = forecast.value[i];
-          dt.push(d);
-          value.push(v);
-          if (day in summary) {
-            summary[day].push(v);
-          } else {
-            summary[day] = [v];
+          if (v !== null) {
+            dt.push(d);
+            value.push(v);
+            if (day in summary) {
+              summary[day].push(v);
+            } else {
+              summary[day] = [v];
+            }
           }
         }
       }

@@ -147,7 +147,7 @@ L.Raster = L.Layer.extend({
       var end = this._data[1];
       for (i = 1; i < this._dataHeight - 1; i++) {
         for (j = 1; j < this._dataWidth - 1; j++) {
-          if (!isNaN(start[i][j])) {
+          if (!isNaN(start[i][j]) && !isNaN(end[i][j])) {
             value =
               start[i][j] +
               (end[i][j] - start[i][j]) * this.options.interpolate;

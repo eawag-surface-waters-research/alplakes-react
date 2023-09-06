@@ -8,10 +8,18 @@ import "./lake.css";
 
 class Raster extends Component {
   state = {
-    _min: 0,
-    _max: 1,
-    dataMin: false,
-    dataMax: false,
+    _min:
+      this.props.options.dataMin === undefined ? "" : this.props.options.dataMin,
+    _max:
+      this.props.options.dataMax === undefined ? "" : this.props.options.dataMax,
+    dataMin:
+      this.props.options.dataMin === undefined
+        ? false
+        : this.props.options.dataMin,
+    dataMax:
+      this.props.options.dataMax === undefined
+        ? false
+        : this.props.options.dataMax,
   };
 
   setMin = (event) => {
@@ -193,7 +201,7 @@ class Raster extends Component {
             onChange={this.setOpacity}
           ></input>
         </div>
-        {labels && (
+        {layer.labels && (
           <div className="setting half">
             <div className="label">Labels</div>
             <label className="switch">

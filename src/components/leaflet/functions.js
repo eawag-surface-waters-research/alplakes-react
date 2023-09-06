@@ -449,8 +449,11 @@ const downloadAlplakesHydrodynamicParameter = async (
     bounds.max.push(d3.max(data_flat));
     setNested(dataStore, [...path, date], data);
     if ("simpleline" in layer.properties) {
-      simpleline.y.push(d3.mean(data_flat));
-      simpleline.x.push(parseInt(date));
+      let mean = d3.mean(data_flat)
+      if (mean) {
+        simpleline.y.push(d3.mean(data_flat));
+        simpleline.x.push(parseInt(date));
+      }      
     }
   }
   var min = d3.min(bounds.min);
