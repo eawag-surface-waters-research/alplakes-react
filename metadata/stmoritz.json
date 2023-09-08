@@ -17,6 +17,7 @@
     "southWest": [46.486, 9.833],
     "northEast": [46.499, 9.858]
   },
+  "ice": true,
   "customPeriod": {
     "type": "alplakes_hydrodynamic",
     "start": -7,

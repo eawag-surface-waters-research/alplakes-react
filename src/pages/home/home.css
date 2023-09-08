@@ -109,6 +109,7 @@
   display: inline-block;
   pointer-events: none;
   position: relative;
+  min-height: 100px;
 }
 
 .main .home .content .products .lake .placeholder-image {
@@ -131,6 +132,10 @@
   transition: all 1s;
   overflow: hidden;
   filter: saturate(120%);
+}
+
+.main .home .content .products .lake .image img.core-image.frozen {
+  filter: grayscale(100%);
 }
 
 .main .home .content .products .lake .image img.core-image {
@@ -397,11 +402,13 @@
     -webkit-filter: grayscale(100%);
     filter: grayscale(100%);
   }
+
   .main .home .content .products .lake:hover .image .summary-table {
     opacity: 1;
     background-color: rgba(0, 0, 0, 0.5);
     border-radius: 0;
   }
+
   .main .home .content .products .lake:hover .image .tags {
     opacity: 0.8;
   }

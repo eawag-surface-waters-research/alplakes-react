@@ -119,7 +119,6 @@ export const setCustomPeriod = async (
   depth,
   depths
 ) => {
-  var frozen = false;
   if (customPeriod.type === "alplakes_hydrodynamic") {
     var data;
     if ("bucket" in customPeriod) {
@@ -141,20 +140,44 @@ export const setCustomPeriod = async (
       let index = closestIndex(depth, depths);
       depth = depths[index];
     }
-    if ("frozen" in data) {
-      frozen = data.frozen;
-    }
     return {
       period: [startDate, maxDate],
       minDate,
       maxDate,
       depths,
       depth,
-      frozen,
     };
   } else {
     console.error("Custom period type not recognised.");
-    return { period, minDate, maxDate, depths, depth, frozen };
+    return { period, minDate, maxDate, depths, depth };
+  }
+};
+
+export const getFrozen = async (lake) => {
+  var frozen = false;
+  try {
+    var { data } = await axios.get(
+      CONFIG.alplakes_bucket + "/simulations/ice.json"
+    );
+    var today = new Date();
+    if (lake in data) {
+      var ice = data[lake];
+      for (var i = 0; i < ice.length; i++) {
+        if (ice[i].length === 1) {
+          if (today > parseDay(ice[i][0].toString())) frozen = true;
+        } else if (ice[i].length === 2) {
+          if (
+            today > parseDay(ice[i][0].toString()) &&
+            today < parseDay(ice[i][1].toString())
+          )
+            frozen = true;
+        }
+      }
+    }
+    return frozen;
+  } catch (e) {
+    console.log(e)
+    return frozen;
   }
 };
 
@@ -212,4 +235,12 @@ const parseDate = (str) => {
     )}:${str.slice(10, 12)}:00.000+00:00`
   );
   return d.getTime();
+};
+
+const parseDay = (yyyymmdd) => {
+  const year = parseInt(yyyymmdd.substring(0, 4), 10);
+  const month = parseInt(yyyymmdd.substring(4, 6), 10) - 1;
+  const day = parseInt(yyyymmdd.substring(6, 8), 10);
+  const date = new Date(year, month, day);
+  return date;
 };

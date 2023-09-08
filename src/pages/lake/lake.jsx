@@ -7,6 +7,7 @@ import ReportIssue from "./reportissue";
 import CONFIG from "../../config.json";
 import {
   relativeDate,
+  getFrozen,
   setCustomPeriod,
   closestIndex,
   interpolateData,
@@ -343,15 +344,14 @@ class Lake extends Component {
       var depths = [depth];
       try {
         if ("customPeriod" in metadata) {
-          ({ period, minDate, maxDate, depth, depths, frozen } =
-            await setCustomPeriod(
-              metadata.customPeriod,
-              period,
-              minDate,
-              maxDate,
-              depth,
-              depths
-            ));
+          ({ period, minDate, maxDate, depth, depths } = await setCustomPeriod(
+            metadata.customPeriod,
+            period,
+            minDate,
+            maxDate,
+            depth,
+            depths
+          ));
         }
       } catch (e) {
         console.error(e);
@@ -365,7 +365,23 @@ class Lake extends Component {
           clickblock: false,
         });
       }
-
+      try {
+        console.log(metadata, "ice" in metadata)
+        if ("ice" in metadata && metadata["ice"]) {
+          frozen = await getFrozen(lake_id);
+        }
+      } catch (e) {
+        console.error(e);
+        alert(
+          "Failed to collect data from the API, please check your internet connection."
+        );
+        this.setState({
+          error: "api",
+          loading: false,
+          lake_id,
+          clickblock: false,
+        });
+      }
       this.setState({
         metadata,
         loading: false,

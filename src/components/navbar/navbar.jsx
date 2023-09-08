@@ -72,7 +72,7 @@ class NavBar extends Component {
 
           <div className="mobile-nav">
             <div className="dropdown">
-              <button className="dropbtn">
+              <button className="dropbtn" title="Menu">
                 <div className="bar"></div>
                 <div className="bar"></div>
                 <div className="bar"></div>

@@ -202,18 +202,19 @@
   width: calc(100% - 24px);
   z-index: 999;
   background-color: white;
-  padding: 18px;
+  padding: 18px 28px;
   box-sizing: border-box;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   color: black;
+  border-radius: 8px;
 }
 
 .main .lake .content .primary .map-component .frozen .close {
   cursor: pointer;
   position: absolute;
   right: 8px;
-  top: 4px;
-  font-size: 22px;
+  top: 0px;
+  font-size: 28px;
 }
 
 .main .lake .content .primary .map-component .legend {

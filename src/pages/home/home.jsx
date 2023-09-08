@@ -11,7 +11,7 @@ import ascending_icon from "../../img/ascending.png";
 import descending_icon from "../../img/descending.png";
 import ascending_icon_dark from "../../img/ascending_dark.png";
 import descending_icon_dark from "../../img/descending_dark.png";
-import ice from "../../img/ice.png";
+import ice_overlay from "../../img/ice.png";
 import { onMouseOver, onMouseOut } from "./functions";
 import CONFIG from "../../config.json";
 import "./home.css";
@@ -120,12 +120,33 @@ class SummaryTable extends Component {
 }
 
 class Lake extends Component {
+  parseDate(yyyymmdd) {
+    const year = parseInt(yyyymmdd.substring(0, 4), 10);
+    const month = parseInt(yyyymmdd.substring(4, 6), 10) - 1;
+    const day = parseInt(yyyymmdd.substring(6, 8), 10);
+    const date = new Date(year, month, day);
+    return date;
+  }
   render() {
-    var { lake, language, forecast } = this.props;
+    var { lake, language, forecast, ice } = this.props;
     var flags = { swiss: swiss, italian: italian, french: french };
     var desc = Translations.descriptions[language];
-    var imgCore = `https://alplakes-eawag.s3.eu-central-1.amazonaws.com/static/website/images/lakes/${lake.key}.png`;
-    var frozen = "frozen" in forecast && forecast.frozen;
+    var imgCore = `https://alplakes-eawag.s3.eu-central-1.amazonaws.com/static/website/images/lakes/${lake.key}.jpg`;
+    var frozen = false;
+    if (ice) {
+      var today = new Date();
+      for (var i = 0; i < ice.length; i++) {
+        if (ice[i].length === 1) {
+          if (today > this.parseDate(ice[i][0].toString())) frozen = true;
+        } else if (ice[i].length === 2) {
+          if (
+            today > this.parseDate(ice[i][0].toString()) &&
+            today < this.parseDate(ice[i][1].toString())
+          )
+            frozen = true;
+        }
+      }
+    }
     return (
       <NavLink to={`/${lake.key}`}>
         <div
@@ -135,8 +156,14 @@ class Lake extends Component {
           onMouseOut={onMouseOut}
         >
           <div className="image">
-            {frozen && <img src={ice} alt="Ice" className="frozen-image" />}
-            <img src={imgCore} alt="Lake" className="core-image" />
+            {frozen && (
+              <img src={ice_overlay} alt="Ice" className="frozen-image" />
+            )}
+            <img
+              src={imgCore}
+              alt="Lake"
+              className={frozen ? "core-image frozen" : "core-image"}
+            />
             <div className="tags">
               {lake.tags.map((t) => (
                 <div className="tag" key={t}>
@@ -144,7 +171,7 @@ class Lake extends Component {
                 </div>
               ))}
             </div>
-            {forecast !== undefined && (
+            {(forecast !== undefined && !frozen) && (
               <div className="summary-table">
                 <SummaryTable forecast={forecast} language={language} />
               </div>
@@ -185,6 +212,7 @@ class Home extends Component {
     ascending: false,
     defaultNumber: 12,
     forecast: {},
+    ice: {},
   };
   setSort = (event) => {
     this.setState({ sort: event.target.value });
@@ -202,7 +230,7 @@ class Home extends Component {
     this.setState({ ascending: !this.state.ascending });
   };
   async componentDidMount() {
-    var { forecast } = this.state;
+    var { forecast, ice } = this.state;
     const { data: list } = await axios.get(
       CONFIG.alplakes_bucket + "/static/website/metadata/list.json"
     );
@@ -212,12 +240,17 @@ class Home extends Component {
           `/simulations/forecast.json?timestamp=${new Date().getTime()}`
       ));
     } catch (e) {}
-    this.setState({ list, forecast });
+    try {
+      ({ data: ice } = await axios.get(
+        CONFIG.alplakes_bucket + "/simulations/ice.json"
+      ));
+    } catch (e) {}
+    this.setState({ list, forecast, ice });
   }
   render() {
     document.title = "Alplakes";
     var { language, dark } = this.props;
-    var { list, sort, ascending, defaultNumber, forecast } = this.state;
+    var { list, sort, ascending, defaultNumber, forecast, ice } = this.state;
     if (sort !== "sortby") {
       list = this.sortList(list, sort, ascending);
     }
@@ -266,6 +299,7 @@ class Home extends Component {
                   language={language}
                   key={lake.key}
                   forecast={forecast[lake.key]}
+                  ice={ice[lake.key]}
                 />
               ))
             )}
