@@ -366,7 +366,6 @@ class Lake extends Component {
         });
       }
       try {
-        console.log(metadata, "ice" in metadata)
         if ("ice" in metadata && metadata["ice"]) {
           frozen = await getFrozen(lake_id);
         }

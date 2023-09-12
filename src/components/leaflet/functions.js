@@ -449,11 +449,11 @@ const downloadAlplakesHydrodynamicParameter = async (
     bounds.max.push(d3.max(data_flat));
     setNested(dataStore, [...path, date], data);
     if ("simpleline" in layer.properties) {
-      let mean = d3.mean(data_flat)
+      let mean = d3.mean(data_flat);
       if (mean) {
         simpleline.y.push(d3.mean(data_flat));
         simpleline.x.push(parseInt(date));
-      }      
+      }
     }
   }
   var min = d3.min(bounds.min);
@@ -551,11 +551,12 @@ const plotAlplakesHydrodynamicRaster = (
       options["unit"] = layer.properties.unit;
     }
   }
-  options["interpolate"] = interpolate
+  options["interpolate"] = interpolate;
   var leaflet_layer = new L.Raster(geometry, data, options).addTo(map);
   if ("labels" in layer && layer.properties.options.labels) {
-    layer.labels.map((p) =>
-      L.marker(p.latlng, {
+    layer.labels.map((p) => {
+      let value = leaflet_layer._getValue(L.latLng(p.latlng));
+      return L.marker(p.latlng, {
         icon: L.divIcon({
           className: "leaflet-mouse-marker",
           iconAnchor: [20, 20],
@@ -563,7 +564,9 @@ const plotAlplakesHydrodynamicRaster = (
         }),
       })
         .bindTooltip(
-          `${p.name}<br>${leaflet_layer._getValue(L.latLng(p.latlng))}`,
+          `${p.name}<br>${
+            typeof value === "string" || value instanceof String ? value : ""
+          }`,
           {
             id: p.name,
             permanent: true,
@@ -571,8 +574,8 @@ const plotAlplakesHydrodynamicRaster = (
             offset: L.point(0, 0),
           }
         )
-        .addTo(layerStore["labels"])
-    );
+        .addTo(layerStore["labels"]);
+    });
   }
   setNested(layerStore, path, leaflet_layer);
 };
@@ -708,8 +711,9 @@ const updateAlplakesHydrodynamic = (
         layerStore["labels"].getLayers().length === 0 &&
         layer.properties.options.labels
       ) {
-        layer.labels.map((p) =>
-          L.marker(p.latlng, {
+        layer.labels.map((p) => {
+          let value = leaflet_layer._getValue(L.latLng(p.latlng));
+          return L.marker(p.latlng, {
             icon: L.divIcon({
               className: "leaflet-mouse-marker",
               iconAnchor: [0, 0],
@@ -717,7 +721,11 @@ const updateAlplakesHydrodynamic = (
             }),
           })
             .bindTooltip(
-              `${p.name}<br>${leaflet_layer._getValue(L.latLng(p.latlng))}`,
+              `${p.name}<br>${
+                typeof value === "string" || value instanceof String
+                  ? value
+                  : ""
+              }`,
               {
                 id: p.name,
                 permanent: true,
@@ -726,14 +734,17 @@ const updateAlplakesHydrodynamic = (
                 offset: L.point(0, 0),
               }
             )
-            .addTo(layerStore["labels"])
-        );
+            .addTo(layerStore["labels"]);
+        });
       } else if (layer.properties.options.labels) {
         layerStore["labels"].getLayers().forEach((m) => {
           let old = m.getTooltip();
           let p = layer.labels.find((p) => p.name === old.options.id);
+          let value = leaflet_layer._getValue(L.latLng(p.latlng));
           m.getTooltip().setContent(
-            `${p.name}<br>${leaflet_layer._getValue(L.latLng(p.latlng))}`
+            `${p.name}<br>${
+              typeof value === "string" || value instanceof String ? value : ""
+            }`
           );
         });
       } else {
