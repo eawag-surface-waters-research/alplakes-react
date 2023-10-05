@@ -1,7 +1,7 @@
 .main .home .content {
   margin: auto;
-  margin-top: 68px;
-  padding: 0 16px;
+  margin-top: 85px;
+  padding: 0 60px;
 }
 
 .main .home.dark .content {
@@ -13,7 +13,7 @@
 }
 
 .main .home .content .sorting {
-  padding: 0 8px;
+  padding: 0 18px;
   text-align: right;
   width: 100%;
   box-sizing: border-box;
@@ -91,7 +91,7 @@
 }
 
 .main .home .content .products .lake {
-  padding: 0 8px 40px 8px;
+  padding: 0 18px 40px;
 }
 
 .main .home .content .products a {
