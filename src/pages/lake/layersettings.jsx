@@ -9,9 +9,13 @@ import "./lake.css";
 class Raster extends Component {
   state = {
     _min:
-      this.props.options.dataMin === undefined ? "" : this.props.options.dataMin,
+      this.props.options.dataMin === undefined
+        ? ""
+        : this.props.options.dataMin,
     _max:
-      this.props.options.dataMax === undefined ? "" : this.props.options.dataMax,
+      this.props.options.dataMax === undefined
+        ? ""
+        : this.props.options.dataMax,
     dataMin:
       this.props.options.dataMin === undefined
         ? false
@@ -1097,15 +1101,35 @@ class Particles extends Component {
 }
 
 class LayerSettings extends Component {
+  addDays = (inputDate, daysToAdd) => {
+    if (!(inputDate instanceof Date)) {
+      throw new Error("Input must be a Date object");
+    }
+    const timestamp = inputDate.getTime() + daysToAdd * 24 * 60 * 60 * 1000;
+    const resultDate = new Date(timestamp);
+    return resultDate;
+  };
+  addOneMonth = (inputDate) => {
+    if (!(inputDate instanceof Date)) {
+      throw new Error("Input must be a Date object");
+    }
+    const currentMonth = inputDate.getMonth();
+    const currentYear = inputDate.getFullYear();
+    const nextMonth = (currentMonth + 1) % 12;
+    const nextYear = nextMonth === 0 ? currentYear + 1 : currentYear;
+    const resultDate = new Date(nextYear, nextMonth, inputDate.getDate());
+    return resultDate;
+  };
   addCssRules = (date, style, options) => {
     var { includeDates, percentage } = options;
-    var month = date.getMonth();
+    var start = new Date(date.getFullYear(), date.getMonth(), 1);
+    var end = this.addOneMonth(start);
     var rule, className;
     for (let i = 0; i < includeDates.length; i++) {
       let p = percentage[i];
       let day = includeDates[i].getDate();
       let element = [];
-      if (includeDates[i].getMonth() === month) {
+      if (includeDates[i] > start && includeDates[i] < end) {
         className = `.custom-css-datepicker .react-datepicker__day--0${
           day < 10 ? "0" + day : day
         }:not(.react-datepicker__day--outside-month)`;
@@ -1115,8 +1139,8 @@ class LayerSettings extends Component {
         style.sheet.insertRule(rule, 0);
         element = document.querySelectorAll(className);
       } else if (
-        includeDates[i].getMonth() === month - 1 &&
-        includeDates[i].getDate() > 15
+        includeDates[i] < start &&
+        includeDates[i] > this.addDays(start, -15)
       ) {
         className = `.custom-css-datepicker .react-datepicker__day--0${
           day < 10 ? "0" + day : day
@@ -1127,8 +1151,8 @@ class LayerSettings extends Component {
         style.sheet.insertRule(rule, 0);
         element = document.querySelectorAll(className);
       } else if (
-        includeDates[i].getMonth() === month + 1 &&
-        includeDates[i].getDate() < 15
+        includeDates[i] > end &&
+        includeDates[i] < this.addDays(end, 15)
       ) {
         className = `.custom-css-datepicker .react-datepicker__day--0${
           day < 10 ? "0" + day : day
