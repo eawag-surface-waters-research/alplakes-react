@@ -799,7 +799,7 @@ const addSencastTiff = async (layer, dataStore, layerStore, datetime, map) => {
       let split = m.k.split("_");
       m.tile = split[split.length - 1].split(".")[0];
       m.satellite = split[0].split("/")[2];
-      m.percent = Math.round((parseFloat(m.vp) / max_pixels) * 100);
+      m.percent = Math.ceil((parseFloat(m.vp) / max_pixels) * 100);
       m.ave = Math.round(parseFloat(m.mean) * 100) / 100;
       return m;
     });
@@ -965,7 +965,7 @@ const addSentinelHubWms = async (
       m.date = m.dt.slice(0, 8);
       m.url = CONFIG.sencast_bucket + "/" + m.k;
       m.time = parseDate(m.dt);
-      m.percent = Math.round((parseFloat(m.vp) / max_pixels) * 100);
+      m.percent = Math.ceil((parseFloat(m.vp) / max_pixels) * 100);
       return m;
     });
     setNested(dataStore, path, metadata);
