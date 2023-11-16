@@ -31,7 +31,7 @@ class Lake extends Component {
     updates: [],
     play: false,
     timestep: 3600000,
-    timeout: 100,
+    timeout: 150,
     error: "",
     temperature: 0,
     average: true,
@@ -94,17 +94,54 @@ class Lake extends Component {
   };
 
   togglePlay = () => {
-    this.setState({ play: !this.state.play });
+    if (this.state.play) {
+      this.pause();
+    } else {
+      this.play();
+    }
+  };
+
+  play = () => {
+    var { timeout } = this.state;
+    this.intervalId = setInterval(() => {
+      this.setState((prevState, props) => {
+        var { timestep, datetime, period, updates, layers, simpleline } =
+          prevState;
+
+        if (datetime >= period[1]) {
+          datetime = period[0];
+        } else {
+          datetime = datetime + timestep;
+        }
+        for (var layer of layers) {
+          if (layer.active) {
+            updates.push({ event: "updateLayer", id: layer.id });
+          }
+        }
+        var temperature =
+          Math.round(interpolateData(datetime, simpleline) * 10) / 10;
+        this.setState();
+        return { datetime, updates, temperature };
+      });
+    }, timeout);
+    this.setState({ play: true });
+  };
+
+  pause = () => {
+    try {
+      clearInterval(this.intervalId);
+    } catch (e) {}
+    this.setState({ play: false });
   };
 
   startAnimation = () => {
     setTimeout(() => {
-      this.setState({ play: true });
+      this.play();
     }, 2000);
   };
 
   setPeriod = (period) => {
-    var { layers, updates, play } = this.state;
+    var { layers, updates } = this.state;
     if (period !== this.state.period) {
       var datetime = period[0];
       var clickblock;
@@ -113,12 +150,10 @@ class Lake extends Component {
           clickblock = true;
           updates.unshift({ event: "removeLayer", id: layer.id });
           updates.push({ event: "addLayer", id: layer.id });
-          if (play) {
-            updates.push({ event: "play" });
-          }
         }
       }
-      this.setState({ play: false, updates, datetime, clickblock, period });
+      this.pause();
+      this.setState({ updates, datetime, clickblock, period });
     }
   };
 
@@ -126,8 +161,9 @@ class Lake extends Component {
     this.setState({ basemap: event.target.value });
   };
 
-  setTimeout = (event) => {
-    this.setState({ timeout: parseInt(event.target.value) });
+  setSpeed = (event) => {
+    this.pause()
+    this.setState({ timeout: parseInt(event.target.value) }, () => this.play());
   };
 
   setTimestep = (event) => {
@@ -202,43 +238,38 @@ class Lake extends Component {
 
   setDatetime = (event) => {
     var int = parseInt(JSON.parse(JSON.stringify(event.target.value)));
-    var play = JSON.parse(JSON.stringify(this.state.play));
-    this.setState({ play: false }, () => {
-      var { updates, layers, simpleline } = this.state;
-      for (var layer of layers) {
-        if (layer.active) {
-          updates.push({ event: "updateLayer", id: layer.id });
-        }
+    var { play, updates, layers, simpleline } = this.state;
+    for (var layer of layers) {
+      if (layer.active) {
+        updates.push({ event: "updateLayer", id: layer.id });
       }
-      var datetime;
-      if (play) {
-        datetime = int;
-      } else {
-        datetime = parseInt(event.target.getAttribute("alt"));
-      }
-      var temperature =
-        Math.round(interpolateData(datetime, simpleline) * 10) / 10;
-      this.setState({ datetime, updates, temperature });
-    });
+    }
+    var datetime;
+    if (play) {
+      datetime = int;
+    } else {
+      datetime = parseInt(event.target.getAttribute("alt"));
+    }
+    var temperature =
+      Math.round(interpolateData(datetime, simpleline) * 10) / 10;
+    this.setState({ datetime, updates, temperature });
   };
 
   setDepth = (event) => {
-    var { layers, depth, updates, play } = this.state;
+    var { layers, depth, updates } = this.state;
     if (
       depth !== event.target.value &&
       layers.filter((l) => l.properties.depth && l.active).length > 0
     ) {
+      this.pause()
       depth = event.target.value;
       for (let layer of layers) {
         if (layer.properties.depth && layer.active) {
           updates.unshift({ event: "removeLayer", id: layer.id });
           updates.push({ event: "addLayer", id: layer.id });
-          if (play) {
-            updates.push({ event: "play" });
-          }
         }
       }
-      this.setState({ play: false, updates, depth, clickblock: true });
+      this.setState({ updates, depth, clickblock: true });
     }
   };
 
@@ -252,10 +283,10 @@ class Lake extends Component {
     var { layers, updates } = this.state;
     var layer = layers.find((l) => l.id === id);
     if (!layer.active) {
+      this.pause()
       layer.active = true;
       updates.push({ event: "addLayer", id: id });
       this.setState({
-        play: false,
         layers,
         updates,
         clickblock: true,
@@ -280,46 +311,6 @@ class Lake extends Component {
     layers.find((l) => l.id === id).properties.options = options;
     this.setState({ layers, updates });
   };
-
-  componentDidUpdate() {
-    var {
-      play,
-      timestep,
-      datetime,
-      timeout,
-      period,
-      updates,
-      layers,
-      simpleline,
-    } = this.state;
-    if (play) {
-      if (datetime >= period[1]) {
-        datetime = period[0];
-        for (var layer of layers) {
-          if (layer.active) {
-            updates.push({ event: "updateLayer", id: layer.id });
-          }
-        }
-        var temperature =
-          Math.round(interpolateData(datetime, simpleline) * 10) / 10;
-        this.setState({ datetime, updates, temperature });
-      } else {
-        setTimeout(() => {
-          if (this.state.play) {
-            datetime = datetime + timestep;
-            for (var layer of layers) {
-              if (layer.active) {
-                updates.push({ event: "updateLayer", id: layer.id });
-              }
-            }
-            var temperature =
-              Math.round(interpolateData(datetime, simpleline) * 10) / 10;
-            this.setState({ datetime, updates, temperature });
-          }
-        }, timeout);
-      }
-    }
-  }
 
   async componentDidMount() {
     document.addEventListener("keydown", this.keyDown, false);
@@ -424,7 +415,7 @@ class Lake extends Component {
               lock={this.lock}
               unlock={this.unlock}
               nextStep={this.nextStep}
-              setTimeout={this.setTimeout}
+              setSpeed={this.setSpeed}
               setTimestep={this.setTimestep}
               setTemperature={this.setTemperature}
               setSimpleline={this.setSimpleline}

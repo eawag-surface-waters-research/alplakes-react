@@ -67,7 +67,7 @@ class Settings extends Component {
       timestep,
       setTimestep,
       timeout,
-      setTimeout,
+      setSpeed,
       basemap,
       setBasemap,
       legend,
@@ -97,14 +97,13 @@ class Settings extends Component {
               <td></td>
               <td>Playback Speed</td>
               <td className="settings-input">
-                <select value={timeout} onChange={setTimeout}>
-                  <option value={1000}>x 0.1</option>
-                  <option value={500}>x 0.2</option>
-                  <option value={200}>x 0.5</option>
-                  <option value={100}>Normal</option>
+                <select value={timeout} onChange={setSpeed}>
+                  <option value={1200}>x 0.1</option>
+                  <option value={400}>x 0.2</option>
+                  <option value={300}>x 0.5</option>
+                  <option value={150}>Normal</option>
                   <option value={50}>x 2</option>
-                  <option value={20}>x 5</option>
-                  <option value={10}>x 10</option>
+                  <option value={1}>x 5</option>
                 </select>
               </td>
             </tr>
@@ -251,7 +250,7 @@ class Media extends Component {
       timestep,
       nextStep,
       timeout,
-      setTimeout,
+      setSpeed,
       setTimestep,
       language,
       basemap,
@@ -315,7 +314,7 @@ class Media extends Component {
           timestep={timestep}
           setTimestep={setTimestep}
           timeout={timeout}
-          setTimeout={setTimeout}
+          setSpeed={setSpeed}
           basemap={basemap}
           setBasemap={setBasemap}
           legend={legend}
