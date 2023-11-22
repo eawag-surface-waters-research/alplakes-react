@@ -22,6 +22,7 @@ class Lake extends Component {
     datetime: Date.now(),
     maxDate: Date.now(),
     minDate: new Date(2010),
+    missingDates: [],
     period: [relativeDate(-2).getTime(), relativeDate(3).getTime()],
     loading: true,
     clickblock: true,
@@ -162,7 +163,7 @@ class Lake extends Component {
   };
 
   setSpeed = (event) => {
-    this.pause()
+    this.pause();
     this.setState({ timeout: parseInt(event.target.value) }, () => this.play());
   };
 
@@ -261,7 +262,7 @@ class Lake extends Component {
       depth !== event.target.value &&
       layers.filter((l) => l.properties.depth && l.active).length > 0
     ) {
-      this.pause()
+      this.pause();
       depth = event.target.value;
       for (let layer of layers) {
         if (layer.properties.depth && layer.active) {
@@ -283,7 +284,7 @@ class Lake extends Component {
     var { layers, updates } = this.state;
     var layer = layers.find((l) => l.id === id);
     if (!layer.active) {
-      this.pause()
+      this.pause();
       layer.active = true;
       updates.push({ event: "addLayer", id: id });
       this.setState({
@@ -314,7 +315,7 @@ class Lake extends Component {
 
   async componentDidMount() {
     document.addEventListener("keydown", this.keyDown, false);
-    var { period, minDate, maxDate, frozen } = this.state;
+    var { period, minDate, maxDate, frozen, missingDates } = this.state;
     const url = window.location.href.split("/");
     const lake_id = url[url.length - 1]
       .split("?")[0]
@@ -335,14 +336,16 @@ class Lake extends Component {
       var depths = [depth];
       try {
         if ("customPeriod" in metadata) {
-          ({ period, minDate, maxDate, depth, depths } = await setCustomPeriod(
-            metadata.customPeriod,
-            period,
-            minDate,
-            maxDate,
-            depth,
-            depths
-          ));
+          ({ period, minDate, maxDate, depth, depths, missingDates } =
+            await setCustomPeriod(
+              metadata.customPeriod,
+              period,
+              minDate,
+              maxDate,
+              depth,
+              depths,
+              missingDates
+            ));
         }
       } catch (e) {
         console.error(e);
@@ -382,6 +385,7 @@ class Lake extends Component {
         depth,
         minDate,
         maxDate,
+        missingDates,
         depths,
         frozen,
       });

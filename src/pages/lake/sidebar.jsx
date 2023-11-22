@@ -3,7 +3,7 @@ import DatePicker from "react-datepicker";
 import SimpleLine from "../../components/d3/simpleline/simpleline";
 import LayerSettings from "./layersettings";
 import Translate from "../../translations.json";
-import { formatTime, formatDateLong } from "./functions";
+import { formatTime, formatDateLong, parseDay } from "./functions";
 import temperature_icon from "../../img/temperature.png";
 import velocity_icon from "../../img/velocity.png";
 import chla_icon from "../../img/chla.png";
@@ -80,7 +80,7 @@ class Period extends Component {
     if (period[0] !== null && period[1] !== null) {
       setPeriod([
         Math.floor(period[0].getTime()),
-        Math.floor(period[1].getTime()),
+        Math.floor(period[1].getTime() + 86400000),
       ]);
       this.setState({ period, maxPeriodDate: false });
     } else if (period[0] !== null && period[1] === null) {
@@ -92,7 +92,7 @@ class Period extends Component {
     }
   };
   render() {
-    var { language, minDate, maxDate } = this.props;
+    var { language, minDate, maxDate, missingDates } = this.props;
     var { period, maxPeriodDate } = this.state;
     const locale = {
       localize: {
@@ -103,6 +103,12 @@ class Period extends Component {
         date: () => "dd/mm/yyyy",
       },
     };
+    var excludeDateIntervals = missingDates.map((m) => {
+      return {
+        start: parseDay(m[0].replaceAll("-", "")),
+        end: parseDay(m[1].replaceAll("-", "")),
+      };
+    });
     return (
       <DatePicker
         selectsRange={true}
@@ -111,6 +117,7 @@ class Period extends Component {
         onChange={(update) => {
           this.setDateRange(update);
         }}
+        excludeDateIntervals={excludeDateIntervals}
         minDate={minDate}
         maxDate={maxPeriodDate ? maxPeriodDate : maxDate}
         dateFormat="dd/MM/yyyy"
@@ -312,6 +319,7 @@ class Sidebar extends Component {
       setDepth,
       setSelection,
       setPeriod,
+      missingDates,
       addLayer,
       minDate,
       maxDate,
@@ -380,6 +388,7 @@ class Sidebar extends Component {
                 language={language}
                 minDate={minDate}
                 maxDate={maxDate}
+                missingDates={missingDates}
               />
               <div className="labels">
                 <div className="depth">{Translate.depth[language]} (m)</div>

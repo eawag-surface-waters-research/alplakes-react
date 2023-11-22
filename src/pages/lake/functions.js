@@ -117,7 +117,8 @@ export const setCustomPeriod = async (
   minDate,
   maxDate,
   depth,
-  depths
+  depths,
+  missingDates
 ) => {
   if (customPeriod.type === "alplakes_hydrodynamic") {
     var data;
@@ -140,12 +141,16 @@ export const setCustomPeriod = async (
       let index = closestIndex(depth, depths);
       depth = depths[index];
     }
+    if ("missing_weeks" in data) {
+      missingDates = data.missing_weeks;
+    }
     return {
       period: [startDate, maxDate],
       minDate,
       maxDate,
       depths,
       depth,
+      missingDates,
     };
   } else {
     console.error("Custom period type not recognised.");
@@ -176,7 +181,7 @@ export const getFrozen = async (lake) => {
     }
     return frozen;
   } catch (e) {
-    console.log(e)
+    console.log(e);
     return frozen;
   }
 };
@@ -237,7 +242,7 @@ const parseDate = (str) => {
   return d.getTime();
 };
 
-const parseDay = (yyyymmdd) => {
+export const parseDay = (yyyymmdd) => {
   const year = parseInt(yyyymmdd.substring(0, 4), 10);
   const month = parseInt(yyyymmdd.substring(4, 6), 10) - 1;
   const day = parseInt(yyyymmdd.substring(6, 8), 10);
