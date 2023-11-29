@@ -115,7 +115,7 @@ class Lake extends Component {
           datetime = datetime + timestep;
         }
         for (var layer of layers) {
-          if (layer.active) {
+          if (layer.active && "playUpdate" in layer && layer.playUpdate) {
             updates.push({ event: "updateLayer", id: layer.id });
           }
         }
