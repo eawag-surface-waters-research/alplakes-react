@@ -55,9 +55,22 @@ const formatDate = (datetime, offset = 0) => {
   var month = a.getUTCMonth() + 1;
   var date = a.getUTCDate();
   var hour = a.getUTCHours();
+  var minute = a.getMinutes();
   return `${String(year)}${month < 10 ? "0" + month : month}${
     date < 10 ? "0" + date : date
-  }${hour < 10 ? "0" + hour : hour}`;
+  }${hour < 10 ? "0" + hour : hour}${minute < 10 ? "0" + minute : minute}`;
+};
+
+const formatDateBucket = (datetime, offset = 0) => {
+  var a = new Date(datetime).getTime();
+  a = new Date(a + offset);
+  var year = a.getUTCFullYear();
+  var month = a.getUTCMonth() + 1;
+  var date = a.getUTCDate();
+  var hour = a.getUTCHours();
+  return `${String(year)}${month < 10 ? "0" + month : month}${
+    date < 10 ? "0" + date : date
+  }${hour < 10 ? "0" + hour : hour}00`;
 };
 
 const formatDateIso = (datetime) => {
@@ -401,7 +414,7 @@ const downloadAlplakesHydrodynamicParameter = async (
       ({ data: par } = await axios.get(
         `${CONFIG.alplakes_bucket}/simulations/${layer.properties.model}/data/${
           layer.properties.lake
-        }/${parameter}_${formatDate(start)}_${formatDate(end)}_${formatDepth(
+        }/${parameter}_${formatDateBucket(start)}_${formatDateBucket(end)}_${formatDepth(
           depth
         )}.txt`
       ));
