@@ -403,7 +403,7 @@ class Lake extends Component {
     var { metadata, lake_id, loading, clickblock, fullscreen, sidebarOpen } =
       this.state;
     var { language, dark } = this.props;
-    if ("name" in metadata) document.title = metadata.name[language];
+    if ("name" in metadata) document.title = metadata.name[language] + " | Alplakes";
     return (
       <div className="lake">
         <NavBar {...this.props} />

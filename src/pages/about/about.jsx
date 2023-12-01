@@ -7,6 +7,7 @@ import "./about.css";
 
 class About extends Component {
   render() {
+    document.title = "About | Alplakes"
     return (
       <div className="main">
         <NavBar {...this.props} />

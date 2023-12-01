@@ -7,6 +7,7 @@ import "./api.css";
 
 class API extends Component {
   render() {
+    document.title = "API | Alplakes"
     return (
       <React.Fragment>
         <NavBar {...this.props} />
