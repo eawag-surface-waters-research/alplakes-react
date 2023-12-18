@@ -45,7 +45,7 @@
       },
       "labels": [
         { "name": "Lugano", "latlng": [46.00192, 8.95523] },
-        { "name": "Polezza", "latlng": [46.03212, 9.11593] },
+        { "name": "Porlezza", "latlng": [46.03212, 9.11593] },
         { "name": "Agno", "latlng": [45.98866, 8.90349] },
         { "name": "Porto Ceresion", "latlng": [45.90707, 8.90253] }
       ],
