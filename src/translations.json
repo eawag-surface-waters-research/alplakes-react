@@ -49,6 +49,12 @@
       " e una profondità massima di "
     ]
   },
+  "today": {
+    "EN": "Today",
+    "DE": "Heute",
+    "FR": "Ajdh",
+    "IT": "Oggi"
+  },
   "sortby": {
     "EN": "Sort By",
     "DE": "Sortieren nach",

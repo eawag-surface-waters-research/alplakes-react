@@ -9,11 +9,11 @@ class Toggle extends Component {
         <input
           type="checkbox"
           id="toggle"
-          class="toggleCheckbox"
+          className="toggleCheckbox"
           onChange={onChange}
           checked={checked}
         />
-        <label for="toggle" class="toggleContainer">
+        <label htmlFor="toggle" className="toggleContainer">
           <div>{left}</div>
           <div>{right}</div>
         </label>

@@ -7,14 +7,22 @@ import Translations from "../../translations.json";
 import swiss from "../../img/swiss.png";
 import italian from "../../img/italian.png";
 import french from "../../img/french.png";
-import ascending_icon from "../../img/ascending.png";
-import descending_icon from "../../img/descending.png";
-import ascending_icon_dark from "../../img/ascending_dark.png";
-import descending_icon_dark from "../../img/descending_dark.png";
-import ice_overlay from "../../img/ice.png";
-import { onMouseOver, onMouseOut } from "./functions";
+import icon from "../../img/icon.png";
+import eawag_logo from "../../img/eawag_logo.png";
+import esa_logo from "../../img/esa_logo.png";
+import trento_logo from "../../img/trento_logo.png";
+import {
+  onMouseOver,
+  onMouseOut,
+  summariseData,
+  meanTemperature,
+  dayName,
+  parseDate,
+  sortList,
+} from "./functions";
 import CONFIG from "../../config.json";
 import "./home.css";
+import HomeMap from "../../components/leaflet/homemap";
 
 class PlaceHolder extends Component {
   render() {
@@ -41,66 +49,9 @@ class PlaceHolder extends Component {
 }
 
 class SummaryTable extends Component {
-  formatDate = (date) => {
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, "0");
-    const day = String(date.getDate()).padStart(2, "0");
-    return `${year}${month}${day}`;
-  };
-  dayName = (YYYYMMDD) => {
-    var { language } = this.props;
-    const year = parseInt(YYYYMMDD.substr(0, 4), 10);
-    const month = parseInt(YYYYMMDD.substr(4, 2), 10) - 1; // Subtracting 1 to make it zero-based
-    const day = parseInt(YYYYMMDD.substr(6, 2), 10);
-    const daysOfWeekNames = Translations.axis[language].shortDays;
-    const date = new Date(year, month, day);
-    const dayOfWeekNumber = date.getDay();
-    return daysOfWeekNames[dayOfWeekNumber];
-  };
-  mean = (numbers) => {
-    if (numbers.length === 0) {
-      return 0;
-    }
-    const sum = numbers.reduce((acc, num) => acc + num, 0);
-    const mean = Math.round((sum * 10) / numbers.length) / 10;
-    return mean;
-  };
-  min = (numbers) => {
-    return Math.round(Math.min(...numbers) * 10) / 10;
-  };
-  max = (numbers) => {
-    return Math.round(Math.max(...numbers) * 10) / 10;
-  };
   render() {
-    var { forecast } = this.props;
-    var now = new Date();
-    now.setHours(0, 0, 0, 0);
-    var dt = [];
-    var value = [];
-    var summary = {};
-    if (
-      "date" in forecast &&
-      Array.isArray(forecast.date) &&
-      "value" in forecast &&
-      Array.isArray(forecast.value)
-    ) {
-      for (let i = 0; i < forecast.date.length; i++) {
-        let d = new Date(forecast.date[i]);
-        if (d > now) {
-          let day = this.formatDate(d);
-          let v = forecast.value[i];
-          if (v !== null) {
-            dt.push(d);
-            value.push(v);
-            if (day in summary) {
-              summary[day].push(v);
-            } else {
-              summary[day] = [v];
-            }
-          }
-        }
-      }
-    }
+    var { forecast, frozen, language } = this.props;
+    var { dt, value, summary } = summariseData(forecast, frozen);
     return (
       <React.Fragment>
         {Object.keys(summary).map((day, i, arr) => (
@@ -108,9 +59,8 @@ class SummaryTable extends Component {
             key={day}
             className={i === arr.length - 1 ? "inner end" : "inner"}
           >
-            <div className="max">{this.max(summary[day])}°</div>
-            <div className="min">{this.min(summary[day])}°</div>
-            <div className="day">{this.dayName(day)}</div>
+            <div className="ave">{meanTemperature(summary[day])}</div>
+            <div className="day">{dayName(day, language, Translations)}</div>
           </div>
         ))}
         <SummaryGraph dt={dt} value={value} />
@@ -120,33 +70,9 @@ class SummaryTable extends Component {
 }
 
 class Lake extends Component {
-  parseDate(yyyymmdd) {
-    const year = parseInt(yyyymmdd.substring(0, 4), 10);
-    const month = parseInt(yyyymmdd.substring(4, 6), 10) - 1;
-    const day = parseInt(yyyymmdd.substring(6, 8), 10);
-    const date = new Date(year, month, day);
-    return date;
-  }
   render() {
-    var { lake, language, forecast, ice } = this.props;
+    var { lake, language, forecast } = this.props;
     var flags = { swiss: swiss, italian: italian, french: french };
-    var desc = Translations.descriptions[language];
-    var imgCore = `https://alplakes-eawag.s3.eu-central-1.amazonaws.com/static/website/images/lakes/${lake.key}.jpg`;
-    var frozen = false;
-    if (ice) {
-      var today = new Date();
-      for (var i = 0; i < ice.length; i++) {
-        if (ice[i].length === 1) {
-          if (today > this.parseDate(ice[i][0].toString())) frozen = true;
-        } else if (ice[i].length === 2) {
-          if (
-            today > this.parseDate(ice[i][0].toString()) &&
-            today < this.parseDate(ice[i][1].toString())
-          )
-            frozen = true;
-        }
-      }
-    }
     return (
       <NavLink to={`/${lake.key}`}>
         <div
@@ -155,50 +81,25 @@ class Lake extends Component {
           onMouseOver={onMouseOver}
           onMouseOut={onMouseOut}
         >
-          <div className="image">
-            {frozen && (
-              <img src={ice_overlay} alt="Ice" className="frozen-image" />
-            )}
-            <img
-              src={imgCore}
-              alt="Lake"
-              className={frozen ? "core-image frozen" : "core-image"}
-            />
-            <div className="tags">
-              {lake.tags.map((t) => (
-                <div className="tag" key={t}>
-                  {t}
-                </div>
-              ))}
-            </div>
-            {(forecast !== undefined && !frozen) && (
-              <div className="summary-table">
-                <SummaryTable forecast={forecast} language={language} />
-              </div>
-            )}
-          </div>
           <div className="properties">
             <div className="left">
+              {lake.name[language]}
+              {lake.frozen && <div className="frozen">(Ice Covered)</div>}
+            </div>
+            <div className="right">
               {lake.flags.map((f) => (
                 <img src={flags[f]} alt={f} key={f} />
               ))}
             </div>
-            <div className="right">
-              <div className="name">
-                {lake.name[language]}
-                {frozen && <div className="frozen">(Ice Covered)</div>}
-              </div>
-              <div className="location">
-                {lake.latitude}, {lake.longitude}
-              </div>
-              <div className="parameters">
-                {desc[0]} <div className="stats">{lake.elevation} m</div>
-                {desc[1]} <div className="stats">{lake.area} km&#178;</div>
-                {desc[2]} <div className="stats">{lake.ave_depth} m</div>
-                {desc[3]} <div className="stats">{lake.max_depth} m.</div>
-              </div>
-            </div>
           </div>
+          <div className="summary-table">
+            <SummaryTable
+              forecast={forecast}
+              language={language}
+              frozen={lake.frozen}
+            />
+          </div>
+          <div className="right-arrow">{">"}</div>
         </div>
       </NavLink>
     );
@@ -212,19 +113,13 @@ class Home extends Component {
     ascending: false,
     defaultNumber: 12,
     forecast: {},
-    ice: {},
+    search: "",
+  };
+  setSearch = (event) => {
+    this.setState({ search: event.target.value });
   };
   setSort = (event) => {
     this.setState({ sort: event.target.value });
-  };
-  sortList = (list, property, ascending) => {
-    var x = 1;
-    var y = -1;
-    if (ascending) {
-      x = -1;
-      y = 1;
-    }
-    return list.sort((a, b) => (a[property] > b[property] ? y : x));
   };
   toggleSort = () => {
     this.setState({ ascending: !this.state.ascending });
@@ -237,7 +132,9 @@ class Home extends Component {
     try {
       ({ data: forecast } = await axios.get(
         CONFIG.alplakes_bucket +
-          `/simulations/forecast.json?timestamp=${new Date().getTime()}`
+          `/simulations/forecast.json?timestamp=${
+            Math.round((new Date().getTime() + 1800000) / 3600000) * 3600 - 3600
+          }`
       ));
     } catch (e) {}
     try {
@@ -245,51 +142,46 @@ class Home extends Component {
         CONFIG.alplakes_bucket + "/simulations/ice.json"
       ));
     } catch (e) {}
-    this.setState({ list, forecast, ice });
+    var today = new Date();
+    list.map((l) => {
+      l.frozen = false;
+      if (l.key in ice) {
+        for (var i = 0; i < ice[l.key].length; i++) {
+          if (ice[l.key][i].length === 1) {
+            if (today > parseDate(ice[l.key][i][0].toString())) l.frozen = true;
+          } else if (ice[l.key][i].length === 2) {
+            if (
+              today > parseDate(ice[l.key][i][0].toString()) &&
+              today < parseDate(ice[l.key][i][1].toString())
+            )
+              l.frozen = true;
+          }
+        }
+      }
+    });
+    this.setState({ list, forecast });
   }
   render() {
     document.title = "Alplakes";
-    var { language, dark } = this.props;
-    var { list, sort, ascending, defaultNumber, forecast, ice } = this.state;
+    var { language } = this.props;
+    var { list, sort, ascending, defaultNumber, forecast, search } = this.state;
     if (sort !== "sortby") {
-      list = this.sortList(list, sort, ascending);
+      list = sortList(list, sort, ascending);
     }
     return (
-      <div className={dark ? "home dark" : "home"}>
+      <div className="home">
         <NavBar {...this.props} />
-        <div className="content">
-          <div className="sorting">
-            <select onChange={this.setSort} value={sort}>
-              <option disabled value="sortby">
-                {Translations.sortby[language]}
-              </option>
-              <option value="elevation">
-                {Translations.elevation[language]}
-              </option>
-              <option value="area">{Translations.area[language]}</option>
-              <option value="depth">{Translations.depth[language]}</option>
-              <option value="maxdepth">
-                {Translations.maxdepth[language]}
-              </option>
-              <option value="latitude">Latitude</option>
-              <option value="longitude">Longitude</option>
-            </select>
-            <button onClick={this.toggleSort} title="Sort Order">
-              <img
-                src={
-                  ascending
-                    ? dark
-                      ? ascending_icon_dark
-                      : ascending_icon
-                    : dark
-                    ? descending_icon_dark
-                    : descending_icon
-                }
-                alt="Sort"
-              />
-            </button>
+        <div className="home-content">
+          <div className="home-search">
+            <input
+              type="search"
+              placeholder="Search lakes"
+              value={search}
+              onChange={this.setSearch}
+            />
+            <img src={icon} alt="Alplakes logo" />
           </div>
-          <div className="products">
+          <div className="home-product-list">
             {list.length === 0 ? (
               <PlaceHolder number={defaultNumber} />
             ) : (
@@ -299,10 +191,17 @@ class Home extends Component {
                   language={language}
                   key={lake.key}
                   forecast={forecast[lake.key]}
-                  ice={ice[lake.key]}
                 />
               ))
             )}
+          </div>
+          <div className="home-map">
+            <HomeMap />
+          </div>
+          <div className="home-logos">
+            <img src={eawag_logo} alt="Eawag" />
+            <img src={esa_logo} alt="Esa" />
+            <img src={trento_logo} alt="Trento" />
           </div>
         </div>
       </div>

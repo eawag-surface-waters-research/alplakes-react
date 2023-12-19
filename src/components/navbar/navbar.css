@@ -6,6 +6,7 @@
   background-color: var(--background-color);
   z-index: 3;
   height: 66px;
+  border-bottom: 1px solid var(--box-color);
 }
 
 .navbar img.icon {
@@ -108,10 +109,10 @@
 .navbar .mobile-nav .nav-content {
   position: fixed;
   width: 100%;
-  height: calc(100% - 66px);
+  height: calc(100% - 67px);
   background-color: var(--background-color);
   left: 0;
-  top: 66px;
+  top: 67px;
   padding: 24px;
   box-sizing: border-box;
 }
