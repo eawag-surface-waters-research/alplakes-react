@@ -3,6 +3,33 @@ import L from "leaflet";
 import "./css/leaflet.css";
 
 class HomeMap extends Component {
+  componentDidUpdate(prevProps) {
+    var { language, list } = this.props;
+    if (this.plot || prevProps.language !== language) {
+      this.polygons.clearLayers();
+      for (let lake of list) {
+        if (lake.geometry !== false) {
+          L.geoJSON(
+            {
+              type: "Polygon",
+              coordinates: lake.geometry,
+            },
+            {
+              style: {
+                fillColor: "red", // Set the fill color
+                weight: 2, // Set the border weight
+                opacity: 0, // Set the border opacity
+                color: "red", // Set the border color
+                fillOpacity: 0.7, // Set the fill opacity
+              },
+            }
+          ).addTo(this.polygons);
+        }
+      }
+      this.map.fitBounds(this.polygons.getBounds());
+      this.plot = false;
+    }
+  }
   async componentDidMount() {
     var center = [46.9, 8.2];
     var zoom = 8;
@@ -21,6 +48,8 @@ class HomeMap extends Component {
         attribution: "&copy; <a href='https://www.mapbox.com/'>mapbox</a>",
       }
     ).addTo(this.map);
+    this.polygons = L.featureGroup().addTo(this.map);
+    this.plot = true;
   }
 
   render() {

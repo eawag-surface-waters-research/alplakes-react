@@ -51,19 +51,18 @@ class PlaceHolder extends Component {
 class SummaryTable extends Component {
   render() {
     var { forecast, frozen, language } = this.props;
-    var { dt, value, summary } = summariseData(forecast, frozen);
     return (
       <React.Fragment>
-        {Object.keys(summary).map((day, i, arr) => (
+        {Object.keys(forecast.summary).map((day, i, arr) => (
           <div
             key={day}
             className={i === arr.length - 1 ? "inner end" : "inner"}
           >
-            <div className="ave">{meanTemperature(summary[day])}</div>
+            <div className="ave">{forecast.summary[day]}</div>
             <div className="day">{dayName(day, language, Translations)}</div>
           </div>
         ))}
-        <SummaryGraph dt={dt} value={value} />
+        <SummaryGraph dt={forecast.dt} value={forecast.value} />
       </React.Fragment>
     );
   }
@@ -71,7 +70,7 @@ class SummaryTable extends Component {
 
 class Lake extends Component {
   render() {
-    var { lake, language, forecast } = this.props;
+    var { lake, language } = this.props;
     var flags = { swiss: swiss, italian: italian, french: french };
     return (
       <NavLink to={`/${lake.key}`}>
@@ -94,7 +93,7 @@ class Lake extends Component {
           </div>
           <div className="summary-table">
             <SummaryTable
-              forecast={forecast}
+              forecast={lake.forecast}
               language={language}
               frozen={lake.frozen}
             />
@@ -109,23 +108,15 @@ class Lake extends Component {
 class Home extends Component {
   state = {
     list: [],
-    sort: "sortby",
-    ascending: false,
     defaultNumber: 12,
-    forecast: {},
     search: "",
   };
   setSearch = (event) => {
     this.setState({ search: event.target.value });
   };
-  setSort = (event) => {
-    this.setState({ sort: event.target.value });
-  };
-  toggleSort = () => {
-    this.setState({ ascending: !this.state.ascending });
-  };
   async componentDidMount() {
-    var { forecast, ice } = this.state;
+    var ice, geometry, forecast;
+    const { language } = this.props;
     const { data: list } = await axios.get(
       CONFIG.alplakes_bucket + "/static/website/metadata/list.json"
     );
@@ -136,15 +127,31 @@ class Home extends Component {
             Math.round((new Date().getTime() + 1800000) / 3600000) * 3600 - 3600
           }`
       ));
-    } catch (e) {}
+    } catch (e) {
+      forecast = {};
+    }
     try {
       ({ data: ice } = await axios.get(
-        CONFIG.alplakes_bucket + "/simulations/ice.json"
+        CONFIG.alplakes_bucket + "/static/website/metadata/ice.json"
       ));
-    } catch (e) {}
+    } catch (e) {
+      ice = {};
+    }
+    try {
+      ({ data: geometry } = await axios.get(
+        CONFIG.alplakes_bucket + "/static/website/metadata/lakes.geojson"
+      ));
+      geometry = geometry.features.reduce((obj, item) => {
+        obj[item.properties.key] = item.geometry.coordinates;
+        return obj;
+      }, {});
+    } catch (e) {
+      geometry = {};
+    }
     var today = new Date();
     list.map((l) => {
       l.frozen = false;
+      l.geometry = false;
       if (l.key in ice) {
         for (var i = 0; i < ice[l.key].length; i++) {
           if (ice[l.key][i].length === 1) {
@@ -158,16 +165,17 @@ class Home extends Component {
           }
         }
       }
+      l.forecast = summariseData(forecast[l.key], l.frozen);
+      if (l.key in geometry) {
+        l.geometry = geometry[l.key];
+      }
     });
-    this.setState({ list, forecast });
+    this.setState({ list });
   }
   render() {
     document.title = "Alplakes";
     var { language } = this.props;
-    var { list, sort, ascending, defaultNumber, forecast, search } = this.state;
-    if (sort !== "sortby") {
-      list = sortList(list, sort, ascending);
-    }
+    var { list, defaultNumber, search } = this.state;
     return (
       <div className="home">
         <NavBar {...this.props} />
@@ -186,17 +194,12 @@ class Home extends Component {
               <PlaceHolder number={defaultNumber} />
             ) : (
               list.map((lake) => (
-                <Lake
-                  lake={lake}
-                  language={language}
-                  key={lake.key}
-                  forecast={forecast[lake.key]}
-                />
+                <Lake lake={lake} language={language} key={lake.key} />
               ))
             )}
           </div>
           <div className="home-map">
-            <HomeMap />
+            <HomeMap list={list} language={language}/>
           </div>
           <div className="home-logos">
             <img src={eawag_logo} alt="Eawag" />

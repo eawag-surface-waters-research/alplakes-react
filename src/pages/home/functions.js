@@ -28,21 +28,22 @@ export const dayName = (YYYYMMDD, language, Translations) => {
 };
 
 export const summariseData = (forecast, frozen) => {
-  var now = new Date();
-  now.setHours(0, 0, 0, 0);
-  now = now.getTime();
+  var dtMin = new Date();
+  dtMin.setHours(0, 0, 0, 0);
+  dtMin = dtMin.getTime();
+  var dtMax = dtMin + 4 * 86400000;
   var dt = [];
   var value = [];
   var summary = {};
   for (let i = 0; i < 5; i++) {
-    summary[formatDate(now + i * 86400000)] = frozen ? [4] : [];
+    summary[formatDate(dtMin + i * 86400000)] = frozen ? [4] : [];
   }
   if (frozen || forecast === undefined) {
-    dt = [now, now + 4 * 86400000];
+    dt = [dtMin, dtMax];
     value = [4, 4];
   } else {
     for (let i = 0; i < forecast.date.length; i++) {
-      if (forecast.date[i] > now) {
+      if (forecast.date[i] > dtMin) {
         let day = formatDate(forecast.date[i]);
         let v = forecast.value[i];
         if (v !== null) {
@@ -52,11 +53,14 @@ export const summariseData = (forecast, frozen) => {
         }
       }
     }
+    for (let key in summary) {
+      summary[key] = meanTemperature(summary[key]);
+    }
   }
-  return { dt, value, summary };
+  return { dt, value, summary, dtMin: new Date(dtMin), dtMax: new Date(dtMax) };
 };
 export const meanTemperature = (numbers) => {
-  if (numbers.length === 0) return "";
+  if (numbers.length === 0) return " ";
   const sum = numbers.reduce((acc, num) => acc + num, 0);
   const mean = Math.round((sum * 10) / numbers.length) / 10;
   return mean + "°";
