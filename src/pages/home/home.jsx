@@ -15,10 +15,9 @@ import {
   onMouseOver,
   onMouseOut,
   summariseData,
-  meanTemperature,
   dayName,
   parseDate,
-  sortList,
+  searchList
 } from "./functions";
 import CONFIG from "../../config.json";
 import "./home.css";
@@ -58,7 +57,10 @@ class SummaryTable extends Component {
             key={day}
             className={i === arr.length - 1 ? "inner end" : "inner"}
           >
-            <div className="ave">{forecast.summary[day]}</div>
+            <div className="ave">
+              {forecast.summary[day]}
+              {forecast.summary[day] ? "°" : "NA"}
+            </div>
             <div className="day">{dayName(day, language, Translations)}</div>
           </div>
         ))}
@@ -75,7 +77,7 @@ class Lake extends Component {
     return (
       <NavLink to={`/${lake.key}`}>
         <div
-          className="lake"
+          className={lake.display ? "lake" : "lake hidden"}
           id={"list-" + lake.key}
           onMouseOver={onMouseOver}
           onMouseOut={onMouseOut}
@@ -83,7 +85,7 @@ class Lake extends Component {
           <div className="properties">
             <div className="left">
               {lake.name[language]}
-              {lake.frozen && <div className="frozen">(Ice Covered)</div>}
+              {lake.frozen && <div className="frozen">(Frozen)</div>}
             </div>
             <div className="right">
               {lake.flags.map((f) => (
@@ -112,7 +114,11 @@ class Home extends Component {
     search: "",
   };
   setSearch = (event) => {
-    this.setState({ search: event.target.value });
+    var { list } = this.state;
+    var search = event.target.value;
+    this.setState({ search });
+    list = searchList(search, list);
+    this.setState({ list });
   };
   async componentDidMount() {
     var ice, geometry, forecast;
@@ -150,6 +156,7 @@ class Home extends Component {
     }
     var today = new Date();
     list.map((l) => {
+      l.display = true;
       l.frozen = false;
       l.geometry = false;
       if (l.key in ice) {
@@ -199,7 +206,7 @@ class Home extends Component {
             )}
           </div>
           <div className="home-map">
-            <HomeMap list={list} language={language}/>
+            <HomeMap list={list} language={language} />
           </div>
           <div className="home-logos">
             <img src={eawag_logo} alt="Eawag" />

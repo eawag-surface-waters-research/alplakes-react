@@ -40,12 +40,33 @@ const addMinutes = (date, minutes) => {
   return new Date(date.getTime() + minutes * 60000);
 };
 
+export const dayName = (YYYYMMDD, language, Translations) => {
+  if (formatDateYYYYMMDD(new Date()) === YYYYMMDD) {
+    return Translations.today[language];
+  }
+  const year = parseInt(YYYYMMDD.substr(0, 4), 10);
+  const month = parseInt(YYYYMMDD.substr(4, 2), 10) - 1; // Subtracting 1 to make it zero-based
+  const day = parseInt(YYYYMMDD.substr(6, 2), 10);
+  const daysOfWeekNames = Translations.axis[language].shortDays;
+  const date = new Date(year, month, day);
+  const dayOfWeekNumber = date.getDay();
+  return daysOfWeekNames[dayOfWeekNumber];
+};
+
 const formatDepth = (number) => {
   const stringNumber = number.toString();
   if (!stringNumber.includes(".")) {
     return stringNumber + ".0";
   }
   return stringNumber;
+};
+
+export const formatDateYYYYMMDD = (d) => {
+  const date = new Date(d);
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}${month}${day}`;
 };
 
 const formatDate = (datetime, offset = 0) => {

@@ -15,12 +15,15 @@
   font-size: 22px;
   padding: 6px 8px 6px 50px;
   border-radius: 22px;
+  background-color: var(--box-color);
+  color: var(--box-font-color);
+  border: none;
 }
 
 .main .home .home-content .home-search img {
   position: absolute;
   left: 6px;
-  height: 31px;
+  height: 28px;
   top: 5px;
 }
 
@@ -37,14 +40,20 @@
   position: relative;
   width: 100%;
   margin-bottom: 12px;
-  background-color: var(--box-color);
+  background-color: var(--box-inner-color);
+  border-radius: 20px;
+}
+
+.main .home .home-content .home-product-list .lake.hidden {
+  display: none;
 }
 
 .main .home .home-content .home-product-list .lake .properties {
-  padding: 12px;
-  width: 400px;
+  padding: 12px 22px 6px 22px;
   box-sizing: border-box;
   border-right: 1px solid var(--background-color);
+  background-color: var(--box-color);
+  border-radius: 20px 20px 0px 0px;
 }
 
 .main .home .home-content .home-product-list .lake .properties .left {
@@ -74,7 +83,7 @@
   text-align: left;
   display: table;
   table-layout: fixed;
-  border-right: 1px solid var(--background-color);
+  padding-top: 8px;
 }
 
 .main .home .home-content .home-product-list .lake .summary-table .inner {
@@ -93,7 +102,7 @@
 .main .home .home-content .home-product-list .lake .summary-table .inner .day {
   font-size: 12px;
   margin-top: 30px;
-  padding-bottom: 2px;
+  padding-bottom: 3px;
 }
 
 .main .home .home-content .home-product-list .lake .summary-table .summarygraph {
@@ -112,7 +121,7 @@
 .main .home .home-content .home-product-list .lake .right-arrow {
   position: absolute;
   right: 16px;
-  top: calc(50% - 15px);
+  top: 50%;
   font-size: 30px;
   font-weight: bold;
   color: lightgray;
@@ -130,6 +139,35 @@
 
 .main .home-content .home-map #map {
   border-radius: 22px;
+}
+
+.main .home-content .home-map #map .day-selector {
+  z-index: 999;
+  position: absolute;
+  bottom: 24px;
+  width: 100%;
+  text-align: center;
+}
+
+.main .home-content .home-map #map .day-selector .day-outer {
+  padding: 0 24px;
+  background-color: var(--box-color);
+  border-radius: 22px;
+  display: inline-block;
+}
+
+.main .home-content .home-map #map .day-selector .day-outer .day-inner {
+  display: inline-block;
+  padding: 12px;
+  cursor: pointer;
+}
+
+.main .home-content .home-map #map .day-selector .day-outer .day-inner:hover {
+  background-color: var(--box-inner-color);
+}
+
+.main .home-content .home-map #map .day-selector .day-outer .day-inner.selected {
+  background-color: var(--box-inner-color);
 }
 
 .main .home-content .home-logos {

@@ -16,6 +16,7 @@
   --background-font-color: rgb(15, 15, 15);
   --box-color: rgb(242, 242, 242);
   --box-font-color: rgb(0, 0, 0);
+  --box-inner-color: rgb(227, 227, 227)
 }
 
 .dark {
@@ -23,6 +24,7 @@
   --background-font-color: rgb(229, 229, 229);
   --box-color: rgb(50, 50, 50);
   --box-font-color: rgb(229, 229, 229);
+  --box-inner-color: rgb(30, 30, 30)
 }
 
 

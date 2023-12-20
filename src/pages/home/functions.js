@@ -27,6 +27,28 @@ export const dayName = (YYYYMMDD, language, Translations) => {
   return daysOfWeekNames[dayOfWeekNumber];
 };
 
+const isSimilarSubstring = (item, term) => {
+  for (let i = 0; i <= item.length - term.length; i++) {
+    let differences = 0;
+    for (let j = 0; j < term.length; j++) {
+      if (item[i + j] !== term[j]) differences++;
+      if (differences > 1) break;
+    }
+    if (differences <= 1) return true;
+  }
+  return false;
+};
+
+export const searchList = (search, list) => {
+  list.map((l) => {
+    l.display = Object.values(l.name).some((item) =>
+      isSimilarSubstring(item.toLowerCase(), search.toLowerCase())
+    );
+    return l;
+  });
+  return list;
+};
+
 export const summariseData = (forecast, frozen) => {
   var dtMin = new Date();
   dtMin.setHours(0, 0, 0, 0);
@@ -53,17 +75,17 @@ export const summariseData = (forecast, frozen) => {
         }
       }
     }
-    for (let key in summary) {
-      summary[key] = meanTemperature(summary[key]);
-    }
+  }
+  for (let key in summary) {
+    summary[key] = mean(summary[key]);
   }
   return { dt, value, summary, dtMin: new Date(dtMin), dtMax: new Date(dtMax) };
 };
-export const meanTemperature = (numbers) => {
-  if (numbers.length === 0) return " ";
+export const mean = (numbers) => {
+  if (numbers.length === 0) return false;
   const sum = numbers.reduce((acc, num) => acc + num, 0);
   const mean = Math.round((sum * 10) / numbers.length) / 10;
-  return mean + "°";
+  return mean;
 };
 
 export const onMouseOver = (event) => {
