@@ -40,6 +40,10 @@ const addMinutes = (date, minutes) => {
   return new Date(date.getTime() + minutes * 60000);
 };
 
+export const toRadians = (degrees) => {
+  return (degrees * Math.PI) / 180;
+};
+
 export const dayName = (YYYYMMDD, language, Translations) => {
   if (formatDateYYYYMMDD(new Date()) === YYYYMMDD) {
     return Translations.today[language];

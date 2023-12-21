@@ -339,7 +339,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
 /* visual tweaks */
 
 .leaflet-container {
-  background: #ddd;
+  background: var(--box-color);
   outline: 0;
 }
 

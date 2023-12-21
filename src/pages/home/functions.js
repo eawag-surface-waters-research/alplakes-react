@@ -42,11 +42,26 @@ const isSimilarSubstring = (item, term) => {
 export const searchList = (search, list) => {
   list.map((l) => {
     l.display = Object.values(l.name).some((item) =>
-      isSimilarSubstring(item.toLowerCase(), search.toLowerCase())
+      isSimilarSubstring(
+        item.toLowerCase().replaceAll(" ", ""),
+        search.toLowerCase().replaceAll(" ", "")
+      )
     );
     return l;
   });
   return list;
+};
+
+export const inBounds = (latitude, longitude, bounds) => {
+  if (
+    latitude >= bounds._southWest.lat &&
+    longitude >= bounds._southWest.lng &&
+    latitude <= bounds._northEast.lat &&
+    longitude <= bounds._northEast.lng
+  ) {
+    return true;
+  }
+  return false;
 };
 
 export const summariseData = (forecast, frozen) => {
@@ -57,6 +72,8 @@ export const summariseData = (forecast, frozen) => {
   var dt = [];
   var value = [];
   var summary = {};
+  var available = true;
+  if (forecast === undefined) available = false;
   for (let i = 0; i < 5; i++) {
     summary[formatDate(dtMin + i * 86400000)] = frozen ? [4] : [];
   }
@@ -79,7 +96,14 @@ export const summariseData = (forecast, frozen) => {
   for (let key in summary) {
     summary[key] = mean(summary[key]);
   }
-  return { dt, value, summary, dtMin: new Date(dtMin), dtMax: new Date(dtMax) };
+  return {
+    dt,
+    value,
+    summary,
+    dtMin: new Date(dtMin),
+    dtMax: new Date(dtMax),
+    available,
+  };
 };
 export const mean = (numbers) => {
   if (numbers.length === 0) return false;

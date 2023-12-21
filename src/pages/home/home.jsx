@@ -17,7 +17,8 @@ import {
   summariseData,
   dayName,
   parseDate,
-  searchList
+  searchList,
+  inBounds,
 } from "./functions";
 import CONFIG from "../../config.json";
 import "./home.css";
@@ -112,6 +113,10 @@ class Home extends Component {
     list: [],
     defaultNumber: 12,
     search: "",
+    boundingBox: false,
+  };
+  setBounds = (boundingBox) => {
+    this.setState({ boundingBox });
   };
   setSearch = (event) => {
     var { list } = this.state;
@@ -120,11 +125,47 @@ class Home extends Component {
     list = searchList(search, list);
     this.setState({ list });
   };
+  sortList = (list) => {
+    var { boundingBox } = this.state;
+    list.sort((a, b) => {
+      // 1. Sort if in map area
+      if (boundingBox) {
+        if (
+          inBounds(a.latitude, a.longitude, boundingBox) &&
+          !inBounds(b.latitude, b.longitude, boundingBox)
+        ) {
+          return -1;
+        }
+        if (
+          !inBounds(a.latitude, a.longitude, boundingBox) &&
+          inBounds(b.latitude, b.longitude, boundingBox)
+        ) {
+          return 1;
+        }
+      }
+      // 2. Sort if forecast available
+      if (a.forecast.available && !b.forecast.available) {
+        return -1;
+      }
+      if (!a.forecast.available && b.forecast.available) {
+        return 1;
+      }
+      // 3. Sort by surface area
+      if (a.area < b.area) {
+        return 1;
+      }
+      if (a.area > b.area) {
+        return -1;
+      }
+      return 0;
+    });
+    return list;
+  };
   async componentDidMount() {
     var ice, geometry, forecast;
     const { language } = this.props;
     const { data: list } = await axios.get(
-      CONFIG.alplakes_bucket + "/static/website/metadata/list.json"
+      CONFIG.alplakes_bucket + "/static/website/metadata/v2/list.json"
     );
     try {
       ({ data: forecast } = await axios.get(
@@ -138,14 +179,14 @@ class Home extends Component {
     }
     try {
       ({ data: ice } = await axios.get(
-        CONFIG.alplakes_bucket + "/static/website/metadata/ice.json"
+        CONFIG.alplakes_bucket + "/static/website/metadata/v2/ice.json"
       ));
     } catch (e) {
       ice = {};
     }
     try {
       ({ data: geometry } = await axios.get(
-        CONFIG.alplakes_bucket + "/static/website/metadata/lakes.geojson"
+        CONFIG.alplakes_bucket + "/static/website/metadata/v2/lakes.geojson"
       ));
       geometry = geometry.features.reduce((obj, item) => {
         obj[item.properties.key] = item.geometry.coordinates;
@@ -183,6 +224,7 @@ class Home extends Component {
     document.title = "Alplakes";
     var { language } = this.props;
     var { list, defaultNumber, search } = this.state;
+    var sortedList = this.sortList(list);
     return (
       <div className="home">
         <NavBar {...this.props} />
@@ -200,13 +242,17 @@ class Home extends Component {
             {list.length === 0 ? (
               <PlaceHolder number={defaultNumber} />
             ) : (
-              list.map((lake) => (
+              sortedList.map((lake) => (
                 <Lake lake={lake} language={language} key={lake.key} />
               ))
             )}
           </div>
           <div className="home-map">
-            <HomeMap list={list} language={language} />
+            <HomeMap
+              list={list}
+              language={language}
+              setBounds={this.setBounds}
+            />
           </div>
           <div className="home-logos">
             <img src={eawag_logo} alt="Eawag" />
