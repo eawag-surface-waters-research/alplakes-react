@@ -16,7 +16,8 @@
   --background-font-color: rgb(15, 15, 15);
   --box-color: rgb(242, 242, 242);
   --box-font-color: rgb(0, 0, 0);
-  --box-inner-color: rgb(227, 227, 227)
+  --box-inner-color: rgb(227, 227, 227);
+  --box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
 }
 
 .dark {
@@ -24,7 +25,8 @@
   --background-font-color: rgb(229, 229, 229);
   --box-color: rgb(50, 50, 50);
   --box-font-color: rgb(229, 229, 229);
-  --box-inner-color: rgb(30, 30, 30)
+  --box-inner-color: rgb(30, 30, 30);
+  --box-shadow: 0 3px 8px rgba(0, 0, 0, 0.24);
 }
 
 

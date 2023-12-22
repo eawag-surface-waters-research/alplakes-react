@@ -106,11 +106,13 @@ class HomeMap extends Component {
         }),
       })
         .bindTooltip(
-          `${lake.name[language]}${
+          `<a href='/${lake.key}' title='Click for more details'>${
+            lake.name[language]
+          }${
             lake.forecast.summary[day] === false
               ? ""
               : `<br>${lake.forecast.summary[day]}°`
-          }${lake.frozen ? " (Frozen)" : ""}`,
+          }${lake.frozen ? " (Frozen)" : ""}</a>`,
           {
             id: lake.key,
             permanent: true,

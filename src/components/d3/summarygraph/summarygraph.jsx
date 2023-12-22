@@ -7,7 +7,7 @@ class SummaryGraph extends Component {
   };
   plot = () => {
     var { graphid } = this.state;
-    var { dt, value } = this.props;
+    var { dt, value, dtMin, dtMax } = this.props;
     var stroke = "red";
     var stroke_width = 2;
     try {
@@ -40,6 +40,9 @@ class SummaryGraph extends Component {
     var xMax = d3.max(dt);
     var yMin = d3.min(value);
     var yMax = d3.max(value);
+
+    if (dtMin) xMin = dtMin;
+    if (dtMax) xMax = dtMax;
 
     var x = d3.scaleTime().range([0, this.width]);
     var y = d3.scaleLinear().range([this.height, 0]);

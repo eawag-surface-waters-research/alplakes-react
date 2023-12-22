@@ -31,16 +31,7 @@ class PlaceHolder extends Component {
       <React.Fragment>
         {[...Array(number).keys()].map((a) => (
           <div className="lake" key={a}>
-            <div className="placeholder-image"></div>
-            <div className="properties">
-              <div className="left">
-                <div className="placeholder-flag" />
-              </div>
-              <div className="right">
-                <div className="placeholder-name" />
-                <div className="placeholder-location" />
-              </div>
-            </div>
+            <div className="loading-placeholder"></div>
           </div>
         ))}
       </React.Fragment>
@@ -50,7 +41,7 @@ class PlaceHolder extends Component {
 
 class SummaryTable extends Component {
   render() {
-    var { forecast, frozen, language } = this.props;
+    var { forecast, language } = this.props;
     return (
       <React.Fragment>
         {Object.keys(forecast.summary).map((day, i, arr) => (
@@ -60,12 +51,17 @@ class SummaryTable extends Component {
           >
             <div className="ave">
               {forecast.summary[day]}
-              {forecast.summary[day] ? "°" : "NA"}
+              {forecast.summary[day] ? "°" : ""}
             </div>
             <div className="day">{dayName(day, language, Translations)}</div>
           </div>
         ))}
-        <SummaryGraph dt={forecast.dt} value={forecast.value} />
+        <SummaryGraph
+          dt={forecast.dt}
+          value={forecast.value}
+          dtMin={forecast.dtMin}
+          dtMax={forecast.dtMax}
+        />
       </React.Fragment>
     );
   }
@@ -82,26 +78,38 @@ class Lake extends Component {
           id={"list-" + lake.key}
           onMouseOver={onMouseOver}
           onMouseOut={onMouseOut}
+          title={"Click for more..."}
         >
           <div className="properties">
             <div className="left">
               {lake.name[language]}
               {lake.frozen && <div className="frozen">(Frozen)</div>}
+              <div className="flags">
+                {lake.flags.map((f) => (
+                  <img src={flags[f]} alt={f} key={f} />
+                ))}
+              </div>
+              <div className="label">
+                <div className="icon">&#9660;</div> {lake.max_depth} m
+                <div className="icon">&#9632;</div> {lake.area} km&#178;
+                <div className="icon">&#9650;</div> {lake.elevation} m.a.s.l.
+              </div>
             </div>
-            <div className="right">
-              {lake.flags.map((f) => (
-                <img src={flags[f]} alt={f} key={f} />
-              ))}
+            <div className="right">More &#x25BA;</div>
+          </div>
+          <div className="summary">
+            <div className="text">Water Temperature Forecast</div>
+            {!lake.forecast.available && (
+              <div className="offline">Forecast Offline</div>
+            )}
+            <div className="summary-table">
+              <SummaryTable
+                forecast={lake.forecast}
+                language={language}
+                frozen={lake.frozen}
+              />
             </div>
           </div>
-          <div className="summary-table">
-            <SummaryTable
-              forecast={lake.forecast}
-              language={language}
-              frozen={lake.frozen}
-            />
-          </div>
-          <div className="right-arrow">{">"}</div>
         </div>
       </NavLink>
     );
