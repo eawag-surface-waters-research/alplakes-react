@@ -8,9 +8,6 @@ import swiss from "../../img/swiss.png";
 import italian from "../../img/italian.png";
 import french from "../../img/french.png";
 import icon from "../../img/icon.png";
-import eawag_logo from "../../img/eawag_logo.png";
-import esa_logo from "../../img/esa_logo.png";
-import trento_logo from "../../img/trento_logo.png";
 import {
   onMouseOver,
   onMouseOut,
@@ -23,21 +20,7 @@ import {
 import CONFIG from "../../config.json";
 import "./home.css";
 import HomeMap from "../../components/leaflet/homemap";
-
-class PlaceHolder extends Component {
-  render() {
-    var { number } = this.props;
-    return (
-      <React.Fragment>
-        {[...Array(number).keys()].map((a) => (
-          <div className="lake" key={a}>
-            <div className="loading-placeholder"></div>
-          </div>
-        ))}
-      </React.Fragment>
-    );
-  }
-}
+import Footer from "../../components/footer/footer";
 
 class SummaryTable extends Component {
   render() {
@@ -67,14 +50,14 @@ class SummaryTable extends Component {
   }
 }
 
-class Lake extends Component {
+class ListItem extends Component {
   render() {
     var { lake, language } = this.props;
     var flags = { swiss: swiss, italian: italian, french: french };
     return (
       <NavLink to={`/${lake.key}`}>
         <div
-          className={lake.display ? "lake" : "lake hidden"}
+          className={lake.display ? "list-item" : "list-item hidden"}
           id={"list-" + lake.key}
           onMouseOver={onMouseOver}
           onMouseOut={onMouseOut}
@@ -83,24 +66,29 @@ class Lake extends Component {
           <div className="properties">
             <div className="left">
               {lake.name[language]}
-              {lake.frozen && <div className="frozen">(Frozen)</div>}
-              <div className="flags">
-                {lake.flags.map((f) => (
-                  <img src={flags[f]} alt={f} key={f} />
-                ))}
-              </div>
+              {lake.frozen && (
+                <div className="frozen">({Translations.frozen[language]})</div>
+              )}
+
               <div className="label">
-                <div className="icon">&#9660;</div> {lake.max_depth} m
-                <div className="icon">&#9632;</div> {lake.area} km&#178;
-                <div className="icon">&#9650;</div> {lake.elevation} m.a.s.l.
+                <div className="icon">&#9660;</div>
+                <div className="text">{lake.max_depth} m</div>
+                <div className="icon">&#9632;</div>
+                <div className="text"> {lake.area} km&#178;</div>
+                <div className="icon">&#9650;</div>
+                <div className="text">{lake.elevation} m.a.s.l.</div>
               </div>
             </div>
-            <div className="right">More &#x25BA;</div>
+            <div className="right">
+              {lake.flags.map((f) => (
+                <img src={flags[f]} alt={f} key={f} />
+              ))}
+              <div className="arrow">&#x25BA;</div>
+            </div>
           </div>
           <div className="summary">
-            <div className="text">Water Temperature Forecast</div>
             {!lake.forecast.available && (
-              <div className="offline">Forecast Offline</div>
+              <div className="offline">{Translations.offline[language]}</div>
             )}
             <div className="summary-table">
               <SummaryTable
@@ -119,7 +107,6 @@ class Lake extends Component {
 class Home extends Component {
   state = {
     list: [],
-    defaultNumber: 12,
     search: "",
     boundingBox: false,
   };
@@ -171,7 +158,6 @@ class Home extends Component {
   };
   async componentDidMount() {
     var ice, geometry, forecast;
-    const { language } = this.props;
     const { data: list } = await axios.get(
       CONFIG.alplakes_bucket + "/static/website/metadata/v2/list.json"
     );
@@ -225,50 +211,58 @@ class Home extends Component {
       if (l.key in geometry) {
         l.geometry = geometry[l.key];
       }
+      return l;
     });
     this.setState({ list });
   }
   render() {
     document.title = "Alplakes";
-    var { language } = this.props;
-    var { list, defaultNumber, search } = this.state;
+    var { language, dark } = this.props;
+    var { list, search } = this.state;
     var sortedList = this.sortList(list);
+    var results = list.filter((l) => l.display).length;
     return (
-      <div className="home">
+      <React.Fragment>
         <NavBar {...this.props} />
-        <div className="home-content">
-          <div className="home-search">
-            <input
-              type="search"
-              placeholder="Search lakes"
-              value={search}
-              onChange={this.setSearch}
-            />
-            <img src={icon} alt="Alplakes logo" />
-          </div>
-          <div className="home-product-list">
-            {list.length === 0 ? (
-              <PlaceHolder number={defaultNumber} />
-            ) : (
-              sortedList.map((lake) => (
-                <Lake lake={lake} language={language} key={lake.key} />
-              ))
-            )}
+        <div className="content">
+          <div className="home-list">
+            <div className="search">
+              <input
+                type="search"
+                placeholder={
+                  Translations.search[language] +
+                  " " +
+                  Translations.lakes[language].toLowerCase()
+                }
+                value={search}
+                onChange={this.setSearch}
+              />
+
+              <img src={icon} alt="Alplakes logo" />
+            </div>
+            <div className="product-list">
+              {list.length !== 0 && results === 0 ? (
+                <div className="empty">
+                  {Translations.results[language]}
+                </div>
+              ) : (
+                sortedList.map((lake) => (
+                  <ListItem lake={lake} language={language} key={lake.key} />
+                ))
+              )}
+            </div>
           </div>
           <div className="home-map">
             <HomeMap
               list={list}
+              dark={dark}
               language={language}
               setBounds={this.setBounds}
             />
           </div>
-          <div className="home-logos">
-            <img src={eawag_logo} alt="Eawag" />
-            <img src={esa_logo} alt="Esa" />
-            <img src={trento_logo} alt="Trento" />
-          </div>
         </div>
-      </div>
+        <Footer {...this.props} />
+      </React.Fragment>
     );
   }
 }

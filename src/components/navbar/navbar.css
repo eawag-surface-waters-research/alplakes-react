@@ -3,17 +3,16 @@
   position: fixed;
   left: 0;
   top: 0;
-  background-color: var(--background-color);
-  z-index: 3;
+  background-color: var(--box-color);
+  z-index: 999;
   height: 66px;
-  border-bottom: 1px solid var(--box-color);
 }
 
 .navbar img.icon {
   position: absolute;
   left: 0;
   top: 0;
-  margin: 18px 0 0 24px;
+  margin: 18px 0 0 var(--padding);
   height: 30px;
 }
 
@@ -21,7 +20,7 @@
   position: relative;
   width: calc(100% - 210px);
   text-align: right;
-  padding: 14px 24px;
+  padding: 14px var(--padding);
   box-sizing: border-box;
   z-index: 4;
   margin-left: 210px;
@@ -46,18 +45,28 @@
 }
 
 .navbar .desktop-nav .nav-item .nav-text:hover {
-  background-color: var(--box-color);
+  background-color: var(--background-color);
 }
 
 .navbar select {
-  background-color: var(--box-color);
-  border: 5px solid var(--box-color);
+  background-color: transparent;
+  border: none;
   color: var(--box-font-color);
   cursor: pointer;
   border-radius: 20px;
-  padding: 4px 8px;
+  padding: 9px 9px;
   text-align: center;
   display: inline-block;
+  font-size: 16px;
+  -webkit-transition: all 0.3s ease-out;
+  -moz-transition: all 0.3s ease-out;
+  -ms-transition: all 0.3s ease-out;
+  -o-transition: all 0.3s ease-out;
+  transition: all 0.3s ease-out;
+}
+
+.navbar select:hover {
+  background-color: var(--background-color);
 }
 
 .navbar .mobile-nav {

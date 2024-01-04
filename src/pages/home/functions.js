@@ -14,14 +14,20 @@ export const parseDate = (yyyymmdd) => {
   return date;
 };
 
-export const dayName = (YYYYMMDD, language, Translations) => {
+export const dayName = (YYYYMMDD, language, Translations, full = false) => {
   if (formatDate(new Date()) === YYYYMMDD) {
+    if (full) {
+      return Translations.today[language].toLowerCase();
+    }
     return Translations.today[language];
   }
   const year = parseInt(YYYYMMDD.substr(0, 4), 10);
   const month = parseInt(YYYYMMDD.substr(4, 2), 10) - 1; // Subtracting 1 to make it zero-based
   const day = parseInt(YYYYMMDD.substr(6, 2), 10);
-  const daysOfWeekNames = Translations.axis[language].shortDays;
+  var daysOfWeekNames = Translations.axis[language].shortDays;
+  if (full) {
+    daysOfWeekNames = Translations.axis[language].days;
+  }
   const date = new Date(year, month, day);
   const dayOfWeekNumber = date.getDay();
   return daysOfWeekNames[dayOfWeekNumber];

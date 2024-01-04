@@ -44,17 +44,30 @@ export const toRadians = (degrees) => {
   return (degrees * Math.PI) / 180;
 };
 
-export const dayName = (YYYYMMDD, language, Translations) => {
+export const dayName = (YYYYMMDD, language, Translations, full = false) => {
   if (formatDateYYYYMMDD(new Date()) === YYYYMMDD) {
+    if (full) {
+      return Translations.today[language].toLowerCase();
+    }
     return Translations.today[language];
   }
   const year = parseInt(YYYYMMDD.substr(0, 4), 10);
   const month = parseInt(YYYYMMDD.substr(4, 2), 10) - 1; // Subtracting 1 to make it zero-based
   const day = parseInt(YYYYMMDD.substr(6, 2), 10);
-  const daysOfWeekNames = Translations.axis[language].shortDays;
+  var daysOfWeekNames = Translations.axis[language].shortDays;
+  if (full) {
+    daysOfWeekNames = Translations.axis[language].days;
+  }
   const date = new Date(year, month, day);
   const dayOfWeekNumber = date.getDay();
   return daysOfWeekNames[dayOfWeekNumber];
+};
+
+export const dateName = (YYYYMMDD, language, Translations) => {
+  const year = parseInt(YYYYMMDD.substr(0, 4), 10);
+  const month = parseInt(YYYYMMDD.substr(4, 2), 10) - 1; // Subtracting 1 to make it zero-based
+  const day = parseInt(YYYYMMDD.substr(6, 2), 10);
+  return `${day} ${Translations.axis[language].months[month]} ${year}`;
 };
 
 const formatDepth = (number) => {
@@ -439,9 +452,9 @@ const downloadAlplakesHydrodynamicParameter = async (
       ({ data: par } = await axios.get(
         `${CONFIG.alplakes_bucket}/simulations/${layer.properties.model}/data/${
           layer.properties.lake
-        }/${parameter}_${formatDateBucket(start)}_${formatDateBucket(end)}_${formatDepth(
-          depth
-        )}.txt`
+        }/${parameter}_${formatDateBucket(start)}_${formatDateBucket(
+          end
+        )}_${formatDepth(depth)}.txt`
       ));
     } catch (e) {
       ({ data: par } = await axios.get(

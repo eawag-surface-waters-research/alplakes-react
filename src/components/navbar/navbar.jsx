@@ -6,8 +6,6 @@ import darkLogo from "../../img/text-logo-white.png";
 import eawag_logo from "../../img/eawag_logo.png";
 import esa_logo from "../../img/esa_logo.png";
 import trento_logo from "../../img/trento_logo.png";
-import dark_icon from "../../img/dark.png";
-import light_icon from "../../img/light.png";
 import "./navbar.css";
 import Toggle from "../sliders/toggle";
 
@@ -42,16 +40,6 @@ class NavBar extends Component {
             <NavLink className="nav-item" to="/about">
               <div className="nav-text">{Translate.about[language]}</div>
             </NavLink>
-            <div className="nav-item">
-              <div className="nav-switch">
-                <Toggle
-                  left="Light"
-                  right="Dark"
-                  onChange={toggleDark}
-                  checked={dark}
-                />
-              </div>
-            </div>
             <div className="nav-item">
               <div className="nav-select">
                 <select

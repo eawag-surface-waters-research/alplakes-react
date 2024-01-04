@@ -23,6 +23,24 @@
     "FR": "Ajouter des calques",
     "IT": "Aggiungi strati"
   },
+  "summary": {
+    "EN": "Alplakes provides monitoring and forecasting for lakes across the European alpine region.",
+    "DE": "Alplakes bietet Überwachung und Vorhersage von Seen im gesamten europäischen Alpenraum.",
+    "FR": "Alplakes assure la surveillance et la prévision des lacs dans toute la région alpine européenne.",
+    "IT": "Alplakes fornisce monitoraggio e previsione dei laghi nella regione alpina europea."
+  },
+  "results": {
+    "EN": "Your search returned 0 results. If the lake you are looking for is not on Alplakes we would be happy to hear from you.",
+    "DE": "Ihre Suche ergab 0 Ergebnisse. Wenn der von Ihnen gesuchte See nicht auf Alplakes liegt, würden wir uns freuen, von Ihnen zu hören.",
+    "FR": "Votre recherche a renvoyé 0 résultat. Si le lac que vous recherchez ne se trouve pas sur Alplakes, nous serions heureux de vous entendre.",
+    "IT": "La tua ricerca ha prodotto 0 risultati. Se il lago che stai cercando non si trova su Alplakes saremo felici di sentire la tua opinione."
+  },
+  "readmore": {
+    "EN": "Read more",
+    "DE": "Mehr lesen",
+    "FR": "En savoir plus",
+    "IT": "Per saperne di più"
+  },
   "descriptions": {
     "EN": [
       "Situated ",
@@ -52,7 +70,7 @@
   "today": {
     "EN": "Today",
     "DE": "Heute",
-    "FR": "Ajdh",
+    "FR": "Aujourd'hui",
     "IT": "Oggi"
   },
   "sortby": {
@@ -96,6 +114,36 @@
     "DE": "Ende",
     "FR": "Fin",
     "IT": "Termine"
+  },
+  "frozen": {
+    "EN": "Frozen",
+    "DE": "Gefroren",
+    "FR": "Congelée",
+    "IT": "Congelato"
+  },
+  "forecast": {
+    "EN": "Temperature forecast",
+    "DE": "Temperaturvorhersage",
+    "FR": "Prévisions de température",
+    "IT": "Previsioni della temperatura"
+  },
+  "for": {
+    "EN": "for",
+    "DE": "für",
+    "FR": "pour",
+    "IT": "per"
+  },
+  "offline": {
+    "EN": "Forecast offline",
+    "DE": "Vorhersage offline",
+    "FR": "Prévisions hors ligne",
+    "IT": "Previsioni offline"
+  },
+  "more": {
+    "EN": "More",
+    "DE": "Mehr",
+    "FR": "Plus",
+    "IT": "Di più"
   },
   "watertemperature": {
     "EN": "Water temperature",

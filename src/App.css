@@ -12,20 +12,25 @@
 /* Variables */
 
 :root {
-  --background-color: rgb(255, 255, 255);
+  --background-color: rgb(242, 242, 242);
   --background-font-color: rgb(15, 15, 15);
-  --box-color: rgb(242, 242, 242);
+  --box-color: rgb(255, 255, 255);
   --box-font-color: rgb(0, 0, 0);
   --box-inner-color: rgb(227, 227, 227);
   --box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+  --header-height: 70px;
+  --footer-height: 100px;
+  --padding: 40px;
+  --list-width: 450px;
+  --search-height: 68px;
 }
 
 .dark {
-  --background-color: rgb(15, 15, 15);
+  --background-color: rgb(30, 30, 30);
   --background-font-color: rgb(229, 229, 229);
   --box-color: rgb(50, 50, 50);
   --box-font-color: rgb(229, 229, 229);
-  --box-inner-color: rgb(30, 30, 30);
+  --box-inner-color: rgb(40, 40, 40);
   --box-shadow: 0 3px 8px rgba(0, 0, 0, 0.24);
 }
 
@@ -33,7 +38,7 @@
 /* Whole site settings */
 
 .main {
-  font-family: "Roboto", "Arial", sans-serif;
+  font-family: "Frutiger Neue LT Pro", "Arial", sans-serif;
   color: var(--background-font-color);
 }
 
@@ -46,6 +51,11 @@
   top: 0;
   left: 0;
   background-color: var(--background-color);
+}
+
+.main .content {
+  padding-top: var(--header-height);
+  position: relative;
 }
 
 /* Scrollbar */

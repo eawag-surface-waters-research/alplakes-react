@@ -1,0 +1,35 @@
+.footer {
+    width: 100%;
+    box-sizing: border-box;
+    position: relative;
+    background-color: var(--box-inner-color);
+    padding: 33px var(--padding) 0 var(--padding);
+    height: var(--footer-height);
+}
+
+.footer .summary {
+    width: var(--list-width);
+    display: inline-block;
+    vertical-align: top;
+}
+
+.footer .summary a {
+    color: var(--background-font-color)
+}
+
+.footer .partners {
+    display: inline-block;
+    vertical-align: top;
+    padding-left: 40px;
+}
+
+.footer .partners img {
+    height: 40px;
+    margin-right: 40px;
+}
+
+.footer .switch {
+    display: inline-block;
+    vertical-align: top;
+    float: right;
+}
