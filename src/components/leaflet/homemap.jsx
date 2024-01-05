@@ -82,13 +82,15 @@ class HomeMap extends Component {
         }),
       })
         .bindTooltip(
-          `<div class="temperature-label" title='Click for more details'><div class="name">${
+          `<a class="temperature-label" href="/${
+            lake.key
+          }" title='Click for more details'><div class="name">${
             lake.name[language]
           }</div>${
             lake.forecast.summary[day] === false
-              ? `<div class="value">25.8°</div>`
+              ? ""
               : `<div class="value">${lake.forecast.summary[day]}°</div>`
-          }</div>`,
+          }</a>`,
           {
             id: lake.key,
             permanent: true,
@@ -107,59 +109,33 @@ class HomeMap extends Component {
     }
   };
 
-  haversine = (pointA, pointB) => {
-    const R = 6371; // Radius of the Earth in kilometers
-    const toRadians = (angle) => (angle * Math.PI) / 180;
-    const lat1 = toRadians(pointA.latitude);
-    const lat2 = toRadians(pointB.latitude);
-    const dLat = lat2 - lat1;
-    const dLon = toRadians(pointB.longitude - pointA.longitude);
-    const sin_dLat_2 = Math.sin(dLat / 2);
-    const sin_dLon_2 = Math.sin(dLon / 2);
-    const cos_lat1 = Math.cos(lat1);
-    const cos_lat2 = Math.cos(lat2);
-    const a =
-      sin_dLat_2 * sin_dLat_2 + sin_dLon_2 * sin_dLon_2 * cos_lat1 * cos_lat2;
-    return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)) * 1000;
+  boxCoords = (latitude, longitude, width, height, zoom) => {
+    var point = this.map.project([latitude, longitude], zoom);
+    var box = {
+      top: point.y + height,
+      bottom: point.y,
+      left: point.x - width / 2,
+      right: point.x + width / 2,
+    };
+    return box;
   };
 
-  distance = (pointA, pointB) => {
-    var height = this.haversine(
-      {
-        latitude: pointA.latitude,
-        longitude: pointA.longitude,
-      },
-      {
-        latitude: pointB.latitude,
-        longitude: pointA.longitude,
+  boxConflictZoomLevel = (pointA, pointB, minZoom, maxZoom) => {
+    for (var i = minZoom; i <= maxZoom; i++) {
+      let boxA = this.boxCoords(pointA.latitude, pointA.longitude, 200, 50, i);
+      let boxB = this.boxCoords(pointB.latitude, pointB.longitude, 200, 50, i);
+      if (
+        !(
+          boxB.left < boxA.right &&
+          boxB.right > boxA.left &&
+          boxB.bottom < boxA.top &&
+          boxB.top > boxA.bottom
+        )
+      ) {
+        break;
       }
-    );
-    var width = this.haversine(
-      {
-        latitude: pointA.latitude,
-        longitude: pointA.longitude,
-      },
-      {
-        latitude: pointA.latitude,
-        longitude: pointB.longitude,
-      }
-    );
-    return { width, height, distance: this.haversine(pointA, pointB) };
-  };
-
-  zoomLevelCluster = (width, height, distance, characters) => {
-    var maxWidth = 1200; // Max width at zoom level 13 in meters
-    var maxHeight = 600; // Max height at zoom level 13 in meters
-    var maxDistance = 800;
-    return Math.min(
-      Math.ceil(
-        Math.log((maxWidth * Math.exp(13 * Math.log(2))) / width) / Math.log(2)
-      ),
-      Math.ceil(
-        Math.log((maxHeight * Math.exp(13 * Math.log(2))) / height) /
-          Math.log(2)
-      )
-    );
+    }
+    return i - 1;
   };
 
   labelClustering = (list, language) => {
@@ -178,14 +154,13 @@ class HomeMap extends Component {
               lake.key !== innerLake.key &&
               !levels[i].includes(innerLake.key)
             ) {
-              let { width, height, distance } = this.distance(innerLake, lake);
-              let zoom = this.zoomLevelCluster(
-                width,
-                height,
-                distance,
-                lake.name[language].length
+              let zoom = this.boxConflictZoomLevel(
+                innerLake,
+                lake,
+                minZoom,
+                maxZoom
               );
-              if (zoom > minZoom && zoom <= maxZoom) {
+              if (zoom >= minZoom && zoom <= maxZoom) {
                 for (let j = minZoom; j <= zoom; j++) {
                   if (!levels[j].includes(innerLake.key)) {
                     levels[j].push(innerLake.key);
@@ -200,7 +175,6 @@ class HomeMap extends Component {
     for (let lake of list) {
       if (!(lake.key in labels)) labels[lake.key] = { zoom: 14 };
     }
-    console.log(labels);
     return labels;
   };
   displayLabels = () => {

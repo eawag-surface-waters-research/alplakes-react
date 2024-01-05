@@ -7,6 +7,8 @@ import Translations from "../../translations.json";
 import swiss from "../../img/swiss.png";
 import italian from "../../img/italian.png";
 import french from "../../img/french.png";
+import german from "../../img/german.png";
+import austrian from "../../img/austrian.png";
 import icon from "../../img/icon.png";
 import depth_icon from "../../img/depth.png";
 import area_icon from "../../img/area.png";
@@ -56,7 +58,13 @@ class SummaryTable extends Component {
 class ListItem extends Component {
   render() {
     var { lake, language } = this.props;
-    var flags = { swiss: swiss, italian: italian, french: french };
+    var flags = {
+      swiss: swiss,
+      italian: italian,
+      french: french,
+      german: german,
+      austrian: austrian,
+    };
     return (
       <NavLink to={`/${lake.key}`}>
         <div
@@ -78,9 +86,13 @@ class ListItem extends Component {
                   <img src={depth_icon} alt="depth" />
                 </div>
                 <div className="text">{lake.max_depth} m</div>
-                <div className="icon"><img src={area_icon} alt="area" /></div>
+                <div className="icon">
+                  <img src={area_icon} alt="area" />
+                </div>
                 <div className="text"> {lake.area} km&#178;</div>
-                <div className="icon"><img src={elevation_icon} alt="elevation" /></div>
+                <div className="icon">
+                  <img src={elevation_icon} alt="elevation" />
+                </div>
                 <div className="text">{lake.elevation} m.a.s.l.</div>
               </div>
             </div>

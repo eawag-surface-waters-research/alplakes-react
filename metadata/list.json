@@ -221,7 +221,7 @@
     "elevation": 395.0,
     "latitude": 47.629,
     "longitude": 9.374,
-    "flags": ["swiss"]
+    "flags": ["swiss", "german", "austrian"]
   },
   {
     "key": "lowerconstance",
@@ -237,7 +237,7 @@
     "elevation": 395.0,
     "latitude": 47.676,
     "longitude": 9.0,
-    "flags": ["swiss"]
+    "flags": ["swiss", "german"]
   },
   {
     "key": "brienz",
@@ -317,7 +317,7 @@
     "elevation": 193.0,
     "latitude": 45.964,
     "longitude": 8.645,
-    "flags": ["swiss"]
+    "flags": ["swiss", "italian"]
   },
   {
     "key": "lungern",
@@ -1222,8 +1222,8 @@
     "ave_depth": "NA",
     "max_depth": 7.3,
     "elevation": 435.0,
-    "latitude": 46.709,
-    "longitude": 8.804,
+    "latitude": 47.608,
+    "longitude": 8.827,
     "flags": ["swiss"]
   },
   {
