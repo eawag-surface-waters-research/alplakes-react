@@ -74,7 +74,7 @@ export const summariseData = (forecast, frozen) => {
   var dtMin = new Date();
   dtMin.setHours(0, 0, 0, 0);
   dtMin = dtMin.getTime();
-  var dtMax = dtMin + 4 * 86400000;
+  var dtMax = dtMin + 5 * 86400000 - 10800000;
   var dt = [];
   var value = [];
   var summary = {};

@@ -20,16 +20,45 @@
 .footer .partners {
     display: inline-block;
     vertical-align: top;
-    padding-left: 40px;
+    width: calc(100% - var(--list-width));
+    text-align: center;
 }
 
 .footer .partners img {
     height: 40px;
-    margin-right: 40px;
+    margin: 0 30px;
 }
 
 .footer .switch {
-    display: inline-block;
-    vertical-align: top;
-    float: right;
+    position: absolute;
+    right: var(--padding);
+    top: 33px;
+}
+
+.footer .switch img {
+    height: 20px;
+    margin-bottom: -4px;
+}
+
+.dark .footer .switch img {
+    height: 20px;
+    -webkit-filter: invert(100%);
+    filter: invert(100%);
+}
+
+@media screen and (max-width: 1250px) {
+    .footer .partners img {
+        height: 30px;
+        margin: 0 12px;
+    }
+
+    .footer .partners {
+        text-align: left;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .footer {
+        display: none;
+    }
 }

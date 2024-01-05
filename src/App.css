@@ -34,6 +34,13 @@
   --box-shadow: 0 3px 8px rgba(0, 0, 0, 0.24);
 }
 
+@media screen and (max-width: 1250px) {
+  :root {
+    --padding: 20px;
+    --list-width: 350px;
+  }
+}
+
 
 /* Whole site settings */
 

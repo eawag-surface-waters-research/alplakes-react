@@ -4,6 +4,7 @@ import SwaggerUI from "swagger-ui-react";
 import "swagger-ui-react/swagger-ui.css";
 import CONFIG from "../../config.json";
 import "./api.css";
+import Footer from "../../components/footer/footer";
 
 class API extends Component {
   render() {
@@ -17,6 +18,7 @@ class API extends Component {
             docExpansion="list"
           />
         </div>
+        <Footer {...this.props} />
       </React.Fragment>
     );
   }

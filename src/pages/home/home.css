@@ -26,6 +26,15 @@
   border-radius: 8px;
 }
 
+.main .content .search input::placeholder {
+  color: var(--box-font-color);
+  opacity: 1;
+}
+
+.main .content .search input::-ms-input-placeholder {
+  color: var(--box-font-color);
+}
+
 .main .content .search img {
   position: absolute;
   left: 26px;
@@ -100,6 +109,16 @@
 .main .content .home-list .product-list .list-item .properties .left .label .icon {
   display: inline-block;
   font-size: 16px;
+}
+
+.main .content .home-list .product-list .list-item .properties .left .label .icon img {
+  height: 12px;
+  margin-right: 5px;
+}
+
+.main.dark .content .home-list .product-list .list-item .properties .left .label .icon img {
+  -webkit-filter: invert(100%);
+  filter: invert(100%);
 }
 
 .main .content .home-list .product-list .list-item .properties .left .label .text {
@@ -213,7 +232,7 @@
   height: calc(100vh - var(--header-height) - var(--footer-height) - var(--padding) * 2);
   margin: var(--padding);
   box-sizing: border-box;
-  min-height: calc(350px + var(--search-height));
+  min-height: calc(350px + var(--search-height) + var(--padding));
   background-color: var(--box-inner-color);
   box-shadow: var(--box-shadow);
 }
@@ -257,6 +276,7 @@
   text-align: center;
   left: 50%;
   transform: translate(-50%, 0);
+  white-space: nowrap;
 }
 
 .main .content .home-map #map .day-selector .day-outer {
@@ -281,39 +301,38 @@
   background-color: var(--box-color);
 }
 
-@media screen and (max-width: 974px) {
+@media screen and (max-width: 800px) {
   .main .content .home-map {
     top: var(--header-height);
     right: 0;
     width: 100%;
     height: 35vh;
+    min-height: unset;
     z-index: 9;
     margin: 0;
   }
 
-  .main .content .search {
-    top: 90px;
-    z-index: 2;
-    width: 100%;
-    left: 0;
-    text-align: center;
-    z-index: 10;
-  }
-
-  .main .content {
-    padding: 0;
-    position: relative;
-  }
-
   .main .content .home-list {
-    margin: 35vh 0 0 0;
+    position: absolute;
+    top: calc(35vh + var(--header-height));
+    width: 100%;
+    margin: 0;
   }
 
   .main .content .home-list .product-list {
-    margin: auto;
+    height: calc(65vh - var(--header-height) - var(--search-height));
+    min-height: unset;
   }
 
-  .main .content .home-logos {
+  .main .content .home-map #map .day-selector .day-outer .day-inner {
+    padding: 8px;
+  }
+
+  .leaflet-control-zoom {
+    display: none;
+  }
+
+  .main .content .home-map #map .title {
     display: none;
   }
 

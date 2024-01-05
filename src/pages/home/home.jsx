@@ -8,6 +8,9 @@ import swiss from "../../img/swiss.png";
 import italian from "../../img/italian.png";
 import french from "../../img/french.png";
 import icon from "../../img/icon.png";
+import depth_icon from "../../img/depth.png";
+import area_icon from "../../img/area.png";
+import elevation_icon from "../../img/elevation.png";
 import {
   onMouseOver,
   onMouseOut,
@@ -71,11 +74,13 @@ class ListItem extends Component {
               )}
 
               <div className="label">
-                <div className="icon">&#9660;</div>
+                <div className="icon">
+                  <img src={depth_icon} alt="depth" />
+                </div>
                 <div className="text">{lake.max_depth} m</div>
-                <div className="icon">&#9632;</div>
+                <div className="icon"><img src={area_icon} alt="area" /></div>
                 <div className="text"> {lake.area} km&#178;</div>
-                <div className="icon">&#9650;</div>
+                <div className="icon"><img src={elevation_icon} alt="elevation" /></div>
                 <div className="text">{lake.elevation} m.a.s.l.</div>
               </div>
             </div>
@@ -242,9 +247,7 @@ class Home extends Component {
             </div>
             <div className="product-list">
               {list.length !== 0 && results === 0 ? (
-                <div className="empty">
-                  {Translations.results[language]}
-                </div>
+                <div className="empty">{Translations.results[language]}</div>
               ) : (
                 sortedList.map((lake) => (
                   <ListItem lake={lake} language={language} key={lake.key} />

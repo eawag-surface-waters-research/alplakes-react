@@ -6,6 +6,8 @@ import darkLogo from "../../img/text-logo-white.png";
 import eawag_logo from "../../img/eawag_logo.png";
 import esa_logo from "../../img/esa_logo.png";
 import trento_logo from "../../img/trento_logo.png";
+import dark_icon from "../../img/dark.png";
+import light_icon from "../../img/light.png";
 import "./navbar.css";
 import Toggle from "../sliders/toggle";
 
@@ -81,8 +83,8 @@ class NavBar extends Component {
               </div>
               <div className="nav-row">
                 <Toggle
-                  left="Light"
-                  right="Dark"
+                  left={<img src={light_icon} alt="light"/>}
+                  right={<img src={dark_icon} alt="dark"/>}
                   onChange={toggleDark}
                   checked={dark}
                 />

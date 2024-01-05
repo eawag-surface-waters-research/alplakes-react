@@ -4,6 +4,8 @@ import Translate from "../../translations.json";
 import eawag_logo from "../../img/eawag_logo.png";
 import esa_logo from "../../img/esa_logo.png";
 import trento_logo from "../../img/trento_logo.png";
+import dark_icon from "../../img/dark.png";
+import light_icon from "../../img/light.png";
 import Toggle from "../sliders/toggle";
 import "./footer.css";
 
@@ -24,8 +26,8 @@ class Footer extends Component {
           </div>
           <div className="switch">
             <Toggle
-              left="Light"
-              right="Dark"
+              left={<img src={light_icon} alt="light"/>}
+              right={<img src={dark_icon} alt="dark"/>}
               onChange={toggleDark}
               checked={dark}
             />
