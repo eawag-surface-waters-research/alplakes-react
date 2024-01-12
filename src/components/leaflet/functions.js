@@ -40,12 +40,50 @@ const addMinutes = (date, minutes) => {
   return new Date(date.getTime() + minutes * 60000);
 };
 
+export const toRadians = (degrees) => {
+  return (degrees * Math.PI) / 180;
+};
+
+export const dayName = (YYYYMMDD, language, Translations, full = false) => {
+  if (formatDateYYYYMMDD(new Date()) === YYYYMMDD) {
+    if (full) {
+      return Translations.today[language].toLowerCase();
+    }
+    return Translations.today[language];
+  }
+  const year = parseInt(YYYYMMDD.substr(0, 4), 10);
+  const month = parseInt(YYYYMMDD.substr(4, 2), 10) - 1; // Subtracting 1 to make it zero-based
+  const day = parseInt(YYYYMMDD.substr(6, 2), 10);
+  var daysOfWeekNames = Translations.axis[language].shortDays;
+  if (full) {
+    daysOfWeekNames = Translations.axis[language].days;
+  }
+  const date = new Date(year, month, day);
+  const dayOfWeekNumber = date.getDay();
+  return daysOfWeekNames[dayOfWeekNumber];
+};
+
+export const dateName = (YYYYMMDD, language, Translations) => {
+  const year = parseInt(YYYYMMDD.substr(0, 4), 10);
+  const month = parseInt(YYYYMMDD.substr(4, 2), 10) - 1; // Subtracting 1 to make it zero-based
+  const day = parseInt(YYYYMMDD.substr(6, 2), 10);
+  return `${day} ${Translations.axis[language].months[month]} ${year}`;
+};
+
 const formatDepth = (number) => {
   const stringNumber = number.toString();
   if (!stringNumber.includes(".")) {
     return stringNumber + ".0";
   }
   return stringNumber;
+};
+
+export const formatDateYYYYMMDD = (d) => {
+  const date = new Date(d);
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}${month}${day}`;
 };
 
 const formatDate = (datetime, offset = 0) => {
@@ -206,6 +244,19 @@ export const flyToBounds = async (bounds, map) => {
   });
 };
 
+const loading = (message) => {
+  if (document.getElementById("loading")) {
+    document.getElementById("loading-text").innerHTML = message;
+    document.getElementById("loading").style.visibility = "visible";
+  }
+};
+
+const loaded = () => {
+  if (document.getElementById("loading")) {
+    document.getElementById("loading").style.visibility = "hidden";
+  }
+};
+
 export const addLayer = async (
   layer,
   period,
@@ -298,6 +349,7 @@ export const updateLayer = async (
       depth
     );
   }
+  loaded();
 };
 
 export const removeLayer = async (layer, layerStore, map) => {
@@ -327,7 +379,9 @@ const addAlplakesHydrodynamic = async (
   setSimpleline,
   bucket
 ) => {
+  loading("Downloading lake geometry");
   await downloadAlplakesHydrodynamicGeometry(layer, period, dataStore);
+  loading(`Downloading lake ${layer.properties.parameter} field`);
   var simpleline = await downloadAlplakesHydrodynamicParameter(
     layer,
     period,
@@ -339,6 +393,7 @@ const addAlplakesHydrodynamic = async (
     setSimpleline(simpleline);
   }
   plotAlplakesHydrodynamic(layer, datetime, depth, dataStore, layerStore, map);
+  loaded();
 };
 
 const downloadAlplakesHydrodynamicGeometry = async (
@@ -414,9 +469,9 @@ const downloadAlplakesHydrodynamicParameter = async (
       ({ data: par } = await axios.get(
         `${CONFIG.alplakes_bucket}/simulations/${layer.properties.model}/data/${
           layer.properties.lake
-        }/${parameter}_${formatDateBucket(start)}_${formatDateBucket(end)}_${formatDepth(
-          depth
-        )}.txt`
+        }/${parameter}_${formatDateBucket(start)}_${formatDateBucket(
+          end
+        )}_${formatDepth(depth)}.txt`
       ));
     } catch (e) {
       ({ data: par } = await axios.get(
@@ -802,6 +857,7 @@ const addSencastTiff = async (layer, dataStore, layerStore, datetime, map) => {
   var metadata;
   var image;
   if (!checkNested(dataStore, path)) {
+    loading("Downloading file list");
     ({ data: metadata } = await axios.get(layer.properties.metadata));
     var max_pixels = d3.max(metadata.map((m) => parseFloat(m.p)));
     metadata = metadata.map((m) => {
@@ -859,10 +915,12 @@ const plotSencastTiff = async (url, layer, layerStore, map) => {
       options["convolve"] = 0;
     }
   }
+  loading("Downloading satellite image");
   var { data } = await axios.get(url, {
     responseType: "arraybuffer",
   });
 
+  loading("Processing satellite image");
   var leaflet_layer = L.floatgeotiff(data, options).addTo(map);
   setNested(layerStore, path, leaflet_layer);
 };
@@ -914,7 +972,7 @@ const updateSencastTiff = async (
     layer.properties.options.dataMin = round(image.min, 2);
     layer.properties.options.dataMax = round(image.max, 2);
     layer.properties.options.updateDate = false;
-
+    loading("Downloading satellite image");
     ({ data } = await axios.get(image.url, {
       responseType: "arraybuffer",
     }));
@@ -931,11 +989,12 @@ const updateSencastTiff = async (
     layer.properties.options.dataMin = round(image.min, 2);
     layer.properties.options.dataMax = round(image.max, 2);
     layer.properties.options.updateImage = false;
-
+    loading("Downloading satellite image");
     ({ data } = await axios.get(image.url, {
       responseType: "arraybuffer",
     }));
   }
+  loading("Processing satellite image");
 
   var leaflet_layer = getNested(layerStore, path);
   if (leaflet_layer !== null && leaflet_layer !== undefined) {
@@ -1062,12 +1121,14 @@ const addAlplakesParticles = async (
   bucket
 ) => {
   const overwrite = { parameter: "velocity", type: "alplakes_hydrodynamic" };
+  loading("Downloading lake geometry");
   await downloadAlplakesHydrodynamicGeometry(
     layer,
     period,
     dataStore,
     overwrite
   );
+  loading("Downloading lake velocity field");
   await downloadAlplakesHydrodynamicParameter(
     layer,
     period,

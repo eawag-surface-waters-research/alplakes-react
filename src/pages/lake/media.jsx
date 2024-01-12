@@ -21,6 +21,21 @@ import {
 } from "./functions";
 import "./lake.css";
 
+class Loading extends Component {
+  render() {
+    return (
+      <div className="loading" id="loading">
+        <div className="loading-symbol">
+          <span className="loader" />
+        </div>
+        <div className="loading-text" id="loading-text">
+          Loading
+        </div>
+      </div>
+    );
+  }
+}
+
 class Legend extends Component {
   render() {
     var { layers, language } = this.props;
@@ -280,18 +295,6 @@ class Media extends Component {
           </div>
         )}
         {legend && <Legend layers={layers} language={language} />}
-        {clickblock && (
-          <div className="data-loading">
-            <div className="sk-chase">
-              <div className="sk-chase-dot"></div>
-              <div className="sk-chase-dot"></div>
-              <div className="sk-chase-dot"></div>
-              <div className="sk-chase-dot"></div>
-              <div className="sk-chase-dot"></div>
-              <div className="sk-chase-dot"></div>
-            </div>
-          </div>
-        )}
         {graphs && (
           <Graphs
             data={graphData}
@@ -320,6 +323,7 @@ class Media extends Component {
           legend={legend}
           toggleLegend={this.toggleLegend}
         />
+        <Loading />
         <div className="playback">
           <div className="slider">
             <Slider

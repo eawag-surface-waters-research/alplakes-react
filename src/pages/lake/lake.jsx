@@ -24,7 +24,7 @@ class Lake extends Component {
     minDate: new Date(2010),
     missingDates: [],
     period: [relativeDate(-2).getTime(), relativeDate(3).getTime()],
-    loading: true,
+    initialLoad: true,
     clickblock: true,
     basemap: "default",
     metadata: {},
@@ -32,7 +32,7 @@ class Lake extends Component {
     updates: [],
     play: false,
     timestep: 3600000,
-    timeout: 150,
+    timeout: 0,
     error: "",
     temperature: 0,
     average: true,
@@ -354,7 +354,7 @@ class Lake extends Component {
         );
         this.setState({
           error: "api",
-          loading: false,
+          initialLoad: false,
           lake_id,
           clickblock: false,
         });
@@ -370,14 +370,14 @@ class Lake extends Component {
         );
         this.setState({
           error: "api",
-          loading: false,
+          initialLoad: false,
           lake_id,
           clickblock: false,
         });
       }
       this.setState({
         metadata,
-        loading: false,
+        initialLoad: false,
         layers: metadata.layers,
         updates,
         period,
@@ -400,7 +400,7 @@ class Lake extends Component {
   }
 
   render() {
-    var { metadata, lake_id, loading, clickblock, fullscreen, sidebarOpen } =
+    var { metadata, lake_id, initialLoad, clickblock, fullscreen, sidebarOpen } =
       this.state;
     var { language, dark } = this.props;
     if ("name" in metadata) document.title = metadata.name[language] + " | Alplakes";
@@ -434,7 +434,7 @@ class Lake extends Component {
             />
           </div>
           <div className="secondary">
-            {!loading && (
+            {!initialLoad && (
               <Sidebar
                 language={language}
                 {...this.state}
