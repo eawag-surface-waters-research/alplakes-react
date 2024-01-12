@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import L, { point } from "leaflet";
+import L from "leaflet";
 import { dayName, dateName, formatDateYYYYMMDD } from "./functions";
 import Translations from "../../translations.json";
 import "./css/leaflet.css";

@@ -341,7 +341,7 @@
         "model": "Sentinel2",
         "lake": "geneva",
         "parameter": "turbidity",
-        "metadata": "https://eawagrs.s3.eu-central-1.amazonaws.com/metadata/sentinel2/geneva_TUR_Nechad2016_665.json",
+        "metadata": "https://eawagrs.s3.eu-central-1.amazonaws.com/metadata/sentinel2/geneva_tsm_dogliotti665.json",
         "unit": "g m-3",
         "display": "tiff",
         "depth": false,

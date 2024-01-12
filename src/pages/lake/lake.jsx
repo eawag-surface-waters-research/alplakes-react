@@ -322,7 +322,7 @@ class Lake extends Component {
       .replace(/[^a-zA-Z ]/g, "");
     try {
       const { data: metadata } = await axios.get(
-        CONFIG.alplakes_bucket + `/static/website/metadata/${lake_id}.json`
+        CONFIG.alplakes_bucket + `/static/website/metadata/v2/${lake_id}.json`
       );
       var updates = [{ event: "bounds" }];
       for (var layer of metadata.layers) {
