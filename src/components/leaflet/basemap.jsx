@@ -51,9 +51,16 @@ class Basemap extends Component {
               bucket
             );
           } catch (e) {
-            console.error("Failed to add layer", this.find(layers, "id", update.id))
-            console.error(e)
-            window.alert(`Failed to add layer ${this.find(layers, "id", update.id).properties.parameter}, try a different time period.`)
+            console.error(
+              "Failed to add layer",
+              this.find(layers, "id", update.id)
+            );
+            console.error(e);
+            window.alert(
+              `Failed to add layer ${
+                this.find(layers, "id", update.id).properties.parameter
+              }, try a different time period.`
+            );
           }
         } else if (update.event === "updateLayer") {
           updateLayer(

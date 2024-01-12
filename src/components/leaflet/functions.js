@@ -244,6 +244,19 @@ export const flyToBounds = async (bounds, map) => {
   });
 };
 
+const loading = (message) => {
+  if (document.getElementById("loading")) {
+    document.getElementById("loading-text").innerHTML = message;
+    document.getElementById("loading").style.visibility = "visible";
+  }
+};
+
+const loaded = () => {
+  if (document.getElementById("loading")) {
+    document.getElementById("loading").style.visibility = "hidden";
+  }
+};
+
 export const addLayer = async (
   layer,
   period,
@@ -336,6 +349,7 @@ export const updateLayer = async (
       depth
     );
   }
+  loaded();
 };
 
 export const removeLayer = async (layer, layerStore, map) => {
@@ -365,7 +379,9 @@ const addAlplakesHydrodynamic = async (
   setSimpleline,
   bucket
 ) => {
+  loading("Downloading lake geometry");
   await downloadAlplakesHydrodynamicGeometry(layer, period, dataStore);
+  loading(`Downloading lake ${layer.properties.parameter} field`);
   var simpleline = await downloadAlplakesHydrodynamicParameter(
     layer,
     period,
@@ -377,6 +393,7 @@ const addAlplakesHydrodynamic = async (
     setSimpleline(simpleline);
   }
   plotAlplakesHydrodynamic(layer, datetime, depth, dataStore, layerStore, map);
+  loaded();
 };
 
 const downloadAlplakesHydrodynamicGeometry = async (
@@ -840,6 +857,7 @@ const addSencastTiff = async (layer, dataStore, layerStore, datetime, map) => {
   var metadata;
   var image;
   if (!checkNested(dataStore, path)) {
+    loading("Downloading file list");
     ({ data: metadata } = await axios.get(layer.properties.metadata));
     var max_pixels = d3.max(metadata.map((m) => parseFloat(m.p)));
     metadata = metadata.map((m) => {
@@ -897,10 +915,12 @@ const plotSencastTiff = async (url, layer, layerStore, map) => {
       options["convolve"] = 0;
     }
   }
+  loading("Downloading satellite image");
   var { data } = await axios.get(url, {
     responseType: "arraybuffer",
   });
 
+  loading("Processing satellite image");
   var leaflet_layer = L.floatgeotiff(data, options).addTo(map);
   setNested(layerStore, path, leaflet_layer);
 };
@@ -952,7 +972,7 @@ const updateSencastTiff = async (
     layer.properties.options.dataMin = round(image.min, 2);
     layer.properties.options.dataMax = round(image.max, 2);
     layer.properties.options.updateDate = false;
-
+    loading("Downloading satellite image");
     ({ data } = await axios.get(image.url, {
       responseType: "arraybuffer",
     }));
@@ -969,11 +989,12 @@ const updateSencastTiff = async (
     layer.properties.options.dataMin = round(image.min, 2);
     layer.properties.options.dataMax = round(image.max, 2);
     layer.properties.options.updateImage = false;
-
+    loading("Downloading satellite image");
     ({ data } = await axios.get(image.url, {
       responseType: "arraybuffer",
     }));
   }
+  loading("Processing satellite image");
 
   var leaflet_layer = getNested(layerStore, path);
   if (leaflet_layer !== null && leaflet_layer !== undefined) {
@@ -1100,12 +1121,14 @@ const addAlplakesParticles = async (
   bucket
 ) => {
   const overwrite = { parameter: "velocity", type: "alplakes_hydrodynamic" };
+  loading("Downloading lake geometry");
   await downloadAlplakesHydrodynamicGeometry(
     layer,
     period,
     dataStore,
     overwrite
   );
+  loading("Downloading lake velocity field");
   await downloadAlplakesHydrodynamicParameter(
     layer,
     period,
