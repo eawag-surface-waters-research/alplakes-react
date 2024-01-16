@@ -275,7 +275,6 @@ class Media extends Component {
       toggleFullscreen,
       layers,
       openSiderbar,
-      clickblock,
       frozen,
       closeFrozen,
     } = this.props;
