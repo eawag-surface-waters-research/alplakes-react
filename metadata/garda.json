@@ -214,19 +214,19 @@
       "id": 6,
       "type": "sencast_tiff",
       "active": false,
-      "description": "Secchi depth with bias removed from the QAA-RGB (Pitarch and Vanhellemont, 2021) from Sentinel 2 data using the @1@ python package and @2@.",
+       "description": "Secchi depth processed from Sentinel 2 data using the @1@ python package. See @2@ by HYGEOS.",
       "links": {
         "1": [
           "SenCast",
           "https://github.com/eawag-surface-waters-research/sencast"
         ],
-        "2": ["Acolite", "https://github.com/acolite/acolite"]
+        "2": ["POLYMER", "https://www.hygeos.com/polymer"]
       },
       "properties": {
         "model": "Sentinel2",
         "lake": "garda",
         "parameter": "secchi",
-        "metadata": "https://eawagrs.s3.eu-central-1.amazonaws.com/metadata/sentinel2/garda_p3qaa_zSD.json",
+        "metadata": "https://eawagrs.s3.eu-central-1.amazonaws.com/metadata/sentinel2/garda_Z490.json",
         "unit": "m",
         "display": "tiff",
         "depth": false,
@@ -243,19 +243,19 @@
       "id": 7,
       "type": "sencast_tiff",
       "active": false,
-      "description": "Turbidity (FNU) using the algorithm of Nechad et al. (2009) recalibrated by Bouchra Nechad in September 2016 from Sentinel 2 data using the @1@ python package and @2@.",
+      "description": "Surface total suspended matter processed from Sentinel 2 data using the @1@ python package. See @2@ by HYGEOS.",
       "links": {
         "1": [
           "SenCast",
           "https://github.com/eawag-surface-waters-research/sencast"
         ],
-        "2": ["Acolite", "https://github.com/acolite/acolite"]
+        "2": ["POLYMER", "https://www.hygeos.com/polymer"]
       },
       "properties": {
         "model": "Sentinel2",
         "lake": "garda",
         "parameter": "turbidity",
-        "metadata": "https://eawagrs.s3.eu-central-1.amazonaws.com/metadata/sentinel2/garda_TUR_Nechad2016_665.json",
+        "metadata": "https://eawagrs.s3.eu-central-1.amazonaws.com/metadata/sentinel2/garda_tsm_dogliotti665.json",
         "unit": "g m-3",
         "display": "tiff",
         "depth": false,
@@ -280,7 +280,7 @@
         "model": "Sentinel2",
         "lake": "garda",
         "parameter": "realcolor",
-        "metadata": "https://eawagrs.s3.eu-central-1.amazonaws.com/metadata/sentinel2/garda_p3qaa_zSD.json",
+        "metadata": "https://eawagrs.s3.eu-central-1.amazonaws.com/metadata/sentinel2/garda_Z490.json",
         "wms": "https://services.sentinel-hub.com/ogc/wms/a595b5c3-8963-4076-98ad-5cbe7e9d7999",
         "unit": "",
         "display": "wms",
