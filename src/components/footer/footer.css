@@ -7,6 +7,16 @@
     height: var(--footer-height);
 }
 
+.footer.small {
+    width: var(--list-width);
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    padding: 8px var(--padding) 0 var(--padding);
+    background-color: var(--background-color);
+    border-top: 1px solid var(--box-color);
+}
+
 .footer .summary {
     width: var(--list-width);
     display: inline-block;
@@ -30,13 +40,28 @@
 }
 
 .footer .switch {
-    position: absolute;
-    right: var(--padding);
-    top: 33px;
+    float: right;
+}
+
+.footer a {
+    text-decoration: none;
+}
+
+.footer .link {
+    display: inline-block;
+    padding: 8px;
+    margin-left: 100px;
+    cursor: pointer;
+    color: var(--background-font-color);
+}
+
+.footer .copyright {
+    padding: 8px 0;
+    display: inline-block;
 }
 
 .footer .switch img {
-    height: 20px;
+    height: 18px;
     margin-bottom: -4px;
 }
 

@@ -134,10 +134,10 @@
     "IT": "per"
   },
   "offline": {
-    "EN": "Forecast offline",
-    "DE": "Vorhersage offline",
-    "FR": "Prévisions hors ligne",
-    "IT": "Previsioni offline"
+    "EN": "Temperature forecast offline. Other datasets are available.",
+    "DE": "Temperaturvorhersage offline. Weitere Datensätze sind verfügbar.",
+    "FR": "Prévisions de température hors ligne. D'autres ensembles de données sont disponibles.",
+    "IT": "Previsioni della temperatura offline. Sono disponibili altri set di dati."
   },
   "more": {
     "EN": "More",

@@ -20,10 +20,11 @@ class NavBar extends Component {
   };
   render() {
     var { menu } = this.state;
-    var { language, languages, setLanguage, dark, toggleDark } = this.props;
+    var { language, languages, setLanguage, dark, toggleDark, small } =
+      this.props;
     return (
       <React.Fragment>
-        <div className="navbar">
+        <div className={small ? "navbar small" : "navbar"}>
           <NavLink to="/">
             <img
               src={dark ? darkLogo : lightLogo}
@@ -33,9 +34,6 @@ class NavBar extends Component {
           </NavLink>
 
           <div className="desktop-nav">
-            <NavLink className="nav-item" to="/">
-              <div className="nav-text">{Translate.lakes[language]}</div>
-            </NavLink>
             <NavLink className="nav-item" to="/api">
               <div className="nav-text">API</div>
             </NavLink>
@@ -83,8 +81,8 @@ class NavBar extends Component {
               </div>
               <div className="nav-row">
                 <Toggle
-                  left={<img src={light_icon} alt="light"/>}
-                  right={<img src={dark_icon} alt="dark"/>}
+                  left={<img src={light_icon} alt="light" />}
+                  right={<img src={dark_icon} alt="dark" />}
                   onChange={toggleDark}
                   checked={dark}
                 />

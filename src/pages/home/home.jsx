@@ -27,6 +27,18 @@ import "./home.css";
 import HomeMap from "../../components/leaflet/homemap";
 import Footer from "../../components/footer/footer";
 
+class PlaceHolder extends Component {
+  render() {
+    return (
+      <React.Fragment>
+        {[...Array(12).keys()].map((a) => (
+          <div className="list-item-placeholder" key={a}></div>
+        ))}
+      </React.Fragment>
+    );
+  }
+}
+
 class SummaryTable extends Component {
   render() {
     var { forecast, language } = this.props;
@@ -240,7 +252,7 @@ class Home extends Component {
     var results = list.filter((l) => l.display).length;
     return (
       <React.Fragment>
-        <NavBar {...this.props} />
+        <NavBar {...this.props} small={true} />
         <div className="content">
           <div className="home-list">
             <div className="search">
@@ -258,7 +270,9 @@ class Home extends Component {
               <img src={icon} alt="Alplakes logo" />
             </div>
             <div className="product-list">
-              {list.length !== 0 && results === 0 ? (
+              {list.length === 0 ? (
+                <PlaceHolder />
+              ) : results === 0 ? (
                 <div className="empty">{Translations.results[language]}</div>
               ) : (
                 sortedList.map((lake) => (
@@ -267,6 +281,7 @@ class Home extends Component {
               )}
             </div>
           </div>
+          <div className="shadow" />
           <div className="home-map">
             <HomeMap
               list={list}
@@ -276,7 +291,7 @@ class Home extends Component {
             />
           </div>
         </div>
-        <Footer {...this.props} />
+        <Footer {...this.props} small={true} />
       </React.Fragment>
     );
   }

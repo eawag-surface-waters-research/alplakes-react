@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import L from "leaflet";
 import { dayName, dateName, formatDateYYYYMMDD } from "./functions";
 import Translations from "../../translations.json";
+import eawag_logo from "../../img/eawag_logo.png";
+import esa_logo from "../../img/esa_logo.png";
+import trento_logo from "../../img/trento_logo.png";
 import "./css/leaflet.css";
 
 class HomeMap extends Component {
@@ -246,7 +249,7 @@ class HomeMap extends Component {
     ).addTo(this.map);
     L.control
       .zoom({
-        position: "bottomright",
+        position: "topleft",
       })
       .addTo(this.map);
     this.polygons = L.featureGroup().addTo(this.map);
@@ -276,6 +279,11 @@ class HomeMap extends Component {
             {Translations.forecast[language]} {Translations.for[language]}{" "}
             {dayName(day, language, Translations, true)},{" "}
             {dateName(day, language, Translations)}
+          </div>
+          <div className="logos">
+          <img src={eawag_logo} alt="Eawag" />
+            <img src={esa_logo} alt="Esa" />
+            <img src={trento_logo} alt="Trento" />
           </div>
           <div className="day-selector">
             <div className="day-outer">

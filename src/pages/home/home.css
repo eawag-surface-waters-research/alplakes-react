@@ -1,29 +1,34 @@
 .main .content .home-list {
-  position: relative;
-  margin: var(--padding);
+  position: fixed;
   width: var(--list-width);
   max-width: 100%;
-  background-color: var(--box-color);
-  padding-bottom: calc(var(--padding)/2);
-  box-shadow: var(--box-shadow);
-  z-index: 999;
+  z-index: 99999;
+  top: var(--header-height);
+  background-color: var(--background-color);
 }
 
 .main .content .home-list .search {
   position: relative;
   width: 100%;
-  background-color: var(--box-inner-color);
+  padding: calc(var(--padding) / 2) var(--padding) calc(var(--padding) / 2) var(--padding);
+  box-sizing: border-box;
+}
+
+.main .content .home-list .search .results {
+  padding: calc(var(--padding)/4);
+  font-size: 20px;
 }
 
 .main .content .search input {
-  width: calc(100% - var(--padding));
-  font-size: 22px;
-  padding: 6px 8px 6px 50px;
-  background-color: var(--background-color);
+  width: 100%;
+  font-size: 18px;
+  padding: 12px 8px 12px 60px;
+  background-color: var(--box-color);
   color: var(--box-font-color);
   border: none;
-  margin: 15px calc(var(--padding) / 2);
-  border-radius: 8px;
+  border-radius: 30px;
+  box-sizing: border-box;
+  box-shadow: var(--input-shadow);
 }
 
 .main .content .search input::placeholder {
@@ -37,21 +42,22 @@
 
 .main .content .search img {
   position: absolute;
-  left: 26px;
-  height: 28px;
-  top: 20px;
+  left: calc(var(--padding) + 7px);
+  height: 31px;
+  top: calc(var(--padding) / 2 + 7px);
 }
 
 .main .content .home-list .product-list {
-  height: calc(100vh - var(--header-height) - var(--search-height) - var(--footer-height) - var(--padding)*3);
+  height: calc(100vh - var(--header-height) - var(--search-height) - var(--footer-height));
   min-height: 350px;
   box-sizing: border-box;
   overflow-y: scroll;
-  margin-top: calc(var(--padding)/2);
+  padding: 12px calc(var(--padding) - 12px) 12px var(--padding);
+  margin-right: 6px;
 }
 
 .main .content .home-list .product-list::-webkit-scrollbar {
-  width: 12px;
+  width: 6px;
 }
 
 .main .content .home-list .product-list::-webkit-scrollbar-track {
@@ -73,14 +79,41 @@
 
 .main .content .home-list .product-list .list-item {
   box-sizing: border-box;
-  padding: calc(var(--padding)/4) calc(var(--padding)/2);
+  padding: calc(var(--padding)/2);
   position: relative;
   width: 100%;
+  box-shadow: var(--box-shadow);
+  margin-bottom: calc(var(--padding) / 2);
+  border-radius: 20px;
+  border: 1px solid transparent;
+}
+
+.main.dark .content .home-list .product-list .list-item {
+  background-color: var(--box-color);
+}
+
+.main .content .home-list .product-list .list-item-placeholder {
+  box-sizing: border-box;
+  padding: calc(var(--padding)/2);
+  position: relative;
+  width: 100%;
+  height: 155px;
+  margin-bottom: calc(var(--padding) / 2);
+  border-radius: 20px;
+  border: 1px solid var(--box-color);
+}
+
+.main.dark .content .home-list .product-list .list-item-placeholder {
+  background-color: var(--box-color);
 }
 
 .main .content .home-list .product-list .list-item:hover {
-  background-color: var(--background-color);
-  box-shadow: var(--box-shadow);
+  box-shadow: none;
+  border-color: var(--box-color);
+}
+
+.main.dark .content .home-list .product-list .list-item {
+  border-color: var(--box-inner-color);
 }
 
 .main .content .home-list .product-list .list-item.hidden {
@@ -116,7 +149,7 @@
 
 .main.dark .content .home-list .product-list .list-item .properties .left .label .icon img {
   -webkit-filter: invert(100%);
-  filter: invert(100%);
+  filter: invert(100%)
 }
 
 .main .content .home-list .product-list .list-item .properties .left .label .text {
@@ -132,7 +165,7 @@
 
 .main .content .home-list .product-list .list-item .properties .right {
   position: absolute;
-  top: 4px;
+  top: 14px;
   right: calc(var(--padding)/2);
   font-size: 23px;
   text-align: right;
@@ -163,9 +196,12 @@
   position: absolute;
   left: 50%;
   transform: translate(-50%, 0);
-  background-color: var(--box-color);
+  background-color: var(--background-color);
   top: 12px;
   z-index: 9;
+  font-size: 14px;
+  text-align: center;
+  opacity: 0.9;
 }
 
 
@@ -222,31 +258,53 @@
   color: lightgray;
 }
 
-.main .content .home-map {
-  position: absolute;
-  top: var(--header-height);
-  right: 0;
-  width: calc(100% - var(--list-width) - (var(--padding) * 2));
-  height: calc(100vh - var(--header-height) - var(--footer-height) - var(--padding) * 2);
-  margin: var(--padding);
-  box-sizing: border-box;
-  min-height: calc(350px + var(--search-height) + var(--padding));
-  background-color: var(--box-inner-color);
+.main .content .shadow {
+  position: fixed;
+  left: var(--list-width);
+  top: 0;
+  width: 0;
+  height: 100%;
+  z-index: 9999;
   box-shadow: var(--box-shadow);
+}
+
+.main .content .home-map {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: calc(100% - var(--list-width));
+  height: 100%;
+  box-sizing: border-box;
+  background-color: var(--box-inner-color);
 }
 
 .main .content .home-map #map .title {
   position: absolute;
   top: 0;
-  left: 0;
+  right: 0;
   z-index: 999;
   font-size: 15px;
   padding: 12px;
-  width: 100%;
   text-align: right;
   box-sizing: border-box;
   text-shadow: 0px 0px 12px var(--box-color);
   font-weight: bold;
+}
+
+.main .content .home-map #map .logos {
+  position: absolute;
+  left: 0;
+  bottom: 5px;
+  z-index: 999;
+}
+
+.main .content .home-map #map .logos img {
+  height: 30px;
+  padding: 0 20px;
+}
+
+.main.dark .content .home-map #map .logos img {
+  filter: invert(100%);
 }
 
 .main .content .home-map #map .temperature-label {
@@ -275,7 +333,7 @@
 .main .content .home-map #map .day-selector {
   z-index: 999;
   position: absolute;
-  bottom: var(--padding);
+  bottom: calc(var(--padding) * 2);
   text-align: center;
   left: 50%;
   transform: translate(-50%, 0);
@@ -318,7 +376,6 @@
   .main .content .home-list {
     position: absolute;
     top: calc(35vh + var(--header-height));
-    width: 100%;
     margin: 0;
   }
 
@@ -336,6 +393,10 @@
   }
 
   .main .content .home-map #map .title {
+    display: none;
+  }
+
+  .main .content .shadow {
     display: none;
   }
 
