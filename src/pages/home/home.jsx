@@ -106,6 +106,9 @@ class ListItem extends Component {
                   <img src={elevation_icon} alt="elevation" />
                 </div>
                 <div className="text">{lake.elevation} m.a.s.l.</div>
+                <div className="header">
+                  {Translations.surfacetemperature[language]}
+                </div>
               </div>
             </div>
             <div className="right">
@@ -255,6 +258,7 @@ class Home extends Component {
         <NavBar {...this.props} small={true} />
         <div className="content">
           <div className="home-list">
+            <div className="intro">{Translations.summary[language]}</div>
             <div className="search">
               <input
                 type="search"

@@ -23,6 +23,12 @@
     "FR": "Ajouter des calques",
     "IT": "Aggiungi strati"
   },
+  "surfacetemperature": {
+    "EN": "Surface temperature",
+    "DE": "Oberflächentemperatur",
+    "FR": "Température superficielle",
+    "IT": "Temperatura superficiale"
+  },
   "summary": {
     "EN": "Alplakes provides monitoring and forecasting for lakes across the European alpine region.",
     "DE": "Alplakes bietet Überwachung und Vorhersage von Seen im gesamten europäischen Alpenraum.",
@@ -40,32 +46,6 @@
     "DE": "Mehr lesen",
     "FR": "En savoir plus",
     "IT": "Per saperne di più"
-  },
-  "descriptions": {
-    "EN": [
-      "Situated ",
-      " above sea level with a surface area of ",
-      ", an average depth of ",
-      ", and a maximum depth of "
-    ],
-    "DE": [
-      "",
-      " über dem Meeresspiegel gelegen, mit einer Fläche von ",
-      ", einer durchschnittlichen Tiefe von ",
-      " und einer maximalen Tiefe von "
-    ],
-    "FR": [
-      "Situé à ",
-      " d'altitude avec une superficie de ",
-      ", une profondeur moyenne de ",
-      " et une profondeur maximale de "
-    ],
-    "IT": [
-      "Situato a ",
-      " sul livello del mare con una superficie di ",
-      ", una profondità media di ",
-      " e una profondità massima di "
-    ]
   },
   "today": {
     "EN": "Today",

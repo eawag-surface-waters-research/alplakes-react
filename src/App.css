@@ -24,6 +24,8 @@
   --list-width: 600px;
   --search-height: 85px;
   --input-shadow: inset 0 1px 2px rgba(0, 0, 0, .39), 0 0 1px #FFF, 0 1px 0 #FFF;
+  --info-height: 36px;
+  --map-border-color: rgb(204, 204, 204);
 }
 
 .dark {

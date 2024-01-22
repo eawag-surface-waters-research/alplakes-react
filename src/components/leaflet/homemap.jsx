@@ -1,10 +1,13 @@
 import React, { Component } from "react";
 import L from "leaflet";
-import { dayName, dateName, formatDateYYYYMMDD } from "./functions";
+import { dayName, formatDateYYYYMMDD } from "./functions";
 import Translations from "../../translations.json";
 import eawag_logo from "../../img/eawag_logo.png";
 import esa_logo from "../../img/esa_logo.png";
 import trento_logo from "../../img/trento_logo.png";
+import temperature_icon from "../../img/temperature_simple.png";
+import ice_icon from "../../img/ice_simple.png";
+import oxygen_icon from "../../img/oxygen_simple.png";
 import "./css/leaflet.css";
 
 class HomeMap extends Component {
@@ -249,7 +252,7 @@ class HomeMap extends Component {
     ).addTo(this.map);
     L.control
       .zoom({
-        position: "topleft",
+        position: "topright",
       })
       .addTo(this.map);
     this.polygons = L.featureGroup().addTo(this.map);
@@ -275,15 +278,30 @@ class HomeMap extends Component {
     return (
       <React.Fragment>
         <div id="map">
-          <div className="title">
-            {Translations.forecast[language]} {Translations.for[language]}{" "}
-            {dayName(day, language, Translations, true)},{" "}
-            {dateName(day, language, Translations)}
-          </div>
           <div className="logos">
-          <img src={eawag_logo} alt="Eawag" />
+            <img src={eawag_logo} alt="Eawag" />
             <img src={esa_logo} alt="Esa" />
             <img src={trento_logo} alt="Trento" />
+          </div>
+          <div className="parameter-selector">
+            <div className="parameter selected top">
+              <img src={temperature_icon} alt="Surface temperature" />
+              <div className="text">
+                {Translations.surfacetemperature[language]}
+              </div>
+            </div>
+            <div className="parameter">
+              <img src={ice_icon} alt="Ice Thickness" />
+              <div className="text">Ice Thickness</div>
+            </div>
+            <div className="parameter">
+              <img src={oxygen_icon} alt="Oxygen Content" />
+              <div className="text">Oxygen Content</div>
+            </div>
+            <div className="parameter bottom">
+              <div className="icon">+</div>
+              <div className="text">More layers</div>
+            </div>
           </div>
           <div className="day-selector">
             <div className="day-outer">
