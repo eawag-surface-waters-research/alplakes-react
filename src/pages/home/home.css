@@ -9,6 +9,7 @@
 
 .main .content .home-list .intro {
   padding: 0 var(--padding);
+  height: 36px;
 }
 
 .main .content .home-list .search {
@@ -16,7 +17,6 @@
   width: 100%;
   padding: calc(var(--padding) / 2) var(--padding) calc(var(--padding) / 2) var(--padding);
   box-sizing: border-box;
-  margin-top: 12px;
 }
 
 .main .content .home-list .search .results {
@@ -53,7 +53,7 @@
 }
 
 .main .content .home-list .product-list {
-  height: calc(100vh - var(--header-height) - var(--search-height) - var(--footer-height) - var(--info-height) - 12px);
+  height: calc(100vh - var(--header-height) - var(--search-height) - var(--footer-height) - var(--info-height));
   min-height: 350px;
   box-sizing: border-box;
   overflow-y: scroll;
