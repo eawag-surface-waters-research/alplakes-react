@@ -16,6 +16,7 @@
   width: 100%;
   padding: calc(var(--padding) / 2) var(--padding) calc(var(--padding) / 2) var(--padding);
   box-sizing: border-box;
+  margin-top: 12px;
 }
 
 .main .content .home-list .search .results {
@@ -26,13 +27,13 @@
 .main .content .search input {
   width: 100%;
   font-size: 18px;
-  padding: 12px 8px 12px 60px;
-  background-color: var(--box-color);
+  padding: 11px 8px 11px 60px;
+  background-color: var(--background-color);
   color: var(--box-font-color);
-  border: none;
   border-radius: 30px;
   box-sizing: border-box;
   box-shadow: var(--input-shadow);
+  border: 1px solid var(--box-color);
 }
 
 .main .content .search input::placeholder {
@@ -52,7 +53,7 @@
 }
 
 .main .content .home-list .product-list {
-  height: calc(100vh - var(--header-height) - var(--search-height) - var(--footer-height) - var(--info-height));
+  height: calc(100vh - var(--header-height) - var(--search-height) - var(--footer-height) - var(--info-height) - 12px);
   min-height: 350px;
   box-sizing: border-box;
   overflow-y: scroll;

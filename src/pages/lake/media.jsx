@@ -279,7 +279,6 @@ class Media extends Component {
       closeFrozen,
     } = this.props;
     var { settings, legend, graphData, graphs } = this.state;
-    var descriptions = Translate.descriptions[language];
     var flags = { swiss: swiss, italian: italian, french: french };
     return (
       <div className="map-component">
@@ -392,16 +391,6 @@ class Media extends Component {
             </div>
             <div className="location">
               {metadata.latitude}, {metadata.longitude}
-            </div>
-            <div className="parameters">
-              {descriptions[0]}{" "}
-              <div className="stats">{metadata.elevation} m</div>
-              {descriptions[1]}{" "}
-              <div className="stats">{metadata.area} km&#178;</div>
-              {descriptions[2]}{" "}
-              <div className="stats">{metadata.ave_depth} m</div>
-              {descriptions[3]}{" "}
-              <div className="stats">{metadata.max_depth} m.</div>
             </div>
           </div>
         </div>

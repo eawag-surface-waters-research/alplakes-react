@@ -5,7 +5,6 @@
   top: 0;
   background-color: var(--background-color);
   z-index: 999999;
-  height: 66px;
 }
 
 .navbar.small {
@@ -16,18 +15,20 @@
   position: absolute;
   left: 0;
   top: 0;
-  margin: 18px 0 0 var(--padding);
+  margin: var(--padding) 0 0 var(--padding);
   height: 30px;
 }
 
 .navbar .desktop-nav {
   position: relative;
-  width: calc(100% - 210px);
   text-align: right;
-  padding: 14px var(--padding);
+  padding: var(--padding) var(--padding) calc(var(--padding)/2) 0;
   box-sizing: border-box;
   z-index: 4;
-  margin-left: 210px;
+  width: fit-content;
+  right: 0;
+  top: 0;
+  float: right;
 }
 
 .navbar .desktop-nav .nav-item {
@@ -39,8 +40,9 @@
 .navbar .desktop-nav .nav-item .nav-text {
   color: var(--background-font-color);
   font-size: 18px;
-  padding: 8px 16px;
+  padding: 4px 16px;
   border-radius: 20px;
+  height: 22px;
   -webkit-transition: all 0.3s ease-out;
   -moz-transition: all 0.3s ease-out;
   -ms-transition: all 0.3s ease-out;
@@ -58,10 +60,11 @@
   color: var(--box-font-color);
   cursor: pointer;
   border-radius: 20px;
-  padding: 9px 9px;
+  padding: 4px 9px;
   text-align: center;
   display: inline-block;
   font-size: 16px;
+  height: 30px;
   -webkit-transition: all 0.3s ease-out;
   -moz-transition: all 0.3s ease-out;
   -ms-transition: all 0.3s ease-out;
