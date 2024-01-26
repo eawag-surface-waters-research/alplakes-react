@@ -115,7 +115,6 @@ class ListItem extends Component {
               {lake.flags.map((f) => (
                 <img src={flags[f]} alt={f} key={f} />
               ))}
-              <div className="arrow">&#x25BA;</div>
             </div>
           </div>
           <div className="summary">
@@ -273,16 +272,18 @@ class Home extends Component {
 
               <img src={icon} alt="Alplakes logo" />
             </div>
-            <div className="product-list">
-              {list.length === 0 ? (
-                <PlaceHolder />
-              ) : results === 0 ? (
-                <div className="empty">{Translations.results[language]}</div>
-              ) : (
-                sortedList.map((lake) => (
-                  <ListItem lake={lake} language={language} key={lake.key} />
-                ))
-              )}
+            <div className="product-wrapper">
+              <div className="product-list">
+                {list.length === 0 ? (
+                  <PlaceHolder />
+                ) : results === 0 ? (
+                  <div className="empty">{Translations.results[language]}</div>
+                ) : (
+                  sortedList.map((lake) => (
+                    <ListItem lake={lake} language={language} key={lake.key} />
+                  ))
+                )}
+              </div>
             </div>
           </div>
           <div className="shadow" />

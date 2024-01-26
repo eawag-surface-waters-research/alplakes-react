@@ -5,6 +5,7 @@
     background-color: var(--box-inner-color);
     padding: 33px var(--padding) 0 var(--padding);
     height: var(--footer-height);
+    z-index: 99999;
 }
 
 .footer.small {
@@ -14,7 +15,7 @@
     left: 0;
     padding: 8px var(--padding) 0 var(--padding);
     background-color: var(--background-color);
-    border-top: 1px solid var(--box-color);
+    border-top: 1px solid var(--box-font-color);
 }
 
 .footer .summary {
