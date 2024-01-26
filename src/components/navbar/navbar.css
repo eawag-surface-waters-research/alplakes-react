@@ -22,7 +22,7 @@
 .navbar .desktop-nav {
   position: relative;
   text-align: right;
-  padding: var(--padding) var(--padding) calc(var(--padding)/2) 0;
+  padding: 6px calc(var(--padding)/2) calc(var(--padding)/2) 0;
   box-sizing: border-box;
   z-index: 4;
   width: fit-content;
