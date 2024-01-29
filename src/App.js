@@ -19,7 +19,6 @@ class App extends Component {
         ? false
         : JSON.parse(localStorage.getItem("dark")),
   };
-  delectLighting = () => {};
   setLanguage = (event) => {
     localStorage.setItem("language", JSON.stringify(event.target.value));
     this.setState({ language: event.target.value });
@@ -44,16 +43,13 @@ class App extends Component {
         this.setState({ dark: true });
       }
     }
-    return "light";
   }
   render() {
     var { dark } = this.state;
     return (
       <React.Fragment>
         <div className={dark ? "main dark" : "main"}>
-          <div
-            className={dark ? "background-color dark" : "background-color"}
-          />
+          <div className="background" />
           <BrowserRouter>
             <Routes>
               <Route

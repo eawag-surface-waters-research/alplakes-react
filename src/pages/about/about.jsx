@@ -1,13 +1,11 @@
 import React, { Component } from "react";
 import NavBar from "../../components/navbar/navbar";
-import eawag_logo from "../../img/eawag_logo.png";
-import esa_logo from "../../img/esa_logo.png";
-import trento_logo from "../../img/trento_logo.png";
+import Footer from "../../components/footer/footer";
 import "./about.css";
 
 class About extends Component {
   render() {
-    document.title = "About | Alplakes"
+    document.title = "About | Alplakes";
     return (
       <div className="main">
         <NavBar {...this.props} />
@@ -36,9 +34,9 @@ class About extends Component {
               set-ups and calibrations can be found in the following{" "}
               <a href="https://github.com/eawag-surface-waters-research/alplakes-simulations">
                 repository
-              </a>.{" "}
-              The models are run using an Apache Airflow deployment, the source
-              code can be accessed{" "}
+              </a>
+              . The models are run using an Apache Airflow deployment, the
+              source code can be accessed{" "}
               <a href="https://github.com/eawag-surface-waters-research/airflow">
                 here
               </a>
@@ -268,12 +266,8 @@ class About extends Component {
             We encourage the use of our products. Please do not hesitate to
             contact us in case a collaboration will benefit your research.
           </p>
-          <div className="images">
-            <img src={eawag_logo} alt="Eawag" />
-            <img src={esa_logo} alt="ESA" />
-            <img src={trento_logo} alt="Trento" />
-          </div>
         </div>
+        <Footer {...this.props} />
       </div>
     );
   }
