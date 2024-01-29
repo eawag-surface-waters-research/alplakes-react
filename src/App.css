@@ -12,33 +12,35 @@
 /* Variables */
 
 :root {
-  --background-color: rgb(240, 240, 240);
+  --background-color: rgba(246, 248, 250, 255);
   --background-font-color: rgb(15, 15, 15);
   --box-color: rgb(255 255 255);
   --box-font-color: rgb(0, 0, 0);
   --box-inner-color: rgb(227, 227, 227);
+  --border-color: rgba(238, 239, 243, 255);
   --box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
   --footer-height: 50px;
-  --padding: 40px;
-  --list-width: 600px;
-  --search-height: 85px;
+  --padding: 30px;
+  --list-width: 550px;
+  --search-height: 142px;
   --input-shadow: inset 0 1px 2px rgba(0, 0, 0, .39), 0 0 1px #FFF, 0 1px 0 #FFF;
   --info-height: 36px;
   --map-border-color: rgb(204, 204, 204);
 }
 
 :root {
-  --header-height: calc(var(--padding) * 1.5 + 30px);
+  --header-height: 42px;
 }
 
 .dark {
-  --background-color: rgb(68 68 68);
-  --background-font-color: rgb(229, 229, 229);
-  --box-color: rgb(50, 50, 50);
+  --background-color: rgb(27 27 27);
+  --background-font-color: rgb(217 217 217);
+  --box-color: rgb(19 19 19);
   --box-font-color: rgb(229, 229, 229);
   --box-inner-color: rgb(40, 40, 40);
   --box-shadow: 0 3px 8px rgba(0, 0, 0, 0.24);
   --input-shadow: inset 0 1px 2px rgba(0, 0, 0, .39), 0 0 1px #5c5c5c, 0 1px 0 #5c5c5c;
+  --border-color: rgb(42 42 42);
 }
 
 @media screen and (max-width: 1200px) {

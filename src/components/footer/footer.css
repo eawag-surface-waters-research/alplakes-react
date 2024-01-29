@@ -9,13 +9,15 @@
 }
 
 .footer.small {
-    width: var(--list-width);
+    width: calc(100% - var(--list-width));
     position: fixed;
     bottom: 0;
-    left: 0;
+    right: 0;
     padding: 8px var(--padding) 0 var(--padding);
-    background-color: var(--background-color);
-    border-top: 1px solid var(--box-font-color);
+    background-color: var(--box-color);
+    border-top: 1px solid var(--border-color);
+    border-left: 1px solid var(--border-color);
+    border-radius: 22px 0 0 0;
 }
 
 .footer .summary {
@@ -51,9 +53,12 @@
 .footer .link {
     display: inline-block;
     padding: 8px;
-    margin-left: 100px;
     cursor: pointer;
     color: var(--background-font-color);
+    position: absolute;
+    left: 0;
+    right: 0;
+    text-align: center;
 }
 
 .footer .copyright {

@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 import Translate from "../../translations.json";
-import lightLogo from "../../img/text-logo-black.png";
-import darkLogo from "../../img/text-logo-white.png";
+import logo from "../../img/icon.png";
 import eawag_logo from "../../img/eawag_logo.png";
 import esa_logo from "../../img/esa_logo.png";
 import trento_logo from "../../img/trento_logo.png";
@@ -20,17 +19,15 @@ class NavBar extends Component {
   };
   render() {
     var { menu } = this.state;
-    var { language, languages, setLanguage, dark, toggleDark, small } =
-      this.props;
+    var { language, languages, setLanguage, dark, toggleDark } = this.props;
     return (
       <React.Fragment>
-        <div className={small ? "navbar small" : "navbar"}>
+        <div className={"navbar"}>
           <NavLink to="/">
-            <img
-              src={dark ? darkLogo : lightLogo}
-              className="icon"
-              alt="Alplakes logo"
-            />
+            <div className="home-nav">
+              <img src={logo} className="icon" alt="Alplakes logo" />
+              <div className="name">ALPLAKES</div>
+            </div>
           </NavLink>
 
           <div className="desktop-nav">

@@ -3,28 +3,39 @@
   position: fixed;
   left: 0;
   top: 0;
-  background-color: var(--background-color);
+  background-color: var(--box-color);
   z-index: 999999;
+  border-bottom: 1px solid var(--border-color);
 }
 
-.navbar.small {
-  width: var(--list-width);
-}
-
-.navbar img.icon {
+.navbar .home-nav {
   position: absolute;
   left: 0;
   top: 0;
-  margin: var(--padding) 0 0 var(--padding);
+  margin: 7px 0 0 var(--padding);
   height: 30px;
+}
+
+.navbar .home-nav img {
+  height: 26px;
+}
+
+.navbar .home-nav .name {
+  display: inline-block;
+  color: var(--background-font-color);
+  font-size: 20px;
+  margin-left: 12px;
+  padding: 3px 0;
+  vertical-align: bottom;
 }
 
 .navbar .desktop-nav {
   position: relative;
   text-align: right;
-  padding: 6px calc(var(--padding)/2) calc(var(--padding)/2) 0;
+  padding: 6px var(--padding) 6px 0;
   box-sizing: border-box;
   z-index: 4;
+  width: -moz-fit-content;
   width: fit-content;
   right: 0;
   top: 0;
@@ -39,10 +50,9 @@
 
 .navbar .desktop-nav .nav-item .nav-text {
   color: var(--background-font-color);
-  font-size: 18px;
+  font-size: 16px;
   padding: 4px 16px;
   border-radius: 20px;
-  height: 22px;
   -webkit-transition: all 0.3s ease-out;
   -moz-transition: all 0.3s ease-out;
   -ms-transition: all 0.3s ease-out;

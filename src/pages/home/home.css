@@ -15,24 +15,30 @@
 .main .content .home-list .search {
   position: relative;
   width: 100%;
-  padding: calc(var(--padding) / 4) var(--padding) calc(var(--padding) / 2) var(--padding);
+  padding: calc(var(--padding)) var(--padding) calc(var(--padding) / 2) var(--padding);
   box-sizing: border-box;
 }
 
-.main .content .home-list .search .results {
-  padding: calc(var(--padding)/4);
-  font-size: 20px;
+.main .content .home-list .search .explore {
+  font-size: 32px;
+  margin-left: calc(var(--padding) / 2);
+}
+
+.main .content .home-list .search .number {
+  font-size: 14px;
+  margin-bottom: calc(var(--padding) / 2);
+  margin-left: calc(var(--padding) / 2);
 }
 
 .main .content .search input {
   width: 100%;
   font-size: 18px;
-  padding: 16px 8px 16px 60px;
+  padding: 12px 8px 12px 47px;
   background-color: var(--box-color);
   color: var(--box-font-color);
   border-radius: 30px;
   box-sizing: border-box;
-  border: none;
+  border: 1px solid var(--border-color);
 }
 
 .main .content .search input::placeholder {
@@ -46,9 +52,14 @@
 
 .main .content .search img {
   position: absolute;
-  left: calc(var(--padding) + 14px);
-  height: 31px;
-  top: calc(var(--padding) / 4 + 11px);
+  left: calc(var(--padding) * 1.5);
+  height: 22px;
+  bottom: 28px;
+}
+
+.main.dark .content .search img {
+  -webkit-filter: invert(100%);
+  filter: invert(100%)
 }
 
 .main .content .home-list .product-wrapper {
@@ -56,13 +67,15 @@
   margin: 0 var(--padding);
   padding: calc(var(--padding) /2) calc(var(--padding) /2) 0 calc(var(--padding) /2);
   border-radius: 24px 24px 0 0;
+  border: 1px solid var(--border-color);
 }
 
 .main .content .home-list .product-list {
-  height: calc(100vh - var(--header-height) - var(--search-height) - var(--footer-height) - var(--info-height) - var(--padding)/4);
+  height: calc(100vh - var(--header-height) - var(--search-height) - calc(var(--padding)/2));
   min-height: 350px;
   box-sizing: border-box;
   overflow-y: scroll;
+
 }
 
 .main .content .home-list .product-list::-webkit-scrollbar {
@@ -113,8 +126,8 @@
   background-color: var(--box-color);
 }
 
-.main .content .home-list .product-list .list-item:hover {
-  background-color: var(--box-inner-color);
+.main .content .home-list .product-list .list-item:hover .view {
+  transform: scale(1.1);
 }
 
 .main .content .home-list .product-list .list-item.hidden {
@@ -125,10 +138,20 @@
   box-sizing: border-box;
 }
 
+.main .content .home-list .product-list .list-item .properties .polygon {
+  display: inline-block;
+  width: 70px;
+  height: 70px;
+}
+
+.main .content .home-list .product-list .list-item .properties .polygon .leaflet-control-attribution {
+  display: none !important;
+}
+
 .main .content .home-list .product-list .list-item .properties .left {
   font-size: 20px;
   display: inline-block;
-  width: 100%;
+  margin-left: 16px;
 }
 
 .main .content .home-list .product-list .list-item .properties .left .label {
@@ -170,26 +193,24 @@
 
 .main .content .home-list .product-list .list-item .properties .right {
   position: absolute;
-  top: 6px;
+  top: 12px;
   right: calc(var(--padding)/2);
   font-size: 23px;
   text-align: right;
 }
 
-.main .content .home-list .product-list .list-item .properties .arrow {
-  display: inline-block;
-  margin-left: 4px;
-  margin-right: -3px;
-}
-
-.main .content .home-list .product-list .list-item .properties .right img {
-  height: 14px;
-  margin-left: 8px;
+.main .content .home-list .product-list .list-item .properties .right .view {
+  border: 2px solid #8B2635;
+  color: #8B2635;
+  border-radius: 22px;
+  padding: 2px 8px;
+  font-size: 14px;
+  transition: all .33s 0s ease;
 }
 
 .main .content .home-list .product-list .list-item .summary {
   position: relative;
-  border-bottom: 1px solid var(--background-font-color);
+  border-bottom: 1px solid var(--border-color);
 }
 
 .main .content .home-list .product-list .list-item .summary .text {
@@ -223,7 +244,7 @@
   display: table-cell;
   width: 100%;
   text-align: center;
-  border-right: 1px solid var(--box-font-color);
+  border-right: 1px solid var(--border-color);
   position: relative;
   z-index: 1;
   height: 55px;
@@ -247,10 +268,11 @@
 
 .main .content .home-list .product-list .list-item .summary .summary-table .summarygraph {
   position: absolute;
-  bottom: 8px;
+  bottom: 0px;
   left: 0;
   width: 100%;
-  height: 30px;
+  height: 38px;
+  z-index: 1;
 }
 
 .main .content .home-list .product-list .list-item .right-arrow {
@@ -272,43 +294,46 @@
   box-shadow: var(--box-shadow);
 }
 
+.main .content .logos {
+  position: fixed;
+  right: var(--padding);
+  bottom: 50px;
+  width: calc(100% - var(--list-width) - var(--padding));
+  text-align: center;
+}
+
+.main .content .logos img {
+  height: 40px;
+  margin: calc(var(--padding) / 2);
+}
+
+.main.dark .content .logos img {
+  -webkit-filter: invert(100%);
+  filter: invert(100%);
+}
+
 .main .content .home-map {
   position: fixed;
-  top: 0;
-  right: 0;
-  width: calc(100% - var(--list-width));
-  height: 100%;
+  top: calc(var(--header-height) + var(--padding) + 68px);
+  right: var(--padding);
+  width: calc(100% - var(--list-width) - var(--padding));
+  height: 68%;
   box-sizing: border-box;
-  background-color: var(--box-inner-color);
+  background-color: var(--box-color);
+  border-radius: 22px;
+  border: 1px solid var(--border-color);
+  padding: 0 calc(var(--padding) / 2) calc(var(--padding) / 2) calc(var(--padding) / 2);
 }
 
-.main .content .home-map #map .title {
-  position: absolute;
-  top: 0;
-  right: 0;
-  z-index: 999;
-  font-size: 15px;
-  padding: 12px;
-  text-align: right;
-  box-sizing: border-box;
-  text-shadow: 0px 0px 12px var(--box-color);
-  font-weight: bold;
+.main .content .home-map .title {
+  font-size: 18px;
+  margin-left: calc(var(--padding) / 2);
+  padding: 12px 0;
 }
 
-.main .content .home-map #map .logos {
-  position: absolute;
-  left: 0;
-  bottom: 5px;
-  z-index: 999;
-}
-
-.main .content .home-map #map .logos img {
-  height: 30px;
-  padding: 0 20px;
-}
-
-.main.dark .content .home-map #map .logos img {
-  filter: invert(100%);
+.main .content .home-map #map {
+  border-radius: 11px;
+  height: calc(100% - 45px);
 }
 
 .main .content .home-map #map .temperature-label {
@@ -337,7 +362,7 @@
 .main .content .home-map #map .day-selector {
   z-index: 999;
   position: absolute;
-  bottom: calc(var(--padding) * 2);
+  bottom: calc(var(--padding));
   text-align: center;
   left: 50%;
   transform: translate(-50%, 0);
@@ -374,7 +399,7 @@
   left: 12px;
   background-color: var(--background-color);
   border-radius: 8px;
-  width: 40px;
+  width: 35px;
   box-shadow: var(--box-shadow);
 }
 
@@ -398,7 +423,7 @@
 
 .main .content .home-map #map .parameter-selector .parameter img {
   height: 18px;
-  padding: 11px 11px 6px 11px;
+  padding: 8px 1px 3px 1px;
   opacity: 0.5;
 }
 
@@ -446,6 +471,38 @@
 
 .main .content .home-map #map .parameter-selector .parameter:hover .text {
   opacity: 1;
+}
+
+.main .content .promos {
+  position: fixed;
+  top: calc(var(--header-height) + var(--padding));
+  right: var(--padding);
+  height: 53px;
+  text-align: right;
+}
+
+.main .content .promo {
+  background-color: var(--box-color);
+  border: 1px solid var(--border-color);
+  margin-left: calc(var(--padding) / 2);
+  display: inline-block;
+  height: 100%;
+  border-radius: 22px;
+  box-sizing: border-box;
+  text-align: left;
+}
+
+.main .content .promo .number {
+  display: inline-block;
+  font-size: 36px;
+  padding-left: 20px;
+  opacity: 0.8;
+}
+
+.main .content .promo .text {
+  display: inline-block;
+  font-size: 14px;
+  padding: 10px 20px 10px 10px;
 }
 
 @media screen and (max-width: 800px) {

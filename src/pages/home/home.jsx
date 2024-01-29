@@ -9,10 +9,13 @@ import italian from "../../img/italian.png";
 import french from "../../img/french.png";
 import german from "../../img/german.png";
 import austrian from "../../img/austrian.png";
-import icon from "../../img/icon.png";
+import searchIcon from "../../img/search.png";
 import depth_icon from "../../img/depth.png";
 import area_icon from "../../img/area.png";
 import elevation_icon from "../../img/elevation.png";
+import eawag_logo from "../../img/eawag_logo.png";
+import esa_logo from "../../img/esa_logo.png";
+import trento_logo from "../../img/trento_logo.png";
 import {
   onMouseOver,
   onMouseOut,
@@ -26,6 +29,8 @@ import CONFIG from "../../config.json";
 import "./home.css";
 import HomeMap from "../../components/leaflet/homemap";
 import Footer from "../../components/footer/footer";
+import PolygonGraph from "../../components/leaflet/polygon";
+import NumberIncreaser from "../../components/numberincreaser/numberincreaser";
 
 class PlaceHolder extends Component {
   render() {
@@ -87,6 +92,9 @@ class ListItem extends Component {
           title={"Click for more..."}
         >
           <div className="properties">
+            <div className="polygon">
+              <PolygonGraph geometry={lake.geometry} />
+            </div>
             <div className="left">
               {lake.name[language]}
               {lake.frozen && (
@@ -112,9 +120,7 @@ class ListItem extends Component {
               </div>
             </div>
             <div className="right">
-              {lake.flags.map((f) => (
-                <img src={flags[f]} alt={f} key={f} />
-              ))}
+              <div className="view">View</div>
             </div>
           </div>
           <div className="summary">
@@ -257,20 +263,17 @@ class Home extends Component {
         <NavBar {...this.props} small={true} />
         <div className="content">
           <div className="home-list">
-            <div className="intro">{Translations.summary[language]}</div>
             <div className="search">
+              <div className="explore">Search lakes</div>
+              <div className="number">{results} lakes available</div>
               <input
                 type="search"
-                placeholder={
-                  Translations.search[language] +
-                  " " +
-                  Translations.lakes[language].toLowerCase()
-                }
+                placeholder={Translations.search[language]}
                 value={search}
                 onChange={this.setSearch}
               />
 
-              <img src={icon} alt="Alplakes logo" />
+              <img src={searchIcon} alt="Alplakes logo" />
             </div>
             <div className="product-wrapper">
               <div className="product-list">
@@ -286,14 +289,34 @@ class Home extends Component {
               </div>
             </div>
           </div>
-          <div className="shadow" />
+          <div className="logos">
+            <div className="text">A collaboration between</div>
+            <img src={eawag_logo} alt="Eawag" />
+            <img src={esa_logo} alt="Esa" />
+            <img src={trento_logo} alt="Trento" />
+          </div>
           <div className="home-map">
+            <div className="title">Temperature forecast</div>
             <HomeMap
               list={list}
               dark={dark}
               language={language}
               setBounds={this.setBounds}
             />
+          </div>
+          <div className="promos">
+            <div className="promo">
+              <div className="number"><NumberIncreaser targetValue={85} /></div>
+              <div className="text">1D <br/>simulations </div>
+            </div>
+            <div className="promo">
+              <div className="number"><NumberIncreaser targetValue={12} /></div>
+              <div className="text">3D <br/>simulations </div>
+            </div>
+            <div className="promo">
+              <div className="number"><NumberIncreaser targetValue={3621} /></div>
+              <div className="text">Satellite <br/>products </div>
+            </div>
           </div>
         </div>
         <Footer {...this.props} small={true} />

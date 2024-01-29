@@ -8,7 +8,7 @@ class SummaryGraph extends Component {
   plot = () => {
     var { graphid } = this.state;
     var { dt, value, dtMin, dtMax } = this.props;
-    var stroke = "red";
+    var stroke = "rgba(68,188,167,255)";
     var stroke_width = 2;
     try {
       d3.select(`#summarygraph_svg_${graphid}`).remove();
@@ -41,6 +41,8 @@ class SummaryGraph extends Component {
     var yMin = d3.min(value);
     var yMax = d3.max(value);
 
+    yMin = yMin - (yMax - yMin) / 2;
+
     if (dtMin) xMin = dtMin;
     if (dtMax) xMax = dtMax;
 
@@ -50,7 +52,29 @@ class SummaryGraph extends Component {
     x.domain([xMin, xMax]);
     y.domain([yMin, yMax]);
 
-    /*this.svg
+    this.svg
+      .append("linearGradient")
+      .attr("id", "area-gradient")
+      .attr("gradientUnits", "userSpaceOnUse")
+      .attr("x1", 0)
+      .attr("y1", y(yMin))
+      .attr("x2", 0)
+      .attr("y2", y(yMax))
+      .selectAll("stop")
+      .data([
+        { offset: "0%", color: "rgba(68,188,167,0)" },
+        { offset: "100%", color: "rgba(68,188,167,0.5)" }, // Transparent red
+      ])
+      .enter()
+      .append("stop")
+      .attr("offset", function (d) {
+        return d.offset;
+      })
+      .attr("stop-color", function (d) {
+        return d.color;
+      });
+
+    this.svg
       .append("path")
       .datum(data)
       .attr("class", "area")
@@ -63,13 +87,13 @@ class SummaryGraph extends Component {
           })
           .y0(this.height)
           .y1(function (d) {
-            return y(d.y);
+            return y(d.y) + 4;
           })
           .curve(d3.curveNatural)
       )
-      .attr("fill", "#ffffff33")
+      .attr("fill", "url(#area-gradient)")
       .attr("stroke", stroke)
-      .attr("stroke-width", 0);*/
+      .attr("stroke-width", 0);
 
     this.svg
       .append("path")
