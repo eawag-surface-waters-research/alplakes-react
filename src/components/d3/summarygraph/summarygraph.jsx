@@ -63,7 +63,7 @@ class SummaryGraph extends Component {
       .selectAll("stop")
       .data([
         { offset: "0%", color: "rgba(68,188,167,0)" },
-        { offset: "100%", color: "rgba(68,188,167,0.5)" }, // Transparent red
+        { offset: "100%", color: "rgba(68,188,167,0.5)" },
       ])
       .enter()
       .append("stop")

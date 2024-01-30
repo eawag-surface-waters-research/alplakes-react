@@ -7,6 +7,7 @@
       "FR": "Le Léman",
       "IT": "Lago Lemano"
     },
+    "filters": ["3D", "1D", "satellite", "live"],
     "area": 580,
     "ave_depth": 154,
     "max_depth": 310,
@@ -23,6 +24,7 @@
       "FR": "Lac de Zurich",
       "IT": "Lago di Zurigo"
     },
+    "filters": ["3D", "1D", "satellite"],
     "area": 89,
     "ave_depth": 49,
     "max_depth": 104,
@@ -39,6 +41,7 @@
       "FR": "Lac de Bienne",
       "IT": "Lago di Bienne"
     },
+    "filters": ["3D", "1D", "satellite"],
     "area": 39.3,
     "ave_depth": 28,
     "max_depth": 74,
@@ -55,6 +58,7 @@
       "FR": "Lac de Greifen",
       "IT": "Lago di Greifen"
     },
+    "filters": ["3D", "1D", "satellite", "live"],
     "area": 8.45,
     "ave_depth": 18,
     "max_depth": 32,
@@ -71,6 +75,7 @@
       "FR": "Lac de Garde",
       "IT": "Lago di Garda"
     },
+    "filters": ["3D", "1D", "satellite"],
     "area": 370,
     "ave_depth": 136,
     "max_depth": 346,
@@ -87,6 +92,7 @@
       "FR": "Lac de Lugano",
       "IT": "Lago di Lugano"
     },
+    "filters": ["3D", "1D", "satellite"],
     "area": 48.7,
     "ave_depth": 134,
     "max_depth": 288,
@@ -103,6 +109,7 @@
       "FR": "Lac de Morat",
       "IT": "Lago di Morat"
     },
+    "filters": ["3D", "1D", "satellite"],
     "area": 22.8,
     "ave_depth": 24,
     "max_depth": 45,
@@ -119,6 +126,7 @@
       "FR": "Lac de Caldonazzo",
       "IT": "Lago di Caldonazzo"
     },
+    "filters": ["3D", "1D", "satellite"],
     "area": 5.38,
     "ave_depth": 26,
     "max_depth": 49,
@@ -130,11 +138,12 @@
   {
     "key": "ageri",
     "name": {
-      "EN": "Lake Ageri",
+      "EN": "Lake Aegeri",
       "DE": "Ägerisee",
       "FR": "Lac d'Ägeri",
       "IT": "Lago di Ägeri"
     },
+    "filters": ["3D", "1D", "satellite", "live"],
     "area": 7.3,
     "ave_depth": 49,
     "max_depth": 83,
@@ -151,6 +160,7 @@
       "FR": "Lac de Joux",
       "IT": "Lago di Joux"
     },
+    "filters": ["3D", "1D", "satellite"],
     "area": 9.5,
     "ave_depth": 15,
     "max_depth": 32,
@@ -167,6 +177,7 @@
       "FR": "Lac de Hallwil",
       "IT": "Lago di Hallwil"
     },
+    "filters": ["3D", "1D", "satellite", "live"],
     "area": 10.3,
     "ave_depth": 28,
     "max_depth": 48,
@@ -183,6 +194,7 @@
       "FR": "Lac de Saint-Moritz",
       "IT": "Lago di Sankt Moritz"
     },
+    "filters": ["3D", "1D", "satellite"],
     "area": 0.78,
     "ave_depth": 25,
     "max_depth": 44,
@@ -199,6 +211,7 @@
       "FR": "Lake Baldegg",
       "IT": "Lake Baldegg"
     },
+    "filters": ["1D"],
     "area": 5.2,
     "ave_depth": 33.0,
     "max_depth": 66.0,
@@ -215,6 +228,7 @@
       "FR": "Upper Lake Constance",
       "IT": "Upper Lake Constance"
     },
+    "filters": ["1D"],
     "area": 473.0,
     "ave_depth": 101.0,
     "max_depth": 251.0,
@@ -231,6 +245,7 @@
       "FR": "Lower Lake Constance",
       "IT": "Lower Lake Constance"
     },
+    "filters": ["1D"],
     "area": 63.0,
     "ave_depth": 13.0,
     "max_depth": 46.0,
@@ -247,6 +262,7 @@
       "FR": "Lake Brienz",
       "IT": "Lake Brienz"
     },
+    "filters": ["1D"],
     "area": 29.8,
     "ave_depth": 173.0,
     "max_depth": 259.0,
@@ -263,6 +279,7 @@
       "FR": "Lake Thun",
       "IT": "Lake Thun"
     },
+    "filters": ["1D"],
     "area": 48.3,
     "ave_depth": 136.0,
     "max_depth": 217.0,
@@ -279,6 +296,7 @@
       "FR": "Lac de la Gruyère",
       "IT": "Lac de la Gruyère"
     },
+    "filters": ["1D"],
     "area": 9.6,
     "ave_depth": 20.0,
     "max_depth": 75.0,
@@ -295,6 +313,7 @@
       "FR": "Klöntalersee",
       "IT": "Klöntalersee"
     },
+    "filters": ["1D"],
     "area": 3.3,
     "ave_depth": "NA",
     "max_depth": 45.0,
@@ -311,6 +330,7 @@
       "FR": "Lake Maggiore",
       "IT": "Lake Maggiore"
     },
+    "filters": ["1D"],
     "area": 212.5,
     "ave_depth": 177.0,
     "max_depth": 372.0,
@@ -327,6 +347,7 @@
       "FR": "Lake Lungern",
       "IT": "Lake Lungern"
     },
+    "filters": ["1D"],
     "area": 2.0,
     "ave_depth": 33.0,
     "max_depth": 68.0,
@@ -343,6 +364,7 @@
       "FR": "Lake Neuchâtel",
       "IT": "Lake Neuchâtel"
     },
+    "filters": ["1D"],
     "area": 218.3,
     "ave_depth": 64.0,
     "max_depth": 152.0,
@@ -359,6 +381,7 @@
       "FR": "Lake Pfäffikon",
       "IT": "Lake Pfäffikon"
     },
+    "filters": ["1D"],
     "area": 3.3,
     "ave_depth": 19.0,
     "max_depth": 36.0,
@@ -375,6 +398,7 @@
       "FR": "Lake Sempach",
       "IT": "Lake Sempach"
     },
+    "filters": ["1D"],
     "area": 14.5,
     "ave_depth": 44.0,
     "max_depth": 87.0,
@@ -391,6 +415,7 @@
       "FR": "Lake Sarnen",
       "IT": "Lake Sarnen"
     },
+    "filters": ["1D"],
     "area": 7.5,
     "ave_depth": 31.0,
     "max_depth": 51.0,
@@ -407,6 +432,7 @@
       "FR": "Alpnachersee",
       "IT": "Alpnachersee"
     },
+    "filters": ["1D"],
     "area": 4.5,
     "ave_depth": 22.0,
     "max_depth": 35.0,
@@ -423,6 +449,7 @@
       "FR": "Lake Lucerne",
       "IT": "Lake Lucerne"
     },
+    "filters": ["1D"],
     "area": 111.0,
     "ave_depth": "NA",
     "max_depth": 214.0,
@@ -439,6 +466,7 @@
       "FR": "Walensee",
       "IT": "Walensee"
     },
+    "filters": ["1D"],
     "area": 24.2,
     "ave_depth": 105.0,
     "max_depth": 151.0,
@@ -455,6 +483,7 @@
       "FR": "Lake Zug",
       "IT": "Lake Zug"
     },
+    "filters": ["1D"],
     "area": 38.3,
     "ave_depth": 83.0,
     "max_depth": 197.0,
@@ -471,6 +500,7 @@
       "FR": "Sihlsee",
       "IT": "Sihlsee"
     },
+    "filters": ["1D"],
     "area": 11.3,
     "ave_depth": "NA",
     "max_depth": 22.0,
@@ -487,6 +517,7 @@
       "FR": "Lago di Poschiavo",
       "IT": "Lago di Poschiavo"
     },
+    "filters": ["1D"],
     "area": 1.98,
     "ave_depth": "NA",
     "max_depth": 85.0,
@@ -503,6 +534,7 @@
       "FR": "Lake Sils",
       "IT": "Lake Sils"
     },
+    "filters": ["1D"],
     "area": 4.1,
     "ave_depth": 35.0,
     "max_depth": 71.0,
@@ -519,6 +551,7 @@
       "FR": "Lake Silvaplana",
       "IT": "Lake Silvaplana"
     },
+    "filters": ["1D"],
     "area": 2.7,
     "ave_depth": 48.0,
     "max_depth": 77.0,
@@ -535,6 +568,7 @@
       "FR": "Lej da Champfer",
       "IT": "Lej da Champfer"
     },
+    "filters": ["1D"],
     "area": 0.51,
     "ave_depth": 17.0,
     "max_depth": 34.0,
@@ -551,6 +585,7 @@
       "FR": "Lake Lauerz",
       "IT": "Lake Lauerz"
     },
+    "filters": ["1D"],
     "area": 3.07,
     "ave_depth": "NA",
     "max_depth": 14.0,
@@ -562,6 +597,7 @@
   {
     "key": "rotsee",
     "name": { "EN": "Rotsee", "DE": "Rotsee", "FR": "Rotsee", "IT": "Rotsee" },
+    "filters": ["1D"],
     "area": 0.468,
     "ave_depth": "NA",
     "max_depth": 16.0,
@@ -578,6 +614,7 @@
       "FR": "Türlersee",
       "IT": "Türlersee"
     },
+    "filters": ["1D"],
     "area": 0.499,
     "ave_depth": "NA",
     "max_depth": 22.1,
@@ -594,6 +631,7 @@
       "FR": "Amsoldingersee",
       "IT": "Amsoldingersee"
     },
+    "filters": ["1D"],
     "area": 0.3807,
     "ave_depth": "NA",
     "max_depth": 13.9,
@@ -610,6 +648,7 @@
       "FR": "Moossee",
       "IT": "Moossee"
     },
+    "filters": ["1D"],
     "area": 0.303,
     "ave_depth": "NA",
     "max_depth": 21.1,
@@ -626,6 +665,7 @@
       "FR": "Mauensee",
       "IT": "Mauensee"
     },
+    "filters": ["1D"],
     "area": 0.55,
     "ave_depth": "NA",
     "max_depth": 9.0,
@@ -642,6 +682,7 @@
       "FR": "Oeschinensee",
       "IT": "Oeschinensee"
     },
+    "filters": ["1D"],
     "area": 1.115,
     "ave_depth": "NA",
     "max_depth": 56.0,
@@ -658,6 +699,7 @@
       "FR": "Soppensee",
       "IT": "Soppensee"
     },
+    "filters": ["1D"],
     "area": 0.2499,
     "ave_depth": "NA",
     "max_depth": 27.0,
@@ -674,6 +716,7 @@
       "FR": "Inkwilersee",
       "IT": "Inkwilersee"
     },
+    "filters": ["1D"],
     "area": 0.1016,
     "ave_depth": "NA",
     "max_depth": 5.0,
@@ -690,6 +733,7 @@
       "FR": "Hüttwilersee",
       "IT": "Hüttwilersee"
     },
+    "filters": ["1D"],
     "area": 0.34,
     "ave_depth": "NA",
     "max_depth": 15,
@@ -706,6 +750,7 @@
       "FR": "Lake Cadagno",
       "IT": "Lake Cadagno"
     },
+    "filters": ["1D"],
     "area": 0.26,
     "ave_depth": "NA",
     "max_depth": 21.0,
@@ -722,6 +767,7 @@
       "FR": "Husemersee",
       "IT": "Husemersee"
     },
+    "filters": ["1D"],
     "area": 0.0799,
     "ave_depth": "NA",
     "max_depth": 14.3,
@@ -738,6 +784,7 @@
       "FR": "Hüttnersee",
       "IT": "Hüttnersee"
     },
+    "filters": ["1D"],
     "area": 0.165,
     "ave_depth": "NA",
     "max_depth": 13.3,
@@ -754,6 +801,7 @@
       "FR": "Lützelsee",
       "IT": "Lützelsee"
     },
+    "filters": ["1D"],
     "area": 0.128,
     "ave_depth": "NA",
     "max_depth": 6.2,
@@ -770,6 +818,7 @@
       "FR": "Mettmenhaslisee",
       "IT": "Mettmenhaslisee"
     },
+    "filters": ["1D"],
     "area": 0.0251,
     "ave_depth": "NA",
     "max_depth": 12.5,
@@ -786,6 +835,7 @@
       "FR": "Egelsee",
       "IT": "Egelsee"
     },
+    "filters": ["1D"],
     "area": 0.0428,
     "ave_depth": "NA",
     "max_depth": 6.0,
@@ -802,6 +852,7 @@
       "FR": "UntererChatzensee",
       "IT": "UntererChatzensee"
     },
+    "filters": ["1D"],
     "area": 0.192,
     "ave_depth": "NA",
     "max_depth": 7.7,
@@ -818,6 +869,7 @@
       "FR": "Seeweidsee",
       "IT": "Seeweidsee"
     },
+    "filters": ["1D"],
     "area": 0.0116,
     "ave_depth": "NA",
     "max_depth": 5.3,
@@ -834,6 +886,7 @@
       "FR": "Burgäschisee",
       "IT": "Burgäschisee"
     },
+    "filters": ["1D"],
     "area": 0.206,
     "ave_depth": "NA",
     "max_depth": 30,
@@ -850,6 +903,7 @@
       "FR": "Burgseeli",
       "IT": "Burgseeli"
     },
+    "filters": ["1D"],
     "area": 0.0525,
     "ave_depth": "NA",
     "max_depth": 19.1,
@@ -866,6 +920,7 @@
       "FR": "Dittligsee",
       "IT": "Dittligsee"
     },
+    "filters": ["1D"],
     "area": 0.0602,
     "ave_depth": "NA",
     "max_depth": 16.4,
@@ -882,6 +937,7 @@
       "FR": "Gerzensee",
       "IT": "Gerzensee"
     },
+    "filters": ["1D"],
     "area": 0.252,
     "ave_depth": "NA",
     "max_depth": 10.7,
@@ -898,6 +954,7 @@
       "FR": "Lobsigensee",
       "IT": "Lobsigensee"
     },
+    "filters": ["1D"],
     "area": 0.0173,
     "ave_depth": "NA",
     "max_depth": 2.5,
@@ -914,6 +971,7 @@
       "FR": "Chli Moossee",
       "IT": "Chli Moossee"
     },
+    "filters": ["1D"],
     "area": 0.0171,
     "ave_depth": "NA",
     "max_depth": 3,
@@ -930,6 +988,7 @@
       "FR": "Uebeschisee",
       "IT": "Uebeschisee"
     },
+    "filters": ["1D"],
     "area": 0.142,
     "ave_depth": "NA",
     "max_depth": 14.7,
@@ -946,6 +1005,7 @@
       "FR": "Lac de Bret",
       "IT": "Lac de Bret"
     },
+    "filters": ["1D"],
     "area": 0.5,
     "ave_depth": "NA",
     "max_depth": 20,
@@ -962,6 +1022,7 @@
       "FR": "Lac Brenet",
       "IT": "Lac Brenet"
     },
+    "filters": ["1D"],
     "area": 0.65,
     "ave_depth": "NA",
     "max_depth": 18,
@@ -978,6 +1039,7 @@
       "FR": "Lac des Chavonnes",
       "IT": "Lac des Chavonnes"
     },
+    "filters": ["1D"],
     "area": 0.051,
     "ave_depth": "NA",
     "max_depth": 30,
@@ -994,6 +1056,7 @@
       "FR": "Lac de Bretaye",
       "IT": "Lac de Bretaye"
     },
+    "filters": ["1D"],
     "area": 0.045,
     "ave_depth": "NA",
     "max_depth": 9,
@@ -1010,6 +1073,7 @@
       "FR": "Lac Lioson",
       "IT": "Lac Lioson"
     },
+    "filters": ["1D"],
     "area": 0.065,
     "ave_depth": "NA",
     "max_depth": 28,
@@ -1026,6 +1090,7 @@
       "FR": "Lago di Tome",
       "IT": "Lago di Tome"
     },
+    "filters": ["1D"],
     "area": 0.058,
     "ave_depth": "NA",
     "max_depth": 38,
@@ -1042,6 +1107,7 @@
       "FR": "Lago Barone",
       "IT": "Lago Barone"
     },
+    "filters": ["1D"],
     "area": 0.069,
     "ave_depth": "NA",
     "max_depth": 56,
@@ -1058,6 +1124,7 @@
       "FR": "Lago Superiore",
       "IT": "Lago Superiore"
     },
+    "filters": ["1D"],
     "area": 0.079,
     "ave_depth": "NA",
     "max_depth": 29,
@@ -1074,6 +1141,7 @@
       "FR": "Lago di Sassolo",
       "IT": "Lago di Sassolo"
     },
+    "filters": ["1D"],
     "area": 0.053,
     "ave_depth": "NA",
     "max_depth": 33,
@@ -1090,6 +1158,7 @@
       "FR": "Geistsee",
       "IT": "Geistsee"
     },
+    "filters": ["1D"],
     "area": 0.0095,
     "ave_depth": "NA",
     "max_depth": 6.5,
@@ -1106,6 +1175,7 @@
       "FR": "Lenkerseeli",
       "IT": "Lenkerseeli"
     },
+    "filters": ["1D"],
     "area": 0.02,
     "ave_depth": "NA",
     "max_depth": 2.2,
@@ -1122,6 +1192,7 @@
       "FR": "Stockseewli",
       "IT": "Stockseewli"
     },
+    "filters": ["1D"],
     "area": 0.0028,
     "ave_depth": "NA",
     "max_depth": 2.0,
@@ -1138,6 +1209,7 @@
       "FR": "Oberes Bänzlauiseeli",
       "IT": "Oberes Bänzlauiseeli"
     },
+    "filters": ["1D"],
     "area": 0.014,
     "ave_depth": "NA",
     "max_depth": 7.2,
@@ -1154,6 +1226,7 @@
       "FR": "Steinsee",
       "IT": "Steinsee"
     },
+    "filters": ["1D"],
     "area": 0.116,
     "ave_depth": "NA",
     "max_depth": 19.1,
@@ -1170,6 +1243,7 @@
       "FR": "Barchetsee",
       "IT": "Barchetsee"
     },
+    "filters": ["1D"],
     "area": 0.0106,
     "ave_depth": "NA",
     "max_depth": 7.0,
@@ -1186,6 +1260,7 @@
       "FR": "Bichelsee",
       "IT": "Bichelsee"
     },
+    "filters": ["1D"],
     "area": 0.093,
     "ave_depth": "NA",
     "max_depth": 7.0,
@@ -1202,6 +1277,7 @@
       "FR": "Hasensee Ost",
       "IT": "Hasensee Ost"
     },
+    "filters": ["1D"],
     "area": 0.07,
     "ave_depth": "NA",
     "max_depth": 5.8,
@@ -1218,6 +1294,7 @@
       "FR": "Hasensee West",
       "IT": "Hasensee West"
     },
+    "filters": ["1D"],
     "area": 0.041,
     "ave_depth": "NA",
     "max_depth": 7.3,
@@ -1234,6 +1311,7 @@
       "FR": "Hauptwiler Weiher",
       "IT": "Hauptwiler Weiher"
     },
+    "filters": ["1D"],
     "area": 0.023,
     "ave_depth": "NA",
     "max_depth": 3.0,
@@ -1250,6 +1328,7 @@
       "FR": "Hugiweiher",
       "IT": "Hugiweiher"
     },
+    "filters": ["1D"],
     "area": 0.01,
     "ave_depth": "NA",
     "max_depth": 4.0,
@@ -1266,6 +1345,7 @@
       "FR": "Oberer Bommerweiher",
       "IT": "Oberer Bommerweiher"
     },
+    "filters": ["1D"],
     "area": 0.092,
     "ave_depth": "NA",
     "max_depth": 2.5,
@@ -1282,6 +1362,7 @@
       "FR": "Märwiler Moos",
       "IT": "Märwiler Moos"
     },
+    "filters": ["1D"],
     "area": 0.028,
     "ave_depth": "NA",
     "max_depth": 2.0,
@@ -1298,6 +1379,7 @@
       "FR": "Nussbommersee",
       "IT": "Nussbommersee"
     },
+    "filters": ["1D"],
     "area": 0.25,
     "ave_depth": "NA",
     "max_depth": 7.9,
@@ -1314,6 +1396,7 @@
       "FR": "Vago Weiher",
       "IT": "Vago Weiher"
     },
+    "filters": ["1D"],
     "area": 0.025,
     "ave_depth": "NA",
     "max_depth": 10.0,
@@ -1330,6 +1413,7 @@
       "FR": "Wilemersee",
       "IT": "Wilemersee"
     },
+    "filters": ["1D"],
     "area": 0.01,
     "ave_depth": "NA",
     "max_depth": 7.0,
@@ -1346,6 +1430,7 @@
       "FR": "Wisterer Weiher",
       "IT": "Wisterer Weiher"
     },
+    "filters": ["1D"],
     "area": 0.025,
     "ave_depth": "NA",
     "max_depth": 14.0,

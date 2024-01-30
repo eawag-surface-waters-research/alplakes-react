@@ -4,11 +4,6 @@ import { NavLink } from "react-router-dom";
 import NavBar from "../../components/navbar/navbar";
 import SummaryGraph from "../../components/d3/summarygraph/summarygraph";
 import Translations from "../../translations.json";
-import swiss from "../../img/swiss.png";
-import italian from "../../img/italian.png";
-import french from "../../img/french.png";
-import german from "../../img/german.png";
-import austrian from "../../img/austrian.png";
 import searchIcon from "../../img/search.png";
 import depth_icon from "../../img/depth.png";
 import area_icon from "../../img/area.png";
@@ -75,17 +70,12 @@ class SummaryTable extends Component {
 class ListItem extends Component {
   render() {
     var { lake, language } = this.props;
-    var flags = {
-      swiss: swiss,
-      italian: italian,
-      french: french,
-      german: german,
-      austrian: austrian,
-    };
     return (
       <NavLink to={`/${lake.key}`}>
         <div
-          className={lake.display ? "list-item" : "list-item hidden"}
+          className={
+            lake.display && !lake.filter ? "list-item" : "list-item hidden"
+          }
           id={"list-" + lake.key}
           onMouseOver={onMouseOver}
           onMouseOut={onMouseOut}
@@ -145,10 +135,28 @@ class Home extends Component {
   state = {
     list: [],
     search: "",
+    filters: ["all"],
     boundingBox: false,
   };
   setBounds = (boundingBox) => {
     this.setState({ boundingBox });
+  };
+  setFilter = (filter) => {
+    var { filters } = this.state;
+    if (filter === "all") {
+      this.setState({ filters: ["all"] });
+    } else if (filters.includes(filter)) {
+      filters = filters.filter((f) => f !== filter);
+      if (filters.length === 0) {
+        this.setState({ filters: ["all"] });
+      } else {
+        this.setState({ filters });
+      }
+    } else {
+      filters = filters.filter((f) => f !== "all");
+      filters.push(filter);
+      this.setState({ filters });
+    }
   };
   setSearch = (event) => {
     var { list } = this.state;
@@ -157,7 +165,7 @@ class Home extends Component {
     list = searchList(search, list);
     this.setState({ list });
   };
-  sortList = (list) => {
+  sortList = (list, filters) => {
     var { boundingBox } = this.state;
     list.sort((a, b) => {
       // 1. Sort if in map area
@@ -190,6 +198,14 @@ class Home extends Component {
         return -1;
       }
       return 0;
+    });
+    list = list.map((l) => {
+      if (filters.includes("all")) {
+        l.filter = false;
+      } else {
+        l.filter = !filters.every((str) => l.filters.includes(str));
+      }
+      return l;
     });
     return list;
   };
@@ -255,48 +271,72 @@ class Home extends Component {
   render() {
     document.title = "Alplakes";
     var { language, dark } = this.props;
-    var { list, search } = this.state;
-    var sortedList = this.sortList(list);
-    var results = list.filter((l) => l.display).length;
+    var { list, search, filters } = this.state;
+    var sortedList = this.sortList(list, filters);
+    var results = sortedList.filter((l) => l.display && !l.filter).length;
+    var filterTypes = [
+      { id: "all", name: "All" },
+      { id: "3D", name: "3D" },
+      { id: "1D", name: "1D" },
+      { id: "satellite", name: "Satellite products" },
+      { id: "live", name: "Live data" },
+    ];
     return (
       <React.Fragment>
         <NavBar {...this.props} small={true} />
         <div className="content">
           <div className="home-list">
             <div className="search">
-              <div className="explore">Search lakes</div>
-              <div className="number">{results} lakes available</div>
               <input
                 type="search"
-                placeholder={Translations.search[language]}
+                placeholder={
+                  Translations.search[language] +
+                  " " +
+                  Translations.lakes[language].toLowerCase()
+                }
                 value={search}
                 onChange={this.setSearch}
               />
-
               <img src={searchIcon} alt="Alplakes logo" />
+              <div className="filters">
+                {filterTypes.map((f) => (
+                  <div
+                    className={
+                      filters.includes(f.id) ? "filter selected" : "filter"
+                    }
+                    key={f.id}
+                    onClick={() => this.setFilter(f.id)}
+                  >
+                    {f.name}
+                  </div>
+                ))}
+              </div>
             </div>
             <div className="product-wrapper">
+              <div className="results">{results} results</div>
               <div className="product-list">
                 {list.length === 0 ? (
                   <PlaceHolder />
-                ) : results === 0 ? (
-                  <div className="empty">{Translations.results[language]}</div>
                 ) : (
-                  sortedList.map((lake) => (
-                    <ListItem lake={lake} language={language} key={lake.key} />
-                  ))
+                  results === 0 && (
+                    <div className="empty">
+                      {Translations.results[language]}
+                    </div>
+                  )
                 )}
+                {sortedList.map((lake) => (
+                  <ListItem lake={lake} language={language} key={lake.key} />
+                ))}
               </div>
             </div>
           </div>
           <div className="logos">
-            <div className="text">A collaboration between</div>
             <img src={eawag_logo} alt="Eawag" />
             <img src={esa_logo} alt="Esa" />
             <img src={trento_logo} alt="Trento" />
           </div>
           <div className="home-map">
-            <div className="title">Temperature forecast</div>
+            <div className="title">Lake temperature forecast</div>
             <HomeMap
               list={list}
               dark={dark}
@@ -306,16 +346,31 @@ class Home extends Component {
           </div>
           <div className="promos">
             <div className="promo">
-              <div className="number"><NumberIncreaser targetValue={85} /></div>
-              <div className="text">1D <br/>simulations </div>
+              <div className="number">
+                <NumberIncreaser targetValue={85} />
+              </div>
+              <div className="text">
+                1D lake<br />
+                simulations{" "}
+              </div>
             </div>
             <div className="promo">
-              <div className="number"><NumberIncreaser targetValue={12} /></div>
-              <div className="text">3D <br/>simulations </div>
+              <div className="number">
+                <NumberIncreaser targetValue={12} />
+              </div>
+              <div className="text">
+                3D lake<br />
+                simulations{" "}
+              </div>
             </div>
             <div className="promo">
-              <div className="number"><NumberIncreaser targetValue={3621} /></div>
-              <div className="text">Satellite <br/>products </div>
+              <div className="number">
+                <NumberIncreaser targetValue={3621} />
+              </div>
+              <div className="text">
+                Satellite <br />
+                products{" "}
+              </div>
             </div>
           </div>
         </div>
