@@ -11,6 +11,9 @@ import elevation_icon from "../../img/elevation.png";
 import eawag_logo from "../../img/eawag_logo.png";
 import esa_logo from "../../img/esa_logo.png";
 import trento_logo from "../../img/trento_logo.png";
+import threed_icon from "../../img/threed-icon.png";
+import oned_icon from "../../img/oned-icon.png";
+import satellite_icon from "../../img/satellite.png"
 import {
   onMouseOver,
   onMouseOut,
@@ -350,18 +353,23 @@ class Home extends Component {
                 <NumberIncreaser targetValue={85} />
               </div>
               <div className="text">
-                1D lake<br />
-                simulations{" "}
+                1D lake
+                <br />
+                simulations
+                <div className="dates">1981 - 2024</div>
               </div>
+              <img src={oned_icon} alt="1D" />
             </div>
             <div className="promo">
               <div className="number">
                 <NumberIncreaser targetValue={12} />
               </div>
               <div className="text">
-                3D lake<br />
-                simulations{" "}
+                3D lake
+                <br />
+                simulations<div className="dates">2019 - 2024</div>
               </div>
+              <img src={threed_icon} alt="3D" />
             </div>
             <div className="promo">
               <div className="number">
@@ -369,8 +377,10 @@ class Home extends Component {
               </div>
               <div className="text">
                 Satellite <br />
-                products{" "}
+                products
+                <div className="dates">2015 - 2024</div>
               </div>
+              <img src={satellite_icon} alt="Satellite" />
             </div>
           </div>
         </div>

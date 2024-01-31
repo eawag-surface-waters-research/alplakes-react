@@ -509,32 +509,59 @@
   position: fixed;
   top: calc(var(--header-height) + var(--padding));
   right: var(--padding);
-  height: 53px;
-  text-align: right;
+  text-align: left;
+  width: calc(100% - var(--list-width) - var(--padding));
+  overflow: hidden;
+  height: 70px;
 }
 
 .main .content .promo {
   background-color: var(--box-color);
   border: 1px solid var(--border-color);
-  margin-left: calc(var(--padding) / 2);
+  margin-right: calc(var(--padding) / 2);
   display: inline-block;
-  height: 100%;
   border-radius: 22px;
   box-sizing: border-box;
   text-align: left;
+  position: relative;
+  margin-bottom: 10px;
 }
 
 .main .content .promo .number {
   display: inline-block;
-  font-size: 36px;
+  font-size: 57px;
   padding-left: 20px;
-  opacity: 0.8;
+  color: var(--highlight-color);
+  position: relative;
+  z-index: 1;
 }
 
 .main .content .promo .text {
   display: inline-block;
   font-size: 14px;
   padding: 10px 20px 10px 10px;
+  position: relative;
+  z-index: 1;
+}
+
+.main .content .promo img {
+  height: 60%;
+  filter: invert(100%);
+  position: absolute;
+  right: 8px;
+  z-index: 0;
+  opacity: 0.1;
+  top: 10%;
+}
+
+.main.dark .content .promo img {
+  filter: invert(0%);
+  opacity: 0.2;
+}
+
+.main .content .promo .text .dates {
+  font-size: 12px;
+  font-weight: bold;
 }
 
 @media screen and (max-width: 800px) {
