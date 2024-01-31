@@ -51,17 +51,15 @@
   color: var(--header-text-color);
   font-size: 16px;
   padding: 4px 16px;
-  border-radius: 20px;
   font-weight: bold;
-  -webkit-transition: all 0.3s ease-out;
-  -moz-transition: all 0.3s ease-out;
-  -ms-transition: all 0.3s ease-out;
-  -o-transition: all 0.3s ease-out;
-  transition: all 0.3s ease-out;
 }
 
 .navbar .desktop-nav .nav-item .nav-text:hover {
-  background-color: var(--background-color);
+  border-bottom: 2px solid var(--highlight-color);
+}
+
+.navbar .desktop-nav .nav-item.active .nav-text {
+  border-bottom: 2px solid var(--highlight-color);
 }
 
 .navbar select {

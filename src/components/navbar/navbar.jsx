@@ -31,6 +31,9 @@ class NavBar extends Component {
           </NavLink>
 
           <div className="desktop-nav">
+          <NavLink className="nav-item" to="/">
+              <div className="nav-text">Lakes</div>
+            </NavLink>
             <NavLink className="nav-item" to="/api">
               <div className="nav-text">API</div>
             </NavLink>
