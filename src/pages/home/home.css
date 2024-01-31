@@ -542,6 +542,7 @@
 .main .content .promo .number {
   display: inline-block;
   font-size: 64px;
+  width: 70px;
   padding-left: 20px;
   color: var(--highlight-color);
   position: relative;

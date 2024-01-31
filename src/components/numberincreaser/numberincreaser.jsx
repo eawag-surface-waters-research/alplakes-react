@@ -4,9 +4,7 @@ const NumberIncreaser = ({ targetValue, duration = 1000 }) => {
     const [currentValue, setCurrentValue] = useState(0);
   
     useEffect(() => {
-      const startTime = Date.now();
-      const endTime = startTime + duration;
-  
+      const startTime = Date.now();  
       const increaseInterval = setInterval(() => {
         const timeElapsed = Date.now() - startTime;
         const progress = timeElapsed / duration;
@@ -24,7 +22,7 @@ const NumberIncreaser = ({ targetValue, duration = 1000 }) => {
       return () => clearInterval(increaseInterval);
     }, [targetValue, duration]);
   
-    return <div>{currentValue}</div>;
+    return <div>{(currentValue < 10 ? '0' : '') + currentValue}</div>;
   };
   
   export default NumberIncreaser;
