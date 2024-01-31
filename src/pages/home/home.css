@@ -354,7 +354,7 @@
   background-color: var(--box-color);
   border-radius: 22px;
   border: 1px solid var(--border-color);
-  padding: 0 calc(var(--padding) / 2) calc(var(--padding) / 2) calc(var(--padding) / 2);
+  padding: calc(var(--padding) / 2);
 }
 
 .main .content .home-map .title {
@@ -364,8 +364,7 @@
 }
 
 .main .content .home-map #map {
-  border-radius: 11px;
-  height: calc(100% - 38.5px);
+  border-radius: 12px;
   border: 1px solid var(--border-color);
 }
 
@@ -492,22 +491,30 @@
 
 .main .content .home-map #map .parameter-selector .parameter .text {
   position: absolute;
-  left: 45px;
-  top: 10px;
+  left: 36px;
+  top: 5px;
   text-align: left;
   white-space: nowrap;
   background-color: var(--box-color);
-  padding: 1px 5px;
-  border-radius: 8px;
-  opacity: 0.5;
+  border-radius: 0 8px 8px 0;
+  width: 0;
+  padding: 5px 0;
+  overflow: hidden;
+  z-index: 0;
+  border-bottom: 1px solid var(--border-color);
+  transition: width 0.5s ease;
 }
 
 .main .content .home-map #map .parameter-selector .parameter.selected .text {
-  opacity: 1;
+  padding: 5px 12px 5px 6px;
+  width: auto;
+  max-width:1000px;
 }
 
 .main .content .home-map #map .parameter-selector .parameter:hover .text {
-  opacity: 1;
+  padding: 5px 12px 5px 6px;
+  width: auto;
+  max-width:1000px;
 }
 
 .main .content .promos {

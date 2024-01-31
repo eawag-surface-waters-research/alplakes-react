@@ -409,7 +409,6 @@ class Home extends Component {
             <img src={trento_logo} alt="Trento" />
           </div>
           <div className="home-map">
-            <div className="title">Lake temperature forecast</div>
             <HomeMap
               list={list}
               dark={dark}

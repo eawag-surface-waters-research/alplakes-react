@@ -281,16 +281,19 @@ class HomeMap extends Component {
           <div className="parameter-selector">
             <div className="parameter selected top">
               <img src={temperature_icon} alt="Surface temperature" />
-              <div className="text"></div>
+              <div className="text">Lake temperature forecast</div>
             </div>
             <div className="parameter">
               <img src={ice_icon} alt="Ice Thickness" />
+              <div className="text">Lake ice forecast</div>
             </div>
             <div className="parameter">
               <img src={oxygen_icon} alt="Oxygen Content" />
+              <div className="text">Lake oxygen forecast</div>
             </div>
             <div className="parameter bottom">
               <div className="icon">+</div>
+              <div className="text">Select from more</div>
             </div>
           </div>
           <div className="day-selector">
