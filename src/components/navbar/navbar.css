@@ -3,16 +3,14 @@
   position: fixed;
   left: 0;
   top: 0;
-  background-color: var(--box-color);
   z-index: 999999;
-  border-bottom: 1px solid var(--border-color);
 }
 
 .navbar .home-nav {
   position: absolute;
   left: 0;
   top: 0;
-  margin: 7px 0 0 var(--padding);
+  margin: var(--padding);
   height: 30px;
 }
 
@@ -22,8 +20,9 @@
 
 .navbar .home-nav .name {
   display: inline-block;
-  color: var(--background-font-color);
+  color: var(--header-text-color);
   font-size: 20px;
+  font-weight: bold;
   margin-left: 12px;
   padding: 3px 0;
   vertical-align: bottom;
@@ -32,7 +31,7 @@
 .navbar .desktop-nav {
   position: relative;
   text-align: right;
-  padding: 6px var(--padding) 6px 0;
+  padding: var(--padding);
   box-sizing: border-box;
   z-index: 4;
   width: -moz-fit-content;
@@ -49,10 +48,11 @@
 }
 
 .navbar .desktop-nav .nav-item .nav-text {
-  color: var(--background-font-color);
+  color: var(--header-text-color);
   font-size: 16px;
   padding: 4px 16px;
   border-radius: 20px;
+  font-weight: bold;
   -webkit-transition: all 0.3s ease-out;
   -moz-transition: all 0.3s ease-out;
   -ms-transition: all 0.3s ease-out;
@@ -67,13 +67,14 @@
 .navbar select {
   background-color: transparent;
   border: none;
-  color: var(--box-font-color);
+  color: var(--header-text-color);
   cursor: pointer;
   border-radius: 20px;
   padding: 4px 9px;
   text-align: center;
   display: inline-block;
   font-size: 16px;
+  font-weight: bold;
   height: 30px;
   -webkit-transition: all 0.3s ease-out;
   -moz-transition: all 0.3s ease-out;
@@ -188,7 +189,7 @@
   padding: 8px;
 }
 
-@media screen and (max-width: 1200px) {
+@media screen and (max-width: 800px) {
   .navbar .mobile-nav {
     display: block;
   }
@@ -196,9 +197,7 @@
   .navbar .desktop-nav {
     display: none;
   }
-}
 
-@media screen and (max-width: 800px) {
   .navbar.small .mobile-nav {
     right: var(--padding);
   }
