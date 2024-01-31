@@ -13,7 +13,9 @@ import esa_logo from "../../img/esa_logo.png";
 import trento_logo from "../../img/trento_logo.png";
 import threed_icon from "../../img/threed-icon.png";
 import oned_icon from "../../img/oned-icon.png";
-import satellite_icon from "../../img/satellite.png"
+import satellite_icon from "../../img/satellite.png";
+import live_icon from "../../img/live.png";
+import insitu_icon from "../../img/insitu.png";
 import {
   onMouseOver,
   onMouseOut,
@@ -134,6 +136,31 @@ class ListItem extends Component {
   }
 }
 
+class Promos extends Component {
+  render() {
+    var { types } = this.props;
+    return (
+      <React.Fragment>
+        <div className="promos">
+          {types.map((t) => (
+            <div className="promo" key={t["id"]}>
+              <div className="number">
+                <NumberIncreaser targetValue={t["value"]} />
+              </div>
+              <div className="text">
+                <div className="upper">lakes with</div>
+                <div className="parameter">{t["long_name"]}</div>
+                <div className="dates">{t["dates"]}</div>
+              </div>
+              <img src={t["icon"]} alt={t["long_name"]} />
+            </div>
+          ))}
+        </div>
+      </React.Fragment>
+    );
+  }
+}
+
 class Home extends Component {
   state = {
     list: [],
@@ -212,6 +239,15 @@ class Home extends Component {
     });
     return list;
   };
+  processTypes = (types, list) => {
+    const year = new Date().getFullYear();
+    types = types.map((t) => {
+      t["value"] = list.filter((l) => l.filters.includes(t["id"])).length;
+      t["dates"] = `${t["start"]} - ${year}`;
+      return t
+    });
+    return types;
+  };
   async componentDidMount() {
     var ice, geometry, forecast;
     const { data: list } = await axios.get(
@@ -277,13 +313,47 @@ class Home extends Component {
     var { list, search, filters } = this.state;
     var sortedList = this.sortList(list, filters);
     var results = sortedList.filter((l) => l.display && !l.filter).length;
-    var filterTypes = [
-      { id: "all", name: "All" },
-      { id: "3D", name: "3D" },
-      { id: "1D", name: "1D" },
-      { id: "satellite", name: "Satellite products" },
-      { id: "live", name: "Live data" },
-    ];
+    var filterTypes = this.processTypes(
+      [
+        { id: "all", short_name: "All" },
+        {
+          id: "3D",
+          short_name: "3D",
+          long_name: "3D models",
+          icon: threed_icon,
+          start: "2019",
+        },
+        {
+          id: "1D",
+          short_name: "1D",
+          long_name: "1D models",
+          icon: oned_icon,
+          start: "1981",
+        },
+        {
+          id: "satellite",
+          short_name: "Satellite",
+          long_name: "satellite products",
+          icon: satellite_icon,
+          start: "2015",
+        },
+        {
+          id: "live",
+          short_name: "Live",
+          long_name: "live data",
+          icon: live_icon,
+          start: "2019",
+        },
+        {
+          id: "insitu",
+          short_name: "Insitu",
+          long_name: "insitu data",
+          icon: insitu_icon,
+          start: "2019",
+        },
+      ],
+      list
+    );
     return (
       <React.Fragment>
         <NavBar {...this.props} small={true} />
@@ -310,7 +380,7 @@ class Home extends Component {
                     key={f.id}
                     onClick={() => this.setFilter(f.id)}
                   >
-                    {f.name}
+                    {f.short_name}
                   </div>
                 ))}
               </div>
@@ -347,42 +417,7 @@ class Home extends Component {
               setBounds={this.setBounds}
             />
           </div>
-          <div className="promos">
-            <div className="promo">
-              <div className="number">
-                <NumberIncreaser targetValue={85} />
-              </div>
-              <div className="text">
-                1D lake
-                <br />
-                simulations
-                <div className="dates">1981 - 2024</div>
-              </div>
-              <img src={oned_icon} alt="1D" />
-            </div>
-            <div className="promo">
-              <div className="number">
-                <NumberIncreaser targetValue={12} />
-              </div>
-              <div className="text">
-                3D lake
-                <br />
-                simulations<div className="dates">2019 - 2024</div>
-              </div>
-              <img src={threed_icon} alt="3D" />
-            </div>
-            <div className="promo">
-              <div className="number">
-                <NumberIncreaser targetValue={3621} />
-              </div>
-              <div className="text">
-                Satellite <br />
-                products
-                <div className="dates">2015 - 2024</div>
-              </div>
-              <img src={satellite_icon} alt="Satellite" />
-            </div>
-          </div>
+          <Promos types={filterTypes.filter((f) => f.id !== "all")} />
         </div>
         <Footer {...this.props} small={true} />
       </React.Fragment>

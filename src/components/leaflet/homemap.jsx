@@ -69,13 +69,6 @@ class HomeMap extends Component {
   plotLabels = (day) => {
     var { list, language } = this.props;
     var zoom = this.map.getZoom();
-    Object.values(this.labels).map((m) => {
-      if (m.marker) {
-        m.marker.remove();
-        m.marker = false;
-      }
-      return m;
-    });
     for (let lake of list) {
       this.labels[lake.key].marker = L.marker([lake.latitude, lake.longitude], {
         icon: L.divIcon({
@@ -193,6 +186,15 @@ class HomeMap extends Component {
       return m;
     });
   };
+  removeLabels = () => {
+    Object.values(this.labels).map((m) => {
+      if (m.marker) {
+        m.marker.remove();
+        m.marker = false;
+      }
+      return m;
+    });
+  };
   componentDidUpdate(prevProps) {
     var { day } = this.state;
     var { list, language } = this.props;
@@ -208,6 +210,7 @@ class HomeMap extends Component {
       map.on("zoomend", this.displayLabels);
       this.plot = false;
     } else if (prevProps.language !== this.props.language) {
+      this.removeLabels();
       this.labels = this.labelClustering(list, language);
       this.plotLabels(day);
     } else if (prevProps.dark !== this.props.dark) {
@@ -278,8 +281,7 @@ class HomeMap extends Component {
           <div className="parameter-selector">
             <div className="parameter selected top">
               <img src={temperature_icon} alt="Surface temperature" />
-              <div className="text">
-              </div>
+              <div className="text"></div>
             </div>
             <div className="parameter">
               <img src={ice_icon} alt="Ice Thickness" />

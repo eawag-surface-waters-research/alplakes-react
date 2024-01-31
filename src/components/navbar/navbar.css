@@ -4,6 +4,7 @@
   left: 0;
   top: 0;
   z-index: 999999;
+  background-color: var(--background-color);
 }
 
 .navbar .home-nav {

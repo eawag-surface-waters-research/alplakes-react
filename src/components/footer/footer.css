@@ -2,10 +2,11 @@
     width: 100%;
     box-sizing: border-box;
     position: relative;
-    background-color: var(--box-inner-color);
-    padding: 33px var(--padding) 0 var(--padding);
-    height: var(--footer-height);
+    background-color: var(--box-color);
     z-index: 99999;
+    margin-top: var(--padding);
+    padding: calc(var(--padding) / 2) var(--padding);
+    border-top: 1px solid var(--border-color);
 }
 
 .footer.small {
