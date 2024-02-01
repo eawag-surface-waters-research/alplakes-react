@@ -16,7 +16,7 @@ class SummaryGraph extends Component {
       console.log(e);
     }
     var div = d3.select(`#summarygraph_${graphid}`);
-    var margin = { top: 5, right: 0, bottom: 5, left: 0 };
+    var margin = { top: 5, right: 0, bottom: 5, left: -5 };
     this.width =
       div.node().getBoundingClientRect().width - margin.left - margin.right;
     this.height =

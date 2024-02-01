@@ -10,6 +10,7 @@
     color: grey;
     cursor: pointer;
     font-size: 16px;
+    margin: auto;
 }
 
 .toggleContainer::before {

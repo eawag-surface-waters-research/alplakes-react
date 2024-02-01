@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 import Translate from "../../translations.json";
-import logo from "../../img/icon.png";
+import logo from "../../img/icon_text.png";
+import logo_dark from "../../img/icon_text_dark.png";
 import eawag_logo from "../../img/eawag_logo.png";
 import esa_logo from "../../img/esa_logo.png";
 import trento_logo from "../../img/trento_logo.png";
@@ -25,8 +26,7 @@ class NavBar extends Component {
         <div className={"navbar"}>
           <NavLink to="/">
             <div className="home-nav">
-              <img src={logo} className="icon" alt="Alplakes logo" />
-              <div className="name">ALPLAKES</div>
+              <img src={dark ? logo_dark : logo} className="icon" alt="Alplakes logo" />
             </div>
           </NavLink>
 

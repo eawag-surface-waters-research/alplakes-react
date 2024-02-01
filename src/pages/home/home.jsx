@@ -16,6 +16,7 @@ import oned_icon from "../../img/oned-icon.png";
 import satellite_icon from "../../img/satellite.png";
 import live_icon from "../../img/live.png";
 import insitu_icon from "../../img/insitu.png";
+import minimise_icon from "../../img/normalscreen.png";
 import {
   onMouseOver,
   onMouseOut,
@@ -167,6 +168,12 @@ class Home extends Component {
     search: "",
     filters: ["all"],
     boundingBox: false,
+    fullscreen: false,
+  };
+  toggleFullscreen = () => {
+    this.setState({ fullscreen: !this.state.fullscreen }, () => {
+      window.dispatchEvent(new Event("resize"));
+    });
   };
   setBounds = (boundingBox) => {
     this.setState({ boundingBox });
@@ -244,7 +251,7 @@ class Home extends Component {
     types = types.map((t) => {
       t["value"] = list.filter((l) => l.filters.includes(t["id"])).length;
       t["dates"] = `${t["start"]} - ${year}`;
-      return t
+      return t;
     });
     return types;
   };
@@ -310,7 +317,7 @@ class Home extends Component {
   render() {
     document.title = "Alplakes";
     var { language, dark } = this.props;
-    var { list, search, filters } = this.state;
+    var { list, search, filters, fullscreen } = this.state;
     var sortedList = this.sortList(list, filters);
     var results = sortedList.filter((l) => l.display && !l.filter).length;
     var filterTypes = this.processTypes(
@@ -408,7 +415,18 @@ class Home extends Component {
             <img src={esa_logo} alt="Esa" />
             <img src={trento_logo} alt="Trento" />
           </div>
-          <div className="home-map">
+          <div className={fullscreen ? "home-map" : "home-map mini"}>
+            <div className="fullscreen" onClick={this.toggleFullscreen}>
+              {fullscreen ? (
+                <div className="label">
+                  <img src={minimise_icon} alt="Minimise" />
+                </div>
+              ) : (
+                <div className="label">
+                  View map
+                </div>
+              )}
+            </div>
             <HomeMap
               list={list}
               dark={dark}

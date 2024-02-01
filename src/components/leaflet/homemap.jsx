@@ -11,7 +11,7 @@ class HomeMap extends Component {
   state = {
     days: [],
     day: "",
-    minZoom: 7,
+    minZoom: 4,
     maxZoom: 13,
     darkMap: "clqz0bzlt017d01qw5xi9ex6x",
     lightMap: "clg4u62lq009a01oa5z336xn7",

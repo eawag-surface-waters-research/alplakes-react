@@ -11,7 +11,7 @@ class Footer extends Component {
     return (
       <React.Fragment>
         <div className={small ? "footer small" : "footer"}>
-          <div className="copyright">&copy; 2024 Alplakes</div>
+          <div className="copyright">&copy; 2024 Alplakes v2.0</div>
           <NavLink to="/about">
             <div className="link">Impressum</div>
           </NavLink>

@@ -2,7 +2,6 @@
   position: fixed;
   width: var(--list-width);
   max-width: 100%;
-  z-index: 99999;
   top: var(--header-height);
   background-color: var(--background-color);
 }
@@ -15,7 +14,7 @@
 .main .content .home-list .search {
   position: relative;
   width: 100%;
-  padding: calc(var(--padding)) var(--padding) calc(var(--padding) / 2) var(--padding);
+  padding: 0 var(--padding) calc(var(--padding) / 2) var(--padding);
   box-sizing: border-box;
 }
 
@@ -54,7 +53,7 @@
   position: absolute;
   left: calc(var(--padding) * 1.5);
   height: 22px;
-  top: calc(var(--padding) + 12px);
+  top: 12px;
 }
 
 .main.dark .content .search img {
@@ -101,7 +100,7 @@
   min-height: 350px;
   box-sizing: border-box;
   overflow-y: scroll;
-
+  overflow-x: hidden;
 }
 
 .main .content .home-list .product-list::-webkit-scrollbar {
@@ -254,7 +253,7 @@
   position: absolute;
   left: 50%;
   transform: translate(-50%, 0);
-  background-color: var(--background-color);
+  background-color: var(--box-color);
   top: 12px;
   z-index: 9;
   font-size: 14px;
@@ -357,10 +356,8 @@
   padding: calc(var(--padding) / 2);
 }
 
-.main .content .home-map .title {
-  font-size: 16px;
-  margin-left: calc(var(--padding) / 2);
-  padding: 12px 0 8px 0;
+.main .content .home-map .fullscreen {
+  display: none;
 }
 
 .main .content .home-map #map {
@@ -508,18 +505,18 @@
 .main .content .home-map #map .parameter-selector .parameter.selected .text {
   padding: 5px 12px 5px 6px;
   width: auto;
-  max-width:1000px;
+  max-width: 1000px;
 }
 
 .main .content .home-map #map .parameter-selector .parameter:hover .text {
   padding: 5px 12px 5px 6px;
   width: auto;
-  max-width:1000px;
+  max-width: 1000px;
 }
 
 .main .content .promos {
   position: fixed;
-  top: calc(var(--header-height) + var(--padding));
+  top: calc(var(--header-height));
   right: var(--padding);
   text-align: left;
   width: calc(100% - var(--list-width) - var(--padding));
@@ -591,57 +588,154 @@
 }
 
 @media screen and (max-width: 800px) {
+
+
+  .main .content .home-map #map {
+    border: none;
+    border-radius: 0;
+  }
+
   .main .content .home-map {
-    top: var(--header-height);
-    right: 0;
+    position: fixed;
+    left: 0;
     width: 100%;
-    height: 35vh;
-    min-height: unset;
-    z-index: 9;
+    top: var(--header-height);
+    width: 100%;
+    height: calc(100% - var(--header-height));
+    opacity: 1;
+    z-index: 999;
     margin: 0;
+    padding: 0;
+    border-radius: 0;
+  }
+
+  .main .content .home-map .fullscreen {
+    display: block;
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    z-index: 9999;
+    background-color: var(--box-color);
+    padding: 8px 8px 4px 8px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--box-shadow);
+    cursor: pointer;
+  }
+
+  .main .content .home-map.mini .fullscreen {
+    display: block;
+    position: absolute;
+    top: 0;
+    z-index: 9999;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgb(255 255 255 / 57%);
+    padding: 0;
+    border-radius: 0;
+    border: none;
+    box-shadow: none;
+  }
+
+  .main.dark .content .home-map.mini .fullscreen {
+    background-color: #0000008a;
+  }
+
+  .main .content .home-map.mini .label {
+    top: 5vh;
+    padding: 6px 12px;
+    background-color: var(--box-color);
+    color: var(--box-font-color);
+    border-radius: 22px;
+    width: fit-content;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--box-shadow);
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: auto;
+  }
+
+  .main .content .home-map .label img {
+    height: 18px;
+    -webkit-filter: invert(100%);
+    filter: invert(100%)
+  }
+
+  .main.dark .content .home-map .label img {
+    -webkit-filter: invert(0%);
+    filter: invert(0%)
+  }
+
+  .main .content .home-map.mini {
+    height: 15vh;
+  }
+
+  .main .content .home-map.mini #map .parameter-selector {
+    display: none;
+  }
+
+  .main .content .home-map.mini #map .day-selector {
+    display: none;
+  }
+
+  .main .content .home-map #map .leaflet-control-zoom {
+    display: none;
+  }
+
+  .main .content .home-map.mini #map .leaflet-control-attribution {
+    display: none;
   }
 
   .main .content .home-list {
     position: absolute;
-    top: calc(35vh + var(--header-height));
+    top: calc(15vh + var(--header-height) + var(--padding));
     margin: 0;
   }
 
-  .main .content .home-list .intro {
-    display: none;
-  }
-
   .main .content .home-list .product-list {
-    height: calc(65vh - var(--header-height) - var(--search-height));
+    height: calc(85vh - var(--header-height) - var(--search-height) - calc(var(--padding)*2.5));
     min-height: unset;
   }
 
-  .main .content .home-map #map .day-selector .day-outer .day-inner {
-    padding: 8px;
+  .main .content .home-list .product-wrapper {
+    margin: 0;
+    border-radius: 0;
   }
 
-  .leaflet-control-zoom {
+  .main .content .search input {
+    font-size: 16px;
+    padding: 8px 8px 8px 47px;
+  }
+
+  .main .content .search img {
+    left: calc(var(--padding) * 2);
+    height: 18px;
+    top: 10px;
+  }
+
+  .main .content .search .filters .filter {
+    padding: 4px 12px;
+    margin: calc(var(--padding) / 2) 6px calc(var(--padding) / 2) 0;
+    font-size: 12px;
+  }
+
+  .main .content .home-list .product-list .list-item .properties .polygon {
+    width: 50px;
+    height: 50px;
+  }
+
+  .main .content .home-list .product-list .list-item .properties .right .view {
     display: none;
   }
 
-  .main .content .home-map #map .title {
+  .main .content .promos {
     display: none;
   }
 
-  .main .content .shadow {
+  .main .content .logos {
     display: none;
-  }
-
-  .main .content .home-map #map .parameter-selector .parameter .text {
-    display: none;
-  }
-
-  .main .content .home-map #map .logos {
-    display: none;
-  }
-
-  .main .content .home-map #map .day-selector {
-    bottom: calc(var(--padding));
   }
 
 }
