@@ -61,6 +61,7 @@
   :root {
     --list-width: 100%;
     --padding: 12px;
+    --search-height: calc(var(--padding) * 3 + 75px);
   }
 }
 

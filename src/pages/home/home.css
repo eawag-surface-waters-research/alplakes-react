@@ -690,35 +690,40 @@
 
   .main .content .home-list {
     position: absolute;
-    top: calc(15vh + var(--header-height) + var(--padding));
+    top: calc(15vh + var(--header-height));
     margin: 0;
   }
 
   .main .content .home-list .product-list {
-    height: calc(85vh - var(--header-height) - var(--search-height) - calc(var(--padding)*2.5));
+    height: unset;
     min-height: unset;
   }
 
   .main .content .home-list .product-wrapper {
     margin: 0;
     border-radius: 0;
+    margin-top: var(--search-height);
   }
 
-  .main .content .search input {
-    font-size: 16px;
-    padding: 8px 8px 8px 47px;
+  .main .content .home-list .search {
+    position: fixed;
+    background-color: var(--background-color);
+    z-index: 999;
+    padding: var(--padding) var(--padding) calc(var(--padding) / 2) var(--padding);
   }
 
-  .main .content .search img {
+  .main .content .home-list .search img {
+    top: calc(var(--padding) + 12px);
     left: calc(var(--padding) * 2);
-    height: 18px;
-    top: 10px;
+  }
+
+  .main .content .search .filters {
+    height: calc(28.5px + var(--padding));
   }
 
   .main .content .search .filters .filter {
-    padding: 4px 12px;
-    margin: calc(var(--padding) / 2) 6px calc(var(--padding) / 2) 0;
-    font-size: 12px;
+    margin: var(--padding) 8px var(--padding) 0;
+    padding: 4px 8px;
   }
 
   .main .content .home-list .product-list .list-item .properties .polygon {
