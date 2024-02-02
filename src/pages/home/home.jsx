@@ -415,17 +415,12 @@ class Home extends Component {
             <img src={esa_logo} alt="Esa" />
             <img src={trento_logo} alt="Trento" />
           </div>
-          <div className={fullscreen ? "home-map" : "home-map mini"}>
+          <div className="map-button" onClick={this.toggleFullscreen}>Map</div>
+          <div className={fullscreen ? "home-map" : "home-map hide"}>
             <div className="fullscreen" onClick={this.toggleFullscreen}>
-              {fullscreen ? (
-                <div className="label">
-                  <img src={minimise_icon} alt="Minimise" />
-                </div>
-              ) : (
-                <div className="label">
-                  View map
-                </div>
-              )}
+              <div className="label">
+                <img src={minimise_icon} alt="Minimise" />
+              </div>
             </div>
             <HomeMap
               list={list}
