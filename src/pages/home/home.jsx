@@ -17,6 +17,7 @@ import satellite_icon from "../../img/satellite.png";
 import live_icon from "../../img/live.png";
 import insitu_icon from "../../img/insitu.png";
 import minimise_icon from "../../img/normalscreen.png";
+import more_icon from "../../img/more.png";
 import {
   onMouseOver,
   onMouseOut,
@@ -116,7 +117,7 @@ class ListItem extends Component {
               </div>
             </div>
             <div className="right">
-              <div className="view">View</div>
+              <div className="view"><img src={more_icon} alt="More" /></div>
             </div>
           </div>
           <div className="summary">

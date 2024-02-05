@@ -12,12 +12,13 @@
 /* Variables */
 
 :root {
-  --background-color: rgba(246, 248, 250, 255);
+  --background-color: rgba(255, 255, 255, 255);
   --background-font-color: rgb(15, 15, 15);
+  --background-suble-font-color: rgb(117, 117, 117);
   --box-color: rgb(255 255 255);
   --box-font-color: rgb(0, 0, 0);
   --box-inner-color: rgb(227, 227, 227);
-  --border-color: rgba(238, 239, 243, 255);
+  --border-color: #ddd;
   --box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
   --footer-height: 50px;
   --padding: 30px;
@@ -27,8 +28,8 @@
   --map-border-color: rgb(204, 204, 204);
   --button-fill-color: black;
   --button-text-color: white;
-  --highlight-color: rgba(68,188,167,255);
-  --header-text-color: rgb(59,59,59);
+  --highlight-color: rgba(68, 188, 167, 255);
+  --header-text-color: rgb(59, 59, 59);
 }
 
 :root {
@@ -37,14 +38,14 @@
 }
 
 .dark {
-  --background-color: #000000;
+  --background-color: rgba(29, 30, 32, 255);
   --background-font-color: #d9d9d9;
   --box-color: rgba(29, 30, 32, 255);
   --box-font-color: #e5e5e5;
   --box-inner-color: #282828;
-  --box-shadow: 0 3px 8px rgba(0,0,0,.24);
+  --box-shadow: 0 3px 8px rgba(0, 0, 0, .24);
   --input-shadow: inset 0 1px 2px rgba(0, 0, 0, .39), 0 0 1px #5c5c5c, 0 1px 0 #5c5c5c;
-  --border-color: #2a2a2a;
+  --border-color: #434343;
   --button-fill-color: white;
   --button-text-color: black;
   --header-text-color: rgb(207, 202, 202);

@@ -14,7 +14,7 @@
     position: fixed;
     bottom: 0;
     right: 0;
-    padding: 8px var(--padding) 0 var(--padding);
+    padding: 5px var(--padding) 5px var(--padding);
     background-color: var(--box-color);
     border-top: 1px solid var(--border-color);
     border-left: 1px solid var(--border-color);

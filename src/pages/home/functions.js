@@ -87,9 +87,10 @@ export const summariseData = (forecast, frozen) => {
     dt = [dtMin, dtMax];
     value = [4, 4];
   } else {
+    var day;
     for (let i = 0; i < forecast.date.length; i++) {
       if (forecast.date[i] > dtMin) {
-        let day = formatDate(forecast.date[i]);
+        day = formatDate(forecast.date[i]);
         let v = forecast.value[i];
         if (v !== null) {
           dt.push(new Date(forecast.date[i]));
@@ -97,6 +98,10 @@ export const summariseData = (forecast, frozen) => {
           summary[day].push(v);
         }
       }
+    }
+    if (summary[formatDate(dtMin + 4 * 86400000)].length === 0) {
+      summary[formatDate(dtMin + 4 * 86400000)] =
+        summary[formatDate(dtMin + 3 * 86400000)];
     }
   }
   for (let key in summary) {
