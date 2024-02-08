@@ -8,7 +8,7 @@ import Footer from "../../components/footer/footer";
 
 class API extends Component {
   render() {
-    document.title = "API | Alplakes"
+    document.title = "API | Alplakes";
     return (
       <React.Fragment>
         <NavBar {...this.props} />

@@ -211,4 +211,8 @@
   .navbar.small .mobile-nav {
     right: var(--padding);
   }
+
+  .navbar {
+    height: calc(var(--padding) * 2 + 22px);
+}
 }

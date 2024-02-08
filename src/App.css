@@ -29,6 +29,7 @@
   --button-fill-color: black;
   --button-text-color: white;
   --highlight-color: rgba(68, 188, 167, 255);
+  --highlight-color-fill: rgba(68, 188, 167, 0.2);
   --header-text-color: rgb(59, 59, 59);
 }
 
@@ -39,7 +40,7 @@
 
 .dark {
   --background-color: rgba(29, 30, 32, 255);
-  --background-font-color: #d9d9d9;
+  --background-font-color: #cccccc;
   --box-color: rgba(29, 30, 32, 255);
   --box-font-color: #e5e5e5;
   --box-inner-color: #282828;
@@ -62,7 +63,8 @@
   :root {
     --list-width: 100%;
     --padding: 12px;
-    --search-height: calc(var(--padding) * 3 + 75px);
+    --search-height: calc(var(--padding) * 3 + 63px);
+    --header-height: calc(var(--padding) * 2 + 22px);
   }
 }
 

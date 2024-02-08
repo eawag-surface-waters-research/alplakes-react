@@ -387,6 +387,21 @@
   display: none;
 }
 
+.main .content .home-map .fullscreen .label .arrow {
+  display: inline-block;
+  font-size: 40px;
+  margin-top: -9px;
+  padding-left: 8px;
+  padding-bottom: 4px;
+}
+
+.main .content .home-map .fullscreen .label .text {
+  display: inline-block;
+  font-size: 16px;
+  padding-left: 9px;
+  vertical-align: text-bottom;
+}
+
 .main .content .home-map #map {
   border-radius: 12px;
   border: 1px solid var(--border-color);
@@ -439,16 +454,17 @@
 
 .main .content .home-map #map .day-selector .day-outer .day-inner {
   display: inline-block;
-  padding: 12px;
+  padding: 4px 10px;
   cursor: pointer;
+  margin: 6px;
 }
 
 .main .content .home-map #map .day-selector .day-outer .day-inner:hover {
-  background-color: var(--box-inner-color);
+  border-bottom: 2px solid var(--highlight-color);
 }
 
 .main .content .home-map #map .day-selector .day-outer .day-inner.selected {
-  background-color: var(--box-color);
+  border-bottom: 2px solid var(--highlight-color);
 }
 
 .main .content .home-map #map .parameter-selector {
@@ -466,10 +482,6 @@
 .main .content .home-map #map .parameter-selector .parameter {
   position: relative;
   border-bottom: 1px solid var(--map-border-color);
-}
-
-.main .content .home-map #map .parameter-selector .parameter:hover {
-  background-color: var(--box-inner-color);
 }
 
 .main .content .home-map #map .parameter-selector .parameter.top {
@@ -567,7 +579,7 @@
   font-size: 64px;
   width: 70px;
   padding-left: 20px;
-  color: var(--highlight-color);
+  color: var(--header-text-color);
   position: relative;
   z-index: 1;
 }
@@ -619,6 +631,7 @@
   .main .content .home-map #map {
     border: none;
     border-radius: 0;
+    height: calc(100% - 40px);
   }
 
   .main .content .home-map {
@@ -633,6 +646,7 @@
     margin: 0;
     padding: 0;
     border-radius: 0;
+    border: none;
   }
 
   .main .content .home-map.hide {
@@ -645,15 +659,7 @@
 
   .main .content .home-map .fullscreen {
     display: block;
-    position: absolute;
-    top: 12px;
-    right: 12px;
-    z-index: 9999;
-    background-color: var(--box-color);
-    padding: 8px 8px 4px 8px;
-    border-radius: 8px;
-    border: 1px solid var(--border-color);
-    box-shadow: var(--box-shadow);
+    border-bottom: 1px solid var(--border-color);
     cursor: pointer;
   }
 
@@ -674,6 +680,45 @@
 
   .main .content .home-map #map .leaflet-control-zoom {
     display: none;
+  }
+
+  .main .content .home-map #map .parameter-selector {
+    top: 0;
+    left: 0;
+    border-radius: 0;
+    width: unset;
+  }
+
+  .main .content .home-map #map .parameter-selector .parameter .text {
+    display: none;
+  }
+
+  .main .content .home-map #map .parameter-selector .parameter {
+    display: inline-block;
+    padding: 0px 20px 0px 20px;
+    border: none;
+    vertical-align: bottom;
+    border-right: 1px solid var(--border-color);
+    border-radius: 0!important;
+    border-bottom: 1px solid var(--border-color)!important;
+  }
+
+  .main .content .home-map #map .parameter-selector .parameter img {
+    height: 24px;
+  }
+
+  .main .content .home-map #map .day-selector {
+    width: 100%;
+    left: 0;
+    bottom: 0;
+    transform: none;
+    background-color: var(--background-color);
+    border-top: 1x solid var(--border-color);
+  }
+
+  .main .content .home-map #map .day-selector .day-outer {
+    box-shadow: none;
+    padding: 12px 24px;
   }
 
   .main .content .home-list {
@@ -706,7 +751,7 @@
   }
 
   .main .content .home-list .product-list .list-item {
-    padding: calc(var(--padding)/4) var(--padding);
+    padding: calc(var(--padding)/4) 0;
   }
 
   .main .content .home-list .search {
@@ -717,22 +762,33 @@
   }
 
   .main .content .home-list .search img {
-    top: calc(var(--padding) + 12px);
+    top: calc(var(--padding) + 10px);
     left: calc(var(--padding) * 2);
+    height: 18px;
   }
 
   .main .content .search .filters {
-    height: calc(28.5px + var(--padding));
+    height: calc(32px + var(--padding));
   }
 
   .main .content .search .filters .filter {
     margin: var(--padding) 8px var(--padding) 0;
-    padding: 4px 8px;
+    padding: 4px 12px;
+    font-size: 12px;
   }
 
   .main .content .home-list .product-list .list-item .properties .polygon {
-    width: 50px;
-    height: 50px;
+    width: 45px;
+    height: 55px;
+    margin-left: var(--padding);
+  }
+
+  .main .content .home-list .product-list .list-item .properties .left .label .header {
+    margin-top: 2px;
+  }
+
+  .main .content .home-list .product-list .list-item .properties .left .label {
+    padding: 0;
   }
 
   .main .content .home-list .product-list .list-item .properties .right .view {
@@ -745,6 +801,10 @@
 
   .main .content .logos {
     display: none;
+  }
+
+  .main .content .search input {
+    padding: 8px 8px 8px 45px;
   }
 
 }

@@ -1,29 +1,47 @@
 .main .api-container {
   width: 100%;
-  max-width: 1200px;
+  max-width: 1400px;
   margin: auto;
-  margin-top: calc(var(--header-height) + var(--padding) * 2);
-  border-radius: 22px;
+  margin-top: var(--header-height);
   padding: 2px var(--padding);
   box-sizing: border-box;
-  background-color: var(--box-color);
-  border: 1px solid var(--border-color);
 }
 
-.main.dark .api-container .swagger-ui {
+.main.dark .api-container .swagger-ui .opblock-body{
   filter: invert(88%) hue-rotate(180deg);
 }
 
-.main.dark .api-container .swagger-ui .highlight-code {
-  filter: invert(100%) hue-rotate(180deg);
-}
-
 .main .api-container .swagger-ui .info {
-  margin: 18px 0;
+  display: none;
 }
 
 .main .api-container .swagger-ui .wrapper {
   padding: 0;
+}
+
+.swagger-ui .opblock.opblock-get .opblock-summary-method {
+  background: var(--highlight-color);
+}
+
+.swagger-ui .opblock.opblock-get .opblock-summary {
+  border-color: var(--highlight-color);
+}
+
+.swagger-ui .opblock.opblock-get {
+  background: none;
+  border-color: var(--highlight-color);
+}
+
+.swagger-ui .opblock.opblock-get .tab-header .tab-item.active h4 span:after {
+  background: var(--highlight-color);
+}
+
+.swagger-ui a.nostyle {
+  color: var(--background-font-color);
+}
+
+.swagger-ui .opblock .opblock-summary-description {
+  color: var(--background-font-color);
 }
 
 @media screen and (max-width: 500px) {

@@ -11,13 +11,14 @@ class HomeMap extends Component {
   state = {
     days: [],
     day: "",
-    minZoom: 4,
+    minZoom: 6,
     maxZoom: 13,
     darkMap: "clqz0bzlt017d01qw5xi9ex6x",
     lightMap: "clg4u62lq009a01oa5z336xn7",
   };
   setDay = (event) => {
     var day = event.target.id;
+    this.removeLabels();
     this.plotPolygons(day, this.state.min, this.state.max);
     this.plotLabels(day);
     this.setState({ day });

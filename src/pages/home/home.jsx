@@ -16,7 +16,6 @@ import oned_icon from "../../img/oned-icon.png";
 import satellite_icon from "../../img/satellite.png";
 import live_icon from "../../img/live.png";
 import insitu_icon from "../../img/insitu.png";
-import minimise_icon from "../../img/normalscreen.png";
 import more_icon from "../../img/more.png";
 import {
   onMouseOver,
@@ -117,7 +116,9 @@ class ListItem extends Component {
               </div>
             </div>
             <div className="right">
-              <div className="view"><img src={more_icon} alt="More" /></div>
+              <div className="view">
+                <img src={more_icon} alt="More" />
+              </div>
             </div>
           </div>
           <div className="summary">
@@ -416,11 +417,14 @@ class Home extends Component {
             <img src={esa_logo} alt="Esa" />
             <img src={trento_logo} alt="Trento" />
           </div>
-          <div className="map-button" onClick={this.toggleFullscreen}>Map</div>
+          <div className="map-button" onClick={this.toggleFullscreen}>
+            Map
+          </div>
           <div className={fullscreen ? "home-map" : "home-map hide"}>
             <div className="fullscreen" onClick={this.toggleFullscreen}>
               <div className="label">
-                <img src={minimise_icon} alt="Minimise" />
+                <div className="arrow">&#8592;</div>
+                <div className="text">Lake temperature forecast</div>
               </div>
             </div>
             <HomeMap
