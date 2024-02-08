@@ -33,42 +33,57 @@ import Footer from "../../components/footer/footer";
 import PolygonGraph from "../../components/leaflet/polygon";
 import NumberIncreaser from "../../components/numberincreaser/numberincreaser";
 
-class PlaceHolder extends Component {
+class Search extends Component {
   render() {
+    var { setFilter, setSearch, search, language, filters, filterTypes } =
+      this.props;
+
     return (
-      <React.Fragment>
-        {[...Array(12).keys()].map((a) => (
-          <div className="list-item-placeholder" key={a}></div>
-        ))}
-      </React.Fragment>
+      <div className="search">
+        <input
+          type="search"
+          placeholder={
+            Translations.search[language] +
+            " " +
+            Translations.lakes[language].toLowerCase()
+          }
+          value={search}
+          onChange={setSearch}
+        />
+        <img src={searchIcon} alt="Search Icon" />
+        <div className="filters">
+          {filterTypes.map((f) => (
+            <div
+              className={filters.includes(f.id) ? "filter selected" : "filter"}
+              key={f.id}
+              onClick={() => setFilter(f.id)}
+            >
+              {f.short_name}
+            </div>
+          ))}
+        </div>
+      </div>
     );
   }
 }
 
-class SummaryTable extends Component {
+class List extends Component {
   render() {
-    var { forecast, language } = this.props;
+    var { language, sortedList, results, search } = this.props;
     return (
-      <React.Fragment>
-        {Object.keys(forecast.summary).map((day, i, arr) => (
-          <div
-            key={day}
-            className={i === arr.length - 1 ? "inner end" : "inner"}
-          >
-            <div className="ave">
-              {forecast.summary[day]}
-              {forecast.summary[day] ? "°" : ""}
-            </div>
-            <div className="day">{dayName(day, language, Translations)}</div>
+      <div className="list">
+        <div className="product-wrapper">
+          <div className="results">{results} results</div>
+          <div className="product-list">
+            {results === 0 && search.length > 0 && (
+              <div className="empty">{Translations.results[language]}</div>
+            )}
+            {sortedList.map((lake) => (
+              <ListItem lake={lake} language={language} key={lake.key} />
+            ))}
           </div>
-        ))}
-        <SummaryGraph
-          dt={forecast.dt}
-          value={forecast.value}
-          dtMin={forecast.dtMin}
-          dtMax={forecast.dtMax}
-        />
-      </React.Fragment>
+        </div>
+      </div>
     );
   }
 }
@@ -135,6 +150,34 @@ class ListItem extends Component {
           </div>
         </div>
       </NavLink>
+    );
+  }
+}
+
+class SummaryTable extends Component {
+  render() {
+    var { forecast, language } = this.props;
+    return (
+      <React.Fragment>
+        {Object.keys(forecast.summary).map((day, i, arr) => (
+          <div
+            key={day}
+            className={i === arr.length - 1 ? "inner end" : "inner"}
+          >
+            <div className="ave">
+              {forecast.summary[day]}
+              {forecast.summary[day] ? "°" : ""}
+            </div>
+            <div className="day">{dayName(day, language, Translations)}</div>
+          </div>
+        ))}
+        <SummaryGraph
+          dt={forecast.dt}
+          value={forecast.value}
+          dtMin={forecast.dtMin}
+          dtMax={forecast.dtMax}
+        />
+      </React.Fragment>
     );
   }
 }
@@ -367,59 +410,21 @@ class Home extends Component {
       <React.Fragment>
         <NavBar {...this.props} small={true} />
         <div className="content">
-          <div className="home-list">
-            <div className="search">
-              <input
-                type="search"
-                placeholder={
-                  Translations.search[language] +
-                  " " +
-                  Translations.lakes[language].toLowerCase()
-                }
-                value={search}
-                onChange={this.setSearch}
-              />
-              <img src={searchIcon} alt="Alplakes logo" />
-              <div className="filters">
-                {filterTypes.map((f) => (
-                  <div
-                    className={
-                      filters.includes(f.id) ? "filter selected" : "filter"
-                    }
-                    key={f.id}
-                    onClick={() => this.setFilter(f.id)}
-                  >
-                    {f.short_name}
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div className="product-wrapper">
-              <div className="results">{results} results</div>
-              <div className="product-list">
-                {list.length === 0 ? (
-                  <PlaceHolder />
-                ) : (
-                  results === 0 && (
-                    <div className="empty">
-                      {Translations.results[language]}
-                    </div>
-                  )
-                )}
-                {sortedList.map((lake) => (
-                  <ListItem lake={lake} language={language} key={lake.key} />
-                ))}
-              </div>
-            </div>
-          </div>
-          <div className="logos">
-            <img src={eawag_logo} alt="Eawag" />
-            <img src={esa_logo} alt="Esa" />
-            <img src={trento_logo} alt="Trento" />
-          </div>
-          <div className="map-button" onClick={this.toggleFullscreen}>
-            Map
-          </div>
+          <Search
+            setFilter={this.setFilter}
+            setSearch={this.setSearch}
+            search={search}
+            language={language}
+            filters={filters}
+            filterTypes={filterTypes}
+          />
+          <List
+            language={language}
+            sortedList={sortedList}
+            results={results}
+            search={search}
+          />
+          <Promos types={filterTypes.filter((f) => f.id !== "all")} />
           <div className={fullscreen ? "home-map" : "home-map hide"}>
             <div className="fullscreen" onClick={this.toggleFullscreen}>
               <div className="label">
@@ -434,7 +439,14 @@ class Home extends Component {
               setBounds={this.setBounds}
             />
           </div>
-          <Promos types={filterTypes.filter((f) => f.id !== "all")} />
+          <div className="logos">
+            <img src={eawag_logo} alt="Eawag" />
+            <img src={esa_logo} alt="Esa" />
+            <img src={trento_logo} alt="Trento" />
+          </div>
+          <div className="map-button" onClick={this.toggleFullscreen}>
+            Map
+          </div>
         </div>
         <Footer {...this.props} small={true} />
       </React.Fragment>

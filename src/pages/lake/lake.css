@@ -15,17 +15,20 @@
   z-index: 2;
 }
 
-.main .lake .content .primary {
-  width: calc(100% - 472px);
-  height: calc(100vh - 220px);
-  display: inline-block;
+.main .lake .content .player {
   position: fixed;
-  top: 66px;
-  left: 24px;
-  z-index: 1;
+  top: calc(var(--header-height) + var(--search-height));
+  right: var(--padding);
+  width: calc(100% - var(--list-width) - var(--padding));
+  height: calc(100% - var(--header-height) - var(--search-height) - var(--footer-height) - 75px);
+  box-sizing: border-box;
+  background-color: var(--box-color);
+  border-radius: 22px;
+  border: 1px solid var(--border-color);
+  padding: calc(var(--padding) / 2);
 }
 
-.main .lake .content .primary.fullscreen {
+.main .lake .content .player.fullscreen {
   position: fixed;
   width: 100%;
   height: 100%;
@@ -35,12 +38,13 @@
 }
 
 .main .lake .content .secondary {
-  width: 400px;
-  height: 100%;
-  vertical-align: top;
-  margin-bottom: 24px;
-  margin-left: calc(100% - 400px);
-  max-width: calc(100% - 24px);
+  width: var(--list-width);
+  max-width: 100%;
+  position: fixed;
+  left: 0;
+  box-sizing: border-box;
+  top: var(--header-height);
+  padding: 0 var(--padding);
 }
 
 
@@ -49,14 +53,14 @@
   display: none;
 }
 
-.main .lake .content .primary .map-component {
+.main .lake .content .player .map-component {
   width: 100%;
   height: 100%;
   box-sizing: border-box;
   position: relative;
 }
 
-.main .lake .content .primary .map-component .loading {
+.main .lake .content .player .map-component .loading {
   position: absolute;
   left: 12px;
   bottom: 70px;
@@ -71,18 +75,18 @@
   visibility: hidden;
 }
 
-.main .lake .content .primary .map-component .loading .loading-symbol {
+.main .lake .content .player .map-component .loading .loading-symbol {
   display: inline-block;
 }
 
-.main .lake .content .primary .map-component .loading .loading-text {
+.main .lake .content .player .map-component .loading .loading-text {
   display: inline-block;
   font-size: 12px;
   max-width: 100px;
   margin: 0 8px;
 }
 
-.main .lake .content .primary .map-component .loading .loading-symbol .loader {
+.main .lake .content .player .map-component .loading .loading-symbol .loader {
   width: 35px;
   height: 35px;
   border: 4px solid black;
@@ -105,14 +109,14 @@
   }
 }
 
-.main .lake .content .primary .map-component .data-loading {
+.main .lake .content .player .map-component .data-loading {
   position: absolute;
   z-index: 999;
   left: 20px;
   bottom: 75px;
 }
 
-.main .lake .content .primary .map-component .graph {
+.main .lake .content .player .map-component .graph {
   position: absolute;
   top: 0;
   left: 0;
@@ -125,12 +129,12 @@
   z-index: 999;
 }
 
-.main.dark .lake .content .primary .map-component .graph {
+.main.dark .lake .content .player .map-component .graph {
   background-color: #000000e8;
   color: white;
 }
 
-.main .lake .content .primary .map-component .graph .close {
+.main .lake .content .player .map-component .graph .close {
   position: absolute;
   left: 0;
   top: 0;
@@ -141,11 +145,11 @@
   z-index: 999;
 }
 
-.main .lake .content .primary .map-component .graph .close:hover {
+.main .lake .content .player .map-component .graph .close:hover {
   color: black;
 }
 
-.main .lake .content .primary .map-component .frozen {
+.main .lake .content .player .map-component .frozen {
   position: absolute;
   top: 12px;
   left: 12px;
@@ -159,7 +163,7 @@
   border-radius: 8px;
 }
 
-.main .lake .content .primary .map-component .frozen .close {
+.main .lake .content .player .map-component .frozen .close {
   cursor: pointer;
   position: absolute;
   right: 8px;
@@ -167,7 +171,7 @@
   font-size: 28px;
 }
 
-.main .lake .content .primary .map-component .legend {
+.main .lake .content .player .map-component .legend {
   position: absolute;
   right: 12px;
   bottom: 70px;
@@ -179,28 +183,28 @@
   padding: 3px 9px;
 }
 
-.main .lake .content .primary .map-component .controls {
+.main .lake .content .player .map-component .controls {
   position: absolute;
   left: 12px;
   top: 84px;
 }
 
-.main .lake .content .primary .map-component .controls a img {
+.main .lake .content .player .map-component .controls a img {
   height: 16px;
   vertical-align: middle;
   margin: auto;
   opacity: 0.5;
 }
 
-.main .lake .content .primary .map-component .controls a.active img {
+.main .lake .content .player .map-component .controls a.active img {
   opacity: 1;
 }
 
-.main .lake .content .primary .map-component .controls a:hover img {
+.main .lake .content .player .map-component .controls a:hover img {
   opacity: 1;
 }
 
-.main .lake .content .primary .map-component .settings-modal {
+.main .lake .content .player .map-component .settings-modal {
   position: absolute;
   right: 12px;
   bottom: 66px;
@@ -211,11 +215,11 @@
   color: white;
 }
 
-.main .lake .content .primary .map-component .settings-modal .settings-input {
+.main .lake .content .player .map-component .settings-modal .settings-input {
   text-align: right;
 }
 
-.main .lake .content .primary .map-component .settings-modal .settings-input input {
+.main .lake .content .player .map-component .settings-modal .settings-input input {
   width: 80px;
   padding: 5px;
   box-sizing: border-box;
@@ -227,7 +231,7 @@
   margin: 5px 0 5px 20px;
 }
 
-.main .lake .content .primary .map-component .settings-modal .settings-input select {
+.main .lake .content .player .map-component .settings-modal .settings-input select {
   padding: 5px;
   box-sizing: border-box;
   border-radius: 8px;
@@ -237,28 +241,32 @@
   margin: 5px 0 5px 20px;
 }
 
-.main .lake .content .primary .map-component .settings-modal.hidden {
+.main .lake .content .player .map-component .settings-modal.hidden {
   visibility: hidden;
 }
 
-.main .lake .content .primary .map-component .viewport {
+.main .lake .content .player .map-component .viewport {
   width: 100%;
   height: 100%;
 }
 
-.main .lake .content .primary .map-component .gradient {
+.main .lake .content .player .map-component .viewport #map {
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+}
+
+.main .lake .content .player .map-component .gradient {
   position: absolute;
-  bottom: 0;
+  bottom: -1px;
   z-index: 999;
   width: 100%;
   height: 127px;
-  background-image: linear-gradient(rgba(0, 0, 0, 0),
-      rgba(0, 0, 0, 0.2),
-      rgba(0, 0, 0, 0.7));
+  background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.7));
   pointer-events: none;
+  border-radius: 12px;
 }
 
-.main .lake .content .primary .map-component .playback {
+.main .lake .content .player .map-component .playback {
   position: absolute;
   bottom: 0;
   left: 0;
@@ -266,7 +274,7 @@
   width: 100%;
 }
 
-.main .lake .content .primary .map-component .playback .slider {
+.main .lake .content .player .map-component .playback .slider {
   width: calc(100% - 28px);
   box-sizing: border-box;
   position: absolute;
@@ -275,7 +283,7 @@
   z-index: 9999;
 }
 
-.main .lake .content .primary .map-component .playback .play-controls {
+.main .lake .content .player .map-component .playback .play-controls {
   position: absolute;
   width: 100%;
   bottom: 0;
@@ -284,15 +292,15 @@
   box-sizing: border-box;
 }
 
-.main .lake .content .primary .map-component .playback .play-controls .clickable-button {
+.main .lake .content .player .map-component .playback .play-controls .clickable-button {
   opacity: 0.9;
 }
 
-.main .lake .content .primary .map-component .playback .play-controls .clickable-button:hover {
+.main .lake .content .player .map-component .playback .play-controls .clickable-button:hover {
   opacity: 1;
 }
 
-.main .lake .content .primary .map-component .playback .play-controls .clickable-button .tooltip {
+.main .lake .content .player .map-component .playback .play-controls .clickable-button .tooltip {
   visibility: hidden;
   background-color: rgba(0, 0, 0, 0.8);
   color: #fff;
@@ -304,15 +312,15 @@
   bottom: 150%;
 }
 
-.main .lake .content .primary .map-component .playback .play-controls .clickable-button .tooltip.right {
+.main .lake .content .player .map-component .playback .play-controls .clickable-button .tooltip.right {
   right: 10px;
 }
 
-.main .lake .content .primary .map-component .playback .play-controls .clickable-button:hover .tooltip {
+.main .lake .content .player .map-component .playback .play-controls .clickable-button:hover .tooltip {
   visibility: visible;
 }
 
-.main .lake .content .primary .map-component .playback .play-controls .play-pause-icon {
+.main .lake .content .player .map-component .playback .play-controls .play-pause-icon {
   border: 0;
   background: transparent;
   box-sizing: border-box;
@@ -326,12 +334,12 @@
   margin-left: 12px;
 }
 
-.main .lake .content .primary .map-component .playback .play-controls .play-pause-icon.paused {
+.main .lake .content .player .map-component .playback .play-controls .play-pause-icon.paused {
   border-style: double;
   border-width: 0px 0 0px 20px;
 }
 
-.main .lake .content .primary .map-component .playback .play-controls .current-datetime {
+.main .lake .content .player .map-component .playback .play-controls .current-datetime {
   display: inline-block;
   padding-top: 16px;
   vertical-align: top;
@@ -339,27 +347,27 @@
   font-size: 14px;
 }
 
-.main .lake .content .primary .map-component .playback .play-controls .selected-period {
+.main .lake .content .player .map-component .playback .play-controls .selected-period {
   display: inline-block;
 }
 
-.main .lake .content .primary .map-component .playback .play-controls .clickable-button {
+.main .lake .content .player .map-component .playback .play-controls .clickable-button {
   display: inline-block;
 }
 
-.main .lake .content .primary .map-component .playback .play-controls .clickable-button.tools {
+.main .lake .content .player .map-component .playback .play-controls .clickable-button.tools {
   float: right;
 }
 
-.main .lake .content .primary .map-component .playback .play-controls .clickable-button.settings {
+.main .lake .content .player .map-component .playback .play-controls .clickable-button.settings {
   float: right;
 }
 
-.main .lake .content .primary .map-component .playback .play-controls .clickable-button.fullscreen {
+.main .lake .content .player .map-component .playback .play-controls .clickable-button.fullscreen {
   float: right;
 }
 
-.main .lake .content .primary .map-component .playback .play-controls .clickable-button.fullscreen:hover img {
+.main .lake .content .player .map-component .playback .play-controls .clickable-button.fullscreen:hover img {
   animation: pulse 0.3s normal;
   animation-timing-function: linear;
 }
@@ -378,7 +386,7 @@
   }
 }
 
-.main .lake .content .primary .map-component .playback .play-controls button {
+.main .lake .content .player .map-component .playback .play-controls button {
   width: 46px;
   height: 48px;
   background-color: transparent;
@@ -387,95 +395,95 @@
   cursor: pointer;
 }
 
-.main .lake .content .primary .map-component .playback .play-controls button img {
+.main .lake .content .player .map-component .playback .play-controls button img {
   width: 24px;
   height: 24px;
 }
 
-.main .lake .content .primary .map-component .properties {
+.main .lake .content .player .map-component .properties {
   display: inline-block;
   vertical-align: top;
   padding-top: 16px;
   width: 100%;
 }
 
-.main .lake .content .primary .map-component .properties .left {
+.main .lake .content .player .map-component .properties .left {
   display: inline-block;
   width: 32px;
   vertical-align: top;
 }
 
-.main .lake .content .primary .map-component .properties .left img {
+.main .lake .content .player .map-component .properties .left img {
   width: 22px;
   margin-top: 2px;
 }
 
-.main .lake .content .primary .map-component .properties .left .placeholder-flag {
+.main .lake .content .player .map-component .properties .left .placeholder-flag {
   width: 22px;
   margin-top: 2px;
   height: 16.5px;
   background-color: rgb(227, 227, 227);
 }
 
-.main.dark .lake .content .primary .map-component .properties .left .placeholder-flag {
+.main.dark .lake .content .player .map-component .properties .left .placeholder-flag {
   background-color: #474747;
 }
 
-.main .lake .content .primary .map-component .properties .right {
+.main .lake .content .player .map-component .properties .right {
   display: inline-block;
   width: calc(100% - 48px);
 }
 
-.main .lake .content .primary .map-component .properties .name {
+.main .lake .content .player .map-component .properties .name {
   font-family: "Roboto", "Arial", sans-serif;
   font-size: 24px;
   font-weight: 500;
 }
 
-.main .lake .content .primary .map-component .properties .location {
+.main .lake .content .player .map-component .properties .location {
   color: grey;
   font-size: 13px;
   margin-top: 3px;
 }
 
-.main .lake .content .primary .map-component .properties .location.hover {
+.main .lake .content .player .map-component .properties .location.hover {
   text-decoration: underline;
 }
 
-.main .lake .content .primary .map-component .properties .parameters {
+.main .lake .content .player .map-component .properties .parameters {
   font-size: 14px;
   color: #3f3f3f;
   margin-top: 2px;
 }
 
-.main.dark .lake .content .primary .map-component .properties .parameters {
+.main.dark .lake .content .player .map-component .properties .parameters {
   color: #c1c1c1;
 }
 
-.main .lake .content .primary .map-component .properties .parameters .stats {
+.main .lake .content .player .map-component .properties .parameters .stats {
   display: inline-block;
   color: black;
   font-size: 16px;
 }
 
-.main.dark .lake .content .primary .map-component .properties .parameters .stats {
+.main.dark .lake .content .player .map-component .properties .parameters .stats {
   color: white;
 }
 
 
 
-.main .lake .content .primary .map-component .properties .right .placeholder-name {
+.main .lake .content .player .map-component .properties .right .placeholder-name {
   width: 60%;
   height: 16.5px;
   background-color: rgb(227, 227, 227);
   border-radius: 4px;
 }
 
-.main.dark .lake .content .primary .map-component .properties .right .placeholder-name {
+.main.dark .lake .content .player .map-component .properties .right .placeholder-name {
   background-color: #474747;
 }
 
-.main .lake .content .primary .map-component .properties .right .placeholder-location {
+.main .lake .content .player .map-component .properties .right .placeholder-location {
   width: 80px;
   height: 15px;
   background-color: rgb(227, 227, 227);
@@ -483,22 +491,22 @@
   border-radius: 4px;
 }
 
-.main.dark .lake .content .primary .map-component .properties .right .placeholder-location {
+.main.dark .lake .content .player .map-component .properties .right .placeholder-location {
   background-color: #474747;
 }
 
-.main .lake .content .primary .map-component .leaflet-settings-control {
+.main .lake .content .player .map-component .leaflet-settings-control {
   display: none;
 }
 
-.main .lake .content .primary .report-issue {
+.main .lake .content .player .report-issue {
   z-index: 9999;
   position: absolute;
   bottom: -31px;
   right: 0;
 }
 
-.main .lake .content .primary .report-issue button {
+.main .lake .content .player .report-issue button {
   background-color: #720000;
   border: none;
   border-radius: 8px;
@@ -508,11 +516,11 @@
   transition: all .2s ease-in-out;
 }
 
-.main .lake .content .primary .report-issue button:hover {
+.main .lake .content .player .report-issue button:hover {
   background-color: red;
 }
 
-.main .lake .content .primary .report-issue .report-issue-modal {
+.main .lake .content .player .report-issue .report-issue-modal {
   display: block;
   position: fixed;
   width: 100vw;
@@ -522,15 +530,15 @@
   top: 0;
 }
 
-.main.dark .lake .content .primary .report-issue .report-issue-modal {
+.main.dark .lake .content .player .report-issue .report-issue-modal {
   background-color: rgba(0, 0, 0, 0.85);
 }
 
-.main .lake .content .primary .report-issue .report-issue-modal.hide {
+.main .lake .content .player .report-issue .report-issue-modal.hide {
   display: none;
 }
 
-.main .lake .content .primary .report-issue .report-issue-modal .report-issue-modal-inner {
+.main .lake .content .player .report-issue .report-issue-modal .report-issue-modal-inner {
   width: 600px;
   max-width: 100%;
   background-color: white;
@@ -544,7 +552,7 @@
   box-sizing: border-box;
 }
 
-.main .lake .content .primary .report-issue .report-issue-modal .report-issue-modal-inner .close {
+.main .lake .content .player .report-issue .report-issue-modal .report-issue-modal-inner .close {
   position: absolute;
   right: 12px;
   top: 0;
@@ -552,7 +560,7 @@
   cursor: pointer;
 }
 
-.main .lake .content .primary .report-issue .report-issue-modal .report-issue-modal-inner textarea {
+.main .lake .content .player .report-issue .report-issue-modal .report-issue-modal-inner textarea {
   width: 100%;
   min-height: 200px;
   margin: 8px 0;
@@ -560,14 +568,14 @@
   box-sizing: border-box;
 }
 
-.main .lake .content .primary .report-issue .report-issue-modal .report-issue-modal-inner input {
+.main .lake .content .player .report-issue .report-issue-modal .report-issue-modal-inner input {
   width: 100%;
   padding: 8px;
   box-sizing: border-box;
   margin: 8px 0 16px 0;
 }
 
-.main .lake .content .primary .report-issue .report-issue-modal .report-issue-modal-inner p {
+.main .lake .content .player .report-issue .report-issue-modal .report-issue-modal-inner p {
   margin: 8px 0;
 }
 
@@ -758,6 +766,7 @@
   position: relative;
   padding: 12px 12px 8px 12px;
   box-sizing: border-box;
+  display: none;
 }
 
 .main.dark .lake .content .secondary .depth-period {
@@ -907,7 +916,6 @@
 
 .main .lake .content .secondary .menu {
   width: 100%;
-  background-color: rgba(0, 0, 0, 0.05);
   border-radius: 12px;
   margin-top: 24px;
   position: relative;
@@ -1097,11 +1105,10 @@
 
 .main .lake .content .secondary .selection {
   width: 100%;
-  background-color: rgba(0, 0, 0, 0.05);
-  border-radius: 12px;
-  margin-top: 24px;
+  border: 1px solid var(--border-color);
+  border-radius: 22px;
   position: relative;
-  padding: 18px;
+  padding: var(--padding);
   box-sizing: border-box;
 }
 
@@ -1557,7 +1564,7 @@
     margin-top: 60px;
   }
 
-  .main .lake .content .primary {
+  .main .lake .content .player {
     width: 100%;
     left: 0;
     height: calc(100% - 315px);
@@ -1565,7 +1572,7 @@
     top: 197px;
   }
 
-  .main .lake .content .primary .report-issue {
+  .main .lake .content .player .report-issue {
     right: 8px;
   }
 
@@ -1573,7 +1580,7 @@
     font-size: 52px;
   }
 
-  .main .lake .content .primary .map-component .properties {
+  .main .lake .content .player .map-component .properties {
     padding: 8px;
   }
 
@@ -1587,7 +1594,7 @@
     left: 0;
   }
 
-  .main .lake .content .primary .map-component .leaflet-settings-control {
+  .main .lake .content .player .map-component .leaflet-settings-control {
     display: block;
   }
 
@@ -1715,11 +1722,11 @@
     font-size: 13px;
   }
 
-  .main .lake .content .primary .map-component .legend {
+  .main .lake .content .player .map-component .legend {
     font-size: 10px;
   }
 
-  .main .lake .content .primary .map-component .playback .play-controls .clickable-button .tooltip {
+  .main .lake .content .player .map-component .playback .play-controls .clickable-button .tooltip {
     display: none;
   }
 
@@ -1740,18 +1747,18 @@
     display: none;
   }
 
-  .main .lake .content .primary {
+  .main .lake .content .player {
     height: calc(100% - 176px);
     top: 58px;
   }
 }
 
 @media screen and (max-height: 500px) {
-  .main .lake .content .primary .map-component .properties {
+  .main .lake .content .player .map-component .properties {
     display: none;
   }
 
-  .main .lake .content .primary {
+  .main .lake .content .player {
     height: calc(100% - 58px);
   }
 }

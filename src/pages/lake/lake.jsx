@@ -5,6 +5,10 @@ import Sidebar from "./sidebar";
 import Media from "./media";
 import ReportIssue from "./reportissue";
 import CONFIG from "../../config.json";
+import Footer from "../../components/footer/footer";
+import eawag_logo from "../../img/eawag_logo.png";
+import esa_logo from "../../img/esa_logo.png";
+import trento_logo from "../../img/trento_logo.png";
 import {
   relativeDate,
   getFrozen,
@@ -400,39 +404,43 @@ class Lake extends Component {
   }
 
   render() {
-    var { metadata, lake_id, initialLoad, clickblock, fullscreen, sidebarOpen } =
-      this.state;
+    var {
+      metadata,
+      lake_id,
+      initialLoad,
+      clickblock,
+      fullscreen,
+      sidebarOpen,
+    } = this.state;
     var { language, dark } = this.props;
-    if ("name" in metadata) document.title = metadata.name[language] + " | Alplakes";
+    if ("name" in metadata)
+      document.title = metadata.name[language] + " | Alplakes";
     return (
       <div className="lake">
         <NavBar {...this.props} />
         <div className="content">
           {clickblock && <div className="click-block" />}
-          <div className={fullscreen ? "primary fullscreen" : "primary"}>
-            <ReportIssue metadata={metadata} language={language} />
-            <Media
-              language={language}
-              togglePlay={this.togglePlay}
-              setDatetime={this.setDatetime}
-              updated={this.updated}
-              lock={this.lock}
-              unlock={this.unlock}
-              nextStep={this.nextStep}
-              setSpeed={this.setSpeed}
-              setTimestep={this.setTimestep}
-              setTemperature={this.setTemperature}
-              setSimpleline={this.setSimpleline}
-              setBasemap={this.setBasemap}
-              toggleFullscreen={this.toggleFullscreen}
-              clearOverlays={this.clearOverlays}
-              openSidebar={this.openSidebar}
-              clickblock={clickblock}
-              startAnimation={this.startAnimation}
-              closeFrozen={this.closeFrozen}
-              {...this.state}
-            />
-          </div>
+          <Media
+            language={language}
+            togglePlay={this.togglePlay}
+            setDatetime={this.setDatetime}
+            updated={this.updated}
+            lock={this.lock}
+            unlock={this.unlock}
+            nextStep={this.nextStep}
+            setSpeed={this.setSpeed}
+            setTimestep={this.setTimestep}
+            setTemperature={this.setTemperature}
+            setSimpleline={this.setSimpleline}
+            setBasemap={this.setBasemap}
+            toggleFullscreen={this.toggleFullscreen}
+            clearOverlays={this.clearOverlays}
+            openSidebar={this.openSidebar}
+            clickblock={clickblock}
+            startAnimation={this.startAnimation}
+            closeFrozen={this.closeFrozen}
+            {...this.state}
+          />
           <div className="secondary">
             {!initialLoad && (
               <Sidebar
@@ -457,7 +465,13 @@ class Lake extends Component {
               </div>
             )}
           </div>
+          <div className="logos">
+            <img src={eawag_logo} alt="Eawag" />
+            <img src={esa_logo} alt="Esa" />
+            <img src={trento_logo} alt="Trento" />
+          </div>
         </div>
+        <Footer {...this.props} small={true} />
       </div>
     );
   }

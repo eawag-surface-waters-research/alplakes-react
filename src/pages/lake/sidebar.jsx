@@ -330,41 +330,6 @@ class Sidebar extends Component {
     var { images } = this.state;
     return (
       <React.Fragment>
-        <div className="info">
-          <div className="data">
-            <div className="temperature">
-              <div className="value" id="temperature_value">
-                {temperature.toFixed(1)}
-              </div>
-              <div className="details">
-                <div className="unit">°C</div>
-                <div className="average">{average && "AVE"}</div>
-              </div>
-            </div>
-            <div className="datetime">
-              <div className="date" id="date_value">
-                {formatDateLong(datetime, Translate.axis[language].months)}
-              </div>
-              <div className="time" id="time_value">
-                {formatTime(datetime)}
-              </div>
-            </div>
-          </div>
-          <div className="graph">
-            <SimpleLine
-              simpleline={simpleline}
-              datetime={datetime}
-              temperature={temperature}
-              formatDate={formatDateLong}
-              formatTime={formatTime}
-              language={language}
-              dark={dark}
-            />
-            <div className="graph-parameter">
-              {Translate.watertemperature[language]}
-            </div>
-          </div>
-        </div>
         <div className={sidebarOpen ? "settings" : "settings hide"}>
           <div
             className="settings-close"

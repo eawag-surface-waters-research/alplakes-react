@@ -281,116 +281,101 @@ class Media extends Component {
     var { settings, legend, graphData, graphs } = this.state;
     var flags = { swiss: swiss, italian: italian, french: french };
     return (
-      <div className="map-component">
-        {frozen && (
-          <div className="frozen">
-            Lake is currently ice covered, simulations are paused during this
-            period and will restart when the ice melts. Historical conditions
-            can still be accessed.
-            <div className="close" onClick={closeFrozen}>
-              &#215;
+      <div className={fullscreen ? "player fullscreen" : "player"}>
+        <div className="map-component">
+          {frozen && (
+            <div className="frozen">
+              Lake is currently ice covered, simulations are paused during this
+              period and will restart when the ice melts. Historical conditions
+              can still be accessed.
+              <div className="close" onClick={closeFrozen}>
+                &#215;
+              </div>
             </div>
-          </div>
-        )}
-        {legend && <Legend layers={layers} language={language} />}
-        {graphs && (
-          <Graphs
-            data={graphData}
-            close={this.closeGraph}
-            metadata={metadata}
-            datetime={datetime}
-          />
-        )}
-        <div className="viewport">
-          <Basemap
-            {...this.props}
-            getProfile={this.getProfile}
-            getTransect={this.getTransect}
-            openSiderbar={openSiderbar}
-          />
-        </div>
-        <div className="gradient" />
-        <Settings
-          settings={settings}
-          timestep={timestep}
-          setTimestep={setTimestep}
-          timeout={timeout}
-          setSpeed={setSpeed}
-          basemap={basemap}
-          setBasemap={setBasemap}
-          legend={legend}
-          toggleLegend={this.toggleLegend}
-        />
-        <Loading />
-        <div className="playback">
-          <div className="slider">
-            <Slider
-              period={period}
-              timestep={timestep}
+          )}
+          {legend && <Legend layers={layers} language={language} />}
+          {graphs && (
+            <Graphs
+              data={graphData}
+              close={this.closeGraph}
+              metadata={metadata}
               datetime={datetime}
-              setDatetime={setDatetime}
+            />
+          )}
+          <div className="viewport">
+            <Basemap
+              {...this.props}
+              getProfile={this.getProfile}
+              getTransect={this.getTransect}
+              openSiderbar={openSiderbar}
             />
           </div>
-          <div className="play-controls">
-            <div className="play-pause clickable-button">
-              <span className="tooltip">{Translate.play[language]}</span>
-              <button onClick={togglePlay}>
-                <div
-                  className={
-                    play ? "play-pause-icon paused" : "play-pause-icon"
-                  }
-                ></div>
-              </button>
+          <div className="gradient" />
+          <Settings
+            settings={settings}
+            timestep={timestep}
+            setTimestep={setTimestep}
+            timeout={timeout}
+            setSpeed={setSpeed}
+            basemap={basemap}
+            setBasemap={setBasemap}
+            legend={legend}
+            toggleLegend={this.toggleLegend}
+          />
+          <Loading />
+          <div className="playback">
+            <div className="slider">
+              <Slider
+                period={period}
+                timestep={timestep}
+                datetime={datetime}
+                setDatetime={setDatetime}
+              />
             </div>
-            <div className="next-frame clickable-button">
-              <span className="tooltip">{Translate.next[language]}</span>
-              <button onClick={nextStep}>
-                <img src={next} alt="next" />
-              </button>
-            </div>
-            <div className="current-datetime">
-              {formatTime(this.props.datetime) + " "}
-              {formatDate(this.props.datetime)}
-            </div>
-            <div className="fullscreen clickable-button">
-              <span className="tooltip right">
-                {Translate.fullscreen[language]}
-              </span>
-              <button onClick={toggleFullscreen}>
-                <img
-                  src={fullscreen ? normalscreen_icon : fullscreen_icon}
-                  alt="full screen"
-                />
-              </button>
-            </div>
-            <div className="settings clickable-button" id="settings-icon">
-              <span className="tooltip">{Translate.settings[language]}</span>
-              <button onClick={this.toggleSettings}>
-                <img src={settings_icon} alt="settings" />
-              </button>
-            </div>
-            {/**<div className="tools clickable-button">
+            <div className="play-controls">
+              <div className="play-pause clickable-button">
+                <span className="tooltip">{Translate.play[language]}</span>
+                <button onClick={togglePlay}>
+                  <div
+                    className={
+                      play ? "play-pause-icon paused" : "play-pause-icon"
+                    }
+                  ></div>
+                </button>
+              </div>
+              <div className="next-frame clickable-button">
+                <span className="tooltip">{Translate.next[language]}</span>
+                <button onClick={nextStep}>
+                  <img src={next} alt="next" />
+                </button>
+              </div>
+              <div className="current-datetime">
+                {formatTime(this.props.datetime) + " "}
+                {formatDate(this.props.datetime)}
+              </div>
+              <div className="fullscreen clickable-button">
+                <span className="tooltip right">
+                  {Translate.fullscreen[language]}
+                </span>
+                <button onClick={toggleFullscreen}>
+                  <img
+                    src={fullscreen ? normalscreen_icon : fullscreen_icon}
+                    alt="full screen"
+                  />
+                </button>
+              </div>
+              <div className="settings clickable-button" id="settings-icon">
+                <span className="tooltip">{Translate.settings[language]}</span>
+                <button onClick={this.toggleSettings}>
+                  <img src={settings_icon} alt="settings" />
+                </button>
+              </div>
+              {/**<div className="tools clickable-button">
               <span className="tooltip">Tools</span>
               <button>
                 <img src={tools_icon} alt="tools" />
               </button>
             </div>**/}
-          </div>
-        </div>
-        <div className="properties">
-          <div className="left">
-            {"flags" in metadata ? (
-              metadata.flags.map((f) => <img src={flags[f]} alt={f} key={f} />)
-            ) : (
-              <div className="placeholder-flag" />
-            )}
-          </div>
-          <div className="right">
-            <div className="name">
-              {"name" in metadata ? metadata.name[language] : "Lake loading..."}
-            </div>
-            <div className="location">
-              {metadata.latitude}, {metadata.longitude}
             </div>
           </div>
         </div>
