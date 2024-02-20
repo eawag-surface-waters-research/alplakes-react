@@ -282,36 +282,34 @@ class HomeMap extends Component {
     }
     return (
       <React.Fragment>
-        <div id="map">
-          <div className="parameter-selector">
-            <div
-              className={
-                parameter === "temperature" ? "parameter selected" : "parameter"
-              }
-              title="Lake temperature forecast"
-              onClick={() => this.setParameter("temperature")}
-            >
-              <img src={temperature_icon} alt="Surface temperature" />
-            </div>
-            <div
-              className={
-                parameter === "ice" ? "parameter selected" : "parameter"
-              }
-              title="Lake ice forecast"
-              onClick={() => this.setParameter("ice")}
-            >
-              <img src={ice_icon} alt="Ice Thickness" />
-            </div>
-            <div
-              className={
-                parameter === "oxygen" ? "parameter selected" : "parameter"
-              }
-              title="Lake oxygen forecast"
-              onClick={() => this.setParameter("oxygen")}
-            >
-              <img src={oxygen_icon} alt="Oxygen Content" />
-            </div>
+        <div className="parameter-selector">
+          <div
+            className={
+              parameter === "temperature" ? "parameter selected" : "parameter"
+            }
+            title="Lake temperature forecast"
+            onClick={() => this.setParameter("temperature")}
+          >
+            <img src={temperature_icon} alt="Surface temperature" />
           </div>
+          <div
+            className={parameter === "ice" ? "parameter selected" : "parameter"}
+            title="Lake ice forecast"
+            onClick={() => this.setParameter("ice")}
+          >
+            <img src={ice_icon} alt="Ice Thickness" />
+          </div>
+          <div
+            className={
+              parameter === "oxygen" ? "parameter selected" : "parameter"
+            }
+            title="Lake oxygen forecast"
+            onClick={() => this.setParameter("oxygen")}
+          >
+            <img src={oxygen_icon} alt="Oxygen Content" />
+          </div>
+        </div>
+        <div id="map">
           <div className="day-selector">
             <div className="day-outer">
               {days.map((d) => (

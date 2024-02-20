@@ -343,7 +343,7 @@
 
 .main .content .map-button {
   position: fixed;
-  bottom: var(--padding);
+  bottom: calc(var(--padding) * 2);
   left: 50%;
   transform: translate(-50%, 0);
   padding: var(--padding) 40px;
@@ -400,8 +400,8 @@
 
 .main .content .home-map .fullscreen .label .text {
   display: inline-block;
-  font-size: 16px;
-  padding-left: 0px;
+  font-size: 20px;
+  padding-left: 12px;
   vertical-align: text-bottom;
 }
 
@@ -472,30 +472,31 @@
   opacity: 1;
 }
 
-.main .content .home-map #map .parameter-selector {
+.main .content .home-map .parameter-selector {
   z-index: 999;
-  position: fixed;
-  text-align: center;
-  background-color: var(--background-color);
+  position: absolute;
+  top: calc(var(--padding) / 2);
+  left: calc(var(--padding) / 2);
   border-radius: 0 0 12px 0;
-  top: calc(var(--header-height) + var(--search-height) + var(--padding) / 2 + 1px);
-  left: calc(var(--list-width) + var(--padding) / 2);
   border: 1px solid var(--background-color);
   border-right: 1px solid var(--border-color);
   border-bottom: 1px solid var(--border-color);
   padding: 0 0 calc(var(--padding) / 2);
+  background-color: var(--background-color);
+  text-align: center;
 }
 
-.main .content .home-map #map .parameter-selector .parameter {
+.main .content .home-map .parameter-selector .parameter {
   position: relative;
   display: inline-block;
   margin-right: calc(var(--padding) / 2);
   width: 50px;
   height: 50px;
+  cursor: pointer;
 }
 
 
-.main .content .home-map #map .parameter-selector .parameter img {
+.main .content .home-map .parameter-selector .parameter img {
   height: 30px;
   padding: 8px 8px 3px 8px;
   opacity: 0.3;
@@ -506,19 +507,19 @@
   filter: invert(100%);
 }
 
-.main .content .home-map #map .parameter-selector .parameter.selected {
+.main .content .home-map .parameter-selector .parameter.selected {
   border-bottom: 2px solid var(--highlight-color);
 }
 
-.main .content .home-map #map .parameter-selector .parameter.selected img {
+.main .content .home-map .parameter-selector .parameter.selected img {
   opacity: 1;
 }
 
-.main .content .home-map #map .parameter-selector .parameter:hover img {
+.main .content .home-map .parameter-selector .parameter:hover img {
   opacity: 1;
 }
 
-.main .content .home-map #map .parameter-selector .parameter .icon {
+.main .content .home-map .parameter-selector .parameter .icon {
   font: bold 22px "Lucida Console", Monaco, monospace;
   line-height: 40px;
 }
@@ -652,14 +653,13 @@
     display: none;
   }
 
-  .main .content .home-map #map .parameter-selector {
-    top: 86px;
-    left: 0;
-    position: fixed;
+  .main .content .home-map .parameter-selector {
+    top: 40px;
+    left: 0px;
     padding-left: var(--padding);
   }
 
-  .main .content .home-map #map .parameter-selector .parameter {
+  .main .content .home-map .parameter-selector .parameter {
     margin-right: var(--padding);
   }
 
