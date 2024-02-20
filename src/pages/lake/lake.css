@@ -3,7 +3,7 @@
   width: 100%;
   padding: 0 24px;
   box-sizing: border-box;
-  margin-top: 66px;
+  margin-top: var(--header-height);
 }
 
 .main .lake .content .click-block {
@@ -15,17 +15,55 @@
   z-index: 2;
 }
 
-.main .lake .content .player {
+.main .lake .content .sidebar {
+  width: calc(var(--sidebar-width) - var(--padding));
+}
+
+.main .lake .content .selector {
   position: fixed;
-  top: calc(var(--header-height) + var(--search-height));
+  top: var(--header-height);
+  left: var(--sidebar-width);
+  border: 1px solid var(--border-color);
+  padding: 4px;
+  border-radius: 22px;
+}
+
+.main .lake .content .selector .left {
+  display: inline-block;
+  padding: 6px 25px;
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  background-color: var(--button-fill-color);
+  color: var(--button-text-color);
+  cursor: pointer;
+}
+
+.main .lake .content .selector .right {
+  display: inline-block;
+  padding: 6px 25px;
+  border: 1px solid transparent;
+  border-radius: 16px;
+  cursor: pointer;
+}
+
+.main .lake .content .view-area {
+  position: fixed;
+  top: calc(var(--header-height) + var(--selector-height));
   right: var(--padding);
-  width: calc(100% - var(--list-width) - var(--padding));
-  height: calc(100% - var(--header-height) - var(--search-height) - var(--footer-height) - 75px);
+  width: calc(100% - var(--sidebar-width) - var(--padding));
+  height: calc(100% - var(--header-height) - var(--selector-height) - var(--footer-height) - 75px);
   box-sizing: border-box;
   background-color: var(--box-color);
   border-radius: 22px;
   border: 1px solid var(--border-color);
   padding: calc(var(--padding) / 2);
+}
+
+.main .lake .content .player {
+  position: relative;
+  height: 100%;
+  width: calc(100% - 350px);
+  display: inline-block;
 }
 
 .main .lake .content .player.fullscreen {
@@ -38,16 +76,24 @@
 }
 
 .main .lake .content .secondary {
-  width: var(--list-width);
-  max-width: 100%;
-  position: fixed;
-  left: 0;
+  position: absolute;
+  display: inline-block;
+  height: 100%;
+  width: 350px;
+  vertical-align: top;
+  padding-left: calc(var(--padding) / 2);
   box-sizing: border-box;
-  top: var(--header-height);
-  padding: 0 var(--padding);
+  overflow: hidden;
+  right: calc(var(--padding) / 2);
 }
 
-
+.main .lake .content .logos {
+  position: fixed;
+  right: var(--padding);
+  bottom: 50px;
+  width: calc(100% - var(--sidebar-width) - var(--padding));
+  text-align: center;
+}
 
 .main .lake .content .secondary::-webkit-scrollbar {
   display: none;
@@ -916,10 +962,7 @@
 
 .main .lake .content .secondary .menu {
   width: 100%;
-  border-radius: 12px;
-  margin-top: 24px;
   position: relative;
-  padding: 12px;
   box-sizing: border-box;
 }
 
@@ -929,15 +972,14 @@
 
 .main .lake .content .secondary .menu .loaded {
   border-radius: 12px;
-  margin: 0 6px;
 }
 
 .main .lake .content .secondary .menu .loaded .app {
   display: inline-block;
   font-size: 50px;
-  border: 2px solid #e5e5e5;
+  border: 1px solid var(--border-color);
   border-radius: 12px;
-  margin: 14px 12px;
+  margin: 14px 9px;
   width: 60px;
   height: 60px;
   text-align: center;
@@ -965,7 +1007,7 @@
   vertical-align: top;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   text-align: center;
-  margin: 16px 14px 34px 14px;
+  margin: 16px 10px 34px 10px;
 }
 
 .main .lake .content .secondary .menu .loaded .app.filled:hover {
@@ -1061,8 +1103,8 @@
 }
 
 .main .lake .content .secondary .menu .loaded .app img {
-  max-width: 38px;
   max-height: 44px;
+  max-width: 38px;
   pointer-events: none;
   width: auto;
   height: auto;
@@ -1105,11 +1147,10 @@
 
 .main .lake .content .secondary .selection {
   width: 100%;
-  border: 1px solid var(--border-color);
-  border-radius: 22px;
   position: relative;
-  padding: var(--padding);
+  padding: 0;
   box-sizing: border-box;
+  margin-top: calc(var(--padding) / 2);
 }
 
 .main.dark .lake .content .secondary .selection {

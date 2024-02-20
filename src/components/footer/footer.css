@@ -22,6 +22,19 @@
     font-size: 14px;
 }
 
+.footer.medium {
+    width: calc(100% - var(--sidebar-width));
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    padding: 5px var(--padding) 5px var(--padding);
+    background-color: var(--box-color);
+    border-top: 1px solid var(--border-color);
+    border-left: 1px solid var(--border-color);
+    border-radius: 22px 0 0 0;
+    font-size: 14px;
+}
+
 .footer .summary {
     width: var(--list-width);
     display: inline-block;

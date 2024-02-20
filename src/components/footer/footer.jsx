@@ -7,10 +7,10 @@ import "./footer.css";
 
 class Footer extends Component {
   render() {
-    var { dark, toggleDark, small } = this.props;
+    var { dark, toggleDark, small, medium } = this.props;
     return (
       <React.Fragment>
-        <div className={small ? "footer small" : "footer"}>
+        <div className={medium ? "footer medium" : small ? "footer small" : "footer"}>
           <div className="copyright">&copy; 2024 Alplakes v2.0</div>
           <NavLink to="/about">
             <div className="link">Impressum</div>

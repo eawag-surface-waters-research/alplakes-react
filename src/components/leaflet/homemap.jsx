@@ -15,6 +15,10 @@ class HomeMap extends Component {
     maxZoom: 13,
     darkMap: "clqz0bzlt017d01qw5xi9ex6x",
     lightMap: "clg4u62lq009a01oa5z336xn7",
+    parameter: "temperature",
+  };
+  setParameter = (parameter) => {
+    this.setState({ parameter });
   };
   setDay = (event) => {
     var day = event.target.id;
@@ -271,7 +275,7 @@ class HomeMap extends Component {
   }
 
   render() {
-    var { days, day } = this.state;
+    var { days, day, parameter } = this.state;
     var { language } = this.props;
     if (day === "") {
       day = formatDateYYYYMMDD(new Date());
@@ -280,21 +284,32 @@ class HomeMap extends Component {
       <React.Fragment>
         <div id="map">
           <div className="parameter-selector">
-            <div className="parameter selected top">
+            <div
+              className={
+                parameter === "temperature" ? "parameter selected" : "parameter"
+              }
+              title="Lake temperature forecast"
+              onClick={() => this.setParameter("temperature")}
+            >
               <img src={temperature_icon} alt="Surface temperature" />
-              <div className="text">Lake temperature forecast</div>
             </div>
-            <div className="parameter">
+            <div
+              className={
+                parameter === "ice" ? "parameter selected" : "parameter"
+              }
+              title="Lake ice forecast"
+              onClick={() => this.setParameter("ice")}
+            >
               <img src={ice_icon} alt="Ice Thickness" />
-              <div className="text">Lake ice forecast</div>
             </div>
-            <div className="parameter">
+            <div
+              className={
+                parameter === "oxygen" ? "parameter selected" : "parameter"
+              }
+              title="Lake oxygen forecast"
+              onClick={() => this.setParameter("oxygen")}
+            >
               <img src={oxygen_icon} alt="Oxygen Content" />
-              <div className="text">Lake oxygen forecast</div>
-            </div>
-            <div className="parameter bottom">
-              <div className="icon">+</div>
-              <div className="text">Select from more</div>
             </div>
           </div>
           <div className="day-selector">

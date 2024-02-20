@@ -420,50 +420,57 @@ class Lake extends Component {
         <NavBar {...this.props} />
         <div className="content">
           {clickblock && <div className="click-block" />}
-          <Media
-            language={language}
-            togglePlay={this.togglePlay}
-            setDatetime={this.setDatetime}
-            updated={this.updated}
-            lock={this.lock}
-            unlock={this.unlock}
-            nextStep={this.nextStep}
-            setSpeed={this.setSpeed}
-            setTimestep={this.setTimestep}
-            setTemperature={this.setTemperature}
-            setSimpleline={this.setSimpleline}
-            setBasemap={this.setBasemap}
-            toggleFullscreen={this.toggleFullscreen}
-            clearOverlays={this.clearOverlays}
-            openSidebar={this.openSidebar}
-            clickblock={clickblock}
-            startAnimation={this.startAnimation}
-            closeFrozen={this.closeFrozen}
-            {...this.state}
-          />
-          <div className="secondary">
-            {!initialLoad && (
-              <Sidebar
-                language={language}
-                {...this.state}
-                dark={dark}
-                addLayer={this.addLayer}
-                removeLayer={this.removeLayer}
-                setSelection={this.setSelection}
-                setPeriod={this.setPeriod}
-                setDepth={this.setDepth}
-                updateOptions={this.updateOptions}
-                closeSidebar={this.closeSidebar}
-                sidebarOpen={sidebarOpen}
-              />
-            )}
-            {this.state.error === "name" && (
-              <div className="error">
-                <div className="error-code">404</div>
-                Sorry the lake id
-                <div className="error-id">{lake_id} </div> could not be found.
-              </div>
-            )}
+          <div className="sidebar">Lake Geneva</div>
+          <div className="selector">
+            <div className="left">Map</div>
+            <div className="right">Graph</div>
+          </div>
+          <div className="view-area">
+            <Media
+              language={language}
+              togglePlay={this.togglePlay}
+              setDatetime={this.setDatetime}
+              updated={this.updated}
+              lock={this.lock}
+              unlock={this.unlock}
+              nextStep={this.nextStep}
+              setSpeed={this.setSpeed}
+              setTimestep={this.setTimestep}
+              setTemperature={this.setTemperature}
+              setSimpleline={this.setSimpleline}
+              setBasemap={this.setBasemap}
+              toggleFullscreen={this.toggleFullscreen}
+              clearOverlays={this.clearOverlays}
+              openSidebar={this.openSidebar}
+              clickblock={clickblock}
+              startAnimation={this.startAnimation}
+              closeFrozen={this.closeFrozen}
+              {...this.state}
+            />
+            <div className="secondary">
+              {!initialLoad && (
+                <Sidebar
+                  language={language}
+                  {...this.state}
+                  dark={dark}
+                  addLayer={this.addLayer}
+                  removeLayer={this.removeLayer}
+                  setSelection={this.setSelection}
+                  setPeriod={this.setPeriod}
+                  setDepth={this.setDepth}
+                  updateOptions={this.updateOptions}
+                  closeSidebar={this.closeSidebar}
+                  sidebarOpen={sidebarOpen}
+                />
+              )}
+              {this.state.error === "name" && (
+                <div className="error">
+                  <div className="error-code">404</div>
+                  Sorry the lake id
+                  <div className="error-id">{lake_id} </div> could not be found.
+                </div>
+              )}
+            </div>
           </div>
           <div className="logos">
             <img src={eawag_logo} alt="Eawag" />
@@ -471,7 +478,7 @@ class Lake extends Component {
             <img src={trento_logo} alt="Trento" />
           </div>
         </div>
-        <Footer {...this.props} small={true} />
+        <Footer {...this.props} medium={true} />
       </div>
     );
   }

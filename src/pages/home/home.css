@@ -291,7 +291,7 @@
   display: table-cell;
   width: 100%;
   text-align: center;
-  border-right: 1px solid var(--border-color);
+  border-left: 1px solid var(--border-color);
   position: relative;
   z-index: 1;
   height: 55px;
@@ -301,7 +301,7 @@
   font-size: 22px;
 }
 
-.main .content .list .product-list .list-item .summary .summary-table .inner.end {
+.main .content .list .product-list .list-item .summary .summary-table .inner.start {
   border: none;
 }
 
@@ -341,14 +341,6 @@
   box-shadow: var(--box-shadow);
 }
 
-.main .content .logos {
-  position: fixed;
-  right: var(--padding);
-  bottom: 50px;
-  width: calc(100% - var(--list-width) - var(--padding));
-  text-align: center;
-}
-
 .main .content .map-button {
   position: fixed;
   bottom: var(--padding);
@@ -363,8 +355,16 @@
   display: none;
 }
 
+.main .content .logos {
+  position: fixed;
+  right: var(--padding);
+  bottom: var(--footer-height);
+  width: calc(100% - var(--list-width) - var(--padding));
+  text-align: center;
+}
+
 .main .content .logos img {
-  height: 40px;
+  height: 30px;
   margin: calc(var(--padding) / 2);
 }
 
@@ -378,7 +378,7 @@
   top: calc(var(--header-height) + var(--search-height));
   right: var(--padding);
   width: calc(100% - var(--list-width) - var(--padding));
-  height: calc(100% - var(--header-height) - var(--search-height) - var(--footer-height) - 75px);
+  height: calc(100% - var(--header-height) - var(--search-height) - var(--footer-height) - 65px);
   box-sizing: border-box;
   background-color: var(--box-color);
   border-radius: 22px;
@@ -401,7 +401,7 @@
 .main .content .home-map .fullscreen .label .text {
   display: inline-block;
   font-size: 16px;
-  padding-left: 9px;
+  padding-left: 0px;
   vertical-align: text-bottom;
 }
 
@@ -432,8 +432,8 @@
 
 .main .content .home-map #map .temperature-label .value {
   display: inline-block;
-  background-color: var(--box-inner-color);
-  color: var(--box-font-color);
+  background-color: var(--highlight-color);
+  color: white;
   padding: 2px 4px;
 }
 
@@ -460,46 +460,45 @@
   padding: 4px 10px;
   cursor: pointer;
   margin: 6px;
+  opacity: 0.6;
 }
 
 .main .content .home-map #map .day-selector .day-outer .day-inner:hover {
-  border-bottom: 2px solid var(--highlight-color);
+  opacity: 1;
 }
 
 .main .content .home-map #map .day-selector .day-outer .day-inner.selected {
   border-bottom: 2px solid var(--highlight-color);
+  opacity: 1;
 }
 
 .main .content .home-map #map .parameter-selector {
   z-index: 999;
-  position: absolute;
-  top: 12px;
+  position: fixed;
   text-align: center;
-  left: 12px;
   background-color: var(--background-color);
-  border-radius: 8px;
-  width: 35px;
-  box-shadow: var(--box-shadow);
+  border-radius: 0 0 12px 0;
+  top: calc(var(--header-height) + var(--search-height) + var(--padding) / 2 + 1px);
+  left: calc(var(--list-width) + var(--padding) / 2);
+  border: 1px solid var(--background-color);
+  border-right: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+  padding: 0 0 calc(var(--padding) / 2);
 }
 
 .main .content .home-map #map .parameter-selector .parameter {
   position: relative;
-  border-bottom: 1px solid var(--map-border-color);
+  display: inline-block;
+  margin-right: calc(var(--padding) / 2);
+  width: 50px;
+  height: 50px;
 }
 
-.main .content .home-map #map .parameter-selector .parameter.top {
-  border-radius: 8px 8px 0 0;
-}
-
-.main .content .home-map #map .parameter-selector .parameter.bottom {
-  border-radius: 0 0 8px 8px;
-  border-bottom: none;
-}
 
 .main .content .home-map #map .parameter-selector .parameter img {
-  height: 18px;
-  padding: 8px 1px 3px 1px;
-  opacity: 0.5;
+  height: 30px;
+  padding: 8px 8px 3px 8px;
+  opacity: 0.3;
 }
 
 .main.dark .content .home-map #map .parameter-selector .parameter img {
@@ -508,11 +507,7 @@
 }
 
 .main .content .home-map #map .parameter-selector .parameter.selected {
-  background-color: var(--box-color);
-}
-
-.main .content .home-map #map .parameter-selector .parameter.selected:hover {
-  background-color: var(--box-color);
+  border-bottom: 2px solid var(--highlight-color);
 }
 
 .main .content .home-map #map .parameter-selector .parameter.selected img {
@@ -526,34 +521,6 @@
 .main .content .home-map #map .parameter-selector .parameter .icon {
   font: bold 22px "Lucida Console", Monaco, monospace;
   line-height: 40px;
-}
-
-.main .content .home-map #map .parameter-selector .parameter .text {
-  position: absolute;
-  left: 36px;
-  top: 5px;
-  text-align: left;
-  white-space: nowrap;
-  background-color: var(--box-color);
-  border-radius: 0 8px 8px 0;
-  width: 0;
-  padding: 5px 0;
-  overflow: hidden;
-  z-index: 0;
-  border-bottom: 1px solid var(--border-color);
-  transition: width 0.5s ease;
-}
-
-.main .content .home-map #map .parameter-selector .parameter.selected .text {
-  padding: 5px 12px 5px 6px;
-  width: auto;
-  max-width: 1000px;
-}
-
-.main .content .home-map #map .parameter-selector .parameter:hover .text {
-  padding: 5px 12px 5px 6px;
-  width: auto;
-  max-width: 1000px;
 }
 
 .main .content .promos {
@@ -686,28 +653,14 @@
   }
 
   .main .content .home-map #map .parameter-selector {
-    top: 0;
+    top: 86px;
     left: 0;
-    border-radius: 0;
-    width: unset;
-  }
-
-  .main .content .home-map #map .parameter-selector .parameter .text {
-    display: none;
+    position: fixed;
+    padding-left: var(--padding);
   }
 
   .main .content .home-map #map .parameter-selector .parameter {
-    display: inline-block;
-    padding: 0px 20px 0px 20px;
-    border: none;
-    vertical-align: bottom;
-    border-right: 1px solid var(--border-color);
-    border-radius: 0!important;
-    border-bottom: 1px solid var(--border-color)!important;
-  }
-
-  .main .content .home-map #map .parameter-selector .parameter img {
-    height: 24px;
+    margin-right: var(--padding);
   }
 
   .main .content .home-map #map .day-selector {
@@ -716,7 +669,7 @@
     bottom: 0;
     transform: none;
     background-color: var(--background-color);
-    border-top: 1x solid var(--border-color);
+    border-top: 1px solid var(--border-color);
   }
 
   .main .content .home-map #map .day-selector .day-outer {

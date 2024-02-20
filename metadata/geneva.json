@@ -17,6 +17,14 @@
     "southWest": [46.2, 6.147],
     "northEast": [46.52, 6.93]
   },
+  "secchi": {
+    "month": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+    "min": [6.73, 6.9, 1.5, 2.24, 2.16, 0.25, 2.08, 2.08, 3.0, 2.74, 4.7, 5.49],
+    "mean": [
+      10.18, 10.56, 7.65, 4.19, 5.06, 6.37, 5.61, 5.17, 5.5, 6.65, 7.32, 9.29
+    ],
+    "max": [13.8, 15.7, 14.4, 8.4, 9.5, 9.8, 10.4, 8.3, 9.2, 11.1, 10.6, 13.6]
+  },
   "customPeriod": {
     "type": "alplakes_hydrodynamic",
     "start": -7,
@@ -45,8 +53,16 @@
       },
       "labels": [
         { "name": "Lausanne", "latlng": [46.50995, 6.61172] },
-        { "name": "Geneva", "latlng": [46.22034, 6.1564], "direction": "right" },
-        { "name": "Thonon", "latlng": [46.37547, 6.47259], "direction": "bottom" },
+        {
+          "name": "Geneva",
+          "latlng": [46.22034, 6.1564],
+          "direction": "right"
+        },
+        {
+          "name": "Thonon",
+          "latlng": [46.37547, 6.47259],
+          "direction": "bottom"
+        },
         { "name": "Vevey", "latlng": [46.45841, 6.84158] }
       ],
       "properties": {

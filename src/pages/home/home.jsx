@@ -159,24 +159,21 @@ class SummaryTable extends Component {
     var { forecast, language } = this.props;
     return (
       <React.Fragment>
-        {Object.keys(forecast.summary).map((day, i, arr) => (
-          <div
-            key={day}
-            className={i === arr.length - 1 ? "inner end" : "inner"}
-          >
-            <div className="ave">
-              {forecast.summary[day]}
-              {forecast.summary[day] ? "°" : ""}
+        {Object.keys(forecast.summary).map((day, i, arr) =>
+          forecast.summary[day] || !forecast.available ? (
+            <div
+              key={day}
+              className={i === 0 ? "inner start" : "inner"}
+            >
+              <div className="ave">
+                {forecast.summary[day]}
+                {forecast.summary[day] ? "°" : ""}
+              </div>
+              <div className="day">{dayName(day, language, Translations)}</div>
             </div>
-            <div className="day">{dayName(day, language, Translations)}</div>
-          </div>
-        ))}
-        <SummaryGraph
-          dt={forecast.dt}
-          value={forecast.value}
-          dtMin={forecast.dtMin}
-          dtMax={forecast.dtMax}
-        />
+          ) : null
+        )}
+        <SummaryGraph dt={forecast.dt} value={forecast.value} />
       </React.Fragment>
     );
   }
@@ -429,7 +426,7 @@ class Home extends Component {
             <div className="fullscreen" onClick={this.toggleFullscreen}>
               <div className="label">
                 <div className="arrow">&#8592;</div>
-                <div className="text">Lake temperature forecast</div>
+                <div className="text">Back</div>
               </div>
             </div>
             <HomeMap
