@@ -1,0 +1,1805 @@
+.main .lake .content {
+  position: relative;
+  width: 100%;
+  padding: 0 24px;
+  box-sizing: border-box;
+  margin-top: var(--header-height);
+}
+
+.main .lake .content .click-block {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  z-index: 2;
+}
+
+.main .lake .content .sidebar {
+  width: calc(var(--sidebar-width) - var(--padding));
+}
+
+.main .lake .content .selector {
+  position: fixed;
+  top: var(--header-height);
+  left: var(--sidebar-width);
+  border: 1px solid var(--border-color);
+  padding: 4px;
+  border-radius: 22px;
+}
+
+.main .lake .content .selector .left {
+  display: inline-block;
+  padding: 6px 25px;
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  background-color: var(--button-fill-color);
+  color: var(--button-text-color);
+  cursor: pointer;
+}
+
+.main .lake .content .selector .right {
+  display: inline-block;
+  padding: 6px 25px;
+  border: 1px solid transparent;
+  border-radius: 16px;
+  cursor: pointer;
+}
+
+.main .lake .content .view-area {
+  position: fixed;
+  top: calc(var(--header-height) + var(--selector-height));
+  right: var(--padding);
+  width: calc(100% - var(--sidebar-width) - var(--padding));
+  height: calc(100% - var(--header-height) - var(--selector-height) - var(--footer-height) - 75px);
+  box-sizing: border-box;
+  background-color: var(--box-color);
+  border-radius: 22px;
+  border: 1px solid var(--border-color);
+  padding: calc(var(--padding) / 2);
+}
+
+.main .lake .content .player {
+  position: relative;
+  height: 100%;
+  width: calc(100% - 350px);
+  display: inline-block;
+}
+
+.main .lake .content .player.fullscreen {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  z-index: 3;
+}
+
+.main .lake .content .secondary {
+  position: absolute;
+  display: inline-block;
+  height: 100%;
+  width: 350px;
+  vertical-align: top;
+  padding-left: calc(var(--padding) / 2);
+  box-sizing: border-box;
+  overflow: hidden;
+  right: calc(var(--padding) / 2);
+}
+
+.main .lake .content .logos {
+  position: fixed;
+  right: var(--padding);
+  bottom: 50px;
+  width: calc(100% - var(--sidebar-width) - var(--padding));
+  text-align: center;
+}
+
+.main .lake .content .secondary::-webkit-scrollbar {
+  display: none;
+}
+
+.main .lake .content .player .map-component {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.main .lake .content .player .map-component .loading {
+  position: absolute;
+  left: 12px;
+  bottom: 70px;
+  z-index: 99999;
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  border-radius: 22px;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  visibility: hidden;
+}
+
+.main .lake .content .player .map-component .loading .loading-symbol {
+  display: inline-block;
+}
+
+.main .lake .content .player .map-component .loading .loading-text {
+  display: inline-block;
+  font-size: 12px;
+  max-width: 100px;
+  margin: 0 8px;
+}
+
+.main .lake .content .player .map-component .loading .loading-symbol .loader {
+  width: 35px;
+  height: 35px;
+  border: 4px solid black;
+  border-bottom-color: transparent;
+  border-radius: 75%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1.5s linear infinite;
+  margin-top: 0px;
+  margin-bottom: -4px;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.main .lake .content .player .map-component .data-loading {
+  position: absolute;
+  z-index: 999;
+  left: 20px;
+  bottom: 75px;
+}
+
+.main .lake .content .player .map-component .graph {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 18px 12px 60px 12px;
+  background-color: rgba(255, 255, 255, 0.8);
+  color: black;
+  z-index: 999;
+}
+
+.main.dark .lake .content .player .map-component .graph {
+  background-color: #000000e8;
+  color: white;
+}
+
+.main .lake .content .player .map-component .graph .close {
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-size: 28px;
+  color: grey;
+  cursor: pointer;
+  padding: 12px;
+  z-index: 999;
+}
+
+.main .lake .content .player .map-component .graph .close:hover {
+  color: black;
+}
+
+.main .lake .content .player .map-component .frozen {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  width: calc(100% - 24px);
+  z-index: 999;
+  background-color: white;
+  padding: 18px 28px;
+  box-sizing: border-box;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  color: black;
+  border-radius: 8px;
+}
+
+.main .lake .content .player .map-component .frozen .close {
+  cursor: pointer;
+  position: absolute;
+  right: 8px;
+  top: 0px;
+  font-size: 28px;
+}
+
+.main .lake .content .player .map-component .legend {
+  position: absolute;
+  right: 12px;
+  bottom: 70px;
+  font-size: 14px;
+  z-index: 999;
+  pointer-events: none;
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 12px;
+  padding: 3px 9px;
+}
+
+.main .lake .content .player .map-component .controls {
+  position: absolute;
+  left: 12px;
+  top: 84px;
+}
+
+.main .lake .content .player .map-component .controls a img {
+  height: 16px;
+  vertical-align: middle;
+  margin: auto;
+  opacity: 0.5;
+}
+
+.main .lake .content .player .map-component .controls a.active img {
+  opacity: 1;
+}
+
+.main .lake .content .player .map-component .controls a:hover img {
+  opacity: 1;
+}
+
+.main .lake .content .player .map-component .settings-modal {
+  position: absolute;
+  right: 12px;
+  bottom: 66px;
+  z-index: 9999;
+  background-color: rgba(28, 28, 28, 0.9);
+  padding: 12px 18px;
+  border-radius: 12px;
+  color: white;
+}
+
+.main .lake .content .player .map-component .settings-modal .settings-input {
+  text-align: right;
+}
+
+.main .lake .content .player .map-component .settings-modal .settings-input input {
+  width: 80px;
+  padding: 5px;
+  box-sizing: border-box;
+  border-radius: 8px;
+  border: 1px solid white;
+  background-color: transparent;
+  color: white;
+  text-align: center;
+  margin: 5px 0 5px 20px;
+}
+
+.main .lake .content .player .map-component .settings-modal .settings-input select {
+  padding: 5px;
+  box-sizing: border-box;
+  border-radius: 8px;
+  border: 1px solid white;
+  background-color: #343434;
+  color: white;
+  margin: 5px 0 5px 20px;
+}
+
+.main .lake .content .player .map-component .settings-modal.hidden {
+  visibility: hidden;
+}
+
+.main .lake .content .player .map-component .viewport {
+  width: 100%;
+  height: 100%;
+}
+
+.main .lake .content .player .map-component .viewport #map {
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+}
+
+.main .lake .content .player .map-component .gradient {
+  position: absolute;
+  bottom: -1px;
+  z-index: 999;
+  width: 100%;
+  height: 127px;
+  background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.7));
+  pointer-events: none;
+  border-radius: 12px;
+}
+
+.main .lake .content .player .map-component .playback {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 999;
+  width: 100%;
+}
+
+.main .lake .content .player .map-component .playback .slider {
+  width: calc(100% - 28px);
+  box-sizing: border-box;
+  position: absolute;
+  bottom: 44px;
+  left: 12px;
+  z-index: 9999;
+}
+
+.main .lake .content .player .map-component .playback .play-controls {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  padding: 0 12px;
+  color: white;
+  box-sizing: border-box;
+}
+
+.main .lake .content .player .map-component .playback .play-controls .clickable-button {
+  opacity: 0.9;
+}
+
+.main .lake .content .player .map-component .playback .play-controls .clickable-button:hover {
+  opacity: 1;
+}
+
+.main .lake .content .player .map-component .playback .play-controls .clickable-button .tooltip {
+  visibility: hidden;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 12px;
+  position: absolute;
+  z-index: 1;
+  bottom: 150%;
+}
+
+.main .lake .content .player .map-component .playback .play-controls .clickable-button .tooltip.right {
+  right: 10px;
+}
+
+.main .lake .content .player .map-component .playback .play-controls .clickable-button:hover .tooltip {
+  visibility: visible;
+}
+
+.main .lake .content .player .map-component .playback .play-controls .play-pause-icon {
+  border: 0;
+  background: transparent;
+  box-sizing: border-box;
+  width: 0;
+  height: 24px;
+  border-color: transparent transparent transparent white;
+  transition: 100ms all ease;
+  cursor: pointer;
+  border-style: solid;
+  border-width: 12px 0 12px 18px;
+  margin-left: 12px;
+}
+
+.main .lake .content .player .map-component .playback .play-controls .play-pause-icon.paused {
+  border-style: double;
+  border-width: 0px 0 0px 20px;
+}
+
+.main .lake .content .player .map-component .playback .play-controls .current-datetime {
+  display: inline-block;
+  padding-top: 16px;
+  vertical-align: top;
+  margin-left: 10px;
+  font-size: 14px;
+}
+
+.main .lake .content .player .map-component .playback .play-controls .selected-period {
+  display: inline-block;
+}
+
+.main .lake .content .player .map-component .playback .play-controls .clickable-button {
+  display: inline-block;
+}
+
+.main .lake .content .player .map-component .playback .play-controls .clickable-button.tools {
+  float: right;
+}
+
+.main .lake .content .player .map-component .playback .play-controls .clickable-button.settings {
+  float: right;
+}
+
+.main .lake .content .player .map-component .playback .play-controls .clickable-button.fullscreen {
+  float: right;
+}
+
+.main .lake .content .player .map-component .playback .play-controls .clickable-button.fullscreen:hover img {
+  animation: pulse 0.3s normal;
+  animation-timing-function: linear;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.1);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+.main .lake .content .player .map-component .playback .play-controls button {
+  width: 46px;
+  height: 48px;
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.main .lake .content .player .map-component .playback .play-controls button img {
+  width: 24px;
+  height: 24px;
+}
+
+.main .lake .content .player .map-component .properties {
+  display: inline-block;
+  vertical-align: top;
+  padding-top: 16px;
+  width: 100%;
+}
+
+.main .lake .content .player .map-component .properties .left {
+  display: inline-block;
+  width: 32px;
+  vertical-align: top;
+}
+
+.main .lake .content .player .map-component .properties .left img {
+  width: 22px;
+  margin-top: 2px;
+}
+
+.main .lake .content .player .map-component .properties .left .placeholder-flag {
+  width: 22px;
+  margin-top: 2px;
+  height: 16.5px;
+  background-color: rgb(227, 227, 227);
+}
+
+.main.dark .lake .content .player .map-component .properties .left .placeholder-flag {
+  background-color: #474747;
+}
+
+.main .lake .content .player .map-component .properties .right {
+  display: inline-block;
+  width: calc(100% - 48px);
+}
+
+.main .lake .content .player .map-component .properties .name {
+  font-family: "Roboto", "Arial", sans-serif;
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.main .lake .content .player .map-component .properties .location {
+  color: grey;
+  font-size: 13px;
+  margin-top: 3px;
+}
+
+.main .lake .content .player .map-component .properties .location.hover {
+  text-decoration: underline;
+}
+
+.main .lake .content .player .map-component .properties .parameters {
+  font-size: 14px;
+  color: #3f3f3f;
+  margin-top: 2px;
+}
+
+.main.dark .lake .content .player .map-component .properties .parameters {
+  color: #c1c1c1;
+}
+
+.main .lake .content .player .map-component .properties .parameters .stats {
+  display: inline-block;
+  color: black;
+  font-size: 16px;
+}
+
+.main.dark .lake .content .player .map-component .properties .parameters .stats {
+  color: white;
+}
+
+
+
+.main .lake .content .player .map-component .properties .right .placeholder-name {
+  width: 60%;
+  height: 16.5px;
+  background-color: rgb(227, 227, 227);
+  border-radius: 4px;
+}
+
+.main.dark .lake .content .player .map-component .properties .right .placeholder-name {
+  background-color: #474747;
+}
+
+.main .lake .content .player .map-component .properties .right .placeholder-location {
+  width: 80px;
+  height: 15px;
+  background-color: rgb(227, 227, 227);
+  margin-top: 5px;
+  border-radius: 4px;
+}
+
+.main.dark .lake .content .player .map-component .properties .right .placeholder-location {
+  background-color: #474747;
+}
+
+.main .lake .content .player .map-component .leaflet-settings-control {
+  display: none;
+}
+
+.main .lake .content .player .report-issue {
+  z-index: 9999;
+  position: absolute;
+  bottom: -31px;
+  right: 0;
+}
+
+.main .lake .content .player .report-issue button {
+  background-color: #720000;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  padding: 4px 8px;
+  cursor: pointer;
+  transition: all .2s ease-in-out;
+}
+
+.main .lake .content .player .report-issue button:hover {
+  background-color: red;
+}
+
+.main .lake .content .player .report-issue .report-issue-modal {
+  display: block;
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(255, 255, 255, 0.5);
+  left: 0;
+  top: 0;
+}
+
+.main.dark .lake .content .player .report-issue .report-issue-modal {
+  background-color: rgba(0, 0, 0, 0.85);
+}
+
+.main .lake .content .player .report-issue .report-issue-modal.hide {
+  display: none;
+}
+
+.main .lake .content .player .report-issue .report-issue-modal .report-issue-modal-inner {
+  width: 600px;
+  max-width: 100%;
+  background-color: white;
+  margin: auto;
+  margin-top: 120px;
+  color: black;
+  position: relative;
+  padding: 24px;
+  border-radius: 16px;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  box-sizing: border-box;
+}
+
+.main .lake .content .player .report-issue .report-issue-modal .report-issue-modal-inner .close {
+  position: absolute;
+  right: 12px;
+  top: 0;
+  font-size: 45px;
+  cursor: pointer;
+}
+
+.main .lake .content .player .report-issue .report-issue-modal .report-issue-modal-inner textarea {
+  width: 100%;
+  min-height: 200px;
+  margin: 8px 0;
+  padding: 8px;
+  box-sizing: border-box;
+}
+
+.main .lake .content .player .report-issue .report-issue-modal .report-issue-modal-inner input {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+  margin: 8px 0 16px 0;
+}
+
+.main .lake .content .player .report-issue .report-issue-modal .report-issue-modal-inner p {
+  margin: 8px 0;
+}
+
+.main .lake .content .secondary .info {
+  background-color: rgba(0, 0, 0, 0.05);
+  padding: 8px 22px;
+  border-radius: 12px;
+}
+
+.main.dark .lake .content .secondary .info {
+  background: radial-gradient(circle, rgb(255 255 255 / 0%) 0%, rgb(50 50 50) 100%);
+}
+
+.main .lake .content .secondary .info .name {
+  font-size: 36px;
+  text-align: center;
+  color: #343434;
+  margin-bottom: 12px;
+}
+
+.main.dark .lake .content .secondary .info .name {
+  color: #dddddd;
+}
+
+.main .lake .content .secondary .info .data .temperature {
+  width: 50%;
+  display: inline-block;
+}
+
+.main .lake .content .secondary .info .data .temperature .value {
+  font-size: 68px;
+  display: inline-block;
+
+}
+
+.main .lake .content .secondary .info .data .temperature .details {
+  display: inline-block;
+}
+
+.main .lake .content .secondary .info .data .temperature .details .unit {
+  font-size: 34px;
+}
+
+.main .lake .content .secondary .info .data .temperature .details .average {
+  text-align: right;
+}
+
+.main .lake .content .secondary .info .data .datetime {
+  width: 50%;
+  display: inline-block;
+  text-align: right;
+}
+
+.main .lake .content .secondary .info .data .datetime .date {
+  font-size: 22px;
+}
+
+.main .lake .content .secondary .info .data .datetime .time {
+  font-size: 28px;
+}
+
+.main .lake .content .secondary .info .graph {
+  width: 100%;
+  height: 120px;
+  border-radius: 12px;
+  position: relative;
+  cursor: pointer;
+  margin: 10px 0;
+}
+
+.main .lake .content .secondary .info .graph .graph-parameter {
+  position: absolute;
+  top: -16px;
+  color: #b6afaf;
+  font-size: 18px;
+  z-index: 0;
+}
+
+.main.dark .lake .content .secondary .info .graph .graph-parameter {
+  color: rgb(101, 101, 101);
+}
+
+.main .lake .content .secondary .info .graph .period {
+  position: absolute;
+  top: 0;
+  width: calc(100% - 20px);
+  left: 10px;
+  color: #b6afaf;
+}
+
+.main.dark .lake .content .secondary .info .graph .period {
+  color: rgb(101, 101, 101);
+}
+
+.main .lake .content .secondary .info .graph .period .start {
+  display: inline-block;
+}
+
+.main .lake .content .secondary .info .graph .period .end {
+  text-align: right;
+  float: right;
+  display: inline-block;
+}
+
+.main .lake .content .secondary .error {
+  text-align: center;
+}
+
+.main .lake .content .secondary .error .error-code {
+  font-size: 100px;
+}
+
+.main .lake .content .secondary .error .error-id {
+  width: 100%;
+  font-weight: 500;
+  padding: 20px 0;
+  font-size: 40px;
+}
+
+.main .lake .content .secondary .settings.hide {
+  display: block;
+}
+
+.main .lake .content .secondary .settings-icon {
+  display: none;
+  position: fixed;
+  left: 0px;
+  top: 200px;
+  z-index: 200;
+  background-color: white;
+  border-radius: 0px 12px 12px 0;
+  padding: 10px 10px 8px 10px;
+  cursor: pointer;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+
+.main .lake .content .secondary .settings .settings-close {
+  display: none;
+  position: absolute;
+  top: 8px;
+  right: 20px;
+  color: black;
+  cursor: pointer;
+  border-radius: 8px;
+  height: 36px;
+}
+
+.main.dark .lake .content .secondary .settings .settings-close {
+  color: white;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.main .lake .content .secondary .settings .settings-close .settings-close-inner {
+  font-size: 32px;
+  margin-top: -5px;
+  height: 36px;
+  width: 36px;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+
+
+.main.dark .lake .content .secondary .settings-icon {
+  background-color: rgba(15, 15, 15);
+  box-shadow: #ffffff8a 0 2px 1px 0px;
+}
+
+.main .lake .content .secondary .settings-icon img {
+  width: 24px;
+  transition: 0.5s;
+}
+
+.main .lake .content .secondary .settings-icon:hover img {
+  transform: scale(1.1);
+}
+
+.main.dark .lake .content .secondary .settings-icon img {
+  -webkit-filter: invert(100%);
+  filter: invert(100%);
+}
+
+.main .lake .content .secondary .depth-period {
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 12px;
+  margin-top: 24px;
+  position: relative;
+  padding: 12px 12px 8px 12px;
+  box-sizing: border-box;
+  display: none;
+}
+
+.main.dark .lake .content .secondary .depth-period {
+  background: radial-gradient(circle, rgb(255 255 255 / 0%) 0%, rgb(50 50 50) 100%);
+}
+
+.main .lake .content .secondary .depth-period select {
+  display: inline-block;
+  font-size: 20px;
+  width: 100px;
+  margin-right: 26px;
+  background-color: #e3e3e3;
+  border: none;
+  cursor: pointer;
+  border-radius: 8px;
+  padding: 4px 8px;
+  text-align: center;
+}
+
+.main .lake .content .secondary .depth-period select:hover {
+  background-color: #d1d0d0;
+}
+
+.main.dark .lake .content .secondary .depth-period select {
+  background-color: rgb(30 30 30);
+  color: #e5e5e5;
+}
+
+.main .lake .content .secondary .depth-period .react-datepicker-wrapper {
+  display: inline-block;
+  width: auto;
+}
+
+.main .lake .content .secondary .depth-period .react-datepicker-wrapper input {
+  font-size: 20px;
+  width: 250px;
+  background-color: #e3e3e3;
+  border: none;
+  cursor: pointer;
+  border-radius: 8px;
+  padding: 4px 16px;
+  box-sizing: border-box;
+}
+
+.main.dark .lake .content .secondary .depth-period .react-datepicker-wrapper input {
+  background-color: rgb(30 30 30);
+  color: #e5e5e5;
+}
+
+.main .lake .content .secondary .depth-period .react-datepicker {
+  border: none;
+  border-radius: 12px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.main.dark .lake .content .secondary .depth-period .react-datepicker {
+  background-color: #272727;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.main.dark .lake .content .secondary .depth-period .react-datepicker .react-datepicker__header {
+  background-color: #1e1e1e;
+}
+
+.main.dark .lake .content .secondary .depth-period .react-datepicker .react-datepicker__day-name {
+  color: white;
+}
+
+.main.dark .lake .content .secondary .depth-period .react-datepicker .react-datepicker__day {
+  color: white;
+  border: 1px solid transparent;
+}
+
+.main .lake .content .secondary .depth-period .react-datepicker .react-datepicker__day {
+  border: 1px solid transparent;
+  color: black;
+}
+
+.main .lake .content .secondary .depth-period .react-datepicker .react-datepicker__day--in-range {
+  background-color: #e0e0e0;
+}
+
+.main.dark .lake .content .secondary .depth-period .react-datepicker .react-datepicker__day--in-range {
+  background-color: #1e1e1e;
+}
+
+.main.dark .lake .content .secondary .depth-period .react-datepicker .react-datepicker__day--keyboard-selected {
+  background-color: #3e3e3e;
+}
+
+.main.dark .lake .content .secondary .depth-period .react-datepicker .react-datepicker__day--disabled {
+  color: #484848;
+}
+
+.main .lake .content .secondary .depth-period .react-datepicker .react-datepicker__day--disabled {
+  color: #d1cfcf;
+}
+
+.main.dark .lake .content .secondary .depth-period .react-datepicker .react-datepicker__day--in-selecting-range {
+  background-color: #1e1e1e;
+  border: 1px solid white;
+}
+
+.main .lake .content .secondary .depth-period .react-datepicker .react-datepicker__day--in-selecting-range {
+  background-color: #eeeeee;
+  border: 1px solid black;
+}
+
+.main.dark .lake .content .secondary .depth-period .react-datepicker .react-datepicker__current-month {
+  color: white;
+}
+
+.main.dark .lake .content .secondary .depth-period .react-datepicker .react-datepicker__day:hover {
+  border: 1px solid white;
+  background-color: transparent;
+}
+
+.main .lake .content .secondary .depth-period .react-datepicker .react-datepicker__day:hover {
+  border: 1px solid black;
+  background-color: transparent;
+}
+
+.main .lake .content .secondary .depth-period .labels {
+  font-size: 12px;
+  padding-top: 5px;
+  color: rgb(101, 101, 101);
+}
+
+.main .lake .content .secondary .depth-period .labels .depth {
+  display: inline-block;
+  width: 100px;
+  text-align: center;
+  margin-right: 26px;
+}
+
+.main .lake .content .secondary .depth-period .labels .start {
+  display: inline-block;
+  width: 125px;
+  text-align: center;
+}
+
+.main .lake .content .secondary .depth-period .labels .end {
+  display: inline-block;
+  width: 125px;
+  text-align: center;
+}
+
+.main .lake .content .secondary .menu {
+  width: 100%;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.main.dark .lake .content .secondary .menu {
+  background: radial-gradient(circle, rgb(255 255 255 / 0%) 0%, rgb(50 50 50) 100%);
+}
+
+.main .lake .content .secondary .menu .loaded {
+  border-radius: 12px;
+}
+
+.main .lake .content .secondary .menu .loaded .app {
+  display: inline-block;
+  font-size: 50px;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  margin: 14px 9px;
+  width: 60px;
+  height: 60px;
+  text-align: center;
+  color: #e5e5e5;
+  position: relative;
+  cursor: pointer;
+}
+
+.main.dark .lake .content .secondary .menu .loaded .app {
+  border: 2px solid #545454;
+  color: #545454;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+
+.main .lake .content .secondary .menu .loaded .app.filled {
+  width: 62px;
+  height: 62px;
+  border: none;
+  vertical-align: top;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  text-align: center;
+  margin: 16px 10px 34px 10px;
+}
+
+.main .lake .content .secondary .menu .loaded .app.filled:hover {
+  box-shadow: #343434 0px 0px 12px;
+}
+
+.main.dark .lake .content .secondary .menu .loaded .app.filled:hover {
+  box-shadow: white 0px 0px 8px;
+}
+
+.main .lake .content .secondary .menu .loaded .app.filled.active {
+  box-shadow: #343434 0px 0px 12px;
+}
+
+.main.dark .lake .content .secondary .menu .loaded .app.filled.active {
+  box-shadow: white 0px 0px 8px;
+}
+
+.main .lake .content .secondary .alplakes_hydrodynamic {
+  background-color: #2d2d2d !important;
+  opacity: 1;
+  background-image: linear-gradient(30deg, #3a4251 12%, transparent 12.5%, transparent 87%, #3a4251 87.5%, #3a4251), linear-gradient(150deg, #3a4251 12%, transparent 12.5%, transparent 87%, #3a4251 87.5%, #3a4251), linear-gradient(30deg, #3a4251 12%, transparent 12.5%, transparent 87%, #3a4251 87.5%, #3a4251), linear-gradient(150deg, #3a4251 12%, transparent 12.5%, transparent 87%, #3a4251 87.5%, #3a4251), linear-gradient(60deg, #3a425177 25%, transparent 25.5%, transparent 75%, #3a425177 75%, #3a425177), linear-gradient(60deg, #3a425177 25%, transparent 25.5%, transparent 75%, #3a425177 75%, #3a425177);
+  background-size: 26px 46px;
+  background-position: 0 0, 0 0, 13px 23px, 13px 23px, 0 0, 13px 23px;
+}
+
+.main .lake .content .secondary .alplakes_particles {
+  background-image:
+    radial-gradient(rgb(58, 66, 81) 40.4%, transparent 40.4%),
+    radial-gradient(rgb(58, 66, 81) 40.4%, transparent 40.4%),
+    radial-gradient(rgb(0, 0, 0) 40.4%, transparent 40.4%),
+    radial-gradient(rgb(0, 0, 0) 40.4%, transparent 40.4%);
+  background-position: 0px 0px, 12px 12px, -1.2px 1.2px, 10.8px 13.2px;
+  background-size: 24px 24px;
+  background-color: rgb(45, 45, 45);
+}
+
+.main .lake .content .secondary .alplakes_transect {
+  background-color: #2d2d2d !important;
+  opacity: 1;
+  background-image: linear-gradient(30deg, #3a4251 12%, transparent 12.5%, transparent 87%, #3a4251 87.5%, #3a4251), linear-gradient(150deg, #3a4251 12%, transparent 12.5%, transparent 87%, #3a4251 87.5%, #3a4251), linear-gradient(30deg, #3a4251 12%, transparent 12.5%, transparent 87%, #3a4251 87.5%, #3a4251), linear-gradient(150deg, #3a4251 12%, transparent 12.5%, transparent 87%, #3a4251 87.5%, #3a4251), linear-gradient(60deg, #3a425177 25%, transparent 25.5%, transparent 75%, #3a425177 75%, #3a425177), linear-gradient(60deg, #3a425177 25%, transparent 25.5%, transparent 75%, #3a425177 75%, #3a425177);
+  background-size: 26px 46px;
+  background-position: 0 0, 0 0, 13px 23px, 13px 23px, 0 0, 13px 23px;
+}
+
+.main .lake .content .secondary .alplakes_profile {
+  background-color: #2d2d2d !important;
+  opacity: 1;
+  background-image: linear-gradient(30deg, #3a4251 12%, transparent 12.5%, transparent 87%, #3a4251 87.5%, #3a4251), linear-gradient(150deg, #3a4251 12%, transparent 12.5%, transparent 87%, #3a4251 87.5%, #3a4251), linear-gradient(30deg, #3a4251 12%, transparent 12.5%, transparent 87%, #3a4251 87.5%, #3a4251), linear-gradient(150deg, #3a4251 12%, transparent 12.5%, transparent 87%, #3a4251 87.5%, #3a4251), linear-gradient(60deg, #3a425177 25%, transparent 25.5%, transparent 75%, #3a425177 75%, #3a425177), linear-gradient(60deg, #3a425177 25%, transparent 25.5%, transparent 75%, #3a425177 75%, #3a425177);
+  background-size: 26px 46px;
+  background-position: 0 0, 0 0, 13px 23px, 13px 23px, 0 0, 13px 23px;
+}
+
+.main .lake .content .secondary .sencast_tiff {
+  background-color: #242424;
+  opacity: 1;
+  background-image: repeating-radial-gradient(circle at 0 0, transparent 0, #242424 15px), repeating-linear-gradient(#3a425155, #3a4251);
+}
+
+.main .lake .content .secondary .sentinel_hub_wms {
+  background-color: #242424;
+  opacity: 1;
+  background-image: linear-gradient(135deg, #3a4251 25%, transparent 25%), linear-gradient(225deg, #3a4251 25%, transparent 25%), linear-gradient(45deg, #3a4251 25%, transparent 25%), linear-gradient(315deg, #3a4251 25%, #242424 25%);
+  background-position: 15px 0, 15px 0, 0 0, 0 0;
+  background-size: 15px 15px;
+  background-repeat: repeat;
+}
+
+.main .lake .content .secondary .menu .loaded .app.filled:active {
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0.05);
+  transform: scale(1.02);
+}
+
+.main .lake .content .secondary .menu .loaded .app .remove {
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  line-height: 10px;
+  padding: 2px;
+  background-color: #b6afaf;
+  border-radius: 22px;
+  text-align: center;
+  width: 20px;
+  height: 20px;
+  box-sizing: border-box;
+  font-size: 44px;
+  transition: color 0.5s;
+}
+
+.main .lake .content .secondary .menu .loaded .app .remove:hover {
+  background-color: red;
+  color: white;
+}
+
+.main .lake .content .secondary .menu .loaded .app img {
+  max-height: 44px;
+  max-width: 38px;
+  pointer-events: none;
+  width: auto;
+  height: auto;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  transition: 0.15s ease-in-out all;
+}
+
+.main .lake .content .secondary .menu .loaded .app:hover img {
+  transform: scale(1.05);
+}
+
+
+.main .lake .content .secondary .menu .loaded .app span {
+  position: absolute;
+  bottom: -34px;
+  font-size: 14px;
+  left: -10px;
+  width: 84px;
+  text-align: center;
+  color: black;
+}
+
+.main.dark .lake .content .secondary .menu .loaded .app span {
+  color: #e5e5e5;
+}
+
+.main .lake .content .secondary .menu .loaded .app span .type {
+  font-size: 12px;
+  color: #343434;
+}
+
+.main.dark .lake .content .secondary .menu .loaded .app span .type {
+  color: rgb(101, 101, 101);
+}
+
+.main .lake .content .secondary .selection {
+  width: 100%;
+  position: relative;
+  padding: 0;
+  box-sizing: border-box;
+  margin-top: calc(var(--padding) / 2);
+}
+
+.main.dark .lake .content .secondary .selection {
+  background: radial-gradient(circle, rgb(255 255 255 / 0%) 0%, rgb(50 50 50) 100%);
+}
+
+.main .lake .content .secondary .selection .title {
+  text-align: right;
+  font-size: 18px;
+  padding-bottom: 8px;
+}
+
+.main .lake .content .secondary .selection .title-model {
+  position: absolute;
+  top: 42px;
+  font-size: 14px;
+  right: 18px;
+}
+
+.main .lake .content .secondary .selection .layers .layer {
+  margin: 6px;
+  padding: 6px 10px 6px 6px;
+  background-color: #e3e3e3;
+  border-radius: 8px;
+  cursor: pointer;
+  display: inline-block;
+  vertical-align: top;
+  width: calc(50% - 12px);
+  box-sizing: border-box;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.main.dark .lake .content .secondary .selection .layers .layer {
+  background-color: rgb(30 30 30);
+}
+
+.main .lake .content .secondary .selection .layers .layer.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.main .lake .content .secondary .selection .layers .layer:hover {
+  background-color: #d1d1d1;
+}
+
+.main.dark .lake .content .secondary .selection .layers .layer:hover {
+  background-color: rgb(15, 15, 15);
+}
+
+.main .lake .content .secondary .selection .layers .layer .icon {
+  width: 50px;
+  height: 50px;
+  display: inline-block;
+  border-radius: 12px;
+  text-align: center;
+  position: relative;
+}
+
+.main .lake .content .secondary .selection .layers .layer img {
+  max-width: 32px;
+  max-height: 34px;
+  top: 50%;
+  transform: translateY(-50%);
+  position: relative;
+  display: inline-block;
+}
+
+.main .lake .content .secondary .selection .layers .layer .text {
+  display: inline-block;
+  margin-left: 8px;
+  vertical-align: bottom;
+  font-size: 14px;
+}
+
+.main .lake .content .secondary .selection .layers .layer .text .parameter {
+  font-size: 16px;
+}
+
+.main .lake .content .secondary .selection .layers .layer .text .type {
+  color: #343434;
+  font-size: 12px;
+}
+
+.main.dark .lake .content .secondary .selection .layers .layer .text .type {
+  color: rgb(101, 101, 101);
+}
+
+.main .lake .content .secondary .selection .layers .layer .text .model {
+  font-size: 12px;
+}
+
+.main .lake .content .secondary .selection .layer-description {
+  color: black;
+  font-size: 16px;
+  cursor: pointer;
+  margin-bottom: 18px;
+}
+
+.main .lake .content .secondary .selection .layer-description a {
+  color: black;
+  font-weight: bold;
+  text-decoration: none;
+  transition: all .2s ease-in-out;
+}
+
+.main.dark .lake .content .secondary .selection .layer-description a {
+  color: #e5e5e5;
+}
+
+.main .lake .content .secondary .selection .layer-description a:hover {
+  color: green;
+}
+
+.main .lake .content .secondary .selection .layer-description button {
+  background-color: transparent;
+  color: black;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+}
+
+.main.dark .lake .content .secondary .selection .layer-description {
+  color: #e5e5e5;
+}
+
+.main.dark .lake .content .secondary .selection .layer-description button {
+  color: #e5e5e5;
+}
+
+.main .lake .content .secondary .selection .layer-settings {
+  font-size: 14px;
+  color: #b6afaf;
+}
+
+.main .lake .content .secondary .selection .layer-settings .layer-section {
+  border-bottom: 2px solid #0000000f;
+  margin-bottom: 18px;
+  font-size: 16px;
+  padding-bottom: 4px;
+}
+
+
+
+
+.main .lake .content .secondary .selection .layer-settings .setting .tiff-image {
+  background-color: white;
+  border: 1px solid white;
+  padding: 5px;
+  border-radius: 8px;
+  margin-top: 8px;
+  cursor: pointer;
+}
+
+.main.dark .lake .content .secondary .selection .layer-settings .setting .tiff-image {
+  background-color: #000000;
+  border: 1px solid black;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.main .lake .content .secondary .selection .layer-settings .setting .tiff-image.active {
+  color: #767676;
+  border: 1px solid #767676;
+}
+
+.main.dark .lake .content .secondary .selection .layer-settings .setting .tiff-image.active {
+  color: white;
+  border: 1px solid white;
+}
+
+.main .lake .content .secondary .selection .layer-settings .setting .tiff-image:hover {
+  color: #767676;
+}
+
+.main.dark .lake .content .secondary .selection .layer-settings .setting .tiff-image:hover {
+  color: white;
+}
+
+.main .lake .content .secondary .selection .layer-settings .setting .tiff-image div {
+  display: inline-block;
+  margin: 0 6px;
+}
+
+
+.main .lake .content .secondary .selection .layer-settings .layer-sub-section {
+  font-size: 15px;
+  padding: 6px 4px 6px 6px;
+  margin: 5px 0px 16px 0px;
+  border-radius: 0 12px 12px 0;
+  font-weight: bold;
+  background-color: white;
+  color: #575757;
+}
+
+.main.dark .lake .content .secondary .selection .layer-settings .layer-sub-section {
+  background-color: rgb(15, 15, 15);
+  color: #ebebeb;
+}
+
+.main .lake .content .secondary .selection .layer-settings .layer-sub-section .switch {
+  display: inline-block;
+  position: relative;
+  float: right;
+  width: 38px;
+  height: 20px;
+  margin-top: -2px;
+}
+
+.main .lake .content .secondary .selection .layer-settings .switch {
+  display: inline-block;
+  position: relative;
+  float: right;
+  width: 38px;
+  height: 20px;
+}
+
+.main .lake .content .secondary .selection .layer-settings .switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.main .lake .content .secondary .selection .layer-settings .slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.main .lake .content .secondary .selection .layer-settings .slider:before {
+  position: absolute;
+  content: "";
+  height: 14px;
+  width: 14px;
+  left: 4px;
+  bottom: 3px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.main .lake .content .secondary .selection .layer-settings input:checked+.slider {
+  background-color: #2196F3;
+}
+
+.main .lake .content .secondary .selection .layer-settings input:focus+.slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+.main .lake .content .secondary .selection .layer-settings input:checked+.slider:before {
+  -webkit-transform: translateX(16px);
+  -ms-transform: translateX(16px);
+  transform: translateX(16px);
+}
+
+.main .lake .content .secondary .selection .layer-settings .slider.round {
+  border-radius: 34px;
+}
+
+.main .lake .content .secondary .selection .layer-settings .slider.round:before {
+  border-radius: 50%;
+}
+
+.main.dark .lake .content .secondary .selection .layer-settings .layer-section {
+  border-bottom: 2px solid #ffffff1f;
+}
+
+.main .lake .content .secondary .selection .layer-settings .setting {
+  padding: 0px 0px 18px 0px;
+  display: inline-block;
+  width: 96%;
+  margin: 0 2%;
+}
+
+.main .lake .content .secondary .selection .layer-settings .setting.half {
+  width: 46%;
+  margin: 0 2%;
+  vertical-align: top;
+}
+
+.main .lake .content .secondary .selection .layer-settings .setting .label {
+  padding: 0px 0px 4px 0px;
+  display: inline-block;
+}
+
+.main .lake .content .secondary .selection .layer-settings .setting .value {
+  float: right;
+}
+
+.main.dark .lake .content .secondary .selection .layer-settings input {
+  color: white;
+  background-color: rgb(30 30 30);
+  cursor: pointer;
+}
+
+.main .lake .content .secondary .selection .layer-settings input[type=number] {
+  width: 100%;
+  font-size: 16px;
+  border: none;
+  padding: 4px 10px;
+  box-sizing: border-box;
+}
+
+.main .lake .content .secondary .selection .layer-settings input[type=number].with-button {
+  width: calc(100% - 70px);
+}
+
+.main .lake .content .secondary .selection .layer-settings input[type=color] {
+  width: 100%;
+  box-sizing: border-box;
+  border: none;
+  padding: 0;
+  height: 26px;
+  background-color: #e3e3e3;
+}
+
+.main.dark .lake .content .secondary .selection .layer-settings input[type=color] {
+  background-color: rgb(30 30 30)
+}
+
+.main .lake .content .secondary .selection .layer-settings input[type=checkbox] {
+  margin-left: 12px;
+}
+
+.main .lake .content .secondary .selection .layer-settings input[type=range] {
+  width: 100%;
+  padding: 2px 0px;
+  box-sizing: border-box;
+}
+
+.main .lake .content .secondary .selection .layer-settings button.remove {
+  display: inline-block;
+  border-radius: 8px;
+  transition: all .2s ease-in-out;
+  border: none;
+  color: #e3e3e3;
+  background-color: #720000;
+  cursor: pointer;
+  padding: 5px 12px;
+  font-size: 14px;
+}
+
+.main .lake .content .secondary .selection .layer-settings button.remove:hover {
+  background-color: red;
+}
+
+.main .lake .content .secondary .selection .layer-settings button.reset {
+  display: inline-block;
+  margin-left: 8px;
+  border-radius: 8px;
+  transition: all .2s ease-in-out;
+  border: none;
+  background-color: #e3e3e3;
+  cursor: pointer;
+  padding: 5px 12px;
+  font-size: 14px;
+}
+
+.main .lake .content .secondary .selection .layer-settings button.reset:hover {
+  background-color: #d1d0d0;
+}
+
+.main .lake .content .secondary .selection .layer-settings button.tiff {
+  display: inline-block;
+  border-radius: 8px;
+  margin-right: 18px;
+  transition: all .2s ease-in-out;
+  border: none;
+  background-color: #e3e3e3;
+  cursor: pointer;
+  padding: 5px 12px;
+  font-size: 14px;
+}
+
+.main .lake .content .secondary .selection .layer-settings button.tiff:hover {
+  background-color: #d1d0d0;
+}
+
+.main .lake .content .secondary .selection .layer-settings select {
+  display: inline-block;
+  font-size: 16px;
+  width: 100%;
+  background-color: #e3e3e3;
+  border: none;
+  cursor: pointer;
+  padding: 4px 8px;
+  text-align: left;
+}
+
+.main.dark .lake .content .secondary .selection .layer-settings select {
+  background-color: rgb(30 30 30);
+  color: #e5e5e5;
+}
+
+.main .lake .content .secondary .selection .layer-settings .react-datepicker {
+  background-color: transparent;
+  border: none;
+}
+
+.main .lake .content .secondary .selection .layer-settings .react-datepicker .react-datepicker__header {
+  background-color: transparent;
+  border: none;
+}
+
+.main.dark .lake .content .secondary .selection .layer-settings .react-datepicker {
+  color: white;
+}
+
+.main .lake .content .secondary .selection .layer-settings .react-datepicker__day {
+  border: 1px solid #f2f2f2;
+}
+
+.main.dark .lake .content .secondary .selection .layer-settings .react-datepicker__day {
+  border: 1px solid #272727;
+}
+
+.main .lake .content .secondary .selection .layer-settings .react-datepicker__day-name,
+.main .lake .content .secondary .selection .layer-settings .react-datepicker__day,
+.main .lake .content .secondary .selection .layer-settings .react-datepicker__time-name {
+  width: 2.5rem;
+  color: unset;
+  border-radius: 0.3rem;
+}
+
+.main .lake .content .secondary .selection .layer-settings .react-datepicker__day--selected {
+  border-color: unset !important;
+  font-weight: bold;
+}
+
+.main .lake .content .secondary .selection .layer-settings .react-datepicker__current-month {
+  color: unset;
+}
+
+.main .lake .content .secondary .selection .layer-settings .react-datepicker__day--disabled {
+  opacity: 0.2;
+}
+
+.main .lake .content .secondary .selection .layer-settings .react-datepicker__day:hover {
+  font-weight: bold;
+  border-color: unset;
+}
+
+@media screen and (max-width: 950px) {
+  .main .lake .content {
+    padding: 0;
+    margin-top: 60px;
+  }
+
+  .main .lake .content .player {
+    width: 100%;
+    left: 0;
+    height: calc(100% - 315px);
+    z-index: 2;
+    top: 197px;
+  }
+
+  .main .lake .content .player .report-issue {
+    right: 8px;
+  }
+
+  .main .lake .content .secondary .info .data .temperature .value {
+    font-size: 52px;
+  }
+
+  .main .lake .content .player .map-component .properties {
+    padding: 8px;
+  }
+
+  .main .lake .content .secondary .info {
+    padding: 0px 12px;
+    background: transparent !important;
+    position: fixed;
+    top: 54px;
+    width: 100%;
+    box-sizing: border-box;
+    left: 0;
+  }
+
+  .main .lake .content .player .map-component .leaflet-settings-control {
+    display: block;
+  }
+
+  .main .lake .content .secondary .settings {
+    z-index: 190;
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    background-color: rgba(255, 255, 255, 0.95);
+    width: 400px;
+    padding: 52px 20px 8px 20px;
+    box-sizing: border-box;
+    max-width: 100%;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    height: 100%;
+    -webkit-transition: all 0.7s ease-out;
+    -moz-transition: all 0.7s ease-out;
+    -ms-transition: all 0.7s ease-out;
+    -o-transition: all 0.7s ease-out;
+    transition: all 0.7s ease-out;
+  }
+
+  .main .lake .content .secondary .settings .settings-buffer {
+    overflow: auto;
+    height: 100%;
+    width: 100%;
+  }
+
+  .main.dark .lake .content .secondary .settings {
+    background-color: rgba(15, 15, 15, 0.97);
+    box-shadow: #a4a4a4ed 0px 0px 8px;
+
+  }
+
+  .main .lake .content .secondary .settings .settings-buffer::-webkit-scrollbar {
+    display: none;
+  }
+
+  .main .lake .content .secondary .settings.hide {
+    left: -400px;
+    box-shadow: none;
+  }
+
+  .main .lake .content .secondary .settings-icon {
+    display: block;
+  }
+
+  .main .lake .content .secondary .settings .settings-close {
+    display: block;
+  }
+
+  .main .lake .content .secondary .settings .settings-close.hide {
+    display: none;
+  }
+
+  .main .lake .content .secondary .info .data .temperature .value {
+    font-size: 40px;
+  }
+
+  .main .lake .content .secondary .info .data .temperature .details .unit {
+    font-size: 14px;
+  }
+
+  .main .lake .content .secondary .info .data .datetime .date {
+    font-size: 16px;
+  }
+
+  .main .lake .content .secondary .info .data .datetime .time {
+    font-size: 18px;
+  }
+
+  .main .lake .content .secondary .info .graph .graph-parameter {
+    font-size: 14px;
+  }
+
+  .main .lake .content .secondary .info .graph {
+    height: 80px;
+  }
+
+  .main .lake .content .secondary .depth-period select {
+    font-size: 18px;
+    width: 80px;
+  }
+
+  .main .lake .content .secondary .depth-period .labels .depth {
+    width: 80px;
+  }
+
+  .main .lake .content .secondary .depth-period .react-datepicker-wrapper input {
+    width: 214px;
+    padding: 4px 8px;
+    font-size: 18px;
+  }
+
+  .main .lake .content .secondary .depth-period .labels .start {
+    width: 110px;
+  }
+
+  .main .lake .content .secondary .depth-period .labels .end {
+    width: 110px;
+  }
+
+  .main .lake .content .secondary .depth-period {
+    margin-top: 0;
+  }
+
+  .main .lake .content .secondary .menu {
+    margin-top: 12px;
+  }
+
+  .main .lake .content .secondary .menu .loaded .app {
+    margin: 14px 7px
+  }
+
+  .main .lake .content .secondary .menu .loaded .app.filled {
+    margin: 16px 8px 34px 8px;
+  }
+
+  .main .lake .content .secondary .selection {
+    padding: 12px;
+    margin-top: 12px;
+  }
+
+  .main .lake .content .secondary .selection .layers .layer .text .parameter {
+    font-size: 13px;
+  }
+
+  .main .lake .content .player .map-component .legend {
+    font-size: 10px;
+  }
+
+  .main .lake .content .player .map-component .playback .play-controls .clickable-button .tooltip {
+    display: none;
+  }
+
+}
+
+@media screen and (max-width: 400px) {
+  .main .lake .content .secondary .settings {
+    padding: 52px 8px 8px 8px;
+  }
+
+  .main .lake .content .secondary .settings .settings-close {
+    right: 8px;
+  }
+}
+
+@media screen and (max-height: 520px) {
+  .main .lake .content .secondary .info {
+    display: none;
+  }
+
+  .main .lake .content .player {
+    height: calc(100% - 176px);
+    top: 58px;
+  }
+}
+
+@media screen and (max-height: 500px) {
+  .main .lake .content .player .map-component .properties {
+    display: none;
+  }
+
+  .main .lake .content .player {
+    height: calc(100% - 58px);
+  }
+}

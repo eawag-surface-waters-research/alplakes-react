@@ -86,11 +86,10 @@
     margin-bottom: -4px;
 }
 
-.dark .footer .switch img {
-    height: 20px;
-    -webkit-filter: invert(100%);
-    filter: invert(100%);
+.footer .toggleContainer div {
+    padding: 3px 7px;
 }
+
 
 @media screen and (max-width: 1250px) {
     .footer .partners img {
