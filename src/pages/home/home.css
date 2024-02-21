@@ -502,7 +502,7 @@
   opacity: 0.3;
 }
 
-.main.dark .content .home-map #map .parameter-selector .parameter img {
+.main.dark .content .home-map .parameter-selector .parameter img {
   -webkit-filter: invert(100%);
   filter: invert(100%);
 }
@@ -550,7 +550,7 @@
   font-size: 64px;
   width: 70px;
   padding-left: 20px;
-  color: var(--header-text-color);
+  color: var(--border-color);
   position: relative;
   z-index: 1;
 }

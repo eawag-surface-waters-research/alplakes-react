@@ -13,6 +13,12 @@
   "ave_depth": 154,
   "max_depth": 310,
   "elevation": 372,
+  "type": "Natural",
+  "volume": 89.0,
+  "residence_time": 4160.0,
+  "mixing_regime": "Oligomictic",
+  "trophic_state": "Mesotrophic",
+  "geothermal_flux": 0.08,
   "bounds": {
     "southWest": [46.2, 6.147],
     "northEast": [46.52, 6.93]
@@ -25,6 +31,40 @@
     ],
     "max": [13.8, 15.7, 14.4, 8.4, 9.5, 9.8, 10.4, 8.3, 9.2, 11.1, 10.6, 13.6]
   },
+  "insitu": [
+    {
+      "url": "https://www.datalakes-eawag.ch/datadetail/666",
+      "name": "LéXPLORE Idronaut",
+      "live": true,
+      "parameters": ["Water Temperature", "Oxygen", "Chlorophyll"],
+      "start": 2020,
+      "end": 2024
+    },
+    {
+      "url": "https://www.datalakes-eawag.ch/datadetail/885",
+      "name": "LéXPLORE Wave Buoy",
+      "live": true,
+      "parameters": ["Wave Height", "Wave Period", "Wave Direction"],
+      "start": 2022,
+      "end": 2024
+    },
+    {
+      "url": "https://www.datalakes-eawag.ch/datadetail/597",
+      "name": "Buchillon Field Station",
+      "live": true,
+      "parameters": ["Water Temperature", "Air Temperature"],
+      "start": 2016,
+      "end": 2024
+    },
+    {
+      "url": "https://www.datalakes-eawag.ch/datadetail/886",
+      "name": "LéXPLORE Heat Flux",
+      "live": true,
+      "parameters": ["Heat Flux"],
+      "start": 2020,
+      "end": 2024
+    }
+  ],
   "customPeriod": {
     "type": "alplakes_hydrodynamic",
     "start": -7,

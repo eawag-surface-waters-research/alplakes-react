@@ -9,6 +9,10 @@ import Selector from "./selector";
 import eawag_logo from "../../img/eawag_logo.png";
 import esa_logo from "../../img/esa_logo.png";
 import trento_logo from "../../img/trento_logo.png";
+import swiss from "../../img/swiss.png";
+import italian from "../../img/italian.png";
+import french from "../../img/french.png";
+import austrian from "../../img/austrian.png";
 import CONFIG from "../../config.json";
 import "./lake.css";
 
@@ -43,26 +47,48 @@ class Lake extends Component {
   render() {
     var { metadata, active, views } = this.state;
     var { language, dark } = this.props;
+    var flag_images = {
+      swiss: swiss,
+      italian: italian,
+      french: french,
+      austrian: austrian,
+    };
     var name = "";
     if ("name" in metadata) {
       document.title = metadata.name[language] + " | Alplakes";
       name = metadata.name[language];
     }
+    var flags = [];
+    if ("flags" in metadata) {
+      flags = metadata.flags;
+    }
     return (
       <div className="lake">
         <NavBar {...this.props} />
         <div className="content">
-          <div className="title">{name}</div>
-          <div className={`details ${active === "details" ? "active" : ""}`}>
-            <Details />
+          <div className="title">
+            {name}
+            <div className="flags">
+              {flags.map((f) => (
+                <img src={flag_images[f]} alt={f} key={f} />
+              ))}
+            </div>
           </div>
-          <Selector active={active} setActive={this.setActive} views={views} />
+          <div className={`details ${active === "details" ? "active" : ""}`}>
+            <Details metadata={metadata} language={language} />
+          </div>
+          <Selector
+            active={active}
+            setActive={this.setActive}
+            views={views}
+            language={language}
+          />
           <div className="view-area">
             <div className={`map ${active === "map" ? "active" : ""}`}>
-              <Map />
+              <Map metadata={metadata} language={language} dark={dark}/>
             </div>
             <div className={`graph ${active === "graph" ? "active" : ""}`}>
-              <Graph />
+              <Graph metadata={metadata} language={language} dark={dark}/>
             </div>
           </div>
           <div className="logos">

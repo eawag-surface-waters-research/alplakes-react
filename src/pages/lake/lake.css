@@ -1,17 +1,31 @@
 .main .lake .content {
     position: relative;
     width: 100%;
-    padding: 0 24px;
+    padding: 0;
     box-sizing: border-box;
     margin-top: calc(var(--header-height) + var(--selector-height));
 }
 
 .main .lake .content .title {
     position: fixed;
-    top: var(--header-height);
-    left: var(--padding);
-    font-size: 22px;
-    padding: 8px 0;
+    top: calc(var(--header-height) - 10px);
+    left: 0;
+    font-size: 44px;
+    width: var(--sidebar-width);
+    text-align: left;
+    background-color: var(--background-color);
+    z-index: 9;
+    padding: 0 var(--padding);
+    box-sizing: border-box;
+}
+
+.main .lake .content .title .flags {
+    margin-top: -18px;
+}
+
+.main .lake .content .title .flags img {
+    height: 16px;
+    padding: 0 4px;
 }
 
 .main .lake .content .logos {
@@ -19,7 +33,144 @@
 }
 
 .main .lake .content .details {
-    width: calc(var(--sidebar-width) - var(--padding) * 2);
+    width: var(--sidebar-width);
+}
+
+.main .lake .content .details .properties {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.main .lake .content .details .properties .property {
+    width: 33%;
+    display: inline-block;
+    margin-top: 28px;
+    text-align: center;
+}
+
+.main .lake .content .details .properties .property .left img {
+    width: 16px;
+}
+
+.main.dark .lake .content .details .properties .property .left img {
+    -webkit-filter: invert(100%);
+    filter: invert(100%);
+}
+
+.main .lake .content .details .properties .property .right {
+    display: inline-block;
+}
+
+.main .lake .content .details .properties .property .right .value {
+    font-size: 16px;
+}
+
+.main .lake .content .details .properties .property .right .value .unit {
+    display: inline-block;
+    font-size: 16px;
+    margin-left: 4px;
+}
+
+.main .lake .content .details .properties .property .right .label {
+    font-size: 10px;
+}
+
+.main .lake .content .details .insitu .datasets a {
+    text-decoration: none;
+    color: var(--background-text-color);
+}
+
+.main .lake .content .details .insitu .datasets .dataset {
+    margin-top: calc(var(--padding) / 2);
+    padding-left: 8px;
+    border-left: 2px solid var(--highlight-color);
+}
+
+.main .lake .content .details .insitu .datasets .dataset .name {
+    font-size: 16px;
+}
+
+.main .lake .content .details .insitu .datasets .dataset .date {
+    font-size: 12px;
+}
+
+.main .lake .content .details .insitu .datasets .dataset .parameters {
+    font-size: 14px;
+    padding-top: 2px;
+}
+
+.main .lake .content .details .insitu .datalakes {
+    text-align: center;
+    padding: 8px 0;
+    font-size: 14px;
+}
+
+.main .lake .content .details .insitu .datalakes img {
+    height: 18px;
+    padding-left: 8px;
+}
+
+.main .lake .content .details .dropdown {
+    padding-top: calc(var(--padding) * 1.5);
+}
+
+.main .lake .content .details .dropdown .header {
+    margin: 0 var(--padding);
+    padding-bottom: 4px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.main .lake .content .details .dropdown .header .plusminus {
+    position: relative;
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    float: right;
+    padding-top: 4px;
+
+    &.active {
+        &:before {
+            transform: translatey(-50%) rotate(-90deg);
+            opacity: 0;
+        }
+
+        &:after {
+            transform: translatey(-50%) rotate(0);
+        }
+    }
+
+    &:before,
+    &:after {
+        content: "";
+        display: block;
+        background-color: #333;
+        position: absolute;
+        top: 50%;
+        left: 0;
+        transition: .35s;
+        width: 100%;
+        height: 2px;
+    }
+
+    &:before {
+        transform: translatey(-50%);
+    }
+
+    &:after {
+        transform: translatey(-50%) rotate(90deg);
+    }
+
+}
+
+.main .lake .content .details .dropdown .contents.hidden {
+    display: none;
+}
+
+.main .lake .content .details .dropdown .contents {
+    margin: 0 var(--padding);
+    font-size: 12px;
+    padding-top: 8px;
 }
 
 .main .lake .content .view-area {
@@ -43,6 +194,382 @@
 
 .main .lake .content .view-area .map.active {
     display: block;
+}
+
+.main .lake .content .view-area .map .map-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.main .lake .content .view-area .map .map-container .gradient {
+    position: absolute;
+    bottom: -1px;
+    z-index: 999;
+    width: 100%;
+    height: 127px;
+    background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.7));
+    pointer-events: none;
+    border-radius: 12px;
+}
+
+.main.dark .lake .content .view-area .map .map-container .gradient {
+    background-image: linear-gradient(rgba(29, 30, 32, 0), rgba(29, 30, 32, 0.2), rgba(29, 30, 32, 0.7));
+}
+
+.main .lake .content .view-area .map .map-container .playback {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 999;
+    width: 100%;
+}
+
+.main .lake .content .view-area .map .map-container .playback .slider {
+    width: calc(100% - 28px);
+    box-sizing: border-box;
+    position: absolute;
+    bottom: 44px;
+    left: 12px;
+    z-index: 9999;
+}
+
+.main .lake .content .view-area .map .map-container .playback .play-controls {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    padding: 0 12px;
+    color: white;
+    box-sizing: border-box;
+}
+
+.main .lake .content .view-area .map .map-container .playback .play-controls .clickable-button {
+    opacity: 0.9;
+}
+
+.main .lake .content .view-area .map .map-container .playback .play-controls .clickable-button:hover {
+    opacity: 1;
+}
+
+.main .lake .content .view-area .map .map-container .playback .play-controls .clickable-button .tooltip {
+    visibility: hidden;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 12px;
+    position: absolute;
+    z-index: 1;
+    bottom: 150%;
+}
+
+.main .lake .content .view-area .map .map-container .playback .play-controls .clickable-button .tooltip.right {
+    right: 10px;
+}
+
+.main .lake .content .view-area .map .map-container .playback .play-controls .clickable-button:hover .tooltip {
+    visibility: visible;
+}
+
+.main .lake .content .view-area .map .map-container .playback .play-controls .play-pause-icon {
+    border: 0;
+    background: transparent;
+    box-sizing: border-box;
+    width: 0;
+    height: 24px;
+    border-color: transparent transparent transparent white;
+    transition: 100ms all ease;
+    cursor: pointer;
+    border-style: solid;
+    border-width: 12px 0 12px 18px;
+    margin-left: 12px;
+}
+
+.main .lake .content .view-area .map .map-container .playback .play-controls .play-pause-icon.paused {
+    border-style: double;
+    border-width: 0px 0 0px 20px;
+}
+
+.main .lake .content .view-area .map .map-container .playback .play-controls .current-datetime {
+    display: inline-block;
+    padding-top: 16px;
+    vertical-align: top;
+    margin-left: 10px;
+    font-size: 14px;
+}
+
+.main .lake .content .view-area .map .map-container .playback .play-controls .selected-period {
+    display: inline-block;
+}
+
+.main .lake .content .view-area .map .map-container .playback .play-controls .clickable-button {
+    display: inline-block;
+}
+
+.main .lake .content .view-area .map .map-container .playback .play-controls .clickable-button.tools {
+    float: right;
+}
+
+.main .lake .content .view-area .map .map-container .playback .play-controls .clickable-button.settings {
+    float: right;
+}
+
+.main .lake .content .view-area .map .map-container .playback .play-controls .clickable-button.fullscreen {
+    float: right;
+}
+
+.main .lake .content .view-area .map .map-container .playback .play-controls .clickable-button.fullscreen:hover img {
+    animation: pulse 0.3s normal;
+    animation-timing-function: linear;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.1);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.main .lake .content .view-area .map .map-container .playback .play-controls button {
+    width: 46px;
+    height: 48px;
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+.main .lake .content .view-area .map .map-container .playback .play-controls button img {
+    width: 24px;
+    height: 24px;
+}
+
+.main .lake .content .view-area .map .map-container .properties {
+    display: inline-block;
+    vertical-align: top;
+    padding-top: 16px;
+    width: 100%;
+}
+
+.main .lake .content .view-area .map .map-container .settings-modal {
+    position: absolute;
+    right: 12px;
+    bottom: 66px;
+    z-index: 9999;
+    background-color: rgba(28, 28, 28, 0.9);
+    padding: 12px 18px;
+    border-radius: 12px;
+    color: white;
+}
+
+.main .lake .content .view-area .map .map-container .settings-modal .settings-input {
+    text-align: right;
+}
+
+.main .lake .content .view-area .map .map-container .settings-modal .settings-input input {
+    width: 80px;
+    padding: 5px;
+    box-sizing: border-box;
+    border-radius: 8px;
+    border: 1px solid white;
+    background-color: transparent;
+    color: white;
+    text-align: center;
+    margin: 5px 0 5px 20px;
+}
+
+.main .lake .content .view-area .map .map-container .settings-modal .settings-input select {
+    padding: 5px;
+    box-sizing: border-box;
+    border-radius: 8px;
+    border: 1px solid white;
+    background-color: #343434;
+    color: white;
+    margin: 5px 0 5px 20px;
+}
+
+.main .lake .content .view-area .map .map-container .settings-modal.hidden {
+    visibility: hidden;
+}
+
+.main .lake .content .view-area .map .map-container .basemap {
+    width: 100%;
+    height: 100%;
+}
+
+.main .lake .content .view-area .map .map-container .basemap #map {
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+}
+
+.main .lake .content .view-area .map .map-container .active-apps {
+    border-radius: 0 0 0 22px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 999;
+    border-left: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+    background-color: var(--background-color);
+    padding-left: 6px;
+}
+
+.main .lake .content .view-area .map .map-container .active-apps .app {
+    display: inline-block;
+    font-size: 50px;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    margin: 14px 9px;
+    width: 60px;
+    height: 60px;
+    text-align: center;
+    color: #e5e5e5;
+    position: relative;
+    cursor: pointer;
+}
+
+.main .lake .content .view-area .map .map-container .active-apps .app.filled {
+    width: 62px;
+    height: 62px;
+    border: none;
+    vertical-align: top;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    text-align: center;
+    margin: 16px 10px 34px 10px;
+}
+
+.main .lake .content .view-area .map .map-container .active-apps .app.filled:hover {
+    box-shadow: #343434 0px 0px 12px;
+}
+
+.main.dark .lake .content .secondary .menu .loaded .app.filled:hover {
+    box-shadow: white 0px 0px 8px;
+}
+
+.main .lake .content .view-area .map .map-container .active-apps .app.filled.active {
+    box-shadow: #343434 0px 0px 12px;
+}
+
+.main.dark .lake .content .secondary .menu .loaded .app.filled.active {
+    box-shadow: white 0px 0px 8px;
+}
+
+.main .lake .content .view-area .map .map-container .alplakes_hydrodynamic {
+    background-color: #2d2d2d !important;
+    opacity: 1;
+    background-image: linear-gradient(30deg, #3a4251 12%, transparent 12.5%, transparent 87%, #3a4251 87.5%, #3a4251), linear-gradient(150deg, #3a4251 12%, transparent 12.5%, transparent 87%, #3a4251 87.5%, #3a4251), linear-gradient(30deg, #3a4251 12%, transparent 12.5%, transparent 87%, #3a4251 87.5%, #3a4251), linear-gradient(150deg, #3a4251 12%, transparent 12.5%, transparent 87%, #3a4251 87.5%, #3a4251), linear-gradient(60deg, #3a425177 25%, transparent 25.5%, transparent 75%, #3a425177 75%, #3a425177), linear-gradient(60deg, #3a425177 25%, transparent 25.5%, transparent 75%, #3a425177 75%, #3a425177);
+    background-size: 26px 46px;
+    background-position: 0 0, 0 0, 13px 23px, 13px 23px, 0 0, 13px 23px;
+}
+
+.main .lake .content .view-area .map .map-container .alplakes_particles {
+    background-image:
+        radial-gradient(rgb(58, 66, 81) 40.4%, transparent 40.4%),
+        radial-gradient(rgb(58, 66, 81) 40.4%, transparent 40.4%),
+        radial-gradient(rgb(0, 0, 0) 40.4%, transparent 40.4%),
+        radial-gradient(rgb(0, 0, 0) 40.4%, transparent 40.4%);
+    background-position: 0px 0px, 12px 12px, -1.2px 1.2px, 10.8px 13.2px;
+    background-size: 24px 24px;
+    background-color: rgb(45, 45, 45);
+}
+
+.main .lake .content .view-area .map .map-container .alplakes_transect {
+    background-color: #2d2d2d !important;
+    opacity: 1;
+    background-image: linear-gradient(30deg, #3a4251 12%, transparent 12.5%, transparent 87%, #3a4251 87.5%, #3a4251), linear-gradient(150deg, #3a4251 12%, transparent 12.5%, transparent 87%, #3a4251 87.5%, #3a4251), linear-gradient(30deg, #3a4251 12%, transparent 12.5%, transparent 87%, #3a4251 87.5%, #3a4251), linear-gradient(150deg, #3a4251 12%, transparent 12.5%, transparent 87%, #3a4251 87.5%, #3a4251), linear-gradient(60deg, #3a425177 25%, transparent 25.5%, transparent 75%, #3a425177 75%, #3a425177), linear-gradient(60deg, #3a425177 25%, transparent 25.5%, transparent 75%, #3a425177 75%, #3a425177);
+    background-size: 26px 46px;
+    background-position: 0 0, 0 0, 13px 23px, 13px 23px, 0 0, 13px 23px;
+}
+
+.main .lake .content .view-area .map .map-container .alplakes_profile {
+    background-color: #2d2d2d !important;
+    opacity: 1;
+    background-image: linear-gradient(30deg, #3a4251 12%, transparent 12.5%, transparent 87%, #3a4251 87.5%, #3a4251), linear-gradient(150deg, #3a4251 12%, transparent 12.5%, transparent 87%, #3a4251 87.5%, #3a4251), linear-gradient(30deg, #3a4251 12%, transparent 12.5%, transparent 87%, #3a4251 87.5%, #3a4251), linear-gradient(150deg, #3a4251 12%, transparent 12.5%, transparent 87%, #3a4251 87.5%, #3a4251), linear-gradient(60deg, #3a425177 25%, transparent 25.5%, transparent 75%, #3a425177 75%, #3a425177), linear-gradient(60deg, #3a425177 25%, transparent 25.5%, transparent 75%, #3a425177 75%, #3a425177);
+    background-size: 26px 46px;
+    background-position: 0 0, 0 0, 13px 23px, 13px 23px, 0 0, 13px 23px;
+}
+
+.main .lake .content .view-area .map .map-container .sencast_tiff {
+    background-color: #242424;
+    opacity: 1;
+    background-image: repeating-radial-gradient(circle at 0 0, transparent 0, #242424 15px), repeating-linear-gradient(#3a425155, #3a4251);
+}
+
+.main .lake .content .view-area .map .map-container .sentinel_hub_wms {
+    background-color: #242424;
+    opacity: 1;
+    background-image: linear-gradient(135deg, #3a4251 25%, transparent 25%), linear-gradient(225deg, #3a4251 25%, transparent 25%), linear-gradient(45deg, #3a4251 25%, transparent 25%), linear-gradient(315deg, #3a4251 25%, #242424 25%);
+    background-position: 15px 0, 15px 0, 0 0, 0 0;
+    background-size: 15px 15px;
+    background-repeat: repeat;
+}
+
+.main .lake .content .view-area .map .map-container .active-apps .app.filled:active {
+    box-shadow: 0 0 0 rgba(0, 0, 0, 0.05);
+    transform: scale(1.02);
+}
+
+.main .lake .content .view-area .map .map-container .active-apps .app .remove {
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    line-height: 10px;
+    padding: 2px;
+    background-color: #b6afaf;
+    border-radius: 22px;
+    text-align: center;
+    width: 20px;
+    height: 20px;
+    box-sizing: border-box;
+    font-size: 44px;
+    transition: color 0.5s;
+}
+
+.main .lake .content .view-area .map .map-container .active-apps .app .remove:hover {
+    background-color: red;
+    color: white;
+}
+
+.main .lake .content .view-area .map .map-container .active-apps .app img {
+    max-height: 44px;
+    max-width: 38px;
+    pointer-events: none;
+    width: auto;
+    height: auto;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    transition: 0.15s ease-in-out all;
+}
+
+.main .lake .content .view-area .map .map-container .active-apps .app:hover img {
+    transform: scale(1.05);
+}
+
+
+.main .lake .content .view-area .map .map-container .active-apps .app span {
+    position: absolute;
+    bottom: -34px;
+    font-size: 14px;
+    left: -10px;
+    width: 84px;
+    text-align: center;
+    color: black;
+}
+
+.main .lake .content .view-area .map .map-container .active-apps .app span .type {
+    font-size: 12px;
+    color: #343434;
 }
 
 .main .lake .content .view-area .graph {
@@ -96,6 +623,19 @@
 
 @media screen and (max-width: 800px) {
 
+    .main .lake .content .title {
+        font-size: 22px;
+        text-align: right;
+        padding-right: var(--padding);
+        box-sizing: border-box;
+        width: 100%;
+
+    }
+
+    .main .lake .content .title .flags img {
+        height: 12px;
+    }
+
     .main .lake .content .details {
         position: fixed;
         top: calc(var(--header-height) + var(--selector-height));
@@ -103,6 +643,14 @@
         z-index: 9;
         height: calc(100% - var(--header-height) - var(--selector-height) - 60px);
         width: 100%;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+
+    .main .lake .content .details::-webkit-scrollbar {
+        display: none;
     }
 
     .main .lake .content .view-area {
@@ -123,5 +671,14 @@
 
     .main .lake .content .details {
         display: none;
+    }
+
+    .main .lake .content .view-area .map .map-container .basemap #map {
+        border-radius: 0;
+        border: none;
+    }
+
+    .main .lake .content .view-area .map .map-container .gradient {
+        border-radius: 0;
     }
 }

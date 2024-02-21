@@ -9,6 +9,10 @@ import "./leaflet_customcontrol";
 import "./css/leaflet.css";
 
 class Basemap extends Component {
+  state = {
+    darkMap: "clqz0bzlt017d01qw5xi9ex6x",
+    lightMap: "clg4u62lq009a01oa5z336xn7",
+  };
   find = (list, parameter, value) => {
     return list.find((l) => l[parameter] === value);
   };
@@ -85,10 +89,42 @@ class Basemap extends Component {
       this.map.triggerLayersUpdate();
     }
     if (prevProps.basemap !== this.props.basemap) {
-      var basemap = L.tileLayer(CONFIG.basemaps[this.props.basemap].url, {
-        maxZoom: 19,
-        attribution: CONFIG.basemaps[this.props.basemap].attribution,
-      });
+      var basemap;
+      if (basemap == "default") {
+        var { darkMap, lightMap } = this.state;
+        var { dark } = this.props;
+        var mapCode = dark ? darkMap : lightMap;
+        basemap = L.tileLayer(
+          `https://api.mapbox.com/styles/v1/jamesrunnalls/${mapCode}/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiamFtZXNydW5uYWxscyIsImEiOiJjazk0ZG9zd2kwM3M5M2hvYmk3YW0wdW9yIn0.uIJUZoDgaC2LfdGtgMz0cQ`,
+          {
+            maxZoom: 19,
+            attribution: "&copy; <a href='https://www.mapbox.com/'>mapbox</a>",
+          }
+        );
+      } else {
+        basemap = L.tileLayer(CONFIG.basemaps[this.props.basemap].url, {
+          maxZoom: 19,
+          attribution: CONFIG.basemaps[this.props.basemap].attribution,
+        });
+      }
+      basemap.addTo(this.map);
+      var old_basemap = this.layerStore["basemap"];
+      this.map.removeLayer(old_basemap);
+      this.layerStore["basemap"] = basemap;
+    } else if (
+      prevProps.dark !== this.props.dark &&
+      this.props.basemap == "default"
+    ) {
+      var { darkMap, lightMap } = this.state;
+      var { dark } = this.props;
+      var mapCode = dark ? darkMap : lightMap;
+      basemap = L.tileLayer(
+        `https://api.mapbox.com/styles/v1/jamesrunnalls/${mapCode}/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiamFtZXNydW5uYWxscyIsImEiOiJjazk0ZG9zd2kwM3M5M2hvYmk3YW0wdW9yIn0.uIJUZoDgaC2LfdGtgMz0cQ`,
+        {
+          maxZoom: 19,
+          attribution: "&copy; <a href='https://www.mapbox.com/'>mapbox</a>",
+        }
+      );
       basemap.addTo(this.map);
       var old_basemap = this.layerStore["basemap"];
       this.map.removeLayer(old_basemap);
@@ -96,7 +132,8 @@ class Basemap extends Component {
     }
   }
   async componentDidMount() {
-    var { openSidebar } = this.props;
+    var { darkMap, lightMap } = this.state;
+    var { dark } = this.props;
     this.dataStore = {};
     this.layerStore = {};
     var center = [46.9, 8.2];
@@ -115,39 +152,19 @@ class Basemap extends Component {
     });
     this.map.doubleClickZoom.disable();
 
-    var basemap = L.tileLayer(CONFIG.basemaps["default"].url, {
-      maxZoom: 19,
-      attribution: CONFIG.basemaps["default"].attribution,
-    });
+    var mapCode = dark ? darkMap : lightMap;
+    var basemap = L.tileLayer(
+      `https://api.mapbox.com/styles/v1/jamesrunnalls/${mapCode}/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiamFtZXNydW5uYWxscyIsImEiOiJjazk0ZG9zd2kwM3M5M2hvYmk3YW0wdW9yIn0.uIJUZoDgaC2LfdGtgMz0cQ`,
+      {
+        maxZoom: 19,
+        attribution: "&copy; <a href='https://www.mapbox.com/'>mapbox</a>",
+      }
+    );
     this.map.addLayer(basemap);
     this.layerStore["basemap"] = basemap;
     this.layerStore["labels"] = L.layerGroup([]).addTo(this.map);
 
     this.layer = L.layerGroup([]).addTo(this.map);
-
-    L.control
-      .custom({
-        position: "topleft",
-        content: `<div class="bar-container">
-                    <div class="bar"></div>
-                    <div class="ball ball1"></div>
-                  </div>
-                  <div class="bar-container">
-                    <div class="bar"></div>
-                    <div class="ball ball2"></div>
-                  </div>
-                  <div class="bar-container">
-                    <div class="bar"></div>
-                    <div class="ball ball3"></div>
-                  </div>`,
-        classes: "leaflet-settings-control",
-        events: {
-          click: function () {
-            openSidebar();
-          },
-        },
-      })
-      .addTo(this.map);
   }
 
   render() {
