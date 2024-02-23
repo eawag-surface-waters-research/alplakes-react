@@ -198,16 +198,16 @@
     "IT": "termoclino"
   },
   "play": {
-    "EN": "Play (Spacebar)",
-    "DE": "Spielen (Leertaste)",
-    "FR": "Jouer (barre d'espace)",
-    "IT": "Riproduci (barra spaziatrice)"
+    "EN": "Play",
+    "DE": "Spielen",
+    "FR": "Jouer",
+    "IT": "Riproduci"
   },
   "next": {
-    "EN": "Next (Right arrow)",
-    "DE": "Weiter (Pfeil nach rechts)",
-    "FR": "Suivant (Flèche droite)",
-    "IT": "Successivo (freccia destra)"
+    "EN": "Next",
+    "DE": "Weiter",
+    "FR": "Suivant",
+    "IT": "Successivo"
   },
   "settings": {
     "EN": "Settings",

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { NavLink } from "react-router-dom";
 import axios from "axios";
 import NavBar from "../../components/navbar/navbar";
 import Footer from "../../components/footer/footer";
@@ -9,6 +10,7 @@ import Selector from "./selector";
 import eawag_logo from "../../img/eawag_logo.png";
 import esa_logo from "../../img/esa_logo.png";
 import trento_logo from "../../img/trento_logo.png";
+import notification_icon from "../../img/notification.png";
 import swiss from "../../img/swiss.png";
 import italian from "../../img/italian.png";
 import french from "../../img/french.png";
@@ -16,11 +18,26 @@ import austrian from "../../img/austrian.png";
 import CONFIG from "../../config.json";
 import "./lake.css";
 
+class NotFound extends Component {
+  render() {
+    var { id } = this.props;
+    return (
+      <div className="not-found">
+        Sorry the lake <div className="title">{id}</div>
+        cannot be found.
+        <NavLink to="/">
+          <div className="call-to-action">See our full list of lakes</div>
+        </NavLink>
+      </div>
+    );
+  }
+}
+
 class Lake extends Component {
   state = {
     id: "",
     metadata: {},
-    error: "",
+    error: false,
     active: "map",
     views: ["graph", "map"],
   };
@@ -39,13 +56,12 @@ class Lake extends Component {
         id,
       });
     } catch (e) {
-      console.error(e);
-      this.setState({ error: "name", id });
+      this.setState({ error: true, id });
     }
   }
 
   render() {
-    var { metadata, active, views } = this.state;
+    var { metadata, active, views, error, id } = this.state;
     var { language, dark } = this.props;
     var flag_images = {
       swiss: swiss,
@@ -65,38 +81,32 @@ class Lake extends Component {
     return (
       <div className="lake">
         <NavBar {...this.props} />
-        <div className="content">
-          <div className="title">
-            {name}
-            <div className="flags">
-              {flags.map((f) => (
-                <img src={flag_images[f]} alt={f} key={f} />
-              ))}
+        {error ? (
+          <NotFound id={id} />
+        ) : (
+          <div className="content">
+            <div className={`details ${active === "details" ? "active" : ""}`}>
+              <Details metadata={metadata} language={language} />
+            </div>
+            <Selector
+              active={active}
+              setActive={this.setActive}
+              views={views}
+              language={language}
+            />
+            <div className="notification">
+              <img src={notification_icon} alt="notification" />
+            </div>
+            <div className="view-area">
+              <div className={`map ${active === "map" ? "active" : ""}`}>
+                <Map metadata={metadata} language={language} dark={dark} />
+              </div>
+              <div className={`graph ${active === "graph" ? "active" : ""}`}>
+                <Graph metadata={metadata} language={language} dark={dark} />
+              </div>
             </div>
           </div>
-          <div className={`details ${active === "details" ? "active" : ""}`}>
-            <Details metadata={metadata} language={language} />
-          </div>
-          <Selector
-            active={active}
-            setActive={this.setActive}
-            views={views}
-            language={language}
-          />
-          <div className="view-area">
-            <div className={`map ${active === "map" ? "active" : ""}`}>
-              <Map metadata={metadata} language={language} dark={dark}/>
-            </div>
-            <div className={`graph ${active === "graph" ? "active" : ""}`}>
-              <Graph metadata={metadata} language={language} dark={dark}/>
-            </div>
-          </div>
-          <div className="logos">
-            <img src={eawag_logo} alt="Eawag" />
-            <img src={esa_logo} alt="Esa" />
-            <img src={trento_logo} alt="Trento" />
-          </div>
-        </div>
+        )}
         <Footer {...this.props} medium={true} />
       </div>
     );

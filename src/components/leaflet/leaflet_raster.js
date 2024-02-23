@@ -371,7 +371,7 @@ L.Raster = L.Layer.extend({
       }
     }
     if (closest && closestDistance < this.options.tooltipSensitivity) {
-      return Math.round(this._values[closest] * 100) / 100 + this.options.unit;
+      return this._values[closest];
     } else {
       return null;
     }

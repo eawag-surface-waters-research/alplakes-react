@@ -17,7 +17,8 @@ class ActiveApps extends Component {
     this.props.removeLayer(parseInt(event.target.getAttribute("id")));
   };
   render() {
-    var { language, layers, setSelection, selection, images } = this.props;
+    var { language, layers, setSelection, selection, images, toggleActiveAdd } =
+      this.props;
     var extra = Math.max(1, 4 - layers.filter((l) => l.active).length);
 
     return (
@@ -56,12 +57,7 @@ class ActiveApps extends Component {
                   src={images[layer.properties.parameter]}
                   alt={layer.properties.parameter}
                 />
-                <span>
-                  {layer.properties.parameter in Translate
-                    ? Translate[layer.properties.parameter][language]
-                    : ""}
-                  <div className="type">{layer.properties.model}</div>
-                </span>
+                <span>{layer.properties.model}</span>
               </div>
             ))}
           {[...Array(extra).keys()].map((p) => (
@@ -69,13 +65,51 @@ class ActiveApps extends Component {
               className="app"
               title="Add layer"
               key={p}
-              onClick={() => setSelection("add")}
+              onClick={toggleActiveAdd}
             >
               +
             </div>
           ))}
         </div>
       </React.Fragment>
+    );
+  }
+}
+
+class AddLayers extends Component {
+  render() {
+    var { language, layers, images, addLayer, activeAdd } = this.props;
+    return (
+      <div className={activeAdd ? "add-layers" : "add-layers hidden"}>
+        <div className="layers">
+          {layers.map((l) => (
+            <div
+              className={l.active ? "layer disabled" : "layer"}
+              key={l.id}
+              onClick={() => addLayer(l.id)}
+              title={l.active ? "" : "Add to map"}
+            >
+              <div className={"icon " + l.type}>
+                <img
+                  src={images[l.properties.parameter]}
+                  alt={l.properties.parameter}
+                />
+              </div>
+              <div className="text">
+                <div className="parameter">
+                  {l.properties.parameter in Translate
+                    ? Translate[l.properties.parameter][language]
+                    : ""}
+                </div>
+                <div className="model">{l.properties.model}</div>
+                <div className="type">
+                  {l.type in Translate ? Translate[l.type][language] : ""}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
     );
   }
 }
@@ -95,12 +129,21 @@ class MapSettings extends Component {
       particles: particles_icon,
       thermocline: thermocline_icon,
     },
+    activeAdd: false,
+  };
+  toggleActiveAdd = () => {
+    this.setState({ activeAdd: !this.state.activeAdd });
   };
   render() {
-    var { images } = this.state;
+    var { images, activeAdd } = this.state;
     return (
       <React.Fragment>
-        <ActiveApps {...this.props} images={images} />
+        <ActiveApps
+          {...this.props}
+          images={images}
+          toggleActiveAdd={this.toggleActiveAdd}
+        />
+        <AddLayers {...this.props} images={images} activeAdd={activeAdd} />
       </React.Fragment>
     );
   }

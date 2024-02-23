@@ -70,9 +70,9 @@
 }
 
 .main .content .search .filters .filter.selected {
-  background-color: var(--button-fill-color);
-  color: var(--button-text-color) !important;
-  border-color: var(--border-color) !important;
+  background-color: var(--background-font-color);
+  color: var(--background-color) !important;
+  border-color: var(--background-font-color) !important;
 }
 
 .main .content .search .filters .filter:hover {
@@ -96,9 +96,6 @@
 .main .content .list .product-wrapper {
   background-color: var(--box-color);
   margin: 0 var(--padding);
-  padding: calc(var(--padding) /2) calc(var(--padding) /2) 0 calc(var(--padding) /2);
-  border-radius: 24px 24px 0 0;
-  border: 1px solid var(--border-color);
 }
 
 .main .content .list .product-wrapper .results {
@@ -375,15 +372,13 @@
 
 .main .content .home-map {
   position: fixed;
-  top: calc(var(--header-height) + var(--search-height));
+  top: calc(var(--header-height));
   right: var(--padding);
   width: calc(100% - var(--list-width) - var(--padding));
-  height: calc(100% - var(--header-height) - var(--search-height) - var(--footer-height) - 65px);
+  height: calc(100% - var(--header-height) - var(--footer-height) - 140px);
   box-sizing: border-box;
   background-color: var(--box-color);
   border-radius: 22px;
-  border: 1px solid var(--border-color);
-  padding: calc(var(--padding) / 2);
 }
 
 .main .content .home-map .fullscreen {
@@ -414,23 +409,23 @@
   opacity: 0.7;
 }
 
-.main .content .home-map #map .temperature-label {
-  font-size: 16px;
+.main .content #map .temperature-label {
+  font-size: 14px;
   transition: all .33s 0s ease;
 }
 
-.main .content .home-map #map .temperature-label:hover {
+.main .content #map .temperature-label:hover {
   transform: scale(1.1);
 }
 
-.main .content .home-map #map .temperature-label .name {
+.main .content #map .temperature-label .name {
   display: inline-block;
   background-color: var(--box-color);
   color: var(--box-font-color);
   padding: 2px 8px;
 }
 
-.main .content .home-map #map .temperature-label .value {
+.main .content #map .temperature-label .value {
   display: inline-block;
   background-color: var(--highlight-color);
   color: white;
@@ -475,8 +470,8 @@
 .main .content .home-map .parameter-selector {
   z-index: 999;
   position: absolute;
-  top: calc(var(--padding) / 2);
-  left: calc(var(--padding) / 2);
+  top: 0;
+  left: 0;
   border-radius: 0 0 12px 0;
   border: 1px solid var(--background-color);
   border-right: 1px solid var(--border-color);
@@ -489,7 +484,7 @@
 .main .content .home-map .parameter-selector .parameter {
   position: relative;
   display: inline-block;
-  margin-right: calc(var(--padding) / 2);
+  margin: 0 calc(var(--padding) / 2);
   width: 50px;
   height: 50px;
   cursor: pointer;
@@ -526,17 +521,17 @@
 
 .main .content .promos {
   position: fixed;
-  top: calc(var(--header-height));
-  right: var(--padding);
+  bottom: calc(var(--footer-height) + var(--padding) / 2);
+  right: 0;
   text-align: left;
-  width: calc(100% - var(--list-width) - var(--padding));
+  width: calc(100% - var(--list-width));
   overflow: hidden;
   height: 80px;
 }
 
 .main .content .promo {
   background-color: var(--box-color);
-  margin-right: calc(var(--padding) / 2);
+  margin-right: var(--padding);
   display: inline-block;
   border-radius: 22px;
   box-sizing: border-box;
@@ -549,7 +544,6 @@
   display: inline-block;
   font-size: 64px;
   width: 70px;
-  padding-left: 20px;
   color: var(--border-color);
   position: relative;
   z-index: 1;

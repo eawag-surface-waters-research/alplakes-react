@@ -436,11 +436,6 @@ class Home extends Component {
               setBounds={this.setBounds}
             />
           </div>
-          <div className="logos">
-            <img src={eawag_logo} alt="Eawag" />
-            <img src={esa_logo} alt="Esa" />
-            <img src={trento_logo} alt="Trento" />
-          </div>
           <div className="map-button" onClick={this.toggleFullscreen}>
             Map
           </div>

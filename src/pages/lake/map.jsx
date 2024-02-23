@@ -8,7 +8,12 @@ import next_icon from "../../img/next.svg";
 import settings_icon from "../../img/settings.svg";
 import fullscreen_icon from "../../img/fullscreen.png";
 import normalscreen_icon from "../../img/normalscreen.png";
-import { relativeDate, formatDate, formatTime } from "./functions";
+import {
+  relativeDate,
+  formatDate,
+  formatTime,
+  setCustomPeriod,
+} from "./functions";
 import MapSettings from "./mapsettings";
 
 class Loading extends Component {
@@ -222,20 +227,25 @@ class Map extends Component {
     timeout: 0,
     play: false,
     datetime: Date.now(),
+    maxDate: Date.now(),
+    minDate: new Date(2010),
+    missingDates: [],
     period: [relativeDate(-2).getTime(), relativeDate(3).getTime()],
     fullscreen: false,
     updates: [],
     layers: [],
+    initialLoad: true,
+    depth: "",
+    depths: [],
+    bucket: true,
   };
   setBasemap = (event) => {
     this.setState({ basemap: event.target.value });
   };
-
   setSpeed = (event) => {
     this.pause();
     this.setState({ timeout: parseInt(event.target.value) }, () => this.play());
   };
-
   setTimestep = (event) => {
     this.setState({ timestep: parseInt(event.target.value) });
   };
@@ -255,20 +265,153 @@ class Map extends Component {
     }
     this.setState({ datetime, updates });
   };
-
   toggleLegend = () => {
     this.setState({ legend: !this.state.legend });
   };
   toggleSettings = () => {
     this.setState({ settings: !this.state.settings });
   };
+  toggleFullscreen = () => {
+    this.setState({ fullscreen: !this.state.fullscreen }, () => {
+      window.dispatchEvent(new Event("resize"));
+    });
+  };
+  updated = () => {
+    this.setState({ updates: [] });
+  };
+  unlock = () => {
+    this.setState({ bucket: false });
+  };
+  startAnimation = () => {
+    setTimeout(() => {
+      this.play();
+    }, 2000);
+  };
+  togglePlay = () => {
+    if (this.state.play) {
+      this.pause();
+    } else {
+      this.play();
+    }
+  };
+  play = () => {
+    var { timeout } = this.state;
+    this.intervalId = setInterval(() => {
+      this.setState((prevState, props) => {
+        var { timestep, datetime, period, updates, layers } = prevState;
+
+        if (datetime >= period[1]) {
+          datetime = period[0];
+        } else {
+          datetime = datetime + timestep;
+        }
+        for (var layer of layers) {
+          if (layer.active && "playUpdate" in layer && layer.playUpdate) {
+            updates.push({ event: "updateLayer", id: layer.id });
+          }
+        }
+        return { datetime, updates };
+      });
+    }, timeout);
+    this.setState({ play: true });
+  };
+  pause = () => {
+    try {
+      clearInterval(this.intervalId);
+    } catch (e) {}
+    this.setState({ play: false });
+  };
+  addLayer = (id) => {
+    var { layers, updates } = this.state;
+    var layer = layers.find((l) => l.id === id);
+    if (!layer.active) {
+      this.pause();
+      layer.active = true;
+      updates.push({ event: "addLayer", id: id });
+      this.setState({
+        layers,
+        updates,
+        clickblock: true,
+        selection: id,
+      });
+    }
+  };
+  removeLayer = (id) => {
+    var { layers } = this.state;
+    var layer = layers.find((l) => l.id === id);
+    if (layer.active) {
+      layer.active = false;
+      var updates = [{ event: "removeLayer", id: id }];
+      this.setState({ layers, updates });
+    }
+  };
+  async componentDidUpdate() {
+    var { metadata } = this.props;
+    var { initialLoad, period, minDate, maxDate, missingDates } = this.state;
+    if (initialLoad && "lake_id" in metadata) {
+      var updates = [{ event: "bounds" }];
+      for (var layer of metadata.layers) {
+        if (layer.active) {
+          layer.active = true;
+          updates.push({ event: "addLayer", id: layer.id });
+        }
+      }
+      //updates.push({ event: "play" });
+      var depth = metadata.depth;
+      var depths = [depth];
+      try {
+        if ("customPeriod" in metadata) {
+          ({ period, minDate, maxDate, depth, depths, missingDates } =
+            await setCustomPeriod(
+              metadata.customPeriod,
+              period,
+              minDate,
+              maxDate,
+              depth,
+              depths,
+              missingDates
+            ));
+        }
+      } catch (e) {
+        console.error(e);
+        alert(
+          "Failed to collect data from the API, please check your internet connection."
+        );
+        this.setState({
+          error: "api",
+          initialLoad: false,
+        });
+      }
+      this.setState({
+        initialLoad: false,
+        layers: metadata.layers,
+        updates,
+        period,
+        depth,
+        minDate,
+        maxDate,
+        missingDates,
+        depths,
+      });
+    }
+  }
 
   render() {
-    var { language, dark } = this.props;
+    var { language, dark, metadata } = this.props;
+    var { fullscreen } = this.state;
     return (
-      <div className="map-container">
+      <div
+        className={fullscreen ? "map-container fullscreen" : "map-container"}
+      >
         <div className="basemap">
-          <Basemap {...this.state} dark={dark} />
+          <Basemap
+            {...this.state}
+            dark={dark}
+            unlock={this.unlock}
+            updated={this.updated}
+            metadata={metadata}
+            startAnimation={this.startAnimation}
+          />
         </div>
         <div className="gradient" />
         <PlayerSettings
@@ -283,8 +426,17 @@ class Map extends Component {
           language={language}
           setDatetime={this.setDatetime}
           toggleSettings={this.toggleSettings}
+          toggleFullscreen={this.toggleFullscreen}
+          togglePlay={this.togglePlay}
         />
-        <MapSettings {...this.state} language={language} dark={dark} />
+        <MapSettings
+          {...this.state}
+          language={language}
+          dark={dark}
+          addLayer={this.addLayer}
+          removeLayer={this.removeLayer}
+        />
+        <Loading />
       </div>
     );
   }

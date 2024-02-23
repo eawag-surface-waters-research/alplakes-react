@@ -25,7 +25,6 @@ class Basemap extends Component {
       period,
       datetime,
       depth,
-      setSimpleline,
       unlock,
       getTransect,
       getProfile,
@@ -49,7 +48,6 @@ class Basemap extends Component {
               this.map,
               datetime,
               depth,
-              setSimpleline,
               getTransect,
               getProfile,
               bucket

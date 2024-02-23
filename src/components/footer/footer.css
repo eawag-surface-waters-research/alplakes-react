@@ -6,7 +6,6 @@
     z-index: 99999;
     margin-top: var(--padding);
     padding: calc(var(--padding) / 2) var(--padding);
-    border-top: 1px solid var(--border-color);
 }
 
 .footer.small {
@@ -14,11 +13,8 @@
     position: fixed;
     bottom: 0;
     right: 0;
-    padding: 5px var(--padding) 5px var(--padding);
+    padding: 5px var(--padding) 5px 0;
     background-color: var(--box-color);
-    border-top: 1px solid var(--border-color);
-    border-left: 1px solid var(--border-color);
-    border-radius: 22px 0 0 0;
     font-size: 14px;
 }
 
@@ -27,10 +23,8 @@
     position: fixed;
     bottom: 0;
     right: 0;
-    padding: 5px var(--padding) 5px var(--padding);
+    padding: 5px var(--padding) 5px 0;
     background-color: var(--box-color);
-    border-top: 1px solid var(--border-color);
-    border-left: 1px solid var(--border-color);
     border-radius: 22px 0 0 0;
     font-size: 14px;
 }

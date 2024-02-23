@@ -265,7 +265,6 @@ export const addLayer = async (
   map,
   datetime,
   depth,
-  setSimpleline,
   getTransect,
   getProfile,
   bucket
@@ -279,7 +278,6 @@ export const addLayer = async (
       map,
       datetime,
       depth,
-      setSimpleline,
       bucket
     );
   } else if (layer.type === "sencast_tiff") {
@@ -376,22 +374,18 @@ const addAlplakesHydrodynamic = async (
   map,
   datetime,
   depth,
-  setSimpleline,
   bucket
 ) => {
   loading("Downloading lake geometry");
   await downloadAlplakesHydrodynamicGeometry(layer, period, dataStore);
   loading(`Downloading lake ${layer.properties.parameter} field`);
-  var simpleline = await downloadAlplakesHydrodynamicParameter(
+  await downloadAlplakesHydrodynamicParameter(
     layer,
     period,
     depth,
     dataStore,
     bucket
   );
-  if ("simpleline" in layer.properties) {
-    setSimpleline(simpleline);
-  }
   plotAlplakesHydrodynamic(layer, datetime, depth, dataStore, layerStore, map);
   loaded();
 };
@@ -494,7 +488,6 @@ const downloadAlplakesHydrodynamicParameter = async (
 
   par = par.split("\n").map((g) => g.split(",").map((s) => parseFloat(s)));
 
-  var simpleline = { x: [], y: [] };
   var bounds = { min: [], max: [] };
 
   for (
@@ -516,13 +509,6 @@ const downloadAlplakesHydrodynamicParameter = async (
     bounds.min.push(d3.min(data_flat));
     bounds.max.push(d3.max(data_flat));
     setNested(dataStore, [...path, date], data);
-    if ("simpleline" in layer.properties) {
-      let mean = d3.mean(data_flat);
-      if (mean) {
-        simpleline.y.push(d3.mean(data_flat));
-        simpleline.x.push(parseInt(date));
-      }
-    }
   }
   var min = d3.min(bounds.min);
   var max = d3.max(bounds.max);
@@ -530,7 +516,6 @@ const downloadAlplakesHydrodynamicParameter = async (
   layer.properties.options.max = max;
   layer.properties.options.dataMin = min;
   layer.properties.options.dataMax = max;
-  return simpleline;
 };
 
 const plotAlplakesHydrodynamic = (
@@ -632,9 +617,13 @@ const plotAlplakesHydrodynamicRaster = (
         }),
       })
         .bindTooltip(
-          `${p.name}<br>${
-            typeof value === "string" || value instanceof String ? value : ""
-          }`,
+          `<div class="temperature-label"><div class="name">${
+            p.name
+          }</div><div class="value">${
+            typeof value === "number"
+              ? Math.round(value * 10) / 10 + options["unit"]
+              : ""
+          }</div></div>`,
           {
             id: p.name,
             permanent: true,
