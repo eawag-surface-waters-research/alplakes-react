@@ -141,6 +141,11 @@
     padding-left: 8px;
 }
 
+.main.dark .lake .content .details .insitu .datalakes img {
+    -webkit-filter: invert(100%);
+    filter: invert(100%);
+}
+
 .main .lake .content .details .dropdown {
     padding: calc(var(--padding) / 2) 0;
 }
@@ -257,7 +262,7 @@
 .main .lake .content .view-area .map .map-container .gradient {
     position: absolute;
     bottom: -1px;
-    z-index: 999;
+    z-index: 996;
     width: 100%;
     height: 127px;
     background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(104, 104, 104, 0.2), rgb(104, 104, 104, 0.7));
@@ -269,11 +274,24 @@
     background-image: linear-gradient(rgba(29, 30, 32, 0), rgba(29, 30, 32, 0.2), rgba(29, 30, 32, 0.7));
 }
 
+.main .lake .content .view-area .map .map-container .legend {
+    position: absolute;
+    right: 12px;
+    bottom: 70px;
+    font-size: 14px;
+    z-index: 991;
+    pointer-events: none;
+    background-color: var(--background-color);
+    border-radius: 12px;
+    padding: 3px 9px;
+    color: var(--background-font-color);
+}
+
 .main .lake .content .view-area .map .map-container .playback {
     position: absolute;
     bottom: 0;
     left: 0;
-    z-index: 999;
+    z-index: 997;
     width: 100%;
 }
 
@@ -493,7 +511,7 @@
     height: 62px;
     border: none;
     vertical-align: top;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    box-shadow: var(--box-shadow);
     text-align: center;
 }
 
@@ -622,26 +640,47 @@
 
 .main .lake .content .view-area .map .map-container .add-layers {
     position: absolute;
-    left: 1px;
-    top: 1px;
-    width: calc(100% - 2px);
-    height: calc(100% - 2px);
-    background-color: rgba(255, 255, 255, 0.7);
+    left: calc(var(--padding) / 2);
+    top: calc(91px + var(--padding) / 2);
+    width: calc(100% - var(--padding));
+    height: calc(100% - 91px - var(--padding));
+    background-color: var(--background-color);
     z-index: 998;
     border-radius: 12px;
-    padding: 105px var(--padding) var(--padding) var(--padding);
+    padding: calc(var(--padding)/2) calc(var(--padding)/2) 0 calc(var(--padding)/2);
     box-sizing: border-box;
+    box-shadow: var(--box-shadow);
 }
 
 .main .lake .content .view-area .map .map-container .add-layers.hidden {
     display: none;
 }
 
+.main .lake .content .view-area .map .map-container .add-layers .layers {
+    height: calc(100% - 39px);
+    overflow-y: scroll;
+    box-sizing: border-box;
+    overflow-x: hidden;
+    padding-right: 12px;
+    padding-bottom: 12px;
+}
+
+.main .lake .content .view-area .map .map-container .add-layers .layers::-webkit-scrollbar {
+    width: 6px;
+}
+
+.main .lake .content .view-area .map .map-container .add-layers .layers::-webkit-scrollbar-track {
+    background-color: var(--background-color);
+}
+
+.main .lake .content .view-area .map .map-container .add-layers .layers::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+}
 
 .main .lake .content .view-area .map .map-container .add-layers .layers .layer {
     margin: 6px;
     padding: 6px 10px 6px 6px;
-    background-color: var(--background-color);
+    background-color: var(--box-color);
     border-radius: 8px;
     cursor: pointer;
     display: inline-block;
@@ -651,13 +690,35 @@
     box-shadow: var(--box-shadow);
 }
 
+.main .lake .content .view-area .map .map-container .add-layers .layers-title {
+    font-size: 22px;
+    border-bottom: 2px solid var(--highlight-color);
+    width: fit-content;
+    padding: 0 4px;
+    margin-bottom: 12px;
+}
+
+.main .lake .content .view-area .map .map-container .add-layers .layers-close {
+    position: absolute;
+    font-size: 30px;
+    color: var(--highlight-color);
+    top: calc(var(--padding)/2);
+    right: var(--padding);
+    cursor: pointer;
+    transition: all .2s ease-in-out;
+}
+
+.main .lake .content .view-area .map .map-container .add-layers .layers-close:hover {
+    transform: scale(1.2);
+}
+
 .main .lake .content .view-area .map .map-container .add-layers .layers .layer.disabled {
     opacity: 0.5;
     pointer-events: none;
 }
 
 .main .lake .content .view-area .map .map-container .add-layers .layers .layer:hover {
-    background-color: #d1d1d1;
+    background-color: var(--background-color);
 }
 
 
@@ -691,7 +752,7 @@
 }
 
 .main .lake .content .view-area .map .map-container .add-layers .layers .layer .text .type {
-    color: #343434;
+    color: var(--background-suble-font-color);
     font-size: 12px;
 }
 
@@ -708,9 +769,9 @@
     left: 12px;
     bottom: 70px;
     z-index: 99999;
-    background-color: white;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    border-radius: 22px;
+    background-color: var(--background-color);
+    box-shadow: var(--box-shadow);
+    border-radius: 12px;
     padding: 8px;
     display: flex;
     align-items: center;
@@ -732,7 +793,7 @@
 .main .lake .content .view-area .map .map-container .loading .loading-symbol .loader {
     width: 35px;
     height: 35px;
-    border: 4px solid black;
+    border: 4px solid var(--background-font-color);
     border-bottom-color: transparent;
     border-radius: 75%;
     display: inline-block;
@@ -845,6 +906,7 @@
         bottom: 55px;
         top: unset;
         padding: 0;
+        z-index: 9;
     }
 
     .main .lake .content .selector.desktop {
@@ -866,5 +928,19 @@
 
     .main .lake .content .view-area .map .map-container .gradient {
         border-radius: 0;
+    }
+
+    .main .lake .content .view-area .map .map-container .add-layers {
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        padding: var(--padding);
+        border-radius: 0;
+        box-shadow: none;
+    }
+
+    .main .lake .content .view-area .map .map-container .add-layers .layers .layer {
+        width: calc(100% - 12px);
     }
 }

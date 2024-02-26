@@ -2,31 +2,30 @@
     width: 100%;
     box-sizing: border-box;
     position: relative;
-    background-color: var(--box-color);
+    background-color: var(--background-color);
     z-index: 99999;
     margin-top: var(--padding);
     padding: calc(var(--padding) / 2) var(--padding);
 }
 
 .footer.small {
-    width: calc(100% - var(--list-width));
+    width: calc(100% - var(--list-width) - var(--padding));
     position: fixed;
     bottom: 0;
-    right: 0;
-    padding: 5px var(--padding) 5px 0;
-    background-color: var(--box-color);
+    right: var(--padding);
     font-size: 14px;
+    padding: 5px 0px;
+    border-top: 1px solid var(--border-color);
 }
 
 .footer.medium {
-    width: calc(100% - var(--sidebar-width));
+    width: calc(100% - var(--sidebar-width) - var(--padding));
     position: fixed;
     bottom: 0;
-    right: 0;
-    padding: 5px var(--padding) 5px 0;
-    background-color: var(--box-color);
-    border-radius: 22px 0 0 0;
+    right: var(--padding);
     font-size: 14px;
+    padding: 5px 0px;
+    border-top: 1px solid var(--border-color);
 }
 
 .footer .summary {
@@ -59,9 +58,8 @@
     text-decoration: none;
 }
 
-.footer .link {
+.footer .middle {
     display: inline-block;
-    padding: 8px;
     cursor: pointer;
     color: var(--background-font-color);
     position: absolute;
@@ -70,9 +68,23 @@
     text-align: center;
 }
 
-.footer .copyright {
-    padding: 8px 0;
+.footer .middle .copywrite {
+    font-size: 10px;
+    color: var(--background-suble-font-color)
+}
+
+.footer .left {
     display: inline-block;
+}
+
+.footer .left img {
+    height: 30px;
+    opacity: 0.8;
+}
+
+.dark .footer .left img {
+    -webkit-filter: invert(100%);
+    filter: invert(100%);
 }
 
 .footer .switch img {

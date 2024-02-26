@@ -26,12 +26,16 @@ class NavBar extends Component {
         <div className={"navbar"}>
           <NavLink to="/">
             <div className="home-nav">
-              <img src={dark ? logo_dark : logo} className="icon" alt="Alplakes logo" />
+              <img
+                src={dark ? logo_dark : logo}
+                className="icon"
+                alt="Alplakes logo"
+              />
             </div>
           </NavLink>
 
           <div className="desktop-nav">
-          <NavLink className="nav-item" to="/">
+            <NavLink className="nav-item" to="/">
               <div className="nav-text">Lakes</div>
             </NavLink>
             <NavLink className="nav-item" to="/api">
@@ -80,12 +84,14 @@ class NavBar extends Component {
                 <NavLink to="/about">{Translate.about[language]}</NavLink>
               </div>
               <div className="nav-row">
-                <Toggle
-                  left={<img src={light_icon} alt="light" />}
-                  right={<img src={dark_icon} alt="dark" />}
-                  onChange={toggleDark}
-                  checked={dark}
-                />
+                <div className="mode">
+                  <Toggle
+                    left={<img src={light_icon} alt="light" />}
+                    right={<img src={dark_icon} alt="dark" />}
+                    onChange={toggleDark}
+                    checked={dark}
+                  />
+                </div>
               </div>
               <div className="nav-row">
                 <select

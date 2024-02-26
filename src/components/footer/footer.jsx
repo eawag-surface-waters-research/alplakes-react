@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 import dark_icon from "../../img/dark.png";
 import light_icon from "../../img/light.png";
 import Toggle from "../sliders/toggle";
+import eawag_logo from "../../img/eawag_logo.png";
 import "./footer.css";
 
 class Footer extends Component {
@@ -10,10 +11,19 @@ class Footer extends Component {
     var { dark, toggleDark, small, medium } = this.props;
     return (
       <React.Fragment>
-        <div className={medium ? "footer medium" : small ? "footer small" : "footer"}>
-          <div className="copyright">&copy; 2024 Alplakes v2.0</div>
+        <div
+          className={
+            medium ? "footer medium" : small ? "footer small" : "footer"
+          }
+        >
+          <div className="left">
+            <img src={eawag_logo} alt="Eawag" />
+          </div>
           <NavLink to="/about">
-            <div className="link">Impressum</div>
+            <div className="middle">
+              Impressum
+              <div className="copywrite">&copy; 2024 Alplakes v2.0</div>
+            </div>
           </NavLink>
           <div className="switch">
             <Toggle

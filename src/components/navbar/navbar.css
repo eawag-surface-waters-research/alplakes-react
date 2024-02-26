@@ -172,6 +172,15 @@
   font-size: 20px;
 }
 
+.navbar .mobile-nav .nav-content .nav-row .toggleContainer div {
+  padding: 3px 7px;
+}
+
+.navbar .mobile-nav .nav-content .nav-row .mode {
+  width: 76px;
+  margin: auto;
+}
+
 .dark .navbar .mobile-nav .nav-content .nav-row img {
   height: 20px;
   -webkit-filter: invert(100%);
@@ -217,5 +226,7 @@
 
   .navbar {
     height: calc(var(--padding) * 2 + 22px);
-}
+    z-index: 9999999;
+
+  }
 }

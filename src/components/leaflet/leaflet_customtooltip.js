@@ -47,13 +47,17 @@ L.Map.include({
       if (typeof layer.getFeatureValue === "function") {
         let value = layer.getFeatureValue(e);
         if (value !== null) {
-          content = content + `<div>${value}</div>`;
+          value = Math.round(value * 10) / 10;
+          content = content + `<div>${value}${layer.options.unit}</div>`;
         }
       }
     });
 
     if (content !== "") {
-      this._updateCursorLocationTooltip(content, e.latlng);
+      this._updateCursorLocationTooltip(
+        `<div class="tooltip-hover">${content}</div>`,
+        e.latlng
+      );
     } else if (this._cursorLocationTooltip) {
       this._cursorLocationTooltip.remove();
       this._cursorLocationTooltip = false;

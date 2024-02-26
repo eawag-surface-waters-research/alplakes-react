@@ -339,7 +339,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
 /* visual tweaks */
 
 .leaflet-container {
-  background: var(--box-color);
+  background: var(--background-color);
   outline: 0;
 }
 
@@ -368,7 +368,6 @@ svg.leaflet-image-layer.leaflet-interactive path {
 
 .leaflet-bar a,
 .leaflet-bar a:hover {
-  background-color: var(--box-color);
   border-bottom: 1px solid #ccc;
   width: 26px;
   height: 26px;
@@ -384,10 +383,6 @@ svg.leaflet-image-layer.leaflet-interactive path {
   background-position: 50% 50%;
   background-repeat: no-repeat;
   display: block;
-}
-
-.leaflet-bar a:hover {
-  background-color: var(--box-inner-color);
 }
 
 .leaflet-bar a:first-child {
@@ -423,6 +418,10 @@ svg.leaflet-image-layer.leaflet-interactive path {
 }
 
 /* zoom control */
+
+.leaflet-control-zoom {
+  background-color: var(--background-color);
+}
 
 .leaflet-control-zoom-in,
 .leaflet-control-zoom-out {
@@ -567,7 +566,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
 /* attribution and scale controls */
 
 .leaflet-container .leaflet-control-attribution {
-  background-color: var(--box-color);
+  background-color: var(--background-color);
   color: var(--box-font-color);
   margin: 0;
 }
@@ -858,7 +857,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
 .leaflet-tooltip-top:before {
   bottom: 0;
   margin-bottom: -12px;
-  border-top-color: var(--box-color);
+  border-top-color: var(--background-color);
 }
 
 .leaflet-tooltip-bottom:before {

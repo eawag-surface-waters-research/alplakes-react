@@ -33,7 +33,7 @@ class Loading extends Component {
 
 class Legend extends Component {
   render() {
-    var { layers, language } = this.props;
+    var { layers, language, setSelection } = this.props;
     return (
       <div className="legend">
         <table>
@@ -50,18 +50,20 @@ class Legend extends Component {
                     : true)
               )
               .map((l) => (
-                <Colorbar
-                  min={l.properties.options.min}
-                  max={l.properties.options.max}
-                  palette={l.properties.options.palette}
-                  unit={l.properties.unit}
-                  key={l.id}
-                  text={
-                    l.properties.parameter in Translate
-                      ? Translate[l.properties.parameter][language]
-                      : ""
-                  }
-                />
+                <div onClick={() => setSelection(l.id)}>
+                  <Colorbar
+                    min={l.properties.options.min}
+                    max={l.properties.options.max}
+                    palette={l.properties.options.palette}
+                    unit={l.properties.unit}
+                    key={l.id}
+                    text={
+                      l.properties.parameter in Translate
+                        ? Translate[l.properties.parameter][language]
+                        : ""
+                    }
+                  />
+                </div>
               ))}
           </tbody>
         </table>
@@ -238,6 +240,7 @@ class Map extends Component {
     depth: "",
     depths: [],
     bucket: true,
+    selection: false,
   };
   setBasemap = (event) => {
     this.setState({ basemap: event.target.value });
@@ -251,7 +254,7 @@ class Map extends Component {
   };
   setDatetime = (event) => {
     var int = parseInt(JSON.parse(JSON.stringify(event.target.value)));
-    var { play, updates, layers, simpleline } = this.state;
+    var { play, updates, layers } = this.state;
     for (var layer of layers) {
       if (layer.active) {
         updates.push({ event: "updateLayer", id: layer.id });
@@ -345,6 +348,13 @@ class Map extends Component {
       this.setState({ layers, updates });
     }
   };
+  setSelection = (selection) => {
+    console.log(selection);
+    this.setState({ selection });
+  };
+  closeSelection = () => {
+    this.setState({ selection: false });
+  };
   async componentDidUpdate() {
     var { metadata } = this.props;
     var { initialLoad, period, minDate, maxDate, missingDates } = this.state;
@@ -435,6 +445,12 @@ class Map extends Component {
           dark={dark}
           addLayer={this.addLayer}
           removeLayer={this.removeLayer}
+          setSelection={this.setSelection}
+        />
+        <Legend
+          {...this.state}
+          language={language}
+          setSelection={this.setSelection}
         />
         <Loading />
       </div>

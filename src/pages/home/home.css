@@ -23,7 +23,7 @@
   width: 100%;
   font-size: 18px;
   padding: 12px 8px 12px 60px;
-  background-color: var(--box-color);
+  background-color: var(--background-color);
   color: var(--box-font-color);
   border-radius: 24px;
   box-sizing: border-box;
@@ -59,7 +59,7 @@
 
 .main .content .search .filters .filter {
   display: inline-block;
-  background-color: var(--box-color);
+  background-color: var(--background-color);
   border: 1px solid var(--border-color);
   border-radius: 22px;
   padding: 4px 16px;
@@ -94,7 +94,7 @@
 }
 
 .main .content .list .product-wrapper {
-  background-color: var(--box-color);
+  background-color: var(--background-color);
   margin: 0 var(--padding);
 }
 
@@ -118,7 +118,7 @@
 }
 
 .main .content .list .product-list::-webkit-scrollbar-track {
-  background-color: var(--box-color);
+  background-color: var(--background-color);
 }
 
 .main .content .list .product-list::-webkit-scrollbar-thumb {
@@ -153,11 +153,11 @@
   height: 155px;
   margin-bottom: calc(var(--padding) / 2);
   border-radius: 20px;
-  border: 5px solid var(--box-color);
+  border: 5px solid var(--background-color);
 }
 
 .main.dark .content .list .product-list .list-item-placeholder {
-  background-color: var(--box-color);
+  background-color: var(--background-color);
 }
 
 .main .content .list .product-list .list-item:hover .properties .right .view img {
@@ -266,7 +266,7 @@
   position: absolute;
   left: 50%;
   transform: translate(-50%, 0);
-  background-color: var(--box-color);
+  background-color: var(--background-color);
   top: 12px;
   z-index: 9;
   font-size: 14px;
@@ -344,7 +344,7 @@
   left: 50%;
   transform: translate(-50%, 0);
   padding: var(--padding) 40px;
-  background-color: var(--box-color);
+  background-color: var(--background-color);
   border: 1px solid var(--border-color);
   border-radius: 22px;
   box-shadow: var(--box-shadow);
@@ -377,7 +377,7 @@
   width: calc(100% - var(--list-width) - var(--padding));
   height: calc(100% - var(--header-height) - var(--footer-height) - 140px);
   box-sizing: border-box;
-  background-color: var(--box-color);
+  background-color: var(--background-color);
   border-radius: 22px;
 }
 
@@ -420,7 +420,7 @@
 
 .main .content #map .temperature-label .name {
   display: inline-block;
-  background-color: var(--box-color);
+  background-color: var(--background-color);
   color: var(--box-font-color);
   padding: 2px 8px;
 }
@@ -530,7 +530,7 @@
 }
 
 .main .content .promo {
-  background-color: var(--box-color);
+  background-color: var(--background-color);
   margin-right: var(--padding);
   display: inline-block;
   border-radius: 22px;
@@ -694,7 +694,7 @@
     position: fixed;
     top: calc(var(--header-height) + var(--search-height));
     border-top: 1px solid var(--border-color);
-    background-color: var(--box-color);
+    background-color: var(--background-color);
     width: 100%;
     z-index: 9999;
     padding: calc(var(--padding) / 2) var(--padding);

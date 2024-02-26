@@ -17,9 +17,9 @@ class ActiveApps extends Component {
     this.props.removeLayer(parseInt(event.target.getAttribute("id")));
   };
   render() {
-    var { language, layers, setSelection, selection, images, toggleActiveAdd } =
+    var { layers, setSelection, selection, images, toggleActiveAdd } =
       this.props;
-    var extra = Math.max(1, 4 - layers.filter((l) => l.active).length);
+    var extra = Math.max(0, 4 - layers.filter((l) => l.active).length);
 
     return (
       <React.Fragment>
@@ -77,16 +77,25 @@ class ActiveApps extends Component {
 }
 
 class AddLayers extends Component {
+  addLayer = (id) => {
+    this.props.toggleActiveAdd();
+    this.props.addLayer(id);
+  };
   render() {
-    var { language, layers, images, addLayer, activeAdd } = this.props;
+    var { language, layers, images, activeAdd, toggleActiveAdd } =
+      this.props;
     return (
       <div className={activeAdd ? "add-layers" : "add-layers hidden"}>
+        <div className="layers-title">Add Layers</div>
+        <div className="layers-close" onClick={toggleActiveAdd}>
+          &#10005;
+        </div>
         <div className="layers">
           {layers.map((l) => (
             <div
               className={l.active ? "layer disabled" : "layer"}
               key={l.id}
-              onClick={() => addLayer(l.id)}
+              onClick={() => this.addLayer(l.id)}
               title={l.active ? "" : "Add to map"}
             >
               <div className={"icon " + l.type}>
@@ -143,7 +152,12 @@ class MapSettings extends Component {
           images={images}
           toggleActiveAdd={this.toggleActiveAdd}
         />
-        <AddLayers {...this.props} images={images} activeAdd={activeAdd} />
+        <AddLayers
+          {...this.props}
+          images={images}
+          activeAdd={activeAdd}
+          toggleActiveAdd={this.toggleActiveAdd}
+        />
       </React.Fragment>
     );
   }
