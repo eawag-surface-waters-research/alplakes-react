@@ -375,7 +375,7 @@
   top: calc(var(--header-height));
   right: var(--padding);
   width: calc(100% - var(--list-width) - var(--padding));
-  height: calc(100% - var(--header-height) - var(--footer-height) - 140px);
+  height: calc(100% - var(--header-height) - var(--footer-height) - var(--padding));
   box-sizing: border-box;
   background-color: var(--background-color);
   border-radius: 22px;
@@ -411,7 +411,7 @@
 
 .main .content #map .temperature-label {
   font-size: 14px;
-  transition: all .33s 0s ease;
+  transition: transform .33s 0s ease;
 }
 
 .main .content #map .temperature-label:hover {
@@ -527,6 +527,7 @@
   width: calc(100% - var(--list-width));
   overflow: hidden;
   height: 80px;
+  display: none;
 }
 
 .main .content .promo {
@@ -742,10 +743,6 @@
   }
 
   .main .content .list .product-list .list-item .properties .right .view {
-    display: none;
-  }
-
-  .main .content .promos {
     display: none;
   }
 

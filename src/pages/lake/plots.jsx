@@ -7,7 +7,7 @@ import {
 
 import "./lake.css";
 
-class Graphs extends Component {
+class Plots extends Component {
   state = {
     data: false,
     parameters: [],
@@ -47,7 +47,7 @@ class Graphs extends Component {
     return closestIndex;
   };
   componentDidMount() {
-    var { data, datetime } = this.props;
+    var { graphData: data, datetime } = this.props;
     if (data.type === "profile") {
       let parameters = data.layer.properties.variables;
       let parameter = parameters[0];
@@ -88,7 +88,7 @@ class Graphs extends Component {
     }
   }
   componentDidUpdate(prevProps) {
-    var { data, datetime } = this.props;
+    var { graphData: data, datetime } = this.props;
     var { x, y } = this.state.data;
     if (data.type === "transect") {
       if (prevProps.datetime !== datetime) {
@@ -117,7 +117,7 @@ class Graphs extends Component {
       maxvalue,
     } = this.state;
     return (
-      <div className="graph">
+      <div className="plots">
         <div className="close" onClick={this.props.close}>
           &#10005;
         </div>
@@ -144,4 +144,4 @@ class Graphs extends Component {
   }
 }
 
-export default Graphs;
+export default Plots;

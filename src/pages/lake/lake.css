@@ -280,11 +280,14 @@
     bottom: 70px;
     font-size: 14px;
     z-index: 991;
-    pointer-events: none;
     background-color: var(--background-color);
     border-radius: 12px;
     padding: 3px 9px;
     color: var(--background-font-color);
+}
+
+.main .lake .content .view-area .map .map-container .legend.hide {
+    display: none;
 }
 
 .main .lake .content .view-area .map .map-container .playback {
@@ -491,6 +494,10 @@
     border-bottom: 1px solid var(--border-color);
 }
 
+.main .lake .content .view-area .map .map-container.fullscreen .active-apps {
+    display: none;
+}
+
 .main .lake .content .view-area .map .map-container .active-apps .app {
     display: inline-block;
     font-size: 50px;
@@ -602,6 +609,7 @@
     transition: color 0.5s;
     border: 1px solid var(--border-color);
     color: var(--background-suble-font-color);
+    user-select: none;
 }
 
 .main .lake .content .view-area .map .map-container .active-apps .app .remove:hover {
@@ -621,6 +629,7 @@
     right: 0;
     margin: auto;
     transition: 0.15s ease-in-out all;
+    user-select: none;
 }
 
 .main .lake .content .view-area .map .map-container .active-apps .app:hover img {
@@ -764,6 +773,402 @@
     font-size: 12px;
 }
 
+.main .lake .content .view-area .map .map-container .close-layer {
+    position: absolute;
+    font-size: 30px;
+    right: -43px;
+    background-color: var(--background-color);
+    bottom: var(--padding);
+    padding: 5px 10px 5px 6px;
+    border-radius: 0 12px 12px 0;
+    border: 1px solid var(--border-color);
+    z-index: 1;
+    cursor: pointer;
+}
+
+.main .lake .content .view-area .map .map-container .close-layer:hover {
+    color: var(--highlight-color);
+
+}
+
+.main .lake .content .view-area .map .map-container .plots {
+    position: absolute;
+    left: calc(var(--padding) / 2);
+    top: calc(91px + var(--padding) / 2);
+    width: calc(100% - var(--padding));
+    height: calc(100% - 91px - var(--padding));
+    background-color: var(--background-color);
+    z-index: 998;
+    border-radius: 12px;
+    padding: calc(var(--padding)/2) calc(var(--padding)/2) 0 calc(var(--padding)/2);
+    box-sizing: border-box;
+    box-shadow: var(--box-shadow);
+}
+
+.main .lake .content .view-area .map .map-container .plots .close {
+    color: var(--background-font-color);
+    cursor: pointer;
+    font-size: 28px;
+    left: 0;
+    padding: 12px;
+    position: absolute;
+    top: 0;
+    z-index: 999;
+}
+
+.main .lake .content .view-area .map .map-container .plots .close:hover {
+    color: var(--highlight-color);
+}
+
+.main .lake .content .view-area .map .map-container .selection {
+    width: 328px;
+    position: relative;
+    padding: 0;
+    box-sizing: border-box;
+    margin-top: calc(var(--padding) / 2);
+    max-height: calc(100vh - var(--header-height) - var(--footer-height) - var(--padding) * 2 - 140px);
+    overflow-y: scroll;
+    padding-right: 6px;
+    padding-bottom: 12px;
+}
+
+
+.main .lake .content .view-area .map .map-container .selection::-webkit-scrollbar {
+    width: 6px;
+}
+
+.main .lake .content .view-area .map .map-container .selection::-webkit-scrollbar-track {
+    background-color: var(--background-color);
+}
+
+.main .lake .content .view-area .map .map-container .selection::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+}
+
+.main .lake .content .view-area .map .map-container .selection .layer-description {
+    color: var(--background-font-color);
+    font-size: 16px;
+    cursor: pointer;
+    margin-bottom: 18px;
+}
+
+.main .lake .content .view-area .map .map-container .selection .layer-description a {
+    color: var(--background-font-color);
+    font-weight: bold;
+    text-decoration: none;
+    transition: all .2s ease-in-out;
+}
+
+.main .lake .content .view-area .map .map-container .selection .layer-description a:hover {
+    color: green;
+}
+
+.main .lake .content .view-area .map .map-container .selection .layer-description button {
+    background-color: transparent;
+    color: var(--background-font-color);
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+}
+
+.main.dark .lake .content .secondary .selection .layer-description button {
+    color: #e5e5e5;
+}
+
+.main .lake .content .view-area .map .map-container .selection .layer-settings {
+    font-size: 14px;
+    color: #b6afaf;
+}
+
+.main .lake .content .view-area .map .map-container .selection .layer-settings .layer-section {
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 18px;
+    font-size: 16px;
+    padding-bottom: 4px;
+}
+
+.main .lake .content .view-area .map .map-container .selection .layer-settings .setting .tiff-image {
+    background-color: white;
+    border: 1px solid white;
+    padding: 5px;
+    border-radius: 8px;
+    margin-top: 8px;
+    cursor: pointer;
+}
+
+.main .lake .content .view-area .map .map-container .selection .layer-settings .setting .tiff-image.active {
+    color: #767676;
+    border: 1px solid #767676;
+}
+
+.main .lake .content .view-area .map .map-container .selection .layer-settings .setting .tiff-image:hover {
+    color: #767676;
+}
+
+.main .lake .content .view-area .map .map-container .selection .layer-settings .setting .tiff-image div {
+    display: inline-block;
+    margin: 0 6px;
+}
+
+.main .lake .content .view-area .map .map-container .selection .layer-settings .layer-sub-section {
+    font-size: 15px;
+    padding: 6px 4px 6px 6px;
+    margin: 5px 0px 16px 0px;
+    font-weight: bold;
+}
+
+.main .lake .content .view-area .map .map-container .selection .layer-settings .layer-sub-section .switch {
+    display: inline-block;
+    position: relative;
+    float: right;
+    width: 38px;
+    height: 20px;
+    margin-top: -2px;
+}
+
+.main .lake .content .view-area .map .map-container .selection .layer-settings .switch {
+    display: inline-block;
+    position: relative;
+    float: right;
+    width: 38px;
+    height: 20px;
+}
+
+.main .lake .content .view-area .map .map-container .selection .layer-settings .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.main .lake .content .view-area .map .map-container .selection .layer-settings .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.main .lake .content .view-area .map .map-container .selection .layer-settings .slider:before {
+    position: absolute;
+    content: "";
+    height: 14px;
+    width: 14px;
+    left: 4px;
+    bottom: 3px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.main .lake .content .view-area .map .map-container .selection .layer-settings input:checked+.slider {
+    background-color: var(--highlight-color);
+}
+
+.main .lake .content .view-area .map .map-container .selection .layer-settings input:focus+.slider {
+    box-shadow: 0 0 1px var(--highlight-color);
+}
+
+.main .lake .content .view-area .map .map-container .selection .layer-settings input:checked+.slider:before {
+    -webkit-transform: translateX(16px);
+    -ms-transform: translateX(16px);
+    transform: translateX(16px);
+}
+
+.main .lake .content .view-area .map .map-container .selection .layer-settings .slider.round {
+    border-radius: 34px;
+}
+
+.main .lake .content .view-area .map .map-container .selection .layer-settings .slider.round:before {
+    border-radius: 50%;
+}
+
+.main .lake .content .view-area .map .map-container .selection .layer-settings .setting {
+    padding: 0px 0px 18px 0px;
+    display: inline-block;
+    width: 96%;
+    margin: 0 2%;
+}
+
+.main .lake .content .view-area .map .map-container .selection .layer-settings .setting.half {
+    width: 46%;
+    margin: 0 2%;
+    vertical-align: top;
+}
+
+.main .lake .content .view-area .map .map-container .selection .layer-settings .setting.third {
+    width: 29%;
+    margin: 0 2%;
+    vertical-align: top;
+}
+
+.main .lake .content .view-area .map .map-container .selection .layer-settings .setting.twothird {
+    width: 62%;
+    margin: 0 2%;
+    vertical-align: top;
+}
+
+.main .lake .content .view-area .map .map-container .selection .layer-settings .setting .label {
+    padding: 0px 0px 4px 0px;
+    display: inline-block;
+}
+
+.main .lake .content .view-area .map .map-container .selection .layer-settings .setting .value {
+    float: right;
+}
+
+.main .lake .content .view-area .map .map-container .selection .layer-settings input[type=number] {
+    width: 100%;
+    font-size: 16px;
+    border: none;
+    padding: 4px 10px;
+    box-sizing: border-box;
+    background-color: var(--background-color);
+    color: var(--background-font-color);
+}
+
+.main .lake .content .view-area .map .map-container .selection .layer-settings input[type=number].with-button {
+    width: calc(100% - 70px);
+}
+
+.main .lake .content .view-area .map .map-container .selection .layer-settings input[type=color] {
+    width: 100%;
+    box-sizing: border-box;
+    border: none;
+    padding: 0;
+    height: 26px;
+    background-color: #e3e3e3;
+}
+
+.main .lake .content .view-area .map .map-container .selection .layer-settings input[type=checkbox] {
+    margin-left: 12px;
+}
+
+.main .lake .content .view-area .map .map-container .selection .layer-settings input[type=range] {
+    width: 100%;
+    padding: 2px 0px;
+    box-sizing: border-box;
+}
+
+.main .lake .content .view-area .map .map-container .selection .layer-settings button.remove {
+    display: inline-block;
+    border-radius: 8px;
+    transition: all .2s ease-in-out;
+    border: none;
+    color: #e3e3e3;
+    background-color: #720000;
+    cursor: pointer;
+    padding: 5px 12px;
+    font-size: 14px;
+}
+
+.main .lake .content .view-area .map .map-container .selection .layer-settings button.remove:hover {
+    background-color: red;
+}
+
+.main .lake .content .view-area .map .map-container .selection .layer-settings button.reset {
+    display: inline-block;
+    margin-left: 8px;
+    border-radius: 8px;
+    transition: all .2s ease-in-out;
+    border: none;
+    background-color: #e3e3e3;
+    cursor: pointer;
+    padding: 5px 12px;
+    font-size: 14px;
+}
+
+.main .lake .content .view-area .map .map-container .selection .layer-settings button.reset:hover {
+    background-color: #d1d0d0;
+}
+
+.main .lake .content .view-area .map .map-container .selection .layer-settings button.tiff {
+    display: inline-block;
+    border-radius: 8px;
+    margin-right: 18px;
+    transition: all .2s ease-in-out;
+    border: none;
+    background-color: #e3e3e3;
+    cursor: pointer;
+    padding: 5px 12px;
+    font-size: 14px;
+}
+
+.main .lake .content .view-area .map .map-container .selection .layer-settings button.tiff:hover {
+    background-color: #d1d0d0;
+}
+
+.main .lake .content .view-area .map .map-container .selection .layer-settings select {
+    display: inline-block;
+    font-size: 16px;
+    width: 100%;
+    background-color: var(--background-color);
+    cursor: pointer;
+    padding: 4px 8px;
+    text-align: left;
+    color: var(--background-font-color);
+}
+
+.main .lake .content .view-area .map .map-container .selection .layer-settings .react-datepicker-wrapper input {
+    display: inline-block;
+    font-size: 16px;
+    width: 100%;
+    background-color: var(--background-color);
+    cursor: pointer;
+    padding: 4px 8px;
+    text-align: left;
+    color: var(--background-font-color);
+    border: 1px solid var(--background-font-color);
+    box-sizing: border-box;
+}
+
+.main .lake .content .view-area .map .map-container .selection .layer-settings .react-datepicker {
+    background-color: var(--background-color);
+    border: none;
+}
+
+.main .lake .content .view-area .map .map-container .selection .layer-settings .react-datepicker .react-datepicker__header {
+    background-color: transparent;
+    border: none;
+}
+
+.main .lake .content .view-area .map .map-container .selection .layer-settings .react-datepicker__day {
+    box-shadow: var(--box-shadow);
+    padding: 1px;
+}
+
+.main .lake .content .view-area .map .map-container .selection .layer-settings .react-datepicker__day:hover {
+    box-shadow: none;
+    border: 1px solid var(--border-color);
+    padding: 0;
+}
+
+.main .lake .content .view-area .map .map-container .selection .layer-settings .react-datepicker__day-name,
+.main .lake .content .view-area .map .map-container .selection .layer-settings .react-datepicker__day,
+.main .lake .content .view-area .map .map-container .selection .layer-settings .react-datepicker__time-name {
+    width: 2.25rem;
+    color: unset;
+    border-radius: 0.3rem;
+}
+
+.main .lake .content .view-area .map .map-container .selection .layer-settings .react-datepicker__day--selected {
+    border: 1px solid var(--background-font-color) !important;
+    padding: 0;
+    font-weight: bold;
+}
+
+.main .lake .content .view-area .map .map-container .selection .layer-settings .react-datepicker__current-month {
+    color: unset;
+}
+
+.main .lake .content .view-area .map .map-container .selection .layer-settings .react-datepicker__day--disabled {
+    opacity: 0.2;
+    box-shadow: none;
+}
+
 .main .lake .content .view-area .map .map-container .loading {
     position: absolute;
     left: 12px;
@@ -873,7 +1278,7 @@
         top: calc(var(--header-height) + 12px);
         left: 0;
         z-index: 999999999;
-        height: calc(100% - var(--header-height) - 60px);
+        height: calc(100% - var(--header-height) - 70px);
         width: 100%;
         overflow-y: scroll;
         overflow-x: hidden;
@@ -906,7 +1311,29 @@
         bottom: 55px;
         top: unset;
         padding: 0;
-        z-index: 9;
+    }
+
+    .main .lake .content .view-area .map .map-container .close-layer {
+        position: fixed;
+        top: calc(var(--header-height) + 18px);
+        bottom: unset;
+        right: var(--padding);
+        border: none;
+        border-radius: 12px 12px 0 0;
+        padding: 1px 11px;
+    }
+
+    .main .lake .content .view-area .map .map-container .selection {
+        position: fixed;
+        left: 0;
+        width: 100%;
+        background-color: var(--background-color);
+        padding: var(--padding);
+        top: calc(var(--header-height) + 55px);
+        height: calc(100% - var(--header-height) - var(--selector-height) - 182px);
+        margin: 0;
+        text-align: left;
+        max-height: unset;
     }
 
     .main .lake .content .selector.desktop {
@@ -931,6 +1358,16 @@
     }
 
     .main .lake .content .view-area .map .map-container .add-layers {
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        padding: var(--padding);
+        border-radius: 0;
+        box-shadow: none;
+    }
+
+    .main .lake .content .view-area .map .map-container .plots {
         top: 0;
         left: 0;
         width: 100%;

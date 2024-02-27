@@ -78,14 +78,12 @@ class Bathymetry extends Component {
       const { data } = await axios.get(
         CONFIG.datalakes_api + `/externaldata/morphology/${bathymetry}.json`
       );
-      console.log(data);
       this.setState({ data });
     } catch (e) {
       this.setState({ error: true });
     }
   }
   render() {
-    var { metadata, language } = this.props;
     var { data } = this.state;
     return (
       <Dropdown
@@ -103,7 +101,7 @@ class Bathymetry extends Component {
 
 class Insitu extends Component {
   render() {
-    var { metadata, language } = this.props;
+    var { metadata } = this.props;
     return (
       <Dropdown
         title="Insitu Data"
@@ -113,7 +111,7 @@ class Insitu extends Component {
             <div className="text">Field measurements from Lake geneva.</div>
             <div className="datasets">
               {metadata.insitu.map((i) => (
-                <a href={i.url} target="_blank" key={i.name}>
+                <a href={i.url} target="_blank" rel="noreferrer" key={i.name}>
                   <div className="dataset">
                     <div className="name">{i.name}</div>
                     <div className="date">
@@ -126,7 +124,11 @@ class Insitu extends Component {
             </div>
             <div className="datalakes">
               See more on
-              <a href="https://www.datalakes-eawag.ch/data" target="_blank">
+              <a
+                href="https://www.datalakes-eawag.ch/data"
+                target="_blank"
+                rel="noreferrer"
+              >
                 <img src={datalakes} alt="Datalakes" />
               </a>
             </div>

@@ -206,6 +206,7 @@ export const getProfileAlplakesHydrodynamic = async (
   period,
   latlng
 ) => {
+  loading("Requesting profile from the server");
   const url = `${api}/simulations/depthtime/${model}/${lake}/${formatAPIDate(
     period[0]
   )}0000/${formatAPIDate(period[1])}2359/${latlng.lat}/${latlng.lng}`;
@@ -215,9 +216,11 @@ export const getProfileAlplakesHydrodynamic = async (
       alert("Point outside of lake.");
       return false;
     }
+    loaded();
     return data;
   } catch (e) {
     console.error(e);
+    loaded();
     return false;
   }
 };

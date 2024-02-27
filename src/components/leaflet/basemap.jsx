@@ -28,7 +28,6 @@ class Basemap extends Component {
       unlock,
       getTransect,
       getProfile,
-      startAnimation,
       bucket,
     } = this.props;
     if (updates.length > 0) {
@@ -79,19 +78,17 @@ class Basemap extends Component {
             this.layerStore,
             this.map
           );
-        } else if (update.event === "play") {
-          startAnimation();
         }
       }
       unlock();
       this.map.triggerLayersUpdate();
     }
+    var { darkMap, lightMap } = this.state;
+    var { dark } = this.props;
+    var mapCode = dark ? darkMap : lightMap;
     if (prevProps.basemap !== this.props.basemap) {
       var basemap;
-      if (basemap == "default") {
-        var { darkMap, lightMap } = this.state;
-        var { dark } = this.props;
-        var mapCode = dark ? darkMap : lightMap;
+      if (basemap === "default") {
         basemap = L.tileLayer(
           `https://api.mapbox.com/styles/v1/jamesrunnalls/${mapCode}/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiamFtZXNydW5uYWxscyIsImEiOiJjazk0ZG9zd2kwM3M5M2hvYmk3YW0wdW9yIn0.uIJUZoDgaC2LfdGtgMz0cQ`,
           {
@@ -111,11 +108,8 @@ class Basemap extends Component {
       this.layerStore["basemap"] = basemap;
     } else if (
       prevProps.dark !== this.props.dark &&
-      this.props.basemap == "default"
+      this.props.basemap === "default"
     ) {
-      var { darkMap, lightMap } = this.state;
-      var { dark } = this.props;
-      var mapCode = dark ? darkMap : lightMap;
       basemap = L.tileLayer(
         `https://api.mapbox.com/styles/v1/jamesrunnalls/${mapCode}/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiamFtZXNydW5uYWxscyIsImEiOiJjazk0ZG9zd2kwM3M5M2hvYmk3YW0wdW9yIn0.uIJUZoDgaC2LfdGtgMz0cQ`,
         {
@@ -124,8 +118,8 @@ class Basemap extends Component {
         }
       );
       basemap.addTo(this.map);
-      var old_basemap = this.layerStore["basemap"];
-      this.map.removeLayer(old_basemap);
+      var old_basemap2 = this.layerStore["basemap"];
+      this.map.removeLayer(old_basemap2);
       this.layerStore["basemap"] = basemap;
     }
   }

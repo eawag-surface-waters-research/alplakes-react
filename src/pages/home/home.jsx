@@ -8,14 +8,6 @@ import searchIcon from "../../img/search.png";
 import depth_icon from "../../img/depth.png";
 import area_icon from "../../img/area.png";
 import elevation_icon from "../../img/elevation.png";
-import eawag_logo from "../../img/eawag_logo.png";
-import esa_logo from "../../img/esa_logo.png";
-import trento_logo from "../../img/trento_logo.png";
-import threed_icon from "../../img/threed-icon.png";
-import oned_icon from "../../img/oned-icon.png";
-import satellite_icon from "../../img/satellite.png";
-import live_icon from "../../img/live.png";
-import insitu_icon from "../../img/insitu.png";
 import more_icon from "../../img/more.png";
 import {
   onMouseOver,
@@ -31,7 +23,6 @@ import "./home.css";
 import HomeMap from "../../components/leaflet/homemap";
 import Footer from "../../components/footer/footer";
 import PolygonGraph from "../../components/leaflet/polygon";
-import NumberIncreaser from "../../components/numberincreaser/numberincreaser";
 
 class Search extends Component {
   render() {
@@ -161,10 +152,7 @@ class SummaryTable extends Component {
       <React.Fragment>
         {Object.keys(forecast.summary).map((day, i, arr) =>
           forecast.summary[day] || !forecast.available ? (
-            <div
-              key={day}
-              className={i === 0 ? "inner start" : "inner"}
-            >
+            <div key={day} className={i === 0 ? "inner start" : "inner"}>
               <div className="ave">
                 {forecast.summary[day]}
                 {forecast.summary[day] ? "°" : ""}
@@ -174,31 +162,6 @@ class SummaryTable extends Component {
           ) : null
         )}
         <SummaryGraph dt={forecast.dt} value={forecast.value} />
-      </React.Fragment>
-    );
-  }
-}
-
-class Promos extends Component {
-  render() {
-    var { types } = this.props;
-    return (
-      <React.Fragment>
-        <div className="promos">
-          {types.map((t) => (
-            <div className="promo" key={t["id"]}>
-              <div className="number">
-                <NumberIncreaser targetValue={t["value"]} />
-              </div>
-              <div className="text">
-                <div className="upper">lakes with</div>
-                <div className="parameter">{t["long_name"]}</div>
-                <div className="dates">{t["dates"]}</div>
-              </div>
-              <img src={t["icon"]} alt={t["long_name"]} />
-            </div>
-          ))}
-        </div>
       </React.Fragment>
     );
   }
@@ -288,15 +251,6 @@ class Home extends Component {
     });
     return list;
   };
-  processTypes = (types, list) => {
-    const year = new Date().getFullYear();
-    types = types.map((t) => {
-      t["value"] = list.filter((l) => l.filters.includes(t["id"])).length;
-      t["dates"] = `${t["start"]} - ${year}`;
-      return t;
-    });
-    return types;
-  };
   async componentDidMount() {
     var ice, geometry, forecast;
     const { data: list } = await axios.get(
@@ -362,47 +316,29 @@ class Home extends Component {
     var { list, search, filters, fullscreen } = this.state;
     var sortedList = this.sortList(list, filters);
     var results = sortedList.filter((l) => l.display && !l.filter).length;
-    var filterTypes = this.processTypes(
-      [
-        { id: "all", short_name: "All" },
-        {
-          id: "3D",
-          short_name: "3D",
-          long_name: "3D models",
-          icon: threed_icon,
-          start: "2019",
-        },
-        {
-          id: "1D",
-          short_name: "1D",
-          long_name: "1D models",
-          icon: oned_icon,
-          start: "1981",
-        },
-        {
-          id: "satellite",
-          short_name: "Satellite",
-          long_name: "satellite products",
-          icon: satellite_icon,
-          start: "2015",
-        },
-        {
-          id: "live",
-          short_name: "Live",
-          long_name: "live data",
-          icon: live_icon,
-          start: "2019",
-        },
-        {
-          id: "insitu",
-          short_name: "Insitu",
-          long_name: "insitu data",
-          icon: insitu_icon,
-          start: "2019",
-        },
-      ],
-      list
-    );
+    var filterTypes = [
+      { id: "all", short_name: "All" },
+      {
+        id: "3D",
+        short_name: "3D",
+      },
+      {
+        id: "1D",
+        short_name: "1D",
+      },
+      {
+        id: "satellite",
+        short_name: "Satellite",
+      },
+      {
+        id: "live",
+        short_name: "Live",
+      },
+      {
+        id: "insitu",
+        short_name: "Insitu",
+      },
+    ];
     return (
       <React.Fragment>
         <NavBar {...this.props} small={true} />
@@ -421,7 +357,6 @@ class Home extends Component {
             results={results}
             search={search}
           />
-          <Promos types={filterTypes.filter((f) => f.id !== "all")} />
           <div className={fullscreen ? "home-map" : "home-map hide"}>
             <div className="fullscreen" onClick={this.toggleFullscreen}>
               <div className="label">

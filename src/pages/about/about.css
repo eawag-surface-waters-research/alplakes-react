@@ -1,18 +1,134 @@
 .main .about {
     width: 100%;
-    max-width: 1200px;
+    max-width: 1400px;
     margin: auto;
-    margin-top: calc(var(--header-height) + var(--padding) * 2);
-    padding: var(--padding);
+    margin-top: calc(var(--header-height));
+    padding: 0 var(--padding);
     border-radius: 22px;
     box-sizing: border-box;
-    background-color: var(--box-color);
-    border: 1px solid var(--border-color);
 }
 
-.main.dark .about {
-    color: #e5e5e5;
+.main .about .section-title {
+    font-size: 28px;
+    border-bottom: 2px solid var(--highlight-color);
+    width: fit-content;
+    margin-bottom: 18px;
 }
+
+.main .about .section-content {
+    display: inline-block;
+    margin-bottom: var(--padding);
+}
+
+.main .about .section-content .half {
+    width: calc(50% - var(--padding)/2);
+    display: inline-block;
+}
+
+.main .about .section-content .half.left {
+    margin-right: var(--padding);
+    vertical-align: top;
+    font-size: 21px;
+}
+
+.main .about .section-content .half .promos {
+    text-align: center;
+}
+
+.main .about .section-content .half .promo {
+    background-color: var(--background-color);
+    margin-right: var(--padding);
+    display: inline-block;
+    border-radius: 22px;
+    box-sizing: border-box;
+    text-align: left;
+    position: relative;
+    margin-bottom: 10px;
+}
+
+.main .about .section-content .half .promo .number {
+    display: inline-block;
+    font-size: 64px;
+    width: 70px;
+    color: var(--highlight-color);
+    position: relative;
+    z-index: 1;
+}
+
+.main .about .section-content .half .promo .text {
+    display: inline-block;
+    font-size: 14px;
+    padding: 10px 20px 10px 10px;
+    position: relative;
+    z-index: 1;
+}
+
+.main .about .section-content .half .promo .text .upper {
+    font-size: 10px;
+    opacity: 0.8;
+}
+
+.main .about .section-content .half .promo .text .parameter {
+    font-size: 16px;
+    padding-top: 4px;
+    padding-bottom: 2px;
+}
+
+.main .about .section-content .half .promo img {
+    max-height: 60%;
+    filter: invert(100%);
+    position: absolute;
+    right: 8px;
+    z-index: 0;
+    top: 10%;
+    max-width: 50px;
+    opacity: 0.2;
+}
+
+.main.dark .about .section-content .half .promo img {
+    filter: invert(0%);
+}
+
+.main .about .section-content .half .promo .text .dates {
+    font-size: 12px;
+    font-weight: bold;
+    opacity: 0.6;
+}
+
+.main .about .section-content .person {
+    width: 200px;
+    display: inline-block;
+    margin-right: var(--padding);
+    margin-top: var(--padding);
+    vertical-align: top;
+}
+
+.main .about .section-content .person img {
+    width: 100%;
+    border-bottom: 2px solid var(--highlight-color);
+}
+
+.main .about .section-content .person .job {
+    font-size: 20px;
+}
+
+.main .about .section-content .person .email {
+    font-size: 14px;
+    text-decoration: underline;
+}
+
+.main .about .section-content .person .contact-head {
+    margin-top: 12px;
+    font-size: 14px;
+    margin-bottom: 4px;
+}
+
+.main .about .section-content .projects {
+    max-width: 700px;
+    margin-bottom: 18px;
+}
+
+
 
 .main .about .header {
     font-size: 28px;
@@ -36,6 +152,7 @@
 
 .main .about p {
     margin-bottom: 18px;
+    font-size: 16px;
 }
 
 .main .about .title {
@@ -75,6 +192,18 @@
     .main .about .images img {
         height: 28px;
         padding: 12px;
+    }
+
+    .main .about .section-content .half {
+        width: 100%;
+    }
+
+    .main .about .section-content .half .promos {
+        margin-top: 12px;
+    }
+
+    .main .about .section-content .person {
+        width: calc(50% - var(--padding));
     }
 }
 

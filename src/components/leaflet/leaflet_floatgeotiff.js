@@ -448,7 +448,7 @@ L.FloatGeotiff = L.ImageOverlay.extend({
   getFeatureValue: function (e) {
     const value = this.getValueAtLatLng(e.latlng.lat, e.latlng.lng);
     if (isFinite(value)) {
-      return `${Math.round(value * 100) / 100} ${this.options.unit}`;
+      return value;
     } else {
       return null;
     }

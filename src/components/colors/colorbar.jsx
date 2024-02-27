@@ -3,7 +3,7 @@ import "./colorbar.css";
 
 class Colorbar extends Component {
   render() {
-    var { min, max, palette, unit, text } = this.props;
+    var { min, max, palette, unit, text, onClick, id } = this.props;
     var colors = [];
     for (let p of palette) {
       colors.push(
@@ -12,12 +12,14 @@ class Colorbar extends Component {
     }
     var background = `linear-gradient(90deg, ${colors.join(", ")})`;
     return (
-      <tr className="colorbar">
+      <tr className="colorbar" onClick={() => onClick(id)}>
         <td>
           {min}
           {unit}
         </td>
-        <td className="bar" style={{ background: background }}>{text}</td>
+        <td className="bar" style={{ background: background }}>
+          {text}
+        </td>
         <td>
           {max}
           {unit}

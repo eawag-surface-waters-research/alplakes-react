@@ -3,8 +3,73 @@ import DatePicker from "react-datepicker";
 import ColorRamp from "../../components/colors/colorramp";
 import Translate from "../../translations.json";
 import CONFIG from "../../config.json";
-import { formatAPIDate, formatDateLong } from "./functions";
+import { formatAPIDate, formatDateLong, parseDay } from "./functions";
+import "react-datepicker/dist/react-datepicker.css";
 import "./lake.css";
+
+class Period extends Component {
+  state = {
+    period: this.props.period,
+    maxPeriod: 21,
+    maxPeriodDate: false,
+  };
+  addDays = (date, days) => {
+    var result = new Date(date);
+    result.setDate(result.getDate() + days);
+    return result;
+  };
+  setDateRange = (period) => {
+    var { maxPeriod } = this.state;
+    var { setPeriod, maxDate } = this.props;
+    if (period[0] !== null && period[1] !== null) {
+      setPeriod([
+        Math.floor(period[0].getTime()),
+        Math.floor(period[1].getTime() + 86400000),
+      ]);
+      this.setState({ period, maxPeriodDate: false });
+    } else if (period[0] !== null && period[1] === null) {
+      var maxPeriodDate = this.addDays(period[0], maxPeriod);
+      this.setState({
+        period,
+        maxPeriodDate: maxPeriodDate < maxDate ? maxPeriodDate : maxDate,
+      });
+    }
+  };
+  render() {
+    var { language, minDate, maxDate, missingDates } = this.props;
+    var { period, maxPeriodDate } = this.state;
+    const locale = {
+      localize: {
+        day: (n) => Translate.axis[language].shortDays[n],
+        month: (n) => Translate.axis[language].months[n],
+      },
+      formatLong: {
+        date: () => "dd/mm/yyyy",
+      },
+    };
+    var excludeDateIntervals = missingDates.map((m) => {
+      return {
+        start: parseDay(m[0].replaceAll("-", "")),
+        end: parseDay(m[1].replaceAll("-", "")),
+      };
+    });
+    return (
+      <DatePicker
+        selectsRange={true}
+        startDate={period[0]}
+        endDate={period[1]}
+        onChange={(update) => {
+          this.setDateRange(update);
+        }}
+        excludeDateIntervals={excludeDateIntervals}
+        minDate={minDate}
+        maxDate={maxPeriodDate ? maxPeriodDate : maxDate}
+        dateFormat="dd/MM/yyyy"
+        locale={locale}
+      />
+    );
+  }
+}
 
 class Raster extends Component {
   state = {
@@ -145,7 +210,18 @@ class Raster extends Component {
 
   render() {
     var { _min, _max } = this.state;
-    var { minDate, maxDate, language, layer } = this.props;
+    var {
+      minDate,
+      maxDate,
+      language,
+      layer,
+      period,
+      setPeriod,
+      missingDates,
+      depth,
+      depths,
+      setDepth,
+    } = this.props;
     var { palette, paletteName, opacity, labels } = this.props.options;
 
     if (opacity === undefined) opacity = 1;
@@ -161,6 +237,31 @@ class Raster extends Component {
     return (
       <div className="layer-settings">
         <div className="layer-section">{Translate.settings[language]}</div>
+        <div className="setting third">
+          <div className="label">Depth (m)</div>
+          <div>
+            <select value={depth} onChange={setDepth}>
+              {depths.map((d) => (
+                <option value={d} key={d}>
+                  {d}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+        <div className="setting twothird">
+          <div className="label">Period</div>
+          <div>
+            <Period
+              period={period}
+              setPeriod={setPeriod}
+              language={language}
+              minDate={minDate}
+              maxDate={maxDate}
+              missingDates={missingDates}
+            />
+          </div>
+        </div>
         <div className="setting half">
           <div className="label">Min</div>
           <div>
@@ -383,7 +484,18 @@ class Current extends Component {
 
   render() {
     var { _paths } = this.state;
-    var { minDate, maxDate, language, layer } = this.props;
+    var {
+      minDate,
+      maxDate,
+      language,
+      layer,
+      period,
+      setPeriod,
+      missingDates,
+      depth,
+      depths,
+      setDepth,
+    } = this.props;
     var {
       opacity,
       velocityScale,
@@ -406,7 +518,31 @@ class Current extends Component {
     return (
       <div className="layer-settings">
         <div className="layer-section">{Translate.settings[language]}</div>
-
+        <div className="setting third">
+          <div className="label">Depth (m)</div>
+          <div>
+            <select value={depth} onChange={setDepth}>
+              {depths.map((d) => (
+                <option value={d} key={d}>
+                  {d}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+        <div className="setting twothird">
+          <div className="label">Period</div>
+          <div>
+            <Period
+              period={period}
+              setPeriod={setPeriod}
+              language={language}
+              minDate={minDate}
+              maxDate={maxDate}
+              missingDates={missingDates}
+            />
+          </div>
+        </div>
         <div className="layer-sub-section">
           Arrows
           <label className="switch">
@@ -1048,12 +1184,24 @@ class Particles extends Component {
   };
 
   render() {
-    var { language } = this.props;
+    var { language, depth, depths, setDepth } = this.props;
     var { paths, spread, opacity } = this.props.options;
     if (opacity === undefined) opacity = 1;
     return (
       <div className="layer-settings">
         <div className="layer-section">{Translate.settings[language]}</div>
+        <div className="setting half">
+          <div className="label">Depth (m)</div>
+          <div>
+            <select value={depth} onChange={setDepth}>
+              {depths.map((d) => (
+                <option value={d} key={d}>
+                  {d}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
         <div className="setting half">
           <div className="label">Particles</div>
           <div className="value">{paths}</div>
@@ -1078,7 +1226,7 @@ class Particles extends Component {
             onChange={this.setSpread}
           ></input>
         </div>
-        <div className="setting">
+        <div className="setting half">
           <div className="label">Opacity</div>
           <div className="value">{opacity}</div>
           <input
@@ -1169,18 +1317,14 @@ class LayerSettings extends Component {
     }
   };
   render() {
-    var { layer, updateOptions, language, minDate, maxDate } = this.props;
+    var { layer } = this.props;
     var type = layer.properties.display;
     if (type === "raster") {
       return (
         <Raster
           id={layer.id}
           options={layer.properties.options}
-          updateOptions={updateOptions}
-          language={language}
-          minDate={minDate}
-          maxDate={maxDate}
-          layer={layer}
+          {...this.props}
         />
       );
     } else if (type === "current") {
@@ -1188,11 +1332,7 @@ class LayerSettings extends Component {
         <Current
           id={layer.id}
           options={layer.properties.options}
-          updateOptions={updateOptions}
-          language={language}
-          minDate={minDate}
-          maxDate={maxDate}
-          layer={layer}
+          {...this.props}
         />
       );
     } else if (type === "tiff") {
@@ -1200,10 +1340,8 @@ class LayerSettings extends Component {
         <Tiff
           id={layer.id}
           options={layer.properties.options}
-          updateOptions={updateOptions}
-          language={language}
+          {...this.props}
           addCssRules={this.addCssRules}
-          layer={layer}
         />
       );
     } else if (type === "wms") {
@@ -1211,10 +1349,8 @@ class LayerSettings extends Component {
         <WMS
           id={layer.id}
           options={layer.properties.options}
-          updateOptions={updateOptions}
-          language={language}
+          {...this.props}
           addCssRules={this.addCssRules}
-          layer={layer}
         />
       );
     } else if (type === "transect") {
@@ -1222,11 +1358,7 @@ class LayerSettings extends Component {
         <Transect
           id={layer.id}
           options={layer.properties.options}
-          updateOptions={updateOptions}
-          language={language}
-          minDate={minDate}
-          maxDate={maxDate}
-          layer={layer}
+          {...this.props}
         />
       );
     } else if (type === "profile") {
@@ -1234,11 +1366,7 @@ class LayerSettings extends Component {
         <Profile
           id={layer.id}
           options={layer.properties.options}
-          updateOptions={updateOptions}
-          language={language}
-          minDate={minDate}
-          maxDate={maxDate}
-          layer={layer}
+          {...this.props}
         />
       );
     } else if (type === "particles") {
@@ -1246,11 +1374,7 @@ class LayerSettings extends Component {
         <Particles
           id={layer.id}
           options={layer.properties.options}
-          updateOptions={updateOptions}
-          language={language}
-          minDate={minDate}
-          maxDate={maxDate}
-          layer={layer}
+          {...this.props}
         />
       );
     } else {

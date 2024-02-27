@@ -14,8 +14,7 @@
     bottom: 0;
     right: var(--padding);
     font-size: 14px;
-    padding: 5px 0px;
-    border-top: 1px solid var(--border-color);
+    padding: 12px 4px;
 }
 
 .footer.medium {
@@ -24,8 +23,7 @@
     bottom: 0;
     right: var(--padding);
     font-size: 14px;
-    padding: 5px 0px;
-    border-top: 1px solid var(--border-color);
+    padding: 12px 4px;
 }
 
 .footer .summary {

@@ -418,7 +418,7 @@ L.Streamlines = (L.Layer ? L.Layer : L.Class).extend({
       );
       if (deg < 0) deg = 360 + deg;
       var value = Math.round(magnitude * 1000) / 1000;
-      return `${value}m/s ${deg}°`;
+      return value;
     }
   },
 });

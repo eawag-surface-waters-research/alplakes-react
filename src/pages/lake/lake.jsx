@@ -7,14 +7,7 @@ import Details from "./details";
 import Map from "./map";
 import Graph from "./graph";
 import Selector from "./selector";
-import eawag_logo from "../../img/eawag_logo.png";
-import esa_logo from "../../img/esa_logo.png";
-import trento_logo from "../../img/trento_logo.png";
 import notification_icon from "../../img/notification.png";
-import swiss from "../../img/swiss.png";
-import italian from "../../img/italian.png";
-import french from "../../img/french.png";
-import austrian from "../../img/austrian.png";
 import CONFIG from "../../config.json";
 import "./lake.css";
 
@@ -56,6 +49,7 @@ class Lake extends Component {
         id,
       });
     } catch (e) {
+      console.log(e);
       this.setState({ error: true, id });
     }
   }
@@ -63,20 +57,8 @@ class Lake extends Component {
   render() {
     var { metadata, active, views, error, id } = this.state;
     var { language, dark } = this.props;
-    var flag_images = {
-      swiss: swiss,
-      italian: italian,
-      french: french,
-      austrian: austrian,
-    };
-    var name = "";
     if ("name" in metadata) {
       document.title = metadata.name[language] + " | Alplakes";
-      name = metadata.name[language];
-    }
-    var flags = [];
-    if ("flags" in metadata) {
-      flags = metadata.flags;
     }
     return (
       <div className="lake">

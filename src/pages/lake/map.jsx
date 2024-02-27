@@ -13,8 +13,11 @@ import {
   formatDate,
   formatTime,
   setCustomPeriod,
+  getTransectAlplakesHydrodynamic,
+  getProfileAlplakesHydrodynamic,
 } from "./functions";
 import MapSettings from "./mapsettings";
+import Plots from "./plots.jsx";
 
 class Loading extends Component {
   render() {
@@ -33,9 +36,9 @@ class Loading extends Component {
 
 class Legend extends Component {
   render() {
-    var { layers, language, setSelection } = this.props;
+    var { layers, language, setSelection, legend } = this.props;
     return (
-      <div className="legend">
+      <div className={legend ? "legend" : "legend hide"}>
         <table>
           <tbody>
             {layers
@@ -50,20 +53,20 @@ class Legend extends Component {
                     : true)
               )
               .map((l) => (
-                <div onClick={() => setSelection(l.id)}>
-                  <Colorbar
-                    min={l.properties.options.min}
-                    max={l.properties.options.max}
-                    palette={l.properties.options.palette}
-                    unit={l.properties.unit}
-                    key={l.id}
-                    text={
-                      l.properties.parameter in Translate
-                        ? Translate[l.properties.parameter][language]
-                        : ""
-                    }
-                  />
-                </div>
+                <Colorbar
+                  min={l.properties.options.min}
+                  max={l.properties.options.max}
+                  palette={l.properties.options.palette}
+                  unit={l.properties.unit}
+                  onClick={setSelection}
+                  key={l.id}
+                  id={l.id}
+                  text={
+                    l.properties.parameter in Translate
+                      ? Translate[l.properties.parameter][language]
+                      : ""
+                  }
+                />
               ))}
           </tbody>
         </table>
@@ -223,7 +226,7 @@ class PlayerControls extends Component {
 class Map extends Component {
   state = {
     settings: false,
-    legend: true,
+    legend: false,
     basemap: "default",
     timestep: 3600000,
     timeout: 0,
@@ -241,6 +244,8 @@ class Map extends Component {
     depths: [],
     bucket: true,
     selection: false,
+    graphs: false,
+    graphData: false,
   };
   setBasemap = (event) => {
     this.setState({ basemap: event.target.value });
@@ -284,11 +289,6 @@ class Map extends Component {
   };
   unlock = () => {
     this.setState({ bucket: false });
-  };
-  startAnimation = () => {
-    setTimeout(() => {
-      this.play();
-    }, 2000);
   };
   togglePlay = () => {
     if (this.state.play) {
@@ -345,20 +345,111 @@ class Map extends Component {
     if (layer.active) {
       layer.active = false;
       var updates = [{ event: "removeLayer", id: id }];
-      this.setState({ layers, updates });
+      this.setState({ layers, updates, selection: false });
     }
   };
+  updateOptions = (id, options) => {
+    var { layers, updates } = this.state;
+    updates.push({ event: "updateLayer", id: id });
+    layers.find((l) => l.id === id).properties.options = options;
+    this.setState({ layers, updates });
+  };
   setSelection = (selection) => {
-    console.log(selection);
-    this.setState({ selection });
+    if (selection === this.state.selection) {
+      this.setState({ selection: false });
+    } else {
+      this.setState({ selection });
+    }
   };
   closeSelection = () => {
     this.setState({ selection: false });
   };
+  setDepth = (event) => {
+    var { layers, depth, updates } = this.state;
+    if (
+      depth !== event.target.value &&
+      layers.filter((l) => l.properties.depth && l.active).length > 0
+    ) {
+      this.pause();
+      depth = event.target.value;
+      for (let layer of layers) {
+        if (layer.properties.depth && layer.active) {
+          updates.unshift({ event: "removeLayer", id: layer.id });
+          updates.push({ event: "addLayer", id: layer.id });
+        }
+      }
+      this.setState({ updates, depth, clickblock: true });
+    }
+  };
+  setPeriod = (period) => {
+    var { layers, updates } = this.state;
+    if (period !== this.state.period) {
+      var datetime = period[0];
+      var clickblock;
+      for (let layer of layers) {
+        if (layer.active && layer.properties.period) {
+          clickblock = true;
+          updates.unshift({ event: "removeLayer", id: layer.id });
+          updates.push({ event: "addLayer", id: layer.id });
+        }
+      }
+      this.pause();
+      this.setState({ updates, datetime, clickblock, period });
+    }
+  };
+  getTransect = async (latlng, layer) => {
+    var { graphData, period } = this.state;
+    if (layer.type === "alplakes_transect") {
+      graphData = await getTransectAlplakesHydrodynamic(
+        CONFIG.alplakes_api,
+        layer.properties.model,
+        layer.properties.lake,
+        period,
+        latlng
+      );
+      if (graphData) {
+        graphData["type"] = "transect";
+        graphData["layer"] = layer;
+      }
+    }
+    if (graphData === false) {
+      window.alert("Failed to collect transect please try again.");
+      this.closeGraph();
+    } else {
+      this.setState({ graphData, graphs: true, selection: false });
+    }
+  };
+  getProfile = async (latlng, layer) => {
+    var { graphData, period } = this.state;
+    if (layer.type === "alplakes_profile") {
+      graphData = await getProfileAlplakesHydrodynamic(
+        CONFIG.alplakes_api,
+        layer.properties.model,
+        layer.properties.lake,
+        period,
+        latlng
+      );
+      if (graphData) {
+        graphData["type"] = "profile";
+        graphData["layer"] = layer;
+      }
+    }
+    if (graphData === false) {
+      window.alert("Failed to collect profile please try again.");
+      this.closeGraph();
+    } else {
+      this.setState({ graphData, graphs: true, selection: false });
+    }
+  };
+  closeGraph = () => {
+    var { updates } = this.state;
+    updates.push({ event: "clear" });
+    this.setState({ updates, graphData: false, graphs: false });
+  };
   async componentDidUpdate() {
     var { metadata } = this.props;
     var { initialLoad, period, minDate, maxDate, missingDates } = this.state;
-    if (initialLoad && "lake_id" in metadata) {
+    if (initialLoad && "key" in metadata) {
       var updates = [{ event: "bounds" }];
       for (var layer of metadata.layers) {
         if (layer.active) {
@@ -366,7 +457,6 @@ class Map extends Component {
           updates.push({ event: "addLayer", id: layer.id });
         }
       }
-      //updates.push({ event: "play" });
       var depth = metadata.depth;
       var depths = [depth];
       try {
@@ -408,7 +498,7 @@ class Map extends Component {
 
   render() {
     var { language, dark, metadata } = this.props;
-    var { fullscreen } = this.state;
+    var { fullscreen, graphs } = this.state;
     return (
       <div
         className={fullscreen ? "map-container fullscreen" : "map-container"}
@@ -420,7 +510,8 @@ class Map extends Component {
             unlock={this.unlock}
             updated={this.updated}
             metadata={metadata}
-            startAnimation={this.startAnimation}
+            getProfile={this.getProfile}
+            getTransect={this.getTransect}
           />
         </div>
         <div className="gradient" />
@@ -445,7 +536,10 @@ class Map extends Component {
           dark={dark}
           addLayer={this.addLayer}
           removeLayer={this.removeLayer}
+          updateOptions={this.updateOptions}
           setSelection={this.setSelection}
+          setPeriod={this.setPeriod}
+          setDepth={this.setDepth}
         />
         <Legend
           {...this.state}
@@ -453,6 +547,7 @@ class Map extends Component {
           setSelection={this.setSelection}
         />
         <Loading />
+        {graphs && <Plots {...this.state} close={this.closeGraph} />}
       </div>
     );
   }

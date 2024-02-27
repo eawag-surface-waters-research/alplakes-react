@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import LayerSettings from "./layersettings";
 import Translate from "../../translations.json";
 import temperature_icon from "../../img/temperature.png";
 import velocity_icon from "../../img/velocity.png";
@@ -10,6 +11,80 @@ import turbidity_icon from "../../img/turbidity.png";
 import rgb_icon from "../../img/rgb.png";
 import particles_icon from "../../img/particles.png";
 import thermocline_icon from "../../img/thermocline.png";
+
+class Selection extends Component {
+  render() {
+    var { selection, layers, setSelection } = this.props;
+    if (selection === false) {
+      return;
+    } else if (Number.isInteger(selection)) {
+      var layer = layers.find((l) => l.id === selection);
+      return (
+        <React.Fragment>
+          <div className="selection">
+            <div className="layer-description">
+              <ShowMoreText
+                text={layer.description ? layer.description : ""}
+                links={layer.links ? layer.links : {}}
+                maxLength={130}
+              />
+            </div>
+            <LayerSettings {...this.props} layer={layer} />
+          </div>
+          <div className="close-layer" onClick={() => setSelection(false)}>
+            &#10005;
+          </div>
+        </React.Fragment>
+      );
+    }
+  }
+}
+
+class ShowMoreText extends Component {
+  state = {
+    showFullText: false,
+  };
+
+  toggleText = () => {
+    this.setState({
+      showFullText: !this.state.showFullText,
+    });
+  };
+
+  render() {
+    const { text, links, maxLength } = this.props;
+    const { showFullText } = this.state;
+
+    const truncatedText =
+      text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
+
+    var show = showFullText ? text : truncatedText;
+
+    return (
+      <div onClick={this.toggleText}>
+        <p>
+          {show.split("@").map((t) =>
+            t in links ? (
+              <a
+                href={links[t][1]}
+                target="_blank"
+                rel="noopener noreferrer"
+                key={t}
+              >
+                {links[t][0]}
+              </a>
+            ) : (
+              t
+            )
+          )}
+        </p>
+        {text.length > maxLength && (
+          <button>{showFullText ? "Show less" : "Show more"}</button>
+        )}
+      </div>
+    );
+  }
+}
 
 class ActiveApps extends Component {
   removeLayer = (event) => {
@@ -70,6 +145,7 @@ class ActiveApps extends Component {
               +
             </div>
           ))}
+          <Selection {...this.props} />
         </div>
       </React.Fragment>
     );
@@ -82,8 +158,7 @@ class AddLayers extends Component {
     this.props.addLayer(id);
   };
   render() {
-    var { language, layers, images, activeAdd, toggleActiveAdd } =
-      this.props;
+    var { language, layers, images, activeAdd, toggleActiveAdd } = this.props;
     return (
       <div className={activeAdd ? "add-layers" : "add-layers hidden"}>
         <div className="layers-title">Add Layers</div>
@@ -141,6 +216,9 @@ class MapSettings extends Component {
     activeAdd: false,
   };
   toggleActiveAdd = () => {
+    if (!this.state.activeAdd) {
+      this.props.setSelection(false);
+    }
     this.setState({ activeAdd: !this.state.activeAdd });
   };
   render() {

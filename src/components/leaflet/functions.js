@@ -314,6 +314,7 @@ export const addLayer = async (
       getProfile
     );
   }
+  loaded();
 };
 
 export const updateLayer = async (
@@ -778,11 +779,13 @@ const updateAlplakesHydrodynamic = (
             }),
           })
             .bindTooltip(
-              `${p.name}<br>${
-                typeof value === "string" || value instanceof String
-                  ? value
+              `<div class="temperature-label"><div class="name">${
+                p.name
+              }</div><div class="value">${
+                typeof value === "number"
+                  ? Math.round(value * 10) / 10 + options["unit"]
                   : ""
-              }`,
+              }</div></div>`,
               {
                 id: p.name,
                 permanent: true,
@@ -799,9 +802,13 @@ const updateAlplakesHydrodynamic = (
           let p = layer.labels.find((p) => p.name === old.options.id);
           let value = leaflet_layer._getValue(L.latLng(p.latlng));
           m.getTooltip().setContent(
-            `${p.name}<br>${
-              typeof value === "string" || value instanceof String ? value : ""
-            }`
+            `<div class="temperature-label"><div class="name">${
+              p.name
+            }</div><div class="value">${
+              typeof value === "number"
+                ? Math.round(value * 10) / 10 + options["unit"]
+                : ""
+            }</div></div>`
           );
         });
       } else {
