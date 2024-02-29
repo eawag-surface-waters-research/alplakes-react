@@ -29,6 +29,18 @@
     "FR": "Température superficielle",
     "IT": "Temperatura superficiale"
   },
+  "icecover": {
+    "EN": "Ice cover",
+    "DE": "Eisdecke",
+    "FR": "Couverture de glace",
+    "IT": "Copertura di ghiaccio"
+  },
+  "bottomoxygen": {
+    "EN": "Bottom oxygen",
+    "DE": "Bodensauerstoff",
+    "FR": "Oxygène inférieur",
+    "IT": "Ossigeno sul fondo"
+  },
   "summary": {
     "EN": "Monitoring and forecasting for lakes across the European alpine region",
     "DE": "Überwachung und Vorhersage von Seen im gesamten europäischen Alpenraum",
@@ -36,6 +48,12 @@
     "IT": "Monitoraggio e previsione dei laghi nella regione alpina europea"
   },
   "results": {
+    "EN": "results",
+    "DE": "résultats",
+    "FR": "Ergebnisse",
+    "IT": "risultati"
+  },
+  "noresults": {
     "EN": "Your search returned 0 results. If the lake you are looking for is not on Alplakes we would be happy to hear from you.",
     "DE": "Ihre Suche ergab 0 Ergebnisse. Wenn der von Ihnen gesuchte See nicht auf Alplakes liegt, würden wir uns freuen, von Ihnen zu hören.",
     "FR": "Votre recherche a renvoyé 0 résultat. Si le lac que vous recherchez ne se trouve pas sur Alplakes, nous serions heureux de vous entendre.",
@@ -196,6 +214,36 @@
     "DE": "Thermokline",
     "FR": "Thermocline",
     "IT": "termoclino"
+  },
+  "click": {
+    "EN": "Click for more",
+    "DE": "Klicken Sie für mehr",
+    "FR": "Cliquez pour en savoir plus",
+    "IT": "Fare clic per ulteriori informazioni"
+  },
+  "satellite": {
+    "EN": "Satellite",
+    "DE": "Satelliten",
+    "FR": "Satellite",
+    "IT": "Satellitare"
+  },
+  "all": {
+    "EN": "All",
+    "DE": "Alle",
+    "FR": "Toute",
+    "IT": "Tutta"
+  },
+  "live": {
+    "EN": "Live",
+    "DE": "Live",
+    "FR": "En direct",
+    "IT": "Dal vivo"
+  },
+  "insitu": {
+    "EN": "Insitu",
+    "DE": "Vor Ort",
+    "FR": "In situ",
+    "IT": "Sul posto"
   },
   "play": {
     "EN": "Play",

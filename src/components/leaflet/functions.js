@@ -47,7 +47,7 @@ export const toRadians = (degrees) => {
 export const dayName = (YYYYMMDD, language, Translations, full = false) => {
   if (formatDateYYYYMMDD(new Date()) === YYYYMMDD) {
     if (full) {
-      return Translations.today[language].toLowerCase();
+      return Translations.today[language];
     }
     return Translations.today[language];
   }

@@ -83,11 +83,9 @@ class HomeMap extends Component {
         }),
       })
         .bindTooltip(
-          `<a class="temperature-label" href="/${
-            lake.key
-          }" title='Click for more details'><div class="name">${
-            lake.name[language]
-          }</div>${
+          `<a class="temperature-label" href="/${lake.key}" title='${
+            Translations.click[language]
+          }'><div class="name">${lake.name[language]}</div>${
             lake.forecast.summary[day] === false
               ? ""
               : `<div class="value">${lake.forecast.summary[day]}°</div>`
@@ -280,34 +278,42 @@ class HomeMap extends Component {
     if (day === "") {
       day = formatDateYYYYMMDD(new Date());
     }
+    var parameters = [
+      {
+        key: "temperature",
+        label: Translations.surfacetemperature[language],
+        img: temperature_icon,
+      },
+      {
+        key: "ice",
+        label: Translations.icecover[language],
+        img: ice_icon,
+      },
+      {
+        key: "oxygen",
+        label: Translations.bottomoxygen[language],
+        img: oxygen_icon,
+      },
+    ];
+    var label = parameters.find((d) =>
+      Object.values(d).includes(parameter)
+    ).label;
     return (
       <React.Fragment>
         <div className="parameter-selector">
-          <div
-            className={
-              parameter === "temperature" ? "parameter selected" : "parameter"
-            }
-            title="Lake temperature forecast"
-            onClick={() => this.setParameter("temperature")}
-          >
-            <img src={temperature_icon} alt="Surface temperature" />
-          </div>
-          <div
-            className={parameter === "ice" ? "parameter selected" : "parameter"}
-            title="Lake ice forecast"
-            onClick={() => this.setParameter("ice")}
-          >
-            <img src={ice_icon} alt="Ice Thickness" />
-          </div>
-          <div
-            className={
-              parameter === "oxygen" ? "parameter selected" : "parameter"
-            }
-            title="Lake oxygen forecast"
-            onClick={() => this.setParameter("oxygen")}
-          >
-            <img src={oxygen_icon} alt="Oxygen Content" />
-          </div>
+          {parameters.map((p) => (
+            <div
+              className={
+                parameter === p.key ? "parameter selected" : "parameter"
+              }
+              key={p.key}
+              title={p.label}
+              onClick={() => this.setParameter(p.key)}
+            >
+              <img src={p.img} alt={p.label} />
+            </div>
+          ))}
+          <div className="label">{label}</div>
         </div>
         <div id="map">
           <div className="day-selector">
@@ -318,6 +324,7 @@ class HomeMap extends Component {
                   key={d}
                   onClick={this.setDay}
                   className={day === d ? "day-inner selected" : "day-inner"}
+                  title={dayName(d, language, Translations, true)}
                 >
                   {dayName(d, language, Translations)}
                 </div>

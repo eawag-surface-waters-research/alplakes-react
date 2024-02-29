@@ -24,6 +24,32 @@ import HomeMap from "../../components/leaflet/homemap";
 import Footer from "../../components/footer/footer";
 import PolygonGraph from "../../components/leaflet/polygon";
 
+class ListSkeleton extends Component {
+  render() {
+    return (
+      <React.Fragment>
+        {[...Array(85).keys()].map((a) => (
+          <div className="list-item-skeleton" key={a}>
+            <div className="lake-shape-skeleton"></div>
+            <div className="text-skeleton">
+              <div className="name-skeleton"></div>
+              <div className="parameters-skeleton"></div>
+            </div>
+            <div className="skeleton-click"></div>
+            <div className="sketelon-graph">
+              <div className="skeleton-block"></div>
+              <div className="skeleton-block"></div>
+              <div className="skeleton-block"></div>
+              <div className="skeleton-block"></div>
+              <div className="skeleton-block right"></div>
+            </div>
+          </div>
+        ))}
+      </React.Fragment>
+    );
+  }
+}
+
 class Search extends Component {
   render() {
     var { setFilter, setSearch, search, language, filters, filterTypes } =
@@ -49,7 +75,7 @@ class Search extends Component {
               key={f.id}
               onClick={() => setFilter(f.id)}
             >
-              {f.short_name}
+              {f.name}
             </div>
           ))}
         </div>
@@ -64,11 +90,16 @@ class List extends Component {
     return (
       <div className="list">
         <div className="product-wrapper">
-          <div className="results">{results} results</div>
+          <div className="results">
+            {results} {Translations.results[language]}
+          </div>
           <div className="product-list">
-            {results === 0 && search.length > 0 && (
-              <div className="empty">{Translations.results[language]}</div>
-            )}
+            {results === 0 &&
+              (search.length > 0 ? (
+                <div className="empty">{Translations.noresults[language]}</div>
+              ) : (
+                <ListSkeleton />
+              ))}
             {sortedList.map((lake) => (
               <ListItem lake={lake} language={language} key={lake.key} />
             ))}
@@ -91,7 +122,7 @@ class ListItem extends Component {
           id={"list-" + lake.key}
           onMouseOver={onMouseOver}
           onMouseOut={onMouseOut}
-          title={"Click for more..."}
+          title={Translations.click[language]}
         >
           <div className="properties">
             <div className="polygon">
@@ -317,26 +348,26 @@ class Home extends Component {
     var sortedList = this.sortList(list, filters);
     var results = sortedList.filter((l) => l.display && !l.filter).length;
     var filterTypes = [
-      { id: "all", short_name: "All" },
+      { id: "all", name: Translations.all[language] },
       {
         id: "3D",
-        short_name: "3D",
+        name: "3D",
       },
       {
         id: "1D",
-        short_name: "1D",
+        name: "1D",
       },
       {
         id: "satellite",
-        short_name: "Satellite",
+        name: Translations.satellite[language],
       },
       {
         id: "live",
-        short_name: "Live",
+        name: Translations.live[language],
       },
       {
         id: "insitu",
-        short_name: "Insitu",
+        name: Translations.insitu[language],
       },
     ];
     return (

@@ -193,6 +193,7 @@
   margin-left: 16px;
   opacity: 0.9;
   transition: all .1s 0s ease;
+  vertical-align: top;
 }
 
 .main .content .list .product-list .list-item .properties .left .label {
@@ -327,6 +328,76 @@
   font-weight: bold;
   color: lightgray;
 }
+
+.main .content .list .product-list .list-item-skeleton {
+  border: 1px solid transparent;
+  border-radius: 16px;
+  box-sizing: border-box;
+  margin-bottom: var(--padding);
+  padding: 0 calc(var(--padding) / 4);
+  position: relative;
+  transition: all .33s ease 0s;
+  width: 100%;
+}
+
+.main .content .list .product-list .lake-shape-skeleton {
+  height: 60px;
+  width: 60px;
+  margin: 7px;
+  background-color: var(--border-color);
+  opacity: 0.2;
+  display: inline-block;
+  margin-bottom: 1px;
+  border-radius: 12px;
+}
+
+.main .content .list .product-list .skeleton-click {
+  float: right;
+  height: 24px;
+  width: 24px;
+  background-color: var(--border-color);
+  opacity: 0.3;
+}
+
+.main .content .list .product-list .text-skeleton {
+  display: inline-block;
+  margin-left: 6px;
+  vertical-align: top;
+}
+
+.main .content .list .product-list .text-skeleton .name-skeleton {
+  height: 22.5px;
+  width: 100px;
+  background-color: var(--border-color);
+  opacity: 0.4;
+  margin-top: 10px;
+  border-radius: 12px;
+}
+
+.main .content .list .product-list .text-skeleton .parameters-skeleton {
+  height: 15.5px;
+  width: 200px;
+  background-color: var(--border-color);
+  opacity: 0.3;
+  margin-top: 10px;
+  border-radius: 12px;
+}
+
+.main .content .list .product-list .skeleton-block {
+  display: inline-block;
+  width: 20%;
+  height: 55px;
+  border-bottom: 1px solid var(--border-color);
+  border-right: 1px solid var(--border-color);
+  box-sizing: border-box;
+  opacity: 0.8;
+}
+
+.main .content .list .product-list .skeleton-block.right {
+  border-right: none;
+}
+
+
 
 .main .content .shadow {
   position: fixed;
@@ -476,7 +547,6 @@
   border: 1px solid var(--background-color);
   border-right: 1px solid var(--border-color);
   border-bottom: 1px solid var(--border-color);
-  padding: 0 0 calc(var(--padding) / 2);
   background-color: var(--background-color);
   text-align: center;
 }
@@ -487,6 +557,7 @@
   margin: 0 calc(var(--padding) / 2);
   width: 50px;
   height: 50px;
+  margin-top: -5px;
   cursor: pointer;
 }
 
@@ -517,6 +588,17 @@
 .main .content .home-map .parameter-selector .parameter .icon {
   font: bold 22px "Lucida Console", Monaco, monospace;
   line-height: 40px;
+}
+
+.main .content .home-map .label {
+  text-align: left;
+  padding: 2.75px 0;
+  color: var(--background-suble-font-color);
+  border-radius: 22px;
+  width: fit-content;
+  margin: calc(var(--padding) / 2) 0;
+  margin-left: calc(var(--padding) / 2);
+  font-size: 18px;
 }
 
 .main .content .promos {
@@ -597,7 +679,7 @@
   .main .content .home-map #map {
     border: none;
     border-radius: 0;
-    height: calc(100% - 40px);
+    height: calc(100% - 66px);
   }
 
   .main .content .home-map {
@@ -649,13 +731,17 @@
   }
 
   .main .content .home-map .parameter-selector {
-    top: 40px;
+    top: 58px;
     left: 0px;
     padding-left: var(--padding);
   }
 
   .main .content .home-map .parameter-selector .parameter {
     margin-right: var(--padding);
+  }
+
+  .main .content .home-map .label {
+    font-size: 16px;
   }
 
   .main .content .home-map #map .day-selector {
@@ -743,6 +829,14 @@
   }
 
   .main .content .list .product-list .list-item .properties .right .view {
+    display: none;
+  }
+
+  .main .content .list .product-list .list-item-skeleton {
+    padding: calc(var(--padding)/4) 0;
+  }
+
+  .main .content .list .product-list .skeleton-click {
     display: none;
   }
 
