@@ -13,6 +13,14 @@ class API extends Component {
       <React.Fragment>
         <NavBar {...this.props} />
         <div className="api-container">
+          <div className="title">Alplakes API Documentation</div>
+          <div className="text">
+            Discover the public endpoints driving alplakes.eawag.ch, connect to
+            them, and leverage our data for your applications.
+          </div>
+          <div className="contact">
+            See our about page for any questions regarding the API.
+          </div>
           <SwaggerUI
             url={CONFIG.alplakes_api + "/openapi.json"}
             docExpansion="list"

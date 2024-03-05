@@ -7,6 +7,24 @@
   box-sizing: border-box;
 }
 
+.main .api-container .title {
+  font-size: 28px;
+  border-bottom: 2px solid var(--highlight-color);
+  width: -moz-fit-content;
+  width: fit-content;
+  margin-bottom: 32px;
+}
+
+.main .api-container .text {
+  font-size: 18px;
+}
+
+.main .api-container .contact {
+  margin-bottom: 32px;
+  margin-top: 12px;
+  font-size: 14px;
+}
+
 .main.dark .api-container .swagger-ui .opblock-body {
   filter: invert(88%) hue-rotate(180deg);
 }

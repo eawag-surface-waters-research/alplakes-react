@@ -93,9 +93,8 @@ class About extends Component {
       <div className="main">
         <NavBar {...this.props} />
         <div className="about">
-          <div className="section-title">About</div>
           <div className="section-content">
-            <div className="half left">
+            <div className="intro">
               Alplakes is an interactive web application offering public access
               to operational simulations and remote sensing products for lakes
               across the European alpine region. This platform consolidates
@@ -105,7 +104,7 @@ class About extends Component {
               access the latest lake models and remote sensing products produced
               by the research community.
             </div>
-            <div className="half right">
+            <div className="intro-promos">
               <Promos types={products} />
             </div>
           </div>

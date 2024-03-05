@@ -1,6 +1,6 @@
 .main .about {
     width: 100%;
-    max-width: 1400px;
+    max-width: 1000px;
     margin: auto;
     margin-top: calc(var(--header-height));
     padding: 0 var(--padding);
@@ -12,7 +12,7 @@
     font-size: 28px;
     border-bottom: 2px solid var(--highlight-color);
     width: fit-content;
-    margin-bottom: 18px;
+    margin-bottom: 32px;
 }
 
 .main .about .section-content {
@@ -20,22 +20,17 @@
     margin-bottom: var(--padding);
 }
 
-.main .about .section-content .half {
-    width: calc(50% - var(--padding)/2);
-    display: inline-block;
-}
-
-.main .about .section-content .half.left {
-    margin-right: var(--padding);
-    vertical-align: top;
+.main .about .section-content .intro {
+    margin-top: calc(var(--padding) * 2);
+    margin-bottom: var(--padding);
     font-size: 21px;
 }
 
-.main .about .section-content .half .promos {
+.main .about .section-content .promos {
     text-align: center;
 }
 
-.main .about .section-content .half .promo {
+.main .about .section-content .promo {
     background-color: var(--background-color);
     margin-right: var(--padding);
     display: inline-block;
@@ -46,7 +41,7 @@
     margin-bottom: 10px;
 }
 
-.main .about .section-content .half .promo .number {
+.main .about .section-content .promo .number {
     display: inline-block;
     font-size: 64px;
     width: 70px;
@@ -55,7 +50,7 @@
     z-index: 1;
 }
 
-.main .about .section-content .half .promo .text {
+.main .about .section-content .promo .text {
     display: inline-block;
     font-size: 14px;
     padding: 10px 20px 10px 10px;
@@ -63,18 +58,18 @@
     z-index: 1;
 }
 
-.main .about .section-content .half .promo .text .upper {
+.main .about .section-content .promo .text .upper {
     font-size: 10px;
     opacity: 0.8;
 }
 
-.main .about .section-content .half .promo .text .parameter {
+.main .about .section-content .promo .text .parameter {
     font-size: 16px;
     padding-top: 4px;
     padding-bottom: 2px;
 }
 
-.main .about .section-content .half .promo img {
+.main .about .section-content .promo img {
     max-height: 60%;
     filter: invert(100%);
     position: absolute;
@@ -85,18 +80,18 @@
     opacity: 0.2;
 }
 
-.main.dark .about .section-content .half .promo img {
+.main.dark .about .section-content .promo img {
     filter: invert(0%);
 }
 
-.main .about .section-content .half .promo .text .dates {
+.main .about .section-content .promo .text .dates {
     font-size: 12px;
     font-weight: bold;
     opacity: 0.6;
 }
 
 .main .about .section-content .person {
-    width: 200px;
+    width: 190px;
     display: inline-block;
     margin-right: var(--padding);
     margin-top: var(--padding);
@@ -124,7 +119,6 @@
 }
 
 .main .about .section-content .projects {
-    max-width: 700px;
     margin-bottom: 18px;
 }
 
@@ -194,11 +188,7 @@
         padding: 12px;
     }
 
-    .main .about .section-content .half {
-        width: 100%;
-    }
-
-    .main .about .section-content .half .promos {
+    .main .about .section-content .promos {
         margin-top: 12px;
     }
 
