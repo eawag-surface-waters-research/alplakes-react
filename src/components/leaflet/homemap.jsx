@@ -2,9 +2,6 @@ import React, { Component } from "react";
 import L from "leaflet";
 import { dayName, formatDateYYYYMMDD } from "./functions";
 import Translations from "../../translations.json";
-import temperature_icon from "../../img/temperature_simple.png";
-import ice_icon from "../../img/ice_simple.png";
-import oxygen_icon from "../../img/oxygen_simple.png";
 import "./css/leaflet.css";
 
 class HomeMap extends Component {
@@ -45,7 +42,7 @@ class HomeMap extends Component {
     }
   };
   plotPolygons = (day) => {
-    var { list } = this.props;
+    var { list, parameter } = this.props;
     this.polygons.clearLayers();
     for (let lake of list) {
       if (lake.geometry !== false) {
@@ -56,11 +53,12 @@ class HomeMap extends Component {
           },
           {
             style: {
-              fillColor: this.getColor(lake.forecast.summary[day]),
+              fillColor: this.getColor(lake.forecast.summary[day][parameter]),
               weight: 0.5,
               opacity: 1,
               color: "black",
-              fillOpacity: lake.forecast.summary[day] === false ? 0 : 1,
+              fillOpacity:
+                lake.forecast.summary[day][parameter] === false ? 0 : 1,
             },
           }
         )
@@ -72,7 +70,7 @@ class HomeMap extends Component {
     }
   };
   plotLabels = (day) => {
-    var { list, language } = this.props;
+    var { list, language, parameter, parameters } = this.props;
     var zoom = this.map.getZoom();
     for (let lake of list) {
       this.labels[lake.key].marker = L.marker([lake.latitude, lake.longitude], {
@@ -86,9 +84,9 @@ class HomeMap extends Component {
           `<a class="temperature-label" href="/${lake.key}" title='${
             Translations.click[language]
           }'><div class="name">${lake.name[language]}</div>${
-            lake.forecast.summary[day] === false
+            lake.forecast.summary[day][parameter] === false
               ? ""
-              : `<div class="value">${lake.forecast.summary[day]}°</div>`
+              : `<div class="value">${lake.forecast.summary[day][parameter]}${parameters[parameter].unit}</div>`
           }</a>`,
           {
             id: lake.key,
@@ -212,6 +210,10 @@ class HomeMap extends Component {
       var map = this.map;
       map.on("zoomend", this.displayLabels);
       this.plot = false;
+    } else if (prevProps.parameter !== this.props.parameter) {
+      this.removeLabels();
+      this.plotPolygons(day);
+      this.plotLabels(day);
     } else if (prevProps.language !== this.props.language) {
       this.removeLabels();
       this.labels = this.labelClustering(list, language);
@@ -273,44 +275,25 @@ class HomeMap extends Component {
   }
 
   render() {
-    var { days, day, parameter } = this.state;
-    var { language } = this.props;
+    var { days, day } = this.state;
+    var { parameter, parameters, setParameter, language } = this.props;
     if (day === "") {
       day = formatDateYYYYMMDD(new Date());
     }
-    var parameters = [
-      {
-        key: "temperature",
-        label: Translations.surfacetemperature[language],
-        img: temperature_icon,
-      },
-      {
-        key: "ice",
-        label: Translations.icecover[language],
-        img: ice_icon,
-      },
-      {
-        key: "oxygen",
-        label: Translations.bottomoxygen[language],
-        img: oxygen_icon,
-      },
-    ];
-    var label = parameters.find((d) =>
-      Object.values(d).includes(parameter)
-    ).label;
+    var label = Translations[parameters[parameter].label][language]
     return (
       <React.Fragment>
         <div className="parameter-selector">
-          {parameters.map((p) => (
+          {Object.keys(parameters).map((p) => (
             <div
               className={
-                parameter === p.key ? "parameter selected" : "parameter"
+                parameter === p ? "parameter selected" : "parameter"
               }
-              key={p.key}
-              title={p.label}
-              onClick={() => this.setParameter(p.key)}
+              key={p}
+              title={Translations[parameters[p].label][language]}
+              onClick={() => setParameter(p)}
             >
-              <img src={p.img} alt={p.label} />
+              <img src={parameters[p].img} alt={Translations[parameters[p].label][language]} />
             </div>
           ))}
           <div className="label">{label}</div>

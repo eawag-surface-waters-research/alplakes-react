@@ -221,12 +221,12 @@
     "flags": ["swiss"]
   },
   {
-    "key": "upperconstance",
+    "key": "constance",
     "name": {
-      "EN": "Upper Lake Constance",
-      "DE": "Upper Lake Constance",
-      "FR": "Upper Lake Constance",
-      "IT": "Upper Lake Constance"
+      "EN": "Lake Constance",
+      "DE": "Lake Constance",
+      "FR": "Lake Constance",
+      "IT": "Lake Constance"
     },
     "filters": ["1D"],
     "area": 473.0,
@@ -236,23 +236,6 @@
     "latitude": 47.629,
     "longitude": 9.374,
     "flags": ["swiss", "german", "austrian"]
-  },
-  {
-    "key": "lowerconstance",
-    "name": {
-      "EN": "Lower Lake Constance",
-      "DE": "Lower Lake Constance",
-      "FR": "Lower Lake Constance",
-      "IT": "Lower Lake Constance"
-    },
-    "filters": ["1D"],
-    "area": 63.0,
-    "ave_depth": 13.0,
-    "max_depth": 46.0,
-    "elevation": 395.0,
-    "latitude": 47.676,
-    "longitude": 9.0,
-    "flags": ["swiss", "german"]
   },
   {
     "key": "brienz",

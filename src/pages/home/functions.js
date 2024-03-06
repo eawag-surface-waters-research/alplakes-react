@@ -70,37 +70,48 @@ export const inBounds = (latitude, longitude, bounds) => {
   return false;
 };
 
-export const summariseData = (forecast, frozen) => {
+export const summariseData = (forecast, parameter, parameters) => {
   var dtMin = new Date();
   dtMin.setHours(0, 0, 0, 0);
   dtMin = dtMin.getTime();
   var dtMax = dtMin + 5 * 86400000 - 10800000;
+
   var dt = [];
-  var value = [];
+  var value = parameters.reduce((obj, item) => ({ ...obj, [item]: [] }), {});
   var summary = {};
-  var available = true;
-  if (forecast === undefined) available = false;
   for (let i = 0; i < 5; i++) {
-    summary[formatDate(dtMin + i * 86400000)] = frozen ? [4] : [];
+    summary[formatDate(dtMin + i * 86400000)] = parameters.reduce(
+      (obj, item) => ({ ...obj, [item]: [] }),
+      {}
+    );
   }
-  if (frozen || forecast === undefined) {
+
+  var available = true;
+  if (forecast === undefined) {
     dt = [dtMin, dtMax];
-    value = [4, 4];
+    value = parameters.reduce((obj, item) => ({ ...obj, [item]: [0, 0] }), {});
+    available = false;
   } else {
-    for (let i = 0; i < forecast.date.length; i++) {
-      if (forecast.date[i] > dtMin) {
-        let day = formatDate(forecast.date[i]);
-        let v = forecast.value[i];
-        if (v !== null) {
-          dt.push(new Date(forecast.date[i]));
-          value.push(v);
-          summary[day].push(v);
+    for (let i = 0; i < forecast.time.length; i++) {
+      if (forecast.time[i] > dtMin) {
+        let day = formatDate(forecast.time[i]);
+        if (forecast[parameter][i] !== null) {
+          dt.push(new Date(forecast.time[i]));
+          for (let p of parameters) {
+            if (p in forecast && forecast[p][i] !== null) {
+              value[p].push(forecast[p][i]);
+              summary[day][p].push(forecast[p][i]);
+            }
+          }
         }
       }
     }
   }
+
   for (let key in summary) {
-    summary[key] = mean(summary[key]);
+    for (let p in summary[key]) {
+      summary[key][p] = mean(summary[key][p]);
+    }
   }
   return {
     dt,

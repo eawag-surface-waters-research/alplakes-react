@@ -9,6 +9,9 @@ import depth_icon from "../../img/depth.png";
 import area_icon from "../../img/area.png";
 import elevation_icon from "../../img/elevation.png";
 import more_icon from "../../img/more.png";
+import temperature_icon from "../../img/temperature_simple.png";
+import ice_icon from "../../img/ice_simple.png";
+import oxygen_icon from "../../img/oxygen_simple.png";
 import {
   onMouseOver,
   onMouseOut,
@@ -86,7 +89,8 @@ class Search extends Component {
 
 class List extends Component {
   render() {
-    var { language, sortedList, results, search } = this.props;
+    var { language, sortedList, results, search, parameter, parameters } =
+      this.props;
     return (
       <div className="list">
         <div className="product-wrapper">
@@ -101,7 +105,13 @@ class List extends Component {
                 <ListSkeleton />
               ))}
             {sortedList.map((lake) => (
-              <ListItem lake={lake} language={language} key={lake.key} />
+              <ListItem
+                lake={lake}
+                language={language}
+                key={lake.key}
+                parameter={parameter}
+                parameters={parameters}
+              />
             ))}
           </div>
         </div>
@@ -112,7 +122,7 @@ class List extends Component {
 
 class ListItem extends Component {
   render() {
-    var { lake, language } = this.props;
+    var { lake, language, parameter, parameters } = this.props;
     return (
       <NavLink to={`/${lake.key}`}>
         <div
@@ -130,10 +140,6 @@ class ListItem extends Component {
             </div>
             <div className="left">
               {lake.name[language]}
-              {lake.frozen && (
-                <div className="frozen">({Translations.frozen[language]})</div>
-              )}
-
               <div className="label">
                 <div className="icon">
                   <img src={depth_icon} alt="depth" />
@@ -166,7 +172,8 @@ class ListItem extends Component {
               <SummaryTable
                 forecast={lake.forecast}
                 language={language}
-                frozen={lake.frozen}
+                parameter={parameter}
+                parameters={parameters}
               />
             </div>
           </div>
@@ -178,21 +185,20 @@ class ListItem extends Component {
 
 class SummaryTable extends Component {
   render() {
-    var { forecast, language } = this.props;
+    var { forecast, language, parameter, parameters } = this.props;
     return (
       <React.Fragment>
-        {Object.keys(forecast.summary).map((day, i, arr) =>
-          forecast.summary[day] || !forecast.available ? (
-            <div key={day} className={i === 0 ? "inner start" : "inner"}>
-              <div className="ave">
-                {forecast.summary[day]}
-                {forecast.summary[day] ? "°" : ""}
-              </div>
-              <div className="day">{dayName(day, language, Translations)}</div>
+        {Object.keys(forecast.summary).map((day, i, arr) => (
+          <div key={day} className={i === 0 ? "inner start" : "inner"}>
+            <div className="ave">
+              {forecast.summary[day][parameter] === false
+                ? ""
+                : `${forecast.summary[day][parameter]}${parameters[parameter].unit}`}
             </div>
-          ) : null
-        )}
-        <SummaryGraph dt={forecast.dt} value={forecast.value} />
+            <div className="day">{dayName(day, language, Translations)}</div>
+          </div>
+        ))}
+        <SummaryGraph dt={forecast.dt} value={forecast.value[parameter]} />
       </React.Fragment>
     );
   }
@@ -205,6 +211,24 @@ class Home extends Component {
     filters: ["all"],
     boundingBox: false,
     fullscreen: false,
+    parameter: "temperature",
+    parameters: {
+      temperature: {
+        label: "surfacetemperature",
+        unit: "°",
+        img: temperature_icon,
+      },
+      ice: {
+        label: "icecover",
+        unit: "m",
+        img: ice_icon,
+      },
+      oxygen: {
+        label: "bottomoxygen",
+        unit: "%",
+        img: oxygen_icon,
+      },
+    },
   };
   toggleFullscreen = () => {
     this.setState({ fullscreen: !this.state.fullscreen }, () => {
@@ -282,27 +306,24 @@ class Home extends Component {
     });
     return list;
   };
+  setParameter = (parameter) => {
+    this.setState({ parameter });
+  };
   async componentDidMount() {
-    var ice, geometry, forecast;
+    var { parameter, parameters } = this.state;
+    var geometry, forecast;
     const { data: list } = await axios.get(
       CONFIG.alplakes_bucket + "/static/website/metadata/v2/list.json"
     );
     try {
       ({ data: forecast } = await axios.get(
         CONFIG.alplakes_bucket +
-          `/simulations/forecast.json?timestamp=${
+          `/simulations/forecast2.json?timestamp=${
             Math.round((new Date().getTime() + 1800000) / 3600000) * 3600 - 3600
           }`
       ));
     } catch (e) {
       forecast = {};
-    }
-    try {
-      ({ data: ice } = await axios.get(
-        CONFIG.alplakes_bucket + "/static/website/metadata/v2/ice.json"
-      ));
-    } catch (e) {
-      ice = {};
     }
     try {
       ({ data: geometry } = await axios.get(
@@ -315,25 +336,14 @@ class Home extends Component {
     } catch (e) {
       geometry = {};
     }
-    var today = new Date();
     list.map((l) => {
       l.display = true;
-      l.frozen = false;
       l.geometry = false;
-      if (l.key in ice) {
-        for (var i = 0; i < ice[l.key].length; i++) {
-          if (ice[l.key][i].length === 1) {
-            if (today > parseDate(ice[l.key][i][0].toString())) l.frozen = true;
-          } else if (ice[l.key][i].length === 2) {
-            if (
-              today > parseDate(ice[l.key][i][0].toString()) &&
-              today < parseDate(ice[l.key][i][1].toString())
-            )
-              l.frozen = true;
-          }
-        }
-      }
-      l.forecast = summariseData(forecast[l.key], l.frozen);
+      l.forecast = summariseData(
+        forecast[l.key],
+        parameter,
+        Object.keys(parameters)
+      );
       if (l.key in geometry) {
         l.geometry = geometry[l.key];
       }
@@ -344,7 +354,8 @@ class Home extends Component {
   render() {
     document.title = "Alplakes";
     var { language, dark } = this.props;
-    var { list, search, filters, fullscreen } = this.state;
+    var { list, search, filters, fullscreen, parameter, parameters } =
+      this.state;
     var sortedList = this.sortList(list, filters);
     var results = sortedList.filter((l) => l.display && !l.filter).length;
     var filterTypes = [
@@ -387,6 +398,8 @@ class Home extends Component {
             sortedList={sortedList}
             results={results}
             search={search}
+            parameter={parameter}
+            parameters={parameters}
           />
           <div className={fullscreen ? "home-map" : "home-map hide"}>
             <div className="fullscreen" onClick={this.toggleFullscreen}>
@@ -400,6 +413,9 @@ class Home extends Component {
               dark={dark}
               language={language}
               setBounds={this.setBounds}
+              parameter={parameter}
+              parameters={parameters}
+              setParameter={this.setParameter}
             />
           </div>
           <div className="map-button" onClick={this.toggleFullscreen}>
