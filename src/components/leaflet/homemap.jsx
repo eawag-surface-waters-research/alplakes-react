@@ -24,21 +24,45 @@ class HomeMap extends Component {
     this.plotLabels(day);
     this.setState({ day });
   };
-  getColor = (value) => {
-    if (value === null || isNaN(value)) {
-      return false;
-    } else if (value < 5) {
-      return "rgb(52,132,150)";
-    } else if (value < 10) {
-      return "rgb(128,194,208)";
-    } else if (value < 15) {
-      return "rgb(196,236,239)";
-    } else if (value < 20) {
-      return "rgb(239,163,127)";
-    } else if (value < 25) {
-      return "rgb(223,102,92)";
-    } else {
-      return "rgb(184,30,33)";
+  getColor = (value, parameter) => {
+    if (parameter === "temperature") {
+      if (value === null || isNaN(value)) {
+        return false;
+      } else if (value < 5) {
+        return "rgb(52,132,150)";
+      } else if (value < 10) {
+        return "rgb(128,194,208)";
+      } else if (value < 15) {
+        return "rgb(196,236,239)";
+      } else if (value < 20) {
+        return "rgb(239,163,127)";
+      } else if (value < 25) {
+        return "rgb(223,102,92)";
+      } else {
+        return "rgb(184,30,33)";
+      }
+    } else if (parameter === "ice") {
+      if (value === null || isNaN(value)) {
+        return false;
+      } else if (value <= 0) {
+        return "rgb(196,236,239)";
+      } else if (value > 0) {
+        return "rgb(223,102,92)";
+      }
+    } else if (parameter === "oxygen") {
+      if (value === null || isNaN(value)) {
+        return false;
+      } else if (value < 20) {
+        return "rgb(52,132,150)";
+      } else if (value < 40) {
+        return "rgb(128,194,208)";
+      } else if (value < 60) {
+        return "rgb(239,163,127)";
+      } else if (value < 80) {
+        return "rgb(223,102,92)";
+      } else {
+        return "rgb(184,30,33)";
+      }
     }
   };
   plotPolygons = (day) => {
@@ -53,7 +77,10 @@ class HomeMap extends Component {
           },
           {
             style: {
-              fillColor: this.getColor(lake.forecast.summary[day][parameter]),
+              fillColor: this.getColor(
+                lake.forecast.summary[day][parameter],
+                parameter
+              ),
               weight: 0.5,
               opacity: 1,
               color: "black",
@@ -280,20 +307,21 @@ class HomeMap extends Component {
     if (day === "") {
       day = formatDateYYYYMMDD(new Date());
     }
-    var label = Translations[parameters[parameter].label][language]
+    var label = Translations[parameters[parameter].label][language];
     return (
       <React.Fragment>
         <div className="parameter-selector">
           {Object.keys(parameters).map((p) => (
             <div
-              className={
-                parameter === p ? "parameter selected" : "parameter"
-              }
+              className={parameter === p ? "parameter selected" : "parameter"}
               key={p}
               title={Translations[parameters[p].label][language]}
               onClick={() => setParameter(p)}
             >
-              <img src={parameters[p].img} alt={Translations[parameters[p].label][language]} />
+              <img
+                src={parameters[p].img}
+                alt={Translations[parameters[p].label][language]}
+              />
             </div>
           ))}
           <div className="label">{label}</div>

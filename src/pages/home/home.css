@@ -283,6 +283,7 @@
   text-align: left;
   display: table;
   table-layout: fixed;
+  height: 55px;
 }
 
 .main .content .list .product-list .list-item .summary .summary-table .inner {
@@ -474,6 +475,31 @@
 .main .content .home-map #map {
   border-radius: 12px;
   border: 1px solid var(--border-color);
+}
+
+.main .content .home-map #map:after {
+  opacity: 0;
+  content: "beta";
+  position: absolute;
+  width: 160px;
+  height: 30px;
+  background: var(--highlight-color);
+  top: calc(95px + var(--padding));
+  left: -40px;
+  text-align: center;
+  font-size: 18px;
+  font-family: sans-serif;
+  text-transform: uppercase;
+  font-weight: bold;
+  color: #fff;
+  line-height: 32px;
+  transform: rotate(-45deg);
+  z-index: 998;
+  transition: opacity 0.33s ease-in;
+}
+
+.main .content.beta .home-map #map:after {
+  opacity: 1;
 }
 
 .main .content .home-map #map .leaflet-tile-pane {

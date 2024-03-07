@@ -7,7 +7,7 @@ class SummaryGraph extends Component {
   };
   plot = () => {
     var { graphid } = this.state;
-    var { dt, value, dtMin, dtMax } = this.props;
+    var { dt, value } = this.props;
     var stroke = "rgba(68,188,167,255)";
     var stroke_width = 2;
     try {
@@ -31,20 +31,23 @@ class SummaryGraph extends Component {
       .append("g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+    var xMin = d3.min(dt);
+    var xMax = d3.max(dt);
+
+    if (value.length === 0) {
+      dt = [xMin, xMax];
+      value = [4, 4];
+    }
+
     var data = [];
     for (var i = 0; i < dt.length; i++) {
       data.push({ x: dt[i], y: value[i] });
     }
 
-    var xMin = d3.min(dt);
-    var xMax = d3.max(dt);
     var yMin = d3.min(value);
     var yMax = d3.max(value);
 
     yMin = yMin - (yMax - yMin) / 2;
-
-    if (dtMin) xMin = dtMin;
-    if (dtMax) xMax = dtMax;
 
     var x = d3.scaleTime().range([0, this.width]);
     var y = d3.scaleLinear().range([this.height, 0]);
@@ -52,14 +55,22 @@ class SummaryGraph extends Component {
     x.domain([xMin, xMax]);
     y.domain([yMin, yMax]);
 
+    var yGMin = y(yMin);
+    var yGMax = y(yMax);
+
+    if (yGMin === yGMax) {
+      yGMin = 28;
+      yGMax = 14;
+    }
+
     this.svg
       .append("linearGradient")
       .attr("id", "area-gradient")
       .attr("gradientUnits", "userSpaceOnUse")
       .attr("x1", 0)
-      .attr("y1", y(yMin))
+      .attr("y1", yGMin)
       .attr("x2", 0)
-      .attr("y2", y(yMax))
+      .attr("y2", yGMax)
       .selectAll("stop")
       .data([
         { offset: "0%", color: "rgba(68,188,167,0)" },
@@ -123,6 +134,10 @@ class SummaryGraph extends Component {
 
   componentWillUnmount() {
     window.removeEventListener("resize", this.plot, false);
+  }
+
+  componentDidUpdate() {
+    this.plot();
   }
 
   render() {

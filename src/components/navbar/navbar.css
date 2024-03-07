@@ -86,6 +86,10 @@
   opacity: 0.7;
 }
 
+.navbar select option {
+  background-color: var(--background-color);
+}
+
 .navbar select:hover {
   opacity: 1;
 }

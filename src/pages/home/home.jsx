@@ -17,7 +17,6 @@ import {
   onMouseOut,
   summariseData,
   dayName,
-  parseDate,
   searchList,
   inBounds,
 } from "./functions";
@@ -154,7 +153,9 @@ class ListItem extends Component {
                 </div>
                 <div className="text">{lake.elevation} m.a.s.l.</div>
                 <div className="header">
-                  {Translations.surfacetemperature[language]}
+                  {`${Translations[parameters[parameter].label][language]} (${
+                    parameters[parameter].unit
+                  })`}
                 </div>
               </div>
             </div>
@@ -165,7 +166,8 @@ class ListItem extends Component {
             </div>
           </div>
           <div className="summary">
-            {!lake.forecast.available && (
+            {(!lake.forecast.available ||
+              lake.forecast.value[parameter].length === 0) && (
               <div className="offline">{Translations.offline[language]}</div>
             )}
             <div className="summary-table">
@@ -185,19 +187,17 @@ class ListItem extends Component {
 
 class SummaryTable extends Component {
   render() {
-    var { forecast, language, parameter, parameters } = this.props;
+    var { forecast, language, parameter } = this.props;
     return (
       <React.Fragment>
-        {Object.keys(forecast.summary).map((day, i, arr) => (
-          <div key={day} className={i === 0 ? "inner start" : "inner"}>
-            <div className="ave">
-              {forecast.summary[day][parameter] === false
-                ? ""
-                : `${forecast.summary[day][parameter]}${parameters[parameter].unit}`}
+        {Object.keys(forecast.summary).map((day, i, arr) =>
+          forecast.summary[day][parameter] === false ? null : (
+            <div key={day} className={i === 0 ? "inner start" : "inner"}>
+              <div className="ave">{forecast.summary[day][parameter]}</div>
+              <div className="day">{dayName(day, language, Translations)}</div>
             </div>
-            <div className="day">{dayName(day, language, Translations)}</div>
-          </div>
-        ))}
+          )
+        )}
         <SummaryGraph dt={forecast.dt} value={forecast.value[parameter]} />
       </React.Fragment>
     );
@@ -217,16 +217,19 @@ class Home extends Component {
         label: "surfacetemperature",
         unit: "°",
         img: temperature_icon,
+        beta: false,
       },
       ice: {
         label: "icecover",
         unit: "m",
         img: ice_icon,
+        beta: true,
       },
       oxygen: {
         label: "bottomoxygen",
         unit: "%",
         img: oxygen_icon,
+        beta: true,
       },
     },
   };
@@ -384,7 +387,9 @@ class Home extends Component {
     return (
       <React.Fragment>
         <NavBar {...this.props} small={true} />
-        <div className="content">
+        <div
+          className={parameters[parameter].beta ? "content beta" : "content"}
+        >
           <Search
             setFilter={this.setFilter}
             setSearch={this.setSearch}
