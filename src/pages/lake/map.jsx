@@ -211,7 +211,7 @@ class PlayerControls extends Component {
               />
             </button>
           </div>
-          <div className="settings clickable-button" id="settings-icon">
+          <div className="play-settings clickable-button" id="settings-icon">
             <span className="tooltip">{Translate.settings[language]}</span>
             <button onClick={toggleSettings}>
               <img src={settings_icon} alt="settings" />
@@ -500,55 +500,64 @@ class Map extends Component {
     var { language, dark, metadata } = this.props;
     var { fullscreen, graphs } = this.state;
     return (
-      <div
-        className={fullscreen ? "map-container fullscreen" : "map-container"}
-      >
-        <div className="basemap">
-          <Basemap
+      <React.Fragment>
+        <div className="settings">
+          <MapSettings
             {...this.state}
+            language={language}
             dark={dark}
-            unlock={this.unlock}
-            updated={this.updated}
-            metadata={metadata}
-            getProfile={this.getProfile}
-            getTransect={this.getTransect}
+            addLayer={this.addLayer}
+            removeLayer={this.removeLayer}
+            updateOptions={this.updateOptions}
+            setSelection={this.setSelection}
+            setPeriod={this.setPeriod}
+            setDepth={this.setDepth}
           />
         </div>
-        <div className="gradient" />
-        <PlayerSettings
-          {...this.state}
-          setTimestep={this.setTimestep}
-          setSpeed={this.setSpeed}
-          setBasemap={this.setBasemap}
-          toggleLegend={this.toggleLegend}
-        />
-        <PlayerControls
-          {...this.state}
-          language={language}
-          setDatetime={this.setDatetime}
-          toggleSettings={this.toggleSettings}
-          toggleFullscreen={this.toggleFullscreen}
-          togglePlay={this.togglePlay}
-        />
-        <MapSettings
-          {...this.state}
-          language={language}
-          dark={dark}
-          addLayer={this.addLayer}
-          removeLayer={this.removeLayer}
-          updateOptions={this.updateOptions}
-          setSelection={this.setSelection}
-          setPeriod={this.setPeriod}
-          setDepth={this.setDepth}
-        />
-        <Legend
-          {...this.state}
-          language={language}
-          setSelection={this.setSelection}
-        />
-        <Loading />
-        {graphs && <Plots {...this.state} close={this.closeGraph} />}
-      </div>
+        <div className="view-area">
+          <div
+            className={
+              fullscreen ? "map-container fullscreen" : "map-container"
+            }
+          >
+            <div className="basemap">
+              <Basemap
+                {...this.state}
+                dark={dark}
+                unlock={this.unlock}
+                updated={this.updated}
+                metadata={metadata}
+                getProfile={this.getProfile}
+                getTransect={this.getTransect}
+              />
+            </div>
+            <div className="gradient" />
+            <PlayerSettings
+              {...this.state}
+              setTimestep={this.setTimestep}
+              setSpeed={this.setSpeed}
+              setBasemap={this.setBasemap}
+              toggleLegend={this.toggleLegend}
+            />
+            <PlayerControls
+              {...this.state}
+              language={language}
+              setDatetime={this.setDatetime}
+              toggleSettings={this.toggleSettings}
+              toggleFullscreen={this.toggleFullscreen}
+              togglePlay={this.togglePlay}
+            />
+
+            <Legend
+              {...this.state}
+              language={language}
+              setSelection={this.setSelection}
+            />
+            <Loading />
+            {graphs && <Plots {...this.state} close={this.closeGraph} />}
+          </div>
+        </div>
+      </React.Fragment>
     );
   }
 }

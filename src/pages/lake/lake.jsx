@@ -57,8 +57,10 @@ class Lake extends Component {
   render() {
     var { metadata, active, views, error, id } = this.state;
     var { language, dark } = this.props;
+    var title = "";
     if ("name" in metadata) {
       document.title = metadata.name[language] + " | Alplakes";
+      title = metadata.name[language];
     }
     return (
       <div className="lake">
@@ -67,24 +69,29 @@ class Lake extends Component {
           <NotFound id={id} />
         ) : (
           <div className="content">
-            <div className={`details ${active === "details" ? "active" : ""}`}>
-              <Details metadata={metadata} language={language} />
+            <div className="top">
+              <div className="title">{title}</div>
+              <div className="notification">
+                <img src={notification_icon} alt="notification" />
+              </div>
             </div>
-            <Selector
-              active={active}
-              setActive={this.setActive}
-              views={views}
-              language={language}
-            />
-            <div className="notification">
-              <img src={notification_icon} alt="notification" />
-            </div>
-            <div className="view-area">
+            <div className="bottom">
+              <Selector
+                active={active}
+                setActive={this.setActive}
+                views={views}
+                language={language}
+              />
               <div className={`map ${active === "map" ? "active" : ""}`}>
                 <Map metadata={metadata} language={language} dark={dark} />
               </div>
               <div className={`graph ${active === "graph" ? "active" : ""}`}>
                 <Graph metadata={metadata} language={language} dark={dark} />
+              </div>
+              <div
+                className={`details ${active === "details" ? "active" : ""}`}
+              >
+                <Details metadata={metadata} language={language} />
               </div>
             </div>
           </div>

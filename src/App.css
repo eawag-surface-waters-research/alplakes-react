@@ -56,6 +56,7 @@
 @media screen and (max-width: 1200px) {
   :root {
     --padding: 20px;
+    --sidebar-width: 402px;
     --list-width: 50%;
   }
 }

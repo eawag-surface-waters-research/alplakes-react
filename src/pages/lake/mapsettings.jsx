@@ -92,7 +92,7 @@ class ActiveApps extends Component {
     this.props.removeLayer(parseInt(event.target.getAttribute("id")));
   };
   render() {
-    var { layers, setSelection, selection, images, toggleActiveAdd } =
+    var { layers, setSelection, selection, images, toggleActiveAdd, language } =
       this.props;
     var extra = Math.max(0, 4 - layers.filter((l) => l.active).length);
 
@@ -132,7 +132,7 @@ class ActiveApps extends Component {
                   src={images[layer.properties.parameter]}
                   alt={layer.properties.parameter}
                 />
-                <span>{layer.properties.model}</span>
+                <span>{Translate[layer.properties.parameter][language]}</span>
               </div>
             ))}
           {[...Array(extra).keys()].map((p) => (

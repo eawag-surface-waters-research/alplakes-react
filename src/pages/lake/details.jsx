@@ -141,7 +141,7 @@ class Insitu extends Component {
 
 class Properties extends Component {
   render() {
-    var { metadata, language } = this.props;
+    var { metadata } = this.props;
     var properties = [
       { key: "area", unit: "km²", label: "Surface Area", img: area_icon },
       { key: "max_depth", unit: "m", label: "Max Depth", img: depth_icon },
@@ -180,27 +180,30 @@ class Properties extends Component {
         img: trophic_icon,
       },
     ];
-    var title = "Loading...";
-    if ("name" in metadata) title = metadata.name[language];
     var plot = properties.filter((p) => p.key in metadata);
     return (
-      <div className="properties">
-        <div className="title">{title}</div>
-        {plot.map((p) => (
-          <div className="property" key={p.key}>
-            <div className="left">
-              <img src={p.img} alt={p.label} />
-            </div>
-            <div className="right">
-              <div className="value">
-                {metadata[p.key]}
-                <div className="unit">{p.unit}</div>
+      <Dropdown
+        title="Properties"
+        visible={true}
+        contents={
+          <div className="properties">
+            {plot.map((p) => (
+              <div className="property" key={p.key}>
+                <div className="left">
+                  <img src={p.img} alt={p.label} />
+                </div>
+                <div className="right">
+                  <div className="value">
+                    {metadata[p.key]}
+                    <div className="unit">{p.unit}</div>
+                  </div>
+                  <div className="label">{p.label}</div>
+                </div>
               </div>
-              <div className="label">{p.label}</div>
-            </div>
+            ))}
           </div>
-        ))}
-      </div>
+        }
+      />
     );
   }
 }
