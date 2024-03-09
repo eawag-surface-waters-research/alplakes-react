@@ -562,18 +562,6 @@ class Current extends Component {
             onChange={this.setArrowsColor}
           ></input>
         </div>
-        <div className="setting half">
-          <div className="label">Opacity</div>
-          <div className="value">{opacity}</div>
-          <input
-            type="range"
-            min="0"
-            max="1"
-            step="0.1"
-            value={opacity}
-            onChange={this.setOpacity}
-          ></input>
-        </div>
         <div className="layer-sub-section">
           Streamlines
           <label className="switch">
@@ -617,18 +605,6 @@ class Current extends Component {
             onChange={this.setSpeed}
           />
         </div>
-        <div className="setting half">
-          <div className="label">Opacity</div>
-          <div className="value">{opacity}</div>
-          <input
-            type="range"
-            min="0"
-            max="1"
-            step="0.1"
-            value={opacity}
-            onChange={this.setOpacity}
-          ></input>
-        </div>
         <div className="layer-sub-section">
           Raster
           <label className="switch">
@@ -645,7 +621,7 @@ class Current extends Component {
           <div className="value">{paletteName}</div>
           <ColorRamp onChange={this.setPalette} value={palette} />
         </div>
-        <div className="setting half">
+        <div className="setting">
           <div className="label">Opacity</div>
           <div className="value">{opacity}</div>
           <input

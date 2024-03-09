@@ -232,10 +232,18 @@
 }
 
 .main .lake .content .map {
+    visibility: hidden;
+}
+
+.main .lake .content .map .settings {
     display: none;
 }
 
 .main .lake .content .map.active {
+    visibility: visible;
+}
+
+.main .lake .content .map.active .settings {
     display: block;
 }
 
@@ -501,7 +509,9 @@
     margin-top: 20px;
 }
 
-.main .lake .content .settings .active-apps {}
+.main .lake .content .settings .active-apps {
+    text-align: center;
+}
 
 .main .lake .content .map .view-area .map-container.fullscreen .active-apps {
     display: none;
@@ -512,7 +522,7 @@
     font-size: 50px;
     border: 1px solid var(--border-color);
     border-radius: 12px;
-    margin: 10px 10px 28px 10px;
+    margin: 10px 12px 28px 12px;
     width: 60px;
     height: 60px;
     text-align: center;
@@ -520,6 +530,10 @@
     position: relative;
     cursor: pointer;
     ;
+}
+
+.main .lake .content .settings .active-apps .app:hover {
+    transform: scale(1.05);
 }
 
 .main .lake .content .settings .active-apps .app.filled {
@@ -531,13 +545,6 @@
     text-align: center;
 }
 
-.main .lake .content .settings .active-apps .app.filled:hover {
-    box-shadow: #343434 0px 0px 12px;
-}
-
-.main.dark .lake .content .secondary .menu .loaded .app.filled:hover {
-    box-shadow: white 0px 0px 8px;
-}
 
 .main .lake .content .settings .active-apps .app.filled.active {
     box-shadow: #343434 0px 0px 12px;
@@ -640,11 +647,6 @@
     transition: 0.15s ease-in-out all;
     user-select: none;
 }
-
-.main .lake .content .settings .active-apps .app:hover img {
-    transform: scale(1.05);
-}
-
 
 .main .lake .content .settings .active-apps .app span {
     position: absolute;
@@ -778,22 +780,8 @@
     font-size: 12px;
 }
 
-.main .lake .content .map .view-area .map-container .close-layer {
-    position: absolute;
-    font-size: 30px;
-    right: -43px;
-    background-color: var(--background-color);
-    bottom: var(--padding);
-    padding: 5px 10px 5px 6px;
-    border-radius: 0 12px 12px 0;
-    border: 1px solid var(--border-color);
-    z-index: 1;
-    cursor: pointer;
-}
-
-.main .lake .content .map .view-area .map-container .close-layer:hover {
-    color: var(--highlight-color);
-
+.main .lake .content .map .settings .close-layer {
+    display: none;
 }
 
 .main .lake .content .map .view-area .map-container .plots {
@@ -801,10 +789,10 @@
     left: calc(var(--padding) / 2);
     top: calc(var(--padding) / 2);
     width: calc(100% - var(--padding));
-    height: calc(100% - var(--padding));
+    height: calc(100% - var(--padding) - 50px);
     background-color: var(--background-color);
     z-index: 998;
-    border-radius: 12px;
+    border-radius: 8px;
     padding: calc(var(--padding)/2) calc(var(--padding)/2) 0 calc(var(--padding)/2);
     box-sizing: border-box;
     box-shadow: var(--box-shadow);
@@ -832,6 +820,7 @@
     margin-top: calc(var(--padding) / 2);
     padding-right: 6px;
     padding-bottom: 12px;
+    text-align: left;
 }
 
 
@@ -1247,10 +1236,11 @@
     bottom: 0;
     left: 0;
     width: 100%;
-    padding: 8px 24px;
+    padding: 12px 24px;
     box-sizing: border-box;
     text-align: center;
     position: fixed;
+    background-color: var(--background-color);
 }
 
 .main .lake .content .selector .selectable {
@@ -1275,24 +1265,9 @@
         display: none;
     }
 
-    .main .lake .content .details {
-        position: fixed;
-        top: calc(var(--header-height) + 12px);
-        left: 0;
-        z-index: 999999999;
-        height: calc(100% - var(--header-height) - 70px);
-        width: 100%;
-        overflow-y: scroll;
-        overflow-x: hidden;
-        -ms-overflow-style: none;
-        scrollbar-width: none;
-        padding: 0 var(--padding);
-        margin: 0;
-        box-sizing: border-box;
-    }
-
-    .main .lake .content .details::-webkit-scrollbar {
-        display: none;
+    .main .lake .content .bottom {
+        padding-top: var(--padding);
+        padding-bottom: 70px;
     }
 
     .main .lake .content .view-area {
@@ -1314,6 +1289,7 @@
         bottom: 55px;
         top: unset;
         padding: 0;
+        z-index: 9999999;
     }
 
     .main .lake .content .map .view-area .map-container .close-layer {
@@ -1332,11 +1308,12 @@
         width: 100%;
         background-color: var(--background-color);
         padding: var(--padding);
-        top: calc(var(--header-height) + 55px);
-        height: calc(100% - var(--header-height) - var(--selector-height) - 182px);
+        top: calc(var(--header-height) + 12px);
+        height: calc(100% - var(--header-height) - var(--selector-height) - 139px);
         margin: 0;
         text-align: left;
         max-height: unset;
+        overflow-y: scroll;
     }
 
     .main .lake .content .selector.desktop {
@@ -1361,10 +1338,10 @@
     }
 
     .main .lake .content .map .settings .add-layers {
-        top: var(--header-height);
+        top: calc(var(--header-height) + 12px);
         left: 0;
         width: 100%;
-        height: 100%;
+        height: calc(100% - var(--header-height) - var(--selector-height) - 139px);
         padding: var(--padding);
         border-radius: 0;
         box-shadow: none;

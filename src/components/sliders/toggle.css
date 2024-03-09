@@ -28,7 +28,6 @@
     border-radius: 16px;
     background-color: var(--background-font-color);
     transition: all 0.3s;
-    box-shadow: var(--box-shadow);
 }
 
 .toggleCheckbox:checked+.toggleContainer::before {

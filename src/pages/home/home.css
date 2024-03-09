@@ -4,8 +4,9 @@
   max-width: 100%;
   top: var(--header-height);
   background-color: var(--background-color);
-  padding: 0 var(--padding) calc(var(--padding) / 2) var(--padding);
+  padding: 0 var(--padding) 0 var(--padding);
   box-sizing: border-box;
+  z-index: 9999;
 }
 
 .main .content .search .explore {
@@ -81,10 +82,10 @@
 }
 
 .main .content .list {
-  position: fixed;
+  position: relative;
   width: var(--list-width);
   max-width: 100%;
-  top: calc(var(--header-height) + var(--search-height));
+  padding-top: var(--search-height);
   background-color: var(--background-color);
 }
 
@@ -98,20 +99,15 @@
   margin: 0 var(--padding);
 }
 
-.main .content .list .product-wrapper .results {
+.main .content .search .results {
   font-size: 14px;
   padding-left: calc(var(--padding) / 4);
-  padding-top: 4px;
+  padding-top: calc(var(--padding) / 2);
+  padding-bottom: 4px;
   color: var(--background-suble-font-color);
 }
 
-.main .content .list .product-list {
-  height: calc(100vh - var(--header-height) - var(--search-height) - calc(var(--padding)/2) - 20px);
-  min-height: 350px;
-  box-sizing: border-box;
-  overflow-y: scroll;
-  overflow-x: hidden;
-}
+.main .content .list .product-list {}
 
 .main .content .list .product-list::-webkit-scrollbar {
   width: 6px;
@@ -258,7 +254,7 @@
   transition: all .2s 0s ease;
 }
 
-.main .content .list .product-list:hover .list-item:not( :hover ) {
+.main .content .list .product-list:hover .list-item:not( :hover) {
   opacity: 0.7;
 }
 
@@ -788,37 +784,12 @@
     padding: 12px 24px;
   }
 
-  .main .content .list {
-    position: absolute;
-    top: var(--header-height);
-    margin: 0;
-  }
-
-  .main .content .list .product-list {
-    height: unset;
-    min-height: unset;
-    overflow: auto;
-  }
-
-  .main .content .list .product-wrapper {
-    margin: 0;
-    border-radius: 0;
-    margin-top: calc(var(--search-height) + var(--padding) + 16px);
-    padding: 0;
-  }
-
-  .main .content .list .product-wrapper .results {
-    position: fixed;
-    top: calc(var(--header-height) + var(--search-height));
-    border-top: 1px solid var(--border-color);
-    background-color: var(--background-color);
-    width: 100%;
-    z-index: 9999;
-    padding: calc(var(--padding) / 2) var(--padding);
-  }
-
   .main .content .list .product-list .list-item {
     padding: calc(var(--padding)/4) 0;
+  }
+
+  .main .content .list .product-list:hover .list-item:not( :hover) {
+    opacity: 1;
   }
 
   .main .content .search {

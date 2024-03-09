@@ -54,7 +54,7 @@ class ListSkeleton extends Component {
 
 class Search extends Component {
   render() {
-    var { setFilter, setSearch, search, language, filters, filterTypes } =
+    var { setFilter, setSearch, search, language, filters, filterTypes, results } =
       this.props;
 
     return (
@@ -81,6 +81,9 @@ class Search extends Component {
             </div>
           ))}
         </div>
+        <div className="results">
+            {results} {Translations.results[language]}
+          </div>
       </div>
     );
   }
@@ -93,9 +96,7 @@ class List extends Component {
     return (
       <div className="list">
         <div className="product-wrapper">
-          <div className="results">
-            {results} {Translations.results[language]}
-          </div>
+          
           <div className="product-list">
             {results === 0 &&
               (search.length > 0 ? (
@@ -397,14 +398,15 @@ class Home extends Component {
             language={language}
             filters={filters}
             filterTypes={filterTypes}
+            results={results}
           />
           <List
             language={language}
             sortedList={sortedList}
-            results={results}
             search={search}
             parameter={parameter}
             parameters={parameters}
+            results={results}
           />
           <div className={fullscreen ? "home-map" : "home-map hide"}>
             <div className="fullscreen" onClick={this.toggleFullscreen}>
