@@ -5,6 +5,7 @@
     background-color: var(--background-color);
     width: fit-content;
     margin: auto;
+    user-select: none;
 }
 
 .toggleContainer {
