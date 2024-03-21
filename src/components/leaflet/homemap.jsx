@@ -53,15 +53,15 @@ class HomeMap extends Component {
       if (value === null || isNaN(value)) {
         return false;
       } else if (value < 20) {
-        return "rgb(52,132,150)";
+        return "rgb(184,30,33)";
       } else if (value < 40) {
-        return "rgb(128,194,208)";
+        return "rrgb(223,102,92)";
       } else if (value < 60) {
         return "rgb(239,163,127)";
       } else if (value < 80) {
-        return "rgb(223,102,92)";
+        return "rgb(128,194,208)";
       } else {
-        return "rgb(184,30,33)";
+        return "rgb(52,132,150)";
       }
     }
   };
