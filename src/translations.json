@@ -132,10 +132,10 @@
     "IT": "per"
   },
   "offline": {
-    "EN": "Model offline. Other datasets are available.",
-    "DE": "Modell offline. Weitere Datensätze sind verfügbar.",
-    "FR": "Modèle hors ligne. D'autres ensembles de données sont disponibles.",
-    "IT": "Modello offline. Sono disponibili altri set di dati."
+    "EN": "Forecast offline. Other datasets are available.",
+    "DE": "Vorhersage offline. Weitere Datensätze sind verfügbar.",
+    "FR": "Prévisions hors ligne. D'autres ensembles de données sont disponibles.",
+    "IT": "Previsioni offline. Sono disponibili altri set di dati."
   },
   "more": {
     "EN": "More",

@@ -85,15 +85,14 @@ export const summariseData = (forecast, parameter, parameters) => {
       {}
     );
   }
-
   var available = true;
-  if (forecast === undefined) {
+  if (forecast === undefined || !("time" in forecast)) {
     dt = [dtMin, dtMax];
     value = parameters.reduce((obj, item) => ({ ...obj, [item]: [0, 0] }), {});
     available = false;
   } else {
     for (let i = 0; i < forecast.time.length; i++) {
-      if (forecast.time[i] > dtMin) {
+      if (forecast.time[i] > dtMin && forecast.time[i] < dtMax) {
         let day = formatDate(forecast.time[i]);
         if (forecast[parameter][i] !== null) {
           dt.push(new Date(forecast.time[i]));
