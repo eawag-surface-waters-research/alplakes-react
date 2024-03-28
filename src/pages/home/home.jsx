@@ -199,7 +199,7 @@ class SummaryTable extends Component {
             </div>
           )
         )}
-        <SummaryGraph dt={forecast.dt} value={forecast.value[parameter]} />
+        <SummaryGraph dt={forecast.dt} value={forecast.value[parameter]} dtMin={forecast.dtMin} dtMax={forecast.dtMax}/>
       </React.Fragment>
     );
   }

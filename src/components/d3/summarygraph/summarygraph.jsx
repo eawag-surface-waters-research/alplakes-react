@@ -7,7 +7,7 @@ class SummaryGraph extends Component {
   };
   plot = () => {
     var { graphid } = this.state;
-    var { dt, value } = this.props;
+    var { dt, value, dtMin, dtMax } = this.props;
     var stroke = "rgba(68,188,167,255)";
     var stroke_width = 2;
     try {
@@ -31,8 +31,8 @@ class SummaryGraph extends Component {
       .append("g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    var xMin = d3.min(dt);
-    var xMax = d3.max(dt);
+    var xMin = dtMin;
+    var xMax = dtMax;
 
     if (value.length === 0) {
       dt = [xMin, xMax];

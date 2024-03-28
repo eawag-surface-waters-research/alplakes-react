@@ -92,17 +92,18 @@ export const summariseData = (forecast, parameter, parameters) => {
     available = false;
   } else {
     for (let i = 0; i < forecast.time.length; i++) {
-      if (forecast.time[i] > dtMin && forecast.time[i] < dtMax) {
         let day = formatDate(forecast.time[i]);
         if (forecast[parameter][i] !== null) {
           dt.push(new Date(forecast.time[i]));
           for (let p of parameters) {
             if (p in forecast && forecast[p][i] !== null) {
               value[p].push(forecast[p][i]);
-              summary[day][p].push(forecast[p][i]);
+              if (day in summary) {
+                summary[day][p].push(forecast[p][i]);
+              }
             }
           }
-        }
+        
       }
     }
   }
@@ -112,6 +113,14 @@ export const summariseData = (forecast, parameter, parameters) => {
       summary[key][p] = mean(summary[key][p]);
     }
   }
+  dtMax = parseDate(
+    Math.max(
+      ...Object.entries(summary)
+        .filter(([key, value]) => value !== false)
+        .map(([key, _]) => key)
+    ).toString()
+  );
+  dtMax.setDate(dtMax.getDate() + 1);
   return {
     dt,
     value,
@@ -122,7 +131,7 @@ export const summariseData = (forecast, parameter, parameters) => {
   };
 };
 export const mean = (numbers) => {
-  if (numbers.length === 0) return false;
+  if (numbers.length < 3) return false;
   const sum = numbers.reduce((acc, num) => acc + num, 0);
   const mean = Math.round((sum * 10) / numbers.length) / 10;
   return mean;
