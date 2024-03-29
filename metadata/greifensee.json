@@ -45,7 +45,7 @@
       },
       "labels": [
         { "name": "Schwerzenbach", "latlng": [47.37124, 8.65935] },
-        { "name": "Riedikon", "latlng": [47.33170, 8.70492] }
+        { "name": "Riedikon", "latlng": [47.3317, 8.70492] }
       ],
       "properties": {
         "model": "delft3d-flow",
@@ -205,6 +205,64 @@
           "paths": 10,
           "spread": 1500,
           "zIndex": 4
+        }
+      }
+    },
+    {
+      "id": 6,
+      "type": "sencast_tiff",
+      "active": false,
+      "description": "Secchi depth processed from Sentinel 2 data using the @1@ python package. See @2@ by HYGEOS.",
+      "links": {
+        "1": [
+          "SenCast",
+          "https://github.com/eawag-surface-waters-research/sencast"
+        ],
+        "2": ["POLYMER", "https://www.hygeos.com/polymer"]
+      },
+      "properties": {
+        "model": "Sentinel2",
+        "lake": "greifensee",
+        "parameter": "secchi",
+        "metadata": "https://eawagrs.s3.eu-central-1.amazonaws.com/metadata/sentinel2/greifensee_Z490.json",
+        "unit": "m",
+        "display": "tiff",
+        "depth": false,
+        "period": false,
+        "options": {
+          "paletteName": "Thermal",
+          "zIndex": 2,
+          "opacity": 1,
+          "convolve": 2
+        }
+      }
+    },
+    {
+      "id": 7,
+      "type": "sencast_tiff",
+      "active": false,
+      "description": "Surface total suspended matter processed from Sentinel 2 data using the @1@ python package. See @2@ by HYGEOS.",
+      "links": {
+        "1": [
+          "SenCast",
+          "https://github.com/eawag-surface-waters-research/sencast"
+        ],
+        "2": ["POLYMER", "https://www.hygeos.com/polymer"]
+      },
+      "properties": {
+        "model": "Sentinel2",
+        "lake": "greifensee",
+        "parameter": "turbidity",
+        "metadata": "https://eawagrs.s3.eu-central-1.amazonaws.com/metadata/sentinel2/greifensee_tsm_dogliotti665.json",
+        "unit": "g m-3",
+        "display": "tiff",
+        "depth": false,
+        "period": false,
+        "options": {
+          "paletteName": "Thermal",
+          "zIndex": 2,
+          "opacity": 1,
+          "convolve": 2
         }
       }
     },
