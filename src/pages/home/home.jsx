@@ -5,10 +5,10 @@ import NavBar from "../../components/navbar/navbar";
 import SummaryGraph from "../../components/d3/summarygraph/summarygraph";
 import Translations from "../../translations.json";
 import searchIcon from "../../img/search.png";
+import filterIcon from "../../img/filter.png";
 import depth_icon from "../../img/depth.png";
 import area_icon from "../../img/area.png";
 import elevation_icon from "../../img/elevation.png";
-import more_icon from "../../img/more.png";
 import temperature_icon from "../../img/temperature_simple.png";
 import ice_icon from "../../img/ice_simple.png";
 import oxygen_icon from "../../img/oxygen_simple.png";
@@ -54,8 +54,15 @@ class ListSkeleton extends Component {
 
 class Search extends Component {
   render() {
-    var { setFilter, setSearch, search, language, filters, filterTypes, results } =
-      this.props;
+    var {
+      setFilter,
+      setSearch,
+      search,
+      language,
+      filters,
+      filterTypes,
+      results,
+    } = this.props;
 
     return (
       <div className="search">
@@ -78,12 +85,16 @@ class Search extends Component {
               onClick={() => setFilter(f.id)}
             >
               {f.name}
+              <div className="filter-description">
+                {f.description}
+                <img src={filterIcon} alt="Filter Icon" />
+              </div>
             </div>
           ))}
         </div>
         <div className="results">
-            {results} {Translations.results[language]}
-          </div>
+          {results} {Translations.results[language]}
+        </div>
       </div>
     );
   }
@@ -91,12 +102,19 @@ class Search extends Component {
 
 class List extends Component {
   render() {
-    var { language, sortedList, results, search, parameter, parameters } =
-      this.props;
+    var {
+      language,
+      sortedList,
+      results,
+      search,
+      parameter,
+      parameters,
+      filterTypes,
+      filters,
+    } = this.props;
     return (
       <div className="list">
         <div className="product-wrapper">
-          
           <div className="product-list">
             {results === 0 &&
               (search.length > 0 ? (
@@ -111,6 +129,8 @@ class List extends Component {
                 key={lake.key}
                 parameter={parameter}
                 parameters={parameters}
+                filterTypes={filterTypes}
+                filters={filters}
               />
             ))}
           </div>
@@ -122,7 +142,8 @@ class List extends Component {
 
 class ListItem extends Component {
   render() {
-    var { lake, language, parameter, parameters } = this.props;
+    var { lake, language, parameter, parameters, filterTypes, filters } =
+      this.props;
     return (
       <NavLink to={`/${lake.key}`}>
         <div
@@ -141,18 +162,24 @@ class ListItem extends Component {
             <div className="left">
               {lake.name[language]}
               <div className="label">
-                <div className="icon">
-                  <img src={depth_icon} alt="depth" />
+                <div className="property">
+                  <div className="icon">
+                    <img src={depth_icon} alt="depth" />
+                  </div>
+                  <div className="text">{lake.max_depth} m</div>
                 </div>
-                <div className="text">{lake.max_depth} m</div>
-                <div className="icon">
-                  <img src={area_icon} alt="area" />
+                <div className="property">
+                  <div className="icon">
+                    <img src={area_icon} alt="area" />
+                  </div>
+                  <div className="text"> {lake.area} km&#178;</div>
                 </div>
-                <div className="text"> {lake.area} km&#178;</div>
-                <div className="icon">
-                  <img src={elevation_icon} alt="elevation" />
+                <div className="property">
+                  <div className="icon">
+                    <img src={elevation_icon} alt="elevation" />
+                  </div>
+                  <div className="text">{lake.elevation} m.a.s.l.</div>
                 </div>
-                <div className="text">{lake.elevation} m.a.s.l.</div>
                 <div className="header">
                   {`${Translations[parameters[parameter].label][language]} (${
                     parameters[parameter].unit
@@ -162,7 +189,18 @@ class ListItem extends Component {
             </div>
             <div className="right">
               <div className="view">
-                <img src={more_icon} alt="More" />
+                {filterTypes
+                  .filter((f) => lake.filters.includes(f.id))
+                  .map((f) => (
+                    <div
+                      className={
+                        filters.includes(f.id) ? "type select" : "type"
+                      }
+                    >
+                      {f.name}
+                    </div>
+                  ))}
+                <div className="type plus">+</div>
               </div>
             </div>
           </div>
@@ -199,7 +237,12 @@ class SummaryTable extends Component {
             </div>
           )
         )}
-        <SummaryGraph dt={forecast.dt} value={forecast.value[parameter]} dtMin={forecast.dtMin} dtMax={forecast.dtMax}/>
+        <SummaryGraph
+          dt={forecast.dt}
+          value={forecast.value[parameter]}
+          dtMin={forecast.dtMin}
+          dtMax={forecast.dtMax}
+        />
       </React.Fragment>
     );
   }
@@ -367,22 +410,27 @@ class Home extends Component {
       {
         id: "3D",
         name: "3D",
-      },
-      {
-        id: "1D",
-        name: "1D",
+        description: Translations.threedDescription[language],
       },
       {
         id: "satellite",
         name: Translations.satellite[language],
+        description: Translations.satelliteDescription[language],
+      },
+      {
+        id: "1D",
+        name: "1D",
+        description: Translations.onedDescription[language],
       },
       {
         id: "live",
         name: Translations.live[language],
+        description: Translations.liveDescription[language],
       },
       {
         id: "insitu",
         name: Translations.insitu[language],
+        description: Translations.insituDescription[language],
       },
     ];
     return (
@@ -407,6 +455,8 @@ class Home extends Component {
             parameter={parameter}
             parameters={parameters}
             results={results}
+            filterTypes={filterTypes}
+            filters={filters}
           />
           <div className={fullscreen ? "home-map" : "home-map hide"}>
             <div className="fullscreen" onClick={this.toggleFullscreen}>

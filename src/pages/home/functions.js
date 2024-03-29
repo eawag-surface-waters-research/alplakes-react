@@ -92,18 +92,17 @@ export const summariseData = (forecast, parameter, parameters) => {
     available = false;
   } else {
     for (let i = 0; i < forecast.time.length; i++) {
-        let day = formatDate(forecast.time[i]);
-        if (forecast[parameter][i] !== null) {
-          dt.push(new Date(forecast.time[i]));
-          for (let p of parameters) {
-            if (p in forecast && forecast[p][i] !== null) {
-              value[p].push(forecast[p][i]);
-              if (day in summary) {
-                summary[day][p].push(forecast[p][i]);
-              }
+      let day = formatDate(forecast.time[i]);
+      if (forecast[parameter][i] !== null) {
+        dt.push(new Date(forecast.time[i]));
+        for (let p of parameters) {
+          if (p in forecast && forecast[p][i] !== null) {
+            value[p].push(forecast[p][i]);
+            if (day in summary) {
+              summary[day][p].push(forecast[p][i]);
             }
           }
-        
+        }
       }
     }
   }
@@ -113,14 +112,17 @@ export const summariseData = (forecast, parameter, parameters) => {
       summary[key][p] = mean(summary[key][p]);
     }
   }
-  dtMax = parseDate(
-    Math.max(
-      ...Object.entries(summary)
-        .filter(([key, value]) => value !== false)
-        .map(([key, _]) => key)
-    ).toString()
-  );
-  dtMax.setDate(dtMax.getDate() + 1);
+  if (available) {
+    dtMax = parseDate(
+      Math.max(
+        ...Object.entries(summary)
+          .filter(([key, value]) => value.temperature !== false)
+          .map(([key, _]) => key)
+      ).toString()
+    );
+    dtMax.setDate(dtMax.getDate() + 1);
+  }
+
   return {
     dt,
     value,
