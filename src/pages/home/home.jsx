@@ -133,6 +133,7 @@ class List extends Component {
                 filters={filters}
               />
             ))}
+            <ListSkeleton />
           </div>
         </div>
       </div>

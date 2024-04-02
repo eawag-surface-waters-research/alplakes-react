@@ -21,7 +21,7 @@
 }
 
 .main .about .section-content .intro {
-    margin-top: calc(var(--padding) * 2);
+    margin-top: calc(var(--padding));
     margin-bottom: var(--padding);
     font-size: 21px;
 }
@@ -125,8 +125,9 @@
 
 
 .main .about .header {
-    font-size: 28px;
-    margin-bottom: 8px;
+    font-size: 40px;
+    margin-top: 18px;
+    color: var(--highlight-color);
 }
 
 .main .about .sub-header {

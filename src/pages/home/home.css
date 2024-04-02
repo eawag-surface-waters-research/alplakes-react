@@ -534,11 +534,11 @@
   opacity: 0;
   content: "beta";
   position: absolute;
-  width: 160px;
+  width: 250px;
   height: 30px;
   background: var(--highlight-color);
-  top: calc(95px + var(--padding));
-  left: -40px;
+  top: 61px;
+  right: -49px;
   text-align: center;
   font-size: 18px;
   font-family: sans-serif;
@@ -546,7 +546,7 @@
   font-weight: bold;
   color: #fff;
   line-height: 32px;
-  transform: rotate(-45deg);
+  transform: rotate(45deg);
   z-index: 998;
   transition: opacity 0.33s ease-in;
 }
@@ -585,7 +585,7 @@
 .main .content .home-map #map .day-selector {
   z-index: 999;
   position: absolute;
-  bottom: calc(var(--padding));
+  bottom: calc(var(--padding) / 2);
   text-align: center;
   left: 50%;
   transform: translate(-50%, 0);
@@ -620,30 +620,27 @@
 .main .content .home-map .parameter-selector {
   z-index: 999;
   position: absolute;
-  top: 0;
-  left: 0;
-  border-radius: 0 0 12px 0;
-  border: 1px solid var(--background-color);
-  border-right: 1px solid var(--border-color);
-  border-bottom: 1px solid var(--border-color);
-  background-color: var(--background-color);
-  text-align: center;
+  top: calc(var(--padding) / 2);
+  left: calc(var(--padding) / 2);
 }
 
 .main .content .home-map .parameter-selector .parameter {
   position: relative;
   display: inline-block;
-  margin: 0 calc(var(--padding) / 2);
-  width: 50px;
-  height: 50px;
-  margin-top: -5px;
+  width: 45px;
+  height: 45px;
   cursor: pointer;
+  background-color: var(--background-color);
+  border-radius: 8px;
+  box-shadow: var(--box-shadow);
+  margin-right: calc(var(--padding) / 3);
+  text-align: center;
 }
 
 
 .main .content .home-map .parameter-selector .parameter img {
-  height: 30px;
-  padding: 8px 8px 3px 8px;
+  height: 21px;
+  padding: 12px 4px 3px 4px;
   opacity: 0.3;
 }
 
@@ -652,11 +649,8 @@
   filter: invert(100%);
 }
 
-.main .content .home-map .parameter-selector .parameter.selected {
-  border-bottom: 2px solid var(--highlight-color);
-}
-
 .main .content .home-map .parameter-selector .parameter.selected img {
+  border-bottom: 2px solid var(--highlight-color);
   opacity: 1;
 }
 
@@ -674,9 +668,9 @@
   padding: 2.75px 0;
   color: var(--background-suble-font-color);
   border-radius: 22px;
+  width: -moz-fit-content;
   width: fit-content;
-  margin: calc(var(--padding) / 2) 0;
-  margin-left: calc(var(--padding) / 2);
+  margin-top: 6px;
   font-size: 18px;
 }
 
@@ -810,9 +804,8 @@
   }
 
   .main .content .home-map .parameter-selector {
-    top: 58px;
-    left: 0px;
-    padding-left: var(--padding);
+    top: 66px;
+    left: var(--padding);
   }
 
   .main .content .home-map .parameter-selector .parameter {
@@ -846,7 +839,12 @@
   }
 
   .main .content .search .filters .filter .filter-description {
-    display: none!important;
+    display: none !important;
+  }
+
+  .main .content .home-map #map:after {
+    top: 25px;
+    right: -90px;
   }
 
   .main .content .search {
@@ -869,7 +867,7 @@
   .main .content .search .filters .filter {
     margin: var(--padding) 8px var(--padding) 0;
     padding: 4px 12px;
-    font-size: 12px;
+    font-size: 14px;
   }
 
   .main .content .list .product-list .list-item .properties .polygon {

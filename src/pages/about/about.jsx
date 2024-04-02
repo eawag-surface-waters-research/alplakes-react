@@ -94,15 +94,18 @@ class About extends Component {
         <NavBar {...this.props} />
         <div className="about">
           <div className="section-content">
+            <div className="header">
+              Forecasting and monitoring alpine lakes.
+            </div>
             <div className="intro">
               Alplakes is an interactive web application offering public access
               to operational simulations and remote sensing products for lakes
               across the European alpine region. This platform consolidates
               outputs from several research projects, providing a comprehensive
-              digital twin for each lake. Alplakes is designed
-              to be user-friendly, allowing a diverse group of users to easily
-              access the latest lake models and remote sensing products produced
-              by the research community.
+              digital twin for each lake. Alplakes is designed to be
+              user-friendly, allowing a diverse group of users to easily access
+              the latest lake models and remote sensing products produced by the
+              research community.
             </div>
             <div className="intro-promos">
               <Promos types={products} />
@@ -116,28 +119,28 @@ class About extends Component {
               collaborating.
             </div>
             <div className="person">
-              <img src={runnallja} alt="James"/>
+              <img src={runnallja} alt="James" />
               <div className="job">Software Engineer</div>
               <div className="email">james.runnalls@eawag.ch</div>
               <div className="contact-head">Talk to me about:</div>
               <div className="contact">Bug reports, new features</div>
             </div>
             <div className="person">
-              <img src={bouffada} alt="Damien"/>
+              <img src={bouffada} alt="Damien" />
               <div className="job">Group Leader</div>
               <div className="email">damien.bouffard@eawag.ch</div>
               <div className="contact-head">Talk to me about:</div>
               <div className="contact">3D models, particle tracking</div>
             </div>
             <div className="person">
-              <img src={odermada} alt="Dani"/>
+              <img src={odermada} alt="Dani" />
               <div className="job">Group Leader</div>
               <div className="email">daniel.odermatt@eawag.ch</div>
               <div className="contact-head">Talk to me about:</div>
               <div className="contact">Remote sensing products</div>
             </div>
             <div className="person">
-              <img src={schmidma} alt="Martin"/>
+              <img src={schmidma} alt="Martin" />
               <div className="job">Group Leader</div>
               <div className="email">martin.schmid@eawag.ch</div>
               <div className="contact-head">Talk to me about:</div>
