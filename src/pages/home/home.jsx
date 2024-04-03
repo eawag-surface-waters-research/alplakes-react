@@ -5,7 +5,6 @@ import NavBar from "../../components/navbar/navbar";
 import SummaryGraph from "../../components/d3/summarygraph/summarygraph";
 import Translations from "../../translations.json";
 import searchIcon from "../../img/search.png";
-import filterIcon from "../../img/filter.png";
 import depth_icon from "../../img/depth.png";
 import area_icon from "../../img/area.png";
 import elevation_icon from "../../img/elevation.png";
@@ -32,18 +31,18 @@ class ListSkeleton extends Component {
       <React.Fragment>
         {[...Array(85).keys()].map((a) => (
           <div className="list-item-skeleton" key={a}>
-            <div className="lake-shape-skeleton"></div>
+            <div className="lake-shape-skeleton pulse"></div>
             <div className="text-skeleton">
-              <div className="name-skeleton"></div>
-              <div className="parameters-skeleton"></div>
+              <div className="name-skeleton pulse"></div>
+              <div className="parameters-skeleton pulse"></div>
+              <div className="graph-title-skeleton pulse"></div>
             </div>
-            <div className="skeleton-click"></div>
             <div className="sketelon-graph">
-              <div className="skeleton-block"></div>
-              <div className="skeleton-block"></div>
-              <div className="skeleton-block"></div>
-              <div className="skeleton-block"></div>
-              <div className="skeleton-block right"></div>
+              <div className="skeleton-block pulse-border"></div>
+              <div className="skeleton-block pulse-border"></div>
+              <div className="skeleton-block pulse-border"></div>
+              <div className="skeleton-block pulse-border"></div>
+              <div className="skeleton-block pulse-border right"></div>
             </div>
           </div>
         ))}
@@ -53,6 +52,21 @@ class ListSkeleton extends Component {
 }
 
 class Search extends Component {
+  compareDicts = (values) => {
+    return function (a, b) {
+      let valueA = a.id;
+      let valueB = b.id;
+      if (values.includes(valueA) && values.includes(valueB)) {
+        return values.indexOf(valueA) - values.indexOf(valueB);
+      } else if (values.includes(valueA)) {
+        return -1;
+      } else if (values.includes(valueB)) {
+        return 1;
+      } else {
+        return 0;
+      }
+    };
+  };
   render() {
     var {
       setFilter,
@@ -62,8 +76,10 @@ class Search extends Component {
       filters,
       filterTypes,
       results,
+      loaded,
     } = this.props;
-
+    var ft = JSON.parse(JSON.stringify(filterTypes));
+    ft.sort(this.compareDicts(filters));
     return (
       <div className="search">
         <input
@@ -78,22 +94,30 @@ class Search extends Component {
         />
         <img src={searchIcon} alt="Search Icon" />
         <div className="filters">
-          {filterTypes.map((f) => (
+          {filters.length > 0 && (
+            <div
+              className="filter remove"
+              onClick={() => setFilter(false)}
+              title={Translations.removeFilters[language]}
+            >
+              &#215;
+            </div>
+          )}
+          {ft.map((f) => (
             <div
               className={filters.includes(f.id) ? "filter selected" : "filter"}
               key={f.id}
               onClick={() => setFilter(f.id)}
+              title={f.description}
             >
               {f.name}
-              <div className="filter-description">
-                {f.description}
-                <img src={filterIcon} alt="Filter Icon" />
-              </div>
             </div>
           ))}
         </div>
         <div className="results">
-          {results} {Translations.results[language]}
+          {loaded
+            ? `${results} ${Translations.results[language]}`
+            : Translations.loadingLakes[language]}
         </div>
       </div>
     );
@@ -197,6 +221,7 @@ class ListItem extends Component {
                       className={
                         filters.includes(f.id) ? "type select" : "type"
                       }
+                      key={f.id}
                     >
                       {f.name}
                     </div>
@@ -253,7 +278,7 @@ class Home extends Component {
   state = {
     list: [],
     search: "",
-    filters: ["all"],
+    filters: [],
     boundingBox: false,
     fullscreen: false,
     parameter: "temperature",
@@ -288,20 +313,14 @@ class Home extends Component {
   };
   setFilter = (filter) => {
     var { filters } = this.state;
-    if (filter === "all") {
-      this.setState({ filters: ["all"] });
+    if (filter === false) {
+      filters = [];
     } else if (filters.includes(filter)) {
       filters = filters.filter((f) => f !== filter);
-      if (filters.length === 0) {
-        this.setState({ filters: ["all"] });
-      } else {
-        this.setState({ filters });
-      }
     } else {
-      filters = filters.filter((f) => f !== "all");
       filters.push(filter);
-      this.setState({ filters });
     }
+    this.setState({ filters });
   };
   setSearch = (event) => {
     var { list } = this.state;
@@ -407,7 +426,6 @@ class Home extends Component {
     var sortedList = this.sortList(list, filters);
     var results = sortedList.filter((l) => l.display && !l.filter).length;
     var filterTypes = [
-      { id: "all", name: Translations.all[language] },
       {
         id: "3D",
         name: "3D",
@@ -448,6 +466,7 @@ class Home extends Component {
             filters={filters}
             filterTypes={filterTypes}
             results={results}
+            loaded={list.length > 0}
           />
           <List
             language={language}

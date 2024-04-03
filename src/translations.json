@@ -222,34 +222,40 @@
     "IT": "Fare clic per ulteriori informazioni"
   },
   "satelliteDescription": {
-    "EN": "for lakes with satellite derived products",
-    "DE": "für Seen mit satellitengestützten Produkten",
-    "FR": "pour les lacs avec produits dérivés du satellite",
-    "IT": "per laghi con prodotti di derivazione satellitare"
+    "EN": "Filter for lakes with satellite derived products",
+    "DE": "Filtern für Seen mit satellitengestützten Produkten",
+    "FR": "Filtrer pour les lacs avec produits dérivés du satellite",
+    "IT": "Filtra per laghi con prodotti di derivazione satellitare"
   },
   "threedDescription": {
-    "EN": "for lakes with 3D hydrodynamic models",
-    "DE": "für Seen mit hydrodynamischen 3D-Modellen",
-    "FR": "pour lacs avec modèles hydrodynamiques 3D",
-    "IT": "per laghi con modelli idrodinamici 3D"
+    "EN": "Filter for lakes with 3D hydrodynamic models",
+    "DE": "Filtern für Seen mit hydrodynamischen 3D-Modellen",
+    "FR": "Filtrer pour lacs avec modèles hydrodynamiques 3D",
+    "IT": "Filtra per laghi con modelli idrodinamici 3D"
   },
   "onedDescription": {
-    "EN": "for lakes with 1D hydrodynamic models",
-    "DE": "für Seen mit hydrodynamischen 1D-Modellen",
-    "FR": "pour les lacs avec modèles hydrodynamiques 1D",
-    "IT": "per laghi con modelli idrodinamici 1D"
+    "EN": "Filter for lakes with 1D hydrodynamic models",
+    "DE": "Filtern für Seen mit hydrodynamischen 1D-Modellen",
+    "FR": "Filtrer pour les lacs avec modèles hydrodynamiques 1D",
+    "IT": "Filtra per laghi con modelli idrodinamici 1D"
   },
   "liveDescription": {
-    "EN": "for lakes with live monitoring stations",
-    "DE": "für Seen mit Live-Überwachungsstationen",
-    "FR": "pour les lacs avec stations de surveillance en direct",
-    "IT": "per laghi con stazioni di monitoraggio in tempo reale"
+    "EN": "Filter for lakes with live monitoring stations",
+    "DE": "Filtern für Seen mit Live-Überwachungsstationen",
+    "FR": "Filtrer pour les lacs avec stations de surveillance en direct",
+    "IT": "Filtra per laghi con stazioni di monitoraggio in tempo reale"
   },
   "insituDescription": {
-    "EN": "for lakes with insitu measurements",
-    "DE": "für Seen mit In-situ-Messungen",
-    "FR": "pour lacs avec mesures in situ",
-    "IT": "per laghi con misurazioni in situ"
+    "EN": "Filter for lakes with insitu measurements",
+    "DE": "Filtern für Seen mit In-situ-Messungen",
+    "FR": "Filtrer pour lacs avec mesures in situ",
+    "IT": "Filtra per laghi con misurazioni in situ"
+  },
+  "removeFilters": {
+    "EN": "Remove filters",
+    "DE": "Filter entfernen",
+    "FR": "Supprimer les filtres",
+    "IT": "Rimuovi filtri"
   },
   "satellite": {
     "EN": "Satellite",
@@ -310,6 +316,12 @@
     "DE": "Melde Probleme",
     "FR": "Signaler un problème",
     "IT": "Rapporto"
+  },
+  "loadingLakes": {
+    "EN": "Loading lakes...",
+    "DE": "Seen werden geladen...",
+    "FR": "Chargement des lacs...",
+    "IT": "Caricamento laghi..."
   },
   "axis": {
     "DE": {

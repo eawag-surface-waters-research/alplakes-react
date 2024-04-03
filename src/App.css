@@ -33,6 +33,7 @@
   --highlight-color: rgba(68, 188, 167, 255);
   --highlight-color-fill: rgba(68, 188, 167, 0.2);
   --header-text-color: rgb(59, 59, 59);
+  --pulse-color: rgb(160, 160, 160);
 }
 
 :root {
@@ -51,6 +52,7 @@
   --button-fill-color: white;
   --button-text-color: black;
   --header-text-color: rgb(207, 202, 202);
+  --pulse-color: rgb(136 136 136);
 }
 
 @media screen and (max-width: 1200px) {

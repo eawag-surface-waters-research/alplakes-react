@@ -68,50 +68,24 @@
   margin: calc(var(--padding) / 2) 12px calc(var(--padding) / 2) 0;
   color: var(--background-suble-font-color);
   transition: all .2s 0s ease;
+  vertical-align: top;
 }
 
 .main .content .search .filters .filter.selected {
-  background-color: var(--background-font-color);
-  color: var(--background-color) !important;
-  border-color: var(--background-font-color) !important;
+  background-color: var(--highlight-color);
+  color: white !important;
+  border-color: var(--highlight-color) !important;
+}
+
+.main .content .search .filters .filter.remove {
+  font-size: 24px;
+  line-height: 24px;
+  padding: 1px 6px;
 }
 
 .main .content .search .filters .filter:hover {
   border-color: var(--background-font-color);
   color: var(--background-font-color);
-}
-
-.main .content .search .filters .filter .filter-description {
-  display: none;
-  position: absolute;
-  font-size: 18px;
-  padding: 12px 8px 12px 60px;
-  background-color: var(--background-color);
-  color: var(--background-font-color);
-  border-radius: 24px;
-  box-sizing: border-box;
-  border: 1px solid var(--border-color);
-  width: calc(100% - var(--padding)* 2);
-  top: 0;
-  left: var(--padding);
-  pointer-events: none;
-  overflow: hidden;
-  white-space: nowrap;
-}
-
-.main .content .search .filters .filter .filter-description img {
-  position: absolute;
-  left: 24px;
-  height: 22px;
-  top: 12px;
-}
-
-.main .content .search .filters .filter:hover .filter-description {
-  display: block;
-}
-
-.main .content .search .filters .filter.selected:hover .filter-description {
-  display: none;
 }
 
 .main .content .list {
@@ -283,6 +257,7 @@
   margin-left: 6px;
   margin-bottom: 6px;
   color: var(--background-suble-font-color);
+  transition: all .2s 0s ease;
 }
 
 .main .content .list .product-list .list-item:hover .properties .right .view .type {
@@ -296,9 +271,8 @@
 }
 
 .main .content .list .product-list .list-item .properties .right .view .type.select {
-  background-color: var(--background-font-color);
-  color: var(--background-color);
-  border-color: var(--background-font-color);
+  color: var(--highlight-color);
+  border-color: var(--highlight-color);
 }
 
 .main .content .list .product-list .list-item .summary {
@@ -395,22 +369,14 @@
 }
 
 .main .content .list .product-list .lake-shape-skeleton {
-  height: 60px;
-  width: 60px;
+  height: 70px;
+  width: 70px;
   margin: 7px;
   background-color: var(--border-color);
   opacity: 0.2;
   display: inline-block;
   margin-bottom: 1px;
   border-radius: 12px;
-}
-
-.main .content .list .product-list .skeleton-click {
-  float: right;
-  height: 24px;
-  width: 24px;
-  background-color: var(--border-color);
-  opacity: 0.3;
 }
 
 .main .content .list .product-list .text-skeleton {
@@ -421,16 +387,25 @@
 
 .main .content .list .product-list .text-skeleton .name-skeleton {
   height: 22.5px;
-  width: 100px;
+  width: 150px;
   background-color: var(--border-color);
   opacity: 0.4;
+  margin-top: 10px;
+  border-radius: 8px;
+}
+
+.main .content .list .product-list .text-skeleton .parameters-skeleton {
+  height: 12px;
+  width: 200px;
+  background-color: var(--border-color);
+  opacity: 0.3;
   margin-top: 10px;
   border-radius: 12px;
 }
 
-.main .content .list .product-list .text-skeleton .parameters-skeleton {
-  height: 15.5px;
-  width: 200px;
+.main .content .list .product-list .text-skeleton .graph-title-skeleton {
+  height: 12px;
+  width: 130px;
   background-color: var(--border-color);
   opacity: 0.3;
   margin-top: 10px;
@@ -441,17 +416,47 @@
   display: inline-block;
   width: 20%;
   height: 55px;
-  border-bottom: 1px solid var(--border-color);
-  border-right: 1px solid var(--border-color);
+  border-bottom: 1px solid;
+  border-right: 1px solid;
   box-sizing: border-box;
   opacity: 0.8;
+  border-color: var(--border-color);
+  opacity: 0.5;
 }
 
 .main .content .list .product-list .skeleton-block.right {
   border-right: none;
 }
 
+@keyframes pulseColor {
+  0% {
+    background-color: var(--border-color);
+  }
 
+  100% {
+    background-color: var(--pulse-color);
+  }
+}
+
+.pulse {
+  background-color: var(--border-color);
+  animation: pulseColor 1s infinite alternate;
+}
+
+@keyframes pulseBorderColor {
+  0% {
+    border-color: var(--border-color);
+  }
+
+  100% {
+    border-color: var(--pulse-color);
+  }
+}
+
+.pulse-border {
+  border-color: var(--border-color);
+  animation: pulseBorderColor 1s infinite alternate;
+}
 
 .main .content .shadow {
   position: fixed;
@@ -836,10 +841,6 @@
 
   .main .content .list .product-list:hover .list-item:not( :hover) {
     opacity: 1;
-  }
-
-  .main .content .search .filters .filter .filter-description {
-    display: none !important;
   }
 
   .main .content .home-map #map:after {
