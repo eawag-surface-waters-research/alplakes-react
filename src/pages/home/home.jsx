@@ -135,6 +135,8 @@ class List extends Component {
       parameters,
       filterTypes,
       filters,
+      setFavorties,
+      favorites,
     } = this.props;
     return (
       <div className="list">
@@ -155,6 +157,8 @@ class List extends Component {
                 parameters={parameters}
                 filterTypes={filterTypes}
                 filters={filters}
+                setFavorties={setFavorties}
+                favorites={favorites}
               />
             ))}
             <ListSkeleton />
@@ -167,8 +171,17 @@ class List extends Component {
 
 class ListItem extends Component {
   render() {
-    var { lake, language, parameter, parameters, filterTypes, filters } =
-      this.props;
+    var {
+      lake,
+      language,
+      parameter,
+      parameters,
+      filterTypes,
+      filters,
+      setFavorties,
+      favorites,
+    } = this.props;
+    var selected = favorites.includes(lake.key);
     return (
       <NavLink to={`/${lake.key}`}>
         <div
@@ -186,6 +199,29 @@ class ListItem extends Component {
             </div>
             <div className="left">
               {lake.name[language]}
+              {selected ? (
+                <div
+                  className="favorite full"
+                  title="Unpin"
+                  onClick={(event) => {
+                    event.preventDefault();
+                    setFavorties(lake.key);
+                  }}
+                >
+                  &#9733;
+                </div>
+              ) : (
+                <div
+                  className="favorite"
+                  title="Pin"
+                  onClick={(event) => {
+                    event.preventDefault();
+                    setFavorties(lake.key);
+                  }}
+                >
+                  &#9734;
+                </div>
+              )}
               <div className="label">
                 <div className="property">
                   <div className="icon">
@@ -302,6 +338,10 @@ class Home extends Component {
         beta: true,
       },
     },
+    favorites:
+      JSON.parse(localStorage.getItem("favorites")) === null
+        ? []
+        : JSON.parse(localStorage.getItem("favorites")),
   };
   toggleFullscreen = () => {
     this.setState({ fullscreen: !this.state.fullscreen }, () => {
@@ -329,10 +369,17 @@ class Home extends Component {
     list = searchList(search, list);
     this.setState({ list });
   };
-  sortList = (list, filters) => {
+  sortList = (list, filters, favorites) => {
     var { boundingBox } = this.state;
     list.sort((a, b) => {
-      // 1. Sort if in map area
+      // 1. Sort by favorites
+      if (favorites.includes(a.key) && !favorites.includes(b.key)) {
+        return -1;
+      }
+      if (!favorites.includes(a.key) && favorites.includes(b.key)) {
+        return 1;
+      }
+      // 2. Sort if in map area
       if (boundingBox) {
         if (
           inBounds(a.latitude, a.longitude, boundingBox) &&
@@ -347,14 +394,14 @@ class Home extends Component {
           return 1;
         }
       }
-      // 2. Sort if forecast available
+      // 3. Sort if forecast available
       if (a.forecast.available && !b.forecast.available) {
         return -1;
       }
       if (!a.forecast.available && b.forecast.available) {
         return 1;
       }
-      // 3. Sort by surface area
+      // 4. Sort by surface area
       if (a.area < b.area) {
         return 1;
       }
@@ -375,6 +422,16 @@ class Home extends Component {
   };
   setParameter = (parameter) => {
     this.setState({ parameter });
+  };
+  setFavorties = (favorite) => {
+    var { favorites } = this.state;
+    if (favorites.includes(favorite)) {
+      favorites = favorites.filter((f) => f !== favorite);
+    } else {
+      favorites.push(favorite);
+    }
+    localStorage.setItem("favorites", JSON.stringify(favorites));
+    this.setState({ favorites });
   };
   async componentDidMount() {
     var { parameter, parameters } = this.state;
@@ -421,9 +478,16 @@ class Home extends Component {
   render() {
     document.title = "Alplakes";
     var { language, dark } = this.props;
-    var { list, search, filters, fullscreen, parameter, parameters } =
-      this.state;
-    var sortedList = this.sortList(list, filters);
+    var {
+      list,
+      search,
+      filters,
+      fullscreen,
+      parameter,
+      parameters,
+      favorites,
+    } = this.state;
+    var sortedList = this.sortList(list, filters, favorites);
     var results = sortedList.filter((l) => l.display && !l.filter).length;
     var filterTypes = [
       {
@@ -477,6 +541,8 @@ class Home extends Component {
             results={results}
             filterTypes={filterTypes}
             filters={filters}
+            setFavorties={this.setFavorties}
+            favorites={favorites}
           />
           <div className={fullscreen ? "home-map" : "home-map hide"}>
             <div className="fullscreen" onClick={this.toggleFullscreen}>

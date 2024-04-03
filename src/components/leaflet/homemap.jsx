@@ -11,7 +11,7 @@ class HomeMap extends Component {
     minZoom: 6,
     maxZoom: 13,
     darkMap: "clqz0bzlt017d01qw5xi9ex6x",
-    lightMap: "clg4u62lq009a01oa5z336xn7",
+    lightMap: "clujqsjw400hd01qq03atg71i",
     parameter: "temperature",
   };
   setParameter = (parameter) => {
