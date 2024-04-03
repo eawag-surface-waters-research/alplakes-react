@@ -161,7 +161,6 @@ class List extends Component {
                 favorites={favorites}
               />
             ))}
-            <ListSkeleton />
           </div>
         </div>
       </div>
