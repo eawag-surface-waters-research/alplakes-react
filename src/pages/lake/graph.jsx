@@ -1,29 +1,15 @@
 import React, { Component } from "react";
-import Toggle from "../../components/sliders/toggle";
+import axios from "axios";
+import "./lake.css";
 
 class Graph extends Component {
-  state = {
-    annual: false,
-  };
-  toggleAnnual = () => {
-    this.setState({ annual: !this.state.annual });
-  };
   render() {
-    var { annual } = this.state;
+    var { id } = this.props;
     return (
-      <React.Fragment>
-        <div className="settings">
-          <Toggle
-            left="Timeframe"
-            right="Annual"
-            onChange={this.toggleAnnual}
-            checked={annual}
-          />
-        </div>
-        <div className="view-area">
-          <div className="graph-area"></div>
-        </div>
-      </React.Fragment>
+      <div className="module-component">
+        <div className="sidebar">Some sidebar stuff here</div>
+        <div className="plot"></div>
+      </div>
     );
   }
 }

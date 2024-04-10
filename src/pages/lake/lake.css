@@ -1,91 +1,30 @@
-.main .lake .not-found {
-    margin-top: calc(var(--header-height) * 2);
-    text-align: center;
-    font-size: 28px;
-    color: var(--background-font-color);
-}
+.main .lake .content {}
 
-.main .lake .not-found .title {
-    font-size: 40px;
-}
-
-.main .lake .not-found a {
-    text-decoration: none;
-}
-
-.main .lake .not-found .call-to-action {
-    color: var(--background-color);
-    background-color: var(--background-font-color);
-    width: fit-content;
-    margin: auto;
-    margin-top: 20px;
-    border-radius: 22px;
-    padding: 8px 22px;
-    cursor: pointer;
-    transition: all .2s ease-in-out;
-    font-size: 22px;
-}
-
-.main .lake .not-found .call-to-action:hover {
-    transform: scale(1.05);
-}
-
-.main .lake .content {
+.main .lake .content .metadata {
     position: relative;
-    width: 100%;
-    padding: 0;
+    padding-left: var(--padding);
+    display: inline-block;
+    width: calc(var(--sidebar-width) - var(--padding));
     box-sizing: border-box;
-    margin-top: var(--header-height);
 }
 
-.main .lake .content .top {
-    width: var(--sidebar-width);
-    padding: 0 var(--padding) calc(var(--padding) / 2);
-    box-sizing: border-box;
-    position: fixed;
-    background-color: var(--background-color);
-    z-index: 99;
-    top: var(--header-height);
-    left: 0;
-}
-
-.main .lake .content .top .title {
-    font-size: 30px;
+.main .lake .content .metadata .title {
+    font-size: 36px;
     line-height: 45px;
-    border-bottom: 2px solid var(--highlight-color);
-    width: fit-content;
 }
 
-.main .lake .content .bottom {
-    width: var(--sidebar-width);
-    padding: 0 var(--padding);
-    box-sizing: border-box;
-    padding-top: calc(var(--padding) / 2 + 47px);
-    position: relative;
+.main .lake .content .metadata .subtitle {
+    font-size: 14px;
 }
 
-.main .lake .content .notification {
-    position: absolute;
-    right: var(--padding);
-    top: 8px;
-    cursor: pointer;
-    display: none;
-}
 
-.main .lake .content .notification img {
-    height: 35px;
-}
-
-.main .lake .content .details {
-    width: 100%;
-}
-
-.main .lake .content .details .properties {
+.main .lake .content .metadata .properties {
     width: 100%;
     box-sizing: border-box;
+    padding: 12px 0;
 }
 
-.main .lake .content .details .properties .property {
+.main .lake .content .metadata .properties .property {
     width: 33%;
     display: inline-block;
     margin-bottom: 10px;
@@ -93,83 +32,83 @@
     margin-top: calc(var(--padding) / 2);
 }
 
-.main .lake .content .details .properties .property .left img {
+.main .lake .content .metadata .properties .property .left img {
     width: 16px;
 }
 
-.main.dark .lake .content .details .properties .property .left img {
+.main.dark .lake .content .metadata .properties .property .left img {
     -webkit-filter: invert(100%);
     filter: invert(100%);
 }
 
-.main .lake .content .details .properties .property .right {
+.main .lake .content .metadata .properties .property .right {
     display: inline-block;
 }
 
-.main .lake .content .details .properties .property .right .value {
+.main .lake .content .metadata .properties .property .right .value {
     font-size: 16px;
 }
 
-.main .lake .content .details .properties .property .right .value .unit {
+.main .lake .content .metadata .properties .property .right .value .unit {
     display: inline-block;
     font-size: 16px;
     margin-left: 4px;
 }
 
-.main .lake .content .details .properties .property .right .label {
+.main .lake .content .metadata .properties .property .right .label {
     font-size: 10px;
 }
 
-.main .lake .content .details .insitu .datasets a {
+.main .lake .content .metadata .insitu .datasets a {
     text-decoration: none;
     color: var(--background-text-color);
 }
 
-.main .lake .content .details .insitu .datasets .dataset {
+.main .lake .content .metadata .insitu .datasets .dataset {
     margin-top: calc(var(--padding) / 2);
     padding-left: 8px;
     border-left: 2px solid var(--highlight-color);
 }
 
-.main .lake .content .details .insitu .datasets .dataset .name {
+.main .lake .content .metadata .insitu .datasets .dataset .name {
     font-size: 16px;
 }
 
-.main .lake .content .details .insitu .datasets .dataset .date {
+.main .lake .content .metadata .insitu .datasets .dataset .date {
     font-size: 12px;
 }
 
-.main .lake .content .details .insitu .datasets .dataset .parameters {
+.main .lake .content .metadata .insitu .datasets .dataset .parameters {
     font-size: 14px;
     padding-top: 2px;
 }
 
-.main .lake .content .details .insitu .datalakes {
+.main .lake .content .metadata .insitu .datalakes {
     text-align: center;
     padding: 8px 0;
     font-size: 14px;
 }
 
-.main .lake .content .details .insitu .datalakes img {
-    height: 18px;
+.main .lake .content .metadata .insitu .datalakes img {
+    height: 14px;
     padding-left: 8px;
 }
 
-.main.dark .lake .content .details .insitu .datalakes img {
+.main.dark .lake .content .metadata .insitu .datalakes img {
     -webkit-filter: invert(100%);
     filter: invert(100%);
 }
 
-.main .lake .content .details .dropdown {
+.main .lake .content .metadata .dropdown {
     padding: 0 0 var(--padding) 0;
 }
 
-.main .lake .content .details .dropdown .header {
+.main .lake .content .metadata .dropdown .header {
     font-size: 20px;
     cursor: pointer;
 }
 
-.main .lake .content .details .dropdown .header .plusminus {
+.main .lake .content .metadata .dropdown .header .plusminus {
     position: relative;
     width: 16px;
     height: 16px;
@@ -211,74 +150,177 @@
 
 }
 
-.main .lake .content .details .dropdown .contents.hidden {
+.main .lake .content .metadata .dropdown .contents.hidden {
     display: none;
 }
 
-.main .lake .content .details .dropdown .contents {
+.main .lake .content .metadata .dropdown .contents {
     font-size: 12px;
     padding-top: 8px;
 }
 
-.main .lake .content .view-area {
-    position: fixed;
-    top: calc(var(--header-height));
-    right: var(--padding);
-    width: calc(100% - var(--sidebar-width) - var(--padding));
-    height: calc(100% - var(--header-height) - var(--footer-height) - var(--padding));
+.main .lake .content .modules {
+    position: relative;
+    margin: 0 var(--padding) 0 0;
+    display: inline-block;
+    width: calc(100% - var(--sidebar-width));
+    vertical-align: top;
+}
+
+.main .lake .content .module {
+    position: relative;
+    display: inline-block;
+    width: calc(50% - var(--padding));
+    vertical-align: top;
+    border-radius: 22px;
+    border: 1px solid var(--border-color);
     box-sizing: border-box;
-    border-radius: 12px;
-    z-index: 999999;
+    margin-left: var(--padding);
+    margin-bottom: var(--padding);
+    cursor: pointer;
 }
 
-.main .lake .content .map {
-    visibility: hidden;
+.main .lake .content .module.active {
+    position: fixed;
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: var(--header-height);
+    z-index: 999;
+    margin: 0;
+    border: none;
+    border-radius: 0;
+    background-color: var(--background-color);
 }
 
-.main .lake .content .map .settings {
+.main .lake .content .module .leaflet-control-attribution {
     display: none;
 }
 
-.main .lake .content .map.active {
-    visibility: visible;
-}
-
-.main .lake .content .map.active .settings {
+.main .lake .content .module.active .leaflet-control-attribution {
     display: block;
 }
 
-.main .lake .content .map .view-area .map-container {
-    width: 100%;
-    height: 100%;
-    position: relative;
+
+.main .lake .content .module .close {
+    display: none;
 }
 
-.main .lake .content .map .view-area .map-container.fullscreen {
-    width: 100%;
-    height: 100%;
-    position: fixed;
+.main .lake .content .module.active .close {
+    display: block;
+    position: absolute;
     top: 0;
+    right: var(--padding);
+    font-size: 40px;
+    width: calc(100% - var(--sidebar-width) - var(--padding));
+    text-align: right;
+}
+
+
+
+.main .lake .content .module .display {
+    height: 300px;
+    width: 100%;
+    border-radius: 22px 22px 0 0;
+    background-color: var(--border-color);
+    pointer-events: none;
+}
+
+.main .lake .content .module.active .display {
+    height: 100%;
+    width: 100%;
+    border-radius: 0;
+    pointer-events: all;
+    background-color: var(--background-color);
+}
+
+.main .lake .content .module .display .module-component {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 22px 22px 0 0;
+}
+
+.main .lake .content .module.active .display .module-component {
+    border-radius: 0;
+}
+
+.main .lake .content .module .display .module-component .sidebar {
+    display: none;
+    height: 100%;
+    vertical-align: top;
+}
+
+.main .lake .content .module .display .module-component .plot {
+    width: 100%;
+    height: 100%;
+    display: inline-block;
+}
+
+.main .lake .content .module.active .display .module-component .sidebar {
+    display: inline-block;
+    width: var(--sidebar-width);
+}
+
+.main .lake .content .module.active .display .module-component .plot {
+    width: calc(100% - var(--sidebar-width) - var(--padding));
+    border: none;
+    box-sizing: border-box;
+    overflow: hidden;
+    margin-right: var(--padding);
+    height: calc(100% - var(--header-height) - var(--padding) - 50px);
+    margin-top: 50px;
+}
+
+.main .lake .content .module .display .module-component .plot .map {
+    height: 100%;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.main .lake .content .module.active .display .module-component .plot .map {
+    height: 60%;
+    width: 100%;
+    border: 1px solid var(--border-color);
+    border-radius: 22px;
+}
+
+.main .lake .content .module.active .display .module-component .plot .map.fullscreen {
+    position: fixed;
+    top: var(--header-height);
     left: 0;
-    z-index: 999999;
-    border-radius: 0;
+    width: 100%;
+    height: calc(100% - var(--header-height));
     border: none;
-}
-
-.main .lake .content .map .view-area .map-container.fullscreen .basemap #map {
-    border-radius: 0;
-    border: none;
-}
-
-.main .lake .content .view-area #map .temperature-label .value {
-    display: block;
-    width: fit-content;
-}
-
-.main .lake .content .map .view-area .map-container.fullscreen .gradient {
     border-radius: 0;
 }
 
-.main .lake .content .map .view-area .map-container .gradient {
+.main .lake .content .module .display .module-component .plot .map .temperature-label {
+    font-size: 14px;
+    transition: transform .33s 0s ease;
+}
+
+.main .lake .content .module .display .module-component .plot .map .temperature-label:hover {
+    transform: scale(1.1);
+}
+
+.main .lake .content .module .display .module-component .plot .map .temperature-label .name {
+    display: inline-block;
+    background-color: var(--background-color);
+    color: var(--box-font-color);
+    padding: 2px 8px;
+}
+
+.main .lake .content .module .display .module-component .plot .map .temperature-label .value {
+    display: inline-block;
+    background-color: var(--highlight-color);
+    color: white;
+    padding: 2px 4px;
+}
+
+.main .lake .content .module .display .module-component .plot .map .gradient {
     position: absolute;
     bottom: -1px;
     z-index: 996;
@@ -287,13 +329,18 @@
     background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(104, 104, 104, 0.2), rgb(104, 104, 104, 0.7));
     pointer-events: none;
     border-radius: 12px;
+    display: none;
 }
 
-.main.dark .lake .content .map .view-area .map-container .gradient {
+.main .lake .content .module.active .display .module-component .plot .map .gradient {
+    display: block;
+}
+
+.main.dark .lake .content .module.active .display .module-component .plot .map .gradient {
     background-image: linear-gradient(rgba(29, 30, 32, 0), rgba(29, 30, 32, 0.2), rgba(29, 30, 32, 0.7));
 }
 
-.main .lake .content .map .view-area .map-container .legend {
+.main .lake .content .module .display .module-component .plot .map .legend {
     position: absolute;
     right: 12px;
     bottom: 70px;
@@ -303,21 +350,31 @@
     border-radius: 12px;
     padding: 3px 9px;
     color: var(--background-font-color);
-}
-
-.main .lake .content .map .view-area .map-container .legend.hide {
     display: none;
 }
 
-.main .lake .content .map .view-area .map-container .playback {
+.main .lake .content .module.active .display .module-component .plot .map .legend {
+    display: block;
+}
+
+.main .lake .content .module .display .module-component .plot .map .legend.hide {
+    display: none;
+}
+
+.main .lake .content .module .display .module-component .plot .map .playback {
     position: absolute;
     bottom: 0;
     left: 0;
     z-index: 997;
     width: 100%;
+    display: none;
 }
 
-.main .lake .content .map .view-area .map-container .playback .slider {
+.main .lake .content .module.active .display .module-component .plot .map .playback {
+    display: block;
+}
+
+.main .lake .content .module .display .module-component .plot .map .playback .slider {
     width: calc(100% - 28px);
     box-sizing: border-box;
     position: absolute;
@@ -326,7 +383,7 @@
     z-index: 9999;
 }
 
-.main .lake .content .map .view-area .map-container .playback .play-controls {
+.main .lake .content .module .display .module-component .plot .map .playback .play-controls {
     position: absolute;
     width: 100%;
     bottom: 0;
@@ -335,15 +392,15 @@
     box-sizing: border-box;
 }
 
-.main .lake .content .map .view-area .map-container .playback .play-controls .clickable-button {
+.main .lake .content .module .display .module-component .plot .map .playback .play-controls .clickable-button {
     opacity: 0.9;
 }
 
-.main .lake .content .map .view-area .map-container .playback .play-controls .clickable-button:hover {
+.main .lake .content .module .display .module-component .plot .map .playback .play-controls .clickable-button:hover {
     opacity: 1;
 }
 
-.main .lake .content .map .view-area .map-container .playback .play-controls .clickable-button .tooltip {
+.main .lake .content .module .display .module-component .plot .map .playback .play-controls .clickable-button .tooltip {
     visibility: hidden;
     background-color: rgba(0, 0, 0, 0.8);
     color: #fff;
@@ -355,15 +412,15 @@
     bottom: 150%;
 }
 
-.main .lake .content .map .view-area .map-container .playback .play-controls .clickable-button .tooltip.right {
+.main .lake .content .module .display .module-component .plot .map .playback .play-controls .clickable-button .tooltip.right {
     right: 10px;
 }
 
-.main .lake .content .map .view-area .map-container .playback .play-controls .clickable-button:hover .tooltip {
+.main .lake .content .module .display .module-component .plot .map .playback .play-controls .clickable-button:hover .tooltip {
     visibility: visible;
 }
 
-.main .lake .content .map .view-area .map-container .playback .play-controls .play-pause-icon {
+.main .lake .content .module .display .module-component .plot .map .playback .play-controls .play-pause-icon {
     border: 0;
     background: transparent;
     box-sizing: border-box;
@@ -377,12 +434,12 @@
     margin-left: 12px;
 }
 
-.main .lake .content .map .view-area .map-container .playback .play-controls .play-pause-icon.paused {
+.main .lake .content .module .display .module-component .plot .map .playback .play-controls .play-pause-icon.paused {
     border-style: double;
     border-width: 0px 0 0px 20px;
 }
 
-.main .lake .content .map .view-area .map-container .playback .play-controls .current-datetime {
+.main .lake .content .module .display .module-component .plot .map .playback .play-controls .current-datetime {
     display: inline-block;
     padding-top: 16px;
     vertical-align: top;
@@ -390,27 +447,27 @@
     font-size: 14px;
 }
 
-.main .lake .content .map .view-area .map-container .playback .play-controls .selected-period {
+.main .lake .content .module .display .module-component .plot .map .playback .play-controls .selected-period {
     display: inline-block;
 }
 
-.main .lake .content .map .view-area .map-container .playback .play-controls .clickable-button {
+.main .lake .content .module .display .module-component .plot .map .playback .play-controls .clickable-button {
     display: inline-block;
 }
 
-.main .lake .content .map .view-area .map-container .playback .play-controls .clickable-button.tools {
+.main .lake .content .module .display .module-component .plot .map .playback .play-controls .clickable-button.tools {
     float: right;
 }
 
-.main .lake .content .map .view-area .map-container .playback .play-controls .clickable-button.play-settings {
+.main .lake .content .module .display .module-component .plot .map .playback .play-controls .clickable-button.play-settings {
     float: right;
 }
 
-.main .lake .content .map .view-area .map-container .playback .play-controls .clickable-button.fullscreen {
+.main .lake .content .module .display .module-component .plot .map .playback .play-controls .clickable-button.fullscreen {
     float: right;
 }
 
-.main .lake .content .map .view-area .map-container .playback .play-controls .clickable-button.fullscreen:hover img {
+.main .lake .content .module .display .module-component .plot .map .playback .play-controls .clickable-button.fullscreen:hover img {
     animation: pulse 0.3s normal;
     animation-timing-function: linear;
 }
@@ -429,7 +486,7 @@
     }
 }
 
-.main .lake .content .map .view-area .map-container .playback .play-controls button {
+.main .lake .content .module .display .module-component .plot .map .playback .play-controls button {
     width: 46px;
     height: 48px;
     background-color: transparent;
@@ -438,19 +495,20 @@
     cursor: pointer;
 }
 
-.main .lake .content .map .view-area .map-container .playback .play-controls button img {
+.main .lake .content .module .display .module-component .plot .map .playback .play-controls button img {
     width: 24px;
     height: 24px;
 }
 
-.main .lake .content .map .view-area .map-container .properties {
+
+.main .lake .content .module .display .module-component .plot .map .properties {
     display: inline-block;
     vertical-align: top;
     padding-top: 16px;
     width: 100%;
 }
 
-.main .lake .content .map .view-area .map-container .settings-modal {
+.main .lake .content .module .display .module-component .plot .map .settings-modal {
     position: absolute;
     right: 12px;
     bottom: 66px;
@@ -461,11 +519,11 @@
     color: white;
 }
 
-.main .lake .content .map .view-area .map-container .settings-modal .settings-input {
+.main .lake .content .module .display .module-component .plot .map .settings-modal .settings-input {
     text-align: right;
 }
 
-.main .lake .content .map .view-area .map-container .settings-modal .settings-input input {
+.main .lake .content .module .display .module-component .plot .map .settings-modal .settings-input input {
     width: 80px;
     padding: 5px;
     box-sizing: border-box;
@@ -477,7 +535,7 @@
     margin: 5px 0 5px 20px;
 }
 
-.main .lake .content .map .view-area .map-container .settings-modal .settings-input select {
+.main .lake .content .module .display .module-component .plot .map .settings-modal .settings-input select {
     padding: 5px;
     box-sizing: border-box;
     border-radius: 8px;
@@ -487,884 +545,69 @@
     margin: 5px 0 5px 20px;
 }
 
-.main .lake .content .map .view-area .map-container .settings-modal.hidden {
+.main .lake .content .module .display .module-component .plot .map .settings-modal.hidden {
     visibility: hidden;
 }
 
-.main .lake .content .map .view-area .map-container .basemap {
+.main .lake .content .module .display .module-component .plot .graph {
+    height: 40%;
     width: 100%;
-    height: 100%;
-}
-
-.main .lake .content .map .view-area .map-container .basemap #map {
-    border-radius: 12px;
-    border: 1px solid var(--border-color);
-}
-
-.main .lake .content .settings {
-    margin-bottom: calc(var(--padding) / 2);
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
-    padding: 32px 16px 16px;
-    margin-top: 20px;
-}
-
-.main .lake .content .settings .active-apps {
-    text-align: center;
-}
-
-.main .lake .content .map .view-area .map-container.fullscreen .active-apps {
     display: none;
 }
 
-.main .lake .content .settings .active-apps .app {
-    display: inline-block;
-    font-size: 50px;
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
-    margin: 10px 10px 28px 10px;
-    width: 60px;
-    height: 60px;
-    text-align: center;
-    color: var(--border-color);
-    position: relative;
-    cursor: pointer;
-    ;
-}
-
-.main .lake .content .settings .active-apps .app:hover {
-    transform: scale(1.05);
-}
-
-.main .lake .content .settings .active-apps .app.filled {
-    width: 62px;
-    height: 62px;
-    border: none;
-    vertical-align: top;
-    box-shadow: var(--box-shadow);
-    text-align: center;
-}
-
-
-.main .lake .content .settings .active-apps .app.filled.active {
-    box-shadow: #343434 0px 0px 12px;
-}
-
-.main.dark .lake .content .secondary .menu .loaded .app.filled.active {
-    box-shadow: white 0px 0px 8px;
-}
-
-.main .lake .content .alplakes_hydrodynamic {
-    background-color: #2d2d2d !important;
-    opacity: 1;
-    background-image: linear-gradient(30deg, #3a4251 12%, transparent 12.5%, transparent 87%, #3a4251 87.5%, #3a4251), linear-gradient(150deg, #3a4251 12%, transparent 12.5%, transparent 87%, #3a4251 87.5%, #3a4251), linear-gradient(30deg, #3a4251 12%, transparent 12.5%, transparent 87%, #3a4251 87.5%, #3a4251), linear-gradient(150deg, #3a4251 12%, transparent 12.5%, transparent 87%, #3a4251 87.5%, #3a4251), linear-gradient(60deg, #3a425177 25%, transparent 25.5%, transparent 75%, #3a425177 75%, #3a425177), linear-gradient(60deg, #3a425177 25%, transparent 25.5%, transparent 75%, #3a425177 75%, #3a425177);
-    background-size: 26px 46px;
-    background-position: 0 0, 0 0, 13px 23px, 13px 23px, 0 0, 13px 23px;
-}
-
-.main .lake .content .alplakes_particles {
-    background-image:
-        radial-gradient(rgb(58, 66, 81) 40.4%, transparent 40.4%),
-        radial-gradient(rgb(58, 66, 81) 40.4%, transparent 40.4%),
-        radial-gradient(rgb(0, 0, 0) 40.4%, transparent 40.4%),
-        radial-gradient(rgb(0, 0, 0) 40.4%, transparent 40.4%);
-    background-position: 0px 0px, 12px 12px, -1.2px 1.2px, 10.8px 13.2px;
-    background-size: 24px 24px;
-    background-color: rgb(45, 45, 45);
-}
-
-.main .lake .content .alplakes_transect {
-    background-color: #2d2d2d !important;
-    opacity: 1;
-    background-image: linear-gradient(30deg, #3a4251 12%, transparent 12.5%, transparent 87%, #3a4251 87.5%, #3a4251), linear-gradient(150deg, #3a4251 12%, transparent 12.5%, transparent 87%, #3a4251 87.5%, #3a4251), linear-gradient(30deg, #3a4251 12%, transparent 12.5%, transparent 87%, #3a4251 87.5%, #3a4251), linear-gradient(150deg, #3a4251 12%, transparent 12.5%, transparent 87%, #3a4251 87.5%, #3a4251), linear-gradient(60deg, #3a425177 25%, transparent 25.5%, transparent 75%, #3a425177 75%, #3a425177), linear-gradient(60deg, #3a425177 25%, transparent 25.5%, transparent 75%, #3a425177 75%, #3a425177);
-    background-size: 26px 46px;
-    background-position: 0 0, 0 0, 13px 23px, 13px 23px, 0 0, 13px 23px;
-}
-
-.main .lake .content .alplakes_profile {
-    background-color: #2d2d2d !important;
-    opacity: 1;
-    background-image: linear-gradient(30deg, #3a4251 12%, transparent 12.5%, transparent 87%, #3a4251 87.5%, #3a4251), linear-gradient(150deg, #3a4251 12%, transparent 12.5%, transparent 87%, #3a4251 87.5%, #3a4251), linear-gradient(30deg, #3a4251 12%, transparent 12.5%, transparent 87%, #3a4251 87.5%, #3a4251), linear-gradient(150deg, #3a4251 12%, transparent 12.5%, transparent 87%, #3a4251 87.5%, #3a4251), linear-gradient(60deg, #3a425177 25%, transparent 25.5%, transparent 75%, #3a425177 75%, #3a425177), linear-gradient(60deg, #3a425177 25%, transparent 25.5%, transparent 75%, #3a425177 75%, #3a425177);
-    background-size: 26px 46px;
-    background-position: 0 0, 0 0, 13px 23px, 13px 23px, 0 0, 13px 23px;
-}
-
-.main .lake .content .sencast_tiff {
-    background-color: #242424;
-    opacity: 1;
-    background-image: repeating-radial-gradient(circle at 0 0, transparent 0, #242424 15px), repeating-linear-gradient(#3a425155, #3a4251);
-}
-
-.main .lake .content .sentinel_hub_wms {
-    background-color: #242424;
-    opacity: 1;
-    background-image: linear-gradient(135deg, #3a4251 25%, transparent 25%), linear-gradient(225deg, #3a4251 25%, transparent 25%), linear-gradient(45deg, #3a4251 25%, transparent 25%), linear-gradient(315deg, #3a4251 25%, #242424 25%);
-    background-position: 15px 0, 15px 0, 0 0, 0 0;
-    background-size: 15px 15px;
-    background-repeat: repeat;
-}
-
-.main .lake .content .settings .active-apps .app.filled:active {
-    box-shadow: 0 0 0 rgba(0, 0, 0, 0.05);
-    transform: scale(1.02);
-}
-
-.main .lake .content .settings .active-apps .app .remove {
-    position: absolute;
-    top: -10px;
-    left: -10px;
-    line-height: 10px;
-    padding: 1px;
-    background-color: var(--background-color);
-    border-radius: 22px;
-    text-align: center;
-    width: 20px;
-    height: 20px;
-    box-sizing: border-box;
-    font-size: 44px;
-    transition: color 0.5s;
-    border: 1px solid var(--border-color);
-    color: var(--background-suble-font-color);
-    user-select: none;
-}
-
-.main .lake .content .settings .active-apps .app .remove:hover {
-    color: red;
-}
-
-.main .lake .content .settings .active-apps .app img {
-    max-height: 44px;
-    max-width: 38px;
-    pointer-events: none;
-    width: auto;
-    height: auto;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    margin: auto;
-    transition: 0.15s ease-in-out all;
-    user-select: none;
-}
-
-.main .lake .content .settings .active-apps .app span {
-    position: absolute;
-    bottom: -19px;
-    font-size: 12px;
-    left: -10px;
-    width: 84px;
-    text-align: center;
-    color: var(--background-suble-font-color);
-}
-
-.main .lake .content .map .settings .add-layers {
-    position: fixed;
-    right: calc(var(--padding)* 1.5);
-    top: calc(var(--header-height) + var(--padding) / 2);
-    width: calc(100% - var(--sidebar-width) - var(--padding)* 2);
-    height: calc(100% - 91px - var(--padding) - var(--header-height));
-    background-color: var(--background-color);
-    border-radius: 12px;
-    padding: calc(var(--padding) / 2) calc(var(--padding) / 2) 0 calc(var(--padding) / 2);
-    box-sizing: border-box;
-    box-shadow: var(--box-shadow);
-    z-index: 9999999;
-}
-
-.main .lake .content .map .settings .add-layers.hidden {
-    display: none;
-}
-
-.main .lake .content .map .settings .add-layers .layers {
-    height: calc(100% - 39px);
-    overflow-y: scroll;
-    box-sizing: border-box;
-    overflow-x: hidden;
-    padding-right: 12px;
-    padding-bottom: 12px;
-}
-
-.main .lake .content .map .settings .add-layers .layers::-webkit-scrollbar {
-    width: 6px;
-}
-
-.main .lake .content .map .settings .add-layers .layers::-webkit-scrollbar-track {
-    background-color: var(--background-color);
-}
-
-.main .lake .content .map .settings .add-layers .layers::-webkit-scrollbar-thumb {
-    background: var(--border-color);
-}
-
-.main .lake .content .map .settings .add-layers .layers .layer {
-    margin: 6px;
-    padding: 6px 10px 6px 6px;
-    background-color: var(--box-color);
-    border-radius: 8px;
-    cursor: pointer;
-    display: inline-block;
-    vertical-align: top;
-    width: calc(50% - 12px);
-    box-sizing: border-box;
-    box-shadow: var(--box-shadow);
-}
-
-.main .lake .content .map .settings .add-layers .layers-title {
-    font-size: 22px;
-    border-bottom: 2px solid var(--highlight-color);
-    width: fit-content;
-    padding: 0 4px;
-    margin-bottom: 12px;
-}
-
-.main .lake .content .map .settings .add-layers .layers-close {
-    position: absolute;
-    font-size: 30px;
-    color: var(--highlight-color);
-    top: calc(var(--padding)/2);
-    right: var(--padding);
-    cursor: pointer;
-    transition: all .2s ease-in-out;
-}
-
-.main .lake .content .map .settings .add-layers .layers-close:hover {
-    transform: scale(1.2);
-}
-
-.main .lake .content .map .settings .add-layers .layers .layer.disabled {
-    opacity: 0.5;
-    pointer-events: none;
-}
-
-.main .lake .content .map .settings .add-layers .layers .layer:hover {
-    background-color: var(--background-color);
-}
-
-
-.main .lake .content .map .settings .add-layers .layers .layer .icon {
-    width: 50px;
-    height: 50px;
-    display: inline-block;
-    border-radius: 12px;
-    text-align: center;
-    position: relative;
-}
-
-.main .lake .content .map .settings .add-layers .layers .layer img {
-    max-width: 32px;
-    max-height: 34px;
-    top: 50%;
-    transform: translateY(-50%);
-    position: relative;
-    display: inline-block;
-}
-
-.main .lake .content .map .settings .add-layers .layers .layer .text {
-    display: inline-block;
-    margin-left: 8px;
-    vertical-align: bottom;
-    font-size: 14px;
-}
-
-.main .lake .content .map .settings .add-layers .layers .layer .text .parameter {
-    font-size: 16px;
-}
-
-.main .lake .content .map .settings .add-layers .layers .layer .text .type {
-    color: var(--background-suble-font-color);
-    font-size: 12px;
-}
-
-.main .lake .content .map .settings .add-layers .layers .layer .text .model {
-    font-size: 12px;
-}
-
-.main .lake .content .map .settings .close-layer {
-    display: none;
-}
-
-.main .lake .content .map .view-area .map-container .plots {
-    position: absolute;
-    left: calc(var(--padding) / 2);
-    top: calc(var(--padding) / 2);
-    width: calc(100% - var(--padding));
-    height: calc(100% - var(--padding) - 50px);
-    background-color: var(--background-color);
-    z-index: 998;
-    border-radius: 8px;
-    padding: calc(var(--padding)/2) calc(var(--padding)/2) 0 calc(var(--padding)/2);
-    box-sizing: border-box;
-    box-shadow: var(--box-shadow);
-}
-
-.main .lake .content .map .view-area .map-container .plots .close {
-    color: var(--background-font-color);
-    cursor: pointer;
-    font-size: 28px;
-    left: 0;
-    padding: 12px;
-    position: absolute;
-    top: 0;
-    z-index: 999;
-}
-
-.main .lake .content .map .view-area .map-container .plots .close:hover {
-    color: var(--highlight-color);
-}
-
-.main .lake .content .map .settings .active-apps .selection {
-    position: relative;
-    padding: 0;
-    box-sizing: border-box;
-    margin-top: calc(var(--padding) / 2);
-    padding-right: 6px;
-    padding-bottom: 12px;
-    text-align: left;
-}
-
-
-.main .lake .content .map .settings .active-apps .selection::-webkit-scrollbar {
-    width: 6px;
-}
-
-.main .lake .content .map .settings .active-apps .selection::-webkit-scrollbar-track {
-    background-color: var(--background-color);
-}
-
-.main .lake .content .map .settings .active-apps .selection::-webkit-scrollbar-thumb {
-    background: var(--border-color);
-}
-
-.main .lake .content .map .settings .active-apps .selection .layer-description {
-    color: var(--background-font-color);
-    font-size: 16px;
-    cursor: pointer;
-    margin-bottom: 18px;
-}
-
-.main .lake .content .map .settings .active-apps .selection .layer-description a {
-    color: var(--background-font-color);
-    font-weight: bold;
-    text-decoration: none;
-    transition: all .2s ease-in-out;
-}
-
-.main .lake .content .map .settings .active-apps .selection .layer-description a:hover {
-    color: green;
-}
-
-.main .lake .content .map .settings .active-apps .selection .layer-description button {
-    background-color: transparent;
-    color: var(--background-font-color);
-    font-weight: bold;
-    border: none;
-    cursor: pointer;
-}
-
-.main.dark .lake .content .secondary .selection .layer-description button {
-    color: #e5e5e5;
-}
-
-.main .lake .content .map .settings .active-apps .selection .layer-settings {
-    font-size: 14px;
-    color: #b6afaf;
-}
-
-.main .lake .content .map .settings .active-apps .selection .layer-settings .layer-section {
-    border-bottom: 1px solid var(--border-color);
-    margin-bottom: 18px;
-    font-size: 16px;
-    padding-bottom: 4px;
-}
-
-.main .lake .content .map .settings .active-apps .selection .layer-settings .setting .tiff-image {
-    background-color: white;
-    border: 1px solid white;
-    padding: 5px;
-    border-radius: 8px;
-    margin-top: 8px;
-    cursor: pointer;
-}
-
-.main .lake .content .map .settings .active-apps .selection .layer-settings .setting .tiff-image.active {
-    color: #767676;
-    border: 1px solid #767676;
-}
-
-.main .lake .content .map .settings .active-apps .selection .layer-settings .setting .tiff-image:hover {
-    color: #767676;
-}
-
-.main .lake .content .map .settings .active-apps .selection .layer-settings .setting .tiff-image div {
-    display: inline-block;
-    margin: 0 6px;
-}
-
-.main .lake .content .map .settings .active-apps .selection .layer-settings .layer-sub-section {
-    font-size: 15px;
-    padding: 6px 4px 6px 6px;
-    margin: 5px 0px 16px 0px;
-    font-weight: bold;
-}
-
-.main .lake .content .map .settings .active-apps .selection .layer-settings .layer-sub-section .switch {
-    display: inline-block;
-    position: relative;
-    float: right;
-    width: 38px;
-    height: 20px;
-    margin-top: -2px;
-}
-
-.main .lake .content .map .settings .active-apps .selection .layer-settings .switch {
-    display: inline-block;
-    position: relative;
-    float: right;
-    width: 38px;
-    height: 20px;
-}
-
-.main .lake .content .map .settings .active-apps .selection .layer-settings .switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-}
-
-.main .lake .content .map .settings .active-apps .selection .layer-settings .slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #ccc;
-    -webkit-transition: .4s;
-    transition: .4s;
-}
-
-.main .lake .content .map .settings .active-apps .selection .layer-settings .slider:before {
-    position: absolute;
-    content: "";
-    height: 14px;
-    width: 14px;
-    left: 4px;
-    bottom: 3px;
-    background-color: white;
-    -webkit-transition: .4s;
-    transition: .4s;
-}
-
-.main .lake .content .map .settings .active-apps .selection .layer-settings input:checked+.slider {
-    background-color: var(--highlight-color);
-}
-
-.main .lake .content .map .settings .active-apps .selection .layer-settings input:focus+.slider {
-    box-shadow: 0 0 1px var(--highlight-color);
-}
-
-.main .lake .content .map .settings .active-apps .selection .layer-settings input:checked+.slider:before {
-    -webkit-transform: translateX(16px);
-    -ms-transform: translateX(16px);
-    transform: translateX(16px);
-}
-
-.main .lake .content .map .settings .active-apps .selection .layer-settings .slider.round {
-    border-radius: 34px;
-}
-
-.main .lake .content .map .settings .active-apps .selection .layer-settings .slider.round:before {
-    border-radius: 50%;
-}
-
-.main .lake .content .map .settings .active-apps .selection .layer-settings .setting {
-    padding: 0px 0px 18px 0px;
-    display: inline-block;
-    width: 96%;
-    margin: 0 2%;
-}
-
-.main .lake .content .map .settings .active-apps .selection .layer-settings .setting.half {
-    width: 46%;
-    margin: 0 2%;
-    vertical-align: top;
-}
-
-.main .lake .content .map .settings .active-apps .selection .layer-settings .setting.third {
-    width: 29%;
-    margin: 0 2%;
-    vertical-align: top;
-}
-
-.main .lake .content .map .settings .active-apps .selection .layer-settings .setting.twothird {
-    width: 62%;
-    margin: 0 2%;
-    vertical-align: top;
-}
-
-.main .lake .content .map .settings .active-apps .selection .layer-settings .setting .label {
-    padding: 0px 0px 4px 0px;
-    display: inline-block;
-}
-
-.main .lake .content .map .settings .active-apps .selection .layer-settings .setting .value {
-    float: right;
-}
-
-.main .lake .content .map .settings .active-apps .selection .layer-settings input[type=number] {
+.main .lake .content .module.active .display .module-component .plot .graph {
+    height: 40%;
     width: 100%;
-    font-size: 16px;
-    border: none;
-    padding: 4px 10px;
-    box-sizing: border-box;
-    background-color: var(--background-color);
-    color: var(--background-font-color);
-}
-
-.main .lake .content .map .settings .active-apps .selection .layer-settings input[type=number].with-button {
-    width: calc(100% - 70px);
-}
-
-.main .lake .content .map .settings .active-apps .selection .layer-settings input[type=color] {
-    width: 100%;
-    box-sizing: border-box;
-    border: none;
-    padding: 0;
-    height: 26px;
-    background-color: #e3e3e3;
-}
-
-.main .lake .content .map .settings .active-apps .selection .layer-settings input[type=checkbox] {
-    margin-left: 12px;
-}
-
-.main .lake .content .map .settings .active-apps .selection .layer-settings input[type=range] {
-    width: 100%;
-    padding: 2px 0px;
-    box-sizing: border-box;
-}
-
-.main .lake .content .map .settings .active-apps .selection .layer-settings button.remove {
-    display: inline-block;
-    border-radius: 8px;
-    transition: all .2s ease-in-out;
-    border: none;
-    color: #e3e3e3;
-    background-color: #720000;
-    cursor: pointer;
-    padding: 5px 12px;
-    font-size: 14px;
-}
-
-.main .lake .content .map .settings .active-apps .selection .layer-settings button.remove:hover {
-    background-color: red;
-}
-
-.main .lake .content .map .settings .active-apps .selection .layer-settings button.reset {
-    display: inline-block;
-    margin-left: 8px;
-    border-radius: 8px;
-    transition: all .2s ease-in-out;
-    border: none;
-    background-color: #e3e3e3;
-    cursor: pointer;
-    padding: 5px 12px;
-    font-size: 14px;
-}
-
-.main .lake .content .map .settings .active-apps .selection .layer-settings button.reset:hover {
-    background-color: #d1d0d0;
-}
-
-.main .lake .content .map .settings .active-apps .selection .layer-settings button.tiff {
-    display: inline-block;
-    border-radius: 8px;
-    margin-right: 18px;
-    transition: all .2s ease-in-out;
-    border: none;
-    background-color: #e3e3e3;
-    cursor: pointer;
-    padding: 5px 12px;
-    font-size: 14px;
-}
-
-.main .lake .content .map .settings .active-apps .selection .layer-settings button.tiff:hover {
-    background-color: #d1d0d0;
-}
-
-.main .lake .content .map .settings .active-apps .selection .layer-settings select {
-    display: inline-block;
-    font-size: 16px;
-    width: 100%;
-    background-color: var(--background-color);
-    cursor: pointer;
-    padding: 4px 8px;
-    text-align: left;
-    color: var(--background-font-color);
-}
-
-.main .lake .content .map .settings .active-apps .selection .layer-settings .react-datepicker-wrapper input {
-    display: inline-block;
-    font-size: 16px;
-    width: 100%;
-    background-color: var(--background-color);
-    cursor: pointer;
-    padding: 4px 8px;
-    text-align: left;
-    color: var(--background-font-color);
-    border: 1px solid var(--background-font-color);
-    box-sizing: border-box;
-}
-
-.main .lake .content .map .settings .active-apps .selection .layer-settings .react-datepicker {
-    background-color: var(--background-color);
-    border: none;
-}
-
-.main .lake .content .map .settings .active-apps .selection .layer-settings .react-datepicker .react-datepicker__header {
-    background-color: transparent;
-    border: none;
-}
-
-.main .lake .content .map .settings .active-apps .selection .layer-settings .react-datepicker__day {
-    box-shadow: var(--box-shadow);
-    padding: 1px;
-}
-
-.main .lake .content .map .settings .active-apps .selection .layer-settings .react-datepicker__day:hover {
-    box-shadow: none;
-    border: 1px solid var(--border-color);
-    padding: 0;
-}
-
-.main .lake .content .map .settings .active-apps .selection .layer-settings .react-datepicker__day-name,
-.main .lake .content .map .settings .active-apps .selection .layer-settings .react-datepicker__day,
-.main .lake .content .map .settings .active-apps .selection .layer-settings .react-datepicker__time-name {
-    width: 2.25rem;
-    color: unset;
-    border-radius: 0.3rem;
-}
-
-.main .lake .content .map .settings .active-apps .selection .layer-settings .react-datepicker__day--selected {
-    border: 1px solid var(--background-font-color) !important;
-    padding: 0;
-    font-weight: bold;
-}
-
-.main .lake .content .map .settings .active-apps .selection .layer-settings .react-datepicker__current-month {
-    color: unset;
-}
-
-.main .lake .content .map .settings .active-apps .selection .layer-settings .react-datepicker__day--disabled {
-    opacity: 0.2;
-    box-shadow: none;
-}
-
-.main .lake .content .map .view-area .map-container .loading {
-    position: absolute;
-    left: 12px;
-    bottom: 70px;
-    z-index: 99999;
-    background-color: var(--background-color);
-    box-shadow: var(--box-shadow);
-    border-radius: 12px;
-    padding: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    visibility: hidden;
-}
-
-.main .lake .content .map .view-area .map-container .loading .loading-symbol {
-    display: inline-block;
-}
-
-.main .lake .content .map .view-area .map-container .loading .loading-text {
-    display: inline-block;
-    font-size: 12px;
-    max-width: 100px;
-    margin: 0 8px;
-}
-
-.main .lake .content .map .view-area .map-container .loading .loading-symbol .loader {
-    width: 35px;
-    height: 35px;
-    border: 4px solid var(--background-font-color);
-    border-bottom-color: transparent;
-    border-radius: 75%;
-    display: inline-block;
-    box-sizing: border-box;
-    animation: rotation 1.5s linear infinite;
-    margin-top: 0px;
-    margin-bottom: -4px;
-}
-
-@keyframes rotation {
-    0% {
-        transform: rotate(0deg);
-    }
-
-    100% {
-        transform: rotate(360deg);
-    }
-}
-
-.main .lake .content .graph .view-area .graph-area {
-    width: 100%;
-    height: 100%;
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
-}
-
-
-.main .lake .content .graph {
-    display: none;
-}
-
-.main .lake .content .graph.active {
     display: block;
 }
 
-.main .lake .content .details.active {
-    display: block;
-}
-
-.main .lake .content .bottom .selector {
-    font-size: 16px;
-    box-sizing: border-box;
-    width: calc(100% - var(--padding)* 2);
-    position: absolute;
-    text-align: center;
-}
-
-.main .lake .content .selector.mobile {
-    display: none;
-    top: unset;
-    bottom: 0;
-    left: 0;
+.main .lake .content .module .link {
     width: 100%;
-    padding: 12px 24px;
+    padding: 20px;
     box-sizing: border-box;
-    text-align: center;
-    position: fixed;
-    background-color: var(--background-color);
+    position: relative;
 }
 
-.main .lake .content .selector .selectable {
-    cursor: pointer;
-    display: inline-block;
-    margin: 6px;
-    opacity: .6;
-    padding: 4px 20px;
-    width: 100px;
-    max-width: calc(33% - 12px);
-    box-sizing: border-box;
+.main .lake .content .module.active .link {
+    display: none;
 }
 
-.main .lake .content .selector .selectable.active {
-    border-bottom: 2px solid var(--highlight-color);
-    opacity: 1;
+.main .lake .content .module .link .title {
+    font-size: 18px;
 }
 
+.main .lake .content .module .link .subtitle {
+    font-size: 14px;
+}
+
+.main .lake .content .module .link .arrow {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+}
+
+.main .lake .content .module .link .arrow img {
+    height: 24px;
+}
+
+.main.dark .lake .content .module .link .arrow img {
+    -webkit-filter: invert(100%);
+    filter: invert(100%)
+}
+
+@media screen and (max-width: 1200px) {
+    .main .lake .content .module {
+        width: calc(100% - var(--padding) * 2);
+        margin: 0 var(--padding) var(--padding) var(--padding);
+    }
+}
 
 @media screen and (max-width: 800px) {
-    .main .lake .content .top {
-        display: none;
-    }
-
-    .main .lake .content .bottom {
-        padding-top: var(--padding);
-        padding-bottom: 70px;
-    }
-
-    .main .lake .content .view-area {
-        left: 0;
-        top: calc(var(--header-height) + 12px);
-        border-radius: 0;
+    .main .lake .content .metadata {
         width: 100%;
-        height: calc(100% - var(--header-height) - var(--selector-height) - 140px);
-        padding: 0;
-        border: none;
     }
 
-    .main .lake .content .settings .active-apps {
-        left: 0;
-        border: none;
+    .main .lake .content .modules {
         width: 100%;
-        text-align: center;
-        position: fixed;
-        bottom: 55px;
-        top: unset;
-        padding: 0;
-        z-index: 9999999;
-    }
-
-    .main .lake .content .map .view-area .map-container .close-layer {
-        position: fixed;
-        top: calc(var(--header-height) + 18px);
-        bottom: unset;
-        right: var(--padding);
-        border: none;
-        border-radius: 12px 12px 0 0;
-        padding: 1px 11px;
-    }
-
-    .main .lake .content .map .settings .active-apps .selection {
-        position: fixed;
-        left: 0;
-        width: 100%;
-        background-color: var(--background-color);
-        padding: var(--padding);
-        top: calc(var(--header-height) + 12px);
-        height: calc(100% - var(--header-height) - var(--selector-height) - 139px);
-        margin: 0;
-        text-align: left;
-        max-height: unset;
-        overflow-y: scroll;
-    }
-
-    .main .lake .content .selector.desktop {
-        display: none;
-    }
-
-    .main .lake .content .selector.mobile {
-        display: block;
-    }
-
-    .main .lake .content .details {
-        display: none;
-    }
-
-    .main .lake .content .map .view-area .map-container .basemap #map {
-        border-radius: 0;
-        border: none;
-    }
-
-    .main .lake .content .map .view-area .map-container .gradient {
-        border-radius: 0;
-    }
-
-    .main .lake .content .map .settings .add-layers {
-        top: calc(var(--header-height) + 12px);
-        left: 0;
-        width: 100%;
-        height: calc(100% - var(--header-height) - var(--selector-height) - 139px);
-        padding: var(--padding);
-        border-radius: 0;
-        box-shadow: none;
-    }
-
-    .main .lake .content .map .view-area .map-container .plots {
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        padding: var(--padding);
-        border-radius: 0;
-        box-shadow: none;
-    }
-
-    .main .lake .content .map .settings .add-layers .layers .layer {
-        width: calc(100% - 12px);
     }
 }

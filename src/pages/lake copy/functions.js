@@ -1,12 +1,6 @@
 import axios from "axios";
 import CONFIG from "../../config.json";
 
-export const parseSubtitle = (title, names) => {
-  names = Object.values(names);
-  names = [...new Set(names)].filter((n) => n !== title);
-  return names.join(" • ");
-};
-
 const stringToDate = (date) => {
   return new Date(
     `${date.slice(0, 4)}-${date.slice(5, 7)}-${date.slice(8, 10)}T${date.slice(

@@ -12,6 +12,7 @@ class Basemap extends Component {
   state = {
     darkMap: "clqz0bzlt017d01qw5xi9ex6x",
     lightMap: "clg4u62lq009a01oa5z336xn7",
+    id: Math.round(Math.random() * 100000),
   };
   find = (list, parameter, value) => {
     return list.find((l) => l[parameter] === value);
@@ -124,13 +125,13 @@ class Basemap extends Component {
     }
   }
   async componentDidMount() {
-    var { darkMap, lightMap } = this.state;
-    var { dark } = this.props;
+    var { darkMap, lightMap, id } = this.state;
+    var { dark, metadata } = this.props;
     this.dataStore = {};
     this.layerStore = {};
     var center = [46.9, 8.2];
     var zoom = 8;
-    this.map = L.map("map", {
+    this.map = L.map("map" + id, {
       preferCanvas: true,
       center: center,
       zoom: zoom,
@@ -143,7 +144,6 @@ class Basemap extends Component {
       zoomAnimation: true,
     });
     this.map.doubleClickZoom.disable();
-
     var mapCode = dark ? darkMap : lightMap;
     var basemap = L.tileLayer(
       `https://api.mapbox.com/styles/v1/jamesrunnalls/${mapCode}/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiamFtZXNydW5uYWxscyIsImEiOiJjazk0ZG9zd2kwM3M5M2hvYmk3YW0wdW9yIn0.uIJUZoDgaC2LfdGtgMz0cQ`,
@@ -152,17 +152,20 @@ class Basemap extends Component {
         attribution: "&copy; <a href='https://www.mapbox.com/'>mapbox</a>",
       }
     );
-    this.map.addLayer(basemap);
     this.layerStore["basemap"] = basemap;
     this.layerStore["labels"] = L.layerGroup([]).addTo(this.map);
-
     this.layer = L.layerGroup([]).addTo(this.map);
+    var map = this.map;
+    map.whenReady(() => {
+      map.addLayer(basemap);
+    });
   }
 
   render() {
+    const { id } = this.state;
     return (
       <React.Fragment>
-        <div id="map"></div>
+        <div id={"map" + id}></div>
       </React.Fragment>
     );
   }

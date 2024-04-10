@@ -28,13 +28,6 @@ class App extends Component {
     this.setState({ dark: !this.state.dark });
   };
   componentDidMount() {
-    var url = window.location.href;
-    var { languages } = this.state;
-    for (let language of languages) {
-      if (url.includes("?" + language.toLowerCase())) {
-        this.setState({ language });
-      }
-    }
     if (
       JSON.parse(localStorage.getItem("dark")) === null &&
       window.matchMedia
@@ -99,6 +92,7 @@ class App extends Component {
                       {...this.state}
                       setLanguage={this.setLanguage}
                       toggleDark={this.toggleDark}
+                      history={this.props.history}
                     />
                   </ErrorBoundary>
                 }

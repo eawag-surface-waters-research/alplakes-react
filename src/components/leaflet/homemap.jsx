@@ -315,16 +315,19 @@ class HomeMap extends Component {
             <div
               className={parameter === p ? "parameter selected" : "parameter"}
               key={p}
-              title={Translations[parameters[p].label][language]}
               onClick={() => setParameter(p)}
             >
-              <img
-                src={parameters[p].img}
-                alt={Translations[parameters[p].label][language]}
-              />
+              <div className="inner">
+                <img
+                  src={parameters[p].img}
+                  alt={Translations[parameters[p].label][language]}
+                />
+              </div>
+              <div className="label">
+                {Translations[parameters[p].label][language]}
+              </div>
             </div>
           ))}
-          <div className="label">{label}</div>
         </div>
         <div id="map">
           <div className="day-selector">

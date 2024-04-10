@@ -3,13 +3,15 @@ import { NavLink } from "react-router-dom";
 import axios from "axios";
 import NavBar from "../../components/navbar/navbar";
 import Footer from "../../components/footer/footer";
-import Details from "./details";
-import Map from "./map";
-import Graph from "./graph";
-import Selector from "./selector";
-import notification_icon from "../../img/notification.png";
 import CONFIG from "../../config.json";
+import Satellite from "./satellite";
+import Graph from "./graph";
+import ThreeD from "./threed";
+import { parseSubtitle } from "./functions";
+import DATA from "./data.json";
+import arrow from "../../img/arrow.png";
 import "./lake.css";
+import Metadata from "./metadata";
 
 class NotFound extends Component {
   render() {
@@ -26,26 +28,82 @@ class NotFound extends Component {
   }
 }
 
+class Module extends Component {
+  render() {
+    var { id, module, active, setActiveModule, closeActiveModule } = this.props;
+    return (
+      <div
+        className={active ? "module active" : "module"}
+        onClick={() => {
+          setActiveModule(module.id, active);
+        }}
+      >
+        <div className="close" onClick={closeActiveModule}>
+          &times;
+        </div>
+        <div className="display">
+          {module.component === "threed" && <ThreeD {...this.props} />}
+          {module.component === "satellite" && <Satellite {...this.props} />}
+          {module.component === "graph" && <Graph {...this.props} />}
+        </div>
+        <div className="link">
+          <div className="title">{module.title}</div>
+          <div className="subtitle">{module.subtitle}</div>
+          <div className="arrow">
+            <img src={arrow} alt="Arrow" />
+          </div>
+        </div>
+      </div>
+    );
+  }
+}
+
 class Lake extends Component {
   state = {
     id: "",
     metadata: {},
+    modules: [],
+    layers: [],
     error: false,
-    active: "map",
-    views: ["graph", "map"],
+    active_module: false,
+    module: "all",
   };
-  setActive = (active) => {
-    this.setState({ active });
+
+  setActiveModule = (active_module, active) => {
+    if (active === false) {
+      console.log(this.props.history);
+      this.setState({ active_module }, () => {
+        window.dispatchEvent(new Event("resize"));
+      });
+    }
+  };
+  closeActiveModule = () => {
+    this.setState({ active_module: false }, () => {
+      window.dispatchEvent(new Event("resize"));
+    });
   };
   async componentDidMount() {
-    const url = window.location.href.split("/");
-    const id = url[url.length - 1].split("?")[0].replace(/[^a-zA-Z ]/g, "");
+    var { active_module } = this.state;
+    const url = new URL(window.location.href);
+    const id = url.pathname.replace(/[^a-zA-Z ]/g, "");
+    const searchParams = {};
+    url.searchParams.forEach((value, key) => {
+      searchParams[key] = value;
+    });
+    if ("module" in searchParams) {
+      active_module = searchParams["module"];
+    }
     try {
-      const { data: metadata } = await axios.get(
+      /*const { data } = await axios.get(
         CONFIG.alplakes_bucket + `/static/website/metadata/v2/${id}.json`
-      );
+      );*/
+      const data = DATA;
+      const { metadata, modules, layers } = data;
       this.setState({
+        active_module,
         metadata,
+        modules,
+        layers,
         id,
       });
     } catch (e) {
@@ -55,12 +113,14 @@ class Lake extends Component {
   }
 
   render() {
-    var { metadata, active, views, error, id } = this.state;
-    var { language, dark } = this.props;
+    var { metadata, modules, error, id, active_module, layers } = this.state;
+    var { language } = this.props;
     var title = "";
+    var subtitle = "";
     if ("name" in metadata) {
       document.title = metadata.name[language] + " | Alplakes";
       title = metadata.name[language];
+      subtitle = parseSubtitle(title, metadata.name);
     }
     return (
       <div className="lake">
@@ -69,34 +129,31 @@ class Lake extends Component {
           <NotFound id={id} />
         ) : (
           <div className="content">
-            <div className="top">
-              <div className="title">{title}</div>
-              <div className="notification">
-                <img src={notification_icon} alt="notification" />
-              </div>
-            </div>
-            <div className="bottom">
-              <Selector
-                active={active}
-                setActive={this.setActive}
-                views={views}
+            <div className="metadata">
+              <Metadata
+                title={title}
+                subtitle={subtitle}
+                metadata={metadata}
                 language={language}
               />
-              <div className={`map ${active === "map" ? "active" : ""}`}>
-                <Map metadata={metadata} language={language} dark={dark} />
-              </div>
-              <div className={`graph ${active === "graph" ? "active" : ""}`}>
-                <Graph metadata={metadata} language={language} dark={dark} />
-              </div>
-              <div
-                className={`details ${active === "details" ? "active" : ""}`}
-              >
-                <Details metadata={metadata} language={language} />
-              </div>
+            </div>
+            <div className="modules">
+              {modules.map((m) => (
+                <Module
+                  key={m.id}
+                  module={m}
+                  metadata={metadata}
+                  layers={layers}
+                  active={active_module === m.id}
+                  setActiveModule={this.setActiveModule}
+                  closeActiveModule={this.closeActiveModule}
+                  {...this.props}
+                />
+              ))}
             </div>
           </div>
         )}
-        <Footer {...this.props} medium={true} />
+        <Footer {...this.props} />
       </div>
     );
   }
