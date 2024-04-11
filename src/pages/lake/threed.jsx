@@ -478,6 +478,7 @@ class ThreeD extends Component {
     return (
       <div className="module-component">
         <div className="sidebar"></div>
+        <div className="header">5 day forecast</div>
         <div className="plot">
           <div className={fullscreen ? "map fullscreen" : "map"}>
             <Basemap

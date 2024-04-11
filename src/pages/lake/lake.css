@@ -15,21 +15,21 @@
 
 .main .lake .content .metadata .subtitle {
     font-size: 14px;
+    margin-bottom: 50px;
 }
 
 
 .main .lake .content .metadata .properties {
     width: 100%;
     box-sizing: border-box;
-    padding: 12px 0;
 }
 
 .main .lake .content .metadata .properties .property {
-    width: 33%;
     display: inline-block;
     margin-bottom: 10px;
     text-align: center;
     margin-top: calc(var(--padding) / 2);
+    margin-right: 30px;
 }
 
 .main .lake .content .metadata .properties .property .left img {
@@ -59,48 +59,69 @@
     font-size: 10px;
 }
 
-.main .lake .content .metadata .insitu .datasets a {
+.main .lake .content .metadata .objects .datasets a {
     text-decoration: none;
     color: var(--background-text-color);
 }
 
-.main .lake .content .metadata .insitu .datasets .dataset {
+.main .lake .content .metadata .objects .datasets .dataset {
     margin-top: calc(var(--padding) / 2);
     padding-left: 8px;
     border-left: 2px solid var(--highlight-color);
+    position: relative;
 }
 
-.main .lake .content .metadata .insitu .datasets .dataset .name {
+.main .lake .content .metadata .objects .datasets .dataset .dataset-button {
+    position: absolute;
+    right: 0;
+    top: 0;
+    background-color: var(--background-color);
+    border: 1px solid var(--border-color);
+    color: var(--background-suble-font-color);
+    border-radius: 8px;
+    padding: 2px 6px;
+    transition: all .33s ease;
+}
+
+.main .lake .content .metadata .objects .datasets .dataset:hover .dataset-button {
+    background-color: var(--highlight-color);
+    border-color: var(--highlight-color);
+    color: white;
+}
+
+.main .lake .content .metadata .objects .datasets .dataset .name {
     font-size: 16px;
+    padding-bottom: 6px;
 }
 
-.main .lake .content .metadata .insitu .datasets .dataset .date {
+.main .lake .content .metadata .objects .datasets .dataset .date {
     font-size: 12px;
 }
 
-.main .lake .content .metadata .insitu .datasets .dataset .parameters {
+.main .lake .content .metadata .objects .datasets .dataset .parameters {
     font-size: 14px;
     padding-top: 2px;
+    color: var(--background-suble-font-color);
 }
 
-.main .lake .content .metadata .insitu .datalakes {
+.main .lake .content .metadata .objects .datalakes {
     text-align: center;
     padding: 8px 0;
     font-size: 14px;
 }
 
-.main .lake .content .metadata .insitu .datalakes img {
+.main .lake .content .metadata .objects .datalakes img {
     height: 14px;
     padding-left: 8px;
 }
 
-.main.dark .lake .content .metadata .insitu .datalakes img {
+.main.dark .lake .content .metadata .objects .datalakes img {
     -webkit-filter: invert(100%);
     filter: invert(100%);
 }
 
 .main .lake .content .metadata .dropdown {
-    padding: 0 0 var(--padding) 0;
+    padding: 0 0 40px 0;
 }
 
 .main .lake .content .metadata .dropdown .header {
@@ -156,8 +177,47 @@
 
 .main .lake .content .metadata .dropdown .contents {
     font-size: 12px;
-    padding-top: 8px;
+    padding-top: 12px;
 }
+
+.main .lake .content .metadata .feedback .input-box {
+    width: 100%;
+    height: 100px;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 8px;
+    margin-top: 8px;
+    background-color: var(--background-color);
+    color: var(--background-font-color);
+}
+
+.main .lake .content .metadata .feedback .email {
+    width: 100%;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 8px;
+    margin-top: 8px;
+    background-color: var(--background-color);
+    color: var(--background-font-color);
+}
+
+.main .lake .content .metadata .feedback .submit {
+    background-color: var(--highlight-color);
+    padding: 6px 12px;
+    color: white;
+    width: fit-content;
+    margin-top: 8px;
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+.main .lake .content .metadata .bathymetry {
+    border: 1px solid var(--border-color);
+    padding: 6px 12px;
+    margin-bottom: 12px;
+    border-radius: 12px;
+}
+
 
 .main .lake .content .modules {
     position: relative;
@@ -187,7 +247,7 @@
     height: 100%;
     left: 0;
     top: var(--header-height);
-    z-index: 999;
+    z-index: 9999;
     margin: 0;
     border: none;
     border-radius: 0;
@@ -246,6 +306,20 @@
     border-radius: 0;
 }
 
+.main .lake .content .module .display .module-component .header {
+    position: absolute;
+    z-index: 9991;
+    right: 16px;
+    top: 12px;
+    font-size: 18px;
+    color: var(--background-suble-font-color);
+    display: block;
+}
+
+.main .lake .content .module.active .display .module-component .header {
+    display: none;
+}
+
 .main .lake .content .module .display .module-component .sidebar {
     display: none;
     height: 100%;
@@ -281,7 +355,7 @@
 }
 
 .main .lake .content .module.active .display .module-component .plot .map {
-    height: 60%;
+    height: 70%;
     width: 100%;
     border: 1px solid var(--border-color);
     border-radius: 22px;
@@ -295,6 +369,14 @@
     height: calc(100% - var(--header-height));
     border: none;
     border-radius: 0;
+}
+
+.main .lake .content .module .display .module-component .plot .map .tooltip-hover {
+    display: none;
+}
+
+.main .lake .content .module.active .display .module-component .plot .map .tooltip-hover {
+    display: block;
 }
 
 .main .lake .content .module .display .module-component .plot .map .temperature-label {
@@ -550,7 +632,7 @@
 }
 
 .main .lake .content .module .display .module-component .plot .graph {
-    height: 40%;
+    height: 30%;
     width: 100%;
     display: none;
 }
@@ -584,6 +666,10 @@
     position: absolute;
     right: 20px;
     top: 20px;
+}
+
+.main .lake .content .module:hover .link .arrow {
+    transform: scale(1.2);
 }
 
 .main .lake .content .module .link .arrow img {

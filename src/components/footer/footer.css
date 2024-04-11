@@ -3,7 +3,7 @@
     box-sizing: border-box;
     position: relative;
     background-color: var(--background-color);
-    z-index: 99999;
+    z-index: 1;
     margin-top: var(--padding);
     padding: calc(var(--padding) / 2) var(--padding);
 }

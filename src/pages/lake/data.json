@@ -35,13 +35,13 @@
       {
         "type": "1D",
         "url": "https://www.datalakes-eawag.ch/lakemorphology?lakegeneva_1",
-        "source": "Eawag, Department of Surface Waters (based on Swisstopo Vector25)",
+        "source": "Swisstopo Vector25",
         "format": "JSON"
       },
       {
         "type": "3D",
         "url": "https://www.swisstopo.admin.ch/en/height-model-swissbathy3d#swissBATHY3D---Download",
-        "source": "swissBATHY3D, Swisstopo",
+        "source": "Swisstopo swissBATHY3D",
         "format": "XYZ"
       }
     ],
@@ -52,7 +52,7 @@
         "live": true,
         "parameters": ["Water Temperature", "Oxygen", "Chlorophyll"],
         "start": 2020,
-        "end": 2024
+        "end": "Now"
       },
       {
         "url": "https://www.datalakes-eawag.ch/datadetail/885",
@@ -60,7 +60,7 @@
         "live": true,
         "parameters": ["Wave Height", "Wave Period", "Wave Direction"],
         "start": 2022,
-        "end": 2024
+        "end": "Now"
       },
       {
         "url": "https://www.datalakes-eawag.ch/datadetail/597",
@@ -68,7 +68,7 @@
         "live": true,
         "parameters": ["Water Temperature", "Air Temperature"],
         "start": 2016,
-        "end": 2024
+        "end": "Now"
       },
       {
         "url": "https://www.datalakes-eawag.ch/datadetail/886",
@@ -76,7 +76,41 @@
         "live": true,
         "parameters": ["Heat Flux"],
         "start": 2020,
-        "end": 2024
+        "end": "Now"
+      }
+    ],
+    "available": [
+      {
+        "url": "https://medium.com/@runnalls.james/operational-3d-lake-modeling-with-delft3d-2f164859e753",
+        "name": "Delft3D Model",
+        "live": true,
+        "parameters": ["Water Temperature", "Current", "Thermocline"],
+        "start": 2019,
+        "end": "5 day forecast"
+      },
+      {
+        "url": "https://medium.com/@runnalls.james/operational-1d-lake-modeling-with-simstrat-dc34964bfe08",
+        "name": "Simstrat 1D Model",
+        "live": true,
+        "parameters": ["Water Temperature", "Oyxgen", "Ice Cover"],
+        "start": 1981,
+        "end": "5 day forecast"
+      },
+      {
+        "url": "https://medium.com/@runnalls.james/water-quality-products-from-remote-sensing-data-using-sencast-e48449bd6aa8",
+        "name": "Sentinel 3 Satellite Products",
+        "live": true,
+        "parameters": ["Chlorophyll A", "Secchi Depth", "Turbidity"],
+        "start": 2016,
+        "end": "Now"
+      },
+      {
+        "url": "https://medium.com/@runnalls.james/water-quality-products-from-remote-sensing-data-using-sencast-e48449bd6aa8",
+        "name": "Sentinel 2 Satellite Products",
+        "live": true,
+        "parameters": ["Secchi Depth", "Turbidity"],
+        "start": 2016,
+        "end": "Now"
       }
     ]
   },
@@ -105,25 +139,29 @@
       "id": "satellite_chla",
       "title": "Chlorophyll A",
       "subtitle": "Remote Sensing Product",
-      "component": "satellite"
+      "component": "satellite",
+      "defaults": ["sentinel3_chlorophyll"]
     },
     {
       "id": "satellite_secchi",
       "title": "Secchi Depth",
       "subtitle": "Remote Sensing Product",
-      "component": "satellite"
+      "component": "satellite",
+      "defaults": ["sentinel3_secchi"]
     },
     {
       "id": "satellite_turbidity",
       "title": "Turbidity",
       "subtitle": "Remote Sensing Product",
-      "component": "satellite"
+      "component": "satellite",
+      "defaults": ["sentinel3_turbidity"]
     },
     {
       "id": "graph_historic",
       "title": "Historic Trends",
       "subtitle": "Models and insitu data",
-      "component": "graph"
+      "component": "graph",
+      "defaults": []
     }
   ],
   "layers": [
@@ -262,7 +300,7 @@
       }
     },
     {
-      "id": 3,
+      "id": "sentinel3_chlorophyll",
       "type": "sencast_tiff",
       "active": false,
       "description": "Surface chlorophyll concentration processed from Sentinel 3 data using the @1@ python package. Retrievals are based on a locally adjusted version of @2@.",
@@ -291,7 +329,7 @@
       }
     },
     {
-      "id": 4,
+      "id": "sentinel3_turbidity",
       "type": "sencast_tiff",
       "active": false,
       "description": "Surface total suspended matter processed from Sentinel 3 data using the @1@ python package. See @2@ by HYGEOS.",
@@ -320,7 +358,7 @@
       }
     },
     {
-      "id": 5,
+      "id": "sentinel3_secchi",
       "type": "sencast_tiff",
       "active": false,
       "description": "Secchi depth processed from Sentinel 3 data using the @1@ python package. See the QAA algorithm by Lee et al. for details.",
