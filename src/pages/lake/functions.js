@@ -16,6 +16,88 @@ const stringToDate = (date) => {
   );
 };
 
+const satelliteStringToDate = (date) => {
+  return new Date(
+    `${date.slice(0, 4)}-${date.slice(4, 6)}-${date.slice(6, 8)}T${date.slice(
+      9,
+      11
+    )}:${date.slice(11, 13)}:00.000+00:00`
+  );
+};
+
+export const processSatelliteFiles = (files, available, max_pixels, layer_id, unit, satellite) => {
+  for (let file of files) {
+    let time = satelliteStringToDate(file.dt);
+    let date = formatDate(time);
+    let url = CONFIG.sencast_bucket + "/" + file.k;
+    let split = file.k.split("_");
+    let tile = split[split.length - 1].split(".")[0];
+    let satellite = split[0].split("/")[2];
+    let percent = Math.ceil((parseFloat(file.vp) / max_pixels) * 100);
+    let { min, max, mean: ave } = file;
+    let image = {
+      url,
+      time,
+      tile,
+      satellite,
+      percent,
+      ave,
+      min,
+      max,
+      layer_id,
+      unit,
+      satellite
+    };
+    if (date in available) {
+      available[date].images.push(image);
+      available[date].max_percent = Math.max(
+        available[date].max_percent,
+        percent
+      );
+      available[date].max = Math.max(available[date].max, max);
+      let total_percent = available[date].images
+        .map((i) => i.percent)
+        .reduce((acc, currentValue) => acc + currentValue, 0);
+      available[date].ave = weightedAverage(
+        available[date].images.map((i) => i.ave),
+        available[date].images.map((i) => i.percent / total_percent)
+      );
+    } else {
+      available[date] = {
+        images: [image],
+        max_percent: percent,
+        ave,
+        min,
+        max,
+        time,
+      };
+    }
+  }
+  return available;
+};
+
+export const compareDates = (date1, date2) => {
+  return date1 - date2;
+};
+
+const weightedAverage = (values, weights) => {
+  if (
+    values.length !== weights.length ||
+    values.length === 0 ||
+    weights.length === 0
+  ) {
+    throw new Error(
+      "Values and weights arrays must have the same length and cannot be empty."
+    );
+  }
+  const sumOfProducts = values.reduce(
+    (acc, value, index) => acc + value * weights[index],
+    0
+  );
+  const sumOfWeights = weights.reduce((acc, weight) => acc + weight, 0);
+  return sumOfProducts / sumOfWeights;
+};
+
 export const parseAPITime = (date) => {
   return new Date(
     `${date.slice(0, 4)}-${date.slice(4, 6)}-${date.slice(6, 8)}T${date.slice(
@@ -72,6 +154,18 @@ export const formatTime = (datetime) => {
   return `${hour < 10 ? "0" + hour : hour}:${
     minute < 10 ? "0" + minute : minute
   }`;
+};
+
+export const formatDateTime = (datetime, months) => {
+  var a = new Date(datetime);
+  var hour = a.getHours();
+  var minute = a.getMinutes();
+  var year = a.getFullYear();
+  var month = months[a.getMonth()];
+  var date = a.getDate();
+  return `${hour < 10 ? "0" + hour : hour}:${
+    minute < 10 ? "0" + minute : minute
+  } ${date} ${month} ${String(year).slice(-2)}`;
 };
 
 export const closestIndex = (num, arr) => {

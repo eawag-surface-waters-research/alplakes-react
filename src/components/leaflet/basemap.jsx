@@ -38,6 +38,12 @@ class Basemap extends Component {
           this.layer.clearLayers();
         } else if (update.event === "bounds") {
           await flyToBounds(metadata.bounds, this.map);
+        } else if (update.event === "initialLoad") {
+          var element = document.getElementById(update.id);
+          if (element) {
+            element.style.opacity = 0;
+          }
+          this.layerStore["basemap"].addTo(this.map)
         } else if (update.event === "addLayer") {
           try {
             await addLayer(
@@ -155,17 +161,13 @@ class Basemap extends Component {
     this.layerStore["basemap"] = basemap;
     this.layerStore["labels"] = L.layerGroup([]).addTo(this.map);
     this.layer = L.layerGroup([]).addTo(this.map);
-    var map = this.map;
-    map.whenReady(() => {
-      map.addLayer(basemap);
-    });
   }
 
   render() {
     const { id } = this.state;
     return (
       <React.Fragment>
-        <div id={"map" + id}></div>
+        <div id={"map" + id} className="leaflet-map"></div>
       </React.Fragment>
     );
   }

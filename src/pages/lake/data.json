@@ -129,32 +129,32 @@
       "component": "graph"
     },
     {
-      "id": "threed_thermocline",
-      "title": "Thermocline",
-      "subtitle": "3D Model",
-      "component": "threed",
-      "defaults": ["delft3d_thermocline"]
-    },
-    {
       "id": "satellite_chla",
       "title": "Chlorophyll A",
       "subtitle": "Remote Sensing Product",
       "component": "satellite",
-      "defaults": ["sentinel3_chlorophyll"]
+      "default": "chlorophyll"
     },
     {
       "id": "satellite_secchi",
       "title": "Secchi Depth",
       "subtitle": "Remote Sensing Product",
       "component": "satellite",
-      "defaults": ["sentinel3_secchi"]
+      "default": "secchi"
     },
     {
       "id": "satellite_turbidity",
       "title": "Turbidity",
       "subtitle": "Remote Sensing Product",
       "component": "satellite",
-      "defaults": ["sentinel3_turbidity"]
+      "default": "turbidity"
+    },
+    {
+      "id": "threed_thermocline",
+      "title": "Thermocline",
+      "subtitle": "3D Model",
+      "component": "threed",
+      "defaults": ["delft3d_thermocline"]
     },
     {
       "id": "graph_historic",
@@ -301,6 +301,7 @@
     },
     {
       "id": "sentinel3_chlorophyll",
+      "parameter": "chlorophyll",
       "type": "sencast_tiff",
       "active": false,
       "description": "Surface chlorophyll concentration processed from Sentinel 3 data using the @1@ python package. Retrievals are based on a locally adjusted version of @2@.",
@@ -316,6 +317,7 @@
         "lake": "geneva",
         "parameter": "chla",
         "metadata": "https://eawagrs.s3.eu-central-1.amazonaws.com/metadata/sentinel3/geneva_chla.json",
+        "wms": "https://creodias.sentinel-hub.com/ogc/wms/fea4245d-9a3b-4337-8cc2-9bbdbd22ff1a",
         "unit": "mg m-3",
         "display": "tiff",
         "depth": false,
@@ -331,6 +333,7 @@
     {
       "id": "sentinel3_turbidity",
       "type": "sencast_tiff",
+      "parameter": "turbidity",
       "active": false,
       "description": "Surface total suspended matter processed from Sentinel 3 data using the @1@ python package. See @2@ by HYGEOS.",
       "links": {
@@ -345,6 +348,7 @@
         "lake": "geneva",
         "parameter": "tsm",
         "metadata": "https://eawagrs.s3.eu-central-1.amazonaws.com/metadata/sentinel3/geneva_tsm_binding754.json",
+        "wms": "https://creodias.sentinel-hub.com/ogc/wms/fea4245d-9a3b-4337-8cc2-9bbdbd22ff1a",
         "unit": "g m-3",
         "display": "tiff",
         "depth": false,
@@ -360,6 +364,7 @@
     {
       "id": "sentinel3_secchi",
       "type": "sencast_tiff",
+      "parameter": "secchi",
       "active": false,
       "description": "Secchi depth processed from Sentinel 3 data using the @1@ python package. See the QAA algorithm by Lee et al. for details.",
       "links": {
@@ -373,6 +378,7 @@
         "lake": "geneva",
         "parameter": "secchi",
         "metadata": "https://eawagrs.s3.eu-central-1.amazonaws.com/metadata/sentinel3/geneva_Zsd_lee.json",
+        "wms": "https://creodias.sentinel-hub.com/ogc/wms/fea4245d-9a3b-4337-8cc2-9bbdbd22ff1a",
         "unit": "m",
         "display": "tiff",
         "depth": false,
@@ -386,8 +392,9 @@
       }
     },
     {
-      "id": 6,
+      "id": "sentinel2_secchi",
       "type": "sencast_tiff",
+      "parameter": "secchi",
       "active": false,
       "description": "Secchi depth processed from Sentinel 2 data using the @1@ python package. See @2@ by HYGEOS.",
       "links": {
@@ -402,6 +409,7 @@
         "lake": "geneva",
         "parameter": "secchi",
         "metadata": "https://eawagrs.s3.eu-central-1.amazonaws.com/metadata/sentinel2/geneva_Z490.json",
+        "wms": "https://services.sentinel-hub.com/ogc/wms/a595b5c3-8963-4076-98ad-5cbe7e9d7999",
         "unit": "m",
         "display": "tiff",
         "depth": false,
@@ -415,8 +423,9 @@
       }
     },
     {
-      "id": 7,
+      "id": "sentinel2_turbidity",
       "type": "sencast_tiff",
+      "parameter": "turbidity",
       "active": false,
       "description": "Surface total suspended matter processed from Sentinel 2 data using the @1@ python package. See @2@ by HYGEOS.",
       "links": {
@@ -431,6 +440,7 @@
         "lake": "geneva",
         "parameter": "turbidity",
         "metadata": "https://eawagrs.s3.eu-central-1.amazonaws.com/metadata/sentinel2/geneva_tsm_dogliotti665.json",
+        "wms": "https://services.sentinel-hub.com/ogc/wms/a595b5c3-8963-4076-98ad-5cbe7e9d7999",
         "unit": "g m-3",
         "display": "tiff",
         "depth": false,
@@ -440,58 +450,6 @@
           "zIndex": 2,
           "opacity": 1,
           "convolve": 2
-        }
-      }
-    },
-    {
-      "id": 8,
-      "type": "sentinel_hub_wms",
-      "active": false,
-      "description": "RGB real color Sentinel 2 images provided by @1@.",
-      "links": {
-        "1": ["Sentinel-Hub", "https://www.sentinel-hub.com/"]
-      },
-      "properties": {
-        "model": "Sentinel2",
-        "lake": "geneva",
-        "parameter": "realcolor",
-        "metadata": "https://eawagrs.s3.eu-central-1.amazonaws.com/metadata/sentinel2/geneva_Z490.json",
-        "wms": "https://services.sentinel-hub.com/ogc/wms/a595b5c3-8963-4076-98ad-5cbe7e9d7999",
-        "unit": "",
-        "display": "wms",
-        "depth": false,
-        "period": false,
-        "options": {
-          "layer": "TRUE_COLOR",
-          "gain": 1,
-          "gamma": 1,
-          "zIndex": 0
-        }
-      }
-    },
-    {
-      "id": 9,
-      "type": "sentinel_hub_wms",
-      "active": false,
-      "description": "RGB real color Sentinel 3 images provided by @1@.",
-      "links": {
-        "1": ["Sentinel-Hub", "https://www.sentinel-hub.com/"]
-      },
-      "properties": {
-        "model": "Sentinel3",
-        "lake": "geneva",
-        "parameter": "realcolor",
-        "metadata": "https://eawagrs.s3.eu-central-1.amazonaws.com/metadata/sentinel3/geneva_tsm_binding754.json",
-        "wms": "https://creodias.sentinel-hub.com/ogc/wms/fea4245d-9a3b-4337-8cc2-9bbdbd22ff1a",
-        "unit": "",
-        "display": "wms",
-        "depth": false,
-        "period": false,
-        "options": {
-          "layer": "TRUE-COLOR",
-          "gain": 1,
-          "gamma": 1,
-          "zIndex": 0
         }
       }
     }

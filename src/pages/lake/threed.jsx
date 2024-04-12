@@ -18,6 +18,7 @@ import {
   getProfileAlplakesHydrodynamic,
 } from "./functions";
 import "./lake.css";
+import Loading from "../../components/loading/loading";
 
 class Legend extends Component {
   render() {
@@ -210,6 +211,7 @@ class PlayerControls extends Component {
 
 class ThreeD extends Component {
   state = {
+    id: Math.round(Math.random() * 100000),
     settings: false,
     legend: false,
     basemap: "default",
@@ -432,11 +434,12 @@ class ThreeD extends Component {
   };
   async componentDidMount() {
     var { metadata, layers, module } = this.props;
-    var { period, minDate, maxDate, missingDates } = this.state;
+    var { period, minDate, maxDate, missingDates, id } = this.state;
     var updates = [{ event: "bounds" }];
     for (var layer of module.defaults) {
       updates.push({ event: "addLayer", id: layer });
     }
+    updates.push({ event: "initialLoad", id: id });
     var depth = metadata.default_depth;
     var depths = [depth];
     try {
@@ -474,13 +477,16 @@ class ThreeD extends Component {
   }
   render() {
     var { dark, metadata, language } = this.props;
-    var { fullscreen } = this.state;
+    var { fullscreen, id } = this.state;
     return (
       <div className="module-component">
         <div className="sidebar"></div>
         <div className="header">5 day forecast</div>
         <div className="plot">
           <div className={fullscreen ? "map fullscreen" : "map"}>
+            <div className="initial-load" id={id}>
+              <Loading />
+            </div>
             <Basemap
               {...this.state}
               dark={dark}

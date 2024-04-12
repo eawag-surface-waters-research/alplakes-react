@@ -29,7 +29,7 @@
     margin-bottom: 10px;
     text-align: center;
     margin-top: calc(var(--padding) / 2);
-    margin-right: 30px;
+    margin-right: 50px;
 }
 
 .main .lake .content .metadata .properties .property .left img {
@@ -181,7 +181,7 @@
 }
 
 .main .lake .content .metadata .feedback .input-box {
-    width: 100%;
+    width: calc(100% - var(--padding));
     height: 100px;
     border: 1px solid var(--border-color);
     border-radius: 12px;
@@ -189,10 +189,11 @@
     margin-top: 8px;
     background-color: var(--background-color);
     color: var(--background-font-color);
+    font-family: "Frutiger Neue LT Pro", "Arial", sans-serif;
 }
 
 .main .lake .content .metadata .feedback .email {
-    width: 100%;
+    width: calc(100% - var(--padding));
     border: 1px solid var(--border-color);
     border-radius: 12px;
     padding: 8px;
@@ -206,9 +207,14 @@
     padding: 6px 12px;
     color: white;
     width: fit-content;
-    margin-top: 8px;
+    margin-top: 12px;
     border-radius: 12px;
     cursor: pointer;
+    transition: all .33s ease;
+}
+
+.main .lake .content .metadata .feedback .submit:hover {
+    transform: scale(1.05);
 }
 
 .main .lake .content .metadata .bathymetry {
@@ -230,14 +236,18 @@
 .main .lake .content .module {
     position: relative;
     display: inline-block;
-    width: calc(50% - var(--padding));
+    width: calc(50% - var(--padding) * 2);
     vertical-align: top;
     border-radius: 22px;
     border: 1px solid var(--border-color);
     box-sizing: border-box;
-    margin-left: var(--padding);
+    margin-left: calc(var(--padding) * 2);
     margin-bottom: var(--padding);
     cursor: pointer;
+}
+
+.main .lake .content .module:hover {
+    border-color: var(--highlight-color);
 }
 
 .main .lake .content .module.active {
@@ -283,7 +293,7 @@
     height: 300px;
     width: 100%;
     border-radius: 22px 22px 0 0;
-    background-color: var(--border-color);
+    background-color: var(--map-color);
     pointer-events: none;
 }
 
@@ -310,7 +320,7 @@
     position: absolute;
     z-index: 9991;
     right: 16px;
-    top: 12px;
+    top: 18px;
     font-size: 18px;
     color: var(--background-suble-font-color);
     display: block;
@@ -352,6 +362,39 @@
     width: 100%;
     position: relative;
     overflow: hidden;
+}
+
+.main .lake .content .module .display .module-component .plot .map .leaflet-map {
+    background-color: var(--map-color);
+}
+
+.main .lake .content .module .display .module-component .plot .map .initial-load {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    z-index: 9999;
+    transition: opacity 1s ease;
+    opacity: 0.7;
+}
+
+.main .lake .content .module.active .display .module-component .plot .map .initial-load {
+    display: none;
+}
+
+.main .lake .content .module .display .module-component .plot .average-value {
+    position: absolute;
+    left: 18px;
+    top: 14px;
+    z-index: 9999;
+    font-size: 22px;
+    display: block;
+}
+
+.main .lake .content .module.active .display .module-component .plot .average-value {
+    display: none;
 }
 
 .main .lake .content .module.active .display .module-component .plot .map {
@@ -666,10 +709,6 @@
     position: absolute;
     right: 20px;
     top: 20px;
-}
-
-.main .lake .content .module:hover .link .arrow {
-    transform: scale(1.2);
 }
 
 .main .lake .content .module .link .arrow img {

@@ -844,49 +844,7 @@ const removeAlplakesHydrodynamic = (layer, layerStore, map) => {
 };
 
 const addSencastTiff = async (layer, dataStore, layerStore, datetime, map) => {
-  var path = [
-    layer.type,
-    layer.properties.model,
-    layer.properties.lake,
-    layer.properties.parameter,
-  ];
-  var metadata;
-  var image;
-  if (!checkNested(dataStore, path)) {
-    loading("Downloading file list");
-    ({ data: metadata } = await axios.get(layer.properties.metadata));
-    var max_pixels = d3.max(metadata.map((m) => parseFloat(m.p)));
-    metadata = metadata.map((m) => {
-      m.unix = parseDate(m.dt).getTime();
-      m.date = m.dt.slice(0, 8);
-      m.url = CONFIG.sencast_bucket + "/" + m.k;
-      m.time = parseDate(m.dt);
-      let split = m.k.split("_");
-      m.tile = split[split.length - 1].split(".")[0];
-      m.satellite = split[0].split("/")[2];
-      m.percent = Math.ceil((parseFloat(m.vp) / max_pixels) * 100);
-      m.ave = Math.round(parseFloat(m.mean) * 100) / 100;
-      return m;
-    });
-    setNested(dataStore, path, metadata);
-    image = findClosest(metadata, "unix", datetime);
-    layer.properties.options.image = image;
-    layer.properties.options.images = metadata;
-    var dates = keepDuplicatesWithHighestValue(metadata, "date", "percent");
-    layer.properties.options.includeDates = dates.map((m) => m.time);
-    layer.properties.options.percentage = dates.map((m) => m.percent);
-    layer.properties.options.validpixelexpression = true;
-
-    layer.properties.options.min = round(image.min, 2);
-    layer.properties.options.max = round(image.max, 2);
-    layer.properties.options.dataMin = round(image.min, 2);
-    layer.properties.options.dataMax = round(image.max, 2);
-  } else {
-    metadata = getNested(dataStore, path);
-    image = findClosest(metadata, "unix", layer.properties.options.date);
-  }
-
-  await plotSencastTiff(image.url, layer, layerStore, map);
+  await plotSencastTiff(layer.properties.url, layer, layerStore, map);
 };
 
 const plotSencastTiff = async (url, layer, layerStore, map) => {
@@ -917,7 +875,7 @@ const plotSencastTiff = async (url, layer, layerStore, map) => {
   });
 
   loading("Processing satellite image");
-  var leaflet_layer = L.floatgeotiff(data, options).addTo(map);
+  var leaflet_layer = await L.floatgeotiff(data, options).addTo(map);
   setNested(layerStore, path, leaflet_layer);
 };
 
