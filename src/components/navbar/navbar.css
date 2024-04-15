@@ -8,6 +8,12 @@
   height: calc(var(--padding) * 2 + 30px);
 }
 
+.navbar.relative {
+  position: relative;
+  z-index: 1;
+  background-color: transparent;
+}
+
 .navbar .home-nav {
   position: absolute;
   left: 0;
@@ -216,6 +222,11 @@
 }
 
 @media screen and (max-width: 800px) {
+  .navbar.relative {
+    position: fixed;
+    background-color: var(--background-color);
+  }
+
   .navbar .mobile-nav {
     display: block;
   }

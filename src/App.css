@@ -20,21 +20,25 @@
   --box-inner-color: rgb(227, 227, 227);
   --border-color: #ddd;
   --box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  --box-shadow-hover: rgba(0, 0, 0, 0.24) 0px 1px 6px;
   --footer-height: 48px;
   --padding: 40px;
   --list-width: 650px;
   --sidebar-width: 450px;
+  --settings-width: 350px;
   --selector-height: 50px;
   --input-shadow: inset 0 1px 2px rgba(0, 0, 0, .39), 0 0 1px #FFF, 0 1px 0 #FFF;
   --info-height: 36px;
   --map-border-color: rgb(204, 204, 204);
   --button-fill-color: black;
   --button-text-color: white;
-  --highlight-color: rgba(68, 188, 167, 255);
+  --highlight-color: rgba(68, 188, 167, 1);
   --highlight-color-fill: rgba(68, 188, 167, 0.2);
+  --highlight-color-subtle: rgba(68, 188, 167, 0.5);
   --header-text-color: rgb(59, 59, 59);
   --pulse-color: rgb(160, 160, 160);
   --map-color: rgb(236, 236, 236);
+  --cell-size: 35px;
 }
 
 :root {
@@ -55,12 +59,13 @@
   --header-text-color: rgb(207, 202, 202);
   --pulse-color: rgb(136 136 136);
   --map-color: rgb(41, 41, 41);
+  --box-shadow: rgb(255 255 255 / 16%) 0px 1px 4px;
+  --box-shadow-hover: rgb(255 255 255 / 16%) 0px 1px 8px;
 }
 
 @media screen and (max-width: 1200px) {
   :root {
     --padding: 20px;
-    --sidebar-width: 402px;
     --list-width: 50%;
   }
 }
@@ -94,7 +99,6 @@
 }
 
 .main .content {
-  padding-top: var(--header-height);
   position: relative;
 }
 

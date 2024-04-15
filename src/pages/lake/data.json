@@ -86,7 +86,8 @@
         "live": true,
         "parameters": ["Water Temperature", "Current", "Thermocline"],
         "start": 2019,
-        "end": "5 day forecast"
+        "end": "5 day forecast",
+        "type": "alplakes_hydrodynamic"
       },
       {
         "url": "https://medium.com/@runnalls.james/operational-1d-lake-modeling-with-simstrat-dc34964bfe08",
@@ -94,23 +95,17 @@
         "live": true,
         "parameters": ["Water Temperature", "Oyxgen", "Ice Cover"],
         "start": 1981,
-        "end": "5 day forecast"
+        "end": "5 day forecast",
+        "type": "simstrat"
       },
       {
         "url": "https://medium.com/@runnalls.james/water-quality-products-from-remote-sensing-data-using-sencast-e48449bd6aa8",
-        "name": "Sentinel 3 Satellite Products",
+        "name": "Sentinel Satellite Products",
         "live": true,
         "parameters": ["Chlorophyll A", "Secchi Depth", "Turbidity"],
         "start": 2016,
-        "end": "Now"
-      },
-      {
-        "url": "https://medium.com/@runnalls.james/water-quality-products-from-remote-sensing-data-using-sencast-e48449bd6aa8",
-        "name": "Sentinel 2 Satellite Products",
-        "live": true,
-        "parameters": ["Secchi Depth", "Turbidity"],
-        "start": 2016,
-        "end": "Now"
+        "end": "Now",
+        "type": "sencast_tiff"
       }
     ]
   },

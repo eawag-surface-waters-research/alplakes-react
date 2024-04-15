@@ -516,7 +516,7 @@ class Home extends Component {
       },
     ];
     return (
-      <React.Fragment>
+      <div className="home">
         <NavBar {...this.props} small={true} />
         <div
           className={parameters[parameter].beta ? "content beta" : "content"}
@@ -565,7 +565,7 @@ class Home extends Component {
           </div>
         </div>
         <Footer {...this.props} small={true} />
-      </React.Fragment>
+      </div>
     );
   }
 }

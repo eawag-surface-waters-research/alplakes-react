@@ -39,6 +39,9 @@ class Promos extends Component {
 }
 
 class About extends Component {
+  componentDidMount() {
+    window.scrollTo(0, 0);
+  }
   render() {
     document.title = "About | Alplakes";
     var end = new Date().getFullYear();
@@ -91,7 +94,7 @@ class About extends Component {
     ];
     return (
       <div className="main">
-        <NavBar {...this.props} />
+        <NavBar {...this.props} relative={true}/>
         <div className="about">
           <div className="section-content">
             <div className="header">

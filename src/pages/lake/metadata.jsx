@@ -344,15 +344,15 @@ class Metadata extends Component {
         <div className="title">{title}</div>
         <div className="subtitle">{subtitle}</div>
         <LatestEvents />
+        {"insitu" in metadata && (
+          <Insitu metadata={metadata} language={language} />
+        )}
         {"available" in metadata && (
           <AvailableData metadata={metadata} language={language} />
         )}
         <Properties metadata={metadata} language={language} />
         {"bathymetry" in metadata && (
           <Bathymetry metadata={metadata} language={language} />
-        )}
-        {"insitu" in metadata && (
-          <Insitu metadata={metadata} language={language} />
         )}
         <Feedback language={language} />
       </React.Fragment>

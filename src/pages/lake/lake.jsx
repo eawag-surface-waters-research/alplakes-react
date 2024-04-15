@@ -30,16 +30,23 @@ class NotFound extends Component {
 
 class Module extends Component {
   render() {
-    var { id, module, active, setActiveModule, closeActiveModule } = this.props;
+    var { id, module, active, setActiveModule, closeActiveModule, selected } =
+      this.props;
     return (
       <div
-        className={active ? "module active" : "module"}
+        className={
+          active ? "module active" : selected ? "module hide" : "module"
+        }
         onClick={() => {
           setActiveModule(module.id, active);
         }}
       >
         <div className="close" onClick={closeActiveModule}>
           &times;
+        </div>
+        <div className="active-title">
+          <div className="title">{module.title}</div>
+          <div className="subtitle">{module.subtitle}</div>
         </div>
         <div className="display">
           {module.component === "threed" && <ThreeD {...this.props} />}
@@ -71,18 +78,20 @@ class Lake extends Component {
 
   setActiveModule = (active_module, active) => {
     if (active === false) {
-      console.log(this.props.history);
+      document.body.style.overflow = "hidden";
       this.setState({ active_module }, () => {
         window.dispatchEvent(new Event("resize"));
       });
     }
   };
   closeActiveModule = () => {
+    document.body.style.overflow = "auto";
     this.setState({ active_module: false }, () => {
       window.dispatchEvent(new Event("resize"));
     });
   };
   async componentDidMount() {
+    window.scrollTo(0, 0);
     var { active_module } = this.state;
     const url = new URL(window.location.href);
     const id = url.pathname.replace(/[^a-zA-Z ]/g, "");
@@ -124,7 +133,7 @@ class Lake extends Component {
     }
     return (
       <div className="lake">
-        <NavBar {...this.props} />
+        <NavBar {...this.props} relative={true} />
         {error ? (
           <NotFound id={id} />
         ) : (
@@ -145,6 +154,7 @@ class Lake extends Component {
                   metadata={metadata}
                   layers={layers}
                   active={active_module === m.id}
+                  selected={active_module ? true : false}
                   setActiveModule={this.setActiveModule}
                   closeActiveModule={this.closeActiveModule}
                   {...this.props}

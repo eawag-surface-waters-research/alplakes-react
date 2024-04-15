@@ -20,10 +20,11 @@ class NavBar extends Component {
   };
   render() {
     var { menu } = this.state;
-    var { language, languages, setLanguage, dark, toggleDark } = this.props;
+    var { language, languages, setLanguage, dark, toggleDark, relative } =
+      this.props;
     return (
       <React.Fragment>
-        <div className={"navbar"}>
+        <div className={relative ? "navbar relative" : "navbar"}>
           <NavLink to="/">
             <div className="home-nav">
               <img

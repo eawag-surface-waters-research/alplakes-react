@@ -7,13 +7,16 @@ import "./api.css";
 import Footer from "../../components/footer/footer";
 
 class API extends Component {
+  componentDidMount() {
+    window.scrollTo(0, 0);
+  }
   render() {
     document.title = "API | Alplakes";
     return (
       <React.Fragment>
-        <NavBar {...this.props} />
+        <NavBar {...this.props} relative={true} />
         <div className="api-container">
-          <div className="title">Alplakes API Documentation</div>
+          <div className="header">API Documentation</div>
           <div className="text">
             Discover the public endpoints driving alplakes.eawag.ch, connect to
             them, and leverage our data for your applications.

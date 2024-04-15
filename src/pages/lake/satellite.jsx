@@ -1,27 +1,30 @@
 import React, { Component } from "react";
 import axios from "axios";
+import * as d3 from "d3";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import Basemap from "../../components/leaflet/basemap";
+import Loading from "../../components/loading/loading";
 import {
   processSatelliteFiles,
   compareDates,
   formatDate,
   formatDateTime,
+  formatTime,
 } from "./functions";
 import Translations from "../../translations.json";
-import * as d3 from "d3";
-import Basemap from "../../components/leaflet/basemap";
 import "./lake.css";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import Loading from "../../components/loading/loading";
+import Legend from "../../components/legend/legend";
+import ShowMoreText from "../../components/showmoretext/showmoretext";
 
 class Satellite extends Component {
   state = {
-    id: Math.round(Math.random() * 100000),
-    legend: false,
+    id: "a" + Math.round(Math.random() * 100000),
+    legend: true,
     basemap: "default",
-    datetime: Date.now(),
     fullscreen: false,
     updates: [],
+    layer: {},
     layers: [],
     bucket: true,
     selection: false,
@@ -30,7 +33,7 @@ class Satellite extends Component {
     available: false,
     image: false,
     includeDates: [],
-    currentDate: new Date(),
+    currentDate: Date.now(),
     parameters: [],
     parameter: false,
     satellites: [],
@@ -41,8 +44,35 @@ class Satellite extends Component {
   unlock = () => {
     this.setState({ bucket: false });
   };
-  setDatetime = (event) => {
-    console.log(event);
+  setDate = (currentDate) => {
+    var { updates, available, layers } = this.state;
+    var date = available[formatDate(currentDate)];
+    var image = date.images.filter((i) => i.percent === date.max_percent)[0];
+    var layer = layers.filter((l) => l.id === image.layer_id)[0];
+    layer.active = true;
+    layer.properties.url = image.url;
+    layer.properties.options.validpixelexpression = true;
+    layer.properties.options.min = Math.round(image.min * 100) / 100;
+    layer.properties.options.max = Math.round(image.max * 100) / 100;
+    layer.properties.options.dataMin = Math.round(image.min * 100) / 100;
+    layer.properties.options.dataMax = Math.round(image.max * 100) / 100;
+    updates.push({ event: "updateLayer", id: layer.id });
+    this.setState({ layers, layer, image, currentDate });
+  };
+  setImage = (url) => {
+    var { updates, available, layers, currentDate } = this.state;
+    var date = available[formatDate(currentDate)];
+    var image = date.images.filter((i) => i.url === url)[0];
+    var layer = layers.filter((l) => l.id === image.layer_id)[0];
+    layer.active = true;
+    layer.properties.url = image.url;
+    layer.properties.options.validpixelexpression = true;
+    layer.properties.options.min = Math.round(image.min * 100) / 100;
+    layer.properties.options.max = Math.round(image.max * 100) / 100;
+    layer.properties.options.dataMin = Math.round(image.min * 100) / 100;
+    layer.properties.options.dataMax = Math.round(image.max * 100) / 100;
+    updates.push({ event: "updateLayer", id: layer.id });
+    this.setState({ layers, layer, image, currentDate });
   };
   onMonthChange = (event) => {
     var { available } = this.state;
@@ -68,6 +98,7 @@ class Satellite extends Component {
     return resultDate;
   };
   addCssRules = (date, available) => {
+    var { id } = this.state;
     var start = new Date(date.getFullYear(), date.getMonth(), 1);
     var end = this.addOneMonth(start);
     var className;
@@ -77,7 +108,7 @@ class Satellite extends Component {
       let obs = day_dict.images.length;
       let element = [];
       if (day_dict.time > start && day_dict.time < end) {
-        className = `.custom-css-datepicker .react-datepicker__day--0${
+        className = `.sidebar.${id} .custom-css-datepicker .react-datepicker__day--0${
           day < 10 ? "0" + day : day
         }:not(.react-datepicker__day--outside-month)`;
         element = document.querySelectorAll(className);
@@ -85,23 +116,25 @@ class Satellite extends Component {
         day_dict.time < start &&
         day_dict.time > this.addDays(start, -15)
       ) {
-        className = `.custom-css-datepicker .react-datepicker__day--0${
+        className = `.sidebar.${id} .custom-css-datepicker .react-datepicker__day--0${
           day < 10 ? "0" + day : day
         }.react-datepicker__day--outside-month`;
         element = document.querySelectorAll(className);
       } else if (day_dict.time > end && day_dict.time < this.addDays(end, 15)) {
-        className = `.custom-css-datepicker .react-datepicker__day--0${
+        className = `.sidebar.${id} .custom-css-datepicker .react-datepicker__day--0${
           day < 10 ? "0" + day : day
         }.react-datepicker__day--outside-month`;
         element = document.querySelectorAll(className);
       }
       if (element.length > 0) {
-        let deg = Math.ceil((p / 100) * 180) + 180;
-        element[0].title = `${p}% (max pixel coverage) from ${obs} images`;
-        if (obs > 0) {
-          element[0].innerHTML = `<div class="percentage" style="background: conic-gradient(transparent 180deg, var(--e-global-color-subtle-accent) 180deg ${deg}deg, transparent ${deg}deg 360deg);"></div></div><div class="observations">${obs}</div><div class="date">${element[0].innerHTML}</div>`;
-        } else {
-          element[0].innerHTML = `<div class="percentage" style="background: conic-gradient(transparent 180deg, var(--e-global-color-subtle-accent) 180deg ${deg}deg, transparent ${deg}deg 360deg);"></div></div><div class="date">${element[0].innerHTML}</div>`;
+        if (element[0].querySelector("div") === null) {
+          let deg = Math.ceil((p / 100) * 180) + 180;
+          element[0].title = `${p}% lake coverage (${obs} images available)`;
+          if (obs > 0) {
+            element[0].innerHTML = `<div class="percentage" style="background: conic-gradient(transparent 180deg, var(--highlight-color) 180deg ${deg}deg, transparent ${deg}deg 360deg);"></div></div><div class="observations">${obs}</div><div class="date">${element[0].innerHTML}</div>`;
+          } else {
+            element[0].innerHTML = `<div class="percentage" style="background: conic-gradient(transparent 180deg, var(--highlight-color) 180deg ${deg}deg, transparent ${deg}deg 360deg);"></div></div><div class="date">${element[0].innerHTML}</div>`;
+          }
         }
       }
     }
@@ -146,6 +179,7 @@ class Satellite extends Component {
     var date = available[formatDate(currentDate)];
     var image = date.images.filter((i) => i.percent === date.max_percent)[0];
     var layer = layers.filter((l) => l.id === image.layer_id)[0];
+    layer.active = true;
     layer.properties.url = image.url;
     layer.properties.options.validpixelexpression = true;
     layer.properties.options.min = Math.round(image.min * 100) / 100;
@@ -157,7 +191,9 @@ class Satellite extends Component {
       { event: "addLayer", id: layer.id },
       { event: "initialLoad", id: id },
     ];
+    this.addCssRules(currentDate, available);
     this.setState({
+      layer: layer,
       layers: layers,
       updates,
       available,
@@ -171,7 +207,8 @@ class Satellite extends Component {
   }
   render() {
     var { dark, metadata, language } = this.props;
-    var { fullscreen, image, datetime, includeDates, id } = this.state;
+    var { fullscreen, image, currentDate, includeDates, id, layer, available } =
+      this.state;
     const locale = {
       localize: {
         day: (n) => Translations.axis[language].shortDays[n],
@@ -181,21 +218,16 @@ class Satellite extends Component {
         date: () => "dd/mm/yyyy",
       },
     };
+    var url =
+      "type" in layer
+        ? metadata.available.filter((a) => a.type === layer.type)[0].url
+        : "";
+    var date = available[formatDate(currentDate)];
+    var images = date ? date.images : [];
     return (
       <div className="module-component">
-        <div className="sidebar">
-          <DatePicker
-            dateFormat="dd/MM/yyyy"
-            locale={locale}
-            inline={true}
-            includeDates={includeDates}
-            selected={datetime}
-            onChange={this.setDatetime}
-            onMonthChange={this.onMonthChange}
-          />
-        </div>
-        <div className="plot">
-          <div className="average-value">
+        <div className={"plot " + id}>
+          <div className="average-value" title="Average value">
             {image && `${Math.round(image.ave * 10) / 10} ${image.unit}`}
           </div>
           <div className="header">
@@ -213,8 +245,61 @@ class Satellite extends Component {
               updated={this.updated}
               metadata={metadata}
             />
+            <Legend
+              {...this.state}
+              language={language}
+              setSelection={this.setSelection}
+            />
           </div>
           <div className="graph"></div>
+        </div>
+        <div className={"sidebar " + id}>
+          <div className="intro">
+            <ShowMoreText
+              text={layer.description ? layer.description : ""}
+              links={layer.links ? layer.links : {}}
+              maxLength={130}
+            />
+            <a href={url} target="_blank" rel="noreferrer" className="button">
+              Learn more
+            </a>
+          </div>
+          <div className="section">Available data</div>
+          <div className="images">
+            {images.map((i) => (
+              <div
+                className={i.url === image.url ? "image selected" : "image"}
+                key={i.url}
+                onClick={() => this.setImage(i.url)}
+              >
+                <div className="left">{i.satellite}</div>
+                <div className="right">
+                  <div>
+                    {formatTime(i.time)} |{" "}
+                    {i.satellite.includes("S3") ? 300 : 29}m resolution
+                  </div>
+                  <div>
+                    {`${i.percent}% coverage`} |{" "}
+                    {`${Math.round(i.ave * 10) / 10} ${i.unit}`}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="custom-css-datepicker">
+            <DatePicker
+              dateFormat="dd/MM/yyyy"
+              locale={locale}
+              inline={true}
+              includeDates={includeDates}
+              selected={currentDate}
+              onChange={(update) => {
+                this.setDate(update);
+              }}
+              onMonthChange={this.onMonthChange}
+            />
+          </div>
+          <div className="section">Settings</div>
         </div>
       </div>
     );

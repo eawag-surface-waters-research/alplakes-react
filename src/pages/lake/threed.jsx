@@ -480,8 +480,7 @@ class ThreeD extends Component {
     var { fullscreen, id } = this.state;
     return (
       <div className="module-component">
-        <div className="sidebar"></div>
-        <div className="header">5 day forecast</div>
+        <div className="header-hide">5 day forecast</div>
         <div className="plot">
           <div className={fullscreen ? "map fullscreen" : "map"}>
             <div className="initial-load" id={id}>
@@ -521,6 +520,7 @@ class ThreeD extends Component {
           </div>
           <div className="graph"></div>
         </div>
+        <div className="sidebar"></div>
       </div>
     );
   }

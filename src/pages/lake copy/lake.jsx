@@ -64,7 +64,7 @@ class Lake extends Component {
     }
     return (
       <div className="lake">
-        <NavBar {...this.props} />
+        <NavBar {...this.props} relative={true} />
         {error ? (
           <NotFound id={id} />
         ) : (

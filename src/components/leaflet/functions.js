@@ -850,7 +850,6 @@ const addSencastTiff = async (layer, dataStore, layerStore, datetime, map) => {
 const plotSencastTiff = async (url, layer, layerStore, map) => {
   var path = [
     layer.type,
-    layer.properties.model,
     layer.properties.lake,
     layer.properties.parameter,
   ];
@@ -875,8 +874,13 @@ const plotSencastTiff = async (url, layer, layerStore, map) => {
   });
 
   loading("Processing satellite image");
-  var leaflet_layer = await L.floatgeotiff(data, options).addTo(map);
-  setNested(layerStore, path, leaflet_layer);
+  var leaflet_layer = getNested(layerStore, path);
+  if (leaflet_layer !== null && leaflet_layer !== undefined) {
+    await leaflet_layer.update(data, options);
+  } else {
+    leaflet_layer = await L.floatgeotiff(data, options).addTo(map);
+    setNested(layerStore, path, leaflet_layer);
+  }
 };
 
 const updateSencastTiff = async (
@@ -886,74 +890,7 @@ const updateSencastTiff = async (
   map,
   datetime
 ) => {
-  var path = [
-    layer.type,
-    layer.properties.model,
-    layer.properties.lake,
-    layer.properties.parameter,
-  ];
-
-  var options = {};
-  if ("options" in layer.properties) {
-    options = layer.properties.options;
-    if ("paletteName" in layer.properties.options) {
-      layer.properties.options.palette =
-        COLORS[layer.properties.options.paletteName];
-      options["palette"] = COLORS[layer.properties.options.paletteName];
-    }
-    if ("unit" in layer.properties) {
-      options["unit"] = layer.properties.unit;
-    }
-  }
-
-  var metadata = getNested(dataStore, path);
-
-  var data = false;
-  if (
-    "date" in layer.properties.options &&
-    "updateDate" in layer.properties.options &&
-    layer.properties.options.updateDate
-  ) {
-    const image = findClosest(
-      metadata,
-      "unix",
-      layer.properties.options.date.getTime()
-    );
-
-    layer.properties.options.image = image;
-    layer.properties.options.min = round(image.min, 2);
-    layer.properties.options.max = round(image.max, 2);
-    layer.properties.options.dataMin = round(image.min, 2);
-    layer.properties.options.dataMax = round(image.max, 2);
-    layer.properties.options.updateDate = false;
-    loading("Downloading satellite image");
-    ({ data } = await axios.get(image.url, {
-      responseType: "arraybuffer",
-    }));
-  }
-
-  if (
-    "image" in layer.properties.options &&
-    "updateImage" in layer.properties.options &&
-    layer.properties.options.updateImage
-  ) {
-    const image = layer.properties.options.image;
-    layer.properties.options.min = round(image.min, 2);
-    layer.properties.options.max = round(image.max, 2);
-    layer.properties.options.dataMin = round(image.min, 2);
-    layer.properties.options.dataMax = round(image.max, 2);
-    layer.properties.options.updateImage = false;
-    loading("Downloading satellite image");
-    ({ data } = await axios.get(image.url, {
-      responseType: "arraybuffer",
-    }));
-  }
-  loading("Processing satellite image");
-
-  var leaflet_layer = getNested(layerStore, path);
-  if (leaflet_layer !== null && leaflet_layer !== undefined) {
-    leaflet_layer.update(data, options);
-  }
+  await plotSencastTiff(layer.properties.url, layer, layerStore, map);
 };
 
 const removeSencastTiff = (layer, layerStore, map) => {

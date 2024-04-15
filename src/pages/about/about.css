@@ -2,7 +2,6 @@
     width: 100%;
     max-width: 1000px;
     margin: auto;
-    margin-top: calc(var(--header-height));
     padding: 0 var(--padding);
     border-radius: 22px;
     box-sizing: border-box;
@@ -127,7 +126,7 @@
 .main .about .header {
     font-size: 40px;
     margin-top: 18px;
-    color: var(--highlight-color);
+    color: var(--background-font-color);
 }
 
 .main .about .sub-header {

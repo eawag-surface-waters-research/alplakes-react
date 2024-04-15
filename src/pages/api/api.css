@@ -1,22 +1,21 @@
 .main .api-container {
   width: 100%;
-  max-width: 1400px;
+  max-width: 1000px;
   margin: auto;
-  margin-top: var(--header-height);
   padding: 2px var(--padding);
   box-sizing: border-box;
+  min-height: 100vh;
 }
 
-.main .api-container .title {
-  font-size: 28px;
-  border-bottom: 2px solid var(--highlight-color);
-  width: -moz-fit-content;
-  width: fit-content;
-  margin-bottom: 32px;
+.main .api-container .header {
+  font-size: 40px;
+  margin-top: 18px;
+  color: var(--background-font-color);
 }
 
 .main .api-container .text {
   font-size: 18px;
+  margin: var(--padding) 0;
 }
 
 .main .api-container .contact {
