@@ -16,6 +16,7 @@ import Translations from "../../translations.json";
 import "./lake.css";
 import Legend from "../../components/legend/legend";
 import ShowMoreText from "../../components/showmoretext/showmoretext";
+import SatelliteSummary from "../../components/d3/satellitesummary/satellitesummary";
 
 class Satellite extends Component {
   state = {
@@ -37,12 +38,19 @@ class Satellite extends Component {
     parameters: [],
     parameter: false,
     satellites: [],
+    sidebar: false,
   };
   updated = () => {
     this.setState({ updates: [] });
   };
   unlock = () => {
     this.setState({ bucket: false });
+  };
+  openSidebar = () => {
+    this.setState({ sidebar: true });
+  };
+  closeSidebar = () => {
+    this.setState({ sidebar: false });
   };
   setDate = (currentDate) => {
     var { updates, available, layers } = this.state;
@@ -59,10 +67,10 @@ class Satellite extends Component {
     updates.push({ event: "updateLayer", id: layer.id });
     this.setState({ layers, layer, image, currentDate });
   };
-  setImage = (url) => {
-    var { updates, available, layers, currentDate } = this.state;
+  setImage = (currentDate) => {
+    var { updates, available, layers } = this.state;
     var date = available[formatDate(currentDate)];
-    var image = date.images.filter((i) => i.url === url)[0];
+    var image = date.images.filter((i) => i.time === currentDate)[0];
     var layer = layers.filter((l) => l.id === image.layer_id)[0];
     layer.active = true;
     layer.properties.url = image.url;
@@ -139,6 +147,10 @@ class Satellite extends Component {
       }
     }
   };
+  componentDidUpdate() {
+    var { currentDate, available } = this.state;
+    this.addCssRules(currentDate, available);
+  }
   async componentDidMount() {
     var { layers: base_layers, module } = this.props;
     var { id } = this.state;
@@ -207,8 +219,16 @@ class Satellite extends Component {
   }
   render() {
     var { dark, metadata, language } = this.props;
-    var { fullscreen, image, currentDate, includeDates, id, layer, available } =
-      this.state;
+    var {
+      fullscreen,
+      image,
+      currentDate,
+      includeDates,
+      id,
+      layer,
+      available,
+      sidebar,
+    } = this.state;
     const locale = {
       localize: {
         day: (n) => Translations.axis[language].shortDays[n],
@@ -224,9 +244,16 @@ class Satellite extends Component {
         : "";
     var date = available[formatDate(currentDate)];
     var images = date ? date.images : [];
+    var label = layer.properties
+      ? Translations[layer.properties.parameter][language]
+      : "";
+    var unit = layer.properties ? layer.properties.unit : "";
     return (
       <div className="module-component">
         <div className={"plot " + id}>
+          <div className="settings" onClick={this.openSidebar}>
+            Settings
+          </div>
           <div className="average-value" title="Average value">
             {image && `${Math.round(image.ave * 10) / 10} ${image.unit}`}
           </div>
@@ -251,9 +278,19 @@ class Satellite extends Component {
               setSelection={this.setSelection}
             />
           </div>
-          <div className="graph"></div>
+          <div className="graph">
+            <SatelliteSummary
+              available={available}
+              language={language}
+              label={label}
+              unit={unit}
+              dark={dark}
+              setImage={this.setImage}
+            />
+          </div>
         </div>
-        <div className={"sidebar " + id}>
+        <div className={sidebar ? "sidebar open " + id : "sidebar " + id}>
+          <div className="close-sidebar" onClick={this.closeSidebar}>&times;</div>
           <div className="intro">
             <ShowMoreText
               text={layer.description ? layer.description : ""}
@@ -263,28 +300,6 @@ class Satellite extends Component {
             <a href={url} target="_blank" rel="noreferrer" className="button">
               Learn more
             </a>
-          </div>
-          <div className="section">Available data</div>
-          <div className="images">
-            {images.map((i) => (
-              <div
-                className={i.url === image.url ? "image selected" : "image"}
-                key={i.url}
-                onClick={() => this.setImage(i.url)}
-              >
-                <div className="left">{i.satellite}</div>
-                <div className="right">
-                  <div>
-                    {formatTime(i.time)} |{" "}
-                    {i.satellite.includes("S3") ? 300 : 29}m resolution
-                  </div>
-                  <div>
-                    {`${i.percent}% coverage`} |{" "}
-                    {`${Math.round(i.ave * 10) / 10} ${i.unit}`}
-                  </div>
-                </div>
-              </div>
-            ))}
           </div>
           <div className="custom-css-datepicker">
             <DatePicker
@@ -298,6 +313,30 @@ class Satellite extends Component {
               }}
               onMonthChange={this.onMonthChange}
             />
+          </div>
+          <div className="images">
+            {images.map((i) => (
+              <div
+                className={i.url === image.url ? "image selected" : "image"}
+                key={i.url}
+                onClick={() => this.setImage(i.time)}
+              >
+                <div className="button">
+                  {i.url === image.url ? "Selected" : "Select"}
+                </div>
+                <div className="left">{i.satellite}</div>
+                <div className="right">
+                  <div>
+                    {formatTime(i.time)} |{" "}
+                    {i.satellite.includes("S3") ? 300 : 29}m resolution
+                  </div>
+                  <div>
+                    {`${i.percent}% coverage`} |{" "}
+                    {`${Math.round(i.ave * 10) / 10} ${i.unit}`}
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
           <div className="section">Settings</div>
         </div>

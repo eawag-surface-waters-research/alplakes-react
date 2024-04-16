@@ -50,44 +50,40 @@ const plotlinegraph = (div, data, options = {}) => {
     }
   }
 
-  try {
-    verifyDiv(div);
+  verifyDiv(div);
 
-    data = processData(data);
-    if (data.length < 1) return;
-    options = processOptions(div, data, options);
+  data = processData(data);
+  if (data.length < 1) return;
+  options = processOptions(div, data, options);
 
-    var { xDomain, yDomain, x2Domain, y2Domain } = dataExtents(data, options);
+  var { xDomain, yDomain, x2Domain, y2Domain } = dataExtents(data, options);
 
-    const context = addCanvas(div, options);
-    const svg = addSVG(div, options);
+  const context = addCanvas(div, options);
+  const svg = addSVG(div, options);
 
-    timeFormatDefaultLocale(languageOptions(options.language));
+  timeFormatDefaultLocale(languageOptions(options.language));
 
-    var xAxis = addXAxis(svg, xDomain, x2Domain, options);
-    var yAxis = addYAxis(svg, yDomain, y2Domain, options);
+  var xAxis = addXAxis(svg, xDomain, x2Domain, options);
+  var yAxis = addYAxis(svg, yDomain, y2Domain, options);
 
-    addInteractionBoxes(svg, div, options);
+  addInteractionBoxes(svg, div, options);
 
-    if (options.title) addTitle(svg, div, options);
-    if (options.border) addBorder(svg, options);
-    if (options.backgroundColor) addBackground(div, options);
-    if (options.setDownloadGraph)
-      options.setDownloadGraph(() => downloadGraph(div, options));
-    if (options.setDownloadGraphDiv)
-      select("#" + options.setDownloadGraphDiv).on("click", function () {
-        downloadGraph(div, options);
-      });
+  if (options.title) addTitle(svg, div, options);
+  if (options.border) addBorder(svg, options);
+  if (options.backgroundColor) addBackground(div, options);
+  if (options.setDownloadGraph)
+    options.setDownloadGraph(() => downloadGraph(div, options));
+  if (options.setDownloadGraphDiv)
+    select("#" + options.setDownloadGraphDiv).on("click", function () {
+      downloadGraph(div, options);
+    });
 
-    var plot = addPlottingArea(div, svg, options);
-    if (options.legend) addLegend(svg, div, data, options);
-    if (options.lines) plotLines(div, plot, data, xAxis, yAxis);
-    if (options.scatter) plotScatter(context, data, xAxis, yAxis, options);
-    if (options.zoom) addZoom(plot, context, data, div, xAxis, yAxis, options);
-    if (options.tooltip) addTooltip(data, div, xAxis, yAxis, options);
-  } catch (e) {
-    console.error(e);
-  }
+  var plot = addPlottingArea(div, svg, options);
+  if (options.legend) addLegend(svg, div, data, options);
+  if (options.lines) plotLines(div, plot, data, xAxis, yAxis);
+  if (options.scatter) plotScatter(context, data, xAxis, yAxis, options);
+  if (options.zoom) addZoom(plot, context, data, div, xAxis, yAxis, options);
+  if (options.tooltip) addTooltip(data, div, xAxis, yAxis, options);
 };
 
 const addPlottingArea = (div, svg, options) => {
@@ -167,6 +163,7 @@ const processOptions = (div, data, userOptions) => {
     { name: "setDownloadGraph", default: false, verify: verifyFunction },
     { name: "setDownloadGraphDiv", default: false, verify: verifyString },
     { name: "hover", default: false, verify: verifyFunction },
+    { name: "onClick", default: false, verify: verifyFunction },
     {
       name: "backgroundColor",
       default: false,
@@ -293,10 +290,10 @@ const dataExtents = (data, options) => {
   var y2Domain = getDomain(y2domarr);
   var x2Domain = getDomain(x2domarr);
 
-  if (options.xMin) xDomain[0] = options.xMin
-  if (options.xMax) xDomain[1] = options.xMax
-  if (options.yMin) yDomain[0] = options.yMin
-  if (options.yMax) yDomain[1] = options.yMax
+  if (options.xMin) xDomain[0] = options.xMin;
+  if (options.xMax) xDomain[1] = options.xMax;
+  if (options.yMin) yDomain[0] = options.yMin;
+  if (options.yMax) yDomain[1] = options.yMax;
 
   return { xDomain, yDomain, x2Domain, y2Domain };
 };
@@ -402,6 +399,7 @@ const addBottomAxis = (svg, xDomain, options) => {
       )
       .attr("x", 6)
       .attr("dx", `${options.fontSize}px`)
+      .attr("fill", "currentColor")
       .style("font-size", `${options.fontSize}px`)
       .style("text-anchor", "end")
       .text(xAxisLabel);
@@ -458,6 +456,7 @@ const addTopAxis = (svg, x2Domain, options) => {
       )
       .attr("x", 6)
       .attr("dx", `${options.fontSize}px`)
+      .attr("fill", "currentColor")
       .style("font-size", `${options.fontSize}px`)
       .style("text-anchor", "end")
       .text(xAxisLabel);
@@ -526,6 +525,7 @@ const addLeftAxis = (svg, yDomain, options) => {
       .attr("y", 0 - options.marginLeft)
       .attr("x", 0 - options.canvasHeight / 2)
       .attr("dy", `${options.fontSize}px`)
+      .attr("fill", "currentColor")
       .style("font-size", `${options.fontSize}px`)
       .style("text-anchor", "middle")
       .text(yAxisLabel);
@@ -580,6 +580,7 @@ const addRightAxis = (svg, y2Domain, options) => {
       )
       .attr("x", 0 - options.canvasHeight / 2)
       .attr("dy", `${options.fontSize}px`)
+      .attr("fill", "currentColor")
       .style("font-size", `${options.fontSize}px`)
       .style("fill", options.dualaxisColor)
       .style("text-anchor", "middle")
@@ -595,6 +596,7 @@ const addTitle = (svg, div, options) => {
     .attr("y", 2 - options.marginTop / 2)
     .attr("id", "title_" + div)
     .attr("text-anchor", "middle")
+    .attr("fill", "currentColor")
     .style("z-index", 3)
     .style("font-size", `${options.fontSize + 2}px`)
     .style("text-decoration", "underline")
@@ -674,6 +676,7 @@ const addBorder = (svg, options) => {
 };
 
 const addTooltip = (data, div, xAxis, yAxis, options) => {
+  var max_distance = 20;
   var zoombox = select(`#interact_${div}`);
   var tooltip = select("#" + div)
     .append("div")
@@ -692,8 +695,7 @@ const addTooltip = (data, div, xAxis, yAxis, options) => {
       var hoverY =
         event.layerY - options.marginTop || event.offsetY - options.marginTop;
       var { idx, idy, distance } = closest(data, hoverX, hoverY, xAxis, yAxis);
-
-      if (distance < 60) {
+      if (distance < max_distance) {
         var xval, yval;
         var xu = "";
         var yu = "";
@@ -729,6 +731,10 @@ const addTooltip = (data, div, xAxis, yAxis, options) => {
           `<tr><td>x:</td><td>${xval} ${xu}</td></tr>` +
           `<tr><td>y:</td><td>${yval} ${yu}</td></tr>` +
           "</tbody></table>";
+
+        if ("tooltip" in data[idx]) {
+          html = data[idx].tooltip[idy] + html;
+        }
 
         if (hoverX > options.width / 2) {
           tooltip
@@ -776,7 +782,7 @@ const addTooltip = (data, div, xAxis, yAxis, options) => {
         }
 
         if (options.hover) options.hover({ idx, idy });
-      } else if (distance > 200) {
+      } else {
         tooltip.style("opacity", 0);
         if (options.hover) options.hover({ mousex: false, mousey: false });
       }
@@ -789,6 +795,19 @@ const addTooltip = (data, div, xAxis, yAxis, options) => {
   zoombox.on("mouseout", () => {
     tooltip.style("opacity", 0);
     if (options.hover) options.hover({ mousex: false, mousey: false });
+  });
+
+  zoombox.on("click", (event) => {
+    var hoverX =
+      event.layerX - options.marginLeft || event.offsetX - options.marginLeft;
+    var hoverY =
+      event.layerY - options.marginTop || event.offsetY - options.marginTop;
+    var { idx, idy, distance } = closest(data, hoverX, hoverY, xAxis, yAxis);
+    if (distance < max_distance) {
+      if (typeof options.onClick === "function") {
+        options.onClick({ x: data[idx].x[idy], y: data[idx].y[idy] });
+      }
+    }
   });
 };
 
@@ -954,13 +973,28 @@ const plotConfidenceInterval = (g, data, xAxis, yAxis) => {
 const plotScatter = (context, data, xAxis, yAxis, options) => {
   context.clearRect(0, 0, options.canvasWidth, options.canvasHeight);
   for (var i = 0; i < data.length; i++) {
-    for (var j = 0; j < data[i].x.length; j++) {
-      context.beginPath();
-      context.strokeStyle = data[i].lineColor;
-      const px = xAxis[data[i].xaxis].ax(data[i].x[j]);
-      const py = yAxis[data[i].yaxis].ax(data[i].y[j]);
-      context.arc(px, py, 2.5, 0, 2 * Math.PI, true);
-      context.stroke();
+    if ("symbol" in data[i] && data[i].symbol === "x") {
+      for (let j = 0; j < data[i].x.length; j++) {
+        context.beginPath();
+        context.strokeStyle = data[i].lineColor;
+        const px = xAxis[data[i].xaxis].ax(data[i].x[j]);
+        const py = yAxis[data[i].yaxis].ax(data[i].y[j]);
+        const crossSize = 3;
+        context.moveTo(px - crossSize, py - crossSize);
+        context.lineTo(px + crossSize, py + crossSize);
+        context.moveTo(px + crossSize, py - crossSize);
+        context.lineTo(px - crossSize, py + crossSize);
+        context.stroke();
+      }
+    } else {
+      for (let j = 0; j < data[i].x.length; j++) {
+        context.beginPath();
+        context.strokeStyle = data[i].lineColor;
+        const px = xAxis[data[i].xaxis].ax(data[i].x[j]);
+        const py = yAxis[data[i].yaxis].ax(data[i].y[j]);
+        context.arc(px, py, 2.5, 0, 2 * Math.PI, true);
+        context.stroke();
+      }
     }
   }
 };

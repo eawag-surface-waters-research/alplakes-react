@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
-import axios from "axios";
+//import axios from "axios";
 import NavBar from "../../components/navbar/navbar";
 import Footer from "../../components/footer/footer";
-import CONFIG from "../../config.json";
 import Satellite from "./satellite";
 import Graph from "./graph";
 import ThreeD from "./threed";
@@ -30,7 +29,7 @@ class NotFound extends Component {
 
 class Module extends Component {
   render() {
-    var { id, module, active, setActiveModule, closeActiveModule, selected } =
+    var { module, active, setActiveModule, closeActiveModule, selected } =
       this.props;
     return (
       <div
@@ -138,15 +137,9 @@ class Lake extends Component {
           <NotFound id={id} />
         ) : (
           <div className="content">
-            <div className="metadata">
-              <Metadata
-                title={title}
-                subtitle={subtitle}
-                metadata={metadata}
-                language={language}
-              />
-            </div>
             <div className="modules">
+              <div className="mobile-title">{title}</div>
+              <div className="mobile-subtitle">{subtitle}</div>
               {modules.map((m) => (
                 <Module
                   key={m.id}
@@ -160,6 +153,14 @@ class Lake extends Component {
                   {...this.props}
                 />
               ))}
+            </div>
+            <div className="metadata">
+              <Metadata
+                title={title}
+                subtitle={subtitle}
+                metadata={metadata}
+                language={language}
+              />
             </div>
           </div>
         )}

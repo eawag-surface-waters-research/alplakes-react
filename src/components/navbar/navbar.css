@@ -225,6 +225,7 @@
   .navbar.relative {
     position: fixed;
     background-color: var(--background-color);
+    z-index: 99999;
   }
 
   .navbar .mobile-nav {

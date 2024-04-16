@@ -5,7 +5,7 @@ export const verifyString = (string) => {
 };
 
 export const verifyNumber = (number) => {
-  return typeof number === "number" && !isNaN(number);
+  return true
 };
 
 export const verifyBool = (bool) => {
