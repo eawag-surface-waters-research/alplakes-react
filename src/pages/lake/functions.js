@@ -25,7 +25,14 @@ const satelliteStringToDate = (date) => {
   );
 };
 
-export const processSatelliteFiles = (files, available, max_pixels, layer_id, unit, satellite) => {
+export const processSatelliteFiles = (
+  files,
+  available,
+  max_pixels,
+  layer_id,
+  unit,
+  satellite
+) => {
   for (let file of files) {
     let time = satelliteStringToDate(file.dt);
     let date = formatDate(time);
@@ -46,7 +53,7 @@ export const processSatelliteFiles = (files, available, max_pixels, layer_id, un
       max,
       layer_id,
       unit,
-      satellite
+      satellite,
     };
     if (date in available) {
       available[date].images.push(image);
@@ -71,6 +78,33 @@ export const processSatelliteFiles = (files, available, max_pixels, layer_id, un
         max,
         time,
       };
+    }
+  }
+  return available;
+};
+
+export const filterImages = (
+  all_images,
+  filterPixelCoverage,
+  filterSatellite
+) => {
+  var available = {};
+  for (let date of Object.keys(all_images)) {
+    let day = JSON.parse(JSON.stringify(all_images[date]));
+    day.time = new Date(day.time);
+    day.images = day.images
+      .filter((i) => i.percent > filterPixelCoverage)
+      .map((i) => {
+        i.time = new Date(i.time);
+        return i;
+      });
+    if (filterSatellite) {
+      day.images = day.images.filter((i) =>
+        i.satellite.includes(filterSatellite)
+      );
+    }
+    if (day.images.length > 0) {
+      available[date] = day;
     }
   }
   return available;

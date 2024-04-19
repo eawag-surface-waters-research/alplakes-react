@@ -4,7 +4,8 @@ import { NavLink } from "react-router-dom";
 import NavBar from "../../components/navbar/navbar";
 import Footer from "../../components/footer/footer";
 import Satellite from "./satellite";
-import Graph from "./graph";
+import CurrentGraph from "./currentgraph";
+import HistoricGraph from "./currentgraph";
 import ThreeD from "./threed";
 import { parseSubtitle } from "./functions";
 import DATA from "./data.json";
@@ -50,7 +51,12 @@ class Module extends Component {
         <div className="display">
           {module.component === "threed" && <ThreeD {...this.props} />}
           {module.component === "satellite" && <Satellite {...this.props} />}
-          {module.component === "graph" && <Graph {...this.props} />}
+          {module.component === "currentgraph" && (
+            <CurrentGraph {...this.props} />
+          )}
+          {module.component === "historicgraph" && (
+            <HistoricGraph {...this.props} />
+          )}
         </div>
         <div className="link">
           <div className="title">{module.title}</div>

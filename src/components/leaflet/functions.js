@@ -848,11 +848,7 @@ const addSencastTiff = async (layer, dataStore, layerStore, datetime, map) => {
 };
 
 const plotSencastTiff = async (url, layer, layerStore, map) => {
-  var path = [
-    layer.type,
-    layer.properties.lake,
-    layer.properties.parameter,
-  ];
+  var path = [layer.type, layer.properties.lake, layer.properties.parameter];
   var options = {};
   if ("options" in layer.properties) {
     options = layer.properties.options;
@@ -890,6 +886,26 @@ const updateSencastTiff = async (
   map,
   datetime
 ) => {
+  if (layerStore["wms"]) {
+    map.removeLayer(layerStore["wms"]);
+    layerStore["wms"] = null;
+  }
+  if (layer.properties.options.wms) {
+    layerStore["wms"] = L.tileLayer
+      .wms(layer.properties.wms, {
+        tileSize: 512,
+        attribution:
+          '&copy; <a href="http://www.sentinel-hub.com/" target="_blank">Sentinel Hub</a>',
+        minZoom: 6,
+        maxZoom: 16,
+        preset: "TRUE-COLOR",
+        layers: "TRUE-COLOR",
+        time: formatWmsDate(layer.properties.options.date),
+        gain: 1,
+        gamma: 1,
+      })
+      .addTo(map);
+  }
   await plotSencastTiff(layer.properties.url, layer, layerStore, map);
 };
 

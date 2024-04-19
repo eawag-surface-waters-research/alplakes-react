@@ -7,6 +7,7 @@ import Basemap from "../../components/leaflet/basemap";
 import Loading from "../../components/loading/loading";
 import {
   processSatelliteFiles,
+  filterImages,
   compareDates,
   formatDate,
   formatDateTime,
@@ -17,6 +18,8 @@ import "./lake.css";
 import Legend from "../../components/legend/legend";
 import ShowMoreText from "../../components/showmoretext/showmoretext";
 import SatelliteSummary from "../../components/d3/satellitesummary/satellitesummary";
+import ImageryIcon from "../../img/imagery.png";
+import ImageryOffIcon from "../../img/imageryoff.png";
 
 class Satellite extends Component {
   state = {
@@ -32,6 +35,7 @@ class Satellite extends Component {
     graphs: false,
     graphData: false,
     available: false,
+    all_images: false,
     image: false,
     includeDates: [],
     currentDate: Date.now(),
@@ -39,6 +43,9 @@ class Satellite extends Component {
     parameter: false,
     satellites: [],
     sidebar: false,
+    filterPixelCoverage: 10,
+    filterSatellite: false,
+    wms: false,
   };
   updated = () => {
     this.setState({ updates: [] });
@@ -52,8 +59,14 @@ class Satellite extends Component {
   closeSidebar = () => {
     this.setState({ sidebar: false });
   };
+  toggleWms = () => {
+    var { layer, updates, wms } = this.state;
+    layer.properties.options.wms = !wms;
+    updates.push({ event: "updateLayer", id: layer.id });
+    this.setState({ wms: !wms, layer, updates });
+  };
   setDate = (currentDate) => {
-    var { updates, available, layers } = this.state;
+    var { updates, available, layers, wms } = this.state;
     var date = available[formatDate(currentDate)];
     var image = date.images.filter((i) => i.percent === date.max_percent)[0];
     var layer = layers.filter((l) => l.id === image.layer_id)[0];
@@ -64,11 +77,13 @@ class Satellite extends Component {
     layer.properties.options.max = Math.round(image.max * 100) / 100;
     layer.properties.options.dataMin = Math.round(image.min * 100) / 100;
     layer.properties.options.dataMax = Math.round(image.max * 100) / 100;
+    layer.properties.options.wms = wms;
+    layer.properties.options.date = currentDate;
     updates.push({ event: "updateLayer", id: layer.id });
     this.setState({ layers, layer, image, currentDate });
   };
   setImage = (currentDate) => {
-    var { updates, available, layers } = this.state;
+    var { updates, available, layers, wms } = this.state;
     var date = available[formatDate(currentDate)];
     var image = date.images.filter((i) => i.time === currentDate)[0];
     var layer = layers.filter((l) => l.id === image.layer_id)[0];
@@ -79,6 +94,8 @@ class Satellite extends Component {
     layer.properties.options.max = Math.round(image.max * 100) / 100;
     layer.properties.options.dataMin = Math.round(image.min * 100) / 100;
     layer.properties.options.dataMax = Math.round(image.max * 100) / 100;
+    layer.properties.options.wms = wms;
+    layer.properties.options.date = currentDate;
     updates.push({ event: "updateLayer", id: layer.id });
     this.setState({ layers, layer, image, currentDate });
   };
@@ -153,7 +170,7 @@ class Satellite extends Component {
   }
   async componentDidMount() {
     var { layers: base_layers, module } = this.props;
-    var { id } = this.state;
+    var { id, filterPixelCoverage, filterSatellite } = this.state;
     var layers = JSON.parse(JSON.stringify(base_layers));
     var parameters = [
       ...new Set(
@@ -170,21 +187,26 @@ class Satellite extends Component {
       return { name: s, active: true };
     });
     var parameter = module.default;
-    var available = {};
+    var all_images = {};
     for (let layer of layers.filter(
       (l) => l.type === "sencast_tiff" && l.parameter === parameter
     )) {
       let { data } = await axios.get(layer.properties.metadata);
       let max_pixels = d3.max(data.map((m) => parseFloat(m.p)));
-      available = processSatelliteFiles(
+      all_images = processSatelliteFiles(
         data,
-        available,
+        all_images,
         max_pixels,
         layer.id,
         layer.properties.unit,
         layer.properties.model
       );
     }
+    var available = filterImages(
+      all_images,
+      filterPixelCoverage,
+      filterSatellite
+    );
     var includeDates = Object.values(available).map((m) => m.time);
     includeDates.sort(compareDates);
     var currentDate = includeDates[includeDates.length - 1];
@@ -198,6 +220,7 @@ class Satellite extends Component {
     layer.properties.options.max = Math.round(image.max * 100) / 100;
     layer.properties.options.dataMin = Math.round(image.min * 100) / 100;
     layer.properties.options.dataMax = Math.round(image.max * 100) / 100;
+    layer.properties.options.date = currentDate;
     var updates = [
       { event: "bounds" },
       { event: "addLayer", id: layer.id },
@@ -215,6 +238,7 @@ class Satellite extends Component {
       parameters,
       parameter,
       satellites,
+      all_images,
     });
   }
   render() {
@@ -228,6 +252,7 @@ class Satellite extends Component {
       layer,
       available,
       sidebar,
+      wms
     } = this.state;
     const locale = {
       localize: {
@@ -277,6 +302,9 @@ class Satellite extends Component {
               language={language}
               setSelection={this.setSelection}
             />
+            <div className="wms" onClick={this.toggleWms}>
+              <img src={wms ? ImageryOffIcon : ImageryIcon} alt="Imagery" />
+            </div>
           </div>
           <div className="graph">
             <SatelliteSummary
@@ -290,7 +318,9 @@ class Satellite extends Component {
           </div>
         </div>
         <div className={sidebar ? "sidebar open " + id : "sidebar " + id}>
-          <div className="close-sidebar" onClick={this.closeSidebar}>&times;</div>
+          <div className="close-sidebar" onClick={this.closeSidebar}>
+            &times;
+          </div>
           <div className="intro">
             <ShowMoreText
               text={layer.description ? layer.description : ""}
@@ -334,6 +364,7 @@ class Satellite extends Component {
                     {`${i.percent}% coverage`} |{" "}
                     {`${Math.round(i.ave * 10) / 10} ${i.unit}`}
                   </div>
+                  <div><div className="download">Download</div></div>
                 </div>
               </div>
             ))}

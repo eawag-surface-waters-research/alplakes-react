@@ -1,3 +1,9 @@
+.main .lake .content::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
 .main .lake .content .metadata {
     position: relative;
     padding-left: var(--padding);
@@ -804,6 +810,35 @@
 .main .lake .content .module .display .module-component .plot .map .legend.hide {
     display: none;
 }
+
+.main .lake .content .module .display .module-component .plot .map .wms {
+    position: absolute;
+    bottom: 45px;
+    left: 18px;
+    z-index: 999;
+    height: 75px;
+    width: 75px;
+    border: 1px solid var(--border-color);
+    cursor: pointer;
+    box-shadow: var(--box-shadow);
+    border-radius: 12px;
+    overflow: hidden;
+    display: none;
+}
+
+.main .lake .content .module .display .module-component .plot .map .wms:hover {
+    box-shadow: none;
+}
+
+.main .lake .content .module .display .module-component .plot .map .wms img {
+    height: 100%;
+    width: 100%;
+}
+
+.main .lake .content .module.active .display .module-component .plot .map .wms {
+    display: block;
+}
+
 
 .main .lake .content .module .display .module-component .plot .map .playback {
     position: absolute;

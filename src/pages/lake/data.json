@@ -119,9 +119,9 @@
     },
     {
       "id": "graph_conditions",
-      "title": "Lake Conditions",
-      "subtitle": "1D & 3D Models",
-      "component": "graph"
+      "title": "Temperature, Oxygen and Ice",
+      "subtitle": "1D Model",
+      "component": "currentgraph"
     },
     {
       "id": "satellite_chla",
@@ -155,7 +155,7 @@
       "id": "graph_historic",
       "title": "Historic Trends",
       "subtitle": "Models and insitu data",
-      "component": "graph",
+      "component": "historicgraph",
       "defaults": []
     }
   ],
@@ -321,7 +321,8 @@
           "paletteName": "cc chl",
           "zIndex": 2,
           "opacity": 1,
-          "convolve": 2
+          "convolve": 2,
+          "wms": false
         }
       }
     },
@@ -352,7 +353,8 @@
           "paletteName": "cc chl",
           "zIndex": 2,
           "opacity": 1,
-          "convolve": 2
+          "convolve": 2,
+          "wms": false
         }
       }
     },
@@ -382,7 +384,8 @@
           "paletteName": "cc chl",
           "zIndex": 2,
           "opacity": 1,
-          "convolve": 2
+          "convolve": 2,
+          "wms": false
         }
       }
     },
@@ -413,7 +416,8 @@
           "paletteName": "Thermal",
           "zIndex": 2,
           "opacity": 1,
-          "convolve": 2
+          "convolve": 2,
+          "wms": false
         }
       }
     },
@@ -444,7 +448,8 @@
           "paletteName": "Thermal",
           "zIndex": 2,
           "opacity": 1,
-          "convolve": 2
+          "convolve": 2,
+          "wms": false
         }
       }
     }

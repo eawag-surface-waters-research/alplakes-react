@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import "./lake.css";
 
-class Graph extends Component {
+class HistoricGraph extends Component {
   render() {
     var { id } = this.props;
     return (
@@ -14,4 +14,4 @@ class Graph extends Component {
   }
 }
 
-export default Graph;
+export default HistoricGraph;
