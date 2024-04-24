@@ -165,8 +165,8 @@ class Bathymetry extends Component {
           title="Bathymetry"
           visible={true}
           contents={
-            <React.Fragment>
-              <div className="bathymetries">
+            <div className="objects">
+              <div className="datasets">
                 {bathymetry.map((b, index) => (
                   <a
                     href={b.url}
@@ -174,15 +174,16 @@ class Bathymetry extends Component {
                     rel="noopener noreferrer"
                     key={index}
                   >
-                    <div className="bathymetry">
-                      {b.type}
-                      {b.source}
-                      {b.format}
+                    <div className="dataset">
+                      <div className="dataset-button">View</div>
+                      <div className="name">{b.source}</div>
+                      <div className="date">{b.type}</div>
+                      <div className="parameters">{b.format}</div>
                     </div>
                   </a>
                 ))}
               </div>
-            </React.Fragment>
+            </div>
           }
         />
       );

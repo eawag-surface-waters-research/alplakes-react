@@ -6,11 +6,7 @@ class CurrentGraph extends Component {
   state = {
     data: []
   }
-  async componentDidMount() {
-    ({ data: geometry } = await axios.get(
-      `${CONFIG.alplakes_bucket}/simulations/${layer.properties.model}/metadata/${layer.properties.lake}/geometry.txt`
-    ));
-  }
+  
   render() {
     var { id } = this.props;
     return (
