@@ -3,15 +3,14 @@ import { NavLink } from "react-router-dom";
 //import axios from "axios";
 import NavBar from "../../components/navbar/navbar";
 import Footer from "../../components/footer/footer";
-import Satellite from "./satellite";
-import CurrentGraph from "./currentgraph";
-import HistoricGraph from "./currentgraph";
-import ThreeD from "./threed";
+import Metadata from "./metadata";
+import Map from "./map";
+import Graph from "./graph";
 import { parseSubtitle } from "./functions";
 import DATA from "./data.json";
 import arrow from "../../img/arrow.png";
 import "./lake.css";
-import Metadata from "./metadata";
+
 
 class NotFound extends Component {
   render() {
@@ -30,8 +29,17 @@ class NotFound extends Component {
 
 class Module extends Component {
   render() {
-    var { module, active, setActiveModule, closeActiveModule, selected } =
-      this.props;
+    var {
+      module,
+      active,
+      setActiveModule,
+      closeActiveModule,
+      selected,
+      language,
+      metadata,
+    } = this.props;
+    var title = metadata.name[language];
+    var subtitle = parseSubtitle(title, metadata.name);
     return (
       <div
         className={
@@ -45,18 +53,12 @@ class Module extends Component {
           &times;
         </div>
         <div className="active-title">
-          <div className="title">{module.title}</div>
-          <div className="subtitle">{module.subtitle}</div>
+          <div className="title">{title}</div>
+          <div className="subtitle">{subtitle}</div>
         </div>
         <div className="display">
-          {module.component === "threed" && <ThreeD {...this.props} />}
-          {module.component === "satellite" && <Satellite {...this.props} />}
-          {module.component === "currentgraph" && (
-            <CurrentGraph {...this.props} />
-          )}
-          {module.component === "historicgraph" && (
-            <HistoricGraph {...this.props} />
-          )}
+          {module.component === "map" && <Map {...this.props} />}
+          {module.component === "graph" && <Graph {...this.props} />}
         </div>
         <div className="link">
           <div className="title">{module.title}</div>
@@ -113,6 +115,11 @@ class Lake extends Component {
       );*/
       const data = DATA;
       const { metadata, modules, layers } = data;
+      layers.map((l) => {
+        l.active = false;
+        l.lake = metadata.key;
+        return l;
+      });
       this.setState({
         active_module,
         metadata,

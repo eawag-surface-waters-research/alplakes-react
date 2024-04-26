@@ -1,6 +1,10 @@
 import axios from "axios";
 import CONFIG from "../../config.json";
 
+export const copy = (data) => {
+  return JSON.parse(JSON.stringify(data));
+};
+
 export const parseSubtitle = (title, names) => {
   names = Object.values(names);
   names = [...new Set(names)].filter((n) => n !== title);
@@ -53,7 +57,6 @@ export const processSatelliteFiles = (
       max,
       layer_id,
       unit,
-      satellite,
     };
     if (date in available) {
       available[date].images.push(image);
@@ -258,51 +261,45 @@ const loaded = () => {
   }
 };
 
-export const setCustomPeriod = async (
-  customPeriod,
-  period,
-  minDate,
-  maxDate,
-  depth,
-  depths,
-  missingDates
-) => {
-  if (customPeriod.type === "alplakes_hydrodynamic") {
-    var data;
-    if ("bucket" in customPeriod) {
-      try {
-        ({ data } = await axios.get(
-          CONFIG.alplakes_bucket + customPeriod.bucket
-        ));
-      } catch (e) {
-        ({ data } = await axios.get(CONFIG.alplakes_api + customPeriod.end));
-      }
-    } else {
-      ({ data } = await axios.get(CONFIG.alplakes_api + customPeriod.end));
-    }
-    minDate = stringToDate(data.start_date).getTime();
-    maxDate = stringToDate(data.end_date).getTime();
-    var startDate = maxDate + customPeriod.start * 8.64e7;
-    if ("depths" in data) {
-      depths = data.depths;
-      let index = closestIndex(depth, depths);
-      depth = depths[index];
-    }
-    if ("missing_weeks" in data) {
-      missingDates = data.missing_weeks;
-    }
-    return {
-      period: [startDate, maxDate],
-      minDate,
-      maxDate,
-      depths,
-      depth,
-      missingDates,
-    };
-  } else {
-    console.error("Custom period type not recognised.");
-    return { period, minDate, maxDate, depths, depth };
+export const customAlplakesPeriod = async (layer, depth) => {
+  var source = layer.sources[layer.source];
+  var data;
+  try {
+    ({ data } = await axios.get(CONFIG.alplakes_bucket + source.bucket));
+  } catch (e) {
+    ({ data } = await axios.get(CONFIG.alplakes_api + source.end));
   }
+  source.minDate = stringToDate(data.start_date).getTime();
+  source.maxDate = stringToDate(data.end_date).getTime();
+  var startDate = source.maxDate + source.start * 8.64e7;
+  if ("depths" in data) {
+    source.depths = data.depths;
+    let index = closestIndex(depth, source.depths);
+    depth = source.depths[index];
+  }
+  if ("missing_weeks" in data) {
+    source.missingDates = data.missing_weeks;
+  }
+  return {
+    period: [startDate, source.maxDate],
+    layer,
+    depth,
+  };
+};
+
+export const latestSencastImage = async (layer) => {
+  var source = layer.sources[layer.source];
+  var { data } = await axios.get(CONFIG.sencast_bucket + source.bucket);
+  let time = satelliteStringToDate(data.dt);
+  let date = formatDate(time);
+  let url = CONFIG.sencast_bucket + "/" + data.k;
+  source.url = url;
+  source.ave = data.mean;
+  source.min = data.min;
+  source.max = data.max;
+  source.date = date;
+  source.time = time;
+  return layer;
 };
 
 export const getFrozen = async (lake) => {

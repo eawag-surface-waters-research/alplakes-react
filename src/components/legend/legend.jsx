@@ -4,34 +4,42 @@ import Translate from "../../translations.json";
 
 class Legend extends Component {
   render() {
-    var { layers, language, setSelection, legend } = this.props;
+    var { layers, language, setSelection, legend, playControls } = this.props;
+    if (layers === undefined || layers.length === 0) {
+      layers = [];
+      legend = false;
+    }
     return (
-      <div className={legend ? "legend" : "legend hide"}>
+      <div
+        className={
+          legend ? (playControls ? "legend play" : "legend") : "legend hide"
+        }
+      >
         <table>
           <tbody>
             {layers
               .filter(
                 (l) =>
                   ["min", "max", "palette"].every((key) =>
-                    Object.keys(l.properties.options).includes(key)
+                    Object.keys(l.displayOptions).includes(key)
                   ) &&
                   l.active &&
-                  ("raster" in l.properties.options
-                    ? l.properties.options.raster
+                  ("raster" in l.displayOptions
+                    ? l.displayOptions.raster
                     : true)
               )
               .map((l) => (
                 <Colorbar
-                  min={l.properties.options.min}
-                  max={l.properties.options.max}
-                  palette={l.properties.options.palette}
-                  unit={l.properties.unit}
+                  min={l.displayOptions.min}
+                  max={l.displayOptions.max}
+                  palette={l.displayOptions.palette}
+                  unit={l.unit}
                   onClick={setSelection}
                   key={l.id}
                   id={l.id}
                   text={
-                    l.properties.parameter in Translate
-                      ? Translate[l.properties.parameter][language]
+                    l.parameter in Translate
+                      ? Translate[l.parameter][language]
                       : ""
                   }
                 />

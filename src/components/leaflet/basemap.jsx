@@ -26,13 +26,13 @@ class Basemap extends Component {
       period,
       datetime,
       depth,
-      unlock,
       getTransect,
       getProfile,
-      bucket,
     } = this.props;
     if (updates.length > 0) {
       updated();
+      var initialLoad = false;
+      if (updates.find(u => u.event === "initialLoad")) initialLoad = true;
       for (var update of updates) {
         if (update.event === "clear") {
           this.layer.clearLayers();
@@ -56,7 +56,7 @@ class Basemap extends Component {
               depth,
               getTransect,
               getProfile,
-              bucket
+              initialLoad
             );
           } catch (e) {
             console.error(
@@ -64,11 +64,11 @@ class Basemap extends Component {
               this.find(layers, "id", update.id)
             );
             console.error(e);
-            window.alert(
+            /**window.alert(
               `Failed to add layer ${
-                this.find(layers, "id", update.id).properties.parameter
+                this.find(layers, "id", update.id).parameter
               }, try a different time period.`
-            );
+            );**/
           }
         } else if (update.event === "updateLayer") {
           updateLayer(
@@ -87,7 +87,6 @@ class Basemap extends Component {
           );
         }
       }
-      unlock();
       this.map.triggerLayersUpdate();
     }
     var { darkMap, lightMap } = this.state;
@@ -132,7 +131,7 @@ class Basemap extends Component {
   }
   async componentDidMount() {
     var { darkMap, lightMap, id } = this.state;
-    var { dark, metadata } = this.props;
+    var { dark } = this.props;
     this.dataStore = {};
     this.layerStore = {};
     var center = [46.9, 8.2];

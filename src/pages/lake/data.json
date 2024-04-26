@@ -13,6 +13,7 @@
     "area": 580,
     "ave_depth": 154,
     "max_depth": 310,
+    "default_depth": 0.7,
     "elevation": 372,
     "type": "Natural",
     "volume": 89.0,
@@ -24,13 +25,6 @@
       "southWest": [46.2, 6.147],
       "northEast": [46.52, 6.93]
     },
-    "customPeriod": {
-      "type": "alplakes_hydrodynamic",
-      "start": -7,
-      "end": "/simulations/metadata/delft3d-flow/geneva",
-      "bucket": "/simulations/delft3d-flow/metadata/geneva/metadata.json"
-    },
-    "default_depth": 0.7,
     "bathymetry": [
       {
         "type": "1D",
@@ -114,69 +108,77 @@
       "id": "threed_map",
       "title": "Temperature and Currents",
       "subtitle": "3D Model",
-      "component": "threed",
-      "defaults": ["delft3d_temperature", "delft3d_currents"]
+      "component": "map",
+      "defaults": ["3D_temperature", "3D_currents"]
     },
     {
       "id": "graph_conditions",
       "title": "Temperature, Oxygen and Ice",
       "subtitle": "1D Model",
-      "component": "currentgraph"
+      "component": "graph"
     },
     {
       "id": "satellite_chla",
       "title": "Chlorophyll A",
       "subtitle": "Remote Sensing Product",
-      "component": "satellite",
-      "default": "chlorophyll"
+      "component": "map",
+      "defaults": ["satellite_chlorophyll"]
     },
     {
       "id": "satellite_secchi",
       "title": "Secchi Depth",
       "subtitle": "Remote Sensing Product",
-      "component": "satellite",
-      "default": "secchi"
+      "component": "map",
+      "defaults": ["satellite_secchi"]
     },
     {
       "id": "satellite_turbidity",
       "title": "Turbidity",
       "subtitle": "Remote Sensing Product",
-      "component": "satellite",
-      "default": "turbidity"
+      "component": "map",
+      "defaults": ["satellite_turbidity"]
     },
     {
       "id": "threed_thermocline",
       "title": "Thermocline",
       "subtitle": "3D Model",
-      "component": "threed",
-      "defaults": ["delft3d_thermocline"]
+      "component": "map",
+      "defaults": ["3D_thermocline"]
     },
     {
       "id": "graph_historic",
       "title": "Historic Trends",
       "subtitle": "Models and insitu data",
-      "component": "historicgraph",
-      "defaults": []
+      "component": "graph"
     }
   ],
   "layers": [
     {
-      "id": "delft3d_temperature",
-      "type": "alplakes_hydrodynamic",
-      "active": true,
-      "playUpdate": true,
-      "description": "Water temperatures are hindcasted and forecasted using the 3D hydrodynamic model @3@. Meteorological forcing data is produced from the @1@ products, hincasts use the Cosmo-1e 1 day deterministic product (VNXQ34) and forecasts use the Cosmo-2e 5 day ensemble forecast (VNXZ32). Where rivers inputs are used this data is sourced from @4@. The scripts used to generate model input, along with the full model setup are avaiable @2@. This model is calibrated using in-situ measuresuments collected by a number of 3rd parties.",
-      "links": {
-        "1": [
-          "MeteoSwiss COSMO",
-          "https://www.meteoswiss.admin.ch/weather/warning-and-forecasting-systems/cosmo-forecasting-system.html"
-        ],
-        "2": [
-          "here",
-          "https://github.com/eawag-surface-waters-research/alplakes-simulations"
-        ],
-        "3": ["Delft3D", "https://oss.deltares.nl/web/delft3d"],
-        "4": ["BAFU Hydrodaten", "https://www.hydrodaten.admin.ch/en"]
+      "id": "3D_temperature",
+      "type": "threed",
+      "playControls": true,
+      "depth": true,
+      "parameter": "temperature",
+      "unit": "°C",
+      "display": "raster",
+      "source": "alplakes_delft3d",
+      "displayOptions": {
+        "paletteName": "Balance",
+        "zIndex": 1,
+        "labels": true,
+        "interpolate": true
+      },
+      "sources": {
+        "alplakes_delft3d": {
+          "type": "alplakes_hydrodynamic",
+          "model": "delft3d-flow",
+          "height": 182,
+          "width": 36,
+          "initialLoad": "customAlplakesPeriod",
+          "start": -7,
+          "end": "/simulations/metadata/delft3d-flow/geneva",
+          "bucket": "/simulations/delft3d-flow/metadata/geneva/metadata.json"
+        }
       },
       "labels": [
         { "name": "Lausanne", "latlng": [46.50995, 6.61172] },
@@ -191,265 +193,161 @@
           "direction": "bottom"
         },
         { "name": "Vevey", "latlng": [46.45841, 6.84158] }
-      ],
-      "properties": {
-        "model": "delft3d-flow",
-        "lake": "geneva",
-        "parameter": "temperature",
-        "unit": "°C",
-        "height": 182,
-        "width": 36,
-        "display": "raster",
-        "interpolate": true,
-        "depth": true,
-        "period": true,
-        "simpleline": true,
-        "temperature": true,
-        "options": {
-          "paletteName": "Balance",
-          "zIndex": 1,
-          "labels": true
-        }
-      }
+      ]
     },
     {
-      "id": "delft3d_currents",
-      "type": "alplakes_hydrodynamic",
-      "active": true,
-      "playUpdate": true,
-      "description": "Lake currents are hindcasted and forecasted using the 3D hydrodynamic model @3@. Meteorological forcing data is produced from the @1@ products, hincasts use the Cosmo-1e 1 day deterministic product (VNXQ34) and forecasts use the Cosmo-2e 5 day ensemble forecast (VNXZ32). Where rivers inputs are used this data is sourced from @4@. The scripts used to generate model input, along with the full model setup are avaiable @2@. This model is calibrated using in-situ measuresuments collected by a number of 3rd parties.",
-      "links": {
-        "1": [
-          "MeteoSwiss COSMO",
-          "https://www.meteoswiss.admin.ch/weather/warning-and-forecasting-systems/cosmo-forecasting-system.html"
-        ],
-        "2": [
-          "here",
-          "https://github.com/eawag-surface-waters-research/alplakes-simulations"
-        ],
-        "3": ["Delft3D", "https://oss.deltares.nl/web/delft3d"],
-        "4": ["BAFU Hydrodaten", "https://www.hydrodaten.admin.ch/en"]
+      "id": "3D_currents",
+      "type": "threed",
+      "playControls": true,
+      "depth": true,
+      "parameter": "velocity",
+      "unit": "m/s",
+      "display": "current",
+      "source": "alplakes_delft3d",
+      "displayOptions": {
+        "raster": false,
+        "streamlines": false,
+        "arrows": true,
+        "vector": true,
+        "paths": 5000,
+        "streamlinesColor": "#ffffff",
+        "arrowsColor": "#000000",
+        "width": 0.5,
+        "fade": 0.97,
+        "duration": 10,
+        "maxAge": 80,
+        "velocityScale": 0.01,
+        "opacity": 0.8,
+        "zIndex": 3,
+        "paletteName": "Thermal"
       },
-      "properties": {
-        "model": "delft3d-flow",
-        "lake": "geneva",
-        "parameter": "velocity",
-        "unit": "m/s",
-        "height": 182,
-        "width": 36,
-        "display": "current",
-        "depth": true,
-        "period": true,
-        "options": {
-          "raster": false,
-          "streamlines": false,
-          "arrows": true,
-          "vector": true,
-          "paths": 5000,
-          "streamlinesColor": "#ffffff",
-          "arrowsColor": "#000000",
-          "width": 0.5,
-          "fade": 0.97,
-          "duration": 10,
-          "maxAge": 80,
-          "velocityScale": 0.01,
-          "opacity": 0.8,
-          "zIndex": 3,
-          "paletteName": "Thermal"
+      "sources": {
+        "alplakes_delft3d": {
+          "type": "alplakes_hydrodynamic",
+          "model": "delft3d-flow",
+          "height": 182,
+          "width": 36,
+          "initialLoad": "customAlplakesPeriod",
+          "start": -7,
+          "end": "/simulations/metadata/delft3d-flow/geneva",
+          "bucket": "/simulations/delft3d-flow/metadata/geneva/metadata.json"
         }
       }
     },
     {
-      "id": "delft3d_thermocline",
-      "type": "alplakes_hydrodynamic",
-      "active": false,
-      "playUpdate": true,
-      "description": "Thermocline depth calculated using @5@ using the 3D hydrodynamic model @3@. Meteorological forcing data is produced from the @1@ products, hincasts use the Cosmo-1e 1 day deterministic product (VNXQ34) and forecasts use the Cosmo-2e 5 day ensemble forecast (VNXZ32). Where rivers inputs are used this data is sourced from @4@. The scripts used to generate model input, along with the full model setup are avaiable @2@. This model is calibrated using in-situ measuresuments collected by a number of 3rd parties.",
-      "links": {
-        "1": [
-          "MeteoSwiss COSMO",
-          "https://www.meteoswiss.admin.ch/weather/warning-and-forecasting-systems/cosmo-forecasting-system.html"
-        ],
-        "2": [
-          "here",
-          "https://github.com/eawag-surface-waters-research/alplakes-simulations"
-        ],
-        "3": ["Delft3D", "https://oss.deltares.nl/web/delft3d"],
-        "4": ["BAFU Hydrodaten", "https://www.hydrodaten.admin.ch/en"],
-        "5": ["PyLake", "https://github.com/hugocruzz/pylake"]
+      "id": "3D_thermocline",
+      "type": "threed",
+      "playControls": true,
+      "depth": false,
+      "parameter": "thermocline",
+      "unit": "m",
+      "display": "raster",
+      "source": "alplakes_delft3d",
+      "displayOptions": {
+        "paletteName": "navia reverse",
+        "zIndex": 2,
+        "labels": true,
+        "interpolate": true
       },
-      "properties": {
-        "model": "delft3d-flow",
-        "lake": "geneva",
-        "parameter": "thermocline",
-        "unit": "m",
-        "height": 182,
-        "width": 36,
-        "display": "raster",
-        "depth": true,
-        "period": true,
-        "options": {
-          "paletteName": "navia reverse",
-          "zIndex": 2
+      "sources": {
+        "alplakes_delft3d": {
+          "type": "alplakes_hydrodynamic",
+          "model": "delft3d-flow",
+          "height": 182,
+          "width": 36,
+          "initialLoad": "customAlplakesPeriod",
+          "start": -7,
+          "end": "/simulations/metadata/delft3d-flow/geneva",
+          "bucket": "/simulations/delft3d-flow/metadata/geneva/metadata.json"
         }
-      }
-    },
-    {
-      "id": "sentinel3_chlorophyll",
-      "parameter": "chlorophyll",
-      "type": "sencast_tiff",
-      "active": false,
-      "description": "Surface chlorophyll concentration processed from Sentinel 3 data using the @1@ python package. Retrievals are based on a locally adjusted version of @2@.",
-      "links": {
-        "1": [
-          "SenCast",
-          "https://github.com/eawag-surface-waters-research/sencast"
-        ],
-        "2": ["OC3", "https://oceancolor.gsfc.nasa.gov/atbd/chlor_a/"]
       },
-      "properties": {
-        "model": "Sentinel3",
-        "lake": "geneva",
-        "parameter": "chla",
-        "metadata": "https://eawagrs.s3.eu-central-1.amazonaws.com/metadata/sentinel3/geneva_chla.json",
-        "wms": "https://creodias.sentinel-hub.com/ogc/wms/fea4245d-9a3b-4337-8cc2-9bbdbd22ff1a",
-        "unit": "mg m-3",
-        "display": "tiff",
-        "depth": false,
-        "period": false,
-        "options": {
-          "paletteName": "cc chl",
-          "zIndex": 2,
-          "opacity": 1,
-          "convolve": 2,
-          "wms": false
-        }
-      }
+      "labels": [
+        { "name": "Lausanne", "latlng": [46.50995, 6.61172] },
+        {
+          "name": "Geneva",
+          "latlng": [46.22034, 6.1564],
+          "direction": "right"
+        },
+        {
+          "name": "Thonon",
+          "latlng": [46.37547, 6.47259],
+          "direction": "bottom"
+        },
+        { "name": "Vevey", "latlng": [46.45841, 6.84158] }
+      ]
     },
     {
-      "id": "sentinel3_turbidity",
-      "type": "sencast_tiff",
-      "parameter": "turbidity",
-      "active": false,
-      "description": "Surface total suspended matter processed from Sentinel 3 data using the @1@ python package. See @2@ by HYGEOS.",
-      "links": {
-        "1": [
-          "SenCast",
-          "https://github.com/eawag-surface-waters-research/sencast"
-        ],
-        "2": ["POLYMER", "https://www.hygeos.com/polymer"]
+      "id": "satellite_chlorophyll",
+      "type": "satellite",
+      "playControls": false,
+      "depth": false,
+      "parameter": "chla",
+      "unit": "mg m-3",
+      "display": "tiff",
+      "source": "sencast",
+      "displayOptions": {
+        "paletteName": "cc chl",
+        "zIndex": 2,
+        "opacity": 1,
+        "convolve": 2,
+        "wms": false
       },
-      "properties": {
-        "model": "Sentinel3",
-        "lake": "geneva",
-        "parameter": "tsm",
-        "metadata": "https://eawagrs.s3.eu-central-1.amazonaws.com/metadata/sentinel3/geneva_tsm_binding754.json",
-        "wms": "https://creodias.sentinel-hub.com/ogc/wms/fea4245d-9a3b-4337-8cc2-9bbdbd22ff1a",
-        "unit": "g m-3",
-        "display": "tiff",
-        "depth": false,
-        "period": false,
-        "options": {
-          "paletteName": "cc chl",
-          "zIndex": 2,
-          "opacity": 1,
-          "convolve": 2,
-          "wms": false
+      "sources": {
+        "sencast": {
+          "type": "sencast_tiff",
+          "model": ["Sentinel3"],
+          "initialLoad": "latestSencastImage",
+          "bucket": "/metadata/latest/geneva_chla.json"
         }
       }
     },
     {
-      "id": "sentinel3_secchi",
-      "type": "sencast_tiff",
+      "id": "satellite_secchi",
+      "type": "satellite",
+      "playControls": false,
+      "depth": false,
       "parameter": "secchi",
-      "active": false,
-      "description": "Secchi depth processed from Sentinel 3 data using the @1@ python package. See the QAA algorithm by Lee et al. for details.",
-      "links": {
-        "1": [
-          "SenCast",
-          "https://github.com/eawag-surface-waters-research/sencast"
-        ]
+      "unit": "m",
+      "display": "tiff",
+      "source": "sencast",
+      "displayOptions": {
+        "paletteName": "cc chl",
+        "zIndex": 2,
+        "opacity": 1,
+        "convolve": 2,
+        "wms": false
       },
-      "properties": {
-        "model": "Sentinel3",
-        "lake": "geneva",
-        "parameter": "secchi",
-        "metadata": "https://eawagrs.s3.eu-central-1.amazonaws.com/metadata/sentinel3/geneva_Zsd_lee.json",
-        "wms": "https://creodias.sentinel-hub.com/ogc/wms/fea4245d-9a3b-4337-8cc2-9bbdbd22ff1a",
-        "unit": "m",
-        "display": "tiff",
-        "depth": false,
-        "period": false,
-        "options": {
-          "paletteName": "cc chl",
-          "zIndex": 2,
-          "opacity": 1,
-          "convolve": 2,
-          "wms": false
+      "sources": {
+        "sencast": {
+          "type": "sencast_tiff",
+          "model": ["Sentinel3", "Sentinel2"],
+          "initialLoad": "latestSencastImage",
+          "bucket": "/metadata/latest/geneva_secchi.json"
         }
       }
     },
     {
-      "id": "sentinel2_secchi",
-      "type": "sencast_tiff",
-      "parameter": "secchi",
-      "active": false,
-      "description": "Secchi depth processed from Sentinel 2 data using the @1@ python package. See @2@ by HYGEOS.",
-      "links": {
-        "1": [
-          "SenCast",
-          "https://github.com/eawag-surface-waters-research/sencast"
-        ],
-        "2": ["POLYMER", "https://www.hygeos.com/polymer"]
+      "id": "satellite_turbidity",
+      "type": "satellite",
+      "playControls": false,
+      "depth": false,
+      "parameter": "tsm",
+      "unit": "g m-3",
+      "display": "tiff",
+      "source": "sencast",
+      "displayOptions": {
+        "paletteName": "cc chl",
+        "zIndex": 2,
+        "opacity": 1,
+        "convolve": 2,
+        "wms": false
       },
-      "properties": {
-        "model": "Sentinel2",
-        "lake": "geneva",
-        "parameter": "secchi",
-        "metadata": "https://eawagrs.s3.eu-central-1.amazonaws.com/metadata/sentinel2/geneva_Z490.json",
-        "wms": "https://services.sentinel-hub.com/ogc/wms/a595b5c3-8963-4076-98ad-5cbe7e9d7999",
-        "unit": "m",
-        "display": "tiff",
-        "depth": false,
-        "period": false,
-        "options": {
-          "paletteName": "Thermal",
-          "zIndex": 2,
-          "opacity": 1,
-          "convolve": 2,
-          "wms": false
-        }
-      }
-    },
-    {
-      "id": "sentinel2_turbidity",
-      "type": "sencast_tiff",
-      "parameter": "turbidity",
-      "active": false,
-      "description": "Surface total suspended matter processed from Sentinel 2 data using the @1@ python package. See @2@ by HYGEOS.",
-      "links": {
-        "1": [
-          "SenCast",
-          "https://github.com/eawag-surface-waters-research/sencast"
-        ],
-        "2": ["POLYMER", "https://www.hygeos.com/polymer"]
-      },
-      "properties": {
-        "model": "Sentinel2",
-        "lake": "geneva",
-        "parameter": "turbidity",
-        "metadata": "https://eawagrs.s3.eu-central-1.amazonaws.com/metadata/sentinel2/geneva_tsm_dogliotti665.json",
-        "wms": "https://services.sentinel-hub.com/ogc/wms/a595b5c3-8963-4076-98ad-5cbe7e9d7999",
-        "unit": "g m-3",
-        "display": "tiff",
-        "depth": false,
-        "period": false,
-        "options": {
-          "paletteName": "Thermal",
-          "zIndex": 2,
-          "opacity": 1,
-          "convolve": 2,
-          "wms": false
+      "sources": {
+        "sencast": {
+          "type": "sencast_tiff",
+          "model": ["Sentinel3", "Sentinel2"],
+          "initialLoad": "latestSencastImage",
+          "bucket": "/metadata/latest/geneva_tsm.json"
         }
       }
     }

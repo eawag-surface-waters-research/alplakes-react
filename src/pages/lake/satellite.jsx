@@ -5,6 +5,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Basemap from "../../components/leaflet/basemap";
 import Loading from "../../components/loading/loading";
+import Legend from "../../components/legend/legend";
 import {
   processSatelliteFiles,
   filterImages,
@@ -15,7 +16,7 @@ import {
 } from "./functions";
 import Translations from "../../translations.json";
 import "./lake.css";
-import Legend from "../../components/legend/legend";
+
 import ShowMoreText from "../../components/showmoretext/showmoretext";
 import SatelliteSummary from "../../components/d3/satellitesummary/satellitesummary";
 import ImageryIcon from "../../img/imagery.png";

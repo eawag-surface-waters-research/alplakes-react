@@ -209,7 +209,7 @@ const getTimestepData = (data, datetime) => {
   }
 };
 
-const round = (value, decimals) => {
+export const round = (value, decimals) => {
   return Math.round(value * 10 ** decimals) / 10 ** decimals;
 };
 
@@ -269,7 +269,8 @@ export const addLayer = async (
   getProfile,
   bucket
 ) => {
-  if (layer.type === "alplakes_hydrodynamic") {
+  var source = layer.sources[layer.source];
+  if (source.type === "alplakes_hydrodynamic") {
     await addAlplakesHydrodynamic(
       layer,
       period,
@@ -280,11 +281,11 @@ export const addLayer = async (
       depth,
       bucket
     );
-  } else if (layer.type === "sencast_tiff") {
+  } else if (source.type === "sencast_tiff") {
     await addSencastTiff(layer, dataStore, layerStore, datetime, map);
-  } else if (layer.type === "sentinel_hub_wms") {
+  } else if (source.type === "sentinel_hub_wms") {
     await addSentinelHubWms(layer, dataStore, layerStore, datetime, map);
-  } else if (layer.type === "alplakes_particles") {
+  } else if (source.type === "alplakes_particles") {
     await addAlplakesParticles(
       layer,
       period,
@@ -295,7 +296,7 @@ export const addLayer = async (
       depth,
       bucket
     );
-  } else if (layer.type === "alplakes_transect") {
+  } else if (source.type === "alplakes_transect") {
     await addAlplakesTransect(
       layer,
       dataStore,
@@ -304,7 +305,7 @@ export const addLayer = async (
       map,
       getTransect
     );
-  } else if (layer.type === "alplakes_profile") {
+  } else if (source.type === "alplakes_profile") {
     await addAlplakesProfile(
       layer,
       dataStore,
@@ -325,7 +326,8 @@ export const updateLayer = async (
   datetime,
   depth
 ) => {
-  if (layer.type === "alplakes_hydrodynamic") {
+  var source = layer.sources[layer.source];
+  if (source.type === "alplakes_hydrodynamic") {
     await updateAlplakesHydrodynamic(
       layer,
       dataStore,
@@ -334,11 +336,11 @@ export const updateLayer = async (
       datetime,
       depth
     );
-  } else if (layer.type === "sencast_tiff") {
+  } else if (source.type === "sencast_tiff") {
     await updateSencastTiff(layer, dataStore, layerStore, map, datetime);
-  } else if (layer.type === "sentinel_hub_wms") {
+  } else if (source.type === "sentinel_hub_wms") {
     await updateSentinelHubWms(layer, dataStore, layerStore, map, datetime);
-  } else if (layer.type === "alplakes_particles") {
+  } else if (source.type === "alplakes_particles") {
     await updateAlplakesParticles(
       layer,
       dataStore,
@@ -352,17 +354,18 @@ export const updateLayer = async (
 };
 
 export const removeLayer = async (layer, layerStore, map) => {
-  if (layer.type === "alplakes_hydrodynamic") {
+  var source = layer.sources[layer.source];
+  if (source.type === "alplakes_hydrodynamic") {
     await removeAlplakesHydrodynamic(layer, layerStore, map);
-  } else if (layer.type === "sencast_tiff") {
+  } else if (source.type === "sencast_tiff") {
     await removeSencastTiff(layer, layerStore, map);
-  } else if (layer.type === "sentinel_hub_wms") {
+  } else if (source.type === "sentinel_hub_wms") {
     removeSentinelHubWms(layer, layerStore, map);
-  } else if (layer.type === "alplakes_transect") {
+  } else if (source.type === "alplakes_transect") {
     removeAlplakesTransect(layer, layerStore, map);
-  } else if (layer.type === "alplakes_profile") {
+  } else if (source.type === "alplakes_profile") {
     removeAlplakesProfile(layer, layerStore, map);
-  } else if (layer.type === "alplakes_particles") {
+  } else if (source.type === "alplakes_particles") {
     removeAlplakesParticles(layer, layerStore, map);
   }
 };
@@ -379,7 +382,7 @@ const addAlplakesHydrodynamic = async (
 ) => {
   loading("Downloading lake geometry");
   await downloadAlplakesHydrodynamicGeometry(layer, period, dataStore);
-  loading(`Downloading lake ${layer.properties.parameter} field`);
+  loading(`Downloading lake ${layer.parameter} field`);
   await downloadAlplakesHydrodynamicParameter(
     layer,
     period,
@@ -397,12 +400,13 @@ const downloadAlplakesHydrodynamicGeometry = async (
   dataStore,
   overwrite = false
 ) => {
-  var type = layer.type;
+  var source = layer.sources[layer.source];
+  var type = source.type;
   if (typeof overwrite === "object") {
     if ("type" in overwrite) type = overwrite.type;
   }
 
-  var path = [type, layer.properties.model, layer.properties.lake, "geometry"];
+  var path = [type, source.model, layer.lake, "geometry"];
 
   if (checkNested(dataStore, path)) {
     return;
@@ -412,15 +416,13 @@ const downloadAlplakesHydrodynamicGeometry = async (
 
   try {
     ({ data: geometry } = await axios.get(
-      `${CONFIG.alplakes_bucket}/simulations/${layer.properties.model}/metadata/${layer.properties.lake}/geometry.txt`
+      `${CONFIG.alplakes_bucket}/simulations/${source.model}/metadata/${layer.lake}/geometry.txt`
     ));
   } catch (e) {
     ({ data: geometry } = await axios.get(
-      `${CONFIG.alplakes_api}/simulations/layer_alplakes/${
-        layer.properties.model
-      }/${layer.properties.lake}/geometry/${formatDate(period[0])}/${formatDate(
-        period[1]
-      )}/0`
+      `${CONFIG.alplakes_api}/simulations/layer_alplakes/${source.model}/${
+        layer.lake
+      }/geometry/${formatDate(period[0])}/${formatDate(period[1])}/0`
     ));
   }
 
@@ -438,20 +440,15 @@ const downloadAlplakesHydrodynamicParameter = async (
   bucket,
   overwrite = false
 ) => {
-  var type = layer.type;
-  var parameter = layer.properties.parameter;
+  var source = layer.sources[layer.source];
+  var type = source.type;
+  var parameter = layer.parameter;
   if (typeof overwrite === "object") {
     if ("type" in overwrite) type = overwrite.type;
     if ("parameter" in overwrite) parameter = overwrite.parameter;
   }
 
-  var path = [
-    type,
-    layer.properties.model,
-    layer.properties.lake,
-    parameter,
-    String(depth),
-  ];
+  var path = [type, source.model, layer.lake, parameter, String(depth)];
 
   var start = period[0];
   var end = period[1];
@@ -462,46 +459,36 @@ const downloadAlplakesHydrodynamicParameter = async (
   if (bucket) {
     try {
       ({ data: par } = await axios.get(
-        `${CONFIG.alplakes_bucket}/simulations/${layer.properties.model}/data/${
-          layer.properties.lake
+        `${CONFIG.alplakes_bucket}/simulations/${source.model}/data/${
+          layer.lake
         }/${parameter}_${formatDateBucket(start)}_${formatDateBucket(
           end
         )}_${formatDepth(depth)}.txt`
       ));
     } catch (e) {
       ({ data: par } = await axios.get(
-        `${CONFIG.alplakes_api}/simulations/layer_alplakes/${
-          layer.properties.model
-        }/${layer.properties.lake}/${parameter}/${formatDate(
-          start
-        )}/${formatDate(end)}/${formatDepth(depth)}`
+        `${CONFIG.alplakes_api}/simulations/layer_alplakes/${source.model}/${
+          layer.lake
+        }/${parameter}/${formatDate(start)}/${formatDate(end)}/${formatDepth(
+          depth
+        )}`
       ));
     }
   } else {
     ({ data: par } = await axios.get(
-      `${CONFIG.alplakes_api}/simulations/layer_alplakes/${
-        layer.properties.model
-      }/${layer.properties.lake}/${parameter}/${formatDate(start)}/${formatDate(
-        end
-      )}/${depth}`
+      `${CONFIG.alplakes_api}/simulations/layer_alplakes/${source.model}/${
+        layer.lake
+      }/${parameter}/${formatDate(start)}/${formatDate(end)}/${depth}`
     ));
   }
 
   par = par.split("\n").map((g) => g.split(",").map((s) => parseFloat(s)));
-
   var bounds = { min: [], max: [] };
-
-  for (
-    var i = 0;
-    i < Math.floor(par.length / (layer.properties.height + 1));
-    i++
-  ) {
-    var date = parseAlplakesDate(
-      String(par[i * (layer.properties.height + 1)][0])
-    );
+  for (var i = 0; i < Math.floor(par.length / (source.height + 1)); i++) {
+    var date = parseAlplakesDate(String(par[i * (source.height + 1)][0]));
     var data = par.slice(
-      i * (layer.properties.height + 1) + 1,
-      (i + 1) * (layer.properties.height + 1)
+      i * (source.height + 1) + 1,
+      (i + 1) * (source.height + 1)
     );
     var data_flat = data.flat();
     if (parameter === "velocity") {
@@ -513,10 +500,10 @@ const downloadAlplakesHydrodynamicParameter = async (
   }
   var min = d3.min(bounds.min);
   var max = d3.max(bounds.max);
-  layer.properties.options.min = min;
-  layer.properties.options.max = max;
-  layer.properties.options.dataMin = min;
-  layer.properties.options.dataMax = max;
+  layer.displayOptions.min = min;
+  layer.displayOptions.max = max;
+  layer.displayOptions.dataMin = min;
+  layer.displayOptions.dataMax = max;
 };
 
 const plotAlplakesHydrodynamic = (
@@ -527,25 +514,21 @@ const plotAlplakesHydrodynamic = (
   layerStore,
   map
 ) => {
+  var source = layer.sources[layer.source];
   var path = [
-    layer.type,
-    layer.properties.model,
-    layer.properties.lake,
-    layer.properties.parameter,
+    source.type,
+    source.model,
+    layer.lake,
+    layer.parameter,
     String(depth),
   ];
-  var geometry_path = [
-    layer.type,
-    layer.properties.model,
-    layer.properties.lake,
-    "geometry",
-  ];
+  var geometry_path = [source.type, source.model, layer.lake, "geometry"];
 
   var data = getNested(dataStore, path);
   var geometry = getNested(dataStore, geometry_path);
-  var { display, interpolate } = layer.properties;
+  var { display } = layer;
   if (display === "raster") {
-    if (interpolate) {
+    if (layer.displayOptions.interpolate) {
       var { interpolateValue, newData } = getTimestepData(data, datetime);
       plotAlplakesHydrodynamicRaster(
         layer,
@@ -584,30 +567,22 @@ const plotAlplakesHydrodynamicRaster = (
   data,
   interpolate
 ) => {
-  var path = [
-    layer.type,
-    layer.properties.model,
-    layer.properties.lake,
-    layer.properties.parameter,
-  ];
-  var options = {};
-  if ("options" in layer.properties) {
-    options = layer.properties.options;
-    if ("paletteName" in layer.properties.options) {
-      layer.properties.options.palette =
-        COLORS[layer.properties.options.paletteName];
-      options["palette"] = COLORS[layer.properties.options.paletteName];
-    }
-    if (!("opacity" in layer.properties.options)) {
-      options["opacity"] = 1;
-    }
-    if ("unit" in layer.properties) {
-      options["unit"] = layer.properties.unit;
-    }
+  var source = layer.sources[layer.source];
+  var path = [source.type, source.model, layer.lake, layer.parameter];
+  var options = layer.displayOptions;
+  if ("paletteName" in layer.displayOptions) {
+    layer.displayOptions.palette = COLORS[layer.displayOptions.paletteName];
+    options["palette"] = COLORS[layer.displayOptions.paletteName];
+  }
+  if (!("opacity" in layer.displayOptions)) {
+    options["opacity"] = 1;
+  }
+  if ("unit" in layer) {
+    options["unit"] = layer.unit;
   }
   options["interpolate"] = interpolate;
   var leaflet_layer = new L.Raster(geometry, data, options).addTo(map);
-  if ("labels" in layer && layer.properties.options.labels) {
+  if ("labels" in layer && layer.displayOptions.labels) {
     layer.labels.map((p) => {
       let value = leaflet_layer._getValue(L.latLng(p.latlng));
       return L.marker(p.latlng, {
@@ -645,27 +620,20 @@ const plotAlplakesHydrodynamicCurrent = (
   geometry,
   data
 ) => {
-  var path = [
-    layer.type,
-    layer.properties.model,
-    layer.properties.lake,
-    layer.properties.parameter,
-  ];
-  var options = {};
-  if ("options" in layer.properties) {
-    options = layer.properties.options;
-    if ("paletteName" in layer.properties.options) {
-      layer.properties.options.palette =
-        COLORS[layer.properties.options.paletteName];
-      options["palette"] = COLORS[layer.properties.options.paletteName];
-    }
-    if (!("opacity" in layer.properties.options)) {
-      options["opacity"] = 1;
-    }
-    if ("unit" in layer.properties) {
-      options["unit"] = layer.properties.unit;
-    }
+  var source = layer.sources[layer.source];
+  var path = [source.type, source.model, layer.lake, layer.parameter];
+  var options = layer.displayOptions;
+  if ("paletteName" in layer.displayOptions) {
+    layer.displayOptions.palette = COLORS[layer.displayOptions.paletteName];
+    options["palette"] = COLORS[layer.displayOptions.paletteName];
   }
+  if (!("opacity" in layer.displayOptions)) {
+    options["opacity"] = 1;
+  }
+  if ("unit" in layer) {
+    options["unit"] = layer.unit;
+  }
+
   var leaflet_layer = { arrows: false, streamlines: false, raster: false };
 
   if ("arrows" in options && options.arrows) {
@@ -690,41 +658,28 @@ const updateAlplakesHydrodynamic = (
   datetime,
   depth
 ) => {
-  var layer_path = [
-    layer.type,
-    layer.properties.model,
-    layer.properties.lake,
-    layer.properties.parameter,
-  ];
+  var source = layer.sources[layer.source];
+  var layer_path = [source.type, source.model, layer.lake, layer.parameter];
   var data_path = [
-    layer.type,
-    layer.properties.model,
-    layer.properties.lake,
-    layer.properties.parameter,
+    source.type,
+    source.model,
+    layer.lake,
+    layer.parameter,
     String(depth),
   ];
-  var geometry_path = [
-    layer.type,
-    layer.properties.model,
-    layer.properties.lake,
-    "geometry",
-  ];
+  var geometry_path = [source.type, source.model, layer.lake, "geometry"];
 
   var data = getNested(dataStore, data_path);
   var geometry = getNested(dataStore, geometry_path);
 
-  var options = {};
-  if ("options" in layer.properties) {
-    options = layer.properties.options;
-    if ("paletteName" in layer.properties.options) {
-      layer.properties.options.palette =
-        COLORS[layer.properties.options.paletteName];
-      options["palette"] = COLORS[layer.properties.options.paletteName];
-    }
+  var options = layer.displayOptions;
+  if ("paletteName" in layer.displayOptions) {
+    layer.displayOptions.palette = COLORS[layer.displayOptions.paletteName];
+    options["palette"] = COLORS[layer.displayOptions.paletteName];
   }
 
   var newData;
-  if (layer.properties.interpolate) {
+  if (layer.displayOptions.interpolate) {
     var out = getTimestepData(data, datetime);
     options["interpolate"] = out.interpolateValue;
     newData = out.newData;
@@ -733,7 +688,7 @@ const updateAlplakesHydrodynamic = (
   }
 
   var leaflet_layer = getNested(layerStore, layer_path);
-  if (layer.properties.parameter === "velocity") {
+  if (layer.parameter === "velocity") {
     for (var key of Object.keys(leaflet_layer)) {
       if (leaflet_layer[key] && options[key]) {
         leaflet_layer[key].update(newData, options);
@@ -767,7 +722,7 @@ const updateAlplakesHydrodynamic = (
     if ("labels" in layer) {
       if (
         layerStore["labels"].getLayers().length === 0 &&
-        layer.properties.options.labels
+        layer.displayOptions.labels
       ) {
         layer.labels.map((p) => {
           let value = leaflet_layer._getValue(L.latLng(p.latlng));
@@ -796,7 +751,7 @@ const updateAlplakesHydrodynamic = (
             )
             .addTo(layerStore["labels"]);
         });
-      } else if (layer.properties.options.labels) {
+      } else if (layer.displayOptions.labels) {
         layerStore["labels"].getLayers().forEach((m) => {
           let old = m.getTooltip();
           let p = layer.labels.find((p) => p.name === old.options.id);
@@ -819,15 +774,11 @@ const updateAlplakesHydrodynamic = (
 };
 
 const removeAlplakesHydrodynamic = (layer, layerStore, map) => {
-  var path = [
-    layer.type,
-    layer.properties.model,
-    layer.properties.lake,
-    layer.properties.parameter,
-  ];
+  var source = layer.sources[layer.source];
+  var path = [source.type, source.model, layer.lake, layer.parameter];
   var leaflet_layer = getNested(layerStore, path);
   if (leaflet_layer) {
-    if (layer.properties.parameter === "velocity" && leaflet_layer) {
+    if (layer.parameter === "velocity" && leaflet_layer) {
       for (var key of Object.keys(leaflet_layer)) {
         if (leaflet_layer[key]) {
           map.removeLayer(leaflet_layer[key]);
@@ -844,25 +795,23 @@ const removeAlplakesHydrodynamic = (layer, layerStore, map) => {
 };
 
 const addSencastTiff = async (layer, dataStore, layerStore, datetime, map) => {
-  await plotSencastTiff(layer.properties.url, layer, layerStore, map);
+  var source = layer.sources[layer.source];
+  await plotSencastTiff(source.url, layer, layerStore, map);
 };
 
 const plotSencastTiff = async (url, layer, layerStore, map) => {
-  var path = [layer.type, layer.properties.lake, layer.properties.parameter];
-  var options = {};
-  if ("options" in layer.properties) {
-    options = layer.properties.options;
-    if ("paletteName" in layer.properties.options) {
-      layer.properties.options.palette =
-        COLORS[layer.properties.options.paletteName];
-      options["palette"] = COLORS[layer.properties.options.paletteName];
-    }
-    if (!("opacity" in layer.properties.options)) {
-      options["opacity"] = 1;
-    }
-    if (!("convolve" in layer.properties.options)) {
-      options["convolve"] = 0;
-    }
+  var source = layer.sources[layer.source];
+  var path = [source.type, layer.lake, layer.parameter];
+  var options = layer.displayOptions;
+  if ("paletteName" in layer.displayOptions) {
+    layer.displayOptions.palette = COLORS[layer.displayOptions.paletteName];
+    options["palette"] = COLORS[layer.displayOptions.paletteName];
+  }
+  if (!("opacity" in layer.displayOptions)) {
+    options["opacity"] = 1;
+  }
+  if (!("convolve" in layer.displayOptions)) {
+    options["convolve"] = 0;
   }
   loading("Downloading satellite image");
   var { data } = await axios.get(url, {
@@ -890,7 +839,7 @@ const updateSencastTiff = async (
     map.removeLayer(layerStore["wms"]);
     layerStore["wms"] = null;
   }
-  if (layer.properties.options.wms) {
+  if (layer.displayOptions.wms) {
     layerStore["wms"] = L.tileLayer
       .wms(layer.properties.wms, {
         tileSize: 512,
@@ -900,22 +849,18 @@ const updateSencastTiff = async (
         maxZoom: 16,
         preset: "TRUE-COLOR",
         layers: "TRUE-COLOR",
-        time: formatWmsDate(layer.properties.options.date),
+        time: formatWmsDate(layer.displayOptions.date),
         gain: 1,
         gamma: 1,
       })
       .addTo(map);
   }
-  await plotSencastTiff(layer.properties.url, layer, layerStore, map);
+  await plotSencastTiff(layer.url, layer, layerStore, map);
 };
 
 const removeSencastTiff = (layer, layerStore, map) => {
-  var path = [
-    layer.type,
-    layer.properties.model,
-    layer.properties.lake,
-    layer.properties.parameter,
-  ];
+  var source = layer.sources[layer.source];
+  var path = [source.type, source.model, layer.lake, layer.parameter];
   var leaflet_layer = getNested(layerStore, path);
   map.removeLayer(leaflet_layer);
   setNested(layerStore, path, null);
@@ -928,12 +873,8 @@ const addSentinelHubWms = async (
   datetime,
   map
 ) => {
-  var path = [
-    layer.type,
-    layer.properties.model,
-    layer.properties.lake,
-    layer.properties.parameter,
-  ];
+  var source = layer.sources[layer.source];
+  var path = [source.type, source.model, layer.lake, layer.parameter];
   var metadata;
   var image;
   if (!checkNested(dataStore, path)) {
@@ -950,12 +891,12 @@ const addSentinelHubWms = async (
     setNested(dataStore, path, metadata);
     image = findClosest(metadata, "unix", datetime);
     var dates = keepDuplicatesWithHighestValue(metadata, "date", "percent");
-    layer.properties.options.includeDates = dates.map((m) => m.time);
-    layer.properties.options.percentage = dates.map((m) => m.percent);
-    layer.properties.options.date = image.time;
+    layer.displayOptions.includeDates = dates.map((m) => m.time);
+    layer.displayOptions.percentage = dates.map((m) => m.percent);
+    layer.displayOptions.date = image.time;
   } else {
     metadata = getNested(dataStore, path);
-    image = findClosest(metadata, "unix", layer.properties.options.date);
+    image = findClosest(metadata, "unix", layer.displayOptions.date);
   }
 
   var leaflet_layer = L.tileLayer
@@ -965,11 +906,11 @@ const addSentinelHubWms = async (
         '&copy; <a href="http://www.sentinel-hub.com/" target="_blank">Sentinel Hub</a>',
       minZoom: 6,
       maxZoom: 16,
-      preset: layer.properties.options.layer,
-      layers: layer.properties.options.layer,
-      time: formatWmsDate(layer.properties.options.date),
-      gain: layer.properties.options.gain,
-      gamma: layer.properties.options.gamma,
+      preset: layer.displayOptions.layer,
+      layers: layer.displayOptions.layer,
+      time: formatWmsDate(layer.displayOptions.date),
+      gain: layer.displayOptions.gain,
+      gamma: layer.displayOptions.gamma,
     })
     .addTo(map);
   setNested(layerStore, path, leaflet_layer);
@@ -982,36 +923,28 @@ const updateSentinelHubWms = async (
   map,
   datetime
 ) => {
-  var path = [
-    layer.type,
-    layer.properties.model,
-    layer.properties.lake,
-    layer.properties.parameter,
-  ];
+  var source = layer.sources[layer.source];
+  var path = [source.type, source.model, layer.lake, layer.parameter];
   var metadata = getNested(dataStore, path);
   var leaflet_layer = getNested(layerStore, path);
 
   const image = findClosest(
     metadata,
     "unix",
-    layer.properties.options.date.getTime()
+    layer.displayOptions.date.getTime()
   );
-  layer.properties.options.updateDate = false;
+  layer.displayOptions.updateDate = false;
 
   leaflet_layer.setParams({
     time: formatWmsDate(image.time),
-    gain: layer.properties.options.gain,
-    gamma: layer.properties.options.gamma,
+    gain: layer.displayOptions.gain,
+    gamma: layer.displayOptions.gamma,
   });
 };
 
 const removeSentinelHubWms = (layer, layerStore, map) => {
-  var path = [
-    layer.type,
-    layer.properties.model,
-    layer.properties.lake,
-    layer.properties.parameter,
-  ];
+  var source = layer.sources[layer.source];
+  var path = [source.type, source.model, layer.lake, layer.parameter];
   var leaflet_layer = getNested(layerStore, path);
   map.removeLayer(leaflet_layer);
   setNested(layerStore, path, null);
@@ -1055,32 +988,31 @@ const plotAlplakesParticles = (
   layerStore,
   map
 ) => {
+  var source = layer.sources[layer.source];
   var path = [
     "alplakes_hydrodynamic",
-    layer.properties.model,
-    layer.properties.lake,
+    source.model,
+    layer.lake,
     "velocity",
     String(depth),
   ];
   var geometry_path = [
     "alplakes_hydrodynamic",
-    layer.properties.model,
-    layer.properties.lake,
+    source.model,
+    layer.lake,
     "geometry",
   ];
-  var layer_path = [layer.type, layer.properties.model, layer.properties.lake];
+  var layer_path = [source.type, source.model, layer.lake];
   var data = getNested(dataStore, path);
   var geometry = getNested(dataStore, geometry_path);
-  var options = {};
-  if ("options" in layer.properties) {
-    options = layer.properties.options;
-    if (!("opacity" in layer.properties.options)) {
-      options["opacity"] = 1;
-    }
-    if ("unit" in layer.properties) {
-      options["unit"] = layer.properties.unit;
-    }
+  var options = layer.displayOptions;
+  if (!("opacity" in layer.displayOptions)) {
+    options["opacity"] = 1;
   }
+  if ("unit" in layer) {
+    options["unit"] = layer.unit;
+  }
+
   var leaflet_layer = L.control
     .particleTracking(geometry, data, datetime, options)
     .addTo(map);
@@ -1095,12 +1027,10 @@ const updateAlplakesParticles = (
   datetime,
   depth
 ) => {
-  var layer_path = [layer.type, layer.properties.model, layer.properties.lake];
+  var source = layer.sources[layer.source];
+  var layer_path = [source.type, source.model, layer.lake];
 
-  var options = {};
-  if ("options" in layer.properties) {
-    options = layer.properties.options;
-  }
+  var options = layer.displayOptions;
 
   var leaflet_layer = getNested(layerStore, layer_path);
   if (leaflet_layer && leaflet_layer !== null) {
@@ -1113,7 +1043,8 @@ const updateAlplakesParticles = (
 };
 
 const removeAlplakesParticles = (layer, layerStore, map) => {
-  var path = [layer.type, layer.properties.model, layer.properties.lake];
+  var source = layer.sources[layer.source];
+  var path = [source.type, source.model, layer.lake];
   var leaflet = getNested(layerStore, path);
   leaflet.remove(map);
   setNested(layerStore, path, null);
@@ -1127,7 +1058,8 @@ const addAlplakesTransect = async (
   map,
   getTransect
 ) => {
-  var path = [layer.type, layer.properties.model, layer.properties.lake];
+  var source = layer.sources[layer.source];
+  var path = [source.type, source.model, layer.lake];
   var leaflet_layer = L.layerGroup([]).addTo(map);
   leaflet_layer.setZIndex(999);
   var leaflet_control = L.control
@@ -1143,7 +1075,8 @@ const addAlplakesTransect = async (
 };
 
 const removeAlplakesTransect = (layer, layerStore, map) => {
-  var path = [layer.type, layer.properties.model, layer.properties.lake];
+  var source = layer.sources[layer.source];
+  var path = [source.type, source.model, layer.lake];
   var leaflet = getNested(layerStore, path);
   leaflet.control.remove(map);
   map.removeLayer(leaflet.layer);
@@ -1158,7 +1091,8 @@ const addAlplakesProfile = async (
   map,
   getProfile
 ) => {
-  var path = [layer.type, layer.properties.model, layer.properties.lake];
+  var source = layer.sources[layer.source];
+  var path = [source.type, source.model, layer.lake];
   var leaflet_layer = L.layerGroup([]).addTo(map);
   leaflet_layer.setZIndex(999);
   var leaflet_control = L.control
@@ -1175,7 +1109,8 @@ const addAlplakesProfile = async (
 };
 
 const removeAlplakesProfile = (layer, layerStore, map) => {
-  var path = [layer.type, layer.properties.model, layer.properties.lake];
+  var source = layer.sources[layer.source];
+  var path = [source.type, source.model, layer.lake];
   var leaflet = getNested(layerStore, path);
   leaflet.control.remove(map);
   map.removeLayer(leaflet.layer);
