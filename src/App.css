@@ -15,7 +15,7 @@
   --background-color: rgba(255, 255, 255, 255);
   --background-font-color: rgb(50, 50, 50);
   --background-suble-font-color: rgb(117, 117, 117);
-  --box-color: rgb(245 245 245);
+  --box-color: rgb(235 238 244);
   --box-font-color: rgb(0, 0, 0);
   --box-inner-color: rgb(227, 227, 227);
   --border-color: #ddd;
@@ -25,7 +25,7 @@
   --padding: 40px;
   --list-width: 650px;
   --sidebar-width: 450px;
-  --settings-width: 350px;
+  --settings-width: 380px;
   --selector-height: 50px;
   --input-shadow: inset 0 1px 2px rgba(0, 0, 0, .39), 0 0 1px #FFF, 0 1px 0 #FFF;
   --info-height: 36px;
@@ -39,7 +39,8 @@
   --pulse-color: rgb(160, 160, 160);
   --map-color: rgb(236, 236, 236);
   --map-button: rgba(0, 0, 0, 0.8);
-  --cell-size: 35px;
+  --cell-size: 32px;
+  --legend-color: rgb(236 236 236 / 47%);
 }
 
 :root {
@@ -50,7 +51,7 @@
 .dark {
   --background-color: rgba(29, 30, 32, 255);
   --background-font-color: #cccccc;
-  --box-color: #1a1a1a;
+  --box-color: #1e2427;
   --box-font-color: #e5e5e5;
   --box-inner-color: #282828;
   --input-shadow: inset 0 1px 2px rgb(44 44 44), 0 0 1px #bdbdbd, 0 1px 0 #464646;
@@ -62,6 +63,7 @@
   --map-color: rgb(41, 41, 41);
   --box-shadow: rgb(255 255 255 / 16%) 0px 1px 4px;
   --box-shadow-hover: rgb(255 255 255 / 16%) 0px 1px 8px;
+  --legend-color: rgb(41 41 41 / 65%);
 }
 
 @media screen and (max-width: 1200px) {

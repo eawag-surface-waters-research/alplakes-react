@@ -144,6 +144,16 @@ export const parseAPITime = (date) => {
   );
 };
 
+export const formatSencastDay = (datetime) => {
+  var a = new Date(datetime);
+  var year = a.getFullYear();
+  var month = a.getMonth() + 1;
+  var date = a.getDate();
+  return `${String(year)}${month < 10 ? "0" + month : month}${
+    date < 10 ? "0" + date : date
+  }`;
+};
+
 export const formatDate = (datetime) => {
   var a = new Date(datetime);
   var year = a.getFullYear();
@@ -220,6 +230,13 @@ export const closestIndex = (num, arr) => {
   return index;
 };
 
+export const closestValue = (target, arr) => {
+  const sortedArr = arr
+    .slice()
+    .sort((a, b) => Math.abs(a - target) - Math.abs(b - target));
+  return sortedArr[0];
+};
+
 export const interpolateData = (value, data) => {
   if (value <= data.x[0]) {
     return data.y[0];
@@ -258,75 +275,6 @@ const loading = (message) => {
 const loaded = () => {
   if (document.getElementById("loading")) {
     document.getElementById("loading").style.visibility = "hidden";
-  }
-};
-
-export const customAlplakesPeriod = async (layer, depth) => {
-  var source = layer.sources[layer.source];
-  var data;
-  try {
-    ({ data } = await axios.get(CONFIG.alplakes_bucket + source.bucket));
-  } catch (e) {
-    ({ data } = await axios.get(CONFIG.alplakes_api + source.end));
-  }
-  source.minDate = stringToDate(data.start_date).getTime();
-  source.maxDate = stringToDate(data.end_date).getTime();
-  var startDate = source.maxDate + source.start * 8.64e7;
-  if ("depths" in data) {
-    source.depths = data.depths;
-    let index = closestIndex(depth, source.depths);
-    depth = source.depths[index];
-  }
-  if ("missing_weeks" in data) {
-    source.missingDates = data.missing_weeks;
-  }
-  return {
-    period: [startDate, source.maxDate],
-    layer,
-    depth,
-  };
-};
-
-export const latestSencastImage = async (layer) => {
-  var source = layer.sources[layer.source];
-  var { data } = await axios.get(CONFIG.sencast_bucket + source.bucket);
-  let time = satelliteStringToDate(data.dt);
-  let date = formatDate(time);
-  let url = CONFIG.sencast_bucket + "/" + data.k;
-  source.url = url;
-  source.ave = data.mean;
-  source.min = data.min;
-  source.max = data.max;
-  source.date = date;
-  source.time = time;
-  return layer;
-};
-
-export const getFrozen = async (lake) => {
-  var frozen = false;
-  try {
-    var { data } = await axios.get(
-      CONFIG.alplakes_bucket + "/simulations/ice.json"
-    );
-    var today = new Date();
-    if (lake in data) {
-      var ice = data[lake];
-      for (var i = 0; i < ice.length; i++) {
-        if (ice[i].length === 1) {
-          if (today > parseDay(ice[i][0].toString())) frozen = true;
-        } else if (ice[i].length === 2) {
-          if (
-            today > parseDay(ice[i][0].toString()) &&
-            today < parseDay(ice[i][1].toString())
-          )
-            frozen = true;
-        }
-      }
-    }
-    return frozen;
-  } catch (e) {
-    console.log(e);
-    return frozen;
   }
 };
 

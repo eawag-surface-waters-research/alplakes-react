@@ -18,22 +18,13 @@ class Basemap extends Component {
     return list.find((l) => l[parameter] === value);
   };
   async componentDidUpdate(prevProps) {
-    const {
-      updates,
-      updated,
-      metadata,
-      layers,
-      period,
-      datetime,
-      depth,
-      getTransect,
-      getProfile,
-    } = this.props;
+    const { updates, updated, metadata, layers } = this.props;
     if (updates.length > 0) {
       updated();
       var initialLoad = false;
-      if (updates.find(u => u.event === "initialLoad")) initialLoad = true;
+      if (updates.find((u) => u.event === "initialLoad")) initialLoad = true;
       for (var update of updates) {
+        var layer = this.find(layers, "id", update.id)
         if (update.event === "clear") {
           this.layer.clearLayers();
         } else if (update.event === "bounds") {
@@ -43,45 +34,35 @@ class Basemap extends Component {
           if (element) {
             element.style.opacity = 0;
           }
-          this.layerStore["basemap"].addTo(this.map)
+          this.layerStore["basemap"].addTo(this.map);
         } else if (update.event === "addLayer") {
           try {
             await addLayer(
-              this.find(layers, "id", update.id),
-              period,
+              layer,
               this.dataStore,
               this.layerStore,
               this.map,
-              datetime,
-              depth,
-              getTransect,
-              getProfile,
-              initialLoad
+              initialLoad,
+              this.props
             );
           } catch (e) {
             console.error(
               "Failed to add layer",
-              this.find(layers, "id", update.id)
+              layer
             );
             console.error(e);
-            /**window.alert(
-              `Failed to add layer ${
-                this.find(layers, "id", update.id).parameter
-              }, try a different time period.`
-            );**/
           }
         } else if (update.event === "updateLayer") {
-          updateLayer(
-            this.find(layers, "id", update.id),
+          await updateLayer(
+            layer,
             this.dataStore,
             this.layerStore,
             this.map,
-            datetime,
-            depth
+            this.props
           );
         } else if (update.event === "removeLayer") {
           removeLayer(
-            this.find(layers, "id", update.id),
+            layer,
             this.layerStore,
             this.map
           );
@@ -89,6 +70,7 @@ class Basemap extends Component {
       }
       this.map.triggerLayersUpdate();
     }
+
     var { darkMap, lightMap } = this.state;
     var { dark } = this.props;
     var mapCode = dark ? darkMap : lightMap;

@@ -7,11 +7,11 @@ import PlayerControls from "../../components/playercontrols/playercontrols";
 import MapSettings from "./mapsettings";
 import CONFIG from "../../config.json";
 import settings_icon from "../../img/options.png";
+import Translations from "../../translations.json";
 import {
   relativeDate,
   copy,
-  customAlplakesPeriod,
-  latestSencastImage,
+  formatDateTime,
   getTransectAlplakesHydrodynamic,
   getProfileAlplakesHydrodynamic,
 } from "./functions";
@@ -22,6 +22,7 @@ class Map extends Component {
     graphFullscreen: false,
     playControls: false,
     intialLoadId: "loading_" + Math.round(Math.random() * 100000),
+    loadingId: "load_" + Math.round(Math.random() * 100000),
     updates: [],
     legend: true,
     basemap: "default",
@@ -34,6 +35,8 @@ class Map extends Component {
     layers: [],
     selection: false,
     sidebar: false,
+    average: 0,
+    firstActive: true,
   };
   updated = () => {
     this.setState({ updates: [] });
@@ -54,22 +57,7 @@ class Map extends Component {
   setTimestep = (event) => {
     this.setState({ timestep: parseInt(event.target.value) });
   };
-  setDatetime = (event) => {
-    var int = parseInt(JSON.parse(JSON.stringify(event.target.value)));
-    var { play, updates, layers } = this.state;
-    for (var layer of layers) {
-      if (layer.active) {
-        updates.push({ event: "updateLayer", id: layer.id });
-      }
-    }
-    var datetime;
-    if (play) {
-      datetime = int;
-    } else {
-      datetime = parseInt(event.target.getAttribute("alt"));
-    }
-    this.setState({ datetime, updates });
-  };
+
   toggleLegend = () => {
     this.setState({ legend: !this.state.legend });
   };
@@ -113,17 +101,18 @@ class Map extends Component {
     this.setState({ play: false });
   };
   addLayer = (id) => {
-    var { layers, updates } = this.state;
+    var { layers, updates, playControls } = this.state;
     var layer = layers.find((l) => l.id === id);
     if (!layer.active) {
       this.pause();
       layer.active = true;
       updates.push({ event: "addLayer", id: id });
+      if ("playControls" in layer && layer.playControls) playControls = true;
       this.setState({
         layers,
         updates,
-        clickblock: true,
         selection: id,
+        playControls,
       });
     }
   };
@@ -133,7 +122,10 @@ class Map extends Component {
     if (layer.active) {
       layer.active = false;
       var updates = [{ event: "removeLayer", id: id }];
-      this.setState({ layers, updates, selection: false });
+      var selection = false;
+      let stillActive = layers.filter((l) => l.active);
+      if (stillActive.length > 0) selection = stillActive[0].id;
+      this.setState({ layers, updates, selection });
     }
   };
   updateOptions = (id, options) => {
@@ -143,47 +135,64 @@ class Map extends Component {
     this.setState({ layers, updates });
   };
   setSelection = (selection) => {
-    if (selection === this.state.selection) {
-      this.setState({ selection: false });
-    } else {
+    if (selection !== this.state.selection) {
       this.setState({ selection });
     }
   };
   closeSelection = () => {
     this.setState({ selection: false });
   };
-  setDepth = (event) => {
+  setDepthAndPeriod = (depth, period) => {
+    if (depth !== this.state.depth || period !== this.state.period) {
+      this.setState({ depth, period });
+    }
+  };
+  setDepth = (value) => {
     var { layers, depth, updates } = this.state;
     if (
-      depth !== event.target.value &&
+      depth !== value &&
       layers.filter((l) => l.depth && l.active).length > 0
     ) {
       this.pause();
-      depth = event.target.value;
+      depth = value;
       for (let layer of layers) {
         if (layer.depth && layer.active) {
           updates.unshift({ event: "removeLayer", id: layer.id });
           updates.push({ event: "addLayer", id: layer.id });
         }
       }
-      this.setState({ updates, depth, clickblock: true });
+      this.setState({ updates, depth });
     }
   };
   setPeriod = (period) => {
     var { layers, updates } = this.state;
     if (period !== this.state.period) {
       var datetime = period[0];
-      var clickblock;
       for (let layer of layers) {
         if (layer.active && layer.playControls) {
-          clickblock = true;
           updates.unshift({ event: "removeLayer", id: layer.id });
           updates.push({ event: "addLayer", id: layer.id });
         }
       }
       this.pause();
-      this.setState({ updates, datetime, clickblock, period });
+      this.setState({ updates, datetime, period });
     }
+  };
+  setDatetime = (event) => {
+    var int = parseInt(JSON.parse(JSON.stringify(event.target.value)));
+    var { play, updates, layers } = this.state;
+    for (var layer of layers) {
+      if (layer.active) {
+        updates.push({ event: "updateLayer", id: layer.id });
+      }
+    }
+    var datetime;
+    if (play) {
+      datetime = int;
+    } else {
+      datetime = parseInt(event.target.getAttribute("alt"));
+    }
+    this.setState({ datetime, updates });
   };
   getTransect = async (latlng, layer) => {
     var { graphData, period } = this.state;
@@ -229,9 +238,39 @@ class Map extends Component {
       this.setState({ graphData, graphs: true, selection: false });
     }
   };
+
+  componentDidUpdate(prevProps) {
+    var { firstActive, updates, layers } = this.state;
+    if (
+      prevProps.active === false &&
+      this.props.active === true &&
+      firstActive
+    ) {
+      let update = false;
+      for (let layer of layers) {
+        let source = layer.sources[layer.source];
+        if (layer.active && "onActivate" in source && source.onActivate) {
+          updates.push({ event: "updateLayer", id: layer.id });
+          update = true;
+        }
+      }
+      if (update) {
+        this.setState({ updates, firstActive: false });
+      }
+    }
+  }
+
   async componentDidMount() {
     var { metadata, layers: globalLayers, module } = this.props;
-    var { intialLoadId, period, depth, selection, playControls } = this.state;
+    var {
+      intialLoadId,
+      period,
+      depth,
+      selection,
+      playControls,
+      datetime,
+      average,
+    } = this.state;
     var layers = copy(globalLayers);
     var updates = [{ event: "bounds" }];
     if ("default_depth" in metadata) depth = metadata.default_depth;
@@ -241,26 +280,29 @@ class Map extends Component {
       layer.active = true;
       if ("playControls" in layer && layer.playControls) playControls = true;
       selection = layer_id;
-      let source = layer.sources[layer.source];
-      if ("initialLoad" in source) {
-        if (source.initialLoad === "customAlplakesPeriod") {
-          ({ layer, period, depth } = await customAlplakesPeriod(layer, depth));
-        } else if (source.initialLoad === "latestSencastImage") {
-          layer = await latestSencastImage(layer);
-        }
-      }
     }
     updates.push({ event: "initialLoad", id: intialLoadId });
-    this.setState({ updates, layers, depth, period, selection, playControls });
+    this.setState({
+      updates,
+      layers,
+      depth,
+      period,
+      selection,
+      playControls,
+      datetime,
+      average,
+    });
   }
   render() {
-    var { dark, language, metadata } = this.props;
+    var { dark, language, metadata, module, active } = this.props;
     var {
       mapFullscreen,
       graphFullscreen,
       intialLoadId,
       playControls,
       sidebar,
+      average,
+      datetime,
     } = this.state;
     return (
       <div className="module-component">
@@ -269,6 +311,20 @@ class Map extends Component {
             <div className="initial-load" id={intialLoadId}>
               <Loading />
             </div>
+            <div className="labels">
+              {Object.keys(module.labels).map((l) => (
+                <div className={l} key={l}>
+                  {module.labels[l] === "average"
+                    ? average
+                    : module.labels[l] === "datetime"
+                    ? formatDateTime(
+                        datetime,
+                        Translations.axis[language].months
+                      )
+                    : module.labels[l]}
+                </div>
+              ))}
+            </div>
             <div className="settings" onClick={this.openSidebar}>
               <img src={settings_icon} alt="Settings" />
             </div>
@@ -276,9 +332,15 @@ class Map extends Component {
               {...this.state}
               dark={dark}
               updated={this.updated}
+              setDepthAndPeriod={this.setDepthAndPeriod}
               metadata={metadata}
+              active={active}
             />
-            <Legend {...this.state} language={language} playControls={playControls}/>
+            <Legend
+              {...this.state}
+              language={language}
+              playControls={playControls}
+            />
             {playControls && (
               <PlayerControls
                 {...this.state}
@@ -309,6 +371,7 @@ class Map extends Component {
             setSelection={this.setSelection}
             setPeriod={this.setPeriod}
             setDepth={this.setDepth}
+            active={active}
           />
         </div>
       </div>

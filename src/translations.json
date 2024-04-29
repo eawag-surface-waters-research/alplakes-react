@@ -517,6 +517,12 @@
       ]
     }
   },
+  "threed": {
+    "EN": "3D Model",
+    "DE": "3D-Modell",
+    "FR": "Modèle 3D",
+    "IT": "Modello 3D"
+  },
   "alplakes_hydrodynamic": {
     "EN": "3D Model",
     "DE": "3D-Modell",

@@ -11,7 +11,6 @@ import DATA from "./data.json";
 import arrow from "../../img/arrow.png";
 import "./lake.css";
 
-
 class NotFound extends Component {
   render() {
     var { id } = this.props;
@@ -37,6 +36,8 @@ class Module extends Component {
       selected,
       language,
       metadata,
+      layers,
+      dark,
     } = this.props;
     var title = metadata.name[language];
     var subtitle = parseSubtitle(title, metadata.name);
@@ -57,7 +58,16 @@ class Module extends Component {
           <div className="subtitle">{subtitle}</div>
         </div>
         <div className="display">
-          {module.component === "map" && <Map {...this.props} />}
+          {module.component === "map" && (
+            <Map
+              dark={dark}
+              language={language}
+              metadata={metadata}
+              module={module}
+              layers={layers}
+              active={active}
+            />
+          )}
           {module.component === "graph" && <Graph {...this.props} />}
         </div>
         <div className="link">

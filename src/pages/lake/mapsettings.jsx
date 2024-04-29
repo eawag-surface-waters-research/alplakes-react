@@ -19,12 +19,24 @@ class Selection extends Component {
       return;
     } else {
       var layer = layers.find((l) => l.id === selection);
+      var source = layer.sources[layer.source];
       return (
         <React.Fragment>
           <div className="selection">
             <div className="layer-description">
-              <ShowMoreText text={""} links={{}} maxLength={130} />
+              <ShowMoreText
+                text={source.description}
+                links={{}}
+                maxLength={130}
+              />
             </div>
+            <a
+              href={source.learnMore}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <div className="layer-link">Learn more</div>
+            </a>
             <LayerSettings {...this.props} layer={layer} />
           </div>
           <div className="close-layer" onClick={() => setSelection(false)}>
@@ -85,7 +97,7 @@ class ShowMoreText extends Component {
 class ActiveApps extends Component {
   removeLayer = (event) => {
     event.stopPropagation();
-    this.props.removeLayer(parseInt(event.target.getAttribute("id")));
+    this.props.removeLayer(event.target.getAttribute("id"));
   };
   render() {
     var { layers, setSelection, selection, images, toggleActiveAdd, language } =
@@ -115,6 +127,7 @@ class ActiveApps extends Component {
                   onClick={() => setSelection(layer.id)}
                   title="Edit settings"
                 >
+                  <div className="join" />
                   <div
                     className="remove"
                     title="Remove layer"
@@ -124,7 +137,12 @@ class ActiveApps extends Component {
                     -
                   </div>
                   <img src={images[layer.parameter]} alt={layer.parameter} />
-                  <span>{Translate[layer.parameter][language]}</span>
+                  <span>
+                    {Translate[layer.parameter][language]}
+                    <div className="under">
+                      {Translate[layer.type][language]}
+                    </div>
+                  </span>
                 </div>
               ))}
             {[...Array(extra).keys()].map((p) => (

@@ -109,6 +109,9 @@
       "title": "Temperature and Currents",
       "subtitle": "3D Model",
       "component": "map",
+      "labels": {
+        "topRight": "5 day forecast"
+      },
       "defaults": ["3D_temperature", "3D_currents"]
     },
     {
@@ -122,6 +125,10 @@
       "title": "Chlorophyll A",
       "subtitle": "Remote Sensing Product",
       "component": "map",
+      "labels": {
+        "topRight": "datetime",
+        "topLeft": "average"
+      },
       "defaults": ["satellite_chlorophyll"]
     },
     {
@@ -129,6 +136,10 @@
       "title": "Secchi Depth",
       "subtitle": "Remote Sensing Product",
       "component": "map",
+      "labels": {
+        "topRight": "datetime",
+        "topLeft": "average"
+      },
       "defaults": ["satellite_secchi"]
     },
     {
@@ -136,6 +147,10 @@
       "title": "Turbidity",
       "subtitle": "Remote Sensing Product",
       "component": "map",
+      "labels": {
+        "topRight": "datetime",
+        "topLeft": "average"
+      },
       "defaults": ["satellite_turbidity"]
     },
     {
@@ -143,6 +158,9 @@
       "title": "Thermocline",
       "subtitle": "3D Model",
       "component": "map",
+      "labels": {
+        "topRight": "5 day forecast"
+      },
       "defaults": ["3D_thermocline"]
     },
     {
@@ -174,10 +192,11 @@
           "model": "delft3d-flow",
           "height": 182,
           "width": 36,
-          "initialLoad": "customAlplakesPeriod",
           "start": -7,
           "end": "/simulations/metadata/delft3d-flow/geneva",
-          "bucket": "/simulations/delft3d-flow/metadata/geneva/metadata.json"
+          "bucket": "/simulations/delft3d-flow/metadata/geneva/metadata.json",
+          "description": "Water temperatures are hindcasted and forecasted using the 3D hydrodynamic model Delft3D-flow. Meteorological forcing data is produced from Meteoswiss products, hincasts use the Cosmo-1e 1 day deterministic product (VNXQ34) and forecasts use the Cosmo-2e 5 day ensemble forecast (VNXZ32). Where rivers inputs are used this data is sourced from Bafu. This model is calibrated using in-situ measuresuments collected by a number of 3rd parties.",
+          "learnMore": "https://medium.com/@runnalls.james/operational-3d-lake-modeling-with-delft3d-2f164859e753"
         }
       },
       "labels": [
@@ -227,10 +246,11 @@
           "model": "delft3d-flow",
           "height": 182,
           "width": 36,
-          "initialLoad": "customAlplakesPeriod",
           "start": -7,
           "end": "/simulations/metadata/delft3d-flow/geneva",
-          "bucket": "/simulations/delft3d-flow/metadata/geneva/metadata.json"
+          "bucket": "/simulations/delft3d-flow/metadata/geneva/metadata.json",
+          "description": "Lake currents are hindcasted and forecasted using the 3D hydrodynamic model Delft3D-flow. Meteorological forcing data is produced from Meteoswiss products, hincasts use the Cosmo-1e 1 day deterministic product (VNXQ34) and forecasts use the Cosmo-2e 5 day ensemble forecast (VNXZ32). Where rivers inputs are used this data is sourced from Bafu. This model is calibrated using in-situ measuresuments collected by a number of 3rd parties.",
+          "learnMore": "https://medium.com/@runnalls.james/operational-3d-lake-modeling-with-delft3d-2f164859e753"
         }
       }
     },
@@ -255,25 +275,16 @@
           "model": "delft3d-flow",
           "height": 182,
           "width": 36,
-          "initialLoad": "customAlplakesPeriod",
           "start": -7,
           "end": "/simulations/metadata/delft3d-flow/geneva",
-          "bucket": "/simulations/delft3d-flow/metadata/geneva/metadata.json"
+          "bucket": "/simulations/delft3d-flow/metadata/geneva/metadata.json",
+          "description": "Thermocline depth calculated using Pylake and the 3D hydrodynamic model Delft3D-flow. Meteorological forcing data is produced from Meteoswiss products, hincasts use the Cosmo-1e 1 day deterministic product (VNXQ34) and forecasts use the Cosmo-2e 5 day ensemble forecast (VNXZ32). Where rivers inputs are used this data is sourced from Bafu. This model is calibrated using in-situ measuresuments collected by a number of 3rd parties.",
+          "learnMore": "https://medium.com/@runnalls.james/operational-3d-lake-modeling-with-delft3d-2f164859e753"
         }
       },
       "labels": [
-        { "name": "Lausanne", "latlng": [46.50995, 6.61172] },
-        {
-          "name": "Geneva",
-          "latlng": [46.22034, 6.1564],
-          "direction": "right"
-        },
-        {
-          "name": "Thonon",
-          "latlng": [46.37547, 6.47259],
-          "direction": "bottom"
-        },
-        { "name": "Vevey", "latlng": [46.45841, 6.84158] }
+        { "name": "LéXPLORE", "latlng": [46.5, 6.67], "direction": "left" },
+        { "name": "SHL2", "latlng": [46.45, 6.59], "direction": "bottom" }
       ]
     },
     {
@@ -286,18 +297,28 @@
       "display": "tiff",
       "source": "sencast",
       "displayOptions": {
-        "paletteName": "cc chl",
+        "paletteName": "Rainbow",
         "zIndex": 2,
         "opacity": 1,
         "convolve": 2,
-        "wms": false
+        "wms": false,
+        "min": 0,
+        "max": 12,
+        "coverage": 10
       },
       "sources": {
         "sencast": {
           "type": "sencast_tiff",
-          "model": ["Sentinel3"],
-          "initialLoad": "latestSencastImage",
-          "bucket": "/metadata/latest/geneva_chla.json"
+          "models": [
+            {
+              "model": "Sentinel3",
+              "metadata": "/metadata/sentinel3/geneva_chla.json"
+            }
+          ],
+          "bucket": "/metadata/latest/geneva_chla.json",
+          "description": "Surface chlorophyll concentration processed from satellite data using the Sencast python package.",
+          "learnMore": "https://medium.com/@runnalls.james/water-quality-products-from-remote-sensing-data-using-sencast-e48449bd6aa8",
+          "onActivate": true
         }
       }
     },
@@ -311,18 +332,32 @@
       "display": "tiff",
       "source": "sencast",
       "displayOptions": {
-        "paletteName": "cc chl",
+        "paletteName": "navia reverse",
         "zIndex": 2,
         "opacity": 1,
         "convolve": 2,
-        "wms": false
+        "wms": false,
+        "min": 0,
+        "max": 12,
+        "coverage": 10
       },
       "sources": {
         "sencast": {
           "type": "sencast_tiff",
-          "model": ["Sentinel3", "Sentinel2"],
-          "initialLoad": "latestSencastImage",
-          "bucket": "/metadata/latest/geneva_secchi.json"
+          "models": [
+            {
+              "model": "Sentinel3",
+              "metadata": "/metadata/sentinel3/geneva_Zsd_lee.json"
+            },
+            {
+              "model": "Sentinel2",
+              "metadata": "/metadata/sentinel2/geneva_Z490.json"
+            }
+          ],
+          "bucket": "/metadata/latest/geneva_secchi.json",
+          "description": "Secchi depth processed from satellite data using the Sencast python package.",
+          "learnMore": "https://medium.com/@runnalls.james/water-quality-products-from-remote-sensing-data-using-sencast-e48449bd6aa8",
+          "onActivate": true
         }
       }
     },
@@ -336,18 +371,32 @@
       "display": "tiff",
       "source": "sencast",
       "displayOptions": {
-        "paletteName": "cc chl",
+        "paletteName": "Turbid",
         "zIndex": 2,
         "opacity": 1,
         "convolve": 2,
-        "wms": false
+        "wms": false,
+        "min": 0,
+        "max": 3,
+        "coverage": 10
       },
       "sources": {
         "sencast": {
           "type": "sencast_tiff",
-          "model": ["Sentinel3", "Sentinel2"],
-          "initialLoad": "latestSencastImage",
-          "bucket": "/metadata/latest/geneva_tsm.json"
+          "models": [
+            {
+              "model": "Sentinel3",
+              "metadata": "/metadata/sentinel3/geneva_tsm_binding754.json"
+            },
+            {
+              "model": "Sentinel2",
+              "metadata": "/sentinel2/geneva_tsm_dogliotti665.json"
+            }
+          ],
+          "bucket": "/metadata/latest/geneva_tsm.json",
+          "description": "Surface total suspended matter processed from satellite data using the Sencast python package.",
+          "learnMore": "https://medium.com/@runnalls.james/water-quality-products-from-remote-sensing-data-using-sencast-e48449bd6aa8",
+          "onActivate": true
         }
       }
     }

@@ -99,6 +99,16 @@ const formatDate = (datetime, offset = 0) => {
   }${hour < 10 ? "0" + hour : hour}${minute < 10 ? "0" + minute : minute}`;
 };
 
+const formatSencastDay = (datetime) => {
+  var a = new Date(datetime);
+  var year = a.getFullYear();
+  var month = a.getMonth() + 1;
+  var date = a.getDate();
+  return `${String(year)}${month < 10 ? "0" + month : month}${
+    date < 10 ? "0" + date : date
+  }`;
+};
+
 const formatDateBucket = (datetime, offset = 0) => {
   var a = new Date(datetime).getTime();
   a = new Date(a + offset);
@@ -177,6 +187,91 @@ const closestDate = (targetDate, dateList) => {
     }
   });
   return closestDate;
+};
+
+const satelliteStringToDate = (date) => {
+  return new Date(
+    `${date.slice(0, 4)}-${date.slice(4, 6)}-${date.slice(6, 8)}T${date.slice(
+      9,
+      11
+    )}:${date.slice(11, 13)}:00.000+00:00`
+  );
+};
+
+const closestIndex = (num, arr) => {
+  let curr = arr[0],
+    diff = Math.abs(num - curr);
+  let index = 0;
+  for (let val = 0; val < arr.length; val++) {
+    let newdiff = Math.abs(num - arr[val]);
+    if (newdiff < diff) {
+      diff = newdiff;
+      curr = arr[val];
+      index = val;
+    }
+  }
+  return index;
+};
+
+export const compareDates = (date1, date2) => {
+  return date1 - date2;
+};
+
+export const filterImages = (images, coverage, satellite) => {
+  var available = {};
+  for (let date of Object.keys(images)) {
+    let day = JSON.parse(JSON.stringify(images[date]));
+    day.time = new Date(day.time);
+    day.images = day.images
+      .filter((i) => i.percent > coverage)
+      .map((i) => {
+        i.time = new Date(i.time);
+        return i;
+      });
+    if (satellite.length > 0) {
+      day.images = day.images.filter((i) => satellite.includes(i.model));
+    }
+    if (day.images.length > 0) {
+      available[date] = day;
+    }
+  }
+  return available;
+};
+
+const weightedAverage = (values, weights) => {
+  if (
+    values.length !== weights.length ||
+    values.length === 0 ||
+    weights.length === 0
+  ) {
+    throw new Error(
+      "Values and weights arrays must have the same length and cannot be empty."
+    );
+  }
+  const sumOfProducts = values.reduce(
+    (acc, value, index) => acc + value * weights[index],
+    0
+  );
+  const sumOfWeights = weights.reduce((acc, weight) => acc + weight, 0);
+  return sumOfProducts / sumOfWeights;
+};
+
+export const parseAPITime = (date) => {
+  return new Date(
+    `${date.slice(0, 4)}-${date.slice(4, 6)}-${date.slice(6, 8)}T${date.slice(
+      8,
+      10
+    )}:${date.slice(10, 12)}:00.000+00:00`
+  );
+};
+
+const stringToDate = (date) => {
+  return new Date(
+    `${date.slice(0, 4)}-${date.slice(5, 7)}-${date.slice(8, 10)}T${date.slice(
+      11,
+      13
+    )}:00:00.000+00:00`
+  );
 };
 
 const getTimestepData = (data, datetime) => {
@@ -259,16 +354,21 @@ const loaded = () => {
 
 export const addLayer = async (
   layer,
-  period,
   dataStore,
   layerStore,
   map,
-  datetime,
-  depth,
-  getTransect,
-  getProfile,
-  bucket
+  initialLoad,
+  props
 ) => {
+  var {
+    period,
+    datetime,
+    depth,
+    getTransect,
+    getProfile,
+    setDepthAndPeriod,
+    active,
+  } = props;
   var source = layer.sources[layer.source];
   if (source.type === "alplakes_hydrodynamic") {
     await addAlplakesHydrodynamic(
@@ -279,10 +379,11 @@ export const addLayer = async (
       map,
       datetime,
       depth,
-      bucket
+      initialLoad,
+      setDepthAndPeriod
     );
   } else if (source.type === "sencast_tiff") {
-    await addSencastTiff(layer, dataStore, layerStore, datetime, map);
+    await addSencastTiff(layer, layerStore, map, active);
   } else if (source.type === "sentinel_hub_wms") {
     await addSentinelHubWms(layer, dataStore, layerStore, datetime, map);
   } else if (source.type === "alplakes_particles") {
@@ -294,7 +395,7 @@ export const addLayer = async (
       map,
       datetime,
       depth,
-      bucket
+      initialLoad
     );
   } else if (source.type === "alplakes_transect") {
     await addAlplakesTransect(
@@ -318,14 +419,8 @@ export const addLayer = async (
   loaded();
 };
 
-export const updateLayer = async (
-  layer,
-  dataStore,
-  layerStore,
-  map,
-  datetime,
-  depth
-) => {
+export const updateLayer = async (layer, dataStore, layerStore, map, props) => {
+  var { datetime, depth, active } = props;
   var source = layer.sources[layer.source];
   if (source.type === "alplakes_hydrodynamic") {
     await updateAlplakesHydrodynamic(
@@ -337,7 +432,7 @@ export const updateLayer = async (
       depth
     );
   } else if (source.type === "sencast_tiff") {
-    await updateSencastTiff(layer, dataStore, layerStore, map, datetime);
+    await updateSencastTiff(layer, layerStore, map, active);
   } else if (source.type === "sentinel_hub_wms") {
     await updateSentinelHubWms(layer, dataStore, layerStore, map, datetime);
   } else if (source.type === "alplakes_particles") {
@@ -378,8 +473,11 @@ const addAlplakesHydrodynamic = async (
   map,
   datetime,
   depth,
-  bucket
+  initialLoad,
+  setDepthAndPeriod
 ) => {
+  loading("Collecting metadata");
+  ({ period, depth } = await getAlplakesHydrodynamicMetadata(layer, depth));
   loading("Downloading lake geometry");
   await downloadAlplakesHydrodynamicGeometry(layer, period, dataStore);
   loading(`Downloading lake ${layer.parameter} field`);
@@ -388,10 +486,34 @@ const addAlplakesHydrodynamic = async (
     period,
     depth,
     dataStore,
-    bucket
+    initialLoad
   );
   plotAlplakesHydrodynamic(layer, datetime, depth, dataStore, layerStore, map);
+  setDepthAndPeriod(depth, period);
   loaded();
+};
+
+const getAlplakesHydrodynamicMetadata = async (layer, depth) => {
+  var source = layer.sources[layer.source];
+  var data;
+  try {
+    ({ data } = await axios.get(CONFIG.alplakes_bucket + source.bucket));
+  } catch (e) {
+    ({ data } = await axios.get(CONFIG.alplakes_api + source.end));
+  }
+  source.minDate = stringToDate(data.start_date).getTime();
+  source.maxDate = stringToDate(data.end_date).getTime();
+  var startDate = source.maxDate + source.start * 8.64e7;
+  if ("depths" in data) {
+    source.depths = data.depths;
+    let index = closestIndex(depth, source.depths);
+    depth = source.depths[index];
+  }
+  if ("missing_weeks" in data) {
+    source.missingDates = data.missing_weeks;
+  }
+  var period = [startDate, source.maxDate];
+  return { period, depth };
 };
 
 const downloadAlplakesHydrodynamicGeometry = async (
@@ -437,7 +559,7 @@ const downloadAlplakesHydrodynamicParameter = async (
   period,
   depth,
   dataStore,
-  bucket,
+  initialLoad,
   overwrite = false
 ) => {
   var source = layer.sources[layer.source];
@@ -456,7 +578,7 @@ const downloadAlplakesHydrodynamicParameter = async (
     console.log("Check downloaded to avoid repeat downloads");
   }
   var par;
-  if (bucket) {
+  if (initialLoad) {
     try {
       ({ data: par } = await axios.get(
         `${CONFIG.alplakes_bucket}/simulations/${source.model}/data/${
@@ -794,9 +916,88 @@ const removeAlplakesHydrodynamic = (layer, layerStore, map) => {
   setNested(layerStore, path, null);
 };
 
-const addSencastTiff = async (layer, dataStore, layerStore, datetime, map) => {
+const addSencastTiff = async (layer, layerStore, map, active) => {
+  layer.displayOptions.dataMin = layer.displayOptions.min;
+  layer.displayOptions.dataMax = layer.displayOptions.max;
   var source = layer.sources[layer.source];
-  await plotSencastTiff(source.url, layer, layerStore, map);
+  if (active) {
+    source = await collectSencastMetadata(source);
+    var includeDates = Object.values(source.available).map((m) => m.time);
+    includeDates.sort(compareDates);
+    var currentDate = includeDates[includeDates.length - 1];
+    var date = source.available[formatSencastDay(currentDate)];
+    var image = date.images.filter((i) => i.percent === date.max_percent)[0];
+    layer.displayOptions.image = image;
+  } else {
+    var { data } = await axios.get(CONFIG.sencast_bucket + source.bucket);
+    let datetime = satelliteStringToDate(data.dt);
+    let date = formatSencastDay(datetime);
+    layer.displayOptions.image = {
+      url: CONFIG.sencast_bucket + "/" + data.k,
+      ave: data.mean,
+      date: date,
+      time: datetime,
+    };
+  }
+
+  await plotSencastTiff(layer.displayOptions.image.url, layer, layerStore, map);
+};
+
+const collectSencastMetadata = async (source) => {
+  var available = {};
+  for (let model of source.models) {
+    let { data: files } = await axios.get(
+      CONFIG.sencast_bucket + model.metadata
+    );
+    let max_pixels = d3.max(files.map((m) => parseFloat(m.p)));
+    for (let file of files) {
+      let time = satelliteStringToDate(file.dt);
+      let date = formatSencastDay(time);
+      let url = CONFIG.sencast_bucket + "/" + file.k;
+      let split = file.k.split("_");
+      let tile = split[split.length - 1].split(".")[0];
+      let satellite = split[0].split("/")[2];
+      let percent = Math.ceil((parseFloat(file.vp) / max_pixels) * 100);
+      let { min, max, mean: ave } = file;
+      let image = {
+        url,
+        time,
+        tile,
+        satellite,
+        model: model.model,
+        percent,
+        ave,
+        min,
+        max,
+      };
+      if (date in available) {
+        available[date].images.push(image);
+        available[date].max_percent = Math.max(
+          available[date].max_percent,
+          percent
+        );
+        available[date].max = Math.max(available[date].max, max);
+        let total_percent = available[date].images
+          .map((i) => i.percent)
+          .reduce((acc, currentValue) => acc + currentValue, 0);
+        available[date].ave = weightedAverage(
+          available[date].images.map((i) => i.ave),
+          available[date].images.map((i) => i.percent / total_percent)
+        );
+      } else {
+        available[date] = {
+          images: [image],
+          max_percent: percent,
+          ave,
+          min,
+          max,
+          time,
+        };
+      }
+    }
+  }
+  source.available = available;
+  return source;
 };
 
 const plotSencastTiff = async (url, layer, layerStore, map) => {
@@ -810,57 +1011,56 @@ const plotSencastTiff = async (url, layer, layerStore, map) => {
   if (!("opacity" in layer.displayOptions)) {
     options["opacity"] = 1;
   }
-  if (!("convolve" in layer.displayOptions)) {
-    options["convolve"] = 0;
+  if (!("coverage" in layer.displayOptions)) {
+    options["coverage"] = 0.1;
   }
-  loading("Downloading satellite image");
-  var { data } = await axios.get(url, {
-    responseType: "arraybuffer",
-  });
+  if (!("satellite" in layer.displayOptions)) {
+    options["satellite"] = [];
+  }
+  options["source_url"] = url;
 
-  loading("Processing satellite image");
+  if ("available" in source) {
+    var images = filterImages(
+      source.available,
+      options["coverage"],
+      options["satellite"]
+    );
+    options["availableImages"] = images;
+    options["includeDates"] = Object.values(images).map((m) => m.time);
+  }
+
   var leaflet_layer = getNested(layerStore, path);
   if (leaflet_layer !== null && leaflet_layer !== undefined) {
-    await leaflet_layer.update(data, options);
+    if (leaflet_layer.options.source_url === url) {
+      await leaflet_layer.update(false, options);
+    } else {
+      loading("Downloading satellite image");
+      let { data } = await axios.get(url, {
+        responseType: "arraybuffer",
+      });
+      await leaflet_layer.update(data, options);
+    }
   } else {
+    loading("Downloading satellite image");
+    let { data } = await axios.get(url, {
+      responseType: "arraybuffer",
+    });
     leaflet_layer = await L.floatgeotiff(data, options).addTo(map);
     setNested(layerStore, path, leaflet_layer);
   }
 };
 
-const updateSencastTiff = async (
-  layer,
-  dataStore,
-  layerStore,
-  map,
-  datetime
-) => {
-  if (layerStore["wms"]) {
-    map.removeLayer(layerStore["wms"]);
-    layerStore["wms"] = null;
+const updateSencastTiff = async (layer, layerStore, map, active) => {
+  var source = layer.sources[layer.source];
+  if (active && !("available" in source)) {
+    source = await collectSencastMetadata(source);
   }
-  if (layer.displayOptions.wms) {
-    layerStore["wms"] = L.tileLayer
-      .wms(layer.properties.wms, {
-        tileSize: 512,
-        attribution:
-          '&copy; <a href="http://www.sentinel-hub.com/" target="_blank">Sentinel Hub</a>',
-        minZoom: 6,
-        maxZoom: 16,
-        preset: "TRUE-COLOR",
-        layers: "TRUE-COLOR",
-        time: formatWmsDate(layer.displayOptions.date),
-        gain: 1,
-        gamma: 1,
-      })
-      .addTo(map);
-  }
-  await plotSencastTiff(layer.url, layer, layerStore, map);
+  await plotSencastTiff(layer.displayOptions.image.url, layer, layerStore, map);
 };
 
 const removeSencastTiff = (layer, layerStore, map) => {
   var source = layer.sources[layer.source];
-  var path = [source.type, source.model, layer.lake, layer.parameter];
+  var path = [source.type, layer.lake, layer.parameter];
   var leaflet_layer = getNested(layerStore, path);
   map.removeLayer(leaflet_layer);
   setNested(layerStore, path, null);
@@ -958,7 +1158,7 @@ const addAlplakesParticles = async (
   map,
   datetime,
   depth,
-  bucket
+  initialLoad
 ) => {
   const overwrite = { parameter: "velocity", type: "alplakes_hydrodynamic" };
   loading("Downloading lake geometry");
@@ -974,7 +1174,7 @@ const addAlplakesParticles = async (
     period,
     depth,
     dataStore,
-    bucket,
+    initialLoad,
     overwrite
   );
   plotAlplakesParticles(layer, datetime, depth, dataStore, layerStore, map);

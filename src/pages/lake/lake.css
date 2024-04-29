@@ -284,6 +284,7 @@
     border-radius: 0;
     background-color: var(--background-color);
     cursor: default;
+    overflow-y: scroll;
 }
 
 .main .lake .content .module.hide {
@@ -369,20 +370,6 @@
     display: block;
 }
 
-.main .lake .content .module .display .module-component .header-hide {
-    position: absolute;
-    z-index: 9991;
-    right: 20px;
-    top: 22px;
-    font-size: 18px;
-    color: var(--background-suble-font-color);
-    display: block;
-}
-
-.main .lake .content .module.active .display .module-component .header-hide {
-    display: none;
-}
-
 .main .lake .content .module .display .module-component .sidebar {
     display: none;
     height: 100%;
@@ -436,18 +423,31 @@
     font-size: 50px;
     border: 1px solid var(--border-color);
     border-radius: 12px;
-    margin: 22px 10px 30px 10px;
+    margin: 25px 12px 40px 12px;
     width: 60px;
     height: 60px;
     text-align: center;
     color: var(--border-color);
     position: relative;
     cursor: pointer;
-    ;
+}
+
+.main .lake .content .module .display .module-component .sidebar .active-apps .app .join {
+    position: absolute;
+    width: 42px;
+    height: var(--padding);
+    background-color: var(--box-color);
+    bottom: calc(-40px - var(--padding));
+    left: 8px;
+    display: none;
 }
 
 .main .lake .content .module .display .module-component .sidebar .active-apps .app:hover {
     transform: scale(1.05);
+}
+
+.main .lake .content .module .display .module-component .sidebar .active-apps .app.filled.active:hover {
+    transform: none;
 }
 
 .main .lake .content .module .display .module-component .sidebar .active-apps .app.filled {
@@ -466,6 +466,10 @@
 
 .main.dark .lake .content .secondary .menu .loaded .app.filled.active {
     box-shadow: white 0px 0px 8px;
+}
+
+.main .lake .content .module .display .module-component .sidebar .active-apps .app.filled.active .join {
+    display: block;
 }
 
 .main .lake .content .threed {
@@ -564,21 +568,26 @@
 
 .main .lake .content .module .display .module-component .sidebar .active-apps .app span {
     position: absolute;
-    bottom: -19px;
+    bottom: -30px;
     font-size: 12px;
     left: -10px;
     width: 84px;
     text-align: center;
+    color: var(--background-font-color);
+}
+
+.main .lake .content .module .display .module-component .sidebar .active-apps .app span .under {
+    font-size: 10px;
     color: var(--background-suble-font-color);
 }
 
 .main .lake .content .module .display .module-component .sidebar .add-layers {
     position: fixed;
-    left: calc(var(--padding)* 2);
-    top: calc(var(--header-height) + var(--padding) / 2);
-    width: calc(100% - var(--padding)* 4);
-    height: calc(100% - var(--padding)* 2 - var(--header-height));
-    background-color: var(--background-color);
+    left: calc(var(--padding));
+    top: calc(var(--header-height));
+    width: calc(100% - var(--padding)* 2);
+    height: calc(100% - var(--padding) - var(--header-height));
+    background-color: rgb(255 255 255);
     border-radius: 12px;
     padding: var(--padding);
     box-sizing: border-box;
@@ -801,11 +810,10 @@
 .main .lake .content .module.active .display .module-component .sidebar .custom-css-datepicker {
     width: 100%;
     text-align: center;
-    margin-top: 28px;
 }
 
 .main .lake .content .module.active .display .module-component .sidebar .custom-css-datepicker .react-datepicker {
-    background-color: var(--background-color);
+    background-color: var(--box-color);
     border: none;
     width: 100%;
     font-size: 16px;
@@ -848,6 +856,7 @@
     z-index: 0;
     border: 2px solid var(--highlight-color);
     opacity: 0.5;
+    left: 0;
 }
 
 .main .lake .content .module.active .display .module-component .sidebar .custom-css-datepicker .react-datepicker .percentage::after {
@@ -857,7 +866,7 @@
     left: 10%;
     width: 80%;
     height: 80%;
-    background-color: var(--background-color);
+    background-color: var(--box-color);
     border-radius: 50%;
     z-index: -1
 }
@@ -867,7 +876,7 @@
     font-size: 9px;
     top: -6px;
     right: -6px;
-    background-color: var(--background-color);
+    background-color: var(--box-color);
     border: 2px solid var(--highlight-color-subtle);
     border-radius: 22px;
     line-height: 15px;
@@ -879,7 +888,6 @@
 .react-datepicker__quarter-text--disabled,
 .react-datepicker__year-text--disabled {
     color: var(--background-suble-font-color);
-    background-color: var(--background-color) !important;
     border: none;
 }
 
@@ -941,10 +949,56 @@
     font-size: 14px;
 }
 
+.main .lake .content .module.active .display .module-component .sidebar .layer-description {
+    color: var(--background-font-color);
+    font-size: 16px;
+    cursor: pointer;
+    margin-bottom: 18px;
+    padding: 8px 8px 0 8px;
+    text-align: left;
+}
+
+.main .lake .content .module.active .display .module-component .sidebar .layer-description a {
+    color: var(--background-font-color);
+    font-weight: bold;
+    text-decoration: none;
+    transition: all .2s ease-in-out;
+}
+
+.main .lake .content .module.active .display .module-component .sidebar .layer-description a:hover {
+    color: green;
+}
+
+.main .lake .content .module.active .display .module-component .sidebar .layer-description button {
+    background-color: transparent;
+    color: var(--background-font-color);
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+}
+
+.main .lake .content .module.active .display .module-component .sidebar a {
+    text-decoration: none;
+}
+
+.main .lake .content .module.active .display .module-component .sidebar .layer-link {
+    padding: 6px 12px;
+    background-color: var(--background-color);
+    border-radius: 12px;
+    box-sizing: border-box;
+    margin: 0 12px;
+    margin-bottom: 26px;
+    box-shadow: var(--box-shadow);
+    color: var(--background-font-color);
+}
+
+.main .lake .content .module.active .display .module-component .sidebar .layer-link:hover {
+    box-shadow: none;
+}
+
 
 .main .lake .content .module.active .display .module-component .sidebar .layer-settings {
     font-size: 14px;
-    color: #b6afaf;
     text-align: left;
 }
 
@@ -1079,9 +1133,22 @@
     vertical-align: top;
 }
 
+.main .lake .content .module.active .display .module-component .sidebar .layer-settings .setting.threequarter {
+    width: 71%;
+    margin: 0 2%;
+    vertical-align: top;
+}
+
+.main .lake .content .module.active .display .module-component .sidebar .layer-settings .setting.onequarter {
+    width: 21%;
+    margin: 0 2%;
+    vertical-align: top;
+}
+
 .main .lake .content .module.active .display .module-component .sidebar .layer-settings .setting .label {
     padding: 0px 0px 4px 0px;
     display: inline-block;
+    color: var(--background-suble-font-color);
 }
 
 .main .lake .content .module.active .display .module-component .sidebar .layer-settings .setting .value {
@@ -1149,6 +1216,19 @@
     font-size: 14px;
 }
 
+.main .lake .content .module.active .display .module-component .sidebar .layer-settings button.set {
+    display: inline-block;
+    border-radius: 8px;
+    transition: all .2s ease-in-out;
+    border: none;
+    background-color: #e3e3e3;
+    cursor: pointer;
+    padding: 8px 21px;
+    font-size: 14px;
+    margin: 3px 0;
+    width: 100%;
+}
+
 .main .lake .content .module.active .display .module-component .sidebar .layer-settings button.reset:hover {
     background-color: #d1d0d0;
 }
@@ -1171,9 +1251,9 @@
 
 .main .lake .content .module.active .display .module-component .sidebar .layer-settings select {
     display: inline-block;
-    font-size: 16px;
+    font-size: 14px;
     width: 100%;
-    background-color: var(--background-color);
+    background-color: var(--box-color);
     cursor: pointer;
     padding: 4px 8px;
     text-align: left;
@@ -1184,7 +1264,6 @@
 .main .lake .content .module.active .display .module-component .sidebar .layer-settings .react-datepicker-wrapper input {
     display: inline-block;
     font-size: 16px;
-    width: 100%;
     background-color: var(--background-color);
     cursor: pointer;
     padding: 4px 8px;
@@ -1195,37 +1274,23 @@
 
 }
 
-.main .lake .content .module.active .display .module-component .sidebar .layer-settings .react-datepicker {
-    background-color: var(--background-color);
-    border: none;
-}
-
 .main .lake .content .module.active .display .module-component .sidebar .layer-settings .react-datepicker .react-datepicker__header {
     background-color: transparent;
     border: none;
 }
 
 .main .lake .content .module.active .display .module-component .sidebar .layer-settings .react-datepicker__day {
-    box-shadow: var(--box-shadow);
     padding: 1px;
-}
-
-.main .lake .content .module.active .display .module-component .sidebar .layer-settings .react-datepicker__day:hover {
-    box-shadow: none;
-    border: 1px solid var(--border-color);
-    padding: 0;
 }
 
 .main .lake .content .module.active .display .module-component .sidebar .layer-settings .react-datepicker__day-name,
 .main .lake .content .module.active .display .module-component .sidebar .layer-settings .react-datepicker__day,
 .main .lake .content .module.active .display .module-component .sidebar .layer-settings .react-datepicker__time-name {
-    width: 2.25rem;
-    color: unset;
+    width: var(--cell-size);
     border-radius: 0.3rem;
 }
 
 .main .lake .content .module.active .display .module-component .sidebar .layer-settings .react-datepicker__day--selected {
-    border: 1px solid var(--background-font-color) !important;
     padding: 0;
     font-weight: bold;
 }
@@ -1294,7 +1359,11 @@
     display: none;
 }
 
-.main .lake .content .module .display .module-component .plot .average-value {
+.main .lake .content .module .display .module-component .plot .map .labels {
+    display: block;
+}
+
+.main .lake .content .module .display .module-component .plot .map .labels .topLeft {
     position: absolute;
     left: 18px;
     top: 18px;
@@ -1305,6 +1374,20 @@
     background-color: var(--highlight-color);
     padding: 4px 8px;
     border-radius: 8px;
+}
+
+.main .lake .content .module .display .module-component .plot .map .labels .topRight {
+    color: var(--background-suble-font-color);
+    display: block;
+    font-size: 18px;
+    position: absolute;
+    right: 20px;
+    top: 22px;
+    z-index: 9991;
+}
+
+.main .lake .content .module.active .display .module-component .plot .map .labels {
+    display: none;
 }
 
 .main .lake .content .module.active .display .module-component .plot .map {
@@ -1382,8 +1465,7 @@
 }
 
 .main .lake .content .module .display .module-component .plot .map .legend {
-    background-color: var(--map-color);
-    border-radius: 12px;
+    background-color: var(--legend-color);
     bottom: 22px;
     font-size: 14px;
     padding: 3px 9px;
@@ -1755,7 +1837,7 @@
     .main .lake .content .module.active .display .module-component .sidebar {
         position: fixed;
         top: 0;
-        left: 0;
+        right: 0;
         z-index: 9999;
         background-color: var(--background-color);
         margin: 0;
@@ -1763,6 +1845,8 @@
         height: 100%;
         overflow-y: auto;
         display: none;
+        max-width: 100%;
+        box-sizing: border-box;
     }
 
     .main .lake .content .module.active .display .module-component .sidebar.open {
@@ -1771,6 +1855,10 @@
 
     .main .lake .content .module.active .display .module-component .sidebar .close-sidebar {
         display: block;
+    }
+
+    .main .lake .content .module .display .module-component .sidebar .active-apps .app {
+        margin: 25px 8px 40px 8px;
     }
 
     .main .lake .content .module.active .display .module-component .plot .settings {
