@@ -3,7 +3,7 @@ import * as d3 from "d3";
 
 L.Control.ParticleTracking = L.Control.extend({
   options: {
-    position: "topright", // location of control button
+    position: "topleft", // location of control button
     paths: 10, // number of paths to add with each click
     spread: 100, // spread of the added paths
     opacity: 1, // opacity of the canvas
@@ -93,7 +93,7 @@ L.Control.ParticleTracking = L.Control.extend({
       map.getPanes().overlayPane.removeChild(this._canvas);
     }
     L.DomUtil.removeClass(this._container, "leaflet-draw-enabled");
-    document.getElementById("map").style.removeProperty("cursor");
+    document.getElementById(this.options.id).style.removeProperty("cursor");
     map.off("moveend", this._reset, this);
     if (map.options.zoomAnimation) {
       map.off("zoomanim", this._animateZoom, this);
@@ -255,7 +255,7 @@ L.Control.ParticleTracking = L.Control.extend({
   _enableDrawing: function () {
     this._isAdding = true;
     L.DomUtil.addClass(this._container, "leaflet-draw-enabled");
-    document.getElementById("map").style.cursor = "crosshair";
+    document.getElementById(this.options.id).style.cursor = "crosshair";
     this._map.on("click", this._addPoints, this);
     document.getElementById("leaflet-draw-label-particles").style.display =
       "none";
@@ -263,7 +263,7 @@ L.Control.ParticleTracking = L.Control.extend({
   _disableDrawing: function () {
     this._isAdding = false;
     L.DomUtil.removeClass(this._container, "leaflet-draw-enabled");
-    document.getElementById("map").style.removeProperty("cursor");
+    document.getElementById(this.options.id).style.removeProperty("cursor");
     this._map.off("click", this._addPoints, this);
   },
   _getIndexAtPoint(x, y) {

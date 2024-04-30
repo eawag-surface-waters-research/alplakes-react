@@ -1,10 +1,9 @@
 import React, { Component } from "react";
-import axios from "axios";
+//import axios from "axios";
 import "./lake.css";
 
 class Graph extends Component {
   render() {
-    var { id } = this.props;
     return (
       <div className="module-component">
         <div className="sidebar">Some sidebar stuff here</div>

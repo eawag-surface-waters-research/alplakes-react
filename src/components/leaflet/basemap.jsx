@@ -12,7 +12,6 @@ class Basemap extends Component {
   state = {
     darkMap: "clqz0bzlt017d01qw5xi9ex6x",
     lightMap: "clg4u62lq009a01oa5z336xn7",
-    id: Math.round(Math.random() * 100000),
   };
   find = (list, parameter, value) => {
     return list.find((l) => l[parameter] === value);
@@ -107,13 +106,13 @@ class Basemap extends Component {
     }
   }
   async componentDidMount() {
-    var { darkMap, lightMap, id } = this.state;
-    var { dark } = this.props;
+    var { darkMap, lightMap } = this.state;
+    var { dark, mapId } = this.props;
     this.dataStore = {};
     this.layerStore = {};
     var center = [46.9, 8.2];
     var zoom = 8;
-    this.map = L.map("map" + id, {
+    this.map = L.map(mapId, {
       preferCanvas: true,
       center: center,
       zoom: zoom,
@@ -140,10 +139,10 @@ class Basemap extends Component {
   }
 
   render() {
-    const { id } = this.state;
+    const { mapId } = this.props;
     return (
       <React.Fragment>
-        <div id={"map" + id} className="leaflet-map"></div>
+        <div id={mapId} className="leaflet-map"></div>
       </React.Fragment>
     );
   }

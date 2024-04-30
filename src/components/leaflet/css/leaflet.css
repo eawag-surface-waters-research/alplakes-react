@@ -540,7 +540,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
 
 .leaflet-draw-label {
   position: absolute;
-  left: -128px;
+  right: -128px;
   background-color: var(--highlight-color);
   padding: 4px 8px;
   top: 0;
@@ -554,10 +554,10 @@ svg.leaflet-image-layer.leaflet-interactive path {
   position: absolute;
   height: 0;
   width: 0;
-  left: 100%;
+  right: 100%;
   top: 14px;
   border: 8px solid transparent;
-  border-left: 10px solid var(--highlight-color);
+  border-right: 10px solid var(--highlight-color);
 }
 
 /* Default icon URLs */

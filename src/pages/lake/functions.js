@@ -11,15 +11,6 @@ export const parseSubtitle = (title, names) => {
   return names.join(" • ");
 };
 
-const stringToDate = (date) => {
-  return new Date(
-    `${date.slice(0, 4)}-${date.slice(5, 7)}-${date.slice(8, 10)}T${date.slice(
-      11,
-      13
-    )}:00:00.000+00:00`
-  );
-};
-
 const satelliteStringToDate = (date) => {
   return new Date(
     `${date.slice(0, 4)}-${date.slice(4, 6)}-${date.slice(6, 8)}T${date.slice(

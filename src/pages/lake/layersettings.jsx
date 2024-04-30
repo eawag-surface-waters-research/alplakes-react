@@ -52,7 +52,7 @@ class Depth extends Component {
     var { depth, step, min, max, depths } = this.state;
     return (
       <React.Fragment>
-        <div className="setting threequarter">
+        <div className="setting twothird">
           <div className="label">Depth (m)</div>
           <div className="value">
             <select value={depth} onChange={this.updateDepth}>
@@ -289,7 +289,7 @@ class Raster extends Component {
 
   render() {
     var { _min, _max, id } = this.state;
-    var { language, layer, period, setPeriod, depth, setDepth, layer } =
+    var { language, layer, period, setPeriod, depth, setDepth } =
       this.props;
     var { palette, paletteName, opacity, labels } = this.props.options;
     var { depths, missingDates, minDate, maxDate } =
@@ -700,6 +700,12 @@ class Tiff extends Component {
     }
   };
 
+  setWms = () => {
+    var { id, updateOptions, options } = this.props;
+    options["wms"] = !options["wms"];
+    updateOptions(id, options);
+  };
+
   setOpacity = (event) => {
     var { id, updateOptions, options } = this.props;
     var value = event.target.value;
@@ -895,6 +901,7 @@ class Tiff extends Component {
       image,
       coverage,
       availableImages,
+      wms,
     } = this.props.options;
     var { unit } = this.props.layer;
     const locale = {
@@ -1025,6 +1032,13 @@ class Tiff extends Component {
             onChange={this.setCoverage}
           ></input>
         </div>
+        <div className="setting half">
+          <div className="label">Imagery</div>
+          <label className="switch">
+            <input type="checkbox" checked={wms} onChange={this.setWms}></input>
+            <span className="slider round"></span>
+          </label>
+        </div>
         <div className="setting">
           <div className="label">Palette</div>
           <div className="value">{paletteName}</div>
@@ -1098,24 +1112,29 @@ class Particles extends Component {
   };
 
   render() {
-    var { language, depth, depths, setDepth } = this.props;
+    var { language, depth, setDepth, layer, period, setPeriod } = this.props;
     var { paths, spread, opacity } = this.props.options;
-    if (opacity === undefined) opacity = 1;
+    var { depths, missingDates, minDate, maxDate } =
+      layer.sources[layer.source];
+    depths = depths ? depths : [];
+    opacity = opacity ? opacity : 1;
+    missingDates = missingDates ? missingDates : [];
     return (
       <div className="layer-settings">
-        <div className="layer-section">{Translate.settings[language]}</div>
-        <div className="setting half">
-          <div className="label">Depth (m)</div>
+        <div className="setting">
+          <div className="label">Period</div>
           <div>
-            <select value={depth} onChange={setDepth}>
-              {depths.map((d) => (
-                <option value={d} key={d}>
-                  {d}
-                </option>
-              ))}
-            </select>
+            <Period
+              period={period}
+              setPeriod={setPeriod}
+              language={language}
+              minDate={minDate}
+              maxDate={maxDate}
+              missingDates={missingDates}
+            />
           </div>
         </div>
+        <Depth depth={depth} depths={depths} onChange={setDepth} />
         <div className="setting half">
           <div className="label">Particles</div>
           <div className="value">{paths}</div>

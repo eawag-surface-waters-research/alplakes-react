@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import axios from "axios";
+//import axios from "axios";
 import Basemap from "../../components/leaflet/basemap";
 import InitialLoading from "../../components/loading/initialloading";
 import Loading from "../../components/loading/loading";
@@ -8,15 +8,14 @@ import PlayerControls from "../../components/playercontrols/playercontrols";
 import MapSettings from "./mapsettings";
 import CONFIG from "../../config.json";
 import settings_icon from "../../img/options.png";
-import Translations from "../../translations.json";
 import {
   relativeDate,
   copy,
-  formatDateTime,
   getTransectAlplakesHydrodynamic,
   getProfileAlplakesHydrodynamic,
 } from "./functions";
 import SummaryGraph from "./summarygraph";
+import MapLabels from "../../components/maplabels/maplabels";
 
 class Map extends Component {
   state = {
@@ -25,6 +24,7 @@ class Map extends Component {
     playControls: false,
     intialLoadId: "loading_" + Math.round(Math.random() * 100000),
     loadingId: "load_" + Math.round(Math.random() * 100000),
+    mapId: "map_" + Math.round(Math.random() * 100000),
     updates: [],
     legend: true,
     basemap: "default",
@@ -37,7 +37,6 @@ class Map extends Component {
     layers: [],
     selection: false,
     sidebar: false,
-    average: 0,
     firstActive: true,
   };
   updated = () => {
@@ -199,49 +198,56 @@ class Map extends Component {
     }
     this.setState({ datetime, updates });
   };
-  getTransect = async (latlng, layer) => {
-    var { graphData, period } = this.state;
-    if (layer.type === "alplakes_transect") {
-      graphData = await getTransectAlplakesHydrodynamic(
-        CONFIG.alplakes_api,
-        layer.properties.model,
-        layer.properties.lake,
-        period,
-        latlng
-      );
-      if (graphData) {
-        graphData["type"] = "transect";
-        graphData["layer"] = layer;
-      }
-    }
-    if (graphData === false) {
-      window.alert("Failed to collect transect please try again.");
-      this.closeGraph();
-    } else {
-      this.setState({ graphData, graphs: true, selection: false });
+  loading = (message, id) => {
+    var parent = document.getElementById(id);
+    if (parent) {
+      parent.querySelector("#loading-text").innerHTML = message;
+      parent.style.visibility = "visible";
     }
   };
-  getProfile = async (latlng, layer) => {
-    var { graphData, period } = this.state;
-    if (layer.type === "alplakes_profile") {
-      graphData = await getProfileAlplakesHydrodynamic(
+
+  loaded = (id) => {
+    if (document.getElementById(id)) {
+      document.getElementById(id).style.visibility = "hidden";
+    }
+  };
+  getTransect = async (latlng, id) => {
+    var { period, layers, loadingId } = this.state;
+    var layer = layers.find((l) => l.id === id);
+    var source = layer.sources[layer.source];
+    var data = false;
+    if (source.type === "alplakes_transect") {
+      this.loading("Collect transect from server", loadingId);
+      data = await getTransectAlplakesHydrodynamic(
         CONFIG.alplakes_api,
-        layer.properties.model,
-        layer.properties.lake,
+        source.model,
+        layer.lake,
         period,
         latlng
       );
-      if (graphData) {
-        graphData["type"] = "profile";
-        graphData["layer"] = layer;
-      }
+      this.loaded(loadingId);
+      layer.displayOptions.data = data;
     }
-    if (graphData === false) {
-      window.alert("Failed to collect profile please try again.");
-      this.closeGraph();
-    } else {
-      this.setState({ graphData, graphs: true, selection: false });
+    this.setState({ layers });
+  };
+  getProfile = async (latlng, id) => {
+    var { period, layers, loadingId } = this.state;
+    var layer = layers.find((l) => l.id === id);
+    var source = layer.sources[layer.source];
+    var data = false;
+    if (source.type === "alplakes_profile") {
+      this.loading("Collect profile from server", loadingId);
+      data = await getProfileAlplakesHydrodynamic(
+        CONFIG.alplakes_api,
+        source.model,
+        layer.lake,
+        period,
+        latlng
+      );
+      this.loaded(loadingId);
+      layer.displayOptions.data = data;
     }
+    this.setState({ layers });
   };
 
   componentDidUpdate(prevProps) {
@@ -279,7 +285,7 @@ class Map extends Component {
     var layers = copy(globalLayers);
     var updates = [{ event: "bounds" }];
     if ("default_depth" in metadata) depth = metadata.default_depth;
-    for (var layer_id of module.defaults) {
+    for (let layer_id of module.defaults) {
       updates.push({ event: "addLayer", id: layer_id });
       let layer = layers.find((l) => l.id === layer_id);
       layer.active = true;
@@ -307,10 +313,10 @@ class Map extends Component {
       loadingId,
       playControls,
       sidebar,
-      average,
-      datetime,
       selection,
       layers,
+      mapId,
+      datetime,
     } = this.state;
     return (
       <div className="module-component">
@@ -319,37 +325,29 @@ class Map extends Component {
             <div className="initial-load" id={intialLoadId}>
               <InitialLoading />
             </div>
-            <div
-              className={playControls ? "layer-loading" : "layer-loading lower"}
-              id={loadingId}
-            >
+            <div className="layer-loading" id={loadingId}>
               <Loading />
             </div>
-            <div className="labels">
-              {Object.keys(module.labels).map((l) => (
-                <div className={l} key={l}>
-                  {module.labels[l] === "average"
-                    ? average
-                    : module.labels[l] === "datetime"
-                    ? formatDateTime(
-                        datetime,
-                        Translations.axis[language].months
-                      )
-                    : module.labels[l]}
-                </div>
-              ))}
-            </div>
+            <MapLabels
+              module={module}
+              layers={layers}
+              selection={selection}
+              language={language}
+            />
             <div className="settings" onClick={this.openSidebar}>
               <img src={settings_icon} alt="Settings" />
             </div>
             <Basemap
               {...this.state}
               dark={dark}
-              updated={this.updated}
-              setDepthAndPeriod={this.setDepthAndPeriod}
               metadata={metadata}
               active={active}
+              mapId={mapId}
+              getProfile={this.getProfile}
+              getTransect={this.getTransect}
+              updated={this.updated}
               setLayers={this.setLayers}
+              setDepthAndPeriod={this.setDepthAndPeriod}
             />
             <Legend
               {...this.state}
@@ -377,6 +375,7 @@ class Map extends Component {
               language={language}
               dark={dark}
               layers={layers}
+              datetime={datetime}
               updateOptions={this.updateOptions}
             />
           </div>

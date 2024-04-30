@@ -307,7 +307,6 @@ class HomeMap extends Component {
     if (day === "") {
       day = formatDateYYYYMMDD(new Date());
     }
-    var label = Translations[parameters[parameter].label][language];
     return (
       <React.Fragment>
         <div className="parameter-selector">

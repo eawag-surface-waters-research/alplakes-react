@@ -140,17 +140,6 @@ const formatWmsDate = (datetime, minutes = 120) => {
   return `${formatDateIso(start)}/${formatDateIso(end)}`;
 };
 
-const parseDate = (dateString) => {
-  const year = dateString.slice(0, 4);
-  const month = parseInt(dateString.slice(4, 6)) - 1; // month is zero-indexed
-  const day = dateString.slice(6, 8);
-  const hour = dateString.slice(9, 11);
-  const minute = dateString.slice(11, 13);
-  const second = dateString.slice(13, 15);
-  const date = new Date(year, month, day, hour, minute, second);
-  return date;
-};
-
 const parseAlplakesDate = (str) => {
   const d = new Date(
     `${str.slice(0, 4)}-${str.slice(4, 6)}-${str.slice(6, 8)}T${str.slice(
@@ -159,21 +148,6 @@ const parseAlplakesDate = (str) => {
     )}:${str.slice(10, 12)}:00.000+00:00`
   );
   return String(d.getTime());
-};
-
-const findClosest = (array, key, value) => {
-  let closest = null;
-  let minDiff = Infinity;
-
-  for (let i = 0; i < array.length; i++) {
-    let diff = Math.abs(array[i][key] - value);
-    if (diff < minDiff) {
-      minDiff = diff;
-      closest = array[i];
-    }
-  }
-
-  return closest;
 };
 
 const closestDate = (targetDate, dateList) => {
@@ -308,23 +282,6 @@ export const round = (value, decimals) => {
   return Math.round(value * 10 ** decimals) / 10 ** decimals;
 };
 
-const keepDuplicatesWithHighestValue = (list, dateKey, valueKey) => {
-  const uniqueObjects = {};
-  for (const obj of list) {
-    const currentDate = obj[dateKey];
-    const currentValue = obj[valueKey];
-
-    if (
-      !uniqueObjects[currentDate] ||
-      uniqueObjects[currentDate][valueKey] < currentValue
-    ) {
-      uniqueObjects[currentDate] = obj;
-    }
-  }
-
-  return Object.values(uniqueObjects);
-};
-
 export const flyToBounds = async (bounds, map) => {
   return new Promise((resolve) => {
     function flyEnd() {
@@ -370,6 +327,7 @@ export const addLayer = async (
     setDepthAndPeriod,
     active,
     loadingId,
+    mapId,
   } = props;
   var source = layer.sources[layer.source];
   if (source.type === "alplakes_hydrodynamic") {
@@ -387,8 +345,6 @@ export const addLayer = async (
     );
   } else if (source.type === "sencast_tiff") {
     return await addSencastTiff(layer, layerStore, map, active, loadingId);
-  } else if (source.type === "sentinel_hub_wms") {
-    return await addSentinelHubWms(layer, dataStore, layerStore, datetime, map);
   } else if (source.type === "alplakes_particles") {
     return await addAlplakesParticles(
       layer,
@@ -396,28 +352,22 @@ export const addLayer = async (
       dataStore,
       layerStore,
       map,
+      mapId,
       datetime,
       depth,
-      initialLoad
+      initialLoad,
+      loadingId
     );
   } else if (source.type === "alplakes_transect") {
     return await addAlplakesTransect(
       layer,
-      dataStore,
       layerStore,
-      datetime,
       map,
+      mapId,
       getTransect
     );
   } else if (source.type === "alplakes_profile") {
-    return await addAlplakesProfile(
-      layer,
-      dataStore,
-      layerStore,
-      datetime,
-      map,
-      getProfile
-    );
+    return await addAlplakesProfile(layer, layerStore, map, mapId, getProfile);
   }
 };
 
@@ -436,14 +386,6 @@ export const updateLayer = async (layer, dataStore, layerStore, map, props) => {
     );
   } else if (source.type === "sencast_tiff") {
     return await updateSencastTiff(layer, layerStore, map, active, loadingId);
-  } else if (source.type === "sentinel_hub_wms") {
-    return await updateSentinelHubWms(
-      layer,
-      dataStore,
-      layerStore,
-      map,
-      datetime
-    );
   } else if (source.type === "alplakes_particles") {
     return await updateAlplakesParticles(
       layer,
@@ -451,7 +393,8 @@ export const updateLayer = async (layer, dataStore, layerStore, map, props) => {
       layerStore,
       map,
       datetime,
-      depth
+      depth,
+      loadingId
     );
   }
 };
@@ -462,8 +405,6 @@ export const removeLayer = async (layer, layerStore, map) => {
     return await removeAlplakesHydrodynamic(layer, layerStore, map);
   } else if (source.type === "sencast_tiff") {
     return await removeSencastTiff(layer, layerStore, map);
-  } else if (source.type === "sentinel_hub_wms") {
-    return removeSentinelHubWms(layer, layerStore, map);
   } else if (source.type === "alplakes_transect") {
     return removeAlplakesTransect(layer, layerStore, map);
   } else if (source.type === "alplakes_profile") {
@@ -1077,6 +1018,34 @@ const updateSencastTiff = async (layer, layerStore, map, active, loadingId) => {
     map,
     loadingId
   );
+  if (layerStore["wms"]) {
+    map.removeLayer(layerStore["wms"]);
+    layerStore["wms"] = null;
+  }
+  if (layer.displayOptions.wms) {
+    var url = "";
+    var type = "TRUE-COLOR";
+    if (layer.displayOptions.image.url.includes("/S2")) {
+      url = CONFIG.sentinel2_wms;
+      type = "TRUE_COLOR";
+    }
+    if (layer.displayOptions.image.url.includes("/S3"))
+      url = CONFIG.sentinel3_wms;
+    layerStore["wms"] = L.tileLayer
+      .wms(url, {
+        tileSize: 512,
+        attribution:
+          '&copy; <a href="http://www.sentinel-hub.com/" target="_blank">Sentinel Hub</a>',
+        minZoom: 6,
+        maxZoom: 16,
+        preset: type,
+        layers: type,
+        time: formatWmsDate(layer.displayOptions.image.time),
+        gain: 1,
+        gamma: 1,
+      })
+      .addTo(map);
+  }
   return layer;
 };
 
@@ -1086,91 +1055,11 @@ const removeSencastTiff = (layer, layerStore, map) => {
   var leaflet_layer = getNested(layerStore, path);
   map.removeLayer(leaflet_layer);
   setNested(layerStore, path, null);
-  return layer;
-};
-
-const addSentinelHubWms = async (
-  layer,
-  dataStore,
-  layerStore,
-  datetime,
-  map
-) => {
-  var source = layer.sources[layer.source];
-  var path = [source.type, source.model, layer.lake, layer.parameter];
-  var metadata;
-  var image;
-  if (!checkNested(dataStore, path)) {
-    ({ data: metadata } = await axios.get(layer.properties.metadata));
-    var max_pixels = d3.max(metadata.map((m) => parseFloat(m.p)));
-    metadata = metadata.map((m) => {
-      m.unix = parseDate(m.dt).getTime();
-      m.date = m.dt.slice(0, 8);
-      m.url = CONFIG.sencast_bucket + "/" + m.k;
-      m.time = parseDate(m.dt);
-      m.percent = Math.ceil((parseFloat(m.vp) / max_pixels) * 100);
-      return m;
-    });
-    setNested(dataStore, path, metadata);
-    image = findClosest(metadata, "unix", datetime);
-    var dates = keepDuplicatesWithHighestValue(metadata, "date", "percent");
-    layer.displayOptions.includeDates = dates.map((m) => m.time);
-    layer.displayOptions.percentage = dates.map((m) => m.percent);
-    layer.displayOptions.date = image.time;
-  } else {
-    metadata = getNested(dataStore, path);
-    image = findClosest(metadata, "unix", layer.displayOptions.date);
+  if (layerStore["wms"]) {
+    map.removeLayer(layerStore["wms"]);
+    layerStore["wms"] = null;
   }
-
-  var leaflet_layer = L.tileLayer
-    .wms(layer.properties.wms, {
-      tileSize: 512,
-      attribution:
-        '&copy; <a href="http://www.sentinel-hub.com/" target="_blank">Sentinel Hub</a>',
-      minZoom: 6,
-      maxZoom: 16,
-      preset: layer.displayOptions.layer,
-      layers: layer.displayOptions.layer,
-      time: formatWmsDate(layer.displayOptions.date),
-      gain: layer.displayOptions.gain,
-      gamma: layer.displayOptions.gamma,
-    })
-    .addTo(map);
-  setNested(layerStore, path, leaflet_layer);
-};
-
-const updateSentinelHubWms = async (
-  layer,
-  dataStore,
-  layerStore,
-  map,
-  datetime
-) => {
-  var source = layer.sources[layer.source];
-  var path = [source.type, source.model, layer.lake, layer.parameter];
-  var metadata = getNested(dataStore, path);
-  var leaflet_layer = getNested(layerStore, path);
-
-  const image = findClosest(
-    metadata,
-    "unix",
-    layer.displayOptions.date.getTime()
-  );
-  layer.displayOptions.updateDate = false;
-
-  leaflet_layer.setParams({
-    time: formatWmsDate(image.time),
-    gain: layer.displayOptions.gain,
-    gamma: layer.displayOptions.gamma,
-  });
-};
-
-const removeSentinelHubWms = (layer, layerStore, map) => {
-  var source = layer.sources[layer.source];
-  var path = [source.type, source.model, layer.lake, layer.parameter];
-  var leaflet_layer = getNested(layerStore, path);
-  map.removeLayer(leaflet_layer);
-  setNested(layerStore, path, null);
+  return layer;
 };
 
 const addAlplakesParticles = async (
@@ -1179,19 +1068,23 @@ const addAlplakesParticles = async (
   dataStore,
   layerStore,
   map,
+  mapId,
   datetime,
   depth,
-  initialLoad
+  initialLoad,
+  loadingId
 ) => {
   const overwrite = { parameter: "velocity", type: "alplakes_hydrodynamic" };
-  loading("Downloading lake geometry");
+  loading("Collecting metadata", loadingId);
+  ({ period, depth } = await getAlplakesHydrodynamicMetadata(layer, depth));
+  loading("Downloading lake geometry", loadingId);
   await downloadAlplakesHydrodynamicGeometry(
     layer,
     period,
     dataStore,
     overwrite
   );
-  loading("Downloading lake velocity field");
+  loading("Downloading lake velocity field", loadingId);
   await downloadAlplakesHydrodynamicParameter(
     layer,
     period,
@@ -1200,7 +1093,16 @@ const addAlplakesParticles = async (
     initialLoad,
     overwrite
   );
-  plotAlplakesParticles(layer, datetime, depth, dataStore, layerStore, map);
+  plotAlplakesParticles(
+    layer,
+    datetime,
+    depth,
+    dataStore,
+    layerStore,
+    map,
+    mapId
+  );
+  loaded(loadingId);
 };
 
 const plotAlplakesParticles = (
@@ -1209,7 +1111,8 @@ const plotAlplakesParticles = (
   depth,
   dataStore,
   layerStore,
-  map
+  map,
+  mapId
 ) => {
   var source = layer.sources[layer.source];
   var path = [
@@ -1235,6 +1138,7 @@ const plotAlplakesParticles = (
   if ("unit" in layer) {
     options["unit"] = layer.unit;
   }
+  options.id = mapId;
 
   var leaflet_layer = L.control
     .particleTracking(geometry, data, datetime, options)
@@ -1275,26 +1179,30 @@ const removeAlplakesParticles = (layer, layerStore, map) => {
 
 const addAlplakesTransect = async (
   layer,
-  dataStore,
   layerStore,
-  datetime,
   map,
+  mapId,
   getTransect
 ) => {
+  if ("paletteName" in layer.displayOptions) {
+    layer.displayOptions.palette = COLORS[layer.displayOptions.paletteName];
+  }
   var source = layer.sources[layer.source];
   var path = [source.type, source.model, layer.lake];
   var leaflet_layer = L.layerGroup([]).addTo(map);
   leaflet_layer.setZIndex(999);
   var leaflet_control = L.control
     .polylineDraw({
-      fire: (event) => getTransect(event, layer),
+      fire: (event) => getTransect(event, layer.id),
       layer: leaflet_layer,
+      id: mapId,
     })
     .addTo(map);
   setNested(layerStore, path, {
     layer: leaflet_layer,
     control: leaflet_control,
   });
+  return layer
 };
 
 const removeAlplakesTransect = (layer, layerStore, map) => {
@@ -1308,27 +1216,31 @@ const removeAlplakesTransect = (layer, layerStore, map) => {
 
 const addAlplakesProfile = async (
   layer,
-  dataStore,
   layerStore,
-  datetime,
   map,
+  mapId,
   getProfile
 ) => {
+  if ("paletteName" in layer.displayOptions) {
+    layer.displayOptions.palette = COLORS[layer.displayOptions.paletteName];
+  }
   var source = layer.sources[layer.source];
   var path = [source.type, source.model, layer.lake];
   var leaflet_layer = L.layerGroup([]).addTo(map);
   leaflet_layer.setZIndex(999);
   var leaflet_control = L.control
     .markerDraw({
-      fire: (event) => getProfile(event, layer),
+      fire: (event) => getProfile(event, layer.id),
       layer: leaflet_layer,
       markerIconUrl: leaflet_marker,
+      id: mapId,
     })
     .addTo(map);
   setNested(layerStore, path, {
     layer: leaflet_layer,
     control: leaflet_control,
   });
+  return layer
 };
 
 const removeAlplakesProfile = (layer, layerStore, map) => {

@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import axios from "axios";
-import YearlyGraph from "../../components/d3/yearlygraph/yearlygraph";
 import area_icon from "../../img/area.png";
 import depth_icon from "../../img/depth.png";
 import elevation_icon from "../../img/elevation.png";
@@ -11,7 +10,6 @@ import mixing_icon from "../../img/mixing.png";
 import trophic_icon from "../../img/trophic.png";
 import type_icon from "../../img/type.png";
 import datalakes from "../../img/datalakes.png";
-import CONFIG from "../../config.json";
 
 class Dropdown extends Component {
   state = {
@@ -140,7 +138,6 @@ class Feedback extends Component {
 
 class LatestEvents extends Component {
   render() {
-    var { metadata } = this.props;
     return (
       <Dropdown
         title="Latest Events"
