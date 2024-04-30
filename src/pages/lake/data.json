@@ -126,8 +126,8 @@
       "subtitle": "Remote Sensing Product",
       "component": "map",
       "labels": {
-        "topRight": "datetime",
-        "topLeft": "average"
+        "topRight": "satelliteDatetime",
+        "topLeft": "satelliteAverage"
       },
       "defaults": ["satellite_chlorophyll"]
     },
@@ -137,8 +137,8 @@
       "subtitle": "Remote Sensing Product",
       "component": "map",
       "labels": {
-        "topRight": "datetime",
-        "topLeft": "average"
+        "topRight": "satelliteDatetime",
+        "topLeft": "satelliteAverage"
       },
       "defaults": ["satellite_secchi"]
     },
@@ -148,8 +148,8 @@
       "subtitle": "Remote Sensing Product",
       "component": "map",
       "labels": {
-        "topRight": "datetime",
-        "topLeft": "average"
+        "topRight": "satelliteDatetime",
+        "topLeft": "satelliteAverage"
       },
       "defaults": ["satellite_turbidity"]
     },
@@ -296,6 +296,7 @@
       "unit": "mg m-3",
       "display": "tiff",
       "source": "sencast",
+      "summaryGraph": "satellite_timeseries",
       "displayOptions": {
         "paletteName": "Rainbow",
         "zIndex": 2,
@@ -331,6 +332,7 @@
       "unit": "m",
       "display": "tiff",
       "source": "sencast",
+      "summaryGraph": "satellite_timeseries",
       "displayOptions": {
         "paletteName": "navia reverse",
         "zIndex": 2,
@@ -370,6 +372,7 @@
       "unit": "g m-3",
       "display": "tiff",
       "source": "sencast",
+      "summaryGraph": "satellite_timeseries",
       "displayOptions": {
         "paletteName": "Turbid",
         "zIndex": 2,
@@ -390,7 +393,7 @@
             },
             {
               "model": "Sentinel2",
-              "metadata": "/sentinel2/geneva_tsm_dogliotti665.json"
+              "metadata": "/metadata/sentinel2/geneva_tsm_dogliotti665.json"
             }
           ],
           "bucket": "/metadata/latest/geneva_tsm.json",

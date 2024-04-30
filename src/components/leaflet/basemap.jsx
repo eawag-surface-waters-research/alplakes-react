@@ -24,7 +24,7 @@ class Basemap extends Component {
       var initialLoad = false;
       if (updates.find((u) => u.event === "initialLoad")) initialLoad = true;
       for (var update of updates) {
-        var layer = this.find(layers, "id", update.id)
+        var layer = this.find(layers, "id", update.id);
         if (update.event === "clear") {
           this.layer.clearLayers();
         } else if (update.event === "bounds") {
@@ -37,7 +37,7 @@ class Basemap extends Component {
           this.layerStore["basemap"].addTo(this.map);
         } else if (update.event === "addLayer") {
           try {
-            await addLayer(
+            layer = await addLayer(
               layer,
               this.dataStore,
               this.layerStore,
@@ -46,27 +46,22 @@ class Basemap extends Component {
               this.props
             );
           } catch (e) {
-            console.error(
-              "Failed to add layer",
-              layer
-            );
+            console.error("Failed to add layer", layer);
             console.error(e);
           }
         } else if (update.event === "updateLayer") {
-          await updateLayer(
+          layer = await updateLayer(
             layer,
             this.dataStore,
             this.layerStore,
             this.map,
             this.props
           );
+          
         } else if (update.event === "removeLayer") {
-          removeLayer(
-            layer,
-            this.layerStore,
-            this.map
-          );
+          layer = removeLayer(layer, this.layerStore, this.map);
         }
+        this.props.setLayers(layers);
       }
       this.map.triggerLayersUpdate();
     }

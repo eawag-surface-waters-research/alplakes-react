@@ -6,9 +6,10 @@ import CONFIG from "../../config.json";
 import {
   formatAPIDate,
   formatDateLong,
+  formatDateTime,
   parseDay,
   closestValue,
-  formatSencastDay
+  formatSencastDay,
 } from "./functions";
 import "react-datepicker/dist/react-datepicker.css";
 import "./lake.css";
@@ -668,16 +669,18 @@ class Tiff extends Component {
 
   setDate = (event) => {
     var { id, updateOptions, options } = this.props;
-    this.onMonthChange(event);
-    options.date = event;
-    options.updateDate = true;
+    var date = options.availableImages[formatSencastDay(event)];
+    var image = date.images.filter((i) => i.percent === date.max_percent)[0];
+    options.image = image;
     updateOptions(id, options);
+    setTimeout(() => this.onMonthChange(image.time), 100);
   };
 
   setImage = (event) => {
     var { id, updateOptions, options } = this.props;
-    options.image = event;
-    options.updateImage = true;
+    var date = options.availableImages[formatSencastDay(event)];
+    var image = date.images.filter((i) => i.time === event)[0];
+    options.image = image;
     updateOptions(id, options);
   };
 
@@ -740,8 +743,8 @@ class Tiff extends Component {
   };
 
   onMonthChange = (event) => {
-    var { image, availableImages } = this.props.options;
-    this.addCssRules(image.time, availableImages);
+    var { availableImages } = this.props.options;
+    this.addCssRules(event, availableImages);
   };
 
   isSameDay = (date1, date2) => {
@@ -785,52 +788,48 @@ class Tiff extends Component {
     var { id } = this.state;
     var start = new Date(date.getFullYear(), date.getMonth(), 1);
     var end = this.addOneMonth(start);
-    var className;
-    for (let day_dict of Object.values(available)) {
-      let p = day_dict.max_percent;
-      let day = day_dict.time.getDate();
-      let obs = day_dict.images.length;
-      let element = [];
-      if (day_dict.time > start && day_dict.time < end) {
-        className = `.setting.${id} .custom-css-datepicker .react-datepicker__day--0${
-          day < 10 ? "0" + day : day
-        }:not(.react-datepicker__day--outside-month)`;
-        element = document.querySelectorAll(className);
-      } else if (
-        day_dict.time < start &&
-        day_dict.time > this.addDays(start, -15)
-      ) {
-        className = `.setting.${id} .custom-css-datepicker .react-datepicker__day--0${
-          day < 10 ? "0" + day : day
-        }.react-datepicker__day--outside-month`;
-        element = document.querySelectorAll(className);
-      } else if (day_dict.time > end && day_dict.time < this.addDays(end, 15)) {
-        className = `.setting.${id} .custom-css-datepicker .react-datepicker__day--0${
-          day < 10 ? "0" + day : day
-        }.react-datepicker__day--outside-month`;
-        element = document.querySelectorAll(className);
-      }
-      if (element.length > 0) {
-        if (element[0].querySelector("div") === null) {
-          let deg = Math.ceil((p / 100) * 180) + 180;
-          element[0].title = `${p}% lake coverage (${obs} images available)`;
-          if (obs > 0) {
-            element[0].innerHTML = `<div class="percentage" style="background: conic-gradient(transparent 180deg, var(--highlight-color) 180deg ${deg}deg, transparent ${deg}deg 360deg);"></div></div><div class="observations">${obs}</div><div class="date">${element[0].innerHTML}</div>`;
-          } else {
-            element[0].innerHTML = `<div class="percentage" style="background: conic-gradient(transparent 180deg, var(--highlight-color) 180deg ${deg}deg, transparent ${deg}deg 360deg);"></div></div><div class="date">${element[0].innerHTML}</div>`;
+    var preStart = this.addDays(start, -7);
+    var postEnd = this.addDays(end, 7);
+    var numberOfDays = Math.ceil(
+      Math.abs(postEnd.getTime() - preStart.getTime()) / (1000 * 3600 * 24)
+    );
+    for (var i = 0; i <= numberOfDays; i++) {
+      let time = this.addDays(preStart, i);
+      let key = formatSencastDay(time);
+      if (key in available) {
+        let element = [];
+        let day = time.getDate();
+        let p = available[key].max_percent;
+        let obs = available[key].images.length;
+        var className;
+        if (time >= start && time <= end) {
+          className = `.setting.${id} .custom-css-datepicker .react-datepicker__day--0${
+            day < 10 ? "0" + day : day
+          }:not(.react-datepicker__day--outside-month)`;
+          element = document.querySelectorAll(className);
+        } else if (time < start) {
+          className = `.setting.${id} .custom-css-datepicker .react-datepicker__day--0${
+            day < 10 ? "0" + day : day
+          }.react-datepicker__day--outside-month`;
+          element = document.querySelectorAll(className);
+        } else if (time > end) {
+          className = `.setting.${id} .custom-css-datepicker .react-datepicker__day--0${
+            day < 10 ? "0" + day : day
+          }.react-datepicker__day--outside-month`;
+          element = document.querySelectorAll(className);
+        }
+        if (element.length > 0) {
+          if (element[0].querySelector("div") === null) {
+            let deg = Math.ceil((p / 100) * 180) + 180;
+            element[0].title = `${p}% lake coverage (${obs} images available)`;
+            if (obs > 0) {
+              element[0].innerHTML = `<div class="percentage" style="background: conic-gradient(transparent 180deg, var(--highlight-color) 180deg ${deg}deg, transparent ${deg}deg 360deg);"></div></div><div class="observations">${obs}</div><div class="date">${day}</div>`;
+            } else {
+              element[0].innerHTML = `<div class="percentage" style="background: conic-gradient(transparent 180deg, var(--highlight-color) 180deg ${deg}deg, transparent ${deg}deg 360deg);"></div></div><div class="date">${day}</div>`;
+            }
           }
         }
       }
-    }
-  };
-
-  loadCalendar = () => {
-    var { includeDates, image, availableImages } = this.props.options;
-    if (includeDates) {
-      this.addCssRules(image.time, availableImages);
-      this.setState({ firstLoad: false });
-    } else {
-      setTimeout(this.loadCalendar, 1000);
     }
   };
 
@@ -847,8 +846,16 @@ class Tiff extends Component {
         dataMax: this.props.options.dataMax,
       });
     }
-    if (this.props.active && this.state.firstLoad) {
-      this.loadCalendar();
+    if (
+      this.props.active &&
+      this.state.firstLoad &&
+      this.props.options.availableImages
+    ) {
+      this.addCssRules(
+        this.props.options.image.time,
+        this.props.options.availableImages
+      );
+      this.setState({ firstLoad: false });
     }
   }
 
@@ -861,6 +868,7 @@ class Tiff extends Component {
     document
       .getElementById("tiff_max_" + id)
       .addEventListener("keydown", this.enterMinMax);
+    this.setState({});
   }
 
   componentWillUnmount() {
@@ -898,10 +906,12 @@ class Tiff extends Component {
         date: () => "dd/mm/yyyy",
       },
     };
+    var months = Translate.axis[language].months;
     includeDates = includeDates ? includeDates : [];
     var images = [];
     if (availableImages && image) {
-      images = availableImages[formatSencastDay(image.time)].images;
+      let day = formatSencastDay(image.time);
+      if (day in availableImages) images = availableImages[day].images;
     }
 
     return (
@@ -917,32 +927,35 @@ class Tiff extends Component {
               onChange={(update) => {
                 this.setDate(update);
               }}
-              key={includeDates.length}
               onMonthChange={this.onMonthChange}
             />
           </div>
-          {images.map((i) => (
-            <div
-              className={i.url === image.url ? "image selected" : "image"}
-              key={i.url}
-              onClick={() => this.setImage(i.time)}
-            >
-              <div className="button">
-                {i.url === image.url ? "Selected" : "Select"}
-              </div>
-              <div className="left">{i.satellite}</div>
-              <div className="right">
-                <div>
-                   | {i.satellite.includes("S3") ? 300 : 29}
-                  m resolution
+          <div className="images">
+            {images.map((i) => (
+              <div
+                className={i.url === image.url ? "image selected" : "image"}
+                key={i.url}
+                onClick={() => this.setImage(i.time)}
+              >
+                <div className="button">
+                  {i.url === image.url ? "Selected" : "Select"}
                 </div>
-                <div>
-                  {`${i.percent}% coverage`} |{" "}
-                  {`${Math.round(i.ave * 10) / 10} ${i.unit}`}
+                <div className="left">
+                  <div className="sat">{i.satellite}</div>
+                  <div className="res">
+                    {i.satellite.includes("S3") ? 300 : 20}m
+                  </div>
+                </div>
+                <div className="right">
+                  <div>{formatDateTime(i.time, months)}</div>
+                  <div>
+                    {`${i.percent}% coverage`} |{" "}
+                    {`${Math.round(i.ave * 10) / 10} ${unit}`}
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
         <div className="setting half">
           <div className="label">Min</div>

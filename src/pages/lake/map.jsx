@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import Basemap from "../../components/leaflet/basemap";
+import InitialLoading from "../../components/loading/initialloading";
 import Loading from "../../components/loading/loading";
 import Legend from "../../components/legend/legend";
 import PlayerControls from "../../components/playercontrols/playercontrols";
@@ -15,6 +16,7 @@ import {
   getTransectAlplakesHydrodynamic,
   getProfileAlplakesHydrodynamic,
 } from "./functions";
+import SummaryGraph from "./summarygraph";
 
 class Map extends Component {
   state = {
@@ -72,6 +74,9 @@ class Map extends Component {
     } else {
       this.play();
     }
+  };
+  setLayers = (layers) => {
+    this.setState({ layers });
   };
   play = () => {
     var { timeout } = this.state;
@@ -299,16 +304,25 @@ class Map extends Component {
       mapFullscreen,
       graphFullscreen,
       intialLoadId,
+      loadingId,
       playControls,
       sidebar,
       average,
       datetime,
+      selection,
+      layers,
     } = this.state;
     return (
       <div className="module-component">
         <div className="plot">
           <div className={mapFullscreen ? "map fullscreen" : "map"}>
             <div className="initial-load" id={intialLoadId}>
+              <InitialLoading />
+            </div>
+            <div
+              className={playControls ? "layer-loading" : "layer-loading lower"}
+              id={loadingId}
+            >
               <Loading />
             </div>
             <div className="labels">
@@ -335,6 +349,7 @@ class Map extends Component {
               setDepthAndPeriod={this.setDepthAndPeriod}
               metadata={metadata}
               active={active}
+              setLayers={this.setLayers}
             />
             <Legend
               {...this.state}
@@ -355,7 +370,16 @@ class Map extends Component {
               />
             )}
           </div>
-          <div className={graphFullscreen ? "graph fullscreen" : "graph"}></div>
+          <div className={graphFullscreen ? "graph fullscreen" : "graph"}>
+            <SummaryGraph
+              active={active}
+              selection={selection}
+              language={language}
+              dark={dark}
+              layers={layers}
+              updateOptions={this.updateOptions}
+            />
+          </div>
         </div>
         <div className={sidebar ? "sidebar open" : "sidebar"}>
           <div className="close-sidebar" onClick={this.closeSidebar}>

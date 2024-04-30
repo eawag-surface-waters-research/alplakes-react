@@ -14,7 +14,7 @@ class SatelliteSummary extends Component {
   setImage = (event) => {
     this.props.setImage(event.x);
   };
-  componentDidUpdate() {
+  processInputs = () => {
     var { loaded, xmin, xmax } = this.state;
     var { available } = this.props;
     if (available && !loaded) {
@@ -45,13 +45,18 @@ class SatelliteSummary extends Component {
       data = Object.values(data);
       this.setState({ data, ymin, ymax, loaded: true });
     }
+  };
+  componentDidUpdate() {
+    this.processInputs();
+  }
+  componentDidMount() {
+    this.processInputs();
   }
   render() {
     var { label, unit, dark } = this.props;
     var { data, xmin, xmax, ymin, ymax } = this.state;
     return (
       <div className="satellite-summary">
-        <div className="description">Averge lake value per image</div>
         <D3LineGraph
           data={data}
           ylabel={label}
@@ -70,6 +75,7 @@ class SatelliteSummary extends Component {
           xscale={"Time"}
           yscale={""}
           legend={false}
+          header={false}
           onClick={this.setImage}
         />
       </div>

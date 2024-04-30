@@ -339,16 +339,17 @@ export const flyToBounds = async (bounds, map) => {
   });
 };
 
-const loading = (message) => {
-  if (document.getElementById("loading")) {
-    document.getElementById("loading-text").innerHTML = message;
-    document.getElementById("loading").style.visibility = "visible";
+const loading = (message, id) => {
+  var parent = document.getElementById(id);
+  if (parent) {
+    parent.querySelector("#loading-text").innerHTML = message;
+    parent.style.visibility = "visible";
   }
 };
 
-const loaded = () => {
-  if (document.getElementById("loading")) {
-    document.getElementById("loading").style.visibility = "hidden";
+const loaded = (id) => {
+  if (document.getElementById(id)) {
+    document.getElementById(id).style.visibility = "hidden";
   }
 };
 
@@ -368,10 +369,11 @@ export const addLayer = async (
     getProfile,
     setDepthAndPeriod,
     active,
+    loadingId,
   } = props;
   var source = layer.sources[layer.source];
   if (source.type === "alplakes_hydrodynamic") {
-    await addAlplakesHydrodynamic(
+    return await addAlplakesHydrodynamic(
       layer,
       period,
       dataStore,
@@ -380,14 +382,15 @@ export const addLayer = async (
       datetime,
       depth,
       initialLoad,
-      setDepthAndPeriod
+      setDepthAndPeriod,
+      loadingId
     );
   } else if (source.type === "sencast_tiff") {
-    await addSencastTiff(layer, layerStore, map, active);
+    return await addSencastTiff(layer, layerStore, map, active, loadingId);
   } else if (source.type === "sentinel_hub_wms") {
-    await addSentinelHubWms(layer, dataStore, layerStore, datetime, map);
+    return await addSentinelHubWms(layer, dataStore, layerStore, datetime, map);
   } else if (source.type === "alplakes_particles") {
-    await addAlplakesParticles(
+    return await addAlplakesParticles(
       layer,
       period,
       dataStore,
@@ -398,7 +401,7 @@ export const addLayer = async (
       initialLoad
     );
   } else if (source.type === "alplakes_transect") {
-    await addAlplakesTransect(
+    return await addAlplakesTransect(
       layer,
       dataStore,
       layerStore,
@@ -407,7 +410,7 @@ export const addLayer = async (
       getTransect
     );
   } else if (source.type === "alplakes_profile") {
-    await addAlplakesProfile(
+    return await addAlplakesProfile(
       layer,
       dataStore,
       layerStore,
@@ -416,27 +419,33 @@ export const addLayer = async (
       getProfile
     );
   }
-  loaded();
 };
 
 export const updateLayer = async (layer, dataStore, layerStore, map, props) => {
-  var { datetime, depth, active } = props;
+  var { datetime, depth, active, loadingId } = props;
   var source = layer.sources[layer.source];
   if (source.type === "alplakes_hydrodynamic") {
-    await updateAlplakesHydrodynamic(
+    return await updateAlplakesHydrodynamic(
       layer,
       dataStore,
       layerStore,
       map,
       datetime,
-      depth
+      depth,
+      loadingId
     );
   } else if (source.type === "sencast_tiff") {
-    await updateSencastTiff(layer, layerStore, map, active);
+    return await updateSencastTiff(layer, layerStore, map, active, loadingId);
   } else if (source.type === "sentinel_hub_wms") {
-    await updateSentinelHubWms(layer, dataStore, layerStore, map, datetime);
+    return await updateSentinelHubWms(
+      layer,
+      dataStore,
+      layerStore,
+      map,
+      datetime
+    );
   } else if (source.type === "alplakes_particles") {
-    await updateAlplakesParticles(
+    return await updateAlplakesParticles(
       layer,
       dataStore,
       layerStore,
@@ -445,23 +454,22 @@ export const updateLayer = async (layer, dataStore, layerStore, map, props) => {
       depth
     );
   }
-  loaded();
 };
 
 export const removeLayer = async (layer, layerStore, map) => {
   var source = layer.sources[layer.source];
   if (source.type === "alplakes_hydrodynamic") {
-    await removeAlplakesHydrodynamic(layer, layerStore, map);
+    return await removeAlplakesHydrodynamic(layer, layerStore, map);
   } else if (source.type === "sencast_tiff") {
-    await removeSencastTiff(layer, layerStore, map);
+    return await removeSencastTiff(layer, layerStore, map);
   } else if (source.type === "sentinel_hub_wms") {
-    removeSentinelHubWms(layer, layerStore, map);
+    return removeSentinelHubWms(layer, layerStore, map);
   } else if (source.type === "alplakes_transect") {
-    removeAlplakesTransect(layer, layerStore, map);
+    return removeAlplakesTransect(layer, layerStore, map);
   } else if (source.type === "alplakes_profile") {
-    removeAlplakesProfile(layer, layerStore, map);
+    return removeAlplakesProfile(layer, layerStore, map);
   } else if (source.type === "alplakes_particles") {
-    removeAlplakesParticles(layer, layerStore, map);
+    return removeAlplakesParticles(layer, layerStore, map);
   }
 };
 
@@ -474,13 +482,14 @@ const addAlplakesHydrodynamic = async (
   datetime,
   depth,
   initialLoad,
-  setDepthAndPeriod
+  setDepthAndPeriod,
+  loadingId
 ) => {
-  loading("Collecting metadata");
+  loading("Collecting metadata", loadingId);
   ({ period, depth } = await getAlplakesHydrodynamicMetadata(layer, depth));
-  loading("Downloading lake geometry");
+  loading("Downloading lake geometry", loadingId);
   await downloadAlplakesHydrodynamicGeometry(layer, period, dataStore);
-  loading(`Downloading lake ${layer.parameter} field`);
+  loading(`Downloading lake ${layer.parameter} field`, loadingId);
   await downloadAlplakesHydrodynamicParameter(
     layer,
     period,
@@ -490,7 +499,8 @@ const addAlplakesHydrodynamic = async (
   );
   plotAlplakesHydrodynamic(layer, datetime, depth, dataStore, layerStore, map);
   setDepthAndPeriod(depth, period);
-  loaded();
+  loaded(loadingId);
+  return layer;
 };
 
 const getAlplakesHydrodynamicMetadata = async (layer, depth) => {
@@ -893,6 +903,7 @@ const updateAlplakesHydrodynamic = (
       }
     }
   }
+  return layer;
 };
 
 const removeAlplakesHydrodynamic = (layer, layerStore, map) => {
@@ -914,14 +925,15 @@ const removeAlplakesHydrodynamic = (layer, layerStore, map) => {
     layerStore["labels"].clearLayers();
   }
   setNested(layerStore, path, null);
+  return layer;
 };
 
-const addSencastTiff = async (layer, layerStore, map, active) => {
+const addSencastTiff = async (layer, layerStore, map, active, loadingId) => {
   layer.displayOptions.dataMin = layer.displayOptions.min;
   layer.displayOptions.dataMax = layer.displayOptions.max;
   var source = layer.sources[layer.source];
   if (active) {
-    source = await collectSencastMetadata(source);
+    source = await collectSencastMetadata(source, loadingId);
     var includeDates = Object.values(source.available).map((m) => m.time);
     includeDates.sort(compareDates);
     var currentDate = includeDates[includeDates.length - 1];
@@ -939,12 +951,13 @@ const addSencastTiff = async (layer, layerStore, map, active) => {
       time: datetime,
     };
   }
-
   await plotSencastTiff(layer.displayOptions.image.url, layer, layerStore, map);
+  return layer;
 };
 
-const collectSencastMetadata = async (source) => {
+const collectSencastMetadata = async (source, loadingId) => {
   var available = {};
+  loading("Collecting metadata", loadingId);
   for (let model of source.models) {
     let { data: files } = await axios.get(
       CONFIG.sencast_bucket + model.metadata
@@ -997,10 +1010,11 @@ const collectSencastMetadata = async (source) => {
     }
   }
   source.available = available;
+  loaded(loadingId);
   return source;
 };
 
-const plotSencastTiff = async (url, layer, layerStore, map) => {
+const plotSencastTiff = async (url, layer, layerStore, map, loadingId) => {
   var source = layer.sources[layer.source];
   var path = [source.type, layer.lake, layer.parameter];
   var options = layer.displayOptions;
@@ -1034,28 +1048,36 @@ const plotSencastTiff = async (url, layer, layerStore, map) => {
     if (leaflet_layer.options.source_url === url) {
       await leaflet_layer.update(false, options);
     } else {
-      loading("Downloading satellite image");
+      loading("Downloading satellite image", loadingId);
       let { data } = await axios.get(url, {
         responseType: "arraybuffer",
       });
       await leaflet_layer.update(data, options);
     }
   } else {
-    loading("Downloading satellite image");
+    loading("Downloading satellite image", loadingId);
     let { data } = await axios.get(url, {
       responseType: "arraybuffer",
     });
     leaflet_layer = await L.floatgeotiff(data, options).addTo(map);
     setNested(layerStore, path, leaflet_layer);
   }
+  loaded(loadingId);
 };
 
-const updateSencastTiff = async (layer, layerStore, map, active) => {
+const updateSencastTiff = async (layer, layerStore, map, active, loadingId) => {
   var source = layer.sources[layer.source];
   if (active && !("available" in source)) {
-    source = await collectSencastMetadata(source);
+    source = await collectSencastMetadata(source, loadingId);
   }
-  await plotSencastTiff(layer.displayOptions.image.url, layer, layerStore, map);
+  await plotSencastTiff(
+    layer.displayOptions.image.url,
+    layer,
+    layerStore,
+    map,
+    loadingId
+  );
+  return layer;
 };
 
 const removeSencastTiff = (layer, layerStore, map) => {
@@ -1064,6 +1086,7 @@ const removeSencastTiff = (layer, layerStore, map) => {
   var leaflet_layer = getNested(layerStore, path);
   map.removeLayer(leaflet_layer);
   setNested(layerStore, path, null);
+  return layer;
 };
 
 const addSentinelHubWms = async (

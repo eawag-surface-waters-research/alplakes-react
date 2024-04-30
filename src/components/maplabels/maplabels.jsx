@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./loading.css";
 
-class Loading extends Component {
+class MapLabels extends Component {
   render() {
     return (
       <React.Fragment>
@@ -16,4 +16,4 @@ class Loading extends Component {
   }
 }
 
-export default Loading;
+export default MapLabels;

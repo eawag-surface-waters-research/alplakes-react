@@ -215,3 +215,39 @@
         transform: rotate(-130deg);
     }
 }
+
+.loading-symbol-x10 {
+    display: inline-block;
+}
+
+.loading-symbol-x10 .loader-x10 {
+    width: 35px;
+    height: 35px;
+    border: 4px solid var(--background-font-color);
+    border-bottom-color: transparent;
+    border-radius: 75%;
+    display: inline-block;
+    box-sizing: border-box;
+    animation: rotation 1.5s linear infinite;
+    margin-top: 0px;
+    margin-bottom: -4px;
+}
+
+.loading-text-x10 {
+    display: inline-block;
+    font-size: 12px;
+    max-width: 100px;
+    margin: 0 8px;
+}
+
+
+
+@keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}

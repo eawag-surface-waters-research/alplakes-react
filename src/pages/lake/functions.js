@@ -230,6 +230,21 @@ export const closestIndex = (num, arr) => {
   return index;
 };
 
+export const findClosest = (array, key, value) => {
+  let closest = null;
+  let minDiff = Infinity;
+
+  for (let i = 0; i < array.length; i++) {
+    let diff = Math.abs(array[i][key] - value);
+    if (diff < minDiff) {
+      minDiff = diff;
+      closest = array[i];
+    }
+  }
+
+  return closest;
+};
+
 export const closestValue = (target, arr) => {
   const sortedArr = arr
     .slice()
