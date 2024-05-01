@@ -4,6 +4,7 @@ import Translations from "../../translations.json";
 import { formatSencastDay, findClosest } from "./functions";
 import ProfileGraph from "../../components/d3/profilegraph/profilegraph";
 import TransectGraph from "../../components/d3/transectgraph/transectgraph";
+import ThreedLinegraph from "../../components/d3/threedlinegraph/threedlinegraph";
 
 class SummaryGraph extends Component {
   setImage = (event) => {
@@ -45,11 +46,14 @@ class SummaryGraph extends Component {
               <ProfileGraph
                 data={layer.displayOptions.data}
                 options={layer.displayOptions}
+                dark={dark}
               />
             </React.Fragment>
           );
         } else {
-          return <React.Fragment></React.Fragment>;
+          return <React.Fragment> <div className="graph-temp">
+          Add a marker to see the profile plotted here.
+        </div></React.Fragment>;
         }
       case "transect_plot":
         if (layer.displayOptions.data) {
@@ -59,6 +63,31 @@ class SummaryGraph extends Component {
                 data={layer.displayOptions.data}
                 options={layer.displayOptions}
                 datetime={datetime}
+                dark={dark}
+              />
+            </React.Fragment>
+          );
+        } else {
+          return (
+            <React.Fragment>
+              <div className="graph-temp">
+                Draw a transect to see it plotted here.
+              </div>
+            </React.Fragment>
+          );
+        }
+      case "threed_linegraph":
+        if (layer.displayOptions.data) {
+          return (
+            <React.Fragment>
+              <ThreedLinegraph
+                data={layer.displayOptions.data}
+                options={layer.displayOptions}
+                datetime={datetime}
+                parameter={layer.parameter}
+                unit={layer.unit}
+                language={language}
+                dark={dark}
               />
             </React.Fragment>
           );

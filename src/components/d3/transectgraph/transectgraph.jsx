@@ -24,7 +24,7 @@ class TransectGraph extends Component {
     return closestIndex;
   };
   render() {
-    var { data: input, options, datetime } = this.props;
+    var { data: input, options, datetime, dark } = this.props;
     var { thresholdStep, palette, variable } = options;
     let z = input[variable].data[this.closestDate(input.time, datetime)];
     let zlabel = variable.charAt(0).toUpperCase() + variable.slice(1);
@@ -55,6 +55,7 @@ class TransectGraph extends Component {
             display={"heatmap"}
             maxvalue={bounds[1]}
             minvalue={bounds[0]}
+            dark={dark}
           />
         )}
       </React.Fragment>

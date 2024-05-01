@@ -147,7 +147,7 @@ const parseAlplakesDate = (str) => {
       10
     )}:${str.slice(10, 12)}:00.000+00:00`
   );
-  return String(d.getTime());
+  return d;
 };
 
 const closestDate = (targetDate, dateList) => {
@@ -556,6 +556,8 @@ const downloadAlplakesHydrodynamicParameter = async (
   }
 
   par = par.split("\n").map((g) => g.split(",").map((s) => parseFloat(s)));
+
+  var average = { x: [], y: [], title: `Average at ${depth}m` };
   var bounds = { min: [], max: [] };
   for (var i = 0; i < Math.floor(par.length / (source.height + 1)); i++) {
     var date = parseAlplakesDate(String(par[i * (source.height + 1)][0]));
@@ -569,7 +571,12 @@ const downloadAlplakesHydrodynamicParameter = async (
     }
     bounds.min.push(d3.min(data_flat));
     bounds.max.push(d3.max(data_flat));
-    setNested(dataStore, [...path, date], data);
+    setNested(dataStore, [...path, String(date.getTime())], data);
+    let mean = d3.mean(data_flat);
+    if (mean) {
+      average.y.push(d3.mean(data_flat));
+      average.x.push(date);
+    }
   }
   var min = d3.min(bounds.min);
   var max = d3.max(bounds.max);
@@ -577,6 +584,7 @@ const downloadAlplakesHydrodynamicParameter = async (
   layer.displayOptions.max = max;
   layer.displayOptions.dataMin = min;
   layer.displayOptions.dataMax = max;
+  layer.displayOptions.data = average;
 };
 
 const plotAlplakesHydrodynamic = (
@@ -1202,7 +1210,7 @@ const addAlplakesTransect = async (
     layer: leaflet_layer,
     control: leaflet_control,
   });
-  return layer
+  return layer;
 };
 
 const removeAlplakesTransect = (layer, layerStore, map) => {
@@ -1240,7 +1248,7 @@ const addAlplakesProfile = async (
     layer: leaflet_layer,
     control: leaflet_control,
   });
-  return layer
+  return layer;
 };
 
 const removeAlplakesProfile = (layer, layerStore, map) => {

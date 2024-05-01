@@ -211,13 +211,22 @@ class Map extends Component {
       document.getElementById(id).style.visibility = "hidden";
     }
   };
+  error = (message) => {
+    var parent = document.getElementById("error-modal");
+    parent.innerHTML = message;
+    parent.style.display = "block";
+    setTimeout(this.removeError, 3000);
+  };
+  removeError = () => {
+    document.getElementById("error-modal").style.display = "none";
+  };
   getTransect = async (latlng, id) => {
     var { period, layers, loadingId } = this.state;
     var layer = layers.find((l) => l.id === id);
     var source = layer.sources[layer.source];
     var data = false;
+    this.loading("Collect transect from server", loadingId);
     if (source.type === "alplakes_transect") {
-      this.loading("Collect transect from server", loadingId);
       data = await getTransectAlplakesHydrodynamic(
         CONFIG.alplakes_api,
         source.model,
@@ -225,18 +234,24 @@ class Map extends Component {
         period,
         latlng
       );
-      this.loaded(loadingId);
-      layer.displayOptions.data = data;
     }
-    this.setState({ layers });
+    if (data) {
+      layer.displayOptions.data = data;
+      this.setState({ layers });
+    } else {
+      this.error(
+        "Failed to collect transect from the server. Please try again."
+      );
+    }
+    this.loaded(loadingId);
   };
   getProfile = async (latlng, id) => {
     var { period, layers, loadingId } = this.state;
     var layer = layers.find((l) => l.id === id);
     var source = layer.sources[layer.source];
     var data = false;
+    this.loading("Collect profile from server", loadingId);
     if (source.type === "alplakes_profile") {
-      this.loading("Collect profile from server", loadingId);
       data = await getProfileAlplakesHydrodynamic(
         CONFIG.alplakes_api,
         source.model,
@@ -244,10 +259,16 @@ class Map extends Component {
         period,
         latlng
       );
-      this.loaded(loadingId);
-      layer.displayOptions.data = data;
     }
-    this.setState({ layers });
+    if (data) {
+      layer.displayOptions.data = data;
+      this.setState({ layers });
+    } else {
+      this.error(
+        "Failed to collect profile from the server. Please try again."
+      );
+    }
+    this.loaded(loadingId);
   };
 
   componentDidUpdate(prevProps) {
@@ -348,6 +369,7 @@ class Map extends Component {
               updated={this.updated}
               setLayers={this.setLayers}
               setDepthAndPeriod={this.setDepthAndPeriod}
+              error={this.error}
             />
             <Legend
               {...this.state}

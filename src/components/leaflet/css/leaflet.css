@@ -547,6 +547,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
   width: 94px;
   border-radius: 8px;
   color: white;
+  font-size: 14px;
 }
 
 .leaflet-draw-label:before {

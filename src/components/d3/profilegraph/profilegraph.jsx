@@ -11,7 +11,7 @@ class ProfileGraph extends Component {
     );
   };
   render() {
-    var { data: input, options } = this.props;
+    var { data: input, options, dark } = this.props;
     var { thresholdStep, palette, variable } = options;
     let z = input[variable].data;
     let zlabel = variable.charAt(0).toUpperCase() + variable.slice(1);
@@ -35,6 +35,7 @@ class ProfileGraph extends Component {
             yReverse={true}
             xReverse={false}
             display={"heatmap"}
+            dark={dark}
           />
         )}
       </React.Fragment>

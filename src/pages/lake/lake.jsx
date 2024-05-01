@@ -160,6 +160,7 @@ class Lake extends Component {
           <NotFound id={id} />
         ) : (
           <div className="content">
+            <div className="error-modal" id="error-modal" />
             <div className="modules">
               <div className="mobile-title">{title}</div>
               <div className="mobile-subtitle">{subtitle}</div>

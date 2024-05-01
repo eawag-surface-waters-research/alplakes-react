@@ -4,6 +4,8 @@ import heatIcon from "../../../img/heat.png";
 import contourIcon from "../../../img/contour.png";
 import xgraphIcon from "../../../img/xgraph.png";
 import ygraphIcon from "../../../img/ygraph.png";
+import shrinkIcon from "../../../img/shrink.png";
+import fullscreenIcon from "../../../img/full.png";
 import "./graphheader.css";
 
 class GraphHeader extends Component {
@@ -40,13 +42,21 @@ class GraphHeader extends Component {
       title,
       download,
       display,
+      fullscreen,
       toggleXgraph,
+      toggleFullscreen,
       toggleYgraph,
       toggleDownload,
       toggleDisplay,
       downloadJSON,
       downloadCSV,
     } = this.props;
+    var fulllabel = "Fullscreen";
+    var fullicon = fullscreenIcon;
+    if (fullscreen) {
+      fulllabel = "Shrink Map";
+      fullicon = shrinkIcon;
+    }
     var displaylabel = "View as heat map";
     var displayicon = heatIcon;
     if (display === "heatmap") {
@@ -100,7 +110,6 @@ class GraphHeader extends Component {
                   <div
                     className={download ? "downloadbar" : "downloadbar hide"}
                   >
-                    <div>Download Graph</div>
                     <button id={"png" + id} title="Download PNG">
                       PNG
                     </button>
@@ -119,6 +128,14 @@ class GraphHeader extends Component {
                       CSV
                     </button>
                   </div>
+                </td>
+                <td style={{ width: "25px" }}>
+                  <img
+                    src={fullicon}
+                    alt="Toggle fullscreen"
+                    onClick={toggleFullscreen}
+                    title={fulllabel}
+                  />
                 </td>
               </tr>
             </tbody>

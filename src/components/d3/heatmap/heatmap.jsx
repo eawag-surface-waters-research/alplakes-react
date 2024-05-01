@@ -292,6 +292,7 @@ class D3HeatMap extends Component {
       yReverse,
       maxvalue,
       minvalue,
+      dark
     } = this.props;
 
     const TimeLabels = ["Time", "time", "datetime", "Datetime", "Date", "date"];
@@ -368,11 +369,11 @@ class D3HeatMap extends Component {
                     fontSize={fontSize}
                     xReverse={false}
                     yReverse={yReverse}
-                    lcolor={["black"]}
+                    lcolor={new Array(10).fill(dark ? "white" : "black")}
                     lweight={[1]}
                     bcolor={["white"]}
                     simple={true}
-                    plotdots={y_dots}
+                    scatter={y_dots}
                     xscale={TimeLabels.includes(zlabel) ? "Time" : ""}
                     yscale={TimeLabels.includes(ylabel) ? "Time" : ""}
                   />
@@ -391,10 +392,10 @@ class D3HeatMap extends Component {
                   fontSize={fontSize}
                   xReverse={xReverse}
                   yReverse={false}
-                  lcolor={["black"]}
+                  lcolor={new Array(10).fill(dark ? "white" : "black")}
                   lweight={[1]}
                   bcolor={["white"]}
-                  plotdots={x_dots}
+                  scatter={x_dots}
                   xscale={TimeLabels.includes(xlabel) ? "Time" : ""}
                   yscale={TimeLabels.includes(zlabel) ? "Time" : ""}
                   simple={true}

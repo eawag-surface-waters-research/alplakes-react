@@ -271,19 +271,6 @@ export const relativeDate = (days) => {
   return result;
 };
 
-const loading = (message) => {
-  if (document.getElementById("loading")) {
-    document.getElementById("loading-text").innerHTML = message;
-    document.getElementById("loading").style.visibility = "visible";
-  }
-};
-
-const loaded = () => {
-  if (document.getElementById("loading")) {
-    document.getElementById("loading").style.visibility = "hidden";
-  }
-};
-
 export const getProfileAlplakesHydrodynamic = async (
   api,
   model,
@@ -291,21 +278,17 @@ export const getProfileAlplakesHydrodynamic = async (
   period,
   latlng
 ) => {
-  loading("Requesting profile from the server");
   const url = `${api}/simulations/depthtime/${model}/${lake}/${formatAPIDate(
     period[0]
   )}0000/${formatAPIDate(period[1])}2359/${latlng.lat}/${latlng.lng}`;
   try {
     const { data } = await axios.get(url);
     if (data.distance > 500) {
-      alert("Point outside of lake.");
       return false;
     }
-    loaded();
     return data;
   } catch (e) {
     console.error(e);
-    loaded();
     return false;
   }
 };
@@ -317,7 +300,6 @@ export const getTransectAlplakesHydrodynamic = async (
   period,
   latlng
 ) => {
-  loading("Requesting transect from the server");
   latlng.pop();
   const url = `${api}/simulations/transect/${model}/${lake}/${formatAPIDatetime(
     period[0]
@@ -327,11 +309,9 @@ export const getTransectAlplakesHydrodynamic = async (
   try {
     const { data } = await axios.get(url);
     data.time = data.time.map((d) => parseDate(d));
-    loaded();
     return data;
   } catch (e) {
     console.error(e);
-    loaded();
     return false;
   }
 };

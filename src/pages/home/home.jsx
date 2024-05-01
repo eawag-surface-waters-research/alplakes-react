@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import { NavLink } from "react-router-dom";
 import NavBar from "../../components/navbar/navbar";
-import SummaryGraph from "../../components/d3/summarygraph/summarygraph";
+import HomeGraph from "../../components/d3/homegraph/homegraph";
 import Translations from "../../translations.json";
 import searchIcon from "../../img/search.png";
 import depth_icon from "../../img/depth.png";
@@ -298,7 +298,7 @@ class SummaryTable extends Component {
             </div>
           )
         )}
-        <SummaryGraph
+        <HomeGraph
           dt={forecast.dt}
           value={forecast.value[parameter]}
           dtMin={forecast.dtMin}

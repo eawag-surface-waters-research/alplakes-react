@@ -22,10 +22,10 @@
 .vis-main.full {
   position: fixed;
   left: 0;
-  top: 40px;
+  top: 0;
   width: 100%;
-  height: calc(100% - 40px);
-  background-color: white;
+  height: 100%;
+  background-color: var(--background-color);
   z-index: 9999999;
   padding: 20px;
   box-sizing: border-box;
@@ -51,19 +51,17 @@
 }
 
 .main.dark .vis-header img {
-  filter: invert(88%) hue-rotate(180deg);
+  filter: invert(100%) hue-rotate(180deg);
 }
 
 .vis-header .downloadbar {
   position: absolute;
   top: 30px;
-  right: -58px;
+  right: 0;
   z-index: 99;
-  background-color: #fff;
-  padding: 20px;
-  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65);
+  background-color: var(--background-color);
+  padding: 12px;
   border-radius: 4px;
-  width: 250px;
   box-sizing: border-box;
   cursor: auto;
 }
@@ -136,24 +134,19 @@
 }
 
 .vis-header .downloadbar button {
-  font-size: 10px;
+  font-size: 14px;
   padding: 3px 5px;
   width: 50px;
-  margin: 15px 10px 5px 10px;
-  background-color: #fff;
+  margin-bottom: 8px;
+  background-color: var(--highlight-color);
   display: inline-block;
+  color: white;
+  border-radius: 6px;
+  border: none;
+  box-shadow: var(--box-shadow);
+  cursor: pointer;
 }
 
 .vis-header .downloadbar button:hover {
-  background-color: rgb(240, 240, 240);
-}
-
-.vis-header .downloadbar button.red {
-  border-color: #fb0000;
-  color: #fb0000;
-}
-
-.vis-header .downloadbar button.blue {
-  border-color: #28b5f5;
-  color: #28b5f5;
+  box-shadow: none;
 }

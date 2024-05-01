@@ -56,29 +56,32 @@ class SatelliteSummary extends Component {
     var { label, unit, dark } = this.props;
     var { data, xmin, xmax, ymin, ymax } = this.state;
     return (
-      <div className="satellite-summary">
-        <D3LineGraph
-          data={data}
-          ylabel={label}
-          yunits={unit}
-          lcolor={new Array(10).fill(dark ? "white" : "black")}
-          lweight={[1]}
-          bcolor={["white"]}
-          simple={false}
-          lines={false}
-          scatter={true}
-          plotdots={true}
-          xmax={xmax}
-          xmin={xmin}
-          ymax={ymax}
-          ymin={ymin}
-          xscale={"Time"}
-          yscale={""}
-          legend={false}
-          header={false}
-          onClick={this.setImage}
-        />
-      </div>
+      <React.Fragment>
+        <div className="graph-title">Average lake values per satellite image</div>
+        <div className="satellite-summary">
+          <D3LineGraph
+            data={data}
+            ylabel={label}
+            yunits={unit}
+            lcolor={new Array(10).fill(dark ? "white" : "black")}
+            lweight={[1]}
+            bcolor={["white"]}
+            simple={false}
+            lines={false}
+            scatter={true}
+            plotdots={true}
+            xmax={xmax}
+            xmin={xmin}
+            ymax={ymax}
+            ymin={ymin}
+            xscale={"Time"}
+            yscale={""}
+            legend={false}
+            header={false}
+            onClick={this.setImage}
+          />
+        </div>
+      </React.Fragment>
     );
   }
 }

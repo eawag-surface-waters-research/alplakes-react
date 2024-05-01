@@ -17,7 +17,7 @@ class Basemap extends Component {
     return list.find((l) => l[parameter] === value);
   };
   async componentDidUpdate(prevProps) {
-    const { updates, updated, metadata, layers } = this.props;
+    const { updates, updated, metadata, layers, error } = this.props;
     if (updates.length > 0) {
       updated();
       var initialLoad = false;
@@ -47,6 +47,11 @@ class Basemap extends Component {
           } catch (e) {
             console.error("Failed to add layer", layer);
             console.error(e);
+            error(
+              `Failed to add layer ${
+                this.find(layers, "id", update.id).parameter
+              }.`
+            );
           }
         } else if (update.event === "updateLayer") {
           layer = await updateLayer(
@@ -56,7 +61,6 @@ class Basemap extends Component {
             this.map,
             this.props
           );
-          
         } else if (update.event === "removeLayer") {
           layer = removeLayer(layer, this.layerStore, this.map);
         }

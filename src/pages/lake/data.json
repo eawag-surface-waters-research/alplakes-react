@@ -112,7 +112,7 @@
       "labels": {
         "topRight": "5 day forecast"
       },
-      "defaults": ["3D_temperature", "3D_currents"]
+      "defaults": ["3D_currents", "3D_temperature"]
     },
     {
       "id": "graph_conditions",
@@ -180,6 +180,7 @@
       "unit": "°C",
       "display": "raster",
       "source": "alplakes_delft3d",
+      "summaryGraph": "threed_linegraph",
       "displayOptions": {
         "paletteName": "Balance",
         "zIndex": 1,
@@ -223,6 +224,7 @@
       "unit": "m/s",
       "display": "current",
       "source": "alplakes_delft3d",
+      "summaryGraph": "threed_linegraph",
       "displayOptions": {
         "raster": false,
         "streamlines": false,
@@ -263,6 +265,7 @@
       "unit": "m",
       "display": "raster",
       "source": "alplakes_delft3d",
+      "summaryGraph": "threed_linegraph",
       "displayOptions": {
         "paletteName": "navia reverse",
         "zIndex": 2,
@@ -336,7 +339,7 @@
           "type": "alplakes_transect",
           "model": "delft3d-flow",
           "variables": ["temperature", "u", "v"],
-          "description": "Plot a transect using the alplakes 3D hydrodynamic model. Click the edit button (top left) to draw your first transect.",
+          "description": "Explore the inner workings of the lake. The transect tool allows you to cut a slice through the lake and visualise the spatial variations.",
           "learnMore": "https://medium.com/@runnalls.james/operational-3d-lake-modeling-with-delft3d-2f164859e753"
         }
       }
@@ -362,7 +365,7 @@
           "type": "alplakes_profile",
           "model": "delft3d-flow",
           "variables": ["temperature", "u", "v"],
-          "description": "Plot a profile using the alplakes 3D hydrodynamic model. Click the marker button (top left) to plot your first profile.",
+          "description": "Explore the inner workings of the lake. The profile tool allows you to visualise the temporal variations at a user selected point.",
           "learnMore": "https://medium.com/@runnalls.james/operational-3d-lake-modeling-with-delft3d-2f164859e753"
         }
       }

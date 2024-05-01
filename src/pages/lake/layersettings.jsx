@@ -1060,26 +1060,42 @@ class Tiff extends Component {
 }
 
 class Transect extends Component {
-  state = {};
-
-  componentDidMount() {}
-
-  componentWillUnmount() {}
+  setPalette = (event) => {
+    var { id, updateOptions, options } = this.props;
+    options["paletteName"] = event.name;
+    options["palette"] = event.palette;
+    updateOptions(id, options);
+  };
 
   render() {
-    return <div className="layer-settings"></div>;
+    var { palette, paletteName } = this.props.options;
+    return <div className="layer-settings">
+       <div className="setting">
+          <div className="label">Palette</div>
+          <div className="value">{paletteName}</div>
+          <ColorRamp onChange={this.setPalette} value={palette} />
+        </div>
+    </div>;
   }
 }
 
 class Profile extends Component {
-  state = {};
-
-  componentDidMount() {}
-
-  componentWillUnmount() {}
+  setPalette = (event) => {
+    var { id, updateOptions, options } = this.props;
+    options["paletteName"] = event.name;
+    options["palette"] = event.palette;
+    updateOptions(id, options);
+  };
 
   render() {
-    return <div className="layer-settings"></div>;
+    var { palette, paletteName } = this.props.options;
+    return <div className="layer-settings">
+       <div className="setting">
+          <div className="label">Palette</div>
+          <div className="value">{paletteName}</div>
+          <ColorRamp onChange={this.setPalette} value={palette} />
+        </div>
+    </div>;
   }
 }
 

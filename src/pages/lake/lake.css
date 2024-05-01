@@ -4,6 +4,20 @@
     clear: both;
 }
 
+.main .lake .content .error-modal {
+    position: fixed;
+    background-color: #7b1818;
+    left: 0;
+    bottom: 0;
+    padding: 12px 18px;
+    z-index: 9999999999999;
+    color: white;
+    font-size: 18px;
+    max-width: 50%;
+    border-radius: 0 8px 0 0;
+    display: none;
+}
+
 .main .lake .content .metadata {
     position: relative;
     padding-left: var(--padding);
@@ -1385,18 +1399,18 @@
 .main .lake .content .module .display .module-component .plot .map .layer-loading {
     position: absolute;
     left: 12px;
-    bottom: 12px;
+    top: 12px;
     z-index: 99999;
     background-color: var(--background-color);
     box-shadow: var(--box-shadow);
     color: var(--background-font-color);
-    border-radius: 22px;
-    padding: 8px;
+    border-radius: 6px;
+    padding: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
     display: none;
-    visibility: hidden;
+    visibility: visible;
 }
 
 .main .lake .content .module.active .display .module-component .plot .map .layer-loading {
@@ -1756,7 +1770,7 @@
     box-sizing: border-box;
     border-radius: 12px;
     margin-top: calc(var(--padding) / 2);
-    padding: 18px 0 0 0;
+    padding: 0;
     position: relative;
 }
 
@@ -1766,6 +1780,21 @@
 
 .main .lake .content .module.active .display .module-component .plot .graph {
     display: block;
+}
+
+.main .lake .content .module.active .display .module-component .plot .graph .graph-title {
+    position: absolute;
+    bottom: 0;
+    text-align: center;
+    width: 100%;
+}
+
+.main .lake .content .module.active .display .module-component .plot .graph .graph-temp {
+    position: relative;
+    float: left;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .main .lake .content .module .display .module-component .plot .graph .satellite-summary {
