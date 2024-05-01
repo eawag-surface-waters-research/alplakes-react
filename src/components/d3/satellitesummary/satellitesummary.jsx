@@ -77,7 +77,7 @@ class SatelliteSummary extends Component {
             xscale={"Time"}
             yscale={""}
             legend={false}
-            header={false}
+            header={true}
             onClick={this.setImage}
           />
         </div>

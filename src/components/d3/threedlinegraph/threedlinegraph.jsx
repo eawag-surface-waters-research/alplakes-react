@@ -22,7 +22,7 @@ class ThreedLinegraph extends Component {
           xscale={"Time"}
           yscale={""}
           simple={false}
-          header={false}
+          header={true}
         />
       </React.Fragment>
     );

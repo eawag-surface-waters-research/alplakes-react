@@ -392,11 +392,10 @@
 
 .main .lake .content .module .display .module-component .sidebar {
     display: none;
-    height: 100%;
+    height: calc(100% - var(--header-height) - var(--padding));
     vertical-align: top;
     width: var(--settings-width);
     margin: calc(var(--padding) - 12px) var(--padding);
-    max-height: calc(100% - var(--header-height));
     position: relative;
 }
 
@@ -425,6 +424,7 @@
 
 .main .lake .content .module .display .module-component .sidebar .active-apps {
     text-align: center;
+    height: 100%;
 }
 
 .main .lake .content .module .display .module-component .sidebar .active-apps .app-area {
@@ -435,8 +435,48 @@
 .main .lake .content .module .display .module-component .sidebar .active-apps .selection {
     background-color: var(--box-color);
     border-radius: 12px;
-    padding: calc(var(--padding) / 2);
+    padding: calc(var(--padding) / 2) calc(var(--padding) / 4) calc(var(--padding) / 2) calc(var(--padding) / 2);
     margin-top: var(--padding);
+    height: calc(100% - var(--header-height) - var(--padding) - 62px);
+}
+
+.main .lake .content .module .display .module-component .sidebar .active-apps .selection .selection-inner {
+    height: 100%;
+    overflow-y: auto;
+    padding-right: calc(var(--padding) / 4);
+}
+
+.main .lake .content .module .display .module-component .sidebar .active-apps .selection .selection-inner::-webkit-scrollbar {
+    width: 6px;
+    height: 8px;
+    border-radius: 2px;
+}
+
+.main .lake .content .module .display .module-component .sidebar .active-apps .selection .selection-inner::-webkit-scrollbar-thumb {
+    background: var(--background-suble-font-color);
+    border-radius: 2px;
+}
+
+.main .lake .content .module .display .module-component .sidebar .active-apps .selection .selection-inner::-moz-scrollbar-thumb {
+    background: var(--background-suble-font-color);
+    border-radius: 2px;
+}
+
+.main .lake .content .module .display .module-component .sidebar .active-apps .selection .selection-inner::-ms-scrollbar-thumb {
+    background: var(--background-suble-font-color);
+    border-radius: 2px;
+}
+
+.main .lake .content .module .display .module-component .sidebar .active-apps .selection .selection-inner::-webkit-scrollbar-track {
+    background: var(--background-color);
+}
+
+.main .lake .content .module .display .module-component .sidebar .active-apps .selection .selection-inner::-moz-scrollbar-track {
+    background: var(--background-color);
+}
+
+.main .lake .content .module .display .module-component .sidebar .active-apps .selection .selection-inner::-ms-scrollbar-track {
+    background: var(--background-color);
 }
 
 .main .lake .content .module .display .module-component .sidebar .active-apps .app {
@@ -727,10 +767,6 @@
 
 .main .lake .content .module .display .module-component .sidebar .add-layers .layers .layer .text .model {
     font-size: 12px;
-}
-
-.main .lake .content .module .display .module-component .sidebar .close-layer {
-    display: none;
 }
 
 .main .lake .content .module.active .display .module-component .sidebar .intro .showtext {
@@ -1355,7 +1391,7 @@
     z-index: 9999;
     padding: 10px 8px 6px 8px;
     border: 1px solid var(--border-color);
-    border-radius: 12px;
+    border-radius: 8px;
     box-shadow: var(--box-shadow);
     display: none;
 }
@@ -1770,7 +1806,7 @@
     box-sizing: border-box;
     border-radius: 12px;
     margin-top: calc(var(--padding) / 2);
-    padding: 0;
+    padding-bottom: 12px;
     position: relative;
 }
 
@@ -1899,13 +1935,13 @@
         border-radius: 0;
     }
 
-    .main .lake .content .module .display .module-component .plot .map .gradient {
-        border-radius: 0;
+    .main .lake .content .module .display .module-component .plot .graph {
+        height: calc(35% - var(--padding) * 2);
+        padding: 0 calc(var(--padding) / 2) 12px calc(var(--padding) / 2);
     }
 
-    .main .lake .content .module.active .display .module-component .plot .graph {
+    .main .lake .content .module .display .module-component .plot .map .gradient {
         border-radius: 0;
-        padding: var(--padding) var(--padding) 25px var(--padding);
     }
 
     .main .lake .content .module.active .display .module-component .sidebar {
@@ -1917,7 +1953,7 @@
         margin: 0;
         padding: 50px var(--padding) 0 var(--padding);
         height: 100%;
-        overflow-y: auto;
+        overflow-y: none;
         display: none;
         max-width: 100%;
         box-sizing: border-box;
@@ -1929,6 +1965,10 @@
 
     .main .lake .content .module.active .display .module-component .sidebar .close-sidebar {
         display: block;
+    }
+
+    .main .lake .content .module .display .module-component .sidebar .active-apps {
+        height: calc(100% - 50px);
     }
 
     .main .lake .content .module .display .module-component .sidebar .active-apps .app {

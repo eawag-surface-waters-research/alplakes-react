@@ -14,7 +14,7 @@ import thermocline_icon from "../../img/thermocline.png";
 
 class Selection extends Component {
   render() {
-    var { selection, layers, setSelection } = this.props;
+    var { selection, layers } = this.props;
     if (selection === false) {
       return;
     } else {
@@ -23,24 +23,23 @@ class Selection extends Component {
       return (
         <React.Fragment>
           <div className="selection">
-            <div className="layer-description">
-              <ShowMoreText
-                text={source.description}
-                links={{}}
-                maxLength={130}
-              />
+            <div className="selection-inner">
+              <div className="layer-description">
+                <ShowMoreText
+                  text={source.description}
+                  links={{}}
+                  maxLength={130}
+                />
+              </div>
+              <a
+                href={source.learnMore}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <div className="layer-link">Learn more</div>
+              </a>
+              <LayerSettings {...this.props} layer={layer} />
             </div>
-            <a
-              href={source.learnMore}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <div className="layer-link">Learn more</div>
-            </a>
-            <LayerSettings {...this.props} layer={layer} />
-          </div>
-          <div className="close-layer" onClick={() => setSelection(false)}>
-            &#10005;
           </div>
         </React.Fragment>
       );
