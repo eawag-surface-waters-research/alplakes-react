@@ -18,7 +18,7 @@ class ThreedLinegraph extends Component {
           lcolor={new Array(10).fill(dark ? "white" : "black")}
           lweight={[2]}
           bcolor={["white"]}
-          scatter={true}
+          scatter={false}
           xscale={"Time"}
           yscale={""}
           simple={false}

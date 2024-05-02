@@ -420,7 +420,11 @@
     display: none;
 }
 
-
+.main .lake .content .module.active .display .module-component .sidebar .graph-settings {
+    background-color: var(--box-color);
+    border-radius: 12px;
+    padding: calc(var(--padding) / 2);
+}
 
 .main .lake .content .module .display .module-component .sidebar .active-apps {
     text-align: center;
@@ -430,6 +434,7 @@
 .main .lake .content .module .display .module-component .sidebar .active-apps .app-area {
     background-color: var(--box-color);
     border-radius: 12px;
+    border: 1px solid var(--border-color);
 }
 
 .main .lake .content .module .display .module-component .sidebar .active-apps .selection {
@@ -438,6 +443,7 @@
     padding: calc(var(--padding) / 2) calc(var(--padding) / 4) calc(var(--padding) / 2) calc(var(--padding) / 2);
     margin-top: var(--padding);
     height: calc(100% - var(--header-height) - var(--padding) - 62px);
+    border: 1px solid var(--border-color);
 }
 
 .main .lake .content .module .display .module-component .sidebar .active-apps .selection .selection-inner {
@@ -498,9 +504,13 @@
     width: 42px;
     height: var(--padding);
     background-color: var(--box-color);
-    bottom: calc(-40px - var(--padding));
+    bottom: calc(-42px - var(--padding));
     left: 8px;
     display: none;
+    border-top: 1px solid var(--box-color);
+    border-bottom: 1px solid var(--box-color);
+    border-left: 1px solid var(--border-color);
+    border-right: 1px solid var(--border-color);
 }
 
 .main .lake .content .module .display .module-component .sidebar .active-apps .app:hover {
@@ -1291,10 +1301,11 @@
     border: none;
     background-color: #e3e3e3;
     cursor: pointer;
-    padding: 8px 21px;
+    padding: 4px 8px;
     font-size: 14px;
     margin: 3px 0;
     width: 100%;
+    margin-top: 12px;
 }
 
 .main .lake .content .module.active .display .module-component .sidebar .layer-settings button.reset:hover {

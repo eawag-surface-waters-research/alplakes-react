@@ -4,16 +4,16 @@
     border-radius: 22px;
     background-color: var(--background-color);
     width: fit-content;
-    margin: auto;
+    width: 100%;
     user-select: none;
+    box-sizing: border-box;
 }
 
 .toggleContainer {
     position: relative;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    width: -moz-fit-content;
-    width: fit-content;
+    width: 100%;
     border-radius: 20px;
     background: var(--background-color);
     cursor: pointer;

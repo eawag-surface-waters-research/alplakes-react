@@ -72,9 +72,9 @@ class Depth extends Component {
             onChange={this.updateDepth}
           ></input>
         </div>
-        <div className="setting onequarter">
+        <div className="setting third">
           <button className="set" onClick={this.setDepth}>
-            Set
+            Set depth
           </button>
         </div>
       </React.Fragment>
