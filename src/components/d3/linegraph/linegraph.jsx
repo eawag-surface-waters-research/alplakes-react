@@ -225,6 +225,8 @@ class D3LineGraph extends Component {
       grid,
       language,
       onClick,
+      curve,
+      marginLeft
     } = this.props;
     var { graphid, fontSize } = this.state;
     if (this.props.header !== false) fontSize = this.props.fontSize;
@@ -261,6 +263,7 @@ class D3LineGraph extends Component {
       yReverse,
       xReverse,
       fontSize,
+      curve: curve,
       scatter: scatter,
       lines: lines,
       tooltip: !simple,
@@ -268,6 +271,7 @@ class D3LineGraph extends Component {
       onClick: onClick,
       legend: legend,
     };
+    if (marginLeft) options["marginLeft"] = marginLeft;
     if (xmax) options["xMax"] = xmax;
     if (xmin) options["xMin"] = xmin;
     if (ymax) options["yMax"] = ymax;

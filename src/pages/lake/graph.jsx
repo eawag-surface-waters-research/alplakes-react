@@ -5,6 +5,7 @@ import GraphSettings from "./graphsettings";
 class Graph extends Component {
   state = {
     sidebar: false,
+    selection: false,
   };
   openSidebar = () => {
     this.setState({ sidebar: true });
@@ -13,18 +14,18 @@ class Graph extends Component {
     this.setState({ sidebar: false });
   };
   render() {
-    var { language, dark } = this.props;
+    var { language, dark, datasets } = this.props;
     var { sidebar } = this.state;
     return (
-      <div className="module-component">
+      <div className="module-component graph">
         <div className="plot">
-          Graph here
+          
         </div>
         <div className={sidebar ? "sidebar open" : "sidebar"}>
           <div className="close-sidebar" onClick={this.closeSidebar}>
             &times;
           </div>
-          <GraphSettings {...this.state} language={language} dark={dark} />
+          <GraphSettings {...this.state} language={language} dark={dark} datasets={datasets}/>
         </div>
       </div>
     );

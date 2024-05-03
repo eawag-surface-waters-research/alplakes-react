@@ -312,7 +312,7 @@ class Properties extends Component {
         visible={true}
         contents={
           <div className="properties">
-            <div>Key physical properties of Lake Geneva</div>
+            <div className="head">Key physical properties of Lake Geneva</div>
             {plot.map((p) => (
               <div className="property" key={p.key}>
                 <div className="left">

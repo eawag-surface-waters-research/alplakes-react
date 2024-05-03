@@ -142,13 +142,14 @@ class PlayerControls extends Component {
       setDatetime,
       nextStep,
       toggleFullscreen,
+      playControls
     } = this.props;
     var { settings, settingsId } = this.state;
     return (
       <React.Fragment>
         <div className="gradient" />
         <PlayerSettings {...this.props} settings={settings} id={settingsId} />
-        <div className="playback">
+        <div className={playControls ? "playback" : "playback hide"}>
           <div className="slider">
             <Slider
               period={period}

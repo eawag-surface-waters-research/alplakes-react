@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import LayerSettings from "./layersettings";
+import ShowMoreText from "../../components/showmore/showmore";
 import Translate from "../../translations.json";
 import temperature_icon from "../../img/temperature.png";
 import velocity_icon from "../../img/velocity.png";
@@ -28,7 +29,7 @@ class Selection extends Component {
                 <ShowMoreText
                   text={source.description}
                   links={{}}
-                  maxLength={130}
+                  maxLength={180}
                 />
               </div>
               <a
@@ -44,52 +45,6 @@ class Selection extends Component {
         </React.Fragment>
       );
     }
-  }
-}
-
-class ShowMoreText extends Component {
-  state = {
-    showFullText: false,
-  };
-
-  toggleText = () => {
-    this.setState({
-      showFullText: !this.state.showFullText,
-    });
-  };
-
-  render() {
-    const { text, links, maxLength } = this.props;
-    const { showFullText } = this.state;
-
-    const truncatedText =
-      text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
-
-    var show = showFullText ? text : truncatedText;
-
-    return (
-      <div onClick={this.toggleText}>
-        <p>
-          {show.split("@").map((t) =>
-            t in links ? (
-              <a
-                href={links[t][1]}
-                target="_blank"
-                rel="noopener noreferrer"
-                key={t}
-              >
-                {links[t][0]}
-              </a>
-            ) : (
-              t
-            )
-          )}
-        </p>
-        {text.length > maxLength && (
-          <button>{showFullText ? "Show less" : "Show more"}</button>
-        )}
-      </div>
-    );
   }
 }
 
@@ -171,33 +126,54 @@ class AddLayers extends Component {
     var { language, layers, images, activeAdd, toggleActiveAdd } = this.props;
     return (
       <div className={activeAdd ? "add-layers" : "add-layers hidden"}>
-        <div className="layers-title">Add Layers</div>
+        <div className="layers-title">Available Layers</div>
         <div className="layers-close" onClick={toggleActiveAdd}>
           &#10005;
         </div>
+
         <div className="layers">
-          {layers.map((l) => (
-            <div
-              className={l.active ? "layer disabled" : "layer"}
-              key={l.id}
-              onClick={() => this.addLayer(l.id)}
-              title={l.active ? "" : "Add to map"}
-            >
-              <div className={"icon " + l.type}>
-                <img src={images[l.parameter]} alt={l.parameter} />
-              </div>
-              <div className="text">
-                <div className="parameter">
-                  {l.parameter in Translate
-                    ? Translate[l.parameter][language]
-                    : ""}
+          {layers.map((l) => {
+            let source = l.sources[l.source];
+            return (
+              <div
+                className={l.active ? "layer disabled" : "layer"}
+                key={l.id}
+                onClick={() => this.addLayer(l.id)}
+                title={l.active ? "" : "Add to map"}
+              >
+                <div className="status">{l.active ? "Added" : "Add"}</div>
+                <div className={"icon " + l.type}>
+                  <img src={images[l.parameter]} alt={l.parameter} />
                 </div>
-                <div className="type">
-                  {l.type in Translate ? Translate[l.type][language] : ""}
+                <div className="text">
+                  <div className="parameter">
+                    {l.parameter in Translate
+                      ? Translate[l.parameter][language]
+                      : ""}
+                  </div>
+                  <div className="type">
+                    {l.type in Translate ? Translate[l.type][language] : ""}
+                  </div>
                 </div>
+                <div className="description">
+                  <ShowMoreText
+                    text={source.description}
+                    links={{}}
+                    maxLength={130}
+                  />
+                </div>
+                {source.tags && (
+                  <div className="tags">
+                    {source.tags.map((t) => (
+                      <div className="tag" key={t}>
+                        {t}
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     );

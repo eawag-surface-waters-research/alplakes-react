@@ -16,13 +16,15 @@ class ThreedLinegraph extends Component {
           xReverse={false}
           yReverse={false}
           lcolor={new Array(10).fill(dark ? "white" : "black")}
-          lweight={[2]}
+          lweight={[1]}
           bcolor={["white"]}
           scatter={false}
           xscale={"Time"}
           yscale={""}
           simple={false}
           header={true}
+          curve={true}
+          marginLeft={60}
         />
       </React.Fragment>
     );

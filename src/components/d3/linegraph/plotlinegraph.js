@@ -22,6 +22,7 @@ import {
   zoom as d3zoom,
   format,
   timeFormatDefaultLocale,
+  curveNatural,
 } from "d3";
 
 import {
@@ -80,7 +81,7 @@ const plotlinegraph = (div, data, options = {}) => {
 
   var plot = addPlottingArea(div, svg, options);
   if (options.legend) addLegend(svg, div, data, options);
-  if (options.lines) plotLines(div, plot, data, xAxis, yAxis);
+  if (options.lines) plotLines(div, plot, data, xAxis, yAxis, options.curve);
   if (options.scatter) plotScatter(context, data, xAxis, yAxis, options);
   if (options.zoom) addZoom(plot, context, data, div, xAxis, yAxis, options);
   if (options.tooltip) addTooltip(data, div, xAxis, yAxis, options);
@@ -145,6 +146,7 @@ const processOptions = (div, data, userOptions) => {
     { name: "yMin", default: false, verify: verifyNumber },
     { name: "xLog", default: false, verify: verifyBool },
     { name: "yLog", default: false, verify: verifyBool },
+    { name: "curve", default: false, verify: verifyBool },
     { name: "scatter", default: false, verify: verifyBool },
     { name: "lines", default: true, verify: verifyBool },
     { name: "grid", default: false, verify: verifyBool },
@@ -859,7 +861,7 @@ const downloadGraph = (div, options) => {
   title.style("opacity", "0");
 };
 
-const plotLines = (div, g, data, xAxis, yAxis) => {
+const plotLines = (div, g, data, xAxis, yAxis, curve) => {
   g.selectAll("path").remove();
   for (let j = 0; j < data.length; j++) {
     plotConfidenceInterval(
@@ -870,32 +872,62 @@ const plotLines = (div, g, data, xAxis, yAxis) => {
     );
   }
   for (let j = 0; j < data.length; j++) {
-    g.append("path")
-      .datum(data[j].x)
-      .attr("id", `line_${j}_${div}`)
-      .attr("fill", "none")
-      .attr("stroke", data[j].lineColor)
-      .attr("stroke-width", data[j].lineWeight)
-      .attr(
-        "d",
-        line()
-          .x(function (d) {
-            return xAxis[data[j].xaxis].ax(d);
-          })
-          .y(function (d, i) {
-            return yAxis[data[j].yaxis].ax(data[j].y[i]);
-          })
-          .defined(function (d, i) {
-            if (
-              isNumeric(xAxis[data[j].xaxis].ax(d)) &&
-              isNumeric(yAxis[data[j].yaxis].ax(data[j].y[i]))
-            ) {
-              return true;
-            } else {
-              return false;
-            }
-          })
-      );
+    if (curve) {
+      g.append("path")
+        .datum(data[j].x)
+        .attr("id", `line_${j}_${div}`)
+        .attr("fill", "none")
+        .attr("stroke", data[j].lineColor)
+        .attr("stroke-width", data[j].lineWeight)
+        .attr(
+          "d",
+          line()
+            .x(function (d) {
+              return xAxis[data[j].xaxis].ax(d);
+            })
+            .y(function (d, i) {
+              return yAxis[data[j].yaxis].ax(data[j].y[i]);
+            })
+            .curve(curveNatural)
+            .defined(function (d, i) {
+              if (
+                isNumeric(xAxis[data[j].xaxis].ax(d)) &&
+                isNumeric(yAxis[data[j].yaxis].ax(data[j].y[i]))
+              ) {
+                return true;
+              } else {
+                return false;
+              }
+            })
+        );
+    } else {
+      g.append("path")
+        .datum(data[j].x)
+        .attr("id", `line_${j}_${div}`)
+        .attr("fill", "none")
+        .attr("stroke", data[j].lineColor)
+        .attr("stroke-width", data[j].lineWeight)
+        .attr(
+          "d",
+          line()
+            .x(function (d) {
+              return xAxis[data[j].xaxis].ax(d);
+            })
+            .y(function (d, i) {
+              return yAxis[data[j].yaxis].ax(data[j].y[i]);
+            })
+            .defined(function (d, i) {
+              if (
+                isNumeric(xAxis[data[j].xaxis].ax(d)) &&
+                isNumeric(yAxis[data[j].yaxis].ax(data[j].y[i]))
+              ) {
+                return true;
+              } else {
+                return false;
+              }
+            })
+        );
+    }
   }
 };
 
@@ -1130,7 +1162,7 @@ const addZoom = (g, context, data, div, xAxis, yAxis, options) => {
         yAxis.y2.axis.scale(yAxis.y2.ax);
         yAxis.y2.g.call(yAxis.y2.axis);
       }
-      if (options.lines) plotLines(div, g, data, xAxis, yAxis);
+      if (options.lines) plotLines(div, g, data, xAxis, yAxis, options.curve);
       if (options.scatter) plotScatter(context, data, xAxis, yAxis, options);
       xAxis.x.ref = xAxis.x.ax;
       if (options.dualaxis === "x2") xAxis.x2.ref = xAxis.x2.ax;
@@ -1147,7 +1179,7 @@ const addZoom = (g, context, data, div, xAxis, yAxis, options) => {
       xAxis.x.ax = t.rescaleX(xAxis.x.ref);
       xAxis.x.axis.scale(xAxis.x.ax);
       xAxis.x.g.call(xAxis.x.axis);
-      if (options.lines) plotLines(div, g, data, xAxis, yAxis);
+      if (options.lines) plotLines(div, g, data, xAxis, yAxis, options.curve);
       if (options.scatter) plotScatter(context, data, xAxis, yAxis, options);
       xAxis.x.ref = xAxis.x.ax;
       zoomboxx.call(zoom.transform, zoomIdentity);
@@ -1161,7 +1193,7 @@ const addZoom = (g, context, data, div, xAxis, yAxis, options) => {
       xAxis.x2.ax = t.rescaleX(xAxis.x2.ref);
       xAxis.x2.axis.scale(xAxis.x2.ax);
       xAxis.x2.g.call(xAxis.x2.axis);
-      if (options.lines) plotLines(div, g, data, xAxis, yAxis);
+      if (options.lines) plotLines(div, g, data, xAxis, yAxis, options.curve);
       if (options.scatter) plotScatter(context, data, xAxis, yAxis, options);
       xAxis.x2.ref = xAxis.x2.ax;
       zoomboxx2.call(zoom.transform, zoomIdentity);
@@ -1175,7 +1207,7 @@ const addZoom = (g, context, data, div, xAxis, yAxis, options) => {
       yAxis.y.ax = t.rescaleY(yAxis.y.ref);
       yAxis.y.axis.scale(yAxis.y.ax);
       yAxis.y.g.call(yAxis.y.axis);
-      if (options.lines) plotLines(div, g, data, xAxis, yAxis);
+      if (options.lines) plotLines(div, g, data, xAxis, yAxis, options.curve);
       if (options.scatter) plotScatter(context, data, xAxis, yAxis, options);
       yAxis.y.ref = yAxis.y.ax;
       zoomboxy.call(zoom.transform, zoomIdentity);
@@ -1189,7 +1221,7 @@ const addZoom = (g, context, data, div, xAxis, yAxis, options) => {
       yAxis.y2.ax = t.rescaleY(yAxis.y2.ref);
       yAxis.y2.axis.scale(yAxis.y2.ax);
       yAxis.y2.g.call(yAxis.y2.axis);
-      if (options.lines) plotLines(div, g, data, xAxis, yAxis);
+      if (options.lines) plotLines(div, g, data, xAxis, yAxis, options.curve);
       if (options.scatter) plotScatter(context, data, xAxis, yAxis, options);
       yAxis.y2.ref = yAxis.y2.ax;
       zoomboxy2.call(zoom.transform, zoomIdentity);

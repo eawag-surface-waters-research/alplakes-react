@@ -197,7 +197,8 @@
           "end": "/simulations/metadata/delft3d-flow/geneva",
           "bucket": "/simulations/delft3d-flow/metadata/geneva/metadata.json",
           "description": "Water temperatures are hindcasted and forecasted using the 3D hydrodynamic model Delft3D-flow. Meteorological forcing data is produced from Meteoswiss products, hincasts use the Cosmo-1e 1 day deterministic product (VNXQ34) and forecasts use the Cosmo-2e 5 day ensemble forecast (VNXZ32). Where rivers inputs are used this data is sourced from Bafu. This model is calibrated using in-situ measuresuments collected by a number of 3rd parties.",
-          "learnMore": "https://medium.com/@runnalls.james/operational-3d-lake-modeling-with-delft3d-2f164859e753"
+          "learnMore": "https://medium.com/@runnalls.james/operational-3d-lake-modeling-with-delft3d-2f164859e753",
+          "tags": ["5 day forecast", "2019 - Now"]
         }
       },
       "labels": [
@@ -252,7 +253,8 @@
           "end": "/simulations/metadata/delft3d-flow/geneva",
           "bucket": "/simulations/delft3d-flow/metadata/geneva/metadata.json",
           "description": "Lake currents are hindcasted and forecasted using the 3D hydrodynamic model Delft3D-flow. Meteorological forcing data is produced from Meteoswiss products, hincasts use the Cosmo-1e 1 day deterministic product (VNXQ34) and forecasts use the Cosmo-2e 5 day ensemble forecast (VNXZ32). Where rivers inputs are used this data is sourced from Bafu. This model is calibrated using in-situ measuresuments collected by a number of 3rd parties.",
-          "learnMore": "https://medium.com/@runnalls.james/operational-3d-lake-modeling-with-delft3d-2f164859e753"
+          "learnMore": "https://medium.com/@runnalls.james/operational-3d-lake-modeling-with-delft3d-2f164859e753",
+          "tags": ["5 day forecast", "2019 - Now"]
         }
       }
     },
@@ -282,7 +284,8 @@
           "end": "/simulations/metadata/delft3d-flow/geneva",
           "bucket": "/simulations/delft3d-flow/metadata/geneva/metadata.json",
           "description": "Thermocline depth calculated using Pylake and the 3D hydrodynamic model Delft3D-flow. Meteorological forcing data is produced from Meteoswiss products, hincasts use the Cosmo-1e 1 day deterministic product (VNXQ34) and forecasts use the Cosmo-2e 5 day ensemble forecast (VNXZ32). Where rivers inputs are used this data is sourced from Bafu. This model is calibrated using in-situ measuresuments collected by a number of 3rd parties.",
-          "learnMore": "https://medium.com/@runnalls.james/operational-3d-lake-modeling-with-delft3d-2f164859e753"
+          "learnMore": "https://medium.com/@runnalls.james/operational-3d-lake-modeling-with-delft3d-2f164859e753",
+          "tags": ["5 day forecast", "2019 - Now"]
         }
       },
       "labels": [
@@ -314,7 +317,8 @@
           "end": "/simulations/metadata/delft3d-flow/geneva",
           "bucket": "/simulations/delft3d-flow/metadata/geneva/metadata.json",
           "description": "Track particles using the alplakes 3D hydrodynamic model. Click the particles button (top left) to add some particles. Press play to see where the particles go.",
-          "learnMore": "https://medium.com/@runnalls.james/operational-3d-lake-modeling-with-delft3d-2f164859e753"
+          "learnMore": "https://medium.com/@runnalls.james/operational-3d-lake-modeling-with-delft3d-2f164859e753",
+          "tags": ["Interactive", "2019 - Now"]
         }
       }
     },
@@ -340,7 +344,8 @@
           "model": "delft3d-flow",
           "variables": ["temperature", "u", "v"],
           "description": "Explore the inner workings of the lake. The transect tool allows you to cut a slice through the lake and visualise the spatial variations.",
-          "learnMore": "https://medium.com/@runnalls.james/operational-3d-lake-modeling-with-delft3d-2f164859e753"
+          "learnMore": "https://medium.com/@runnalls.james/operational-3d-lake-modeling-with-delft3d-2f164859e753",
+          "tags": ["Interactive", "2019 - Now"]
         }
       }
     },
@@ -366,7 +371,8 @@
           "model": "delft3d-flow",
           "variables": ["temperature", "u", "v"],
           "description": "Explore the inner workings of the lake. The profile tool allows you to visualise the temporal variations at a user selected point.",
-          "learnMore": "https://medium.com/@runnalls.james/operational-3d-lake-modeling-with-delft3d-2f164859e753"
+          "learnMore": "https://medium.com/@runnalls.james/operational-3d-lake-modeling-with-delft3d-2f164859e753",
+          "tags": ["Interactive", "2019 - Now"]
         }
       }
     },
@@ -404,7 +410,8 @@
           "bucket": "/metadata/latest/geneva_chla.json",
           "description": "Surface chlorophyll concentration processed from satellite data using the Sencast python package.",
           "learnMore": "https://medium.com/@runnalls.james/water-quality-products-from-remote-sensing-data-using-sencast-e48449bd6aa8",
-          "onActivate": true
+          "onActivate": true,
+          "tags": ["Sentinel 3", "2016 - Now"]
         }
       }
     },
@@ -446,7 +453,8 @@
           "bucket": "/metadata/latest/geneva_secchi.json",
           "description": "Secchi depth processed from satellite data using the Sencast python package.",
           "learnMore": "https://medium.com/@runnalls.james/water-quality-products-from-remote-sensing-data-using-sencast-e48449bd6aa8",
-          "onActivate": true
+          "onActivate": true,
+          "tags": ["Sentinel 3", "Sentinel 2", "2016 - Now"]
         }
       }
     },
@@ -488,9 +496,26 @@
           "bucket": "/metadata/latest/geneva_tsm.json",
           "description": "Surface total suspended matter processed from satellite data using the Sencast python package.",
           "learnMore": "https://medium.com/@runnalls.james/water-quality-products-from-remote-sensing-data-using-sencast-e48449bd6aa8",
-          "onActivate": true
+          "onActivate": true,
+          "tags": ["Sentinel 3", "Sentinel 2", "2016 - Now"]
         }
       }
+    }
+  ],
+  "datasets": [
+    {
+      "id": "simstrat_timeseries_temperature_depth",
+      "type": "oned",
+      "parameter": "temperature",
+      "unit": "°C",
+      "display": "line",
+      "source": "simstrat",
+      "displayOptions": {
+        "color": "black"
+      },
+      "description": "Surface total suspended matter processed from satellite data using the Sencast python package.",
+      "learnMore": "https://medium.com/@runnalls.james/operational-1d-lake-modeling-with-simstrat-dc34964bfe08",
+      "tags": ["5 day forecast", "Timeseries"]
     }
   ]
 }

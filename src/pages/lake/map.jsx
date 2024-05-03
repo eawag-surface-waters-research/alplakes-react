@@ -376,19 +376,18 @@ class Map extends Component {
               language={language}
               playControls={playControls}
             />
-            {playControls && (
-              <PlayerControls
-                {...this.state}
-                language={language}
-                setDatetime={this.setDatetime}
-                toggleFullscreen={this.toggleMapFullscreen}
-                togglePlay={this.togglePlay}
-                setTimestep={this.setTimestep}
-                setSpeed={this.setSpeed}
-                setBasemap={this.setBasemap}
-                toggleLegend={this.toggleLegend}
-              />
-            )}
+            <PlayerControls
+              {...this.state}
+              playControls={playControls}
+              language={language}
+              setDatetime={this.setDatetime}
+              toggleFullscreen={this.toggleMapFullscreen}
+              togglePlay={this.togglePlay}
+              setTimestep={this.setTimestep}
+              setSpeed={this.setSpeed}
+              setBasemap={this.setBasemap}
+              toggleLegend={this.toggleLegend}
+            />
           </div>
           <div className={graphFullscreen ? "graph fullscreen" : "graph"}>
             <SummaryGraph

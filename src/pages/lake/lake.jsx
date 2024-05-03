@@ -38,6 +38,7 @@ class Module extends Component {
       metadata,
       layers,
       dark,
+      datasets
     } = this.props;
     var title = metadata.name[language];
     var subtitle = parseSubtitle(title, metadata.name);
@@ -68,7 +69,17 @@ class Module extends Component {
               active={active}
             />
           )}
-          {module.component === "graph" && <Graph {...this.props} />}
+          {module.component === "graph" && (
+            <Graph
+              {...this.props}
+              dark={dark}
+              language={language}
+              metadata={metadata}
+              module={module}
+              datasets={datasets}
+              active={active}
+            />
+          )}
         </div>
         <div className="link">
           <div className="title">{module.title}</div>
@@ -88,6 +99,7 @@ class Lake extends Component {
     metadata: {},
     modules: [],
     layers: [],
+    datasets: [],
     error: false,
     active_module: false,
     module: "all",
@@ -95,14 +107,12 @@ class Lake extends Component {
 
   setActiveModule = (active_module, active) => {
     if (active === false) {
-      document.body.style.overflow = "hidden";
       this.setState({ active_module }, () => {
         window.dispatchEvent(new Event("resize"));
       });
     }
   };
   closeActiveModule = () => {
-    document.body.style.overflow = "auto";
     this.setState({ active_module: false }, () => {
       window.dispatchEvent(new Event("resize"));
     });
@@ -124,7 +134,7 @@ class Lake extends Component {
         CONFIG.alplakes_bucket + `/static/website/metadata/v2/${id}.json`
       );*/
       const data = DATA;
-      const { metadata, modules, layers } = data;
+      const { metadata, modules, layers, datasets } = data;
       layers.map((l) => {
         l.active = false;
         l.lake = metadata.key;
@@ -135,6 +145,7 @@ class Lake extends Component {
         metadata,
         modules,
         layers,
+        datasets,
         id,
       });
     } catch (e) {
@@ -144,7 +155,7 @@ class Lake extends Component {
   }
 
   render() {
-    var { metadata, modules, error, id, active_module, layers } = this.state;
+    var { metadata, modules, error, id, active_module, layers, datasets } = this.state;
     var { language } = this.props;
     var title = "";
     var subtitle = "";
@@ -154,7 +165,7 @@ class Lake extends Component {
       subtitle = parseSubtitle(title, metadata.name);
     }
     return (
-      <div className="lake">
+      <div className={active_module ? "lake noscroll" : "lake"}>
         <NavBar {...this.props} relative={true} />
         {error ? (
           <NotFound id={id} />
@@ -170,6 +181,7 @@ class Lake extends Component {
                   module={m}
                   metadata={metadata}
                   layers={layers}
+                  datasets={datasets}
                   active={active_module === m.id}
                   selected={active_module ? true : false}
                   setActiveModule={this.setActiveModule}

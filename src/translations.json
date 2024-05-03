@@ -523,6 +523,12 @@
     "FR": "Modèle 3D",
     "IT": "Modello 3D"
   },
+  "oned": {
+    "EN": "1D Model",
+    "DE": "1D-Modell",
+    "FR": "Modèle 1D",
+    "IT": "Modello 1D"
+  },
   "alplakes_hydrodynamic": {
     "EN": "3D Model",
     "DE": "3D-Modell",

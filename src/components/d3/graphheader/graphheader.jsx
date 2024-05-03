@@ -66,80 +66,73 @@ class GraphHeader extends Component {
     return (
       <React.Fragment>
         <div className="vis-header">
-          <table className="downloadtable">
-            <tbody>
-              <tr>
-                <td className="title">{title}</td>
-                {toggleYgraph && (
-                  <td style={{ width: "25px" }}>
-                    <img
-                      src={ygraphIcon}
-                      alt="ygraph"
-                      onClick={toggleYgraph}
-                      title="Toggle y Graph"
-                    />
-                  </td>
-                )}
-                {toggleXgraph && (
-                  <td style={{ width: "25px" }}>
-                    <img
-                      src={xgraphIcon}
-                      alt="xgraph"
-                      onClick={toggleXgraph}
-                      title="Toggle X Graph"
-                    />
-                  </td>
-                )}
-                {display && (
-                  <td style={{ width: "25px" }}>
-                    <img
-                      src={displayicon}
-                      alt="heatmap"
-                      onClick={toggleDisplay}
-                      title={displaylabel}
-                    />
-                  </td>
-                )}
-                <td id={"graphdownload" + id} style={{ width: "25px" }}>
-                  <img
-                    src={downloadIcon}
-                    alt="download"
-                    onClick={toggleDownload}
-                    title="Download"
-                  />
-                  <div
-                    className={download ? "downloadbar" : "downloadbar hide"}
-                  >
-                    <button id={"png" + id} title="Download PNG">
-                      PNG
-                    </button>
-                    <button
-                      className="blue"
-                      onClick={downloadJSON}
-                      title="Download as JSON"
-                    >
-                      JSON
-                    </button>
-                    <button
-                      className="red"
-                      onClick={downloadCSV}
-                      title="Download as CSV"
-                    >
-                      CSV
-                    </button>
-                  </div>
-                </td>
-                <td style={{ width: "25px" }}>
-                  <img
-                    src={fullicon}
-                    alt="Toggle fullscreen"
-                    onClick={toggleFullscreen}
-                    title={fulllabel}
-                  />
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          <div className="title">{title}</div>
+          {toggleYgraph && (
+            <div className="icon">
+              <img
+                src={ygraphIcon}
+                alt="ygraph"
+                onClick={toggleYgraph}
+                title="Toggle y Graph"
+              />
+            </div>
+          )}
+          {toggleXgraph && (
+            <div className="icon">
+              <img
+                src={xgraphIcon}
+                alt="xgraph"
+                onClick={toggleXgraph}
+                title="Toggle X Graph"
+              />
+            </div>
+          )}
+          {display && (
+            <div className="icon">
+              <img
+                src={displayicon}
+                alt="heatmap"
+                onClick={toggleDisplay}
+                title={displaylabel}
+              />
+            </div>
+          )}
+          <div className="icon">
+            <img
+              src={downloadIcon}
+              alt="download"
+              onClick={toggleDownload}
+              title="Download"
+            />
+          </div>
+          <div className="icon">
+            <img
+              src={fullicon}
+              alt="Toggle fullscreen"
+              onClick={toggleFullscreen}
+              title={fulllabel}
+            />
+          </div>
+
+          <div className={download ? "downloadbar" : "downloadbar hide"}>
+            <button id={"png" + id} title="Download PNG">
+              PNG
+            </button>
+            <button
+              className="blue"
+              onClick={downloadJSON}
+              title="Download as JSON"
+            >
+              JSON
+            </button>
+            <button
+              className="red"
+              onClick={downloadCSV}
+              title="Download as CSV"
+            >
+              CSV
+            </button>
+          </div>
         </div>
       </React.Fragment>
     );
