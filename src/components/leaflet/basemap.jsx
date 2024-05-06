@@ -38,6 +38,7 @@ class Basemap extends Component {
           try {
             layer = await addLayer(
               layer,
+              layers,
               this.dataStore,
               this.layerStore,
               this.map,

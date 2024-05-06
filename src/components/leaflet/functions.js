@@ -312,6 +312,7 @@ const loaded = (id) => {
 
 export const addLayer = async (
   layer,
+  layers,
   dataStore,
   layerStore,
   map,
@@ -328,6 +329,7 @@ export const addLayer = async (
     active,
     loadingId,
     mapId,
+    setLayers,
   } = props;
   var source = layer.sources[layer.source];
   if (source.type === "alplakes_hydrodynamic") {
@@ -341,7 +343,9 @@ export const addLayer = async (
       depth,
       initialLoad,
       setDepthAndPeriod,
-      loadingId
+      loadingId,
+      setLayers,
+      layers
     );
   } else if (source.type === "sencast_tiff") {
     return await addSencastTiff(layer, layerStore, map, active, loadingId);
@@ -424,7 +428,9 @@ const addAlplakesHydrodynamic = async (
   depth,
   initialLoad,
   setDepthAndPeriod,
-  loadingId
+  loadingId,
+  setLayers,
+  layers
 ) => {
   loading("Collecting metadata", loadingId);
   ({ period, depth } = await getAlplakesHydrodynamicMetadata(layer, depth));
@@ -438,7 +444,16 @@ const addAlplakesHydrodynamic = async (
     dataStore,
     initialLoad
   );
-  plotAlplakesHydrodynamic(layer, datetime, depth, dataStore, layerStore, map);
+  plotAlplakesHydrodynamic(
+    layer,
+    datetime,
+    depth,
+    dataStore,
+    layerStore,
+    map,
+    setLayers,
+    layers
+  );
   setDepthAndPeriod(depth, period);
   loaded(loadingId);
   return layer;
@@ -593,7 +608,9 @@ const plotAlplakesHydrodynamic = (
   depth,
   dataStore,
   layerStore,
-  map
+  map,
+  setLayers,
+  layers
 ) => {
   var source = layer.sources[layer.source];
   var path = [
@@ -617,7 +634,11 @@ const plotAlplakesHydrodynamic = (
         map,
         geometry,
         newData,
-        interpolateValue
+        interpolateValue,
+        data,
+        depth,
+        setLayers,
+        layers
       );
     } else {
       plotAlplakesHydrodynamicRaster(
@@ -626,7 +647,11 @@ const plotAlplakesHydrodynamic = (
         map,
         geometry,
         data[closestDate(datetime, Object.keys(data))],
-        false
+        false,
+        data,
+        depth,
+        setLayers,
+        layers
       );
     }
   } else if (display === "current") {
@@ -646,7 +671,11 @@ const plotAlplakesHydrodynamicRaster = (
   map,
   geometry,
   data,
-  interpolate
+  interpolate,
+  fullData,
+  depth,
+  setLayers,
+  layers
 ) => {
   var source = layer.sources[layer.source];
   var path = [source.type, source.model, layer.lake, layer.parameter];
@@ -663,35 +692,71 @@ const plotAlplakesHydrodynamicRaster = (
   }
   options["interpolate"] = interpolate;
   var leaflet_layer = new L.Raster(geometry, data, options).addTo(map);
+  leaflet_layer.on("click", function (event) {
+    if (event.value !== null) {
+      let label = `${round(event.latlng.lat, 2)},${round(
+        event.latlng.lng,
+        2
+      )} at ${depth}m`;
+      layer.displayOptions.data = setAlplakesRasterGraphData(
+        event.index,
+        label,
+        fullData
+      );
+      setLayers(layers)
+    }
+  });
   if ("labels" in layer && layer.displayOptions.labels) {
     layer.labels.map((p) => {
-      let value = leaflet_layer._getValue(L.latLng(p.latlng));
-      return L.marker(p.latlng, {
+      let { value, index } = leaflet_layer._getValue(L.latLng(p.latlng));
+      let marker = L.marker(p.latlng, {
         icon: L.divIcon({
           className: "leaflet-mouse-marker",
           iconAnchor: [20, 20],
           iconSize: [40, 40],
         }),
-      })
-        .bindTooltip(
-          `<div class="temperature-label"><div class="name">${
-            p.name
-          }</div><div class="value">${
-            typeof value === "number"
-              ? Math.round(value * 10) / 10 + options["unit"]
-              : ""
-          }</div></div>`,
-          {
-            id: p.name,
-            permanent: true,
-            direction: p.direction ? p.direction : "top",
-            offset: L.point(0, 0),
-          }
-        )
-        .addTo(layerStore["labels"]);
+      }).addTo(layerStore["labels"]);
+      let tooltip = marker.bindTooltip(
+        `<div class="temperature-label"><div class="name">${
+          p.name
+        }</div><div class="value">${
+          typeof value === "number"
+            ? Math.round(value * 10) / 10 + options["unit"]
+            : ""
+        }</div></div>`,
+        {
+          id: p.name,
+          permanent: true,
+          direction: p.direction ? p.direction : "top",
+          offset: L.point(0, 0),
+          interactive: true,
+        }
+      );
+      tooltip.on("click", function (event) {
+        L.DomEvent.stopPropagation(event);
+        if (value !== null) {
+          let label = `${p.name} at ${depth}m`;
+          layer.displayOptions.data = setAlplakesRasterGraphData(
+            index,
+            label,
+            fullData
+          );
+          setLayers(layers)
+        }
+      });
+      return marker;
     });
   }
   setNested(layerStore, path, leaflet_layer);
+};
+
+const setAlplakesRasterGraphData = (index, label, data) => {
+  var slice = { x: [], y: [], title: label };
+  for (let ts of Object.keys(data)) {
+    slice.x.push(new Date(parseFloat(ts)));
+    slice.y.push(data[ts][index[0]][index[1]]);
+  }
+  return slice;
 };
 
 const plotAlplakesHydrodynamicCurrent = (
@@ -806,7 +871,7 @@ const updateAlplakesHydrodynamic = (
         layer.displayOptions.labels
       ) {
         layer.labels.map((p) => {
-          let value = leaflet_layer._getValue(L.latLng(p.latlng));
+          let { value } = leaflet_layer._getValue(L.latLng(p.latlng));
           return L.marker(p.latlng, {
             icon: L.divIcon({
               className: "leaflet-mouse-marker",
@@ -836,7 +901,7 @@ const updateAlplakesHydrodynamic = (
         layerStore["labels"].getLayers().forEach((m) => {
           let old = m.getTooltip();
           let p = layer.labels.find((p) => p.name === old.options.id);
-          let value = leaflet_layer._getValue(L.latLng(p.latlng));
+          let { value } = leaflet_layer._getValue(L.latLng(p.latlng));
           m.getTooltip().setContent(
             `<div class="temperature-label"><div class="name">${
               p.name

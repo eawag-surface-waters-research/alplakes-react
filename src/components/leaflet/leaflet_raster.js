@@ -1,4 +1,4 @@
-import L from "leaflet";
+import L, { latLng } from "leaflet";
 import { min, max } from "d3";
 
 L.Raster = L.Layer.extend({
@@ -25,7 +25,6 @@ L.Raster = L.Layer.extend({
     L.Util.setOptions(this, options);
     if (isNaN(this.options.min)) this.options.min = min(data.flat());
     if (isNaN(this.options.max)) this.options.max = max(data.flat());
-    this._values = [];
     this._points = [];
   },
   onAdd: function (map) {
@@ -139,7 +138,6 @@ L.Raster = L.Layer.extend({
   _drawLayer: function () {
     this._ctx.clearRect(0, 0, this._width, this._height);
     var cell = 0;
-    var values = [];
     var points = [];
     var i, j, value;
     if (this.options.interpolate !== false && this._data.length === 2) {
@@ -164,13 +162,14 @@ L.Raster = L.Layer.extend({
               this.options.max,
               this.options.palette
             );
-            values.push(value);
-            points.push(
-              L.latLng([
+            points.push({
+              latLng: L.latLng([
                 this._geometry[i][j],
                 this._geometry[i][j + this._dataWidth],
-              ])
-            );
+              ]),
+              value,
+              index: [i, j],
+            });
             let coords = this._vertices[cell];
             this._drawCell(this._ctx, coords, `rgb(${color.join(",")})`);
           }
@@ -192,13 +191,14 @@ L.Raster = L.Layer.extend({
               this.options.max,
               this.options.palette
             );
-            values.push(value);
-            points.push(
-              L.latLng([
+            points.push({
+              latLng: L.latLng([
                 this._geometry[i][j],
                 this._geometry[i][j + this._dataWidth],
-              ])
-            );
+              ]),
+              value,
+              index: [i, j],
+            });
             let coords = this._vertices[cell];
             this._drawCell(this._ctx, coords, `rgb(${color.join(",")})`);
           }
@@ -207,7 +207,6 @@ L.Raster = L.Layer.extend({
       }
     }
     this._points = points;
-    this._values = values;
   },
   _drawCell: function (ctx, coords, color) {
     ctx.strokeStyle = color;
@@ -229,8 +228,8 @@ L.Raster = L.Layer.extend({
       if (isNaN(center[0])) {
         return false;
       } else if (!isNaN(opposite[0]) && !isNaN(left[0]) && !isNaN(right[0])) {
-        var x = ( opposite[0] + left[0] + right[0] + center[0] ) / 4
-        var y = ( opposite[1] + left[1] + right[1] + center[1] ) / 4
+        var x = (opposite[0] + left[0] + right[0] + center[0]) / 4;
+        var y = (opposite[1] + left[1] + right[1] + center[1]) / 4;
         return [x, y];
       } else if (!isNaN(opposite[0])) {
         let x = center[0] + (opposite[0] - center[0]) / 2;
@@ -351,29 +350,32 @@ L.Raster = L.Layer.extend({
   },
   getFeatureValue: function (t) {
     try {
-      return this._getValue(t.latlng);
+      var { value } = this._getValue(t.latlng);
+      return value;
     } catch (e) {
       console.error("Leaflet raster getFeatureValue event failed.", e);
     }
   },
   _queryValue: function (e) {
-    e["value"] = this._getValue(e.latlng);
+    var { value, index } = this._getValue(e.latlng);
+    e["value"] = value;
+    e["index"] = index;
     return e;
   },
   _getValue: function (latlng) {
     var closest = null;
     var closestDistance = Infinity;
     for (var i = 0; i < this._points.length; i++) {
-      let distance = latlng.distanceTo(this._points[i]);
+      let distance = latlng.distanceTo(this._points[i].latLng);
       if (distance < closestDistance) {
         closest = i;
         closestDistance = distance;
       }
     }
     if (closest && closestDistance < this.options.tooltipSensitivity) {
-      return this._values[closest];
+      return this._points[closest];
     } else {
-      return null;
+      return { value: null, latLng: this._points[closest].latLng, index: null };
     }
   },
 });
