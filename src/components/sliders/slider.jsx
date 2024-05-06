@@ -1,8 +1,11 @@
 import React, { Component } from "react";
+import Translate from "../../translations.json";
 import "./slider.css";
 
 class Slider extends Component {
   inputHover = (e) => {
+    var { language } = this.props;
+    var months = Translate.axis[language].months;
     var min = parseInt(e.target.getAttribute("min"));
     var max = parseInt(e.target.getAttribute("max"));
     var step = parseInt(e.target.getAttribute("step"));
@@ -14,8 +17,7 @@ class Slider extends Component {
     var right = e.target.clientWidth - div.offsetWidth;
     var left = offset * e.target.clientWidth - div.offsetWidth / 2;
     div.style.left = Math.min(Math.max(0, left), right) + "px";
-    div.innerHTML =
-      this.formatTime(valueHover) + " " + this.formatDate(valueHover);
+    div.innerHTML = this.formatDateTime(valueHover, months);
     e.target.setAttribute("alt", valueHover);
     var arrow = document.getElementById("input-range-label-arrow");
     arrow.style.left =
@@ -38,23 +40,16 @@ class Slider extends Component {
       "hidden";
   };
 
-  formatDate = (datetime) => {
-    var a = new Date(datetime);
-    var year = a.getFullYear();
-    var month = a.getMonth() + 1;
-    var date = a.getDate();
-    return `${date < 10 ? "0" + date : date}.${
-      month < 10 ? "0" + month : month
-    }.${String(year).slice(-2)}`;
-  };
-
-  formatTime = (datetime) => {
+  formatDateTime = (datetime, months) => {
     var a = new Date(datetime);
     var hour = a.getHours();
     var minute = a.getMinutes();
+    var year = a.getFullYear();
+    var month = months[a.getMonth()];
+    var date = a.getDate();
     return `${hour < 10 ? "0" + hour : hour}:${
       minute < 10 ? "0" + minute : minute
-    }`;
+    } ${date} ${month} ${String(year).slice(-2)}`;
   };
 
   componentDidMount() {

@@ -118,7 +118,8 @@
       "id": "graph_conditions",
       "title": "Temperature, Oxygen and Ice",
       "subtitle": "1D Model",
-      "component": "graph"
+      "component": "graph",
+      "defaults": ["simstrat_timeseries_temperature"]
     },
     {
       "id": "satellite_chla",
@@ -167,7 +168,8 @@
       "id": "graph_historic",
       "title": "Historic Trends",
       "subtitle": "Models and insitu data",
-      "component": "graph"
+      "component": "graph",
+      "defaults": []
     }
   ],
   "layers": [
@@ -503,18 +505,35 @@
   ],
   "datasets": [
     {
+      "id": "simstrat_timeseries_temperature",
+      "type": "oned",
+      "parameter": "temperature",
+      "unit": "°C",
+      "display": "heat",
+      "source": "Simstrat",
+      "data_access": "simstrat_timeseries_temperature",
+      "displayOptions": {
+        "paletteName": "Balance",
+        "thresholdStep": 200
+      },
+      "description": "Some metadata here",
+      "learnMore": "https://medium.com/@runnalls.james/operational-1d-lake-modeling-with-simstrat-dc34964bfe08",
+      "tags": ["5 day forecast", "Timeseries", "Heatmap"]
+    },
+    {
       "id": "simstrat_timeseries_temperature_depth",
       "type": "oned",
       "parameter": "temperature",
       "unit": "°C",
       "display": "line",
-      "source": "simstrat",
+      "source": "Simstrat",
+      "data_access": "simstrat_timeseries_temperature_depth",
       "displayOptions": {
         "color": "black"
       },
       "description": "Surface total suspended matter processed from satellite data using the Sencast python package.",
       "learnMore": "https://medium.com/@runnalls.james/operational-1d-lake-modeling-with-simstrat-dc34964bfe08",
-      "tags": ["5 day forecast", "Timeseries"]
+      "tags": ["5 day forecast", "Timeseries", "Linegraph"]
     }
   ]
 }

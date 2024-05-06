@@ -38,7 +38,7 @@ class Module extends Component {
       metadata,
       layers,
       dark,
-      datasets
+      datasets,
     } = this.props;
     var title = metadata.name[language];
     var subtitle = parseSubtitle(title, metadata.name);
@@ -140,6 +140,11 @@ class Lake extends Component {
         l.lake = metadata.key;
         return l;
       });
+      datasets.map((d) => {
+        d.active = false;
+        d.lake = metadata.key;
+        return d;
+      });
       this.setState({
         active_module,
         metadata,
@@ -155,7 +160,8 @@ class Lake extends Component {
   }
 
   render() {
-    var { metadata, modules, error, id, active_module, layers, datasets } = this.state;
+    var { metadata, modules, error, id, active_module, layers, datasets } =
+      this.state;
     var { language } = this.props;
     var title = "";
     var subtitle = "";

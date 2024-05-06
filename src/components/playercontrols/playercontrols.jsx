@@ -87,23 +87,16 @@ const PlayerSettings = (props) => {
   );
 };
 
-const formatTime = (datetime) => {
+const formatDateTime = (datetime, months) => {
   var a = new Date(datetime);
   var hour = a.getHours();
   var minute = a.getMinutes();
+  var year = a.getFullYear();
+  var month = months[a.getMonth()];
+  var date = a.getDate();
   return `${hour < 10 ? "0" + hour : hour}:${
     minute < 10 ? "0" + minute : minute
-  }`;
-};
-
-const formatDate = (datetime) => {
-  var a = new Date(datetime);
-  var year = a.getFullYear();
-  var month = a.getMonth() + 1;
-  var date = a.getDate();
-  return `${date < 10 ? "0" + date : date}.${
-    month < 10 ? "0" + month : month
-  }.${String(year).slice(-2)}`;
+  } ${date} ${month} ${String(year).slice(-2)}`;
 };
 
 class PlayerControls extends Component {
@@ -145,6 +138,7 @@ class PlayerControls extends Component {
       playControls
     } = this.props;
     var { settings, settingsId } = this.state;
+    var months = Translate.axis[language].months;
     return (
       <React.Fragment>
         <div className="gradient" />
@@ -156,6 +150,7 @@ class PlayerControls extends Component {
               timestep={timestep}
               datetime={datetime}
               setDatetime={setDatetime}
+              language={language}
             />
           </div>
           <div className="play-controls">
@@ -176,8 +171,7 @@ class PlayerControls extends Component {
               </button>
             </div>
             <div className="current-datetime">
-              {formatTime(this.props.datetime) + " "}
-              {formatDate(this.props.datetime)}
+              {formatDateTime(this.props.datetime, months)}
             </div>
             <div className="fullscreen clickable-button">
               <span className="tooltip right">

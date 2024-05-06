@@ -178,7 +178,6 @@ class Map extends Component {
           updates.push({ event: "addLayer", id: layer.id });
         }
       }
-      this.pause();
       this.setState({ updates, datetime, period });
     }
   };

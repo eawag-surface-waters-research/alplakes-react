@@ -46,9 +46,9 @@ class Selection extends Component {
 }
 
 class ActiveApps extends Component {
-  removeLayer = (event) => {
+  removeDataset = (event) => {
     event.stopPropagation();
-    this.props.removeLayer(event.target.getAttribute("id"));
+    this.props.removeDataset(event.target.getAttribute("id"));
   };
   render() {
     var {
@@ -59,6 +59,7 @@ class ActiveApps extends Component {
       toggleActiveAdd,
       language,
     } = this.props;
+    var extra = Math.max(0, 4 - datasets.filter((l) => l.active).length);
     return (
       <React.Fragment>
         <div className="active-apps">
@@ -72,38 +73,51 @@ class ActiveApps extends Component {
                   ? 1
                   : 0
               )
-              .map((layer, index) => (
-                <div
-                  className={
-                    "app filled " +
-                    layer.type +
-                    (selection === layer.id ? " active" : "")
-                  }
-                  key={layer.id}
-                  onClick={() => setSelection(layer.id)}
-                  title="Edit settings"
-                >
-                  <div className="join" />
+              .map((dataset, index) => (
+                <React.Fragment>
                   <div
-                    className="remove"
-                    title="Remove layer"
-                    id={layer.id}
-                    onClick={this.removeLayer}
+                    className={
+                      "app filled " +
+                      dataset.type +
+                      (selection === dataset.id ? " active" : "")
+                    }
+                    key={dataset.id}
+                    onClick={() => setSelection(dataset.id)}
+                    title="Edit settings"
                   >
-                    -
-                  </div>
-                  <img src={images[layer.parameter]} alt={layer.parameter} />
-                  <span>
-                    {Translate[layer.parameter][language]}
-                    <div className="under">
-                      {Translate[layer.type][language]}
+                    <div className="join" />
+                    <div
+                      className="remove"
+                      title="Remove dataset"
+                      id={dataset.id}
+                      onClick={this.removeDataset}
+                    >
+                      -
                     </div>
-                  </span>
-                </div>
+                    <img
+                      src={images[dataset.parameter]}
+                      alt={dataset.parameter}
+                    />
+                    <span>
+                      {Translate[dataset.parameter][language]}
+                      <div className="under">
+                        {Translate[dataset.type][language]}
+                        <div>({dataset.source})</div>
+                      </div>
+                    </span>
+                  </div>
+                </React.Fragment>
               ))}
-            <div className="app" title="Add layer" onClick={toggleActiveAdd}>
-              +
-            </div>
+            {[...Array(extra).keys()].map((p) => (
+              <div
+                className="app"
+                title="Add dataset"
+                key={p}
+                onClick={toggleActiveAdd}
+              >
+                +
+              </div>
+            ))}
           </div>
           <Selection {...this.props} />
         </div>
@@ -113,9 +127,9 @@ class ActiveApps extends Component {
 }
 
 class AddDatasets extends Component {
-  addLayer = (id) => {
+  addDataset = (id) => {
     this.props.toggleActiveAdd();
-    this.props.addLayer(id);
+    this.props.addDataset(id);
   };
   render() {
     var { language, datasets, images, activeAdd, toggleActiveAdd } = this.props;
@@ -125,19 +139,15 @@ class AddDatasets extends Component {
         <div className="layers-close" onClick={toggleActiveAdd}>
           &#10005;
         </div>
-        <div className="compare">
-          Compare
-        </div>
-        <div className="compare">
-          New Plot
-        </div>
+        <div className="compare">Compare</div>
+        <div className="compare">New Plot</div>
         <div className="layers">
           {datasets.map((l) => {
             return (
               <div
                 className={l.active ? "layer disabled" : "layer"}
                 key={l.id}
-                onClick={() => this.addLayer(l.id)}
+                onClick={() => this.addDataset(l.id)}
                 title={l.active ? "" : "Add to map"}
               >
                 <div className="status">{l.active ? "Added" : "Add"}</div>

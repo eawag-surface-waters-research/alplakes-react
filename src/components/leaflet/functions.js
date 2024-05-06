@@ -381,7 +381,6 @@ export const updateLayer = async (layer, dataStore, layerStore, map, props) => {
   if (source.type === "alplakes_hydrodynamic") {
     return await updateAlplakesHydrodynamic(
       layer,
-      period,
       dataStore,
       layerStore,
       map,
@@ -433,8 +432,11 @@ const addAlplakesHydrodynamic = async (
   setLayers,
   layers
 ) => {
-  loading("Collecting metadata", loadingId);
-  ({ period, depth } = await getAlplakesHydrodynamicMetadata(layer, depth));
+  if (initialLoad) {
+    loading("Collecting metadata", loadingId);
+    ({ period, depth } = await getAlplakesHydrodynamicMetadata(layer, depth));
+    setDepthAndPeriod(depth, period);
+  }
   loading("Downloading lake geometry", loadingId);
   await downloadAlplakesHydrodynamicGeometry(layer, period, dataStore);
   loading(`Downloading lake ${layer.parameter} field`, loadingId);
@@ -455,7 +457,6 @@ const addAlplakesHydrodynamic = async (
     setLayers,
     layers
   );
-  setDepthAndPeriod(depth, period);
   loaded(loadingId);
   return layer;
 };
@@ -704,7 +705,7 @@ const plotAlplakesHydrodynamicRaster = (
         label,
         fullData
       );
-      setLayers(layers)
+      setLayers(layers);
     }
   });
   if ("labels" in layer && layer.displayOptions.labels) {
@@ -742,7 +743,7 @@ const plotAlplakesHydrodynamicRaster = (
             label,
             fullData
           );
-          setLayers(layers)
+          setLayers(layers);
         }
       });
       return marker;
@@ -799,7 +800,6 @@ const plotAlplakesHydrodynamicCurrent = (
 
 const updateAlplakesHydrodynamic = (
   layer,
-  period,
   dataStore,
   layerStore,
   map,
@@ -828,9 +828,7 @@ const updateAlplakesHydrodynamic = (
 
   var newData;
   if (layer.displayOptions.interpolate) {
-    var out = getTimestepData(data, datetime);
-    options["interpolate"] = out.interpolateValue;
-    newData = out.newData;
+    ({ newData } = getTimestepData(data, datetime));
   } else {
     newData = data[closestDate(datetime, Object.keys(data))];
   }
@@ -1150,8 +1148,10 @@ const addAlplakesParticles = async (
   loadingId
 ) => {
   const overwrite = { parameter: "velocity", type: "alplakes_hydrodynamic" };
-  loading("Collecting metadata", loadingId);
-  ({ period, depth } = await getAlplakesHydrodynamicMetadata(layer, depth));
+  if (initialLoad) {
+    loading("Collecting metadata", loadingId);
+    ({ period, depth } = await getAlplakesHydrodynamicMetadata(layer, depth));
+  }
   loading("Downloading lake geometry", loadingId);
   await downloadAlplakesHydrodynamicGeometry(
     layer,
