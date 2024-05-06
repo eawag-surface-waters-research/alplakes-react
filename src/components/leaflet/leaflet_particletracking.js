@@ -83,7 +83,7 @@ L.Control.ParticleTracking = L.Control.extend({
     if (map.options.zoomAnimation && L.Browser.any3d) {
       map.on("zoomanim", this._animateZoom, this);
     }
-
+    map.setView(map.unproject(map.project(map.getCenter()).subtract([1, 0])));
     return this._container;
   },
   onRemove: function (map) {

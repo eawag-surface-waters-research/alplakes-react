@@ -381,6 +381,7 @@ export const updateLayer = async (layer, dataStore, layerStore, map, props) => {
   if (source.type === "alplakes_hydrodynamic") {
     return await updateAlplakesHydrodynamic(
       layer,
+      period,
       dataStore,
       layerStore,
       map,
@@ -798,6 +799,7 @@ const plotAlplakesHydrodynamicCurrent = (
 
 const updateAlplakesHydrodynamic = (
   layer,
+  period,
   dataStore,
   layerStore,
   map,

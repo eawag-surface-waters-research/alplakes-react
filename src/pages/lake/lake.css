@@ -570,12 +570,12 @@
 
 .main .lake .content .oned {
     background-color: #242424;
-opacity: 1;
-background-image: linear-gradient(0deg, #242424 50%, #3a4251 50%);
-background-size: 10px 10px;
+    opacity: 1;
+    background-image: linear-gradient(0deg, #242424 50%, #3a4251 50%);
+    background-size: 10px 10px;
 }
 
-.main .lake .content .alplakes_particles {
+.main .lake .content .particles {
     background-image:
         radial-gradient(rgb(58, 66, 81) 40.4%, transparent 40.4%),
         radial-gradient(rgb(58, 66, 81) 40.4%, transparent 40.4%),
@@ -1415,15 +1415,15 @@ background-size: 10px 10px;
 
 .main .lake .content .module.active .display .module-component .sidebar .layer-settings .react-datepicker-wrapper input {
     display: inline-block;
-    font-size: 16px;
+    font-size: 18px;
     background-color: var(--background-color);
     cursor: pointer;
-    padding: 4px 8px;
+    padding: 8px 12px;
     text-align: left;
     color: var(--background-font-color);
     border: none;
     box-sizing: border-box;
-
+    border-radius: 8px;
 }
 
 .main .lake .content .module.active .display .module-component .sidebar .layer-settings .react-datepicker .react-datepicker__header {

@@ -225,7 +225,6 @@
       "unit": "m/s",
       "display": "current",
       "source": "alplakes_delft3d",
-      "summaryGraph": "threed_linegraph",
       "displayOptions": {
         "raster": false,
         "streamlines": false,
@@ -295,7 +294,7 @@
     },
     {
       "id": "3D_particles",
-      "type": "threed",
+      "type": "particles",
       "playControls": true,
       "depth": true,
       "parameter": "particles",
