@@ -15,8 +15,23 @@ class SummaryGraph extends Component {
     layer.displayOptions.image = image;
     updateOptions(layer.id, layer.displayOptions);
   };
+  clearThreedPlot = (id) => {
+    var { layers, setLayers } = this.props;
+    var layer = layers.find((l) => l.id === id);
+    layer.displayOptions.data = layer.displayOptions.data.filter(
+      (d) => d.name === "Average"
+    );
+    setLayers(layers);
+  };
   render() {
-    var { layers, selection, active, language, dark, datetime } = this.props;
+    var {
+      layers,
+      selection,
+      active,
+      language,
+      dark,
+      datetime,
+    } = this.props;
     var layer = layers.find((l) => l.id === selection);
     var plot = false;
     if (active && layer && "summaryGraph" in layer) plot = layer.summaryGraph;
@@ -51,9 +66,14 @@ class SummaryGraph extends Component {
             </React.Fragment>
           );
         } else {
-          return <React.Fragment> <div className="graph-temp">
-          Add a marker to see the profile plotted here.
-        </div></React.Fragment>;
+          return (
+            <React.Fragment>
+              {" "}
+              <div className="graph-temp">
+                Add a marker to see the profile plotted here.
+              </div>
+            </React.Fragment>
+          );
         }
       case "transect_plot":
         if (layer.displayOptions.data) {
@@ -88,6 +108,7 @@ class SummaryGraph extends Component {
                 unit={layer.unit}
                 language={language}
                 dark={dark}
+                clearPlot={() => this.clearThreedPlot(layer.id)}
               />
             </React.Fragment>
           );

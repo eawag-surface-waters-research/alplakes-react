@@ -161,7 +161,7 @@ class AddDatasets extends Component {
                       : ""}
                   </div>
                   <div className="type">
-                    {l.type in Translate ? Translate[l.type][language] : ""}
+                    {l.type in Translate ? Translate[l.type][language] : ""} ({l.source})
                   </div>
                 </div>
                 <div className="description">

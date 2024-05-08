@@ -28,13 +28,14 @@ class ProfileGraph extends Component {
             data={data}
             ylabel={ylabel}
             zlabel={zlabel}
+            xlabel={"time"}
             yunits={yunits}
             zunits={zunits}
             colors={palette}
             thresholdStep={thresholdStep}
             yReverse={true}
             xReverse={false}
-            display={"heatmap"}
+            display={"contour"}
             dark={dark}
           />
         )}

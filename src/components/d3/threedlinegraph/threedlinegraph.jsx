@@ -4,18 +4,38 @@ import Translate from "../../../translations.json";
 
 class ThreedLinegraph extends Component {
   render() {
-    var { data, parameter, unit, language, dark } = this.props;
+    var { data, parameter, unit, language, dark, clearPlot } = this.props;
+    var lcolor = [
+      dark ? "white" : "black",
+      "#e6194B",
+      "#3cb44b",
+      "#4363d8",
+      "#f58231",
+      "#911eb4",
+      "#42d4f4",
+      "#f032e6",
+      "#fabed4",
+      "#469990",
+      "#dcbeff",
+      "#9A6324",
+      "#fffac8",
+      "#800000",
+      "#aaffc3",
+      "#808000",
+      "#ffd8b1",
+      "#000075",
+    ];
     return (
       <React.Fragment>
-        <div className="graph-title">{data.title}</div>
+        <div className="graph-title">{data[0].title}</div>
         <D3LineGraph
-          data={[data]}
+          data={data}
           ylabel={Translate[parameter][language]}
           yunits={unit}
           fontSize={12}
           xReverse={false}
           yReverse={false}
-          lcolor={new Array(10).fill(dark ? "white" : "black")}
+          lcolor={lcolor}
           lweight={[1]}
           bcolor={["white"]}
           scatter={false}
@@ -25,6 +45,7 @@ class ThreedLinegraph extends Component {
           header={true}
           curve={true}
           marginLeft={60}
+          clearPlot={clearPlot}
         />
       </React.Fragment>
     );

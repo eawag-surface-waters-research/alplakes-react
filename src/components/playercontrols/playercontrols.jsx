@@ -135,7 +135,7 @@ class PlayerControls extends Component {
       setDatetime,
       nextStep,
       toggleFullscreen,
-      playControls
+      playControls,
     } = this.props;
     var { settings, settingsId } = this.state;
     var months = Translate.axis[language].months;
@@ -175,12 +175,12 @@ class PlayerControls extends Component {
             </div>
             <div className="fullscreen clickable-button">
               <span className="tooltip right">
-                {Translate.fullscreen[language]}
+                {fullscreen ? "Exit full screen" : "Full screen"}
               </span>
               <button onClick={toggleFullscreen}>
                 <img
                   src={fullscreen ? normalscreen_icon : fullscreen_icon}
-                  alt="full screen"
+                  alt="Full screen"
                 />
               </button>
             </div>

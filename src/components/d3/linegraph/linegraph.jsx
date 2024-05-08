@@ -226,7 +226,7 @@ class D3LineGraph extends Component {
       language,
       onClick,
       curve,
-      marginLeft
+      marginLeft,
     } = this.props;
     var { graphid, fontSize } = this.state;
     if (this.props.header !== false) fontSize = this.props.fontSize;
@@ -234,9 +234,6 @@ class D3LineGraph extends Component {
     for (var i = 0; i < data.length; i++) {
       data[i]["lineColor"] = lcolor[i] ? lcolor[i] : "black";
       data[i]["lineWeight"] = lweight[i] ? lweight[i] : 1;
-      data[i]["name"] = legend && legend[i] ? legend[i].text : "";
-      data[i]["xaxis"] = legend && legend[i] ? legend[i].xaxis : "x";
-      data[i]["yaxis"] = legend && legend[i] ? legend[i].yaxis : "y";
       data[i]["upper"] =
         confidence && confidence[i] ? confidence[i].CI_upper : "";
       data[i]["lower"] =
@@ -297,17 +294,12 @@ class D3LineGraph extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (!isEqual(prevProps, this.props)) {
-      this.plot();
-    }
-    if (prevState.fontSize !== this.state.fontSize) {
-      this.plot();
-    }
+    this.plot();
   }
 
   render() {
     var { graphid, download, fullscreen, fontSize } = this.state;
-    var { title, simple } = this.props;
+    var { title, simple, clearPlot } = this.props;
     return simple ? (
       <div className="linegraph-graph" id={"vis" + graphid} />
     ) : (
@@ -326,6 +318,7 @@ class D3LineGraph extends Component {
                 editFontSize={this.editFontSize}
                 downloadJSON={this.downloadJSON}
                 downloadCSV={this.downloadCSV}
+                clearPlot={clearPlot}
               />
             </div>
           )}

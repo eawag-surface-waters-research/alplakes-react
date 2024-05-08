@@ -574,7 +574,7 @@ const downloadAlplakesHydrodynamicParameter = async (
 
   par = par.split("\n").map((g) => g.split(",").map((s) => parseFloat(s)));
 
-  var average = { x: [], y: [], title: `Average at ${depth}m` };
+  var average = { x: [], y: [], title: `${depth}m`, name: "Average" };
   var bounds = { min: [], max: [] };
   for (var i = 0; i < Math.floor(par.length / (source.height + 1)); i++) {
     var date = parseAlplakesDate(String(par[i * (source.height + 1)][0]));
@@ -601,7 +601,7 @@ const downloadAlplakesHydrodynamicParameter = async (
   layer.displayOptions.max = max;
   layer.displayOptions.dataMin = min;
   layer.displayOptions.dataMax = max;
-  layer.displayOptions.data = average;
+  layer.displayOptions.data = [average];
 };
 
 const plotAlplakesHydrodynamic = (
@@ -696,16 +696,16 @@ const plotAlplakesHydrodynamicRaster = (
   var leaflet_layer = new L.Raster(geometry, data, options).addTo(map);
   leaflet_layer.on("click", function (event) {
     if (event.value !== null) {
-      let label = `${round(event.latlng.lat, 2)},${round(
-        event.latlng.lng,
-        2
-      )} at ${depth}m`;
-      layer.displayOptions.data = setAlplakesRasterGraphData(
-        event.index,
-        label,
-        fullData
-      );
-      setLayers(layers);
+      let label = `${round(event.latlng.lat, 2)}, ${round(event.latlng.lng, 2)}`;
+      if (
+        !layer.displayOptions.data.map((d) => d.name).includes(label) &&
+        layer.displayOptions.data.length < 6
+      ) {
+        layer.displayOptions.data.push(
+          setAlplakesRasterGraphData(event.index, label, fullData)
+        );
+        setLayers(layers);
+      }
     }
   });
   if ("labels" in layer && layer.displayOptions.labels) {
@@ -737,13 +737,16 @@ const plotAlplakesHydrodynamicRaster = (
       tooltip.on("click", function (event) {
         L.DomEvent.stopPropagation(event);
         if (value !== null) {
-          let label = `${p.name} at ${depth}m`;
-          layer.displayOptions.data = setAlplakesRasterGraphData(
-            index,
-            label,
-            fullData
-          );
-          setLayers(layers);
+          let label = `${p.name}`;
+          if (
+            !layer.displayOptions.data.map((d) => d.name).includes(label) &&
+            layer.displayOptions.data.length < 6
+          ) {
+            layer.displayOptions.data.push(
+              setAlplakesRasterGraphData(index, label, fullData)
+            );
+            setLayers(layers);
+          }
         }
       });
       return marker;
@@ -753,7 +756,7 @@ const plotAlplakesHydrodynamicRaster = (
 };
 
 const setAlplakesRasterGraphData = (index, label, data) => {
-  var slice = { x: [], y: [], title: label };
+  var slice = { x: [], y: [], name: label };
   for (let ts of Object.keys(data)) {
     slice.x.push(new Date(parseFloat(ts)));
     slice.y.push(data[ts][index[0]][index[1]]);

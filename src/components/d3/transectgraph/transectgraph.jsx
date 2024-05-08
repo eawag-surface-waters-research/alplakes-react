@@ -52,7 +52,7 @@ class TransectGraph extends Component {
             thresholdStep={thresholdStep}
             yReverse={true}
             xReverse={false}
-            display={"heatmap"}
+            display={"contour"}
             maxvalue={bounds[1]}
             minvalue={bounds[0]}
             dark={dark}

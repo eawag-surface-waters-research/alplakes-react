@@ -242,7 +242,7 @@ const processOptions = (div, data, userOptions) => {
         options.marginTop = options.fontSize + 2;
       }
     } else {
-      options.marginTop = 10;
+      options.marginTop = 0;
     }
   }
 
@@ -615,8 +615,8 @@ const addLegend = (svg, div, data, options) => {
 
     var legendbackground = legendblock
       .append("rect")
-      .style("fill", "white")
-      .style("opacity", 0.6);
+      .style("fill", "currentColor")
+      .style("opacity", 0.1);
 
     var x = options.canvasWidth - 10;
     var textAnchor = "end";

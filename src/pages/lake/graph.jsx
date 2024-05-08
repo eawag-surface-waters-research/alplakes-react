@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import GraphSettings from "./graphsettings";
 import { copy } from "./functions";
+import { addDataset, updateDataset, removeDataset } from "./graphfunctions";
 //import axios from "axios";
 
 class Graph extends Component {
@@ -22,11 +23,14 @@ class Graph extends Component {
     if (!dataset.active) {
       dataset.active = true;
       updates.push({ event: "addDataset", id: id });
-      this.setState({
-        datasets,
-        updates,
-        selection: id,
-      });
+      this.setState(
+        {
+          datasets,
+          updates,
+          selection: id,
+        },
+        () => this.processUpdates()
+      );
     }
   };
   removeDataset = (id) => {
@@ -38,13 +42,50 @@ class Graph extends Component {
       var selection = false;
       let stillActive = datasets.filter((l) => l.active);
       if (stillActive.length > 0) selection = stillActive[0].id;
-      this.setState({ datasets, updates, selection });
+      this.setState({ datasets, updates, selection }, () =>
+        this.processUpdates()
+      );
     }
   };
   setSelection = (selection) => {
     if (selection !== this.state.selection) {
       this.setState({ selection });
     }
+  };
+  find = (list, parameter, value) => {
+    return list.find((l) => l[parameter] === value);
+  };
+  processUpdates = async () => {
+    var { updates, datasets } = this.state;
+    if (updates.length > 0) {
+      this.setState({ updates: [] });
+      for (var update of updates) {
+        var dataset = this.find(datasets, "id", update.id);
+        if (update.event === "addDataset") {
+          try {
+            dataset = await addDataset(dataset);
+          } catch (e) {
+            console.error("Failed to add dataset", dataset.id);
+            console.error(e);
+            this.error(`Failed to add layer ${dataset.parameter}.`);
+          }
+        } else if (update.event === "updateDataset") {
+          dataset = await updateDataset(dataset);
+        } else if (update.event === "removeDataset") {
+          dataset = removeDataset(dataset);
+        }
+      }
+      this.setState({ datasets });
+    }
+  };
+  error = (message) => {
+    var parent = document.getElementById("error-modal");
+    parent.innerHTML = message;
+    parent.style.display = "block";
+    setTimeout(this.removeError, 3000);
+  };
+  removeError = () => {
+    document.getElementById("error-modal").style.display = "none";
   };
   async componentDidMount() {
     var { metadata, datasets: globalDatasets, module } = this.props;
@@ -57,11 +98,14 @@ class Graph extends Component {
       dataset.active = true;
       selection = dataset_id;
     }
-    this.setState({
-      updates,
-      datasets,
-      selection,
-    });
+    this.setState(
+      {
+        updates,
+        datasets,
+        selection,
+      },
+      () => this.processUpdates()
+    );
   }
   render() {
     var { language, dark } = this.props;

@@ -344,6 +344,11 @@
     padding: var(--padding);
     font-size: 40px;
     cursor: pointer;
+    transition: all .2s ease;
+}
+
+.main .lake .content .module.active .close:hover {
+    transform: scale(1.1);
 }
 
 .main .lake .content .module .active-title {
@@ -452,8 +457,8 @@
     background-color: var(--box-color);
     border-radius: 12px;
     padding: calc(var(--padding) / 2) calc(var(--padding) / 4) calc(var(--padding) / 2) calc(var(--padding) / 2);
-    margin-top: var(--padding);
-    height: calc(100% - var(--header-height) - var(--padding) * 1.5 - 62px);
+    margin-top: calc(var(--padding)/2);
+    height: calc(100% - 131px - var(--padding) * 1.5);
     border: 1px solid var(--border-color);
 }
 
@@ -521,9 +526,9 @@
 .main .lake .content .module .display .module-component .sidebar .active-apps .app .join {
     position: absolute;
     width: 42px;
-    height: var(--padding);
+    height: calc(var(--padding)/2);
     background-color: var(--box-color);
-    bottom: calc(-42px - var(--padding));
+    bottom: calc(-42px - var(--padding)/2);
     left: 8px;
     display: none;
     border-top: 1px solid var(--box-color);
@@ -943,10 +948,13 @@
     line-height: 20px;
 }
 
-.main .lake .content .module.active .display .module-component .sidebar .images .image .button {
+.main .lake .content .module.active .display .module-component .sidebar .images .image .right-buttons {
     position: absolute;
     right: 0;
     top: 0;
+}
+
+.main .lake .content .module.active .display .module-component .sidebar .images .image .button {
     background-color: var(--background-color);
     border: 1px solid var(--border-color);
     color: var(--background-suble-font-color);
@@ -1399,29 +1407,36 @@
 .main .lake .content .module.active .display .module-component .sidebar .layer-settings button.tiff {
     display: inline-block;
     border-radius: 8px;
-    margin-right: 18px;
-    transition: all .2s ease-in-out;
-    border: none;
-    background-color: #e3e3e3;
+    margin-right: 12px;
+    border: 1px solid var(--border-color);
+    background-color: var(--background-color);
+    color: var(--background-font-color);
     cursor: pointer;
-    padding: 5px 12px;
-    font-size: 14px;
+    padding: 2px 6px;
+    font-size: 12px;
+    margin-top: 4px;
 }
 
 .main .lake .content .module.active .display .module-component .sidebar .layer-settings button.tiff:hover {
-    background-color: #d1d0d0;
+    background-color: var(--highlight-color);
+    color: white;
+    border-color: var(--highlight-color);
 }
 
 .main .lake .content .module.active .display .module-component .sidebar .layer-settings select {
     display: inline-block;
     font-size: 14px;
     width: 100%;
-    background-color: var(--box-color);
+    background-color: var(--background-color);
     cursor: pointer;
     padding: 4px 8px;
     text-align: left;
     color: var(--background-font-color);
     border: none;
+}
+
+.main .lake .content .module.active .display .module-component .sidebar .layer-settings select.subtle {
+    background-color: var(--box-color);
 }
 
 .main .lake .content .module.active .display .module-component .sidebar .layer-settings .react-datepicker-wrapper input {
@@ -1451,6 +1466,7 @@
 .main .lake .content .module.active .display .module-component .sidebar .layer-settings .react-datepicker__time-name {
     width: var(--cell-size);
     border-radius: 0.3rem;
+    color: var(--background-font-color);
 }
 
 .main .lake .content .module.active .display .module-component .sidebar .layer-settings .react-datepicker__day--selected {
@@ -1459,12 +1475,30 @@
 }
 
 .main .lake .content .module.active .display .module-component .sidebar .layer-settings .react-datepicker__current-month {
-    color: unset;
+    color: var(--background-font-color);
 }
 
 .main .lake .content .module.active .display .module-component .sidebar .layer-settings .react-datepicker__day--disabled {
     opacity: 0.2;
     box-shadow: none;
+}
+
+.main .lake .content .module.active .display .module-component .sidebar .layer-settings .react-datepicker__day--keyboard-selected {
+    background-color: var(--box-color);
+}
+
+.main .lake .content .module.active .display .module-component .sidebar .layer-settings .period-selector .react-datepicker__day--in-range {
+    background-color: var(--highlight-color);
+    color: white;
+}
+
+.main .lake .content .module.active .display .module-component .sidebar .layer-settings .period-selector .react-datepicker__day--in-selecting-range {
+    background-color: var(--box-color);
+}
+
+.main .lake .content .module.active .display .module-component .sidebar .layer-settings .period-selector .react-datepicker {
+    background-color: var(--background-color);
+    border-radius: 0;
 }
 
 .main .lake .content .module.active .display .module-component .plot {
@@ -1481,12 +1515,12 @@
 .main .lake .content .module .display .module-component .plot .settings {
     background-color: var(--background-color);
     position: absolute;
-    right: 12px;
+    right: 0;
     top: 12px;
     z-index: 9999;
-    padding: 10px 8px 6px 8px;
+    padding: 14px 8px 10px 12px;
     border: 1px solid var(--border-color);
-    border-radius: 8px;
+    border-radius: 8px 0 0 8px;
     box-shadow: var(--box-shadow);
     display: none;
 }
@@ -1595,7 +1629,7 @@
     height: 100%;
     border: none;
     border-radius: 0;
-    z-index: 9;
+    z-index: 9999;
 }
 
 .main .lake .content .module .display .module-component .plot .map .tooltip-hover {
@@ -1917,12 +1951,7 @@
     box-sizing: border-box;
     border-radius: 12px;
     margin-top: calc(var(--padding) / 2);
-    padding-bottom: 12px;
     position: relative;
-}
-
-.main .lake .content .module .display .module-component .plot .graph .linegraph-main .linegraph-graph {
-    height: calc(100% - 15px);
 }
 
 .main .lake .content .module.active .display .module-component .plot .graph {

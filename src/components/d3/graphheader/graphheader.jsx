@@ -5,6 +5,7 @@ import contourIcon from "../../../img/contour.png";
 import xgraphIcon from "../../../img/xgraph.png";
 import ygraphIcon from "../../../img/ygraph.png";
 import shrinkIcon from "../../../img/shrink.png";
+import brushIcon from "../../../img/brush.png";
 import fullscreenIcon from "../../../img/full.png";
 import "./graphheader.css";
 
@@ -43,6 +44,7 @@ class GraphHeader extends Component {
       download,
       display,
       fullscreen,
+      clearPlot,
       toggleXgraph,
       toggleFullscreen,
       toggleYgraph,
@@ -67,6 +69,16 @@ class GraphHeader extends Component {
       <React.Fragment>
         <div className="vis-header">
           <div className="title">{title}</div>
+          {clearPlot && (
+            <div className="icon">
+              <img
+                src={brushIcon}
+                alt="brushIcon"
+                onClick={clearPlot}
+                title="Remove lines"
+              />
+            </div>
+          )}
           {toggleYgraph && (
             <div className="icon">
               <img

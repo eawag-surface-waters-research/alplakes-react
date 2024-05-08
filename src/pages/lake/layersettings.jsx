@@ -55,7 +55,11 @@ class Depth extends Component {
         <div className="setting twothird">
           <div className="label">Depth (m)</div>
           <div className="value">
-            <select value={depth} onChange={this.updateDepth}>
+            <select
+              value={depth}
+              onChange={this.updateDepth}
+              className="subtle"
+            >
               {depths.map((d) => (
                 <option value={d} key={d}>
                   {d}
@@ -289,18 +293,23 @@ class Raster extends Component {
 
   render() {
     var { _min, _max, id } = this.state;
-    var { language, layer, period, setPeriod, depth, setDepth } =
-      this.props;
+    var { language, layer, period, setPeriod, depth, setDepth } = this.props;
     var { palette, paletteName, opacity, labels } = this.props.options;
-    var { depths, missingDates, minDate, maxDate } =
+    var { depths, missingDates, minDate, maxDate, model } =
       layer.sources[layer.source];
-
     if (opacity === undefined) opacity = 1;
+    var downloadDates = this.downloadDates(
+      model,
+      layer.lake,
+      minDate,
+      maxDate,
+      Translate.axis[language].months
+    );
     return (
       <div className="layer-settings">
         <div className="setting">
           <div className="label">Period</div>
-          <div>
+          <div className="period-selector">
             <Period
               period={period}
               setPeriod={setPeriod}
@@ -373,6 +382,19 @@ class Raster extends Component {
           <div className="label">Palette</div>
           <div className="value">{paletteName}</div>
           <ColorRamp onChange={this.setPalette} value={palette} />
+        </div>
+        <div className="setting">
+          <div className="label">Download</div>
+          <select defaultValue="" onChange={this.downloadFile}>
+            <option disabled value="">
+              Select week
+            </option>
+            {downloadDates.reverse().map((d) => (
+              <option key={d.url} value={d.url}>
+                {d.date}
+              </option>
+            ))}
+          </select>
         </div>
       </div>
     );
@@ -534,15 +556,22 @@ class Current extends Component {
       arrowsColor,
       streamlinesColor,
     } = this.props.options;
-    var { depths, missingDates, minDate, maxDate } =
+    var { depths, missingDates, minDate, maxDate, model } =
       layer.sources[layer.source];
     depths = depths ? depths : [];
     missingDates = missingDates ? missingDates : [];
+    var downloadDates = this.downloadDates(
+      model,
+      layer.lake,
+      minDate,
+      maxDate,
+      Translate.axis[language].months
+    );
     return (
       <div className="layer-settings">
         <div className="setting">
           <div className="label">Period</div>
-          <div>
+          <div className="period-selector">
             <Period
               period={period}
               setPeriod={setPeriod}
@@ -643,6 +672,19 @@ class Current extends Component {
             value={opacity}
             onChange={this.setOpacity}
           ></input>
+        </div>
+        <div className="setting">
+          <div className="label">Download</div>
+          <select defaultValue="" onChange={this.downloadFile}>
+            <option disabled value="">
+              Select week
+            </option>
+            {downloadDates.reverse().map((d) => (
+              <option key={d.url} value={d.url}>
+                {d.date}
+              </option>
+            ))}
+          </select>
         </div>
       </div>
     );
@@ -788,6 +830,18 @@ class Tiff extends Component {
     const nextYear = nextMonth === 0 ? currentYear + 1 : currentYear;
     const resultDate = new Date(nextYear, nextMonth, inputDate.getDate());
     return resultDate;
+  };
+
+  netcdfUrl = (url) => {
+    var ncUrl = false;
+    if (url.includes("S3")) {
+      let p = url.split("/");
+      let f = p[p.length - 1].split("_");
+      let n = `${f[0]}_${f[f.length - 3]}_${f[f.length - 2]}.nc`;
+      p[p.length - 1] = n;
+      ncUrl = p.join("/");
+    }
+    return ncUrl;
   };
 
   addCssRules = (date, available) => {
@@ -938,30 +992,45 @@ class Tiff extends Component {
             />
           </div>
           <div className="images">
-            {images.map((i) => (
-              <div
-                className={i.url === image.url ? "image selected" : "image"}
-                key={i.url}
-                onClick={() => this.setImage(i.time)}
-              >
-                <div className="button">
-                  {i.url === image.url ? "Selected" : "Select"}
-                </div>
-                <div className="left">
-                  <div className="sat">{i.satellite}</div>
-                  <div className="res">
-                    {i.satellite.includes("S3") ? 300 : 20}m
+            {images.map((i) => {
+              var ncUrl = this.netcdfUrl(i.url);
+              return (
+                <div
+                  className={i.url === image.url ? "image selected" : "image"}
+                  key={i.url}
+                  onClick={() => this.setImage(i.time)}
+                >
+                  <div className="right-buttons">
+                    <div className="button">
+                      {i.url === image.url ? "Selected" : "Select"}
+                    </div>
+                  </div>
+                  <div className="left">
+                    <div className="sat">{i.satellite}</div>
+                    <div className="res">
+                      {i.satellite.includes("S3") ? 300 : 20}m
+                    </div>
+                  </div>
+                  <div className="right">
+                    <div>{formatDateTime(i.time, months)}</div>
+                    <div>
+                      {`${i.percent}% coverage`} |{" "}
+                      {`${Math.round(i.ave * 10) / 10} ${unit}`}
+                    </div>
+                  </div>
+                  <div className="under">
+                    <a href={i.url} title="Download image as GeoTIFF">
+                      <button className="tiff">GeoTIFF</button>
+                    </a>
+                    {ncUrl && (
+                      <a href={ncUrl} title="Download image as NetCDF">
+                        <button className="tiff">netCDF4</button>
+                      </a>
+                    )}
                   </div>
                 </div>
-                <div className="right">
-                  <div>{formatDateTime(i.time, months)}</div>
-                  <div>
-                    {`${i.percent}% coverage`} |{" "}
-                    {`${Math.round(i.ave * 10) / 10} ${unit}`}
-                  </div>
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
         <div className="setting half">
@@ -1069,13 +1138,15 @@ class Transect extends Component {
 
   render() {
     var { palette, paletteName } = this.props.options;
-    return <div className="layer-settings">
-       <div className="setting">
+    return (
+      <div className="layer-settings">
+        <div className="setting">
           <div className="label">Palette</div>
           <div className="value">{paletteName}</div>
           <ColorRamp onChange={this.setPalette} value={palette} />
         </div>
-    </div>;
+      </div>
+    );
   }
 }
 
@@ -1089,13 +1160,15 @@ class Profile extends Component {
 
   render() {
     var { palette, paletteName } = this.props.options;
-    return <div className="layer-settings">
-       <div className="setting">
+    return (
+      <div className="layer-settings">
+        <div className="setting">
           <div className="label">Palette</div>
           <div className="value">{paletteName}</div>
           <ColorRamp onChange={this.setPalette} value={palette} />
         </div>
-    </div>;
+      </div>
+    );
   }
 }
 
@@ -1139,7 +1212,7 @@ class Particles extends Component {
       <div className="layer-settings">
         <div className="setting">
           <div className="label">Period</div>
-          <div>
+          <div className="period-selector">
             <Period
               period={period}
               setPeriod={setPeriod}

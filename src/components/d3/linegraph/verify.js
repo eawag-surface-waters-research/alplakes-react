@@ -5,11 +5,15 @@ export const verifyString = (string) => {
 };
 
 export const verifyNumber = (number) => {
-  return true
+  return true;
 };
 
 export const verifyBool = (bool) => {
   return typeof bool === "boolean";
+};
+
+export const verifyNone = (value) => {
+  return true;
 };
 
 export const verifyFunction = (f) => {

@@ -10,8 +10,9 @@
 
 .vis-header .icon {
   display: inline-block;
-  margin-left: 12px;
   transition: all .2s ease;
+  padding: 4px 6px;
+  background-color: var(--background-color);
 }
 
 .vis-header .icon:hover {

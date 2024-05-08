@@ -386,6 +386,7 @@ class Map extends Component {
               setSpeed={this.setSpeed}
               setBasemap={this.setBasemap}
               toggleLegend={this.toggleLegend}
+              fullscreen={mapFullscreen}
             />
           </div>
           <div className={graphFullscreen ? "graph fullscreen" : "graph"}>
@@ -397,6 +398,7 @@ class Map extends Component {
               layers={layers}
               datetime={datetime}
               updateOptions={this.updateOptions}
+              setLayers={this.setLayers}
             />
           </div>
         </div>
