@@ -1113,7 +1113,7 @@ class Tiff extends Component {
           <div className="value">{paletteName}</div>
           <ColorRamp onChange={this.setPalette} value={palette} />
         </div>
-        <div className="setting half">
+        <div className="setting">
           Valid Pixel Expression
           <input
             type="checkbox"

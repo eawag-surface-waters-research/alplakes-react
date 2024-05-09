@@ -251,9 +251,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.25825199"
-     inkscape:cx="2181.9774"
-     inkscape:cy="2075.4922"
+     inkscape:zoom="0.11627382"
+     inkscape:cx="1414.7639"
+     inkscape:cy="2365.1068"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -1763,7 +1763,7 @@
              id="polygon20-7"
              style="fill:#3b3b3b;fill-opacity:1" /></g></g></g><g
        id="g7-6"
-       transform="matrix(0.34371098,0,0,0.34371098,-520.64126,-316.97999)"
+       transform="matrix(0.34371098,0,0,0.34371098,-1315.9884,-282.52401)"
        style="fill:#ffffff;fill-opacity:1"
        inkscape:export-filename="fullscreen.png"
        inkscape:export-xdpi="96"
@@ -1774,7 +1774,7 @@
    id="g4-0-5"
    style="fill:#ffffff;fill-opacity:1">
 		<polygon
-   points="205.284,177 68.284,40 165,40 165,0 0,0 0,165 40,165 40,68.284 177,205.284 "
+   points="68.284,40 165,40 165,0 0,0 0,165 40,165 40,68.284 177,205.284 205.284,177 "
    id="polygon2-3"
    style="fill:#ffffff;fill-opacity:1" />
 	</g>
@@ -1785,7 +1785,7 @@
    id="g10-2"
    style="fill:#ffffff;fill-opacity:1">
 		<polygon
-   points="68.284,472 205.284,335 177,306.716 40,443.716 40,347 0,347 0,512 165,512 165,472 "
+   points="205.284,335 177,306.716 40,443.716 40,347 0,347 0,512 165,512 165,472 68.284,472 "
    id="polygon8-9"
    style="fill:#ffffff;fill-opacity:1" />
 	</g>
@@ -1796,7 +1796,7 @@
    id="g16-27"
    style="fill:#ffffff;fill-opacity:1">
 		<polygon
-   points="512,0 347,0 347,40 443.716,40 306.716,177 335,205.284 472,68.284 472,165 512,165 "
+   points="347,0 347,40 443.716,40 306.716,177 335,205.284 472,68.284 472,165 512,165 512,0 "
    id="polygon14-0"
    style="fill:#ffffff;fill-opacity:1" />
 	</g>
@@ -1807,7 +1807,7 @@
    id="g22-3"
    style="fill:#ffffff;fill-opacity:1">
 		<polygon
-   points="512,347 472,347 472,443.716 335,306.716 306.716,335 443.716,472 347,472 347,512 512,512 "
+   points="472,347 472,443.716 335,306.716 306.716,335 443.716,472 347,472 347,512 512,512 512,347 "
    id="polygon20-6"
    style="fill:#ffffff;fill-opacity:1" />
 	</g>
@@ -1859,7 +1859,7 @@
 </g></g><g
        inkscape:label="Layer 1"
        id="layer1-61-2"
-       transform="matrix(1.517637,0,0,1.517637,-648.86699,-279.86352)"
+       transform="matrix(1.517637,0,0,1.517637,-1444.2141,-245.40754)"
        style="fill:#ffffff;fill-opacity:1"
        inkscape:export-filename="normalscreen.png"
        inkscape:export-xdpi="96"
@@ -1869,7 +1869,7 @@
          style="fill:#ffffff;fill-opacity:1"><g
            id="g4-6-8"
            style="fill:#ffffff;fill-opacity:1"><polygon
-             points="40,165 40,68.284 177,205.284 205.284,177 68.284,40 165,40 165,0 0,0 0,165 "
+             points="40,68.284 177,205.284 205.284,177 68.284,40 165,40 165,0 0,0 0,165 40,165 "
              id="polygon2-7-9"
              style="fill:#ffffff;fill-opacity:1" /></g></g><g
          id="g12-5-7"
@@ -1877,7 +1877,7 @@
          style="fill:#ffffff;fill-opacity:1"><g
            id="g10-3-3"
            style="fill:#ffffff;fill-opacity:1"><polygon
-             points="0,512 165,512 165,472 68.284,472 205.284,335 177,306.716 40,443.716 40,347 0,347 "
+             points="165,512 165,472 68.284,472 205.284,335 177,306.716 40,443.716 40,347 0,347 0,512 "
              id="polygon8-5-6"
              style="fill:#ffffff;fill-opacity:1" /></g></g><g
          id="g18-6-1"
@@ -1885,7 +1885,7 @@
          style="fill:#ffffff;fill-opacity:1"><g
            id="g16-2-2"
            style="fill:#ffffff;fill-opacity:1"><polygon
-             points="472,68.284 472,165 512,165 512,0 347,0 347,40 443.716,40 306.716,177 335,205.284 "
+             points="472,165 512,165 512,0 347,0 347,40 443.716,40 306.716,177 335,205.284 472,68.284 "
              id="polygon14-9-9"
              style="fill:#ffffff;fill-opacity:1" /></g></g><g
          id="g24-1-3"
@@ -1893,7 +1893,7 @@
          style="fill:#ffffff;fill-opacity:1"><g
            id="g22-2-1"
            style="fill:#ffffff;fill-opacity:1"><polygon
-             points="347,472 347,512 512,512 512,347 472,347 472,443.716 335,306.716 306.716,335 443.716,472 "
+             points="347,512 512,512 512,347 472,347 472,443.716 335,306.716 306.716,335 443.716,472 347,472 "
              id="polygon20-7-9"
              style="fill:#ffffff;fill-opacity:1" /></g></g></g><g
        inkscape:label="Layer 1"

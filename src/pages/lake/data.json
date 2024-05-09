@@ -408,7 +408,7 @@
               "metadata": "/metadata/sentinel3/geneva_chla.json"
             }
           ],
-          "bucket": "/metadata/latest/geneva_chla.json",
+          "bucket": "/metadata/sentinel3/geneva_chla_latest.json",
           "description": "Surface chlorophyll concentration processed from satellite data using the Sencast python package.",
           "learnMore": "https://medium.com/@runnalls.james/water-quality-products-from-remote-sensing-data-using-sencast-e48449bd6aa8",
           "onActivate": true,
@@ -451,7 +451,7 @@
               "metadata": "/metadata/sentinel2/geneva_Z490.json"
             }
           ],
-          "bucket": "/metadata/latest/geneva_secchi.json",
+          "bucket": "/metadata/sentinel3/geneva_Zsd_lee_latest.json",
           "description": "Secchi depth processed from satellite data using the Sencast python package.",
           "learnMore": "https://medium.com/@runnalls.james/water-quality-products-from-remote-sensing-data-using-sencast-e48449bd6aa8",
           "onActivate": true,
@@ -494,7 +494,7 @@
               "metadata": "/metadata/sentinel2/geneva_tsm_dogliotti665.json"
             }
           ],
-          "bucket": "/metadata/latest/geneva_tsm.json",
+          "bucket": "/metadata/sentinel3/geneva_tsm_binding754_latest.json",
           "description": "Surface total suspended matter processed from satellite data using the Sencast python package.",
           "learnMore": "https://medium.com/@runnalls.james/water-quality-products-from-remote-sensing-data-using-sencast-e48449bd6aa8",
           "onActivate": true,
