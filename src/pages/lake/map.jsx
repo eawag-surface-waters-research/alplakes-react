@@ -5,7 +5,7 @@ import InitialLoading from "../../components/loading/initialloading";
 import Loading from "../../components/loading/loading";
 import Legend from "../../components/legend/legend";
 import PlayerControls from "../../components/playercontrols/playercontrols";
-import MapSettings from "./mapsettings";
+import Settings from "./settings";
 import CONFIG from "../../config.json";
 import settings_icon from "../../img/options.png";
 import {
@@ -406,7 +406,7 @@ class Map extends Component {
           <div className="close-sidebar" onClick={this.closeSidebar}>
             &times;
           </div>
-          <MapSettings
+          <Settings
             {...this.state}
             language={language}
             dark={dark}

@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import LayerSettings from "./layersettings";
+import ShowMoreText from "../../components/showmore/showmore";
 import Translate from "../../translations.json";
 import temperature_icon from "../../img/temperature.png";
 import velocity_icon from "../../img/velocity.png";
@@ -10,33 +12,34 @@ import turbidity_icon from "../../img/turbidity.png";
 import rgb_icon from "../../img/rgb.png";
 import particles_icon from "../../img/particles.png";
 import thermocline_icon from "../../img/thermocline.png";
-import ShowMoreText from "../../components/showmore/showmore";
 
 class Selection extends Component {
   render() {
-    var { selection, datasets } = this.props;
+    var { selection, layers } = this.props;
     if (selection === false) {
       return;
     } else {
-      var dataset = datasets.find((l) => l.id === selection);
+      var layer = layers.find((l) => l.id === selection);
+      var source = layer.sources[layer.source];
       return (
         <React.Fragment>
           <div className="selection">
             <div className="selection-inner">
               <div className="layer-description">
                 <ShowMoreText
-                  text={dataset.description}
+                  text={source.description}
                   links={{}}
                   maxLength={180}
                 />
               </div>
               <a
-                href={dataset.learnMore}
+                href={source.learnMore}
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 <div className="layer-link">Learn more</div>
               </a>
+              <LayerSettings {...this.props} layer={layer} />
             </div>
           </div>
         </React.Fragment>
@@ -46,25 +49,19 @@ class Selection extends Component {
 }
 
 class ActiveApps extends Component {
-  removeDataset = (event) => {
+  removeLayer = (event) => {
     event.stopPropagation();
-    this.props.removeDataset(event.target.getAttribute("id"));
+    this.props.removeLayer(event.target.getAttribute("id"));
   };
   render() {
-    var {
-      datasets,
-      setSelection,
-      selection,
-      images,
-      toggleActiveAdd,
-      language,
-    } = this.props;
-    var extra = Math.max(0, 4 - datasets.filter((l) => l.active).length);
+    var { layers, setSelection, selection, images, toggleActiveAdd, language } =
+      this.props;
+    var extra = Math.max(0, 4 - layers.filter((l) => l.active).length);
     return (
       <React.Fragment>
         <div className="active-apps">
           <div className="app-area">
-            {datasets
+            {layers
               .filter((l) => l.active)
               .sort((a, b) =>
                 a.displayOptions["zIndex"] > b.displayOptions["zIndex"]
@@ -73,45 +70,39 @@ class ActiveApps extends Component {
                   ? 1
                   : 0
               )
-              .map((dataset, index) => (
-                <React.Fragment>
+              .map((layer, index) => (
+                <div
+                  className={
+                    "app filled " +
+                    layer.type +
+                    (selection === layer.id ? " active" : "")
+                  }
+                  key={layer.id}
+                  onClick={() => setSelection(layer.id)}
+                  title="Edit settings"
+                >
+                  <div className="join" />
                   <div
-                    className={
-                      "app filled " +
-                      dataset.type +
-                      (selection === dataset.id ? " active" : "")
-                    }
-                    key={dataset.id}
-                    onClick={() => setSelection(dataset.id)}
-                    title="Edit settings"
+                    className="remove"
+                    title="Remove layer"
+                    id={layer.id}
+                    onClick={this.removeLayer}
                   >
-                    <div className="join" />
-                    <div
-                      className="remove"
-                      title="Remove dataset"
-                      id={dataset.id}
-                      onClick={this.removeDataset}
-                    >
-                      -
-                    </div>
-                    <img
-                      src={images[dataset.parameter]}
-                      alt={dataset.parameter}
-                    />
-                    <span>
-                      {Translate[dataset.parameter][language]}
-                      <div className="under">
-                        {Translate[dataset.type][language]}
-                        <div>({dataset.source})</div>
-                      </div>
-                    </span>
+                    -
                   </div>
-                </React.Fragment>
+                  <img src={images[layer.parameter]} alt={layer.parameter} />
+                  <span>
+                    {Translate[layer.parameter][language]}
+                    <div className="under">
+                      {Translate[layer.type][language]}
+                    </div>
+                  </span>
+                </div>
               ))}
             {[...Array(extra).keys()].map((p) => (
               <div
                 className="app"
-                title="Add dataset"
+                title="Add layer"
                 key={p}
                 onClick={toggleActiveAdd}
               >
@@ -126,28 +117,28 @@ class ActiveApps extends Component {
   }
 }
 
-class AddDatasets extends Component {
-  addDataset = (id) => {
+class AddLayers extends Component {
+  addLayer = (id) => {
     this.props.toggleActiveAdd();
-    this.props.addDataset(id);
+    this.props.addLayer(id);
   };
   render() {
-    var { language, datasets, images, activeAdd, toggleActiveAdd } = this.props;
+    var { language, layers, images, activeAdd, toggleActiveAdd } = this.props;
     return (
       <div className={activeAdd ? "add-layers" : "add-layers hidden"}>
-        <div className="layers-title">Available datasets</div>
+        <div className="layers-title">Available Layers</div>
         <div className="layers-close" onClick={toggleActiveAdd}>
           &#10005;
         </div>
-        <div className="compare">Compare</div>
-        <div className="compare">New Plot</div>
+
         <div className="layers">
-          {datasets.map((l) => {
+          {layers.map((l) => {
+            let source = l.sources[l.source];
             return (
               <div
                 className={l.active ? "layer disabled" : "layer"}
                 key={l.id}
-                onClick={() => this.addDataset(l.id)}
+                onClick={() => this.addLayer(l.id)}
                 title={l.active ? "" : "Add to map"}
               >
                 <div className="status">{l.active ? "Added" : "Add"}</div>
@@ -161,19 +152,19 @@ class AddDatasets extends Component {
                       : ""}
                   </div>
                   <div className="type">
-                    {l.type in Translate ? Translate[l.type][language] : ""} ({l.source})
+                    {l.type in Translate ? Translate[l.type][language] : ""}
                   </div>
                 </div>
                 <div className="description">
                   <ShowMoreText
-                    text={l.description}
+                    text={source.description}
                     links={{}}
                     maxLength={130}
                   />
                 </div>
-                {l.tags && (
+                {source.tags && (
                   <div className="tags">
-                    {l.tags.map((t) => (
+                    {source.tags.map((t) => (
                       <div className="tag" key={t}>
                         {t}
                       </div>
@@ -189,7 +180,7 @@ class AddDatasets extends Component {
   }
 }
 
-class GraphSettings extends Component {
+class Settings extends Component {
   state = {
     images: {
       temperature: temperature_icon,
@@ -218,7 +209,7 @@ class GraphSettings extends Component {
           images={images}
           toggleActiveAdd={this.toggleActiveAdd}
         />
-        <AddDatasets
+        <AddLayers
           {...this.props}
           images={images}
           activeAdd={activeAdd}
@@ -229,4 +220,4 @@ class GraphSettings extends Component {
   }
 }
 
-export default GraphSettings;
+export default Settings;

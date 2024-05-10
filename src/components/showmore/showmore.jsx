@@ -14,7 +14,6 @@ class ShowMoreText extends Component {
     render() {
       const { text, links, maxLength } = this.props;
       const { showFullText } = this.state;
-  
       const truncatedText =
         text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
   

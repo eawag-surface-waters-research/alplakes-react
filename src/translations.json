@@ -529,6 +529,24 @@
     "FR": "Modèle 1D",
     "IT": "Modello 1D"
   },
+  "heatmap": {
+    "EN": "Heatmap",
+    "DE": "Heatmap",
+    "FR": "Carte de chaleur",
+    "IT": "Mappa di calore"
+  },
+  "doy": {
+    "EN": "Day of year",
+    "DE": "Tag des Jahres",
+    "FR": "Jour de l'année",
+    "IT": "Giorno dell'anno"
+  },
+  "linegraph": {
+    "EN": "Linegraph",
+    "DE": "Liniendiagramm",
+    "FR": "Graphique linéaire",
+    "IT": "Grafico a linee"
+  },
   "alplakes_hydrodynamic": {
     "EN": "3D Model",
     "DE": "3D-Modell",

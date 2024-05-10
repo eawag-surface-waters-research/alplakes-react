@@ -119,7 +119,7 @@
       "title": "Temperature, Oxygen and Ice",
       "subtitle": "1D Model",
       "component": "graph",
-      "defaults": ["simstrat_timeseries_temperature"]
+      "defaults": ["temperature_heatmap"]
     },
     {
       "id": "satellite_chla",
@@ -169,7 +169,7 @@
       "title": "Historic Trends",
       "subtitle": "Models and insitu data",
       "component": "graph",
-      "defaults": ["simstrat_yearly_temperature_surface"]
+      "defaults": ["temperature_doy"]
     }
   ],
   "layers": [
@@ -296,7 +296,7 @@
     },
     {
       "id": "3D_particles",
-      "type": "particles",
+      "type": "threed",
       "playControls": true,
       "depth": true,
       "parameter": "particles",
@@ -505,50 +505,47 @@
   ],
   "datasets": [
     {
-      "id": "simstrat_timeseries_temperature",
-      "type": "oned",
+      "id": "temperature_heatmap",
+      "type": "heatmap",
       "parameter": "temperature",
       "unit": "°C",
       "display": "heat",
-      "source": "Simstrat",
-      "data_access": "simstrat_timeseries_temperature",
+      "source": "simstrat_geneva",
+      "sources": {
+        "simstrat_geneva": {
+          "data_access": "simstrat_heatmap_temperature",
+          "label": "Simstrat Geneva",
+          "lake": "geneva",
+          "model": "simstrat",
+          "description": "Depth time visualisation of water temperature. Water temperatures are hindcasted and forecasted using the 1D hydrodynamic model Simstrat. Meteorological forcing data is produced from Meteoswiss products, hincasts use meteostation data and forecasts use the Cosmo-2e 5 day ensemble forecast (VNXZ32). Where rivers inputs are used this data is sourced from Bafu. This model is calibrated using in-situ measuresuments collected by a number of 3rd parties.",
+          "learnMore": "https://medium.com/@runnalls.james/operational-1d-lake-modeling-with-simstrat-dc34964bfe08",
+          "tags": ["5 day forecast", "Timeseries", "Heatmap"]
+        }
+      },
       "displayOptions": {
         "paletteName": "Balance",
         "thresholdStep": 200
-      },
-      "description": "Depth time visualisation of water temperature. Water temperatures are hindcasted and forecasted using the 1D hydrodynamic model Simstrat. Meteorological forcing data is produced from Meteoswiss products, hincasts use meteostation data and forecasts use the Cosmo-2e 5 day ensemble forecast (VNXZ32). Where rivers inputs are used this data is sourced from Bafu. This model is calibrated using in-situ measuresuments collected by a number of 3rd parties.",
-      "learnMore": "https://medium.com/@runnalls.james/operational-1d-lake-modeling-with-simstrat-dc34964bfe08",
-      "tags": ["5 day forecast", "Timeseries", "Heatmap"]
+      }
     },
     {
-      "id": "simstrat_timeseries_temperature_depth",
-      "type": "oned",
+      "id": "temperature_doy",
+      "type": "doy",
       "parameter": "temperature",
       "unit": "°C",
       "display": "line",
-      "source": "Simstrat",
-      "data_access": "simstrat_timeseries_temperature_depth",
-      "displayOptions": {
-        "color": "black"
+      "source": "simstrat_geneva",
+      "sources": {
+        "simstrat_geneva": {
+          "data_access": "simstrat_doy_temperature",
+          "label": "Simstrat Geneva",
+          "lake": "geneva",
+          "model": "simstrat",
+          "description": "Average DOY water temperature. Water temperatures are hindcasted and forecasted using the 1D hydrodynamic model Simstrat. Meteorological forcing data is produced from Meteoswiss products, hincasts use meteostation data and forecasts use the Cosmo-2e 5 day ensemble forecast (VNXZ32). Where rivers inputs are used this data is sourced from Bafu. This model is calibrated using in-situ measuresuments collected by a number of 3rd parties.",
+          "learnMore": "https://medium.com/@runnalls.james/operational-1d-lake-modeling-with-simstrat-dc34964bfe08",
+          "tags": ["Historic Trends", "DOY average"]
+        }
       },
-      "description": "Visualisation of water temperature for specific depths. Water temperatures are hindcasted and forecasted using the 1D hydrodynamic model Simstrat. Meteorological forcing data is produced from Meteoswiss products, hincasts use meteostation data and forecasts use the Cosmo-2e 5 day ensemble forecast (VNXZ32). Where rivers inputs are used this data is sourced from Bafu. This model is calibrated using in-situ measuresuments collected by a number of 3rd parties.",
-      "learnMore": "https://medium.com/@runnalls.james/operational-1d-lake-modeling-with-simstrat-dc34964bfe08",
-      "tags": ["5 day forecast", "Timeseries", "Linegraph"]
-    },
-    {
-      "id": "simstrat_yearly_temperature_surface",
-      "type": "oned",
-      "parameter": "temperature",
-      "unit": "°C",
-      "display": "line",
-      "source": "Simstrat",
-      "data_access": "simstrat_yearly_temperature_surface",
-      "displayOptions": {
-        "color": "black"
-      },
-      "description": "Average DOY water temperature. Water temperatures are hindcasted and forecasted using the 1D hydrodynamic model Simstrat. Meteorological forcing data is produced from Meteoswiss products, hincasts use meteostation data and forecasts use the Cosmo-2e 5 day ensemble forecast (VNXZ32). Where rivers inputs are used this data is sourced from Bafu. This model is calibrated using in-situ measuresuments collected by a number of 3rd parties.",
-      "learnMore": "https://medium.com/@runnalls.james/operational-1d-lake-modeling-with-simstrat-dc34964bfe08",
-      "tags": ["DOY average", "Linegraph", "Surface"]
+      "displayOptions": {}
     }
   ]
 }

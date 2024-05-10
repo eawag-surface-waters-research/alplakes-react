@@ -1,15 +1,16 @@
 import React, { Component } from "react";
-import GraphSettings from "./graphsettings";
+import DatasetHeatmap from "../../components/d3/dataset/datasetheatmap";
+import Settings from "./settings";
 import { copy } from "./functions";
-import { addDataset, updateDataset, removeDataset } from "./graphfunctions";
-//import axios from "axios";
+import { addLayer, updateLayer, removeLayer } from "./graphfunctions";
+
 
 class Graph extends Component {
   state = {
     sidebar: false,
     selection: false,
     updates: [],
-    datasets: [],
+    layers: [],
   };
   openSidebar = () => {
     this.setState({ sidebar: true });
@@ -17,15 +18,15 @@ class Graph extends Component {
   closeSidebar = () => {
     this.setState({ sidebar: false });
   };
-  addDataset = (id) => {
-    var { datasets, updates } = this.state;
-    var dataset = datasets.find((l) => l.id === id);
-    if (!dataset.active) {
-      dataset.active = true;
-      updates.push({ event: "addDataset", id: id });
+  addLayer = (id) => {
+    var { layers, updates } = this.state;
+    var layer = layers.find((l) => l.id === id);
+    if (!layer.active) {
+      layer.active = true;
+      updates.push({ event: "addLayer", id: id });
       this.setState(
         {
-          datasets,
+          layers,
           updates,
           selection: id,
         },
@@ -33,16 +34,16 @@ class Graph extends Component {
       );
     }
   };
-  removeDataset = (id) => {
-    var { datasets } = this.state;
-    var dataset = datasets.find((l) => l.id === id);
-    if (dataset.active) {
-      dataset.active = false;
-      var updates = [{ event: "removeDataset", id: id }];
+  removeLayer = (id) => {
+    var { layers } = this.state;
+    var layer = layers.find((l) => l.id === id);
+    if (layer.active) {
+      layer.active = false;
+      var updates = [{ event: "removeLayer", id: id }];
       var selection = false;
-      let stillActive = datasets.filter((l) => l.active);
+      let stillActive = layers.filter((l) => l.active);
       if (stillActive.length > 0) selection = stillActive[0].id;
-      this.setState({ datasets, updates, selection }, () =>
+      this.setState({ layers, updates, selection }, () =>
         this.processUpdates()
       );
     }
@@ -56,26 +57,27 @@ class Graph extends Component {
     return list.find((l) => l[parameter] === value);
   };
   processUpdates = async () => {
-    var { updates, datasets } = this.state;
+    var { language } = this.props;
+    var { updates, layers } = this.state;
     if (updates.length > 0) {
       this.setState({ updates: [] });
       for (var update of updates) {
-        var dataset = this.find(datasets, "id", update.id);
-        if (update.event === "addDataset") {
+        var layer = this.find(layers, "id", update.id);
+        if (update.event === "addLayer") {
           try {
-            dataset = await addDataset(dataset);
+            layer = await addLayer(layer, language);
           } catch (e) {
-            console.error("Failed to add dataset", dataset.id);
+            console.error("Failed to add layer", layer.id);
             console.error(e);
-            this.error(`Failed to add layer ${dataset.parameter}.`);
+            this.error(`Failed to add layer ${layer.parameter}.`);
           }
-        } else if (update.event === "updateDataset") {
-          dataset = await updateDataset(dataset);
-        } else if (update.event === "removeDataset") {
-          dataset = removeDataset(dataset);
+        } else if (update.event === "updateLayer") {
+          layer = await updateLayer(layer);
+        } else if (update.event === "removeLayer") {
+          layer = removeLayer(layer);
         }
       }
-      this.setState({ datasets });
+      this.setState({ layers });
     }
   };
   error = (message) => {
@@ -88,20 +90,20 @@ class Graph extends Component {
     document.getElementById("error-modal").style.display = "none";
   };
   async componentDidMount() {
-    var { metadata, datasets: globalDatasets, module } = this.props;
+    var { datasets, module } = this.props;
     var { selection } = this.state;
     var updates = [];
-    var datasets = copy(globalDatasets);
-    for (let dataset_id of module.defaults) {
-      updates.push({ event: "addDataset", id: dataset_id });
-      let dataset = datasets.find((l) => l.id === dataset_id);
-      dataset.active = true;
-      selection = dataset_id;
+    var layers = copy(datasets);
+    for (let layer_id of module.defaults) {
+      updates.push({ event: "addLayer", id: layer_id });
+      let layer = layers.find((l) => l.id === layer_id);
+      layer.active = true;
+      selection = layer_id;
     }
     this.setState(
       {
         updates,
-        datasets,
+        layers,
         selection,
       },
       () => this.processUpdates()
@@ -109,21 +111,30 @@ class Graph extends Component {
   }
   render() {
     var { language, dark } = this.props;
-    var { sidebar, datasets } = this.state;
+    var { sidebar, layers } = this.state;
+    var heat_layer = false;
+    var heat_layers = layers.filter((d) => d.active && d.display === "heat");
+    if (heat_layers.length > 0) {
+      heat_layer = heat_layers[0];
+    }
     return (
       <div className="module-component graph">
-        <div className="plot"></div>
+        <div className="plot">
+          {heat_layer && (
+            <DatasetHeatmap {...heat_layer.displayOptions} dark={dark} />
+          )}
+        </div>
         <div className={sidebar ? "sidebar open" : "sidebar"}>
           <div className="close-sidebar" onClick={this.closeSidebar}>
             &times;
           </div>
-          <GraphSettings
+          <Settings
             {...this.state}
             language={language}
             dark={dark}
-            datasets={datasets}
-            addDataset={this.addDataset}
-            removeDataset={this.removeDataset}
+            layers={layers}
+            addLayer={this.addLayer}
+            removeLayer={this.removeLayer}
             setSelection={this.setSelection}
           />
         </div>

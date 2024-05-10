@@ -185,6 +185,10 @@ export const formatDateLong = (datetime, months) => {
   return `${date} ${month} ${String(year)}`;
 };
 
+export const parseSimstratDatetime = (string) => {
+
+}
+
 export const formatTime = (datetime) => {
   var a = new Date(datetime);
   var hour = a.getHours();

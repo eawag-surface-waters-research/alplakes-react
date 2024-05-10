@@ -45,7 +45,7 @@
 .main .lake .content .metadata .properties {
     width: 100%;
     box-sizing: border-box;
-    text-align: center;
+    text-align: left;
 }
 
 .main .lake .content .metadata .properties .head {
@@ -55,10 +55,11 @@
 .main .lake .content .metadata .properties .property {
     display: inline-block;
     margin-bottom: 10px;
-    text-align: center;
+    text-align: left;
     margin-top: calc(var(--padding) / 2);
-    margin-right: 25px;
-    margin-left: 25px;
+    margin-right: 30px;
+    margin-left: 0;
+    width: 92px;
 }
 
 .main .lake .content .metadata .properties .property .left img {
@@ -211,7 +212,7 @@
 }
 
 .main .lake .content .metadata .feedback .input-box {
-    width: calc(100% - var(--padding));
+    width: 100%;
     height: 100px;
     border: 1px solid var(--border-color);
     border-radius: 12px;
@@ -220,16 +221,18 @@
     background-color: var(--background-color);
     color: var(--background-font-color);
     font-family: "Frutiger Neue LT Pro", "Arial", sans-serif;
+    box-sizing: border-box;
 }
 
 .main .lake .content .metadata .feedback .email {
-    width: calc(100% - var(--padding));
+    width: 100%;
     border: 1px solid var(--border-color);
     border-radius: 12px;
     padding: 12px;
     margin-top: 8px;
     background-color: var(--background-color);
     color: var(--background-font-color);
+    box-sizing: border-box;
 }
 
 .main .lake .content .metadata .feedback .submit {
@@ -462,13 +465,10 @@
     border: 1px solid var(--border-color);
 }
 
-.main .lake .content .module .display .module-component.graph .sidebar .active-apps .selection {
-    height: calc(100% - var(--header-height) - 145px + var(--padding)/2);
-}
-
 .main .lake .content .module .display .module-component .sidebar .active-apps .selection .selection-inner {
     height: 100%;
     overflow-y: auto;
+    overflow-x: hidden;
     padding-right: calc(var(--padding) / 4);
 }
 
@@ -519,10 +519,6 @@
     cursor: pointer;
 }
 
-.main .lake .content .module .display .module-component.graph .sidebar .active-apps .app {
-    margin: 25px 12px 60px 12px;
-}
-
 .main .lake .content .module .display .module-component .sidebar .active-apps .app .join {
     position: absolute;
     width: 42px;
@@ -535,10 +531,6 @@
     border-bottom: 1px solid var(--box-color);
     border-left: 1px solid var(--border-color);
     border-right: 1px solid var(--border-color);
-}
-
-.main .lake .content .module .display .module-component.graph .sidebar .active-apps .app .join {
-    bottom: calc(-62px - var(--padding));
 }
 
 .main .lake .content .module .display .module-component .sidebar .active-apps .app:hover {
@@ -572,60 +564,41 @@
 }
 
 .main .lake .content .threed {
-    background-color: #2d2d2d !important;
-    opacity: 1;
-    background-image: linear-gradient(30deg, #3a4251 12%, transparent 12.5%, transparent 87%, #3a4251 87.5%, #3a4251), linear-gradient(150deg, #3a4251 12%, transparent 12.5%, transparent 87%, #3a4251 87.5%, #3a4251), linear-gradient(30deg, #3a4251 12%, transparent 12.5%, transparent 87%, #3a4251 87.5%, #3a4251), linear-gradient(150deg, #3a4251 12%, transparent 12.5%, transparent 87%, #3a4251 87.5%, #3a4251), linear-gradient(60deg, #3a425177 25%, transparent 25.5%, transparent 75%, #3a425177 75%, #3a425177), linear-gradient(60deg, #3a425177 25%, transparent 25.5%, transparent 75%, #3a425177 75%, #3a425177);
-    background-size: 26px 46px;
-    background-position: 0 0, 0 0, 13px 23px, 13px 23px, 0 0, 13px 23px;
-}
-
-.main .lake .content .oned {
-    background-color: #242424;
-    opacity: 1;
-    background-image: linear-gradient(0deg, #242424 50%, #3a4251 50%);
-    background-size: 10px 10px;
-}
-
-.main .lake .content .particles {
-    background-image:
-        radial-gradient(rgb(58, 66, 81) 40.4%, transparent 40.4%),
-        radial-gradient(rgb(58, 66, 81) 40.4%, transparent 40.4%),
-        radial-gradient(rgb(0, 0, 0) 40.4%, transparent 40.4%),
-        radial-gradient(rgb(0, 0, 0) 40.4%, transparent 40.4%);
-    background-position: 0px 0px, 12px 12px, -1.2px 1.2px, 10.8px 13.2px;
-    background-size: 24px 24px;
-    background-color: rgb(45, 45, 45);
-}
-
-.main .lake .content .alplakes_transect {
-    background-color: #2d2d2d !important;
-    opacity: 1;
-    background-image: linear-gradient(30deg, #3a4251 12%, transparent 12.5%, transparent 87%, #3a4251 87.5%, #3a4251), linear-gradient(150deg, #3a4251 12%, transparent 12.5%, transparent 87%, #3a4251 87.5%, #3a4251), linear-gradient(30deg, #3a4251 12%, transparent 12.5%, transparent 87%, #3a4251 87.5%, #3a4251), linear-gradient(150deg, #3a4251 12%, transparent 12.5%, transparent 87%, #3a4251 87.5%, #3a4251), linear-gradient(60deg, #3a425177 25%, transparent 25.5%, transparent 75%, #3a425177 75%, #3a425177), linear-gradient(60deg, #3a425177 25%, transparent 25.5%, transparent 75%, #3a425177 75%, #3a425177);
-    background-size: 26px 46px;
-    background-position: 0 0, 0 0, 13px 23px, 13px 23px, 0 0, 13px 23px;
-}
-
-.main .lake .content .alplakes_profile {
-    background-color: #2d2d2d !important;
-    opacity: 1;
-    background-image: linear-gradient(30deg, #3a4251 12%, transparent 12.5%, transparent 87%, #3a4251 87.5%, #3a4251), linear-gradient(150deg, #3a4251 12%, transparent 12.5%, transparent 87%, #3a4251 87.5%, #3a4251), linear-gradient(30deg, #3a4251 12%, transparent 12.5%, transparent 87%, #3a4251 87.5%, #3a4251), linear-gradient(150deg, #3a4251 12%, transparent 12.5%, transparent 87%, #3a4251 87.5%, #3a4251), linear-gradient(60deg, #3a425177 25%, transparent 25.5%, transparent 75%, #3a425177 75%, #3a425177), linear-gradient(60deg, #3a425177 25%, transparent 25.5%, transparent 75%, #3a425177 75%, #3a425177);
-    background-size: 26px 46px;
-    background-position: 0 0, 0 0, 13px 23px, 13px 23px, 0 0, 13px 23px;
+    background-color: #26423d;
+    opacity: 0.8;
+    background-image: linear-gradient(30deg, #4aa091 12%, transparent 12.5%, transparent 87%, #4aa091 87.5%, #4aa091), linear-gradient(150deg, #4aa091 12%, transparent 12.5%, transparent 87%, #4aa091 87.5%, #4aa091), linear-gradient(30deg, #4aa091 12%, transparent 12.5%, transparent 87%, #4aa091 87.5%, #4aa091), linear-gradient(150deg, #4aa091 12%, transparent 12.5%, transparent 87%, #4aa091 87.5%, #4aa091), linear-gradient(60deg, #4aa09177 25%, transparent 25.5%, transparent 75%, #4aa09177 75%, #4aa09177), linear-gradient(60deg, #4aa09177 25%, transparent 25.5%, transparent 75%, #4aa09177 75%, #4aa09177);
+    background-size: 28px 49px;
+    background-position: 0 0, 0 0, 14px 25px, 14px 25px, 0 0, 14px 25px;
 }
 
 .main .lake .content .satellite {
-    background-color: #242424;
-    opacity: 1;
-    background-image: repeating-radial-gradient(circle at 0 0, transparent 0, #242424 15px), repeating-linear-gradient(#3a425155, #3a4251);
+    background-color: #26423d;
+    opacity: 0.8;
+    background-image: repeating-radial-gradient(circle at 0 0, transparent 0, #26423d 24px), repeating-linear-gradient(#4aa09155, #4aa091);
 }
 
-.main .lake .content .sentinel_hub_wms {
-    background-color: #242424;
-    opacity: 1;
-    background-image: linear-gradient(135deg, #3a4251 25%, transparent 25%), linear-gradient(225deg, #3a4251 25%, transparent 25%), linear-gradient(45deg, #3a4251 25%, transparent 25%), linear-gradient(315deg, #3a4251 25%, #242424 25%);
-    background-position: 15px 0, 15px 0, 0 0, 0 0;
-    background-size: 15px 15px;
+.main .lake .content .heatmap {
+    background-color: #26423d;
+    opacity: 0.8;
+    background-image: repeating-linear-gradient(45deg, #4aa091 25%, transparent 25%, transparent 75%, #4aa091 75%, #4aa091), repeating-linear-gradient(45deg, #4aa091 25%, #26423d 25%, #26423d 75%, #4aa091 75%, #4aa091);
+    background-position: 0 0, 9px 9px;
+    background-size: 18px 18px;
+}
+
+.main .lake .content .linegraph {
+    background-color: #26423d;
+    opacity: 0.8;
+    background-image: linear-gradient(135deg, #4aa091 25%, transparent 25%), linear-gradient(225deg, #4aa091 25%, transparent 25%), linear-gradient(45deg, #4aa091 25%, transparent 25%), linear-gradient(315deg, #4aa091 25%, #26423d 25%);
+    background-position: 9px 0, 9px 0, 0 0, 0 0;
+    background-size: 18px 18px;
     background-repeat: repeat;
+}
+
+.main .lake .content .doy {
+    background-color: #26423d;
+    opacity: 0.8;
+    background: linear-gradient(135deg, #4aa09155 25%, transparent 25%) -9px 0/ 18px 18px, linear-gradient(225deg, #4aa091 25%, transparent 25%) -9px 0/ 18px 18px, linear-gradient(315deg, #4aa09155 25%, transparent 25%) 0px 0/ 18px 18px, linear-gradient(45deg, #4aa091 25%, #26423d 25%) 0px 0/ 18px 18px;
+
 }
 
 .main .lake .content .module .display .module-component .sidebar .active-apps .app.filled:active {
@@ -680,10 +653,6 @@
     width: 84px;
     text-align: center;
     color: var(--background-font-color);
-}
-
-.main .lake .content .module .display .module-component.graph .sidebar .active-apps .app span {
-    bottom: -42px;
 }
 
 .main .lake .content .module .display .module-component .sidebar .active-apps .app span .under {
@@ -1541,6 +1510,31 @@
     overflow: hidden;
 }
 
+.main .lake .content .module .display .module-component.graph .plot .heatmap-main .heatmap-header {
+    visibility: hidden;
+}
+
+.main .lake .content .module.active .display .module-component.graph .plot .heatmap-main .heatmap-header {
+    visibility: visible;
+}
+
+.main .lake .content .module .display .module-component.graph .plot .linegraph-main .linegraph-header {
+    visibility: hidden;
+}
+
+.main .lake .content .module.active .display .module-component.graph .plot .linegraph-main .linegraph-header {
+    visibility: visible;
+}
+
+.main .lake .content .module .display .module-component.graph .plot {
+    padding: 0 12px;
+    box-sizing: border-box;
+}
+
+.main .lake .content .module.active .display .module-component.graph .plot {
+    padding: 0;
+}
+
 .main .lake .content .module .display .module-component .plot .map .leaflet-map {
     background-color: var(--map-color);
 }
@@ -1945,12 +1939,12 @@
 }
 
 .main .lake .content .module .display .module-component .plot .graph {
-    height: calc(35% - var(--padding) / 2);
+    height: calc(35% - var(--padding));
     width: 100%;
     display: none;
     box-sizing: border-box;
     border-radius: 12px;
-    margin-top: calc(var(--padding) / 2);
+    margin-top: var(--padding);
     position: relative;
 }
 
@@ -2075,11 +2069,6 @@
         border-radius: 0;
     }
 
-    .main .lake .content .module .display .module-component .plot .graph {
-        height: calc(35% - var(--padding) * 2);
-        padding: 0 calc(var(--padding) / 2) 12px calc(var(--padding) / 2);
-    }
-
     .main .lake .content .module .display .module-component .plot .map .gradient {
         border-radius: 0;
     }
@@ -2128,10 +2117,28 @@
         padding: 0;
     }
 
+    .main .lake .content .module .display .module-component .sidebar .active-apps .selection {
+        border-radius: 12px 12px 0 0;
+        height: calc(100% - 98px);
+    }
+
+    .main .lake .content .module.active .display .module-component .plot .map {
+        height: 50%;
+    }
+
+    .main .lake .content .module.active .display .module-component .plot .graph {
+        height: calc(50% - var(--padding) * 2);
+        padding: 12px;
+    }
+
 }
 
 @media screen and (max-width: 500px) {
     .main .lake .content .module.active .display .module-component .sidebar {
         width: 100%;
+    }
+
+    .main .lake .content .metadata .properties .property {
+        margin-right: 16px;
     }
 }
