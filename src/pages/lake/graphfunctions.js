@@ -6,8 +6,8 @@ import { formatAPIDatetime } from "./functions";
 
 export const addLayer = async (layer, language) => {
   var source = layer.sources[layer.source];
-  if (source.data_access === "simstrat_heatmap_temperature") {
-    return await addSimstratHeatmap(layer, "T", language);
+  if (source.data_access === "simstrat_heatmap") {
+    return await addSimstratHeatmap(layer, language);
   }
 };
 
@@ -15,11 +15,9 @@ export const updateLayer = async (layer) => {
   console.log("Update layer");
 };
 
-export const removeLayer = (layer) => {
-  console.log("Remove layer");
-};
+export const removeLayer = (layer) => {};
 
-const addSimstratHeatmap = async (layer, parameter, language) => {
+const addSimstratHeatmap = async (layer, language) => {
   var source = layer.sources[layer.source];
   var { maxDate, minDate } = await simstratMetadata(source.model, source.lake);
   var start = new Date(maxDate.getTime() - 7 * 24 * 60 * 60 * 1000);
@@ -42,11 +40,13 @@ const addSimstratHeatmap = async (layer, parameter, language) => {
   var { data } = await axios.get(
     `${CONFIG.alplakes_api}/simulations/1d/depthtime/${source.model}/${
       source.lake
-    }/${parameter}/${formatAPIDatetime(start)}/${formatAPIDatetime(maxDate)}`
+    }/${source.parameter}/${formatAPIDatetime(start)}/${formatAPIDatetime(
+      maxDate
+    )}`
   );
   var x = data.time.map((t) => new Date(t));
   var y = data.depths;
-  var z = data[parameter];
+  var z = data[source.parameter];
   layer.displayOptions.data = { x, y, z };
   return layer;
 };

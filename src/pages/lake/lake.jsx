@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import { NavLink } from "react-router-dom";
-//import axios from "axios";
+import axios from "axios";
 import NavBar from "../../components/navbar/navbar";
 import Footer from "../../components/footer/footer";
 import Metadata from "./metadata";
@@ -8,19 +7,20 @@ import Map from "./map";
 import Graph from "./graph";
 import { parseSubtitle } from "./functions";
 import DATA from "./data.json";
+import CONFIG from "../../config.json";
 import arrow from "../../img/arrow.png";
 import "./lake.css";
 
 class NotFound extends Component {
   render() {
-    var { id } = this.props;
+    var { id, text } = this.props;
     return (
       <div className="not-found">
-        Sorry the lake <div className="title">{id}</div>
-        cannot be found.
-        <NavLink to="/">
-          <div className="call-to-action">See our full list of lakes</div>
-        </NavLink>
+        {text && (
+          <div className="inner">
+            Sorry the lake <div className="title">"{id}"</div> cannot be found.
+          </div>
+        )}
       </div>
     );
   }
@@ -130,10 +130,15 @@ class Lake extends Component {
       active_module = searchParams["module"];
     }
     try {
-      /*const { data } = await axios.get(
-        CONFIG.alplakes_bucket + `/static/website/metadata/v2/${id}.json`
-      );*/
-      const data = DATA;
+      var data;
+      if (id === "geneva") {
+        data = DATA;
+      } else {
+        ({ data } = await axios.get(
+          CONFIG.alplakes_bucket + `/static/website/metadata/v2/${id}.json`
+        ));
+      }
+
       const { metadata, modules, layers, datasets } = data;
       layers.map((l) => {
         l.active = false;
@@ -174,8 +179,8 @@ class Lake extends Component {
       <div className={active_module ? "lake noscroll" : "lake"}>
         <NavBar {...this.props} relative={true} />
         {error ? (
-          <NotFound id={id} />
-        ) : (
+          <NotFound id={id} text={true} />
+        ) : modules.length > 0 ? (
           <div className="content">
             <div className="error-modal" id="error-modal" />
             <div className="modules">
@@ -205,6 +210,8 @@ class Lake extends Component {
               />
             </div>
           </div>
+        ) : (
+          <NotFound id={id} />
         )}
         <Footer {...this.props} />
       </div>

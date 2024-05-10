@@ -173,6 +173,12 @@
     "FR": "Secchi",
     "IT": "Secchi"
   },
+  "oxygensat": {
+    "EN": "Oxygen saturation",
+    "DE": "Sauerstoffsättigung",
+    "FR": "Saturation d'oxygène",
+    "IT": "Saturazione di ossigeno"
+  },
   "turbidity": {
     "EN": "Turbidity",
     "DE": "Trübung",

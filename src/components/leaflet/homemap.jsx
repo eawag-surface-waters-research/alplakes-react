@@ -301,6 +301,11 @@ class HomeMap extends Component {
     }
   }
 
+  componentWillUnmount() {
+    this.map.off();
+    this.map.remove();
+  }
+
   render() {
     var { days, day } = this.state;
     var { parameter, parameters, setParameter, language } = this.props;

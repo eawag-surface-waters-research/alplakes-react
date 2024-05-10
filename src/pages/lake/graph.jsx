@@ -4,7 +4,6 @@ import Settings from "./settings";
 import { copy } from "./functions";
 import { addLayer, updateLayer, removeLayer } from "./graphfunctions";
 
-
 class Graph extends Component {
   state = {
     sidebar: false,
@@ -22,6 +21,11 @@ class Graph extends Component {
     var { layers, updates } = this.state;
     var layer = layers.find((l) => l.id === id);
     if (!layer.active) {
+      for (let l of layers.filter((l) => l.active)) {
+        l.active = false;
+        updates.push({ event: "removeLayer", id: l.id });
+      }
+
       layer.active = true;
       updates.push({ event: "addLayer", id: id });
       this.setState(

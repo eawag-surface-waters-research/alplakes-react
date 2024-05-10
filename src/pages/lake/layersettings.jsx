@@ -38,6 +38,8 @@ class Depth extends Component {
       var min = Math.min(...depths);
       var max = Math.max(...depths);
       this.setState({ depth, min, max, depths });
+    } else {
+      this.setState({ depth });
     }
   }
   componentDidUpdate() {
@@ -209,6 +211,13 @@ class Raster extends Component {
     updateOptions(id, options);
   };
 
+  setPalette = (event) => {
+    var { id, updateOptions, options } = this.props;
+    options["paletteName"] = event.name;
+    options["palette"] = event.palette;
+    updateOptions(id, options);
+  };
+
   downloadFile = (event) => {
     var data = event.target.value.split("?");
     const link = document.createElement("a");
@@ -238,13 +247,6 @@ class Raster extends Component {
     return dates;
   };
 
-  setPalette = (event) => {
-    var { id, updateOptions, options } = this.props;
-    options["paletteName"] = event.name;
-    options["palette"] = event.palette;
-    updateOptions(id, options);
-  };
-
   resetMin = () => {
     this.setState({ _min: this.props.options.dataMin });
   };
@@ -271,7 +273,6 @@ class Raster extends Component {
 
   componentDidMount() {
     var { id } = this.state;
-    window.addEventListener("click", this.updateMinMax);
     document
       .getElementById("raster_min_" + id)
       .addEventListener("keydown", this.enterMinMax);
@@ -282,7 +283,6 @@ class Raster extends Component {
 
   componentWillUnmount() {
     var { id } = this.state;
-    window.removeEventListener("click", this.updateMinMax);
     document
       .getElementById("raster_min_" + id)
       .removeEventListener("keydown", this.enterMinMax);

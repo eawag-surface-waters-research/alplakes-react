@@ -3,6 +3,14 @@
     overflow: hidden;
 }
 
+.main .lake .not-found {
+    height: calc(100vh - var(--header-height) - 2* var(--padding) - 34px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 45px;
+}
+
 .main .lake .content::after {
     content: "";
     display: table;
@@ -64,6 +72,7 @@
 
 .main .lake .content .metadata .properties .property .left img {
     width: 16px;
+    margin-bottom: 3px;
 }
 
 .main.dark .lake .content .metadata .properties .property .left img {
@@ -548,11 +557,16 @@
     vertical-align: top;
     box-shadow: var(--box-shadow);
     text-align: center;
+    opacity: 0.65;
 }
 
 
 .main .lake .content .module .display .module-component .sidebar .active-apps .app.filled.active {
-    box-shadow: #343434 0px 0px 12px;
+    opacity: 1;
+}
+
+.main .lake .content .module .display .module-component .sidebar .active-apps .app.filled:hover {
+    opacity: 1;
 }
 
 .main.dark .lake .content .secondary .menu .loaded .app.filled.active {
@@ -580,7 +594,7 @@
 .main .lake .content .heatmap {
     background-color: #26423d;
     opacity: 0.8;
-    background-image: repeating-linear-gradient(45deg, #4aa091 25%, transparent 25%, transparent 75%, #4aa091 75%, #4aa091), repeating-linear-gradient(45deg, #4aa091 25%, #26423d 25%, #26423d 75%, #4aa091 75%, #4aa091);
+    background-image: repeating-linear-gradient(45deg, #4aa091 25%, transparent 25%, transparent 75%, #5ddec8 75%, #4aa091), repeating-linear-gradient(45deg, #4aa091 25%, #51857b 25%, #26423d 75%, #4aa091 75%, #4aa091);
     background-position: 0 0, 9px 9px;
     background-size: 18px 18px;
 }

@@ -12,6 +12,7 @@ import turbidity_icon from "../../img/turbidity.png";
 import rgb_icon from "../../img/rgb.png";
 import particles_icon from "../../img/particles.png";
 import thermocline_icon from "../../img/thermocline.png";
+import oxygen_icon from "../../img/oxygen.png";
 
 class Selection extends Component {
   render() {
@@ -30,6 +31,7 @@ class Selection extends Component {
                   text={source.description}
                   links={{}}
                   maxLength={180}
+                  toggle={true}
                 />
               </div>
               <a
@@ -160,6 +162,7 @@ class AddLayers extends Component {
                     text={source.description}
                     links={{}}
                     maxLength={130}
+                    toggle={false}
                   />
                 </div>
                 {source.tags && (
@@ -194,6 +197,7 @@ class Settings extends Component {
       profile: profile_icon,
       particles: particles_icon,
       thermocline: thermocline_icon,
+      oxygensat: oxygen_icon,
     },
     activeAdd: false,
   };

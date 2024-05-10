@@ -434,7 +434,10 @@ const addAlplakesHydrodynamic = async (
 ) => {
   if (initialLoad) {
     loading("Collecting metadata", loadingId);
-    ({ period, depth } = await getAlplakesHydrodynamicMetadata(layer, depth));
+    ({ layer, period, depth } = await getAlplakesHydrodynamicMetadata(
+      layer,
+      depth
+    ));
     setDepthAndPeriod(depth, period);
   }
   loading("Downloading lake geometry", loadingId);
@@ -471,6 +474,8 @@ const getAlplakesHydrodynamicMetadata = async (layer, depth) => {
   }
   source.minDate = stringToDate(data.start_date).getTime();
   source.maxDate = stringToDate(data.end_date).getTime();
+  source.height = data.height;
+  source.width = data.width;
   var startDate = source.maxDate + source.start * 8.64e7;
   if ("depths" in data) {
     source.depths = data.depths;
@@ -481,7 +486,7 @@ const getAlplakesHydrodynamicMetadata = async (layer, depth) => {
     source.missingDates = data.missing_weeks;
   }
   var period = [startDate, source.maxDate];
-  return { period, depth };
+  return { layer, period, depth };
 };
 
 const downloadAlplakesHydrodynamicGeometry = async (
@@ -696,7 +701,10 @@ const plotAlplakesHydrodynamicRaster = (
   var leaflet_layer = new L.Raster(geometry, data, options).addTo(map);
   leaflet_layer.on("click", function (event) {
     if (event.value !== null) {
-      let label = `${round(event.latlng.lat, 2)}, ${round(event.latlng.lng, 2)}`;
+      let label = `${round(event.latlng.lat, 2)}, ${round(
+        event.latlng.lng,
+        2
+      )}`;
       if (
         !layer.displayOptions.data.map((d) => d.name).includes(label) &&
         layer.displayOptions.data.length < 6
@@ -1153,7 +1161,10 @@ const addAlplakesParticles = async (
   const overwrite = { parameter: "velocity", type: "alplakes_hydrodynamic" };
   if (initialLoad) {
     loading("Collecting metadata", loadingId);
-    ({ period, depth } = await getAlplakesHydrodynamicMetadata(layer, depth));
+    ({ layer, period, depth } = await getAlplakesHydrodynamicMetadata(
+      layer,
+      depth
+    ));
   }
   loading("Downloading lake geometry", loadingId);
   await downloadAlplakesHydrodynamicGeometry(
