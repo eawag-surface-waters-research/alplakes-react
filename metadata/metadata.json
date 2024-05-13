@@ -23,6 +23,7 @@
     "datalakes_id": 1,
     "swiss_bathy": true,
     "sediment_oxygen_uptake_rate": -37.5,
+    "default_depth": 0.7,
     "alplakes": {
       "3D_temperature": [
         { "name": "Lausanne", "latlng": [46.50995, 6.61172] },
@@ -42,7 +43,41 @@
         { "name": "LéXPLORE", "latlng": [46.5, 6.67], "direction": "left" },
         { "name": "SHL2", "latlng": [46.45, 6.59], "direction": "bottom" }
       ]
-    }
+    },
+    "insitu": [
+      {
+        "url": "https://www.datalakes-eawag.ch/datadetail/666",
+        "name": "LéXPLORE Idronaut",
+        "live": true,
+        "parameters": ["Water Temperature", "Oxygen", "Chlorophyll"],
+        "start": 2020,
+        "end": "Now"
+      },
+      {
+        "url": "https://www.datalakes-eawag.ch/datadetail/885",
+        "name": "LéXPLORE Wave Buoy",
+        "live": true,
+        "parameters": ["Wave Height", "Wave Period", "Wave Direction"],
+        "start": 2022,
+        "end": "Now"
+      },
+      {
+        "url": "https://www.datalakes-eawag.ch/datadetail/597",
+        "name": "Buchillon Field Station",
+        "live": true,
+        "parameters": ["Water Temperature", "Air Temperature"],
+        "start": 2016,
+        "end": "Now"
+      },
+      {
+        "url": "https://www.datalakes-eawag.ch/datadetail/886",
+        "name": "LéXPLORE Heat Flux",
+        "live": true,
+        "parameters": ["Heat Flux"],
+        "start": 2020,
+        "end": "Now"
+      }
+    ]
   },
   {
     "key": "zurich",
@@ -70,6 +105,7 @@
     "volume": 3.83,
     "type": "Natural",
     "surface_area": 88.5,
+    "default_depth": 1,
     "alplakes": {
       "3D_temperature": [
         { "name": "Zürich", "latlng": [47.36226, 8.54151] },
@@ -102,6 +138,7 @@
     "trophic_state": "Eutrophic",
     "datalakes_id": 2,
     "swiss_bathy": true,
+    "default_depth": 0.7,
     "alplakes": {
       "3D_temperature": [
         { "name": "Biel", "latlng": [47.13198, 7.23017] },
@@ -134,6 +171,7 @@
     "trophic_state": "Eutrophic",
     "datalakes_id": 3,
     "sediment_oxygen_uptake_rate": -32.5,
+    "default_depth": 0.7,
     "alplakes": {
       "3D_temperature": [
         { "name": "Schwerzenbach", "latlng": [47.37124, 8.65935] },
@@ -159,6 +197,7 @@
     "flags": ["italian"],
     "simstrat": false,
     "datalakes_id": 59,
+    "default_depth": 1,
     "alplakes": {
       "3D_temperature": [
         { "name": "Desenzano", "latlng": [45.46958, 10.55326] },
@@ -194,6 +233,7 @@
     "geothermal_flux": 0.06,
     "trophic_state": "Mesotrophic",
     "sediment_oxygen_uptake_rate": -33.1,
+    "default_depth": 1,
     "alplakes": {
       "3D_temperature": [
         { "name": "Lugano", "latlng": [46.00192, 8.95523] },
@@ -228,6 +268,7 @@
     "datalakes_id": 26,
     "swiss_bathy": true,
     "sediment_oxygen_uptake_rate": -32.8,
+    "default_depth": 1,
     "alplakes": {
       "3D_temperature": [
         { "name": "Murten", "latlng": [	46.92919, 7.10616] }
@@ -252,6 +293,7 @@
     "flags": ["italian"],
     "simstrat": false,
     "datalakes_id": 189,
+    "default_depth": 1,
     "alplakes": {
       "3D_temperature": [
         { "name": "San Cristoforo", "latlng": [46.0356, 11.2343] },
@@ -285,6 +327,7 @@
     "datalakes_id": 6,
     "swiss_bathy": true,
     "sediment_oxygen_uptake_rate": -19.7,
+    "default_depth": 1,
     "alplakes": {
       "3D_temperature": [
         { "name": "Ägeri", "latlng": [47.13537, 8.60224] },
@@ -316,6 +359,7 @@
     "trophic_state": "",
     "datalakes_id": 17,
     "swiss_bathy": true,
+    "default_depth": 0.7,
     "alplakes": {
       "3D_temperature": [
         { "name": "Le Pont", "latlng": [46.66445, 6.32636] },
@@ -349,6 +393,7 @@
     "datalakes_id": 8,
     "swiss_bathy": true,
     "sediment_oxygen_uptake_rate": -28.1,
+    "default_depth": 1,
     "alplakes": {
       "3D_temperature": [
         { "name": "Boniswil", "latlng": [47.31477, 8.20381] },
@@ -379,6 +424,7 @@
     "geothermal_flux": 0.07,
     "trophic_state": "",
     "datalakes_id": 41,
+    "default_depth": 1,
     "alplakes": {
       "3D_temperature": [
         { "name": "St. Moritz", "latlng": [46.49652, 9.84614] }

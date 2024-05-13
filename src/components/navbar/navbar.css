@@ -168,7 +168,7 @@
 }
 
 .navbar .mobile-nav .nav-content .nav-row {
-  padding: 12px 0;
+  padding: 18px 0;
   text-align: center;
 }
 
@@ -198,7 +198,7 @@
 }
 
 .navbar .mobile-nav .nav-content .nav-row a {
-  font-size: 32px;
+  font-size: 50px;
   text-decoration: none;
   color: var(--background-font-color);
 }

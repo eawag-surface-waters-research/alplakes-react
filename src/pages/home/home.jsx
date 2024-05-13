@@ -241,9 +241,7 @@ class ListItem extends Component {
                   <div className="text">{lake.elevation} m.a.s.l.</div>
                 </div>
                 <div className="header">
-                  {`${Translations[parameters[parameter].label][language]} (${
-                    parameters[parameter].unit
-                  })`}
+                  {`${Translations[parameters[parameter].label][language]}`}
                 </div>
               </div>
             </div>
@@ -287,13 +285,20 @@ class ListItem extends Component {
 
 class SummaryTable extends Component {
   render() {
-    var { forecast, language, parameter } = this.props;
+    var { forecast, language, parameter, parameters } = this.props;
     return (
       <React.Fragment>
         {Object.keys(forecast.summary).map((day, i, arr) =>
           forecast.summary[day][parameter] === false ? null : (
             <div key={day} className={i === 0 ? "inner start" : "inner"}>
-              <div className="ave">{forecast.summary[day][parameter]}</div>
+              <div className="ave">
+                {forecast.summary[day][parameter]}
+                <div
+                  className={parameter === "temperature" ? "unit full" : "unit"}
+                >
+                  {parameters[parameter].unit}
+                </div>
+              </div>
               <div className="day">{dayName(day, language, Translations)}</div>
             </div>
           )

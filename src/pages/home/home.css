@@ -351,6 +351,15 @@
   font-size: 22px;
 }
 
+.main .home .content .list .product-list .list-item .summary .summary-table .inner .ave .unit {
+  font-size: 12px;
+  display: inline-block;
+}
+
+.main .home .content .list .product-list .list-item .summary .summary-table .inner .ave .unit.full {
+  font-size: 22px;
+}
+
 .main .home .content .list .product-list .list-item .summary .summary-table .inner.start {
   border: none;
 }

@@ -158,31 +158,35 @@ class Bathymetry extends Component {
     if ("bathymetry" in metadata) {
       var bathymetry = metadata.bathymetry;
       return (
-        <Dropdown
-          title="Bathymetry"
-          visible={true}
-          contents={
-            <div className="objects">
-              <div className="datasets">
-                {bathymetry.map((b, index) => (
-                  <a
-                    href={b.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    key={index}
-                  >
-                    <div className="dataset">
-                      <div className="dataset-button">View</div>
-                      <div className="name">{b.source}</div>
-                      <div className="date">{b.type}</div>
-                      <div className="parameters">{b.format}</div>
-                    </div>
-                  </a>
-                ))}
-              </div>
-            </div>
-          }
-        />
+        <React.Fragment>
+          {bathymetry.length > 0 && (
+            <Dropdown
+              title="Bathymetry"
+              visible={true}
+              contents={
+                <div className="objects">
+                  <div className="datasets">
+                    {bathymetry.map((b, index) => (
+                      <a
+                        href={b.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        key={index}
+                      >
+                        <div className="dataset">
+                          <div className="dataset-button">View</div>
+                          <div className="name">{b.source}</div>
+                          <div className="date">{b.type}</div>
+                          <div className="parameters">{b.format}</div>
+                        </div>
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              }
+            />
+          )}
+        </React.Fragment>
       );
     }
   }
@@ -192,41 +196,52 @@ class Insitu extends Component {
   render() {
     var { metadata } = this.props;
     return (
-      <Dropdown
-        title="Insitu Data"
-        visible={true}
-        contents={
-          <div className="objects">
-            <div className="text">
-              Selected field measurements from Lake geneva.
-            </div>
-            <div className="datasets">
-              {metadata.insitu.map((i) => (
-                <a href={i.url} target="_blank" rel="noreferrer" key={i.name}>
-                  <div className="dataset">
-                    <div className="dataset-button">View</div>
-                    <div className="name">{i.name}</div>
-                    <div className="date">
-                      {i.start} - {i.end}
-                    </div>
-                    <div className="parameters">{i.parameters.join(", ")}</div>
-                  </div>
-                </a>
-              ))}
-            </div>
-            <div className="datalakes">
-              See more on
-              <a
-                href="https://www.datalakes-eawag.ch/data"
-                target="_blank"
-                rel="noreferrer"
-              >
-                <img src={datalakes} alt="Datalakes" />
-              </a>
-            </div>
-          </div>
-        }
-      />
+      <React.Fragment>
+        {metadata.insitu.length > 0 && (
+          <Dropdown
+            title="Insitu Data"
+            visible={true}
+            contents={
+              <div className="objects">
+                <div className="text">
+                  Selected field measurements from Lake geneva.
+                </div>
+                <div className="datasets">
+                  {metadata.insitu.map((i) => (
+                    <a
+                      href={i.url}
+                      target="_blank"
+                      rel="noreferrer"
+                      key={i.name}
+                    >
+                      <div className="dataset">
+                        <div className="dataset-button">View</div>
+                        <div className="name">{i.name}</div>
+                        <div className="date">
+                          {i.start} - {i.end}
+                        </div>
+                        <div className="parameters">
+                          {i.parameters.join(", ")}
+                        </div>
+                      </div>
+                    </a>
+                  ))}
+                </div>
+                <div className="datalakes">
+                  See more on
+                  <a
+                    href="https://www.datalakes-eawag.ch/data"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    <img src={datalakes} alt="Datalakes" />
+                  </a>
+                </div>
+              </div>
+            }
+          />
+        )}
+      </React.Fragment>
     );
   }
 }
@@ -305,7 +320,7 @@ class Properties extends Component {
         img: trophic_icon,
       },
     ];
-    var plot = properties.filter((p) => p.key in metadata);
+    var plot = properties.filter((p) => p.key in metadata && metadata[p.key] !== "NA");
     return (
       <Dropdown
         title="Lake Properties"

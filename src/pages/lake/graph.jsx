@@ -3,6 +3,7 @@ import DatasetHeatmap from "../../components/d3/dataset/datasetheatmap";
 import Settings from "./settings";
 import { copy } from "./functions";
 import { addLayer, updateLayer, removeLayer } from "./graphfunctions";
+import settings_icon from "../../img/options.png";
 
 class Graph extends Component {
   state = {
@@ -127,6 +128,9 @@ class Graph extends Component {
           {heat_layer && (
             <DatasetHeatmap {...heat_layer.displayOptions} dark={dark} />
           )}
+          <div className="settings" onClick={this.openSidebar}>
+            <img src={settings_icon} alt="Settings" />
+          </div>
         </div>
         <div className={sidebar ? "sidebar open" : "sidebar"}>
           <div className="close-sidebar" onClick={this.closeSidebar}>

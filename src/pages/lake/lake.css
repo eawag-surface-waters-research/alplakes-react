@@ -352,7 +352,7 @@
     position: absolute;
     top: 0;
     right: 0;
-    line-height: 26px;
+    line-height: 36px;
     padding: var(--padding);
     font-size: 40px;
     cursor: pointer;
@@ -1497,14 +1497,11 @@
 
 .main .lake .content .module .display .module-component .plot .settings {
     background-color: var(--background-color);
-    position: absolute;
-    right: 0;
-    top: 12px;
+    position: fixed;
+    right: 50px;
+    top: 0px;
     z-index: 9999;
-    padding: 14px 8px 10px 12px;
-    border: 1px solid var(--border-color);
-    border-radius: 8px 0 0 8px;
-    box-shadow: var(--box-shadow);
+    padding: 18px 8px 10px 12px;
     display: none;
 }
 
@@ -2063,6 +2060,7 @@
 
     .main .lake .content .module .active-title {
         margin: var(--padding);
+        max-width: calc(100% - 110px);
     }
 
     .main .lake .content .modules .mobile-title {

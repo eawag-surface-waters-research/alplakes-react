@@ -466,6 +466,8 @@ const addAlplakesHydrodynamic = async (
 
 const getAlplakesHydrodynamicMetadata = async (layer, depth) => {
   var source = layer.sources[layer.source];
+  source.bucket = source.bucket.replace("{lake}", layer.lake);
+  source.end = source.end.replace("{lake}", layer.lake);
   var data;
   try {
     ({ data } = await axios.get(CONFIG.alplakes_bucket + source.bucket));
@@ -957,9 +959,11 @@ const addSencastTiff = async (layer, layerStore, map, active, loadingId) => {
   layer.displayOptions.dataMin = layer.displayOptions.min;
   layer.displayOptions.dataMax = layer.displayOptions.max;
   var source = layer.sources[layer.source];
+  source.bucket = source.bucket.replace("{lake}", layer.lake);
   if (active) {
-    source = await collectSencastMetadata(source, loadingId);
-    var includeDates = Object.values(source.available).map((m) => m.time);
+    source = await collectSencastMetadata(source, loadingId, layer.lake);
+    var images = filterImages(source.available, 10, []);
+    var includeDates = Object.values(images).map((m) => m.time);
     includeDates.sort(compareDates);
     var currentDate = includeDates[includeDates.length - 1];
     var date = source.available[formatSencastDay(currentDate)];
@@ -980,10 +984,11 @@ const addSencastTiff = async (layer, layerStore, map, active, loadingId) => {
   return layer;
 };
 
-const collectSencastMetadata = async (source, loadingId) => {
+const collectSencastMetadata = async (source, loadingId, lake) => {
   var available = {};
   loading("Collecting metadata", loadingId);
   for (let model of source.models) {
+    model.metadata = model.metadata.replace("{lake}", lake);
     let { data: files } = await axios.get(
       CONFIG.sencast_bucket + model.metadata
     );
@@ -1093,7 +1098,7 @@ const plotSencastTiff = async (url, layer, layerStore, map, loadingId) => {
 const updateSencastTiff = async (layer, layerStore, map, active, loadingId) => {
   var source = layer.sources[layer.source];
   if (active && !("available" in source)) {
-    source = await collectSencastMetadata(source, loadingId);
+    source = await collectSencastMetadata(source, loadingId, layer.lake);
   }
   await plotSencastTiff(
     layer.displayOptions.image.url,
