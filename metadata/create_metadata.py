@@ -3,7 +3,7 @@ import boto3
 import requests
 import functions as func
 
-upload = False
+upload = True
 bucket_folder = "static/website/metadata/v2"
 
 # Load Metadata

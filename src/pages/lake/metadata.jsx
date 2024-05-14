@@ -154,7 +154,7 @@ class LatestEvents extends Component {
 
 class Bathymetry extends Component {
   render() {
-    var { metadata } = this.props;
+    var { metadata, language } = this.props;
     if ("bathymetry" in metadata) {
       var bathymetry = metadata.bathymetry;
       return (
@@ -175,8 +175,8 @@ class Bathymetry extends Component {
                       >
                         <div className="dataset">
                           <div className="dataset-button">View</div>
-                          <div className="name">{b.source}</div>
-                          <div className="date">{b.type}</div>
+                          <div className="name">{b.source} ({b.type})</div>
+                          <div className="date">{b.name ? b.name : metadata["name"][language]}</div>
                           <div className="parameters">{b.format}</div>
                         </div>
                       </a>

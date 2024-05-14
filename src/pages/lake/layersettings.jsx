@@ -91,7 +91,7 @@ class Depth extends Component {
 class Period extends Component {
   state = {
     period: this.props.period,
-    maxPeriod: 21,
+    maxPeriod: this.props.maxPeriod ? this.props.maxPeriod : 21,
     maxPeriodDate: false,
   };
   addDays = (date, days) => {
@@ -1270,6 +1270,56 @@ class Particles extends Component {
   }
 }
 
+class Heat extends Component {
+  state = {
+    id: Math.round(Math.random() * 100000),
+  };
+
+  setPalette = (event) => {
+    var { id, updateOptions, options } = this.props;
+    options["paletteName"] = event.name;
+    options["palette"] = event.palette;
+    updateOptions(id, options);
+  };
+
+  setPeriod = (period) => {
+    var { id, updateOptions, options } = this.props;
+    options["period"] = period;
+    options["updatePeriod"] = true;
+    updateOptions(id, options);
+  };
+
+  render() {
+    var { language, layer } = this.props;
+    var { palette, paletteName, period, minDate, maxDate } = this.props.options;
+    var { model } = layer.sources[layer.source];
+    return (
+      <div className="layer-settings">
+        {period && (
+          <div className="setting">
+            <div className="label">Period</div>
+            <div className="period-selector">
+              <Period
+                period={period}
+                setPeriod={this.setPeriod}
+                language={language}
+                minDate={minDate}
+                maxDate={maxDate}
+                maxPeriod={365}
+              />
+            </div>
+          </div>
+        )}
+        <div className="setting">
+          <div className="label">Palette</div>
+          <div className="value">{paletteName}</div>
+          <ColorRamp onChange={this.setPalette} value={palette} />
+        </div>
+      </div>
+    );
+  }
+}
+
 class LayerSettings extends Component {
   render() {
     var { layer } = this.props;
@@ -1305,6 +1355,10 @@ class LayerSettings extends Component {
           options={layer.displayOptions}
           {...this.props}
         />
+      );
+    } else if (type === "heat") {
+      return (
+        <Heat id={layer.id} options={layer.displayOptions} {...this.props} />
       );
     } else {
       return (

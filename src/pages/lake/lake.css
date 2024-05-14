@@ -988,6 +988,7 @@
     vertical-align: middle;
     margin: 6px;
     font-size: 14px;
+    border: 1px solid transparent;
 }
 
 .main .lake .content .module.active .display .module-component .sidebar .custom-css-datepicker .react-datepicker .date {
@@ -1444,6 +1445,11 @@
     padding: 1px;
 }
 
+.main .lake .content .module.active .display .module-component .sidebar .layer-settings .react-datepicker__day:hover {
+    background-color: var(--box-color);
+    border-color: var(--highlight-color);
+}
+
 .main .lake .content .module.active .display .module-component .sidebar .layer-settings .react-datepicker__day-name,
 .main .lake .content .module.active .display .module-component .sidebar .layer-settings .react-datepicker__day,
 .main .lake .content .module.active .display .module-component .sidebar .layer-settings .react-datepicker__time-name {
@@ -1477,6 +1483,7 @@
 
 .main .lake .content .module.active .display .module-component .sidebar .layer-settings .period-selector .react-datepicker__day--in-selecting-range {
     background-color: var(--box-color);
+    border-color: var(--highlight-color);
 }
 
 .main .lake .content .module.active .display .module-component .sidebar .layer-settings .period-selector .react-datepicker {
@@ -1566,7 +1573,7 @@
     display: none;
 }
 
-.main .lake .content .module .display .module-component .plot .map .layer-loading {
+.main .lake .content .module .display .module-component .plot .layer-loading {
     position: absolute;
     left: 12px;
     top: 12px;
@@ -1583,7 +1590,7 @@
     visibility: visible;
 }
 
-.main .lake .content .module.active .display .module-component .plot .map .layer-loading {
+.main .lake .content .module.active .display .module-component .plot .layer-loading {
     display: block;
 }
 

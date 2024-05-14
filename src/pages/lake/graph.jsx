@@ -2,8 +2,10 @@ import React, { Component } from "react";
 import DatasetHeatmap from "../../components/d3/dataset/datasetheatmap";
 import Settings from "./settings";
 import { copy } from "./functions";
-import { addLayer, updateLayer, removeLayer } from "./graphfunctions";
+import { addLayer, updateLayer, removeLayer, loaded } from "./graphfunctions";
 import settings_icon from "../../img/options.png";
+import Loading from "../../components/loading/loading";
+import DatasetLinegraph from "../../components/d3/dataset/datasetlinegraph";
 
 class Graph extends Component {
   state = {
@@ -11,6 +13,7 @@ class Graph extends Component {
     selection: false,
     updates: [],
     layers: [],
+    loadingId: "load_" + Math.round(Math.random() * 100000),
   };
   openSidebar = () => {
     this.setState({ sidebar: true });
@@ -53,6 +56,12 @@ class Graph extends Component {
       );
     }
   };
+  updateOptions = (id, options) => {
+    var { layers, updates } = this.state;
+    updates.push({ event: "updateLayer", id: id });
+    layers.find((l) => l.id === id).displayOptions = options;
+    this.setState({ layers, updates }, () => this.processUpdates());
+  };
   setSelection = (selection) => {
     if (selection !== this.state.selection) {
       this.setState({ selection });
@@ -63,27 +72,28 @@ class Graph extends Component {
   };
   processUpdates = async () => {
     var { language } = this.props;
-    var { updates, layers } = this.state;
+    var { updates, layers, loadingId } = this.state;
     if (updates.length > 0) {
       this.setState({ updates: [] });
       for (var update of updates) {
         var layer = this.find(layers, "id", update.id);
         if (update.event === "addLayer") {
           try {
-            layer = await addLayer(layer, language);
+            layer = await addLayer(layer, language, loadingId);
           } catch (e) {
             console.error("Failed to add layer", layer.id);
             console.error(e);
             this.error(`Failed to add layer ${layer.parameter}.`);
           }
         } else if (update.event === "updateLayer") {
-          layer = await updateLayer(layer);
+          layer = await updateLayer(layer, loadingId);
         } else if (update.event === "removeLayer") {
           layer = removeLayer(layer);
         }
       }
       this.setState({ layers });
     }
+    loaded(loadingId);
   };
   error = (message) => {
     var parent = document.getElementById("error-modal");
@@ -116,20 +126,32 @@ class Graph extends Component {
   }
   render() {
     var { language, dark } = this.props;
-    var { sidebar, layers } = this.state;
+    var { sidebar, layers, loadingId } = this.state;
     var heat_layer = false;
     var heat_layers = layers.filter((d) => d.active && d.display === "heat");
     if (heat_layers.length > 0) {
       heat_layer = heat_layers[0];
     }
+    var line_layer = false;
+    var line_layers = layers.filter((d) => d.active && d.display === "line");
+    if (line_layers.length > 0) {
+      line_layer = line_layers[0];
+    }
+    console.log(line_layers)
     return (
       <div className="module-component graph">
         <div className="plot">
           {heat_layer && (
             <DatasetHeatmap {...heat_layer.displayOptions} dark={dark} />
           )}
+          {line_layer && (
+            <DatasetLinegraph {...line_layer.displayOptions} dark={dark} />
+          )}
           <div className="settings" onClick={this.openSidebar}>
             <img src={settings_icon} alt="Settings" />
+          </div>
+          <div className="layer-loading" id={loadingId}>
+            <Loading />
           </div>
         </div>
         <div className={sidebar ? "sidebar open" : "sidebar"}>
@@ -143,6 +165,7 @@ class Graph extends Component {
             layers={layers}
             addLayer={this.addLayer}
             removeLayer={this.removeLayer}
+            updateOptions={this.updateOptions}
             setSelection={this.setSelection}
           />
         </div>

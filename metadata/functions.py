@@ -1,6 +1,9 @@
+import re
+
+
 def make_bounds(shape, key):
     s = next((d for d in shape["features"] if "key" in d["properties"]
-             and d["properties"]["key"] == key), None)
+              and d["properties"]["key"] == key), None)
     coordinates = s["geometry"]["coordinates"][0]
     min_lon = min(coord[0] for coord in coordinates)
     max_lon = max(coord[0] for coord in coordinates)
@@ -10,6 +13,34 @@ def make_bounds(shape, key):
         "southWest": [min_lat, min_lon],
         "northEast": [max_lat, max_lon]
     }
+
+
+def url_safe(string):
+    clean = [
+        {'b': "ä", 'a': "a"},
+        {'b': "ö", 'a': "o"},
+        {'b': "ü", 'a': "u"},
+        {'b': "è", 'a': "e"},
+        {'b': "é", 'a': "e"},
+        {'b': "à", 'a': "a"},
+        {'b': "ù", 'a': "u"},
+        {'b': "â", 'a': "a"},
+        {'b': "ê", 'a': "e"},
+        {'b': "î", 'a': "i"},
+        {'b': "ô", 'a': "o"},
+        {'b': "û", 'a': "u"},
+        {'b': "ç", 'a': "c"},
+        {'b': "ë", 'a': "e"},
+        {'b': "ï", 'a': "i"},
+        {'b': "ü", 'a': "u"},
+        {'b': "ì", 'a': "i"},
+        {'b': "ò", 'a': "o"},
+        {'b': "ó", 'a': "o"},
+    ]
+    for edit in clean:
+        string = string.replace(edit['b'], edit['a'])
+
+    return re.sub(r'[^a-zA-Z]', '', string).lower()
 
 
 def make_bathymetry(data, datalakes_lakes):
@@ -25,9 +56,10 @@ def make_bathymetry(data, datalakes_lakes):
             if p["morphology"]:
                 bathymetry.append({
                     "type": "1D",
-                    "url": "https://www.datalakes-eawag.ch/lakemorphology",
+                    "url": "https://www.datalakes-eawag.ch/lakemorphology?{}_{}".format(url_safe(p["name"]), p["id"]),
                     "source": "Swisstopo Vector25",
-                    "format": "JSON"
+                    "format": "JSON",
+                    "name": p["name"]
                 })
 
     if "swiss_bathy" in data:
@@ -91,12 +123,12 @@ def make_modules(data, sd):
     if "simstrat" not in data or data["simstrat"] != False:
         modules.append({
             "id": "graph_conditions",
-            "title": "Temperature, Oxygen and Ice",
+            "title": "Temperature",
             "subtitle": "1D Model",
             "component": "graph",
             "defaults": ["temperature_heatmap"]
         })
-    if "sentinel3" in sd and "chla" in sd["sentinel3"]:
+    if sd and "sentinel3" in sd and "chla" in sd["sentinel3"]:
         modules.append({
             "id": "satellite_chla",
             "title": "Chlorophyll A",
@@ -108,7 +140,7 @@ def make_modules(data, sd):
             },
             "defaults": ["satellite_chlorophyll"]
         })
-    if ("sentinel3" in sd and "Zsd_lee" in sd["sentinel3"]) or ("sentinel2" in sd and "Z490" in sd["sentinel2"]):
+    if sd and (("sentinel3" in sd and "Zsd_lee" in sd["sentinel3"]) or ("sentinel2" in sd and "Z490" in sd["sentinel2"])):
         modules.append({
             "id": "satellite_secchi",
             "title": "Secchi Depth",
@@ -120,7 +152,8 @@ def make_modules(data, sd):
             },
             "defaults": ["satellite_secchi"]
         })
-    if ("sentinel3" in sd and "tsm_binding754" in sd["sentinel3"]) or ("sentinel2" in sd and "tsm_dogliotti665" in sd["sentinel2"]):
+    if sd and (("sentinel3" in sd and "tsm_binding754" in sd["sentinel3"]) or (
+            "sentinel2" in sd and "tsm_dogliotti665" in sd["sentinel2"])):
         modules.append({
             "id": "satellite_turbidity",
             "title": "Turbidity",
@@ -146,8 +179,8 @@ def make_modules(data, sd):
     if "simstrat" not in data or data["simstrat"] != False:
         modules.append({
             "id": "graph_historic",
-            "title": "Historic Trends",
-            "subtitle": "Models and insitu data",
+            "title": "Historic Temperature Trend",
+            "subtitle": "1D Model",
             "component": "graph",
             "defaults": ["temperature_doy"]
         })
@@ -339,7 +372,7 @@ def make_layers(data, sd):
                 }
             }
         ]
-    if "sentinel3" in sd and "chla" in sd["sentinel3"]:
+    if sd and "sentinel3" in sd and "chla" in sd["sentinel3"]:
         layers.append({
             "id": "satellite_chlorophyll",
             "type": "satellite",
@@ -379,7 +412,7 @@ def make_layers(data, sd):
                 }
             }
         })
-    if ("sentinel3" in sd and "Zsd_lee" in sd["sentinel3"]) or ("sentinel2" in sd and "Z490" in sd["sentinel2"]):
+    if sd and (("sentinel3" in sd and "Zsd_lee" in sd["sentinel3"]) or ("sentinel2" in sd and "Z490" in sd["sentinel2"])):
         models = []
         bucket = False
         if ("sentinel3" in sd and "Zsd_lee" in sd["sentinel3"]):
@@ -395,7 +428,7 @@ def make_layers(data, sd):
                 "metadata": "/metadata/sentinel2/{lake}_Z490.json"
             })
             if bucket == False:
-                bucket = "/metadata/sentinel3/{lake}_Z490_latest.json"
+                bucket = "/metadata/sentinel2/{lake}_Z490_latest.json"
 
         layers.append({
             "id": "satellite_secchi",
@@ -431,7 +464,8 @@ def make_layers(data, sd):
                 }
             }
         })
-    if ("sentinel3" in sd and "tsm_binding754" in sd["sentinel3"]) or ("sentinel2" in sd and "tsm_dogliotti665" in sd["sentinel2"]):
+    if sd and (("sentinel3" in sd and "tsm_binding754" in sd["sentinel3"]) or (
+            "sentinel2" in sd and "tsm_dogliotti665" in sd["sentinel2"])):
         models = []
         bucket = False
         if "sentinel3" in sd and "tsm_binding754" in sd["sentinel3"]:
@@ -549,14 +583,17 @@ def make_datasets(data):
                 "source": "simstrat_{}".format(data["simstrat"][0]),
                 "sources": simstrat_source(data["simstrat"],
                                            {
-                                               "data_access": "simstrat_doy_temperature",
+                                               "data_access": "simstrat_doy",
                                                "model": "simstrat",
-                                               "depths": ["surface", "bottom"],
+                                               "depths": [0, data["max_depth"]],
+                                               "parameter": "T",
                                                "description": "Average DOY water temperature. Water temperatures are hindcasted and forecasted using the 1D hydrodynamic model Simstrat. Meteorological forcing data is produced from Meteoswiss products, hincasts use meteostation data and forecasts use the Cosmo-2e 5 day ensemble forecast (VNXZ32). Where rivers inputs are used this data is sourced from Bafu. This model is calibrated using in-situ measuresuments collected by a number of 3rd parties.",
                                                "learnMore": "https://medium.com/@runnalls.james/operational-1d-lake-modeling-with-simstrat-dc34964bfe08",
                                                "tags": ["Historic Trends", "DOY average"]
                                            }),
-                "displayOptions": {}
+                "displayOptions": {
+                    "depth": 0
+                }
             }
         ]
     return datasets

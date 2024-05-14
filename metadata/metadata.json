@@ -436,9 +436,9 @@
     "key": "baldegg",
     "name": {
       "EN": "Lake Baldegg",
-      "DE": "Lake Baldegg",
-      "FR": "Lake Baldegg",
-      "IT": "Lake Baldegg"
+      "DE": "Baldeggersee",
+      "FR": "Lac de Baldegg",
+      "IT": "Lago di Baldegg"
     },
     "area": 5.2,
     "ave_depth": 33.0,
@@ -461,9 +461,9 @@
     "key": "constance",
     "name": {
       "EN": "Lake Constance",
-      "DE": "Lake Constance",
-      "FR": "Lake Constance",
-      "IT": "Lake Constance"
+      "DE": "Bodensee",
+      "FR": "Bodan",
+      "IT": "Lago di Costanza"
     },
     "area": 473.0,
     "ave_depth": 101.0,
@@ -488,9 +488,9 @@
     "key": "brienz",
     "name": {
       "EN": "Lake Brienz",
-      "DE": "Lake Brienz",
-      "FR": "Lake Brienz",
-      "IT": "Lake Brienz"
+      "DE": "Brienzersee",
+      "FR": "Lac de Brienz",
+      "IT": "Lago di Brienz"
     },
     "area": 29.8,
     "ave_depth": 173.0,
@@ -513,9 +513,9 @@
     "key": "thun",
     "name": {
       "EN": "Lake Thun",
-      "DE": "Lake Thun",
-      "FR": "Lake Thun",
-      "IT": "Lake Thun"
+      "DE": "Thunersee",
+      "FR": "Lac de Thoune",
+      "IT": "Lago di Thun"
     },
     "area": 48.3,
     "ave_depth": 136.0,
@@ -537,10 +537,10 @@
   {
     "key": "gruyere",
     "name": {
-      "EN": "Lac de la Gruyère",
-      "DE": "Lac de la Gruyère",
+      "EN": "Lake of Gruyère",
+      "DE": "Greyerzersee",
       "FR": "Lac de la Gruyère",
-      "IT": "Lac de la Gruyère"
+      "IT": "Lago di Gruyère"
     },
     "area": 9.6,
     "ave_depth": 20.0,
@@ -560,10 +560,10 @@
   {
     "key": "klontalersee",
     "name": {
-      "EN": "Klöntalersee",
+      "EN": "Lake Klöntal",
       "DE": "Klöntalersee",
-      "FR": "Klöntalersee",
-      "IT": "Klöntalersee"
+      "FR": "Lac du Klöntal",
+      "IT": "Lago di Klöntal"
     },
     "area": 3.3,
     "ave_depth": "NA",
@@ -584,9 +584,9 @@
     "key": "maggiore",
     "name": {
       "EN": "Lake Maggiore",
-      "DE": "Lake Maggiore",
-      "FR": "Lake Maggiore",
-      "IT": "Lake Maggiore"
+      "DE": "Langensee",
+      "FR": "Lac Majeur",
+      "IT": "Lago Maggiore"
     },
     "area": 212.5,
     "ave_depth": 177.0,
@@ -609,9 +609,9 @@
     "key": "lungern",
     "name": {
       "EN": "Lake Lungern",
-      "DE": "Lake Lungern",
-      "FR": "Lake Lungern",
-      "IT": "Lake Lungern"
+      "DE": "Lungerersee",
+      "FR": "Lac de Lungern",
+      "IT": "Lago di Lungern"
     },
     "area": 2.0,
     "ave_depth": 33.0,
@@ -632,9 +632,9 @@
     "key": "neuchatel",
     "name": {
       "EN": "Lake Neuchâtel",
-      "DE": "Lake Neuchâtel",
-      "FR": "Lake Neuchâtel",
-      "IT": "Lake Neuchâtel"
+      "DE": "Neuenburgersee",
+      "FR": "Lac de Neuchâtel ",
+      "IT": "Lago di Neuchâtel"
     },
     "area": 218.3,
     "ave_depth": 64.0,
@@ -657,9 +657,9 @@
     "key": "pfaffikon",
     "name": {
       "EN": "Lake Pfäffikon",
-      "DE": "Lake Pfäffikon",
-      "FR": "Lake Pfäffikon",
-      "IT": "Lake Pfäffikon"
+      "DE": "Pfäffikersee",
+      "FR": "Lac de Pfäffikon",
+      "IT": "Lago di Pfäffikon"
     },
     "area": 3.3,
     "ave_depth": 19.0,
@@ -681,9 +681,9 @@
     "key": "sempach",
     "name": {
       "EN": "Lake Sempach",
-      "DE": "Lake Sempach",
-      "FR": "Lake Sempach",
-      "IT": "Lake Sempach"
+      "DE": "Sempachersee",
+      "FR": "Lac de Sempach",
+      "IT": "Lago di Sempach"
     },
     "area": 14.5,
     "ave_depth": 44.0,
@@ -706,9 +706,9 @@
     "key": "sarnen",
     "name": {
       "EN": "Lake Sarnen",
-      "DE": "Lake Sarnen",
-      "FR": "Lake Sarnen",
-      "IT": "Lake Sarnen"
+      "DE": "Sarnersee",
+      "FR": "Lac de Sarnen",
+      "IT": "Lago di Sarnen"
     },
     "area": 7.5,
     "ave_depth": 31.0,
@@ -729,10 +729,10 @@
   {
     "key": "alpnachersee",
     "name": {
-      "EN": "Alpnachersee",
+      "EN": "Lake Alpnach",
       "DE": "Alpnachersee",
-      "FR": "Alpnachersee",
-      "IT": "Alpnachersee"
+      "FR": "Lac d'Alpnach",
+      "IT": "Lago Alpnach"
     },
     "area": 4.5,
     "ave_depth": 22.0,
@@ -755,9 +755,9 @@
     "key": "lucerne",
     "name": {
       "EN": "Lake Lucerne",
-      "DE": "Lake Lucerne",
-      "FR": "Lake Lucerne",
-      "IT": "Lake Lucerne"
+      "DE": "Vierwaldstättersee",
+      "FR": "Lac des Quatre-Cantons",
+      "IT": "Lago dei Quattro Cantoni"
     },
     "area": 111.0,
     "ave_depth": "NA",
@@ -784,10 +784,10 @@
   {
     "key": "walensee",
     "name": {
-      "EN": "Walensee",
+      "EN": "Lake Walen",
       "DE": "Walensee",
-      "FR": "Walensee",
-      "IT": "Walensee"
+      "FR": "Lac de Walenstadt",
+      "IT": "Lago di Walenstadt"
     },
     "area": 24.2,
     "ave_depth": 105.0,
@@ -810,9 +810,9 @@
     "key": "zug",
     "name": {
       "EN": "Lake Zug",
-      "DE": "Lake Zug",
-      "FR": "Lake Zug",
-      "IT": "Lake Zug"
+      "DE": "Zugersee",
+      "FR": "Lac de Zoug",
+      "IT": "Lago di Zugo"
     },
     "area": 38.3,
     "ave_depth": 83.0,
@@ -833,10 +833,10 @@
   {
     "key": "sihlsee",
     "name": {
-      "EN": "Sihlsee",
+      "EN": "Lake Sihl",
       "DE": "Sihlsee",
-      "FR": "Sihlsee",
-      "IT": "Sihlsee"
+      "FR": "Lac de Sihl",
+      "IT": "Lago di Sihl"
     },
     "area": 11.3,
     "ave_depth": "NA",
@@ -880,9 +880,9 @@
     "key": "sils",
     "name": {
       "EN": "Lake Sils",
-      "DE": "Lake Sils",
-      "FR": "Lake Sils",
-      "IT": "Lake Sils"
+      "DE": "Silsersee",
+      "FR": "Lac de Sils",
+      "IT": "Lago di Sils"
     },
     "area": 4.1,
     "ave_depth": 35.0,
@@ -904,9 +904,9 @@
     "key": "silvaplana",
     "name": {
       "EN": "Lake Silvaplana",
-      "DE": "Lake Silvaplana",
-      "FR": "Lake Silvaplana",
-      "IT": "Lake Silvaplana"
+      "DE": "Silvaplanersee",
+      "FR": "Lac de Silvaplana",
+      "IT": "Lago di Silvaplana"
     },
     "area": 2.7,
     "ave_depth": 48.0,
@@ -927,8 +927,8 @@
   {
     "key": "champfer",
     "name": {
-      "EN": "Lej da Champfer",
-      "DE": "Lej da Champfer",
+      "EN": "Lake Champfèr",
+      "DE": "Champfèrersee",
       "FR": "Lej da Champfer",
       "IT": "Lej da Champfer"
     },
@@ -951,9 +951,9 @@
     "key": "lauerz",
     "name": {
       "EN": "Lake Lauerz",
-      "DE": "Lake Lauerz",
-      "FR": "Lake Lauerz",
-      "IT": "Lake Lauerz"
+      "DE": "Lauerzersee",
+      "FR": "Lac de Lauerz",
+      "IT": "Lago di Lauerz"
     },
     "area": 3.07,
     "ave_depth": "NA",
@@ -1087,10 +1087,10 @@
   {
     "key": "oeschinensee",
     "name": {
-      "EN": "Oeschinensee",
+      "EN": "Lake Oeschinen",
       "DE": "Oeschinensee",
-      "FR": "Oeschinensee",
-      "IT": "Oeschinensee"
+      "FR": "Lac d'Oeschinen",
+      "IT": "Lago di Oeschinen"
     },
     "area": 1.115,
     "ave_depth": "NA",
@@ -1135,7 +1135,7 @@
     "name": {
       "EN": "Inkwilersee",
       "DE": "Inkwilersee",
-      "FR": "Inkwilersee",
+      "FR": "Lac d'Inkwil",
       "IT": "Inkwilersee"
     },
     "area": 0.1016,
@@ -1180,9 +1180,9 @@
     "key": "cadagno",
     "name": {
       "EN": "Lake Cadagno",
-      "DE": "Lake Cadagno",
-      "FR": "Lake Cadagno",
-      "IT": "Lake Cadagno"
+      "DE": "Cadagnosee",
+      "FR": "Lac de Cadagno",
+      "IT": "Lago di Cadagno"
     },
     "area": 0.26,
     "ave_depth": "NA",
@@ -1317,10 +1317,10 @@
   {
     "key": "untererchatzensee",
     "name": {
-      "EN": "UntererChatzensee",
-      "DE": "UntererChatzensee",
-      "FR": "UntererChatzensee",
-      "IT": "UntererChatzensee"
+      "EN": "Unterer Chatzensee",
+      "DE": "Unterer Chatzensee",
+      "FR": "Unterer Chatzensee",
+      "IT": "Unterer Chatzensee"
     },
     "area": 0.192,
     "ave_depth": "NA",
@@ -1547,10 +1547,10 @@
   {
     "key": "brenet",
     "name": {
-      "EN": "Lac Brenet",
+      "EN": "Lake Brenet",
       "DE": "Lac Brenet",
       "FR": "Lac Brenet",
-      "IT": "Lac Brenet"
+      "IT": "Lago Brenet"
     },
     "area": 0.65,
     "ave_depth": "NA",

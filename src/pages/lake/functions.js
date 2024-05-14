@@ -135,6 +135,21 @@ export const parseAPITime = (date) => {
   );
 };
 
+export const getDoyArray = () => {
+  const datesArray = [];
+  const startDate = new Date(new Date().getFullYear(), 0, 1);
+  for (let i = 0; i < 366; i++) {
+    const currentDate = new Date(startDate);
+    currentDate.setDate(startDate.getDate() + i);
+    datesArray.push(currentDate);
+  }
+  return datesArray;
+};
+
+export const removeFeb = (array) => {
+  return [...array.slice(0, 58), ...array.slice(59)];
+}
+
 export const formatSencastDay = (datetime) => {
   var a = new Date(datetime);
   var year = a.getFullYear();
@@ -185,9 +200,7 @@ export const formatDateLong = (datetime, months) => {
   return `${date} ${month} ${String(year)}`;
 };
 
-export const parseSimstratDatetime = (string) => {
-
-}
+export const parseSimstratDatetime = (string) => {};
 
 export const formatTime = (datetime) => {
   var a = new Date(datetime);
