@@ -274,8 +274,23 @@ const dataExtents = (data, options) => {
   var y2domarr = [];
   var x2domarr = [];
   for (var i = 0; i < data.length; i++) {
-    let xext = extent(data[i].x);
-    let yext = extent(data[i].y);
+    var xext, yext;
+    if (
+      "confidenceAxis" in data[i] &&
+      "upper" in data[i] &&
+      "lower" in data[i]
+    ) {
+      if (data[i]["confidenceAxis"] === "y") {
+        yext = extent([...data[i]["upper"], ...data[i]["lower"], ...data[i].y]);
+        xext = extent(data[i].x);
+      } else {
+        xext = extent([...data[i]["upper"], ...data[i]["lower"], ...data[i].x]);
+        yext = extent(data[i].y);
+      }
+    } else {
+      xext = extent(data[i].x);
+      yext = extent(data[i].y);
+    }
     if (data[i].yaxis === "y2") {
       y2domarr.push(yext);
     } else {
@@ -611,6 +626,7 @@ const addLegend = (svg, div, data, options) => {
     var legendblock = svg
       .append("g")
       .attr("id", "legend_" + div)
+      .attr("class", "legend")
       .attr("pointer-events", "none");
 
     var legendbackground = legendblock

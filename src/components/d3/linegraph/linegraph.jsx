@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import * as d3 from "d3";
-import isEqual from "lodash/isEqual";
 import GraphHeader from "../graphheader/graphheader";
 import plotlinegraph from "./plotlinegraph";
 import "./linegraph.css";
@@ -227,19 +226,19 @@ class D3LineGraph extends Component {
       onClick,
       curve,
       marginLeft,
+      marginTop,
     } = this.props;
     var { graphid, fontSize } = this.state;
     if (this.props.header !== false) fontSize = this.props.fontSize;
 
     for (var i = 0; i < data.length; i++) {
-      data[i]["lineColor"] = lcolor[i] ? lcolor[i] : "black";
-      data[i]["lineWeight"] = lweight[i] ? lweight[i] : 1;
-      data[i]["upper"] =
+      if (!("lineColor" in data[i])) data[i]["lineColor"] = lcolor[i] ? lcolor[i] : "black";
+      if (!("lineWeight" in data[i])) data[i]["lineWeight"] = lweight[i] ? lweight[i] : 1;
+      if (!("upper" in data[i])) data[i]["upper"] =
         confidence && confidence[i] ? confidence[i].CI_upper : "";
-      data[i]["lower"] =
+      if (!("lower" in data[i])) data[i]["lower"] =
         confidence && confidence[i] ? confidence[i].CI_lower : "";
-      data[i]["confidenceAxis"] = confidence && confidence[i] ? "y" : "";
-      data[i]["confidenceAxis"] = confidence && confidence[i] ? "y" : "";
+      if (!("confidenceAxis" in data[i])) data[i]["confidenceAxis"] = confidence && confidence[i] ? "y" : "";
     }
     var options = {
       language,
@@ -269,6 +268,7 @@ class D3LineGraph extends Component {
       legend: legend,
     };
     if (marginLeft) options["marginLeft"] = marginLeft;
+    if (marginTop) options["marginTop"] = marginTop;
     if (xmax) options["xMax"] = xmax;
     if (xmin) options["xMin"] = xmin;
     if (ymax) options["yMax"] = ymax;

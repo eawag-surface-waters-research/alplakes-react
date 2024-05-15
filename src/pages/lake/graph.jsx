@@ -137,7 +137,6 @@ class Graph extends Component {
     if (line_layers.length > 0) {
       line_layer = line_layers[0];
     }
-    console.log(line_layers)
     return (
       <div className="module-component graph">
         <div className="plot">

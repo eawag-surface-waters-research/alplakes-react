@@ -6,7 +6,6 @@ import Metadata from "./metadata";
 import Map from "./map";
 import Graph from "./graph";
 import { parseSubtitle } from "./functions";
-import DATA from "./data.json";
 import CONFIG from "../../config.json";
 import arrow from "../../img/arrow.png";
 import "./lake.css";
@@ -130,15 +129,9 @@ class Lake extends Component {
       active_module = searchParams["module"];
     }
     try {
-      var data;
-      if (id === "geneva") {
-        data = DATA;
-      } else {
-        ({ data } = await axios.get(
-          CONFIG.alplakes_bucket + `/static/website/metadata/v2/${id}.json`
-        ));
-      }
-
+      var { data } = await axios.get(
+        CONFIG.alplakes_bucket + `/static/website/metadata/v2/${id}.json`
+      );
       const { metadata, modules, layers, datasets } = data;
       layers.map((l) => {
         l.active = false;

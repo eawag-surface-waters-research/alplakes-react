@@ -163,6 +163,10 @@
   margin-bottom: var(--padding);
 }
 
+.main .home .content .list .product-list .list-item:hover {
+  transform: translateX(3px);
+}
+
 .main .home .content .list .product-list .list-item-placeholder {
   box-sizing: border-box;
   padding: calc(var(--padding)/2);

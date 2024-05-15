@@ -113,14 +113,19 @@ const addSimstratDoy = async (layer, language) => {
   var { data } = await axios.get(
     `${CONFIG.alplakes_api}/simulations/1d/doy/${source.model}/${source.lake}/${source.parameter}/${layer.displayOptions.depth}`
   );
-  var x = getDoyArray()
-  if (x.length === 365){
-    layer.displayOptions.data = { confidenceAxis: "y", upper: removeFeb(data.max), lower: removeFeb(data.min), y: removeFeb(data.mean), x };
-  } else {
-    layer.displayOptions.data = { confidenceAxis: "y", upper: data.max, lower: data.min, y: data.mean, x };
+  var x = getDoyArray();
+  var upper = data.max;
+  var lower = data.min;
+  var y = data.mean;
+  if (x.length === 365) {
+    upper = removeFeb(data.max);
+    lower = removeFeb(data.min);
+    y = removeFeb(data.mean);
   }
-  console.log(layer.displayOptions.data);
+  layer.displayOptions.data = [
+    { confidenceAxis: "y", upper, lower, y, x, name:"Mean", "lineColor": "grey" },
+    { x, y: upper, name:"Max", lineColor: "grey" },
+    { x, y: lower, name:"Min", lineColor: "grey" },
+  ];
   return layer;
 };
-
-

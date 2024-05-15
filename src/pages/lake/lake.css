@@ -108,6 +108,11 @@
     padding-left: 8px;
     border-left: 2px solid var(--highlight-color);
     position: relative;
+    transition: all .33s 0s ease;
+}
+
+.main .lake .content .metadata .objects .datasets .dataset:hover {
+    transform: translateX(3px);
 }
 
 .main .lake .content .metadata .objects .datasets .dataset .dataset-button {
@@ -1140,13 +1145,14 @@
     box-sizing: border-box;
     margin: 0 12px;
     margin-bottom: 26px;
-    box-shadow: var(--box-shadow);
     color: var(--background-font-color);
+    border: 1px solid var(--border-color);
     text-align: center;
+    transition: all .2s ease;
 }
 
 .main .lake .content .module.active .display .module-component .sidebar .layer-link:hover {
-    box-shadow: none;
+    transform: scale(1.02);
 }
 
 
@@ -1996,6 +2002,14 @@
     top: 0px;
     left: 0px;
     font-size: 16px;
+}
+
+.main .lake .content .module .display .module-component.graph .plot .linegraph-main .linegraph-graph .legend {
+    visibility: hidden;
+}
+
+.main .lake .content .module.active .display .module-component.graph .plot .linegraph-main .linegraph-graph .legend {
+    visibility: visible;
 }
 
 .main .lake .content .module .link {
