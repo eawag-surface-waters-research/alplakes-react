@@ -304,7 +304,7 @@ const loading = (message, id) => {
   }
 };
 
-const loaded = (id) => {
+export const loaded = (id) => {
   if (document.getElementById(id)) {
     document.getElementById(id).style.visibility = "hidden";
   }
@@ -432,7 +432,8 @@ const addAlplakesHydrodynamic = async (
   setLayers,
   layers
 ) => {
-  if (initialLoad) {
+  var source = layer.sources[layer.source];
+  if (initialLoad || source.height === undefined) {
     loading("Collecting metadata", loadingId);
     ({ layer, period, depth } = await getAlplakesHydrodynamicMetadata(
       layer,

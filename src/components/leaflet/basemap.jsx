@@ -1,7 +1,13 @@
 import React, { Component } from "react";
 import L from "leaflet";
 import CONFIG from "../../config.json";
-import { flyToBounds, addLayer, updateLayer, removeLayer } from "./functions";
+import {
+  flyToBounds,
+  addLayer,
+  updateLayer,
+  removeLayer,
+  loaded,
+} from "./functions";
 import "./leaflet_geotiff";
 import "./leaflet_colorpicker";
 import "./leaflet_customtooltip";
@@ -46,7 +52,7 @@ class Basemap extends Component {
               this.props
             );
           } catch (e) {
-            console.error("Failed to add layer", layer);
+            loaded(this.props.loadingId);
             console.error(e);
             error(
               `Failed to add layer ${

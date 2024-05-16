@@ -63,6 +63,16 @@ for lake in metadata:
     data["modules"] = func.make_modules(lake, satellite_data)
     data["layers"] = func.make_layers(lake, satellite_data)
     data["datasets"] = func.make_datasets(lake)
+
+    if "insitu" in data["metadata"] and len(data["metadata"]["insitu"]) > 0:
+        home["filters"].append("insitu")
+        live = False
+        for i in range(len(data["metadata"]["insitu"])):
+            if data["metadata"]["insitu"][i]["live"]:
+                live = True
+        if live:
+            home["filters"].append("live")
+
     with open('files/{}.json'.format(key), 'w') as json_file:
         json_file.write(json.dumps(data, separators=(',', ':'), ensure_ascii=False))
     if upload:

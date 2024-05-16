@@ -1451,7 +1451,7 @@
     padding: 1px;
 }
 
-.main .lake .content .module.active .display .module-component .sidebar .layer-settings .react-datepicker__day:hover {
+.main .lake .content .module.active .display .module-component .sidebar .layer-settings .period-selector .react-datepicker__day:hover {
     background-color: var(--box-color);
     border-color: var(--highlight-color);
 }
