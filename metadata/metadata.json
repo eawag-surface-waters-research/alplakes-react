@@ -94,7 +94,7 @@
     "latitude": 47.24,
     "longitude": 8.68,
     "flags": ["swiss"],
-    "simstrat": ["upperzurich", "lowerzurich"],
+    "simstrat": ["lowerzurich", "upperzurich"],
     "datalakes_id": [4, 5],
     "swiss_bathy": true,
     "trophic_state": "Mesotrophic",
@@ -767,9 +767,9 @@
     "longitude": 8.429,
     "flags": ["swiss"],
     "simstrat": [
+      "lucernekreuztrichterandvitznauerbecken",
       "lucerneurnersee",
-      "lucernegersauerandtreibbecken",
-      "lucernekreuztrichterandvitznauerbecken"
+      "lucernegersauerandtreibbecken"
     ],
     "datalakes_id": [37, 34, 31],
     "swiss_bathy": true,
