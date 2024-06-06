@@ -123,7 +123,7 @@ def make_modules(data, sd):
     if "simstrat" not in data or data["simstrat"] != False:
         modules.append({
             "id": "graph_conditions",
-            "title": "Temperature",
+            "title": "Average Temperature",
             "subtitle": "1D Model",
             "component": "graph",
             "defaults": ["temperature_heatmap"]

@@ -39,7 +39,7 @@ export const removeLayer = (layer) => {};
 const addSimstratHeatmap = async (layer, language) => {
   var source = layer.sources[layer.source];
   var { maxDate, minDate } = await simstratMetadata(source.model, source.lake);
-  var start = new Date(maxDate.getTime() - 7 * 24 * 60 * 60 * 1000);
+  var start = new Date(maxDate.getTime() - 365 * 24 * 60 * 60 * 1000);
   var options = {
     period: [start, maxDate],
     minDate,

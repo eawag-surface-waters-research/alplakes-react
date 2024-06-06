@@ -6,6 +6,7 @@ import { addLayer, updateLayer, removeLayer, loaded } from "./graphfunctions";
 import settings_icon from "../../img/options.png";
 import Loading from "../../components/loading/loading";
 import DatasetLinegraph from "../../components/d3/dataset/datasetlinegraph";
+import InitialLoading from "../../components/loading/initialloading";
 
 class Graph extends Component {
   state = {
@@ -14,6 +15,7 @@ class Graph extends Component {
     updates: [],
     layers: [],
     loadingId: "load_" + Math.round(Math.random() * 100000),
+    initialLoad: true,
   };
   openSidebar = () => {
     this.setState({ sidebar: true });
@@ -91,7 +93,7 @@ class Graph extends Component {
           layer = removeLayer(layer);
         }
       }
-      this.setState({ layers });
+      this.setState({ layers, initialLoad: false });
     }
     loaded(loadingId);
   };
@@ -126,7 +128,7 @@ class Graph extends Component {
   }
   render() {
     var { language, dark } = this.props;
-    var { sidebar, layers, loadingId } = this.state;
+    var { sidebar, layers, loadingId, initialLoad } = this.state;
     var heat_layer = false;
     var heat_layers = layers.filter((d) => d.active && d.display === "heat");
     if (heat_layers.length > 0) {
@@ -149,6 +151,11 @@ class Graph extends Component {
           <div className="settings" onClick={this.openSidebar}>
             <img src={settings_icon} alt="Settings" />
           </div>
+          {initialLoad && (
+            <div className="initial-load">
+              <InitialLoading />
+            </div>
+          )}
           <div className="layer-loading" id={loadingId}>
             <Loading />
           </div>
