@@ -123,10 +123,10 @@ def make_modules(data, sd):
     if "simstrat" not in data or data["simstrat"] != False:
         modules.append({
             "id": "graph_conditions",
-            "title": "Average Temperature",
+            "title": "Average surface temperature",
             "subtitle": "1D Model",
             "component": "graph",
-            "defaults": ["temperature_heatmap"]
+            "defaults": ["temperature_linegraph"]
         })
     if sd and "sentinel3" in sd and "chla" in sd["sentinel3"]:
         modules.append({
@@ -178,8 +178,15 @@ def make_modules(data, sd):
         })
     if "simstrat" not in data or data["simstrat"] != False:
         modules.append({
+            "id": "graph_depthtime",
+            "title": "Average Temperature",
+            "subtitle": "1D Model",
+            "component": "graph",
+            "defaults": ["temperature_heatmap"]
+        })
+        modules.append({
             "id": "graph_historic",
-            "title": "Historic surface temperature evolution",
+            "title": "Surface annual course",
             "subtitle": "1D Model",
             "component": "graph",
             "defaults": ["temperature_doy"]

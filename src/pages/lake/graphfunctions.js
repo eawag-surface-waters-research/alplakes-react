@@ -2,7 +2,7 @@ import axios from "axios";
 import CONFIG from "../../config.json";
 import COLORS from "../../components/colors/colors.json";
 import Translate from "../../translations.json";
-import { formatAPIDatetime, getDoyArray, removeFeb } from "./functions";
+import { formatAPIDatetime, getDoyArray, removeLeap } from "./functions";
 
 export const loading = (message, id) => {
   var parent = document.getElementById(id);
@@ -113,19 +113,71 @@ const addSimstratDoy = async (layer, language) => {
   var { data } = await axios.get(
     `${CONFIG.alplakes_api}/simulations/1d/doy/${source.model}/${source.lake}/${source.parameter}/${layer.displayOptions.depth}`
   );
-  var x = getDoyArray();
-  var upper = data.max;
-  var lower = data.min;
-  var y = data.mean;
-  if (x.length === 365) {
-    upper = removeFeb(data.max);
-    lower = removeFeb(data.min);
-    y = removeFeb(data.mean);
+  var x = removeLeap(getDoyArray());
+  var display = [];
+  if ("min" in data)
+    display.push({
+      x,
+      y: removeLeap(data.min),
+      name: false,
+      lineColor: "lightgrey",
+    });
+  if ("max" in data)
+    display.push({
+      x,
+      y: removeLeap(data.max),
+      name: false,
+      lineColor: "lightgrey",
+    });
+  if ("perc5" in data && "perc95" in data) {
+    display.push({
+      confidenceAxis: "y",
+      upper: removeLeap(data.perc95),
+      lower: removeLeap(data.perc5),
+      x,
+      y: removeLeap(data.mean),
+      lineColor: "grey",
+      name: false,
+    });
   }
-  layer.displayOptions.data = [
-    { confidenceAxis: "y", upper, lower, y, x, name:"Mean", "lineColor": "grey" },
-    { x, y: upper, name:"Max", lineColor: "grey" },
-    { x, y: lower, name:"Min", lineColor: "grey" },
-  ];
+  if ("perc25" in data && "perc75" in data) {
+    display.push({
+      confidenceAxis: "y",
+      upper: removeLeap(data.perc75),
+      lower: removeLeap(data.perc25),
+      x,
+      y: removeLeap(data.mean),
+      lineColor: "grey",
+      name: false,
+    });
+  }
+  if ("lastyear" in data) {
+    display.push({
+      x,
+      y: removeLeap(data.lastyear),
+      name: new Date().getFullYear() - 1,
+      lineColor: "#ffc045",
+    });
+  }
+  var start = new Date(new Date().getFullYear(), 0, 1, 0, 0);
+  var end = new Date();
+  end.setDate(end.getDate() + 5);
+  var { data: currentData } = await axios.get(
+    `${CONFIG.alplakes_api}/simulations/1d/point/${source.model}/${
+      source.lake
+    }/${source.parameter}/${formatAPIDatetime(start)}/${formatAPIDatetime(
+      end
+    )}/${layer.displayOptions.depth}?resample=daily`
+  );
+  var xx = currentData.time.map(t => new Date(t))
+  var yy = currentData[source.parameter]
+  display.push({
+    x: xx,
+    y: yy,
+    name: new Date().getFullYear(),
+    lineColor: "#ff7d45",
+    lineWeight: 2,
+  });
+  layer.displayOptions.data = display;
   return layer;
 };

@@ -650,9 +650,11 @@ const addLegend = (svg, div, data, options) => {
       };
     }
 
+    var legendData = data.filter((d) => d.name !== false);
+
     legendblock
       .selectAll("legendtext")
-      .data(data)
+      .data(legendData)
       .enter()
       .append("text")
       .attr("x", x)

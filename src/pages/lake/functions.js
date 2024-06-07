@@ -146,8 +146,13 @@ export const getDoyArray = () => {
   return datesArray;
 };
 
-export const removeFeb = (array) => {
-  return [...array.slice(0, 58), ...array.slice(59)];
+export const removeLeap = (array) => {
+  if (array.length === 366) {
+    return [...array.slice(0, 58), ...array.slice(59)];
+  } else {
+    return array
+  }
+  
 }
 
 export const formatSencastDay = (datetime) => {
