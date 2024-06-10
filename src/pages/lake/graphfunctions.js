@@ -24,6 +24,8 @@ export const addLayer = async (layer, language, loadingId) => {
     return await addSimstratHeatmap(layer, language);
   } else if (source.data_access === "simstrat_doy") {
     return await addSimstratDoy(layer, language);
+  } else if (source.data_access === "simstrat_linegraph") {
+    return await addSimstratLinegraph(layer, language);
   }
 };
 
@@ -31,6 +33,8 @@ export const updateLayer = async (layer, loadingId) => {
   var source = layer.sources[layer.source];
   if (source.data_access === "simstrat_heatmap") {
     return await updateSimstratHeatmap(layer, loadingId);
+  } else if (source.data_access === "simstrat_linegraph") {
+    return await updateSimstratLinegraph(layer, loadingId);
   }
 };
 
@@ -169,8 +173,8 @@ const addSimstratDoy = async (layer, language) => {
       end
     )}/${layer.displayOptions.depth}?resample=daily`
   );
-  var xx = currentData.time.map(t => new Date(t))
-  var yy = currentData[source.parameter]
+  var xx = currentData.time.map((t) => new Date(t));
+  var yy = currentData[source.parameter];
   display.push({
     x: xx,
     y: yy,
@@ -179,5 +183,59 @@ const addSimstratDoy = async (layer, language) => {
     lineWeight: 2,
   });
   layer.displayOptions.data = display;
+  return layer;
+};
+
+const addSimstratLinegraph = async (layer, language) => {
+  var source = layer.sources[layer.source];
+  var { maxDate, minDate, depths } = await simstratMetadata(
+    source.model,
+    source.lake
+  );
+  var depth = Math.min(...depths);
+  var start = new Date(maxDate.getTime() - 5 * 24 * 60 * 60 * 1000);
+  var options = {
+    depths,
+    depth,
+    period: [start, maxDate],
+    minDate,
+    maxDate,
+    xlabel: "time",
+    xunits: "",
+    ylabel: Translate[layer.parameter][language],
+    yunits: layer.unit,
+    curve: true,
+  };
+  layer.displayOptions = { ...layer.displayOptions, ...options };
+  var { data } = await axios.get(
+    `${CONFIG.alplakes_api}/simulations/1d/point/${source.model}/${
+      source.lake
+    }/${source.parameter}/${formatAPIDatetime(start)}/${formatAPIDatetime(
+      maxDate
+    )}/${depth}`
+  );
+  var x = data.time.map((t) => new Date(t));
+  var y = data[source.parameter];
+  layer.displayOptions.data = { x, y };
+  return layer;
+};
+
+const updateSimstratLinegraph = async (layer, loadingId) => {
+  var source = layer.sources[layer.source];
+  if (layer.displayOptions.update) {
+    loading("Downloading data from the server", loadingId);
+    let { period, depth } = layer.displayOptions;
+    var { data } = await axios.get(
+      `${CONFIG.alplakes_api}/simulations/1d/point/${source.model}/${
+        source.lake
+      }/${source.parameter}/${formatAPIDatetime(period[0])}/${formatAPIDatetime(
+        period[1]
+      )}/${depth}`
+    );
+    var x = data.time.map((t) => new Date(t));
+    var y = data[source.parameter];
+    layer.displayOptions.data = { x, y };
+    layer.displayOptions.updatePeriod = false;
+  }
   return layer;
 };

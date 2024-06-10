@@ -863,19 +863,16 @@ class Tiff extends Component {
         let obs = available[key].images.length;
         var className;
         if (time >= start && time <= end) {
-          className = `.setting.${id} .custom-css-datepicker .react-datepicker__day--0${
-            day < 10 ? "0" + day : day
-          }:not(.react-datepicker__day--outside-month)`;
+          className = `.setting.${id} .custom-css-datepicker .react-datepicker__day--0${day < 10 ? "0" + day : day
+            }:not(.react-datepicker__day--outside-month)`;
           element = document.querySelectorAll(className);
         } else if (time < start) {
-          className = `.setting.${id} .custom-css-datepicker .react-datepicker__day--0${
-            day < 10 ? "0" + day : day
-          }.react-datepicker__day--outside-month`;
+          className = `.setting.${id} .custom-css-datepicker .react-datepicker__day--0${day < 10 ? "0" + day : day
+            }.react-datepicker__day--outside-month`;
           element = document.querySelectorAll(className);
         } else if (time > end) {
-          className = `.setting.${id} .custom-css-datepicker .react-datepicker__day--0${
-            day < 10 ? "0" + day : day
-          }.react-datepicker__day--outside-month`;
+          className = `.setting.${id} .custom-css-datepicker .react-datepicker__day--0${day < 10 ? "0" + day : day
+            }.react-datepicker__day--outside-month`;
           element = document.querySelectorAll(className);
         }
         if (element.length > 0) {
@@ -1320,6 +1317,53 @@ class Heat extends Component {
   }
 }
 
+class Line extends Component {
+  state = {
+    id: Math.round(Math.random() * 100000),
+  };
+
+  setPeriod = (period) => {
+    var { id, updateOptions, options } = this.props;
+    options["period"] = period;
+    options["update"] = true;
+    updateOptions(id, options);
+  };
+
+  setDepth = (depth) => {
+    var { id, updateOptions, options } = this.props;
+    options["depth"] = depth;
+    options["update"] = true;
+    updateOptions(id, options);
+  }
+
+  render() {
+    var { language, layer } = this.props;
+    var { period, minDate, maxDate, depth, depths } = this.props.options;
+    var { model } = layer.sources[layer.source];
+    return (
+      <div className="layer-settings">
+        {period && (
+          <div className="setting">
+            <div className="label">Period</div>
+            <div className="period-selector">
+              <Period
+                period={period}
+                setPeriod={this.setPeriod}
+                language={language}
+                minDate={minDate}
+                maxDate={maxDate}
+                maxPeriod={365}
+              />
+            </div>
+          </div>
+        )}
+        {depth && (
+          <Depth depth={depth} depths={depths} onChange={this.setDepth} />)}
+      </div>
+    );
+  }
+}
+
 class LayerSettings extends Component {
   render() {
     var { layer } = this.props;
@@ -1359,6 +1403,10 @@ class LayerSettings extends Component {
     } else if (type === "heat") {
       return (
         <Heat id={layer.id} options={layer.displayOptions} {...this.props} />
+      );
+    } else if (type === "line") {
+      return (
+        <Line id={layer.id} options={layer.displayOptions} {...this.props} />
       );
     } else {
       return (

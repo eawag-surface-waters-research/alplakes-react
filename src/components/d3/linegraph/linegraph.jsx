@@ -231,8 +231,15 @@ class D3LineGraph extends Component {
     var { graphid, fontSize } = this.state;
     if (this.props.header !== false) fontSize = this.props.fontSize;
 
+    var lineColor = "black"
+    if ("dark" in this.props && this.props.dark) lineColor = "white";
+
+    if (!Array.isArray(data)) {
+      data = [data];
+    }
+
     for (var i = 0; i < data.length; i++) {
-      if (!("lineColor" in data[i])) data[i]["lineColor"] = lcolor[i] ? lcolor[i] : "black";
+      if (!("lineColor" in data[i])) data[i]["lineColor"] = lcolor[i] ? lcolor[i] : lineColor;
       if (!("lineWeight" in data[i])) data[i]["lineWeight"] = lweight[i] ? lweight[i] : 1;
       if (!("upper" in data[i])) data[i]["upper"] =
         confidence && confidence[i] ? confidence[i].CI_upper : "";

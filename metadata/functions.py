@@ -582,6 +582,24 @@ def make_datasets(data):
                 }
             },
             {
+                "id": "temperature_linegraph",
+                "type": "linegraph",
+                "parameter": "temperature",
+                "unit": "°C",
+                "display": "line",
+                "source": "simstrat_{}".format(data["simstrat"][0]),
+                "sources": simstrat_source(data["simstrat"],
+                                           {
+                                               "data_access": "simstrat_linegraph",
+                                               "model": "simstrat",
+                                               "parameter": "T",
+                                               "description": "Visualisation of water temperature. Water temperatures are hindcasted and forecasted using the 1D hydrodynamic model Simstrat. Meteorological forcing data is produced from Meteoswiss products, hincasts use meteostation data and forecasts use the Cosmo-2e 5 day ensemble forecast (VNXZ32). Where rivers inputs are used this data is sourced from Bafu. This model is calibrated using in-situ measuresuments collected by a number of 3rd parties.",
+                                               "learnMore": "https://medium.com/@runnalls.james/operational-1d-lake-modeling-with-simstrat-dc34964bfe08",
+                                               "tags": ["5 day forecast", "Timeseries"]
+                                           }),
+                "displayOptions": {}
+            },
+            {
                 "id": "temperature_doy",
                 "type": "doy",
                 "parameter": "temperature",
