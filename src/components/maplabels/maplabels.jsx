@@ -8,9 +8,8 @@ const formatDateTime = (datetime, months) => {
   var year = a.getFullYear();
   var month = months[a.getMonth()];
   var date = a.getDate();
-  return `${hour < 10 ? "0" + hour : hour}:${
-    minute < 10 ? "0" + minute : minute
-  } ${date} ${month} ${String(year).slice(-2)}`;
+  return `${hour < 10 ? "0" + hour : hour}:${minute < 10 ? "0" + minute : minute
+    } ${date} ${month} ${String(year).slice(-2)}`;
 };
 
 class MapLabels extends Component {
@@ -35,9 +34,10 @@ class MapLabels extends Component {
         } else {
           labels[key] = "";
         }
+      } else if (labels[key] === "forecast5") {
+        labels[key] = Translate["forecast5"][language];
       }
     }
-
     return (
       <div className="labels">
         {Object.keys(labels).map((l) => (

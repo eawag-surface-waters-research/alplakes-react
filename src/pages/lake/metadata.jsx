@@ -10,6 +10,8 @@ import mixing_icon from "../../img/mixing.png";
 import trophic_icon from "../../img/trophic.png";
 import type_icon from "../../img/type.png";
 import datalakes from "../../img/datalakes.png";
+import ShowMoreText from "../../components/showmore/showmore";
+import Translations from "../../translations.json";
 
 class Dropdown extends Component {
   state = {
@@ -90,43 +92,40 @@ class Feedback extends Component {
     }
   };
   render() {
+    var { language } = this.props;
     var { sent, text, email, error } = this.state;
     return (
       <Dropdown
-        title="Feedback"
+        title={Translations["feedback"][language]}
         visible={true}
         contents={
           <div className="feedback">
             <div className="text">
-              Thank you for taking the time to provide feedback. Please include
-              a brief message detailing your thoughts and suggestions, and if
-              you're open to further discussion, kindly provide your email
-              address. We appreciate your input!
+              {Translations["feedbackText"][language]}
             </div>
             <textarea
               className="input-box"
-              placeholder="Add your feedback here"
+              placeholder={Translations["addFeedback"][language]}
               value={text}
               disabled={sent}
               onChange={this.setMessage}
             />
             <input
               className="email"
-              placeholder="Email address"
+              placeholder={Translations["emailAddress"][language]}
               value={email}
               disabled={sent}
               onChange={this.setEmail}
             />
             <div className="submit" onClick={this.submitReport}>
-              Share feedback
+              {Translations["shareFeedback"][language]}
             </div>
             {sent && (
-              <div className="submitted">Thanks for providing feedback!</div>
+              <div className="submitted">{Translations["thanksFeedback"][language]}</div>
             )}
             {error && (
               <div className="error">
-                Failed to submit feedback please directly email
-                james.runnalls@eawag.ch
+                {Translations["errorFeedback"][language]}
               </div>
             )}
           </div>
@@ -138,13 +137,14 @@ class Feedback extends Component {
 
 class LatestEvents extends Component {
   render() {
+    var { language } = this.props;
     return (
       <Dropdown
-        title="Latest Events"
+        title={Translations["latestEvents"][language]}
         visible={true}
         contents={
           <div className="events">
-            <div className="text">No events have been reported.</div>
+            <div className="text">{Translations["noEvents"][language]}</div>
           </div>
         }
       />
@@ -161,7 +161,7 @@ class Bathymetry extends Component {
         <React.Fragment>
           {bathymetry.length > 0 && (
             <Dropdown
-              title="Bathymetry"
+              title={Translations["bathymetry"][language]}
               visible={true}
               contents={
                 <div className="objects">
@@ -174,7 +174,7 @@ class Bathymetry extends Component {
                         key={index}
                       >
                         <div className="dataset">
-                          <div className="dataset-button">View</div>
+                          <div className="dataset-button">{Translations["view"][language]}</div>
                           <div className="name">{b.source} ({b.type})</div>
                           <div className="date">{b.name ? b.name : metadata["name"][language]}</div>
                           <div className="parameters">{b.format}</div>
@@ -194,17 +194,17 @@ class Bathymetry extends Component {
 
 class Insitu extends Component {
   render() {
-    var { metadata } = this.props;
+    var { metadata, language } = this.props;
     return (
       <React.Fragment>
         {metadata.insitu.length > 0 && (
           <Dropdown
-            title="Insitu Data"
+            title={Translations["insituData"][language]}
             visible={true}
             contents={
               <div className="objects">
                 <div className="text">
-                  Selected field measurements from Lake geneva.
+                  {Translations["insituDataDesc"][language]} {metadata.name[language]}.
                 </div>
                 <div className="datasets">
                   {metadata.insitu.map((i) => (
@@ -215,20 +215,26 @@ class Insitu extends Component {
                       key={i.name}
                     >
                       <div className="dataset">
-                        <div className="dataset-button">View</div>
+                        <div className="dataset-button">{Translations["view"][language]}</div>
                         <div className="name">{i.name}</div>
                         <div className="date">
                           {i.start} - {i.end}
                         </div>
+
                         <div className="parameters">
-                          {i.parameters.join(", ")}
+                          <ShowMoreText
+                            text={i.parameters.join(", ")}
+                            links={{}}
+                            maxLength={100}
+                            toggle={true}
+                          />
                         </div>
                       </div>
                     </a>
                   ))}
                 </div>
                 <div className="datalakes">
-                  See more on
+                  {Translations["seeMore"][language]}
                   <a
                     href="https://www.datalakes-eawag.ch/data"
                     target="_blank"
@@ -248,21 +254,21 @@ class Insitu extends Component {
 
 class AvailableData extends Component {
   render() {
-    var { metadata } = this.props;
+    var { metadata, language } = this.props;
     return (
       <Dropdown
-        title="Available Data"
+        title={Translations["availableData"][language]}
         visible={true}
         contents={
           <div className="objects">
             <div className="text">
-              Learn more about how our datasets are produced.
+              {Translations["availableDataDesc"][language]}
             </div>
             <div className="datasets">
               {metadata.available.map((i) => (
                 <a href={i.url} target="_blank" rel="noreferrer" key={i.name}>
                   <div className="dataset">
-                    <div className="dataset-button">Learn more</div>
+                    <div className="dataset-button">{Translations["learnMore"][language]}</div>
                     <div className="name">{i.name}</div>
                     <div className="date">
                       {i.start} - {i.end}
@@ -281,53 +287,53 @@ class AvailableData extends Component {
 
 class Properties extends Component {
   render() {
-    var { metadata } = this.props;
+    var { metadata, language } = this.props;
     var properties = [
-      { key: "area", unit: "km²", label: "Surface Area", img: area_icon },
-      { key: "max_depth", unit: "m", label: "Max Depth", img: depth_icon },
+      { key: "area", unit: "km²", label: Translations["surfaceArea"][language], img: area_icon },
+      { key: "max_depth", unit: "m", label: Translations["maxDepth"][language], img: depth_icon },
 
-      { key: "volume", unit: "km³", label: "Volume", img: volume_icon },
-      { key: "ave_depth", unit: "m", label: "Average Depth", img: depth_icon },
+      { key: "volume", unit: "km³", label: Translations["volume"][language], img: volume_icon },
+      { key: "ave_depth", unit: "m", label: Translations["averageDepth"][language], img: depth_icon },
       {
         key: "elevation",
         unit: "m.a.s.l",
-        label: "Elevation",
+        label: Translations["elevation"][language],
         img: elevation_icon,
       },
       {
         key: "residence_time",
         unit: "days",
-        label: "Residence time",
+        label: Translations["residenceTime"][language],
         img: time_icon,
       },
       {
         key: "geothermal_flux",
         unit: "W/m²",
-        label: "Geothermal flux",
+        label: Translations["geothermalFlux"][language],
         img: flux_icon,
       },
-      { key: "type", unit: "", label: "Type", img: type_icon },
+      { key: "type", unit: "", label: Translations["type"][language], img: type_icon },
       {
         key: "mixing_regime",
         unit: "",
-        label: "Mixing Regime",
+        label: Translations["mixingRegime"][language],
         img: mixing_icon,
       },
       {
         key: "trophic_state",
         unit: "",
-        label: "Tropic State",
+        label: Translations["trophicState"][language],
         img: trophic_icon,
       },
     ];
     var plot = properties.filter((p) => p.key in metadata && metadata[p.key] !== "NA");
     return (
       <Dropdown
-        title="Lake Properties"
+        title={Translations["lakeProperties"][language]}
         visible={true}
         contents={
           <div className="properties">
-            <div className="head">Key physical properties of Lake Geneva</div>
+            <div className="head">{Translations["lakePropertiesDesc"][language]} {metadata.name[language]}</div>
             {plot.map((p) => (
               <div className="property" key={p.key}>
                 <div className="left">
@@ -356,11 +362,11 @@ class Metadata extends Component {
       <React.Fragment>
         <div className="title">{title}</div>
         <div className="subtitle">{subtitle}</div>
-        <LatestEvents />
+        <LatestEvents language={language} />
         {"insitu" in metadata && (
           <Insitu metadata={metadata} language={language} />
         )}
-        {"available" in metadata && (
+        {"available" in metadata && false && (
           <AvailableData metadata={metadata} language={language} />
         )}
         <Properties metadata={metadata} language={language} />

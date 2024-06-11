@@ -135,7 +135,7 @@ class Graph extends Component {
       heat_layer = heat_layers[0];
     }
     var line_layer = false;
-    var line_layers = layers.filter((d) => d.active && d.display === "line");
+    var line_layers = layers.filter((d) => d.active && (d.display === "line" || d.display === "doy"));
     if (line_layers.length > 0) {
       line_layer = line_layers[0];
     }
@@ -143,10 +143,10 @@ class Graph extends Component {
       <div className="module-component graph">
         <div className="plot">
           {heat_layer && (
-            <DatasetHeatmap {...heat_layer.displayOptions} dark={dark} />
+            <DatasetHeatmap {...heat_layer.displayOptions} dark={dark} language={language} />
           )}
           {line_layer && (
-            <DatasetLinegraph {...line_layer.displayOptions} dark={dark} />
+            <DatasetLinegraph {...line_layer.displayOptions} dark={dark} language={language} />
           )}
           <div className="settings" onClick={this.openSidebar}>
             <img src={settings_icon} alt="Settings" />

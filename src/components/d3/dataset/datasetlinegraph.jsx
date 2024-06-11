@@ -3,7 +3,7 @@ import D3LineGraph from "../linegraph/linegraph";
 
 class DatasetLinegraph extends Component {
   render() {
-    var { dark, data, ylabel, yunits, xlabel, xunits, curve } = this.props;
+    var { dark, data, ylabel, yunits, xlabel, xunits, curve, language } = this.props;
     return (
       <React.Fragment>
         {data && (
@@ -18,6 +18,7 @@ class DatasetLinegraph extends Component {
             lcolor={[]}
             lweight={[]}
             curve={curve}
+            language={language}
 
           />
         )}

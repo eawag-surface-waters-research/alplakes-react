@@ -21,6 +21,9 @@ response = requests.get("https://api.datalakes-eawag.ch/selectiontables/lakes")
 datalakes_lakes = response.json()
 response = requests.get("https://api.datalakes-eawag.ch/datasets")
 datalakes_datasets = response.json()
+datalakes_datasets = sorted(datalakes_datasets, key=lambda d: d['maxdatetime'], reverse=True)
+response = requests.get("https://api.datalakes-eawag.ch/selectiontables/parameters")
+datalakes_parameters = response.json()
 
 s3 = boto3.client('s3')
 
@@ -57,6 +60,8 @@ for lake in metadata:
         home["filters"].append("satellite")
         satellite_data = satellite[key]
         sat = True
+    if "insitu" not in data["metadata"] and "datalakes_id" in data["metadata"]:
+        data["metadata"]["insitu"] = func.make_insitu(data["metadata"]["datalakes_id"], datalakes_datasets, datalakes_parameters)
     data["metadata"]["bounds"] = func.make_bounds(shape, key)
     data["metadata"]["bathymetry"] = func.make_bathymetry(lake, datalakes_lakes)
     data["metadata"]["available"] = func.make_available(sat, threed, oned)

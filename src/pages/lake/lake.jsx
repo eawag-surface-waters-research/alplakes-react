@@ -81,8 +81,8 @@ class Module extends Component {
           )}
         </div>
         <div className="link">
-          <div className="title">{module.title}</div>
-          <div className="subtitle">{module.subtitle}</div>
+          <div className="title">{module.title[language]}</div>
+          <div className="subtitle">{module.subtitle[language]}</div>
           <div className="arrow">
             <img src={arrow} alt="Arrow" />
           </div>

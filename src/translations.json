@@ -589,7 +589,217 @@
     "FR": "Satellite",
     "IT": "Satellitare"
   },
-  "demo": {
+  "surfaceArea": {
+    "EN": "Surface area",
+    "DE": "Oberfläche",
+    "FR": "Superficie",
+    "IT": "Superficie"
+  },
+  "maxDepth": {
+    "EN": "Max depth",
+    "DE": "Maximale Tiefe",
+    "FR": "Profondeur max",
+    "IT": "Profondità massima"
+  },
+  "volume": {
+    "EN": "Volume",
+    "DE": "Volumen",
+    "FR": "Volume",
+    "IT": "Volume"
+  },
+  "averageDepth": {
+    "EN": "Average depth",
+    "DE": "Durchschnittliche Tiefe",
+    "FR": "Profondeur moyenne",
+    "IT": "Profondità media"
+  },
+  "residenceTime": {
+    "EN": "Residence time",
+    "DE": "Verweilzeit",
+    "FR": "Temps de séjour",
+    "IT": "Tempo di residenza"
+  },
+  "geothermalFlux": {
+    "EN": "Geothermal flux",
+    "DE": "Geothermischer Fluss",
+    "FR": "Flux géothermique",
+    "IT": "Flusso geotermico"
+  },
+  "mixingRegime": {
+    "EN": "Mixing Regime",
+    "DE": "Mischregime",
+    "FR": "Régime de mélange",
+    "IT": "Regime di miscelazione"
+  },
+  "trophicState": {
+    "EN": "Trophic State",
+    "DE": "Trophischer Zustand",
+    "FR": "État trophique",
+    "IT": "Stato trofico"
+  },
+  "lakeProperties": {
+    "EN": "Lake Properties",
+    "DE": "Seegrundstücke",
+    "FR": "Propriétés du lac",
+    "IT": "Proprietà del lago"
+  },
+  "lakePropertiesDesc": {
+    "EN": "Key physical properties of ",
+    "DE": "Wichtige physikalische Eigenschaften von ",
+    "FR": "Propriétés physiques clés de ",
+    "IT": "Principali proprietà fisiche di "
+  },
+  "type": {
+    "EN": "Type",
+    "DE": "Typ",
+    "FR": "Taper",
+    "IT": "Tipo"
+  },
+  "availableData": {
+    "EN": "Available Data",
+    "DE": "Verfügbare Daten",
+    "FR": "Données disponibles",
+    "IT": "Dati disponibili"
+  },
+  "availableDataDesc": {
+    "EN": "Learn more about how our datasets are produced.",
+    "DE": "Erfahren Sie mehr darüber, wie unsere Datensätze erstellt werden.",
+    "FR": "Apprenez-en davantage sur la façon dont nos ensembles de données sont produits.",
+    "IT": "Scopri di più su come vengono prodotti i nostri set di dati."
+  },
+  "learnMore": {
+    "EN": "Learn more",
+    "DE": "Erfahren Sie mehr",
+    "FR": "Apprendre encore plus",
+    "IT": "Saperne di più"
+  },
+  "seeMore": {
+    "EN": "See more on ",
+    "DE": "Mehr erfahren auf ",
+    "FR": "En savoir plus sur ",
+    "IT": "Vedi di più su "
+  },
+  "view": {
+    "EN": "View",
+    "DE": "Sicht",
+    "FR": "Voir",
+    "IT": "View"
+  },
+  "insituData": {
+    "EN": "Insitu Data",
+    "DE": "In-situ-Daten",
+    "FR": "Données Insitu",
+    "IT": "Dati in loco"
+  },
+  "insituDataDesc": {
+    "EN": "Selected field measurements from ",
+    "DE": "Ausgewählte Feldmessungen von ",
+    "FR": "Mesures de terrain sélectionnées à partir de ",
+    "IT": "Misurazioni sul campo selezionate da "
+  },
+  "bathymetry": {
+    "EN": "Bathymetry",
+    "DE": "Bathymetrie",
+    "FR": "Bathymétrie",
+    "IT": "Batimetria"
+  },
+  "latestEvents": {
+    "EN": "Latest Events",
+    "DE": "Letzte Veranstaltungen",
+    "FR": "Derniers évènements",
+    "IT": "Ultimi eventi"
+  },
+  "noEvents": {
+    "EN": "No events have been reported.",
+    "DE": "Es wurden keine Ereignisse gemeldet.",
+    "FR": "Aucun événement n'a été signalé.",
+    "IT": "Non è stato segnalato alcun evento."
+  },
+  "feedback": {
+    "EN": "Feedback",
+    "DE": "Rückmeldung",
+    "FR": "Retour",
+    "IT": "Feedback"
+  },
+  "feedbackText": {
+    "EN": "Thank you for taking the time to provide feedback. Please include a brief message detailing your thoughts and suggestions, and if you're open to further discussion, kindly provide your email address. We appreciate your input!",
+    "DE": "Vielen Dank, dass Sie sich die Zeit genommen haben, uns Feedback zu geben. Bitte fügen Sie eine kurze Nachricht mit Ihren Gedanken und Vorschlägen bei. Wenn Sie offen für weitere Diskussionen sind, geben Sie bitte Ihre E-Mail-Adresse an. Wir freuen uns über Ihren Beitrag!",
+    "FR": "Merci d'avoir pris le temps de donner votre avis. Veuillez inclure un bref message détaillant vos réflexions et suggestions, et si vous êtes ouvert à une discussion plus approfondie, veuillez fournir votre adresse e-mail. Nous apprécions votre contribution !",
+    "IT": "Grazie per aver dedicato del tempo per fornire un feedback. Per favore includi un breve messaggio che dettaglia i tuoi pensieri e suggerimenti e, se sei disponibile a ulteriori discussioni, fornisci gentilmente il tuo indirizzo email. Apprezziamo il tuo contributo!"
+  },
+  "addFeedback": {
+    "EN": "Add your feedback here",
+    "DE": "Geben Sie hier Ihr Feedback ein",
+    "FR": "Ajoutez vos commentaires ici",
+    "IT": "Aggiungi il tuo feedback qui"
+  },
+  "emailAddress": {
+    "EN": "Email address",
+    "DE": "E-Mail-Adresse",
+    "FR": "Adresse e-mail",
+    "IT": "Indirizzo e-mail"
+  },
+  "shareFeedback": {
+    "EN": "Share feedback",
+    "DE": "Feedback teilen",
+    "FR": "Partager vos commentaires",
+    "IT": "Condividi feedback"
+  },
+  "thanksFeedback": {
+    "EN": "Thanks for providing feedback!",
+    "DE": "Feedback teilen",
+    "FR": "Partager vos commentaires",
+    "IT": "Condividi feedback"
+  },
+  "errorFeedback": {
+    "EN": "Failed to submit feedback please directly email james.runnalls@eawag.ch",
+    "DE": "Wenn das Senden von Feedback fehlgeschlagen ist, senden Sie bitte direkt eine E-Mail an james.runnalls@eawag.ch",
+    "FR": "Échec de la soumission des commentaires, veuillez envoyer un e-mail directement à james.runnalls@eawag.ch",
+    "IT": "Impossibile inviare il feedback, inviare direttamente un'e-mail a james.runnalls@eawag.ch"
+  },
+  "forecast5": {
+    "EN": "5 day forecast",
+    "DE": "5-Tage-Vorhersage",
+    "FR": "Prévisions sur 5 jours",
+    "IT": "Previsioni a 5 giorni"
+  },
+  "apiHeader": {
+    "EN": "API Documentation",
+    "DE": "API-Dokumentation",
+    "FR": "Documentation API",
+    "IT": "Documentazione dell'API"
+  },
+  "apiDesc": {
+    "EN": "Discover the public endpoints driving alplakes.eawag.ch, connect to them, and leverage our data for your applications.",
+    "DE": "Entdecken Sie die öffentlichen Endpunkte von alplakes.eawag.ch, stellen Sie eine Verbindung zu ihnen her und nutzen Sie unsere Daten für Ihre Anwendungen.",
+    "FR": "Découvrez les points de terminaison publics qui pilotent alplakes.eawag.ch, connectez-vous à eux et exploitez nos données pour vos applications.",
+    "IT": "Scopri gli endpoint pubblici che guidano alplakes.eawag.ch, connettiti ad essi e sfrutta i nostri dati per le tue applicazioni."
+  },
+  "apiContact": {
+    "EN": "See our about page for any questions regarding the API.",
+    "DE": "Bei Fragen zur API besuchen Sie unsere Infoseite.",
+    "FR": "Consultez notre page À propos pour toute question concernant l'API.",
+    "IT": "Consulta la nostra pagina Informazioni per qualsiasi domanda riguardante l'API."
+  },
+  "apiWarning": {
+    "EN": "",
+    "DE": "API-Dokumentation ist nur auf Englisch verfügbar.",
+    "FR": "La documentation de l'API est uniquement disponible en anglais.",
+    "IT": "La documentazione API è disponibile solo in inglese."
+  },
+  "a": {
+    "EN": "",
+    "DE": "",
+    "FR": "",
+    "IT": ""
+  },
+  "b": {
+    "EN": "",
+    "DE": "",
+    "FR": "",
+    "IT": ""
+  },
+  "c": {
     "EN": "",
     "DE": "",
     "FR": "",

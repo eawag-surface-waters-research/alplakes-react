@@ -33,6 +33,10 @@ class PolygonGraph extends Component {
     this.map.fitBounds(polygon.getBounds());
     polygon.addTo(this.map);
   }
+  componentWillUnmount() {
+    this.map.off();
+    this.map.remove();
+  }
 
   render() {
     const { graphid } = this.state;

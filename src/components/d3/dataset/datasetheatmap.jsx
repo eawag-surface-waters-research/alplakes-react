@@ -14,6 +14,7 @@ class DatasetHeatmap extends Component {
       zunits,
       xlabel,
       xunits,
+      language
     } = this.props;
     return (
       <React.Fragment>
@@ -32,6 +33,7 @@ class DatasetHeatmap extends Component {
             xReverse={false}
             display={"contour"}
             dark={dark}
+            language={language}
           />
         )}
       </React.Fragment>

@@ -317,6 +317,7 @@
     "latitude": 47.125,
     "longitude": 8.62,
     "flags": ["swiss"],
+    "simstrat": ["aegeri"],
     "surface_area": 7.3,
     "type": "Natural",
     "volume": 0.36,

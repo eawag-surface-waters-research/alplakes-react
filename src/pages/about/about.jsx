@@ -155,44 +155,66 @@ class About extends Component {
           <div className="section-content">
             <div className="sub-header">Alplakes</div>
             <div className="projects">
-              Alplakes is an open-source esa funded research project aimed at
-              providing operational products based on a combination of remote
-              sensing and hydrodynamic models for a number of European lakes.
-              The project is a collaboration between Eawag, Università di Trento
-              and CNR. As part of this project 12 3D hydrodynamic models where
-              built and calibrated, Sentinel 2 products were calibrated and the
-              web platform was developed.
+              <p>
+                <u>Project description:</u> Alplakes is an open-source ESA funded research project aimed at providing operational products based on a combination of remote sensing and hydrodynamic models for a number of European lakes. The project is a collaboration between Eawag, Università di Trento and CNR. As part of this project 12 3D hydrodynamic models where built and calibrated, Sentinel 2 products were calibrated and the web platform was developed.
+              </p>
+              <p>
+                <u>Funding:</u> ESA
+              </p>
+              <p>
+                <u>PI:</u> Damien Bouffard
+              </p>
             </div>
             <div className="sub-header">Simstrat</div>
             <div className="projects">
-              The aquatic research institute Eawag is working with the 1D lake
-              model Simstrat for a better understanding of lake dynamics. This
-              project is developed jointly by the Aquatic Physics and Applied
-              System Analysis groups in the Department Surface Waters - Research
-              & Management (SURF)
+              <p>
+                <u>Project description:</u>Simstrat is a one-dimensional physical lake model for the simulation of stratification and mixing in deep stratified lakes. The model is under continuous development at Eawag. Simstrat is operationally applied to all larger lakes and a selection of smaller lakes in Switzerland.This project is developed jointly by the Aquatic Physics and Applied System Analysis groups in the Department Surface Waters - Research & Management (SURF)
+              </p>
+              <p>
+                <u>Funding:</u> Eawag
+              </p>
+              <p>
+                <u>PI:</u> Martin Schmid
+              </p>
             </div>
             <div className="sub-header">SenCast</div>
             <div className="projects">
-              Sencast is a toolbox to download and derive water quality
-              parameters from satellite images. It acts as a framework for the
-              use a variety of processors such as Idepix, Polymer, Sen2Cor and
-              Acolite. It supports ESA satellites Sentinel 2 and Sentinel 3 and
-              USGS satellite Landsat 8. It is developed and maintained by the
-              SURF Remote Sensing group at Eawag.
+              <p>
+                <u>Project description:</u> Sencast is a toolbox to download and derive water quality parameters from satellite images. It acts as a framework for the use a variety of processors such as Idepix, Polymer, Sen2Cor and Acolite. It supports ESA satellites Sentinel 2 and Sentinel 3 and USGS satellite Landsat 8. It is developed and maintained by the SURF Remote Sensing group at Eawag.
+              </p>
+              <p>
+                <u>Funding:</u> Eawag
+              </p>
+              <p>
+                <u>PI:</u> Daniel Odermatt
+              </p>
             </div>
             <div className="sub-header">Meteolakes</div>
             <div className="projects">
-              Meteolakes is a web application that shares some results of 3D
-              coupled hydrodynamic-biological simulations performed daily with
-              4.5 days forecasts for several Swiss lakes using real-time
-              atmospheric, rivers and WWTPs data. Additionally it provides
-              measurements from a field station and satellite observations
-              downloaded in real-time. With direct impacts at scientific and
-              community level, this combination also aims at assisting
-              stakeholders in evidence-based decision-making and towards the
-              sustainable management of our lakes. This product was developed by
-              Theo Baracchini as part of his PhD thesis. It has been superceeded
-              by the Alplakes platform.
+              <p>
+                <u>Project description:</u> Meteolakes is a web application that shares some results of 3D coupled hydrodynamic-biological simulations performed daily with 4.5 days forecasts for several Swiss lakes using real-time atmospheric, rivers and WWTPs data. Additionally it provides measurements from a field station and satellite observations downloaded in real-time. With direct impacts at scientific and community level, this combination also aims at assisting stakeholders in evidence-based decision-making and towards the sustainable management of our lakes. This product was developed by Theo Baracchini as part of his PhD thesis. It has been superceeded by the Alplakes platform.
+              </p>
+              <p>
+                <u>Funding:</u> ESA
+              </p>
+              <p>
+                <u>PI:</u> Damien Bouffard
+              </p>
+            </div>
+          </div>
+          <div className="section-title">List of contributors</div>
+          <div className="section-content">
+            <div className="sub-header">2024</div>
+            <div className="projects">
+              Amadori Marina, Bärenbold Fabian, Bouffard Damien, Brescani Mariano , Giardino Claudia, Irani Rahaghi Abolfazl, Odermatt, Daniel, Runnalls James, Schmid Martin, Toffolon Marco, Werther Mortimer
+            </div>
+            <div className="sub-header">2020 - 2023</div>
+            <div className="projects">
+              Amadori Marina, Bärenbold Fabian, Bouffard Damien, Cruz Hugo, Irani Rahaghi Abolfazl, Odermatt, Daniel, Runnalls James, Schmid Martin, Šukys Jonas, Toffolon Marco, Werther Mortimer
+            </div>
+            <div className="sub-header">2016 - 2019</div>
+            <div className="projects">
+              Anneville Orlane, Baracchini Theo, Bouffard Damien, Gaudard Adrien, Schmid Martin, Soulignac Frédéric, Odermatt, Daniel
             </div>
           </div>
           <div className="section-title">Related Publications</div>

@@ -1,4 +1,5 @@
 import re
+import requests
 
 
 def make_bounds(shape, key):
@@ -41,6 +42,35 @@ def url_safe(string):
         string = string.replace(edit['b'], edit['a'])
 
     return re.sub(r'[^a-zA-Z]', '', string).lower()
+
+
+def make_insitu(datalakes_ids, datasets, datalakes_parameters):
+    insitu = []
+    if not isinstance(datalakes_ids, list):
+        datalakes_ids = [datalakes_ids]
+    for datalakes_id in datalakes_ids:
+        ds = [d for d in datasets if d["lakes_id"] == datalakes_id and d["mapplotfunction"] == "gitPlot"][:5]
+        for d in ds:
+            end = d["maxdatetime"][:4]
+            if isinstance(d["monitor"], (int, float)):
+                end = "Now"
+            response = requests.get("https://api.datalakes-eawag.ch/datasetparameters/{}".format(d["id"]))
+            parameters = []
+            for parameter in response.json():
+                if parameter["parameters_id"] not in [1, 2, 3, 4, 10, 27, 28, 29, 30]:
+                    p = [d for d in datalakes_parameters if d["id"] == parameter["parameters_id"]][0]
+                    parameters.append(p["name"])
+            parameters = list(dict.fromkeys(parameters))
+            insitu.append(
+                {
+                    "url": "https://www.datalakes-eawag.ch/datadetail/{}".format(d["id"]),
+                    "name": d["title"],
+                    "live": isinstance(d["monitor"], (int, float)),
+                    "parameters": parameters,
+                    "start": d["mindatetime"][:4],
+                    "end": end
+                })
+    return insitu
 
 
 def make_bathymetry(data, datalakes_lakes):
@@ -112,27 +142,57 @@ def make_modules(data, sd):
     if "alplakes" in data:
         modules.append({
             "id": "threed_map",
-            "title": "Temperature and Currents",
-            "subtitle": "3D Model",
+            "title": {
+                "EN": "Temperature and Currents",
+                "DE": "Temperatur und Strömungen",
+                "FR": "Température et courants",
+                "IT": "Temperature e Correnti"
+            },
+            "subtitle": {
+                "EN": "3D Model",
+                "DE": "3D-Modell",
+                "FR": "modèle 3D",
+                "IT": "Modello 3D"
+            },
             "component": "map",
             "labels": {
-                "topRight": "5 day forecast"
+                "topRight": "forecast5"
             },
             "defaults": ["3D_currents", "3D_temperature"]
         })
     if "simstrat" not in data or data["simstrat"] != False:
         modules.append({
             "id": "graph_conditions",
-            "title": "Average surface temperature",
-            "subtitle": "1D Model",
+            "title": {
+                "EN": "Average surface temperature",
+                "DE": "Durchschnittliche Oberflächentemperatur",
+                "FR": "Température moyenne de surface",
+                "IT": "Temperatura superficiale media"
+            },
+            "subtitle": {
+                "EN": "1D Model",
+                "DE": "1D-Modell",
+                "FR": "modèle 1D",
+                "IT": "Modello 1D"
+            },
             "component": "graph",
             "defaults": ["temperature_linegraph"]
         })
     if sd and "sentinel3" in sd and "chla" in sd["sentinel3"]:
         modules.append({
             "id": "satellite_chla",
-            "title": "Chlorophyll A",
-            "subtitle": "Remote Sensing Product",
+            "title": {
+                "EN": "Chlorophyll A",
+                "DE": "Chlorophyll A",
+                "FR": "Chlorophylle A",
+                "IT": "Clorofilla A"
+            },
+            "subtitle": {
+                "EN": "Remote Sensing Product",
+                "DE": "Fernerkundungsprodukt",
+                "FR": "Produit de télédétection",
+                "IT": "Prodotto di telerilevamento"
+            },
             "component": "map",
             "labels": {
                 "topRight": "satelliteDatetime",
@@ -140,11 +200,22 @@ def make_modules(data, sd):
             },
             "defaults": ["satellite_chlorophyll"]
         })
-    if sd and (("sentinel3" in sd and "Zsd_lee" in sd["sentinel3"]) or ("sentinel2" in sd and "Z490" in sd["sentinel2"])):
+    if sd and (
+            ("sentinel3" in sd and "Zsd_lee" in sd["sentinel3"]) or ("sentinel2" in sd and "Z490" in sd["sentinel2"])):
         modules.append({
             "id": "satellite_secchi",
-            "title": "Secchi Depth",
-            "subtitle": "Remote Sensing Product",
+            "title": {
+                "EN": "Secchi Depth",
+                "DE": "Secchi Tiefe",
+                "FR": "Profondeur de Secchi",
+                "IT": "Profondità Secchi"
+            },
+            "subtitle": {
+                "EN": "Remote Sensing Product",
+                "DE": "Fernerkundungsprodukt",
+                "FR": "Produit de télédétection",
+                "IT": "Prodotto di telerilevamento"
+            },
             "component": "map",
             "labels": {
                 "topRight": "satelliteDatetime",
@@ -156,8 +227,18 @@ def make_modules(data, sd):
             "sentinel2" in sd and "tsm_dogliotti665" in sd["sentinel2"])):
         modules.append({
             "id": "satellite_turbidity",
-            "title": "Turbidity",
-            "subtitle": "Remote Sensing Product",
+            "title": {
+                "EN": "Turbidity",
+                "DE": "Trübung",
+                "FR": "Turbidité",
+                "IT": "Torbidità"
+            },
+            "subtitle": {
+                "EN": "Remote Sensing Product",
+                "DE": "Fernerkundungsprodukt",
+                "FR": "Produit de télédétection",
+                "IT": "Prodotto di telerilevamento"
+            },
             "component": "map",
             "labels": {
                 "topRight": "satelliteDatetime",
@@ -168,26 +249,56 @@ def make_modules(data, sd):
     if "alplakes" in data:
         modules.append({
             "id": "threed_thermocline",
-            "title": "Thermocline",
-            "subtitle": "3D Model",
+            "title": {
+                "EN": "Thermocline",
+                "DE": "Thermokline",
+                "FR": "Thermocline",
+                "IT": "Termoclino"
+            },
+            "subtitle": {
+                "EN": "3D Model",
+                "DE": "3D-Modell",
+                "FR": "modèle 3D",
+                "IT": "Modello 3D"
+            },
             "component": "map",
             "labels": {
-                "topRight": "5 day forecast"
+                "topRight": "forecast5"
             },
             "defaults": ["3D_thermocline"]
         })
     if "simstrat" not in data or data["simstrat"] != False:
         modules.append({
             "id": "graph_depthtime",
-            "title": "Average Temperature",
-            "subtitle": "1D Model",
+            "title": {
+                "EN": "Average Temperature",
+                "DE": "Durchschnittstemperatur",
+                "FR": "Température moyenne",
+                "IT": "Temperatura media"
+            },
+            "subtitle": {
+                "EN": "1D Model",
+                "DE": "1D-Modell",
+                "FR": "modèle 1D",
+                "IT": "Modello 1D"
+            },
             "component": "graph",
             "defaults": ["temperature_heatmap"]
         })
         modules.append({
             "id": "graph_historic",
-            "title": "Surface annual course",
-            "subtitle": "1D Model",
+            "title": {
+                "EN": "Surface annual course",
+                "DE": "Oberflächenjahresverlauf",
+                "FR": "Cours annuel de surface",
+                "IT": "Corso annuale di superficie"
+            },
+            "subtitle": {
+                "EN": "1D Model",
+                "DE": "1D-Modell",
+                "FR": "modèle 1D",
+                "IT": "Modello 1D"
+            },
             "component": "graph",
             "defaults": ["temperature_doy"]
         })
@@ -419,7 +530,8 @@ def make_layers(data, sd):
                 }
             }
         })
-    if sd and (("sentinel3" in sd and "Zsd_lee" in sd["sentinel3"]) or ("sentinel2" in sd and "Z490" in sd["sentinel2"])):
+    if sd and (
+            ("sentinel3" in sd and "Zsd_lee" in sd["sentinel3"]) or ("sentinel2" in sd and "Z490" in sd["sentinel2"])):
         models = []
         bucket = False
         if ("sentinel3" in sd and "Zsd_lee" in sd["sentinel3"]):
@@ -604,7 +716,7 @@ def make_datasets(data):
                 "type": "doy",
                 "parameter": "temperature",
                 "unit": "°C",
-                "display": "line",
+                "display": "doy",
                 "source": "simstrat_{}".format(data["simstrat"][0]),
                 "sources": simstrat_source(data["simstrat"],
                                            {

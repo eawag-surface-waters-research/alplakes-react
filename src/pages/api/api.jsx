@@ -3,8 +3,9 @@ import NavBar from "../../components/navbar/navbar";
 import SwaggerUI from "swagger-ui-react";
 import "swagger-ui-react/swagger-ui.css";
 import CONFIG from "../../config.json";
-import "./api.css";
 import Footer from "../../components/footer/footer";
+import Translations from "../../translations.json";
+import "./api.css";
 
 class API extends Component {
   componentDidMount() {
@@ -12,17 +13,20 @@ class API extends Component {
   }
   render() {
     document.title = "API | Alplakes";
+    var { language } = this.props;
     return (
       <React.Fragment>
         <NavBar {...this.props} relative={true} />
         <div className="api-container">
-          <div className="header">API Documentation</div>
+          <div className="header"> {Translations["apiHeader"][language]}</div>
           <div className="text">
-            Discover the public endpoints driving alplakes.eawag.ch, connect to
-            them, and leverage our data for your applications.
+            {Translations["apiDesc"][language]}
           </div>
           <div className="contact">
-            See our about page for any questions regarding the API.
+            {Translations["apiContact"][language]}
+          </div>
+          <div className="contact">
+            {Translations["apiWarning"][language]}
           </div>
           <SwaggerUI
             url={CONFIG.alplakes_api + "/openapi.json"}

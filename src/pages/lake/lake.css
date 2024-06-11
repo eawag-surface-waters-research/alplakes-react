@@ -1150,6 +1150,7 @@
     border: 1px solid var(--border-color);
     text-align: center;
     transition: all .2s ease;
+    display: none;
 }
 
 .main .lake .content .module.active .display .module-component .sidebar .layer-link:hover {

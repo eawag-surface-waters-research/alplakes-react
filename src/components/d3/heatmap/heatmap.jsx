@@ -270,7 +270,7 @@ class D3HeatMap extends Component {
           zMax: maxvalue,
           colors,
           title,
-          language,
+          language: language.toLowerCase(),
           backgroundColor: bcolor,
           autoDownsample: ads,
           fontSize,
