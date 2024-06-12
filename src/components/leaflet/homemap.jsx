@@ -4,6 +4,139 @@ import { dayName, formatDateYYYYMMDD } from "./functions";
 import Translations from "../../translations.json";
 import "./css/leaflet.css";
 
+class MapLegend extends Component {
+  render() {
+    var { parameter, language } = this.props;
+    if (parameter === "temperature") {
+      return (
+        <table>
+          <tbody>
+            <tr>
+              <td>
+                <div
+                  className="legendIcon"
+                  style={{ backgroundColor: "rgb(184,30,33)" }}
+                />
+                {"> 25 °C"}
+              </td>
+              <td>
+                <div
+                  className="legendIcon"
+                  style={{ backgroundColor: "rgb(196,236,239)" }}
+                />
+                {"10-15 °C"}
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div
+                  className="legendIcon"
+                  style={{ backgroundColor: "rgb(223,102,92)" }}
+                />
+                {"20-25 °C"}
+              </td>
+              <td>
+                <div
+                  className="legendIcon"
+                  style={{ backgroundColor: "rgb(128,194,208)" }}
+                />
+                {"5-10 °C"}
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div
+                  className="legendIcon"
+                  style={{ backgroundColor: "rgb(239,163,127)" }}
+                />
+                {"15-20 °C"}
+              </td>
+              <td>
+                <div
+                  className="legendIcon"
+                  style={{ backgroundColor: "rgb(52,132,150)" }}
+                />
+                {"< 5 °C"}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      );
+    } else if (parameter === "ice") {
+      return (
+        <table>
+          <tbody>
+            <tr>
+              <td>
+                <div
+                  className="legendIcon"
+                  style={{ backgroundColor: "rgb(196,236,239)" }}
+                />
+                {Translations["unfrozen"][language]}
+              </td>
+              <td>
+                <div
+                  className="legendIcon"
+                  style={{ backgroundColor: "rgb(223,102,92)" }}
+                />
+                {Translations["frozen"][language]}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      );
+    } else if (parameter === "oxygen") {
+      return (
+        <table>
+          <tbody>
+            <tr>
+              <td>
+                <div
+                  className="legendIcon"
+                  style={{ backgroundColor: "rgb(52,132,150)" }}
+                />
+                {"80-100 %"}
+              </td>
+              <td>
+                <div
+                  className="legendIcon"
+                  style={{ backgroundColor: "rgb(223,102,92)" }}
+                />
+                {"20-40 %"}
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div
+                  className="legendIcon"
+                  style={{ backgroundColor: "rgb(128,194,208)" }}
+                />
+                {"60-80 %"}
+              </td>
+              <td>
+                <div
+                  className="legendIcon"
+                  style={{ backgroundColor: "rgb(184,30,33)" }}
+                />
+                {"0-20 %"}
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div
+                  className="legendIcon"
+                  style={{ backgroundColor: "rgb(239,163,127)" }}
+                />
+                {"40-60 %"}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      );
+    }
+  }
+}
+
 class HomeMap extends Component {
   state = {
     days: [],
@@ -55,7 +188,7 @@ class HomeMap extends Component {
       } else if (value < 20) {
         return "rgb(184,30,33)";
       } else if (value < 40) {
-        return "rrgb(223,102,92)";
+        return "rgb(223,102,92)";
       } else if (value < 60) {
         return "rgb(239,163,127)";
       } else if (value < 80) {
@@ -329,6 +462,7 @@ class HomeMap extends Component {
               </div>
               <div className="label">
                 {Translations[parameters[p].label][language]}
+                <MapLegend parameter={p} language={language} />
               </div>
             </div>
           ))}

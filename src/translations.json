@@ -119,6 +119,12 @@
     "FR": "Congelée",
     "IT": "Congelato"
   },
+  "unfrozen": {
+    "EN": "Unfrozen",
+    "DE": "Aufgetaut",
+    "FR": "Dégelé",
+    "IT": "Scongelato"
+  },
   "forecast": {
     "EN": "Temperature forecast",
     "DE": "Temperaturvorhersage",

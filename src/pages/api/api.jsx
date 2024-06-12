@@ -23,10 +23,7 @@ class API extends Component {
             {Translations["apiDesc"][language]}
           </div>
           <div className="contact">
-            {Translations["apiContact"][language]}
-          </div>
-          <div className="contact">
-            {Translations["apiWarning"][language]}
+            {Translations["apiContact"][language]} {Translations["apiWarning"][language]}
           </div>
           <SwaggerUI
             url={CONFIG.alplakes_api + "/openapi.json"}

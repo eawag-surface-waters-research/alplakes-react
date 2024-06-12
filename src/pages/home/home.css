@@ -725,12 +725,27 @@
   background-color: var(--background-color);
   padding: 12px;
   position: absolute;
-  bottom: calc(-55px);
+  top: calc(100% + var(--padding)/4);
   box-shadow: var(--box-shadow);
   border-radius: 8px;
   text-align: left;
   display: none;
   text-wrap: nowrap;
+}
+
+.main .home .content .home-map .parameter-selector .parameter .label table {
+  font-size: 14px;
+  color: var(--background-suble-font-color);
+  margin-top: 6px;
+}
+
+.main .home .content .home-map .parameter-selector .parameter .label .legendIcon {
+  width: 12px;
+  height: 12px;
+  border-radius: 16px;
+  display: inline-block;
+  vertical-align: bottom;
+  margin: 3px 6px;
 }
 
 .main .home .content .home-map .parameter-selector .parameter:hover .label {
