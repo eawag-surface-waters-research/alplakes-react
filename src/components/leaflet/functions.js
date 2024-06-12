@@ -1165,7 +1165,8 @@ const addAlplakesParticles = async (
   loadingId
 ) => {
   const overwrite = { parameter: "velocity", type: "alplakes_hydrodynamic" };
-  if (initialLoad) {
+  var source = layer.sources[layer.source];
+  if (initialLoad || source.height === undefined) {
     loading("Collecting metadata", loadingId);
     ({ layer, period, depth } = await getAlplakesHydrodynamicMetadata(
       layer,
