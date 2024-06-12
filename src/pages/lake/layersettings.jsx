@@ -13,6 +13,7 @@ import {
 } from "./functions";
 import "react-datepicker/dist/react-datepicker.css";
 import "./lake.css";
+import refreshIcon from "../../img/refresh.png"
 
 class Depth extends Component {
   state = {
@@ -248,11 +249,11 @@ class Raster extends Component {
   };
 
   resetMin = () => {
-    this.setState({ _min: this.props.options.dataMin });
+    this.setState({ _min: this.props.options.dataMin }, () => this.updateMinMax());
   };
 
   resetMax = () => {
-    this.setState({ _max: this.props.options.dataMax });
+    this.setState({ _max: this.props.options.dataMax }, () => this.updateMinMax());
   };
 
   componentDidUpdate() {
@@ -269,26 +270,6 @@ class Raster extends Component {
         dataMax: this.props.options.dataMax,
       });
     }
-  }
-
-  componentDidMount() {
-    var { id } = this.state;
-    document
-      .getElementById("raster_min_" + id)
-      .addEventListener("keydown", this.enterMinMax);
-    document
-      .getElementById("raster_max_" + id)
-      .addEventListener("keydown", this.enterMinMax);
-  }
-
-  componentWillUnmount() {
-    var { id } = this.state;
-    document
-      .getElementById("raster_min_" + id)
-      .removeEventListener("keydown", this.enterMinMax);
-    document
-      .getElementById("raster_max_" + id)
-      .removeEventListener("keydown", this.enterMinMax);
   }
 
   render() {
@@ -323,34 +304,34 @@ class Raster extends Component {
         <Depth depth={depth} depths={depths} onChange={setDepth} />
         <div className="setting half">
           <div className="label">Min</div>
-          <div>
+          <div className="minmax">
             <input
               type="number"
               className="with-button"
               value={_min}
               step="0.1"
               onChange={this.setMin}
+              onBlur={this.updateMinMax}
+              onKeyDown={this.enterMinMax}
               id={"raster_min_" + id}
             />
-            <button onClick={this.resetMin} className="reset">
-              Reset
-            </button>
+            <img src={refreshIcon} alt="Reset" onClick={this.resetMin} className="reset" title="Reset"/>
           </div>
         </div>
         <div className="setting half">
           <div className="label">Max</div>
-          <div>
+          <div className="minmax">
             <input
               type="number"
               className="with-button"
               value={_max}
               step="0.1"
               onChange={this.setMax}
+              onBlur={this.updateMinMax}
+              onKeyDown={this.enterMinMax}
               id={"raster_max_" + id}
             />
-            <button onClick={this.resetMax} className="reset">
-              Reset
-            </button>
+            <img src={refreshIcon} alt="Reset" onClick={this.resetMax} className="reset" title="Reset"/>
           </div>
         </div>
         <div className="setting half">
@@ -783,11 +764,11 @@ class Tiff extends Component {
   };
 
   resetMin = () => {
-    this.setState({ _min: this.props.options.dataMin });
+    this.setState({ _min: this.props.options.dataMin }, () => this.updateMinMax());
   };
 
   resetMax = () => {
-    this.setState({ _max: this.props.options.dataMax });
+    this.setState({ _max: this.props.options.dataMax }, () => this.updateMinMax());
   };
 
   onMonthChange = (event) => {
@@ -916,29 +897,6 @@ class Tiff extends Component {
     }
   }
 
-  componentDidMount() {
-    var { id } = this.state;
-    window.addEventListener("click", this.updateMinMax);
-    document
-      .getElementById("tiff_min_" + id)
-      .addEventListener("keydown", this.enterMinMax);
-    document
-      .getElementById("tiff_max_" + id)
-      .addEventListener("keydown", this.enterMinMax);
-    this.setState({});
-  }
-
-  componentWillUnmount() {
-    var { id } = this.state;
-    window.removeEventListener("click", this.updateMinMax);
-    document
-      .getElementById("tiff_min_" + id)
-      .removeEventListener("keydown", this.enterMinMax);
-    document
-      .getElementById("tiff_max_" + id)
-      .removeEventListener("keydown", this.enterMinMax);
-  }
-
   render() {
     var { _min, _max, id } = this.state;
     var { language } = this.props;
@@ -1032,34 +990,34 @@ class Tiff extends Component {
         </div>
         <div className="setting half">
           <div className="label">Min</div>
-          <div>
+          <div className="minmax">
             <input
               type="number"
               className="with-button"
               value={_min}
               step="0.1"
               onChange={this.setMin}
+              onBlur={this.updateMinMax}
+              onKeyDown={this.enterMinMax}
               id={"tiff_min_" + id}
             />
-            <button onClick={this.resetMin} className="reset">
-              Reset
-            </button>
+            <img src={refreshIcon} alt="Reset" onClick={this.resetMin} className="reset" title="Reset"/>
           </div>
         </div>
         <div className="setting half">
           <div className="label">Max</div>
-          <div>
+          <div className="minmax">
             <input
               type="number"
               className="with-button"
               value={_max}
               step="0.1"
               onChange={this.setMax}
+              onBlur={this.updateMinMax}
+              onKeyDown={this.enterMinMax}
               id={"tiff_max_" + id}
             />
-            <button onClick={this.resetMax} className="reset">
-              Reset
-            </button>
+            <img src={refreshIcon} alt="Reset" onClick={this.resetMax} className="reset" title="Reset"/>
           </div>
         </div>
         <div className="setting half">
