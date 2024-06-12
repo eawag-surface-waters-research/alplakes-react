@@ -56,7 +56,7 @@ for lake in metadata:
         oned = True
         home["filters"].append("1D")
     satellite_data = False
-    if key in satellite:
+    if key in satellite and "sentinel3" in satellite[key]:
         home["filters"].append("satellite")
         satellite_data = satellite[key]
         sat = True

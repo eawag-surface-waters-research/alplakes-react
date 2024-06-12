@@ -200,8 +200,8 @@ def make_modules(data, sd):
             },
             "defaults": ["satellite_chlorophyll"]
         })
-    if sd and (
-            ("sentinel3" in sd and "Zsd_lee" in sd["sentinel3"]) or ("sentinel2" in sd and "Z490" in sd["sentinel2"])):
+    if sd and ("sentinel3" in sd and "Zsd_lee" in sd["sentinel3"]):
+        # or ("sentinel2" in sd and "Z490" in sd["sentinel2"])
         modules.append({
             "id": "satellite_secchi",
             "title": {
@@ -223,8 +223,8 @@ def make_modules(data, sd):
             },
             "defaults": ["satellite_secchi"]
         })
-    if sd and (("sentinel3" in sd and "tsm_binding754" in sd["sentinel3"]) or (
-            "sentinel2" in sd and "tsm_dogliotti665" in sd["sentinel2"])):
+    if sd and ("sentinel3" in sd and "tsm_binding754" in sd["sentinel3"]):
+        # or ("sentinel2" in sd and "tsm_dogliotti665" in sd["sentinel2"])
         modules.append({
             "id": "satellite_turbidity",
             "title": {

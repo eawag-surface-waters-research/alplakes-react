@@ -114,9 +114,18 @@ const addSimstratDoy = async (layer, language) => {
     yunits: layer.unit,
   };
   layer.displayOptions = { ...layer.displayOptions, ...options };
-  var { data } = await axios.get(
-    `${CONFIG.alplakes_api}/simulations/1d/doy/${source.model}/${source.lake}/${source.parameter}/${layer.displayOptions.depth}`
-  );
+  try {
+    var { data } = await axios.get(
+      `${CONFIG.alplakes_api}/simulations/1d/doy/${source.model}/${source.lake}/${source.parameter}/${layer.displayOptions.depth}`
+    );
+  } catch (e) {
+    console.error("DOY value not calculated, triggering calculation.");
+    axios.get(
+      `${CONFIG.alplakes_api}/simulations/1d/doy/write/${source.model}/${source.lake}/${source.parameter}/${layer.displayOptions.depth}`
+    );
+    throw Object.assign(new Error("DOY value not calculated"), { code: 402 });
+  }
+
   var x = removeLeap(getDoyArray());
   var display = [];
   if ("min" in data)

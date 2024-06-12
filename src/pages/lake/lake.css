@@ -2027,6 +2027,7 @@
 
 .main .lake .content .module .link .title {
     font-size: 18px;
+    max-width: calc(100% - 35px);
 }
 
 .main .lake .content .module .link .subtitle {

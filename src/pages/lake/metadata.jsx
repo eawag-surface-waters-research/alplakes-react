@@ -333,7 +333,7 @@ class Properties extends Component {
         visible={true}
         contents={
           <div className="properties">
-            <div className="head">{Translations["lakePropertiesDesc"][language]} {metadata.name[language]}</div>
+            <div className="head">{Translations["lakePropertiesDesc"][language]}</div>
             {plot.map((p) => (
               <div className="property" key={p.key}>
                 <div className="left">

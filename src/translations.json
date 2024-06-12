@@ -644,10 +644,10 @@
     "IT": "Proprietà del lago"
   },
   "lakePropertiesDesc": {
-    "EN": "Key physical properties of ",
-    "DE": "Wichtige physikalische Eigenschaften von ",
-    "FR": "Propriétés physiques clés de ",
-    "IT": "Principali proprietà fisiche di "
+    "EN": "Key physical properties",
+    "DE": "Wichtige physikalische Eigenschaften",
+    "FR": "Propriétés physiques clés",
+    "IT": "Principali proprietà fisiche"
   },
   "type": {
     "EN": "Type",

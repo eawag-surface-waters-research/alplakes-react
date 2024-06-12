@@ -4,7 +4,7 @@ import "./css/leaflet.css";
 
 class PolygonGraph extends Component {
   state = {
-    graphid: Math.round(Math.random() * 100000),
+    graphid: Math.round(Math.random() * 100000000),
   };
   async componentDidMount() {
     const { graphid } = this.state;
@@ -34,8 +34,13 @@ class PolygonGraph extends Component {
     polygon.addTo(this.map);
   }
   componentWillUnmount() {
-    this.map.off();
-    this.map.remove();
+    try {
+      this.map.off();
+      this.map.remove();
+    } catch (e) {
+      console.error(e);
+    }
+
   }
 
   render() {
