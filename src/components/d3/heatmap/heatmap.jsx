@@ -256,6 +256,8 @@ class D3HeatMap extends Component {
           levels,
         } = this.props;
 
+        if (typeof language === 'string' || language instanceof String) language = language.toLowerCase()
+
         var options = {
           xLabel: xlabel,
           yLabel: ylabel,
@@ -270,7 +272,7 @@ class D3HeatMap extends Component {
           zMax: maxvalue,
           colors,
           title,
-          language: language.toLowerCase(),
+          language: language,
           backgroundColor: bcolor,
           autoDownsample: ads,
           fontSize,
