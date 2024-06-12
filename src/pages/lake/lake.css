@@ -439,6 +439,14 @@
     position: relative;
 }
 
+.main .lake .content .module .display .module-component.graph rect {
+    pointer-events: none;
+}
+
+.main .lake .content .module.active .display .module-component.graph rect {
+    pointer-events: all;
+}
+
 .main .lake .content .module.active .display .module-component .sidebar {
     display: inline-block;
 }
