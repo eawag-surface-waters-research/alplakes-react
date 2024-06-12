@@ -91,6 +91,7 @@ class Search extends Component {
           }
           value={search}
           onChange={setSearch}
+          id="search"
         />
         <img src={searchIcon} alt="Search Icon" />
         <div className="filters">
@@ -437,7 +438,15 @@ class Home extends Component {
     localStorage.setItem("favorites", JSON.stringify(favorites));
     this.setState({ favorites });
   };
+  focusSearchBar = (e) => {
+    try {
+      if (e.key.length === 1 && e.key.match(/[a-z]/i)) {
+        document.getElementById("search").focus();
+      }
+    } catch (e) {}
+  };
   async componentDidMount() {
+    window.addEventListener("keydown", this.focusSearchBar);
     var { parameter, parameters } = this.state;
     var geometry, forecast;
     const { data: list } = await axios.get(
@@ -478,6 +487,9 @@ class Home extends Component {
       return l;
     });
     this.setState({ list });
+  }
+  componentWillUnmount() {
+    window.removeEventListener("keydown", this.focusSearchBar);
   }
   render() {
     document.title = "Alplakes";

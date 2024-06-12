@@ -146,9 +146,9 @@ class Map extends Component {
   closeSelection = () => {
     this.setState({ selection: false });
   };
-  setDepthAndPeriod = (depth, period) => {
+  setDepthAndPeriod = (depth, period, datetime) => {
     if (depth !== this.state.depth || period !== this.state.period) {
-      this.setState({ depth, period });
+      this.setState({ depth, period, datetime });
     }
   };
   setDepth = (value) => {

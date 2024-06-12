@@ -435,11 +435,12 @@ const addAlplakesHydrodynamic = async (
   var source = layer.sources[layer.source];
   if (initialLoad || source.height === undefined) {
     loading("Collecting metadata", loadingId);
-    ({ layer, period, depth } = await getAlplakesHydrodynamicMetadata(
+    ({ layer, period, depth, datetime } = await getAlplakesHydrodynamicMetadata(
       layer,
-      depth
+      depth,
+      datetime
     ));
-    setDepthAndPeriod(depth, period);
+    setDepthAndPeriod(depth, period, datetime);
   }
   loading("Downloading lake geometry", loadingId);
   await downloadAlplakesHydrodynamicGeometry(layer, period, dataStore);
@@ -465,7 +466,7 @@ const addAlplakesHydrodynamic = async (
   return layer;
 };
 
-const getAlplakesHydrodynamicMetadata = async (layer, depth) => {
+const getAlplakesHydrodynamicMetadata = async (layer, depth, datetime) => {
   var source = layer.sources[layer.source];
   source.bucket = source.bucket.replace("{lake}", layer.lake);
   source.end = source.end.replace("{lake}", layer.lake);
@@ -489,7 +490,8 @@ const getAlplakesHydrodynamicMetadata = async (layer, depth) => {
     source.missingDates = data.missing_weeks;
   }
   var period = [startDate, source.maxDate];
-  return { layer, period, depth };
+  if (datetime < startDate || datetime > source.maxDate) datetime = startDate;
+  return { layer, period, depth, datetime };
 };
 
 const downloadAlplakesHydrodynamicGeometry = async (
@@ -631,7 +633,6 @@ const plotAlplakesHydrodynamic = (
     String(depth),
   ];
   var geometry_path = [source.type, source.model, layer.lake, "geometry"];
-
   var data = getNested(dataStore, path);
   var geometry = getNested(dataStore, geometry_path);
   var { display } = layer;
@@ -1168,9 +1169,10 @@ const addAlplakesParticles = async (
   var source = layer.sources[layer.source];
   if (initialLoad || source.height === undefined) {
     loading("Collecting metadata", loadingId);
-    ({ layer, period, depth } = await getAlplakesHydrodynamicMetadata(
+    ({ layer, period, depth, datetime } = await getAlplakesHydrodynamicMetadata(
       layer,
-      depth
+      depth,
+      datetime
     ));
   }
   loading("Downloading lake geometry", loadingId);
