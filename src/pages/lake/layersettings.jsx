@@ -13,7 +13,7 @@ import {
 } from "./functions";
 import "react-datepicker/dist/react-datepicker.css";
 import "./lake.css";
-import refreshIcon from "../../img/refresh.png"
+import refreshIcon from "../../img/refresh.png";
 
 class Depth extends Component {
   state = {
@@ -249,11 +249,15 @@ class Raster extends Component {
   };
 
   resetMin = () => {
-    this.setState({ _min: this.props.options.dataMin }, () => this.updateMinMax());
+    this.setState({ _min: this.props.options.dataMin }, () =>
+      this.updateMinMax()
+    );
   };
 
   resetMax = () => {
-    this.setState({ _max: this.props.options.dataMax }, () => this.updateMinMax());
+    this.setState({ _max: this.props.options.dataMax }, () =>
+      this.updateMinMax()
+    );
   };
 
   componentDidUpdate() {
@@ -315,7 +319,13 @@ class Raster extends Component {
               onKeyDown={this.enterMinMax}
               id={"raster_min_" + id}
             />
-            <img src={refreshIcon} alt="Reset" onClick={this.resetMin} className="reset" title="Reset"/>
+            <img
+              src={refreshIcon}
+              alt="Reset"
+              onClick={this.resetMin}
+              className="reset"
+              title="Reset"
+            />
           </div>
         </div>
         <div className="setting half">
@@ -331,7 +341,13 @@ class Raster extends Component {
               onKeyDown={this.enterMinMax}
               id={"raster_max_" + id}
             />
-            <img src={refreshIcon} alt="Reset" onClick={this.resetMax} className="reset" title="Reset"/>
+            <img
+              src={refreshIcon}
+              alt="Reset"
+              onClick={this.resetMax}
+              className="reset"
+              title="Reset"
+            />
           </div>
         </div>
         <div className="setting half">
@@ -764,11 +780,15 @@ class Tiff extends Component {
   };
 
   resetMin = () => {
-    this.setState({ _min: this.props.options.dataMin }, () => this.updateMinMax());
+    this.setState({ _min: this.props.options.dataMin }, () =>
+      this.updateMinMax()
+    );
   };
 
   resetMax = () => {
-    this.setState({ _max: this.props.options.dataMax }, () => this.updateMinMax());
+    this.setState({ _max: this.props.options.dataMax }, () =>
+      this.updateMinMax()
+    );
   };
 
   onMonthChange = (event) => {
@@ -844,16 +864,19 @@ class Tiff extends Component {
         let obs = available[key].images.length;
         var className;
         if (time >= start && time <= end) {
-          className = `.setting.${id} .custom-css-datepicker .react-datepicker__day--0${day < 10 ? "0" + day : day
-            }:not(.react-datepicker__day--outside-month)`;
+          className = `.setting.${id} .custom-css-datepicker .react-datepicker__day--0${
+            day < 10 ? "0" + day : day
+          }:not(.react-datepicker__day--outside-month)`;
           element = document.querySelectorAll(className);
         } else if (time < start) {
-          className = `.setting.${id} .custom-css-datepicker .react-datepicker__day--0${day < 10 ? "0" + day : day
-            }.react-datepicker__day--outside-month`;
+          className = `.setting.${id} .custom-css-datepicker .react-datepicker__day--0${
+            day < 10 ? "0" + day : day
+          }.react-datepicker__day--outside-month`;
           element = document.querySelectorAll(className);
         } else if (time > end) {
-          className = `.setting.${id} .custom-css-datepicker .react-datepicker__day--0${day < 10 ? "0" + day : day
-            }.react-datepicker__day--outside-month`;
+          className = `.setting.${id} .custom-css-datepicker .react-datepicker__day--0${
+            day < 10 ? "0" + day : day
+          }.react-datepicker__day--outside-month`;
           element = document.querySelectorAll(className);
         }
         if (element.length > 0) {
@@ -1001,7 +1024,13 @@ class Tiff extends Component {
               onKeyDown={this.enterMinMax}
               id={"tiff_min_" + id}
             />
-            <img src={refreshIcon} alt="Reset" onClick={this.resetMin} className="reset" title="Reset"/>
+            <img
+              src={refreshIcon}
+              alt="Reset"
+              onClick={this.resetMin}
+              className="reset"
+              title="Reset"
+            />
           </div>
         </div>
         <div className="setting half">
@@ -1017,7 +1046,13 @@ class Tiff extends Component {
               onKeyDown={this.enterMinMax}
               id={"tiff_max_" + id}
             />
-            <img src={refreshIcon} alt="Reset" onClick={this.resetMax} className="reset" title="Reset"/>
+            <img
+              src={refreshIcon}
+              alt="Reset"
+              onClick={this.resetMax}
+              className="reset"
+              title="Reset"
+            />
           </div>
         </div>
         <div className="setting half">
@@ -1292,7 +1327,7 @@ class Line extends Component {
     options["depth"] = depth;
     options["update"] = true;
     updateOptions(id, options);
-  }
+  };
 
   render() {
     var { language, layer } = this.props;
@@ -1316,7 +1351,8 @@ class Line extends Component {
           </div>
         )}
         {depth && (
-          <Depth depth={depth} depths={depths} onChange={this.setDepth} />)}
+          <Depth depth={depth} depths={depths} onChange={this.setDepth} />
+        )}
       </div>
     );
   }
@@ -1367,11 +1403,7 @@ class LayerSettings extends Component {
         <Line id={layer.id} options={layer.displayOptions} {...this.props} />
       );
     } else {
-      return (
-        <div className="layer-settings">
-          No customisable parameters available for this layer.
-        </div>
-      );
+      return <div className="layer-settings"></div>;
     }
   }
 }

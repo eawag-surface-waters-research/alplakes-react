@@ -793,17 +793,53 @@
     "FR": "La documentation de l'API est uniquement disponible en anglais.",
     "IT": "La documentazione API è disponibile solo in inglese."
   },
-  "a": {
-    "EN": "",
-    "DE": "",
-    "FR": "",
-    "IT": ""
+  "aboutTitle": {
+    "EN": "Forecasting and monitoring alpine lakes",
+    "DE": "Prognose und Überwachung alpiner Seen",
+    "FR": "Prévision et surveillance des lacs alpins",
+    "IT": "Previsione e monitoraggio dei laghi alpini"
   },
-  "b": {
-    "EN": "",
-    "DE": "",
-    "FR": "",
-    "IT": ""
+  "aboutIntro": {
+    "EN": "Alplakes is an interactive web application offering public access to operational simulations and remote sensing products for lakes across the European alpine region. This platform consolidates outputs from several research projects, providing a comprehensive digital twin for each lake. Alplakes is designed to be user-friendly, allowing a diverse group of users to easily access the latest lake models and remote sensing products produced by the research community.",
+    "DE": "Alplakes ist eine interaktive Webanwendung, die der Öffentlichkeit Zugang zu Betriebssimulationen und Fernerkundungsprodukten für Seen im gesamten europäischen Alpenraum bietet. Diese Plattform konsolidiert Ergebnisse aus mehreren Forschungsprojekten und bietet einen umfassenden digitalen Zwilling für jeden See. Alplakes ist benutzerfreundlich gestaltet und ermöglicht einer vielfältigen Benutzergruppe den einfachen Zugriff auf die neuesten Seemodelle und Fernerkundungsprodukte der Forschungsgemeinschaft.",
+    "FR": "Alplakes est une application Web interactive offrant un accès public à des simulations opérationnelles et à des produits de télédétection pour les lacs de la région alpine européenne. Cette plateforme consolide les résultats de plusieurs projets de recherche, fournissant un jumeau numérique complet pour chaque lac. Alplakes est conçu pour être convivial, permettant à un groupe diversifié d'utilisateurs d'accéder facilement aux derniers modèles de lacs et produits de télédétection produits par la communauté des chercheurs.",
+    "IT": "Alplakes è un'applicazione web interattiva che offre accesso pubblico a simulazioni operative e prodotti di telerilevamento per i laghi della regione alpina europea. Questa piattaforma consolida i risultati di diversi progetti di ricerca, fornendo un gemello digitale completo per ciascun lago. Alplakes è progettato per essere facile da usare, consentendo a un gruppo eterogeneo di utenti di accedere facilmente agli ultimi modelli di laghi e ai prodotti di telerilevamento prodotti dalla comunità di ricerca."
+  },
+  "getInTouch": {
+    "EN": "Get in touch",
+    "DE": "In Kontakt kommen",
+    "FR": "Entrer en contact",
+    "IT": "Mettiti in contatto"
+  },
+  "getInTouchDesc": {
+    "EN": "We encourage the use of our products. Please do not hesitate to contact us in case you have feedback or are interested in collaborating.",
+    "DE": "Wir ermutigen Sie, unsere Produkte zu verwenden. Bitte zögern Sie nicht, uns zu kontaktieren, wenn Sie Feedback haben oder an einer Zusammenarbeit interessiert sind.",
+    "FR": "Nous encourageons l'utilisation de nos produits. N'hésitez pas à nous contacter si vous avez des commentaires ou si vous êtes intéressé à collaborer.",
+    "IT": "Incoraggiamo l'uso dei nostri prodotti. Non esitate a contattarci nel caso abbiate feedback o siate interessati a collaborare."
+  },
+  "projects": {
+    "EN": "Projects",
+    "DE": "Projekte",
+    "FR": "Projets",
+    "IT": "Progetti"
+  },
+  "contributors": {
+    "EN": "List of contributors",
+    "DE": "Liste der Mitwirkenden",
+    "FR": "Liste des contributeurs",
+    "IT": "Elenco dei contributori"
+  },
+  "publications": {
+    "EN": "Related Publications",
+    "DE": "Liste der Mitwirkenden",
+    "FR": "Liste des contributeurs",
+    "IT": "Elenco dei contributori"
+  },
+  "talk": {
+    "EN": "Talk to me about:",
+    "DE": "Parlez-moi de :",
+    "FR": "Sprechen Sie mit mir über:",
+    "IT": "Parlami di:"
   },
   "c": {
     "EN": "",

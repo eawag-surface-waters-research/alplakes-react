@@ -404,6 +404,7 @@ class HomeMap extends Component {
       maxZoom: maxZoom,
       maxBoundsViscosity: 0.5,
       zoomControl: false,
+      attributionControl: false,
     });
     this.map = map;
 

@@ -1384,6 +1384,11 @@
     opacity: 0.5;
 }
 
+.main.dark .lake .content .module.active .display .module-component .sidebar .layer-settings img.reset {
+    -webkit-filter: invert(100%);
+    filter: invert(100%)
+}
+
 .main .lake .content .module.active .display .module-component .sidebar .layer-settings img.reset:hover {
     transform: rotate(-90deg);
     opacity: 1;

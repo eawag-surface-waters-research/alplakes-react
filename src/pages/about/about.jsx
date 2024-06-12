@@ -11,6 +11,7 @@ import runnallja from "../../img/runnalja.jpg";
 import bouffada from "../../img/bouffada.jpg";
 import odermada from "../../img/odermada.jpg";
 import schmidma from "../../img/schmidma.jpg";
+import Translations from "../../translations.json";
 import "./about.css";
 
 class Promos extends Component {
@@ -44,6 +45,7 @@ class About extends Component {
   }
   render() {
     document.title = "About | Alplakes";
+    var { language } = this.props;
     var end = new Date().getFullYear();
     var products = [
       {
@@ -97,66 +99,60 @@ class About extends Component {
         <NavBar {...this.props} relative={true} />
         <div className="about">
           <div className="section-content">
-            <div className="header">
-              Forecasting and monitoring alpine lakes.
-            </div>
-            <div className="intro">
-              Alplakes is an interactive web application offering public access
-              to operational simulations and remote sensing products for lakes
-              across the European alpine region. This platform consolidates
-              outputs from several research projects, providing a comprehensive
-              digital twin for each lake. Alplakes is designed to be
-              user-friendly, allowing a diverse group of users to easily access
-              the latest lake models and remote sensing products produced by the
-              research community.
-            </div>
+            <div className="header">{Translations["aboutTitle"][language]}</div>
+            <div className="intro">{Translations["aboutIntro"][language]}</div>
             <div className="intro-promos">
               <Promos types={products} />
             </div>
           </div>
-          <div className="section-title">Get in touch</div>
+          <div className="section-title">
+            {Translations["getInTouch"][language]}
+          </div>
           <div className="section-content">
-            <div>
-              We encourage the use of our products. Please do not hesitate to
-              contact us in case you have feedback or are interested in
-              collaborating.
-            </div>
+            <div>{Translations["getInTouchDesc"][language]}</div>
             <div className="person">
               <img src={runnallja} alt="James" />
               <div className="job">Software Engineer</div>
               <div className="email">james.runnalls@eawag.ch</div>
-              <div className="contact-head">Talk to me about:</div>
+              <div className="contact-head">{Translations["talk"][language]}</div>
               <div className="contact">Bug reports, new features</div>
             </div>
             <div className="person">
               <img src={bouffada} alt="Damien" />
               <div className="job">Group Leader</div>
               <div className="email">damien.bouffard@eawag.ch</div>
-              <div className="contact-head">Talk to me about:</div>
+              <div className="contact-head">{Translations["talk"][language]}</div>
               <div className="contact">3D models, particle tracking</div>
             </div>
             <div className="person">
               <img src={odermada} alt="Dani" />
               <div className="job">Group Leader</div>
               <div className="email">daniel.odermatt@eawag.ch</div>
-              <div className="contact-head">Talk to me about:</div>
+              <div className="contact-head">{Translations["talk"][language]}</div>
               <div className="contact">Remote sensing products</div>
             </div>
             <div className="person">
               <img src={schmidma} alt="Martin" />
               <div className="job">Group Leader</div>
               <div className="email">martin.schmid@eawag.ch</div>
-              <div className="contact-head">Talk to me about:</div>
+              <div className="contact-head">{Translations["talk"][language]}</div>
               <div className="contact">1D models</div>
             </div>
           </div>
           <div className="section-content"></div>
-          <div className="section-title">Projects</div>
+          <div className="section-title">{Translations["projects"][language]}</div>
           <div className="section-content">
             <div className="sub-header">Alplakes</div>
             <div className="projects">
               <p>
-                <u>Project description:</u> Alplakes is an open-source ESA funded research project aimed at providing operational products based on a combination of remote sensing and hydrodynamic models for a number of European lakes. The project is a collaboration between Eawag, Università di Trento and CNR. As part of this project 12 3D hydrodynamic models where built and calibrated, Sentinel 2 products were calibrated and the web platform was developed.
+                <u>Project description:</u> Alplakes is an open-source ESA
+                funded research project aimed at providing operational products
+                based on a combination of remote sensing and hydrodynamic models
+                for a number of European lakes. The project is a collaboration
+                between Eawag, Università di Trento and CNR. As part of this
+                project 12 3D hydrodynamic models where built and calibrated,
+                Sentinel 2 products were calibrated and the web platform was
+                developed.
               </p>
               <p>
                 <u>Funding:</u> ESA
@@ -168,7 +164,14 @@ class About extends Component {
             <div className="sub-header">Simstrat</div>
             <div className="projects">
               <p>
-                <u>Project description:</u>Simstrat is a one-dimensional physical lake model for the simulation of stratification and mixing in deep stratified lakes. The model is under continuous development at Eawag. Simstrat is operationally applied to all larger lakes and a selection of smaller lakes in Switzerland.This project is developed jointly by the Aquatic Physics and Applied System Analysis groups in the Department Surface Waters - Research & Management (SURF)
+                <u>Project description:</u>Simstrat is a one-dimensional
+                physical lake model for the simulation of stratification and
+                mixing in deep stratified lakes. The model is under continuous
+                development at Eawag. Simstrat is operationally applied to all
+                larger lakes and a selection of smaller lakes in
+                Switzerland.This project is developed jointly by the Aquatic
+                Physics and Applied System Analysis groups in the Department
+                Surface Waters - Research & Management (SURF)
               </p>
               <p>
                 <u>Funding:</u> Eawag
@@ -180,7 +183,13 @@ class About extends Component {
             <div className="sub-header">SenCast</div>
             <div className="projects">
               <p>
-                <u>Project description:</u> Sencast is a toolbox to download and derive water quality parameters from satellite images. It acts as a framework for the use a variety of processors such as Idepix, Polymer, Sen2Cor and Acolite. It supports ESA satellites Sentinel 2 and Sentinel 3 and USGS satellite Landsat 8. It is developed and maintained by the SURF Remote Sensing group at Eawag.
+                <u>Project description:</u> Sencast is a toolbox to download and
+                derive water quality parameters from satellite images. It acts
+                as a framework for the use a variety of processors such as
+                Idepix, Polymer, Sen2Cor and Acolite. It supports ESA satellites
+                Sentinel 2 and Sentinel 3 and USGS satellite Landsat 8. It is
+                developed and maintained by the SURF Remote Sensing group at
+                Eawag.
               </p>
               <p>
                 <u>Funding:</u> Eawag
@@ -192,7 +201,17 @@ class About extends Component {
             <div className="sub-header">Meteolakes</div>
             <div className="projects">
               <p>
-                <u>Project description:</u> Meteolakes is a web application that shares some results of 3D coupled hydrodynamic-biological simulations performed daily with 4.5 days forecasts for several Swiss lakes using real-time atmospheric, rivers and WWTPs data. Additionally it provides measurements from a field station and satellite observations downloaded in real-time. With direct impacts at scientific and community level, this combination also aims at assisting stakeholders in evidence-based decision-making and towards the sustainable management of our lakes. This product was developed by Theo Baracchini as part of his PhD thesis. It has been superceeded by the Alplakes platform.
+                <u>Project description:</u> Meteolakes is a web application that
+                shares some results of 3D coupled hydrodynamic-biological
+                simulations performed daily with 4.5 days forecasts for several
+                Swiss lakes using real-time atmospheric, rivers and WWTPs data.
+                Additionally it provides measurements from a field station and
+                satellite observations downloaded in real-time. With direct
+                impacts at scientific and community level, this combination also
+                aims at assisting stakeholders in evidence-based decision-making
+                and towards the sustainable management of our lakes. This
+                product was developed by Theo Baracchini as part of his PhD
+                thesis. It has been superceeded by the Alplakes platform.
               </p>
               <p>
                 <u>Funding:</u> ESA
@@ -202,22 +221,28 @@ class About extends Component {
               </p>
             </div>
           </div>
-          <div className="section-title">List of contributors</div>
+          <div className="section-title">{Translations["contributors"][language]}</div>
           <div className="section-content">
             <div className="sub-header">2024</div>
             <div className="projects">
-              Amadori Marina, Bärenbold Fabian, Bouffard Damien, Brescani Mariano , Giardino Claudia, Irani Rahaghi Abolfazl, Odermatt, Daniel, Runnalls James, Schmid Martin, Toffolon Marco, Werther Mortimer
+              Amadori Marina, Bärenbold Fabian, Bouffard Damien, Brescani
+              Mariano , Giardino Claudia, Irani Rahaghi Abolfazl, Odermatt,
+              Daniel, Runnalls James, Schmid Martin, Toffolon Marco, Werther
+              Mortimer
             </div>
             <div className="sub-header">2020 - 2023</div>
             <div className="projects">
-              Amadori Marina, Bärenbold Fabian, Bouffard Damien, Cruz Hugo, Irani Rahaghi Abolfazl, Odermatt, Daniel, Runnalls James, Schmid Martin, Šukys Jonas, Toffolon Marco, Werther Mortimer
+              Amadori Marina, Bärenbold Fabian, Bouffard Damien, Cruz Hugo,
+              Irani Rahaghi Abolfazl, Odermatt, Daniel, Runnalls James, Schmid
+              Martin, Šukys Jonas, Toffolon Marco, Werther Mortimer
             </div>
             <div className="sub-header">2016 - 2019</div>
             <div className="projects">
-              Anneville Orlane, Baracchini Theo, Bouffard Damien, Gaudard Adrien, Schmid Martin, Soulignac Frédéric, Odermatt, Daniel
+              Anneville Orlane, Baracchini Theo, Bouffard Damien, Gaudard
+              Adrien, Schmid Martin, Soulignac Frédéric, Odermatt, Daniel
             </div>
           </div>
-          <div className="section-title">Related Publications</div>
+          <div className="section-title">{Translations["publications"][language]}</div>
           <div className="section-content">
             <div className="sub-header">Model development</div>
             <p>
