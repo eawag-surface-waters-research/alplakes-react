@@ -917,6 +917,10 @@
     padding: calc(var(--padding)/4) 0;
   }
 
+  .main .home .content .list .product-list .list-item:hover {
+    transform: none;
+  }
+
   .main .home .content .list .product-list:hover .list-item:not( :hover) {
     opacity: 1;
   }

@@ -202,7 +202,7 @@ class ListItem extends Component {
               {selected ? (
                 <div
                   className="favorite full"
-                  title="Unpin"
+                  title="Remove"
                   onClick={(event) => {
                     event.preventDefault();
                     setFavorties(lake.key);
@@ -213,7 +213,7 @@ class ListItem extends Component {
               ) : (
                 <div
                   className="favorite"
-                  title="Pin"
+                  title="Save"
                   onClick={(event) => {
                     event.preventDefault();
                     setFavorties(lake.key);
