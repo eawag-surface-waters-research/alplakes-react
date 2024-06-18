@@ -1923,11 +1923,12 @@
 
 .main .lake .content .module .display .module-component .plot .map .playback .play-controls button {
     width: 46px;
-    height: 48px;
+    height: 47px;
     background-color: transparent;
     border: none;
     padding: 0;
     cursor: pointer;
+    vertical-align: bottom;
 }
 
 .main .lake .content .module .display .module-component .plot .map .playback .play-controls button img {

@@ -109,18 +109,6 @@ const formatSencastDay = (datetime) => {
   }`;
 };
 
-const formatDateBucket = (datetime, offset = 0) => {
-  var a = new Date(datetime).getTime();
-  a = new Date(a + offset);
-  var year = a.getUTCFullYear();
-  var month = a.getUTCMonth() + 1;
-  var date = a.getUTCDate();
-  var hour = a.getUTCHours();
-  return `${String(year)}${month < 10 ? "0" + month : month}${
-    date < 10 ? "0" + date : date
-  }${hour < 10 ? "0" + hour : hour}00`;
-};
-
 const formatDateIso = (datetime) => {
   var year = datetime.getFullYear();
   var month = datetime.getMonth() + 1;
@@ -468,13 +456,19 @@ const addAlplakesHydrodynamic = async (
 
 const getAlplakesHydrodynamicMetadata = async (layer, depth, datetime) => {
   var source = layer.sources[layer.source];
-  source.bucket = source.bucket.replace("{lake}", layer.lake);
-  source.end = source.end.replace("{lake}", layer.lake);
   var data;
   try {
-    ({ data } = await axios.get(CONFIG.alplakes_bucket + source.bucket));
+    ({ data } = await axios.get(
+      `${CONFIG.alplakes_bucket}/simulations/${source.model}/cache/${
+        layer.lake
+      }/metadata.json?timestamp=${
+        Math.round((new Date().getTime() + 1800000) / 3600000) * 3600 - 3600
+      }`
+    ));
   } catch (e) {
-    ({ data } = await axios.get(CONFIG.alplakes_api + source.end));
+    ({ data } = await axios.get(
+      `${CONFIG.alplakes_api}/simulations/metadata/${source.model}/${layer.lake}`
+    ));
   }
   source.minDate = stringToDate(data.start_date).getTime();
   source.maxDate = stringToDate(data.end_date).getTime();
@@ -516,7 +510,7 @@ const downloadAlplakesHydrodynamicGeometry = async (
 
   try {
     ({ data: geometry } = await axios.get(
-      `${CONFIG.alplakes_bucket}/simulations/${source.model}/metadata/${layer.lake}/geometry.txt`
+      `${CONFIG.alplakes_bucket}/simulations/${source.model}/cache/${layer.lake}/geometry.txt`
     ));
   } catch (e) {
     ({ data: geometry } = await axios.get(
@@ -559,11 +553,11 @@ const downloadAlplakesHydrodynamicParameter = async (
   if (initialLoad) {
     try {
       ({ data: par } = await axios.get(
-        `${CONFIG.alplakes_bucket}/simulations/${source.model}/data/${
+        `${CONFIG.alplakes_bucket}/simulations/${source.model}/cache/${
           layer.lake
-        }/${parameter}_${formatDateBucket(start)}_${formatDateBucket(
-          end
-        )}_${formatDepth(depth)}.txt`
+        }/${parameter}.txt?timestamp=${
+          Math.round((new Date().getTime() + 1800000) / 3600000) * 3600 - 3600
+        }`
       ));
     } catch (e) {
       ({ data: par } = await axios.get(
