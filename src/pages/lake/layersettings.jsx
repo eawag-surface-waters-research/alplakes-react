@@ -1279,12 +1279,29 @@ class Heat extends Component {
     updateOptions(id, options);
   };
 
+  setSource = (event) => {
+    var { layer, updateSource } = this.props;
+    var source = event.target.value;
+    if (layer.source !== source) {
+      updateSource(layer.id, source);
+    }
+  };
+
   render() {
     var { language, layer } = this.props;
     var { palette, paletteName, period, minDate, maxDate } = this.props.options;
-    var { model } = layer.sources[layer.source];
     return (
       <div className="layer-settings">
+        <div className="setting">
+          <div className="label">Simulation</div>
+          <select value={layer.source} onChange={this.setSource}>
+            {Object.keys(layer.sources).map((s) => (
+              <option value={s} key={s}>
+                {s}
+              </option>
+            ))}
+          </select>
+        </div>
         {period && (
           <div className="setting">
             <div className="label">Period</div>
@@ -1329,12 +1346,29 @@ class Line extends Component {
     updateOptions(id, options);
   };
 
+  setSource = (event) => {
+    var { layer, updateSource } = this.props;
+    var source = event.target.value;
+    if (layer.source !== source) {
+      updateSource(layer.id, source);
+    }
+  };
+
   render() {
     var { language, layer } = this.props;
     var { period, minDate, maxDate, depth, depths } = this.props.options;
-    var { model } = layer.sources[layer.source];
     return (
       <div className="layer-settings">
+        <div className="setting">
+          <div className="label">Simulation</div>
+          <select value={layer.source} onChange={this.setSource}>
+            {Object.keys(layer.sources).map((s) => (
+              <option value={s} key={s}>
+                {s}
+              </option>
+            ))}
+          </select>
+        </div>
         {period && (
           <div className="setting">
             <div className="label">Period</div>
@@ -1353,6 +1387,38 @@ class Line extends Component {
         {depth && (
           <Depth depth={depth} depths={depths} onChange={this.setDepth} />
         )}
+      </div>
+    );
+  }
+}
+
+class Doy extends Component {
+  state = {
+    id: Math.round(Math.random() * 100000),
+  };
+
+  setSource = (event) => {
+    var { layer, updateSource } = this.props;
+    var source = event.target.value;
+    if (layer.source !== source) {
+      updateSource(layer.id, source);
+    }
+  };
+
+  render() {
+    var { layer } = this.props;
+    return (
+      <div className="layer-settings">
+        <div className="setting">
+          <div className="label">Simulation</div>
+          <select value={layer.source} onChange={this.setSource}>
+            {Object.keys(layer.sources).map((s) => (
+              <option value={s} key={s}>
+                {s}
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
     );
   }
@@ -1402,7 +1468,11 @@ class LayerSettings extends Component {
       return (
         <Line id={layer.id} options={layer.displayOptions} {...this.props} />
       );
-    } else {
+    } else if (type === "doy") {
+      return (
+        <Doy id={layer.id} options={layer.displayOptions} {...this.props} />
+      );
+    }else {
       return <div className="layer-settings"></div>;
     }
   }

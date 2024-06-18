@@ -119,10 +119,7 @@ const addSimstratDoy = async (layer, language) => {
       `${CONFIG.alplakes_api}/simulations/1d/doy/${source.model}/${source.lake}/${source.parameter}/${layer.displayOptions.depth}`
     );
   } catch (e) {
-    console.error("DOY value not calculated, triggering calculation.");
-    axios.get(
-      `${CONFIG.alplakes_api}/simulations/1d/doy/write/${source.model}/${source.lake}/${source.parameter}/${layer.displayOptions.depth}`
-    );
+    console.error("DOY value not calculated.");
     throw Object.assign(new Error("DOY value not calculated"), { code: 402 });
   }
 

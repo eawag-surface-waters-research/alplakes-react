@@ -64,6 +64,13 @@ class Graph extends Component {
     layers.find((l) => l.id === id).displayOptions = options;
     this.setState({ layers, updates }, () => this.processUpdates());
   };
+  updateSource = (id, source) => {
+    var { layers, updates } = this.state;
+    layers.find((l) => l.id === id).source = source;
+    updates.push({ event: "removeLayer", id: id });
+    updates.push({ event: "addLayer", id: id });
+    this.setState({ layers, updates }, () => this.processUpdates());
+  };
   setSelection = (selection) => {
     if (selection !== this.state.selection) {
       this.setState({ selection });
@@ -182,6 +189,7 @@ class Graph extends Component {
             addLayer={this.addLayer}
             removeLayer={this.removeLayer}
             updateOptions={this.updateOptions}
+            updateSource={this.updateSource}
             setSelection={this.setSelection}
           />
         </div>
