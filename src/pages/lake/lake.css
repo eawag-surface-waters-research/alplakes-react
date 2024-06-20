@@ -1,5 +1,6 @@
 .main .lake.noscroll {
     height: 100vh;
+    padding-right: 8px;
     overflow: hidden;
 }
 
@@ -300,6 +301,7 @@
     position: relative;
     display: inline-block;
     width: calc(50% - var(--padding));
+    height: 377px;
     vertical-align: top;
     border-radius: 12px;
     border: 1px solid var(--border-color);
@@ -313,7 +315,13 @@
     box-shadow: var(--box-shadow-hover);
 }
 
-.main .lake .content .module.active {
+.main .lake .content .module .module-inner {
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
+
+.main .lake .content .module.active .module-inner {
     position: fixed;
     display: inline-block;
     width: 100%;
@@ -326,10 +334,6 @@
     border-radius: 0;
     background-color: var(--background-color);
     cursor: default;
-}
-
-.main .lake .content .module.hide {
-    visibility: hidden;
 }
 
 .main .lake .content .module .leaflet-control-attribution {

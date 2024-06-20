@@ -256,7 +256,8 @@ class D3HeatMap extends Component {
           levels,
         } = this.props;
 
-        if (typeof language === 'string' || language instanceof String) language = language.toLowerCase()
+        if (typeof language === "string" || language instanceof String)
+          language = language.toLowerCase();
 
         var options = {
           xLabel: xlabel,
@@ -294,11 +295,12 @@ class D3HeatMap extends Component {
       this.setState({ display: this.props.display });
     }
     this.plotHeatMap();
-    window.addEventListener("resize", this.plotHeatMap);
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener("resize", this.plotHeatMap);
+    const myObserver = new ResizeObserver((entries) => {
+      entries.forEach((entry) => {
+        this.plotHeatMap();
+      });
+    });
+    myObserver.observe(document.getElementById("vis" + this.state.graphid));
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -311,8 +313,9 @@ class D3HeatMap extends Component {
       xgraph !== prevState.xgraph ||
       ygraph !== prevState.ygraph
     )
-      this.plotHeatMap();
-    if (!isEqual(prevProps, this.props)) this.setState({ saved: [] });
+      if (!isEqual(prevProps, this.props))
+        //this.plotHeatMap();
+        this.setState({ saved: [] });
   }
 
   render() {

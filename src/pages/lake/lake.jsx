@@ -43,48 +43,48 @@ class Module extends Component {
     var subtitle = parseSubtitle(title, metadata.name);
     return (
       <div
-        className={
-          active ? "module active" : selected ? "module hide" : "module"
-        }
+        className={active ? "module active" : "module"}
         onClick={() => {
           setActiveModule(module.id, active);
         }}
       >
-        <div className="close" onClick={closeActiveModule}>
-          &times;
-        </div>
-        <div className="active-title">
-          <div className="title">{title}</div>
-          <div className="subtitle">{subtitle}</div>
-        </div>
-        <div className="display">
-          {module.component === "map" && (
-            <Map
-              dark={dark}
-              language={language}
-              metadata={metadata}
-              module={module}
-              layers={layers}
-              active={active}
-            />
-          )}
-          {module.component === "graph" && (
-            <Graph
-              {...this.props}
-              dark={dark}
-              language={language}
-              metadata={metadata}
-              module={module}
-              datasets={datasets}
-              active={active}
-            />
-          )}
-        </div>
-        <div className="link">
-          <div className="title">{module.title[language]}</div>
-          <div className="subtitle">{module.subtitle[language]}</div>
-          <div className="arrow">
-            <img src={arrow} alt="Arrow" />
+        <div className="module-inner">
+          <div className="close" onClick={closeActiveModule}>
+            &times;
+          </div>
+          <div className="active-title">
+            <div className="title">{title}</div>
+            <div className="subtitle">{subtitle}</div>
+          </div>
+          <div className="display">
+            {module.component === "map" && (
+              <Map
+                dark={dark}
+                language={language}
+                metadata={metadata}
+                module={module}
+                layers={layers}
+                active={active}
+              />
+            )}
+            {module.component === "graph" && (
+              <Graph
+                {...this.props}
+                dark={dark}
+                language={language}
+                metadata={metadata}
+                module={module}
+                datasets={datasets}
+                active={active}
+              />
+            )}
+          </div>
+          <div className="link">
+            <div className="title">{module.title[language]}</div>
+            <div className="subtitle">{module.subtitle[language]}</div>
+            <div className="arrow">
+              <img src={arrow} alt="Arrow" />
+            </div>
           </div>
         </div>
       </div>
