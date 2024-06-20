@@ -1607,14 +1607,14 @@
 
 .main .lake .content .module .display .module-component .plot .layer-loading {
     position: absolute;
-    left: 12px;
-    top: 12px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
     z-index: 99999;
     background-color: var(--background-color);
-    box-shadow: var(--box-shadow);
     color: var(--background-font-color);
-    border-radius: 6px;
-    padding: 12px;
+    border-radius: 30px;
+    padding: 10px;
     display: flex;
     align-items: center;
     justify-content: center;

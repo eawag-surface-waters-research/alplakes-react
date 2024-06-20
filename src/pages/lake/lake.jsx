@@ -32,7 +32,6 @@ class Module extends Component {
       active,
       setActiveModule,
       closeActiveModule,
-      selected,
       language,
       metadata,
       layers,

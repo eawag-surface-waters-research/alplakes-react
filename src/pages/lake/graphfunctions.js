@@ -21,7 +21,7 @@ export const loaded = (id) => {
 export const addLayer = async (layer, language, loadingId) => {
   var source = layer.sources[layer.source];
   if (source.data_access === "simstrat_heatmap") {
-    return await addSimstratHeatmap(layer, language);
+    return await addSimstratHeatmap(layer, language, loadingId);
   } else if (source.data_access === "simstrat_doy") {
     return await addSimstratDoy(layer, language);
   } else if (source.data_access === "simstrat_linegraph") {
@@ -40,7 +40,8 @@ export const updateLayer = async (layer, loadingId) => {
 
 export const removeLayer = (layer) => {};
 
-const addSimstratHeatmap = async (layer, language) => {
+const addSimstratHeatmap = async (layer, language, loadingId) => {
+  loading(`Downloading data from the server`, loadingId);
   var source = layer.sources[layer.source];
   var { maxDate, minDate } = await simstratMetadata(source.model, source.lake);
   var start = new Date(maxDate.getTime() - 365 * 24 * 60 * 60 * 1000);
@@ -77,7 +78,7 @@ const addSimstratHeatmap = async (layer, language) => {
 const updateSimstratHeatmap = async (layer, loadingId) => {
   var source = layer.sources[layer.source];
   if (layer.displayOptions.updatePeriod) {
-    loading("Downloading new period from the server", loadingId);
+    loading("Downloading data from the server", loadingId);
     let period = layer.displayOptions.period;
     var { data } = await axios.get(
       `${CONFIG.alplakes_api}/simulations/1d/depthtime/${source.model}/${

@@ -312,10 +312,12 @@ class D3HeatMap extends Component {
       fullscreen !== prevState.fullscreen ||
       xgraph !== prevState.xgraph ||
       ygraph !== prevState.ygraph
-    )
-      if (!isEqual(prevProps, this.props))
-        //this.plotHeatMap();
-        this.setState({ saved: [] });
+    ) {
+      this.plotHeatMap();
+    }
+    if (!isEqual(prevProps, this.props)) {
+      this.setState({ saved: [] });
+    }
   }
 
   render() {
