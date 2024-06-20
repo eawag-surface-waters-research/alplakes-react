@@ -75,7 +75,17 @@ class Basemap extends Component {
       }
       this.map.triggerLayersUpdate();
     }
-
+    if (prevProps.active !== this.props.active) {
+      setTimeout(() => {
+        this.map.fitBounds(
+          L.latLngBounds(
+            L.latLng(metadata.bounds.southWest),
+            L.latLng(metadata.bounds.northEast)
+          ),
+          { padding: [20, 20], animate: false }
+        );
+      }, 50);
+    }
     var { darkMap, lightMap } = this.state;
     var { dark } = this.props;
     var mapCode = dark ? darkMap : lightMap;
