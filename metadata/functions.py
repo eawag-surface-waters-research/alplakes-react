@@ -330,8 +330,6 @@ def make_layers(data, sd):
                         "type": "alplakes_hydrodynamic",
                         "model": "delft3d-flow",
                         "start": -7,
-                        "end": "/simulations/metadata/delft3d-flow/{lake}",
-                        "bucket": "/simulations/delft3d-flow/metadata/{lake}/metadata.json",
                         "description": "Water temperatures are hindcasted and forecasted using the 3D hydrodynamic model Delft3D-flow. Meteorological forcing data is produced from Meteoswiss products, hincasts use the Cosmo-1e 1 day deterministic product (VNXQ34) and forecasts use the Cosmo-2e 5 day ensemble forecast (VNXZ32). Where rivers inputs are used this data is sourced from Bafu. This model is calibrated using in-situ measuresuments collected by a number of 3rd parties.",
                         "learnMore": "https://medium.com/@runnalls.james/operational-3d-lake-modeling-with-delft3d-2f164859e753",
                         "tags": ["5 day forecast", "2019 - Now"]
@@ -370,8 +368,6 @@ def make_layers(data, sd):
                         "type": "alplakes_hydrodynamic",
                         "model": "delft3d-flow",
                         "start": -7,
-                        "end": "/simulations/metadata/delft3d-flow/{lake}",
-                        "bucket": "/simulations/delft3d-flow/metadata/{lake}/metadata.json",
                         "description": "Lake currents are hindcasted and forecasted using the 3D hydrodynamic model Delft3D-flow. Meteorological forcing data is produced from Meteoswiss products, hincasts use the Cosmo-1e 1 day deterministic product (VNXQ34) and forecasts use the Cosmo-2e 5 day ensemble forecast (VNXZ32). Where rivers inputs are used this data is sourced from Bafu. This model is calibrated using in-situ measuresuments collected by a number of 3rd parties.",
                         "learnMore": "https://medium.com/@runnalls.james/operational-3d-lake-modeling-with-delft3d-2f164859e753",
                         "tags": ["5 day forecast", "2019 - Now"]
@@ -399,8 +395,6 @@ def make_layers(data, sd):
                         "type": "alplakes_hydrodynamic",
                         "model": "delft3d-flow",
                         "start": -7,
-                        "end": "/simulations/metadata/delft3d-flow/{lake}",
-                        "bucket": "/simulations/delft3d-flow/metadata/{lake}/metadata.json",
                         "description": "Thermocline depth calculated using Pylake and the 3D hydrodynamic model Delft3D-flow. Meteorological forcing data is produced from Meteoswiss products, hincasts use the Cosmo-1e 1 day deterministic product (VNXQ34) and forecasts use the Cosmo-2e 5 day ensemble forecast (VNXZ32). Where rivers inputs are used this data is sourced from Bafu. This model is calibrated using in-situ measuresuments collected by a number of 3rd parties.",
                         "learnMore": "https://medium.com/@runnalls.james/operational-3d-lake-modeling-with-delft3d-2f164859e753",
                         "tags": ["5 day forecast", "2019 - Now"]
@@ -427,8 +421,6 @@ def make_layers(data, sd):
                         "type": "alplakes_particles",
                         "model": "delft3d-flow",
                         "start": -7,
-                        "end": "/simulations/metadata/delft3d-flow/{lake}",
-                        "bucket": "/simulations/delft3d-flow/metadata/{lake}/metadata.json",
                         "description": "Track particles using the alplakes 3D hydrodynamic model. Click the particles button (top left) to add some particles. Press play to see where the particles go.",
                         "learnMore": "https://medium.com/@runnalls.james/operational-3d-lake-modeling-with-delft3d-2f164859e753",
                         "tags": ["Interactive", "2019 - Now"]
