@@ -164,6 +164,11 @@ class Media extends Component {
     cursor: "point",
     graphs: false,
     graphData: false,
+    warning: true,
+  };
+
+  closeWarning = () => {
+    this.setState({ warning: false });
   };
 
   getProfile = async (latlng, layer) => {
@@ -250,6 +255,7 @@ class Media extends Component {
   componentDidMount() {
     document.addEventListener("keydown", this.escFunction, false);
     document.addEventListener("click", this.closeWindows);
+    setTimeout(() => this.closeWarning(), 5000);
   }
   componentWillUnmount() {
     document.removeEventListener("keydown", this.escFunction, false);
@@ -279,11 +285,19 @@ class Media extends Component {
       frozen,
       closeFrozen,
     } = this.props;
-    var { settings, legend, graphData, graphs } = this.state;
+    var { settings, legend, graphData, graphs, warning } = this.state;
     var descriptions = Translate.descriptions[language];
     var flags = { swiss: swiss, italian: italian, french: french };
     return (
       <div className="map-component">
+        {warning && (
+          <div className="warning" onClick={this.closeWarning}>
+            <div className="warning-header">Warning</div>
+            On sunny afternoons, shoreline temperatures can typically be 1-2°C
+            warmer than model predictions due to the large horizontal grid size
+            used in lake models.
+          </div>
+        )}
         {frozen && (
           <div className="frozen">
             Lake is currently ice covered, simulations are paused during this
