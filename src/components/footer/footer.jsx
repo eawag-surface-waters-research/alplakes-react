@@ -25,7 +25,7 @@ class Footer extends Component {
               <div className="copywrite">&copy; 2024 Alplakes v2.0</div>
             </div>
           </NavLink>
-          <div className="switch">
+          <div className="switch" title={dark ? "Light mode" : "Dark mode"}>
             <Toggle
               left={<img src={light_icon} alt="light" />}
               right={<img src={dark_icon} alt="dark" />}

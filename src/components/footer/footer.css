@@ -61,9 +61,11 @@
     cursor: pointer;
     color: var(--background-font-color);
     position: absolute;
-    left: 0;
+    left: 50%;
     right: 0;
     text-align: center;
+    width: fit-content;
+    transform: translate(-50%, 0);
 }
 
 .footer .middle .copywrite {
@@ -83,6 +85,10 @@
 .dark .footer .left img {
     -webkit-filter: invert(100%);
     filter: invert(100%);
+}
+
+.footer .switch:hover .toggle {
+    border-color: var(--background-font-color);
 }
 
 .footer .switch img {

@@ -24,17 +24,25 @@ class App extends Component {
     this.setState({ language: event.target.value });
   };
   toggleDark = () => {
+    if (this.state.dark) {
+      document.documentElement.style.colorScheme = "light";
+    } else {
+      document.documentElement.style.colorScheme = "dark";
+    }
     localStorage.setItem("dark", JSON.stringify(!this.state.dark));
     this.setState({ dark: !this.state.dark });
   };
   componentDidMount() {
-    if (
-      JSON.parse(localStorage.getItem("dark")) === null &&
-      window.matchMedia
-    ) {
-      if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+    if (JSON.parse(localStorage.getItem("dark")) === null) {
+      if (
+        window.matchMedia &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches
+      ) {
+        document.documentElement.style.colorScheme = "dark";
         this.setState({ dark: true });
       }
+    } else if (JSON.parse(localStorage.getItem("dark"))) {
+      document.documentElement.style.colorScheme = "dark";
     }
   }
   render() {

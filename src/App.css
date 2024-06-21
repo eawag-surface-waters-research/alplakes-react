@@ -41,6 +41,7 @@
   --map-button: rgba(0, 0, 0, 0.8);
   --cell-size: 32px;
   --legend-color: rgb(236 236 236 / 47%);
+  color-scheme: light;
 }
 
 :root {
@@ -113,38 +114,4 @@
   box-shadow: var(--box-shadow);
   text-align: center;
   font-size: 12px;
-}
-
-/* Scrollbar */
-
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-
-::-webkit-scrollbar-thumb {
-  background: rgb(207, 202, 202);
-  border-radius: 2px;
-}
-
-::-moz-scrollbar-thumb {
-  background: rgb(207, 202, 202);
-  border-radius: 2px;
-}
-
-::-ms-scrollbar-thumb {
-  background: rgb(207, 202, 202);
-  border-radius: 2px;
-}
-
-::-webkit-scrollbar-track {
-  background: rgba(29, 30, 32, 255);
-}
-
-::-moz-scrollbar-track {
-  background: rgba(29, 30, 32, 255);
-}
-
-::-ms-scrollbar-track {
-  background: rgba(29, 30, 32, 255);
 }

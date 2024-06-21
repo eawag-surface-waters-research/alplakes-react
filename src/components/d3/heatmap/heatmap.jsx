@@ -313,7 +313,7 @@ class D3HeatMap extends Component {
       xgraph !== prevState.xgraph ||
       ygraph !== prevState.ygraph
     ) {
-      this.plotHeatMap();
+      setTimeout(() => this.plotHeatMap(), 1);
     }
     if (!isEqual(prevProps, this.props)) {
       this.setState({ saved: [] });

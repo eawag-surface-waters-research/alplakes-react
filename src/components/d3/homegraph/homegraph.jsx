@@ -41,6 +41,7 @@ class SummaryGraph extends Component {
 
     var data = [];
     for (var i = 0; i < dt.length; i++) {
+      if (!isNaN(parseFloat(value[i])) && isFinite(value[i]))
       data.push({ x: dt[i], y: value[i] });
     }
 
