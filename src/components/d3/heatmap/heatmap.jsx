@@ -145,7 +145,10 @@ class D3HeatMap extends Component {
           csvContent +
           `${printdata.x[i]},${this.columnSelect(printdata.z, i).join(",")}\n`;
       }
-      var name = title + ".csv";
+      var name = "heatmap_data.csv";
+      if (title) {
+        name = title.split(" ").join("_") + ".csv";
+      }
       var encodedUri = encodeURI(csvContent);
       var link = document.createElement("a");
       link.setAttribute("href", encodedUri);
@@ -165,7 +168,10 @@ class D3HeatMap extends Component {
       ...{ xlabel, xunits, ylabel, yunits, zlabel, zunits, title },
       ...data,
     };
-    var name = title.split(" ").join("_") + ".json";
+    var name = "heatmap_data.json";
+    if (title) {
+      name = title.split(" ").join("_") + ".json";
+    }
     var encodedUri =
       "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(arr));
     var link = document.createElement("a");

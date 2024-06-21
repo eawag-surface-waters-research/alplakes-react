@@ -98,7 +98,10 @@ class D3LineGraph extends Component {
           csvContent = csvContent + "\n";
         }
       }
-      var name = title.split(" ").join("_") + ".csv";
+      var name = "linegraph_data.csv";
+      if (title) {
+        name = title.split(" ").join("_") + ".csv";
+      }
       var encodedUri = encodeURI(csvContent);
       var link = document.createElement("a");
       link.setAttribute("href", encodedUri);
@@ -115,7 +118,10 @@ class D3LineGraph extends Component {
   downloadJSON = () => {
     var { data, xlabel, xunits, ylabel, yunits, title } = this.props;
     var arr = { ...{ xlabel, xunits, ylabel, yunits, title }, ...data };
-    var name = title.split(" ").join("_") + ".json";
+    var name = "linegraph_data.json";
+    if (title) {
+      name = title.split(" ").join("_") + ".json";
+    }
     var encodedUri =
       "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(arr));
     var link = document.createElement("a");
@@ -231,7 +237,7 @@ class D3LineGraph extends Component {
     var { graphid, fontSize } = this.state;
     if (this.props.header !== false) fontSize = this.props.fontSize;
 
-    var lineColor = "black"
+    var lineColor = "black";
     if ("dark" in this.props && this.props.dark) lineColor = "white";
 
     if (!Array.isArray(data)) {
@@ -239,13 +245,18 @@ class D3LineGraph extends Component {
     }
 
     for (var i = 0; i < data.length; i++) {
-      if (!("lineColor" in data[i])) data[i]["lineColor"] = lcolor[i] ? lcolor[i] : lineColor;
-      if (!("lineWeight" in data[i])) data[i]["lineWeight"] = lweight[i] ? lweight[i] : 1;
-      if (!("upper" in data[i])) data[i]["upper"] =
-        confidence && confidence[i] ? confidence[i].CI_upper : "";
-      if (!("lower" in data[i])) data[i]["lower"] =
-        confidence && confidence[i] ? confidence[i].CI_lower : "";
-      if (!("confidenceAxis" in data[i])) data[i]["confidenceAxis"] = confidence && confidence[i] ? "y" : "";
+      if (!("lineColor" in data[i]))
+        data[i]["lineColor"] = lcolor[i] ? lcolor[i] : lineColor;
+      if (!("lineWeight" in data[i]))
+        data[i]["lineWeight"] = lweight[i] ? lweight[i] : 1;
+      if (!("upper" in data[i]))
+        data[i]["upper"] =
+          confidence && confidence[i] ? confidence[i].CI_upper : "";
+      if (!("lower" in data[i]))
+        data[i]["lower"] =
+          confidence && confidence[i] ? confidence[i].CI_lower : "";
+      if (!("confidenceAxis" in data[i]))
+        data[i]["confidenceAxis"] = confidence && confidence[i] ? "y" : "";
     }
     var options = {
       language,
