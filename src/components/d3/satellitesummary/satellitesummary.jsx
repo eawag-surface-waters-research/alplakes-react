@@ -9,15 +9,15 @@ class SatelliteSummary extends Component {
     ymax: 0,
     xmin: new Date(new Date().setMonth(new Date().getMonth() - 4)),
     xmax: new Date(),
-    loaded: false,
+    selection: false,
   };
   setImage = (event) => {
     this.props.setImage(event.x);
   };
   processInputs = () => {
-    var { loaded, xmin, xmax } = this.state;
-    var { available } = this.props;
-    if (available && !loaded) {
+    var { xmin, xmax } = this.state;
+    var { available, selection } = this.props;
+    if (available && selection !== this.state.selection) {
       var data = {};
       var ymin = Infinity;
       var ymax = -Infinity;
@@ -43,7 +43,7 @@ class SatelliteSummary extends Component {
         }
       }
       data = Object.values(data);
-      this.setState({ data, ymin, ymax, loaded: true });
+      this.setState({ data, ymin, ymax, selection });
     }
   };
   componentDidUpdate() {
@@ -57,7 +57,9 @@ class SatelliteSummary extends Component {
     var { data, xmin, xmax, ymin, ymax } = this.state;
     return (
       <React.Fragment>
-        <div className="graph-title">Average lake values per satellite image</div>
+        <div className="graph-title">
+          Average lake values per satellite image
+        </div>
         <div className="satellite-summary">
           <D3LineGraph
             data={data}

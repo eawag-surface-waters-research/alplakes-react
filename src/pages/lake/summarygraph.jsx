@@ -51,6 +51,7 @@ class SummaryGraph extends Component {
               unit={layer.unit}
               dark={dark}
               setImage={this.setImage}
+              selection={selection}
             />
           </React.Fragment>
         );

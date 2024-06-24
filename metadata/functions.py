@@ -599,7 +599,7 @@ def make_layers(data, sd):
             "playControls": False,
             "depth": False,
             "parameter": "tsm",
-            "unit": "g m-3",
+            "unit": "FNU",
             "display": "tiff",
             "source": "sencast",
             "summaryGraph": "satellite_timeseries",
