@@ -150,10 +150,9 @@ export const removeLeap = (array) => {
   if (array.length === 366) {
     return [...array.slice(0, 58), ...array.slice(59)];
   } else {
-    return array
+    return array;
   }
-  
-}
+};
 
 export const formatSencastDay = (datetime) => {
   var a = new Date(datetime);
@@ -183,6 +182,10 @@ export const formatAPIDate = (datetime) => {
   return `${String(year)}${month < 10 ? "0" + month : month}${
     date < 10 ? "0" + date : date
   }`;
+};
+
+export const hour = () => {
+  return Math.round((new Date().getTime() + 1800000) / 3600000) * 3600 - 3600;
 };
 
 export const formatAPIDatetime = (datetime) => {

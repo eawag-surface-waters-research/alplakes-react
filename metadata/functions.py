@@ -716,7 +716,7 @@ def make_datasets(data):
                                                "model": "simstrat",
                                                "depths": [0, data["max_depth"]],
                                                "parameter": "T",
-                                               "description": "Average DOY water temperature. Water temperatures are hindcasted and forecasted using the 1D hydrodynamic model Simstrat. Meteorological forcing data is produced from Meteoswiss products, hincasts use meteostation data and forecasts use the Cosmo-2e 5 day ensemble forecast (VNXZ32). Where rivers inputs are used this data is sourced from Bafu. This model is calibrated using in-situ measuresuments collected by a number of 3rd parties.",
+                                               "description": "Surface average DOY water temperature. Water temperatures are hindcasted and forecasted using the 1D hydrodynamic model Simstrat. Meteorological forcing data is produced from Meteoswiss products, hincasts use meteostation data and forecasts use the Cosmo-2e 5 day ensemble forecast (VNXZ32). Where rivers inputs are used this data is sourced from Bafu. This model is calibrated using in-situ measuresuments collected by a number of 3rd parties.",
                                                "learnMore": "https://medium.com/@runnalls.james/operational-1d-lake-modeling-with-simstrat-dc34964bfe08",
                                                "tags": ["Historic Trends", "DOY average"]
                                            }),

@@ -2,7 +2,7 @@ import axios from "axios";
 import CONFIG from "../../config.json";
 import COLORS from "../../components/colors/colors.json";
 import Translate from "../../translations.json";
-import { formatAPIDatetime, getDoyArray, removeLeap } from "./functions";
+import { formatAPIDatetime, getDoyArray, removeLeap, hour } from "./functions";
 
 export const loading = (message, id) => {
   var parent = document.getElementById(id);
@@ -40,11 +40,49 @@ export const updateLayer = async (layer, loadingId) => {
 
 export const removeLayer = (layer) => {};
 
+const simstratMetadata = async (model, lake) => {
+  var metadata;
+  try {
+    ({ data: metadata } = await axios.get(
+      `${
+        CONFIG.alplakes_bucket
+      }/simulations/${model}/cache/${lake}/metadata.json?timestamp=${hour()}`
+    ));
+  } catch (e) {
+    console.error("Failed to collect Simstrat metadata from S3.");
+    ({ data: metadata } = await axios.get(
+      `${CONFIG.alplakes_api}/simulations/1d/metadata/${model}/${lake}`
+    ));
+  }
+
+  var maxDate = new Date(metadata.end_date);
+  var minDate = new Date(metadata.start_date);
+  var depths = metadata.depths;
+  return { minDate, maxDate, depths };
+};
+
 const addSimstratHeatmap = async (layer, language, loadingId) => {
   loading(`Downloading data from the server`, loadingId);
   var source = layer.sources[layer.source];
   var { maxDate, minDate } = await simstratMetadata(source.model, source.lake);
   var start = new Date(maxDate.getTime() - 365 * 24 * 60 * 60 * 1000);
+  var data;
+  try {
+    ({ data } = await axios.get(
+      `${CONFIG.alplakes_bucket}/simulations/${source.model}/cache/${
+        source.lake
+      }/heatmap_${source.parameter}.json?timestamp=${hour()}`
+    ));
+  } catch (e) {
+    console.error("Failed to collect heatmap from S3.");
+    ({ data } = await axios.get(
+      `${CONFIG.alplakes_api}/simulations/1d/depthtime/${source.model}/${
+        source.lake
+      }/${source.parameter}/${formatAPIDatetime(start)}/${formatAPIDatetime(
+        maxDate
+      )}`
+    ));
+  }
   var options = {
     period: [start, maxDate],
     minDate,
@@ -61,13 +99,6 @@ const addSimstratHeatmap = async (layer, language, loadingId) => {
     options["palette"] = COLORS[layer.displayOptions.paletteName];
   }
   layer.displayOptions = { ...layer.displayOptions, ...options };
-  var { data } = await axios.get(
-    `${CONFIG.alplakes_api}/simulations/1d/depthtime/${source.model}/${
-      source.lake
-    }/${source.parameter}/${formatAPIDatetime(start)}/${formatAPIDatetime(
-      maxDate
-    )}`
-  );
   var x = data.time.map((t) => new Date(t));
   var y = data.depths;
   var z = data[source.parameter];
@@ -96,16 +127,6 @@ const updateSimstratHeatmap = async (layer, loadingId) => {
   return layer;
 };
 
-const simstratMetadata = async (model, lake) => {
-  var { data: metadata } = await axios.get(
-    `${CONFIG.alplakes_api}/simulations/1d/metadata/${model}/${lake}`
-  );
-  var maxDate = new Date(metadata.end_date);
-  var minDate = new Date(metadata.start_date);
-  var depths = metadata.depths;
-  return { minDate, maxDate, depths };
-};
-
 const addSimstratDoy = async (layer, language) => {
   var source = layer.sources[layer.source];
   var options = {
@@ -115,13 +136,20 @@ const addSimstratDoy = async (layer, language) => {
     yunits: layer.unit,
   };
   layer.displayOptions = { ...layer.displayOptions, ...options };
+  var data = {};
   try {
-    var { data } = await axios.get(
-      `${CONFIG.alplakes_api}/simulations/1d/doy/${source.model}/${source.lake}/${source.parameter}/${layer.displayOptions.depth}`
-    );
+    ({ data } = await axios.get(
+      `${CONFIG.alplakes_bucket}/simulations/${source.model}/cache/${source.lake}/doy_${source.parameter}.json`
+    ));
   } catch (e) {
-    console.error("DOY value not calculated.");
-    throw Object.assign(new Error("DOY value not calculated"), { code: 402 });
+    console.error("Failed to collect DOY from S3.");
+    try {
+      ({ data } = await axios.get(
+        `${CONFIG.alplakes_api}/simulations/1d/doy/${source.model}/${source.lake}/${source.parameter}/${layer.displayOptions.depth}`
+      ));
+    } catch (e) {
+      console.error("Failed to collect DOY from API.");
+    }
   }
 
   var x = removeLeap(getDoyArray());
@@ -173,22 +201,44 @@ const addSimstratDoy = async (layer, language) => {
   var start = new Date(new Date().getFullYear(), 0, 1, 0, 0);
   var end = new Date();
   end.setDate(end.getDate() + 5);
-  var { data: currentData } = await axios.get(
-    `${CONFIG.alplakes_api}/simulations/1d/point/${source.model}/${
-      source.lake
-    }/${source.parameter}/${formatAPIDatetime(start)}/${formatAPIDatetime(
-      end
-    )}/${layer.displayOptions.depth}?resample=daily`
-  );
-  var xx = currentData.time.map((t) => new Date(t));
-  var yy = currentData[source.parameter];
-  display.push({
-    x: xx,
-    y: yy,
-    name: new Date().getFullYear(),
-    lineColor: "#ff7d45",
-    lineWeight: 2,
-  });
+  var currentData = false;
+  try {
+    ({ data: currentData } = await axios.get(
+      `${CONFIG.alplakes_bucket}/simulations/${source.model}/cache/${
+        source.lake
+      }/doy_currentyear.json?timestamp=${hour()}`
+    ));
+  } catch (e) {
+    console.error("Failed to collect current year from S3.");
+    try {
+      ({ data: currentData } = await axios.get(
+        `${CONFIG.alplakes_api}/simulations/1d/point/${source.model}/${
+          source.lake
+        }/${source.parameter}/${formatAPIDatetime(start)}/${formatAPIDatetime(
+          end
+        )}/${layer.displayOptions.depth}?resample=daily`
+      ));
+    } catch (e) {
+      console.error("Failed to collect current year from API.");
+    }
+  }
+
+  if (currentData !== false) {
+    var xx = currentData.time.map((t) => new Date(t));
+    var yy = currentData[source.parameter];
+    display.push({
+      x: xx,
+      y: yy,
+      name: new Date().getFullYear(),
+      lineColor: "#ff7d45",
+      lineWeight: 2,
+    });
+  }
+
+  if (display.length === 0) {
+    throw Object.assign(new Error("Unable to access DOY data."), { code: 402 });
+  }
+
   layer.displayOptions.data = display;
   return layer;
 };
@@ -201,6 +251,23 @@ const addSimstratLinegraph = async (layer, language) => {
   );
   var depth = Math.min(...depths);
   var start = new Date(maxDate.getTime() - 5 * 24 * 60 * 60 * 1000);
+  var data;
+  try {
+    ({ data } = await axios.get(
+      `${CONFIG.alplakes_bucket}/simulations/${source.model}/cache/${
+        source.lake
+      }/linegraph_${source.parameter}.json?timestamp=${hour()}`
+    ));
+  } catch (e) {
+    console.error("Failed to collect linegraph from S3.");
+    ({ data } = await axios.get(
+      `${CONFIG.alplakes_api}/simulations/1d/point/${source.model}/${
+        source.lake
+      }/${source.parameter}/${formatAPIDatetime(start)}/${formatAPIDatetime(
+        maxDate
+      )}/${depth}`
+    ));
+  }
   var options = {
     depths,
     depth,
@@ -214,13 +281,6 @@ const addSimstratLinegraph = async (layer, language) => {
     curve: true,
   };
   layer.displayOptions = { ...layer.displayOptions, ...options };
-  var { data } = await axios.get(
-    `${CONFIG.alplakes_api}/simulations/1d/point/${source.model}/${
-      source.lake
-    }/${source.parameter}/${formatAPIDatetime(start)}/${formatAPIDatetime(
-      maxDate
-    )}/${depth}`
-  );
   var x = data.time.map((t) => new Date(t));
   var y = data[source.parameter];
   layer.displayOptions.data = { x, y };
