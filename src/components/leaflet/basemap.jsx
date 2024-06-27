@@ -147,7 +147,6 @@ class Basemap extends Component {
       zoomControl: false,
       showCursorLocation: true,
       zoomAnimation: true,
-      attributionControl: false,
     });
     this.map.doubleClickZoom.disable();
     var mapID = dark ? darkMap : lightMap;
