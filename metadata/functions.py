@@ -330,7 +330,7 @@ def make_layers(data, sd):
                         "type": "alplakes_hydrodynamic",
                         "model": "delft3d-flow",
                         "start": -7,
-                        "description": "Water temperatures are hindcasted and forecasted using the 3D hydrodynamic model Delft3D-flow. Meteorological forcing data is produced from Meteoswiss products, hincasts use the Cosmo-1e 1 day deterministic product (VNXQ34) and forecasts use the Cosmo-2e 5 day ensemble forecast (VNXZ32). Where rivers inputs are used this data is sourced from Bafu. This model is calibrated using in-situ measuresuments collected by a number of 3rd parties.",
+                        "description": "Water temperatures are hindcasted and forecasted using the 3D hydrodynamic model Delft3D-flow. On sunny afternoons, shoreline temperatures can typically be 1-2°C warmer than model predictions due to the large horizontal grid size used in lake models. Meteorological forcing data is produced from Meteoswiss products, hincasts use the Cosmo-1e 1 day deterministic product (VNXQ34) and forecasts use the Cosmo-2e 5 day ensemble forecast (VNXZ32). Where rivers inputs are used this data is sourced from Bafu. This model is calibrated using in-situ measuresuments collected by a number of 3rd parties.",
                         "learnMore": "https://medium.com/@runnalls.james/operational-3d-lake-modeling-with-delft3d-2f164859e753",
                         "tags": ["5 day forecast", "2019 - Now"]
                     }
@@ -676,7 +676,7 @@ def make_datasets(data):
                                                "data_access": "simstrat_heatmap",
                                                "model": "simstrat",
                                                "parameter": "OxygenSat",
-                                               "description": "Depth time visualisation of oxygen saturation. Oxygen values are hindcasted and forecasted using the 1D hydrodynamic model Simstrat in combination with AED2. Meteorological forcing data is produced from Meteoswiss products, hincasts use meteostation data and forecasts use the Cosmo-2e 5 day ensemble forecast (VNXZ32). Where rivers inputs are used this data is sourced from Bafu. This model is calibrated using in-situ measuresuments collected by a number of 3rd parties.",
+                                               "description": "Depth time visualisation of oxygen saturation. Oxygen values are hindcasted and forecasted using the 1D hydrodynamic model Simstrat in combination with AED2. The oxygen model is a preliminary version which works reasonably well for some lakes but is clearly wrong for other lakes. Meteorological forcing data is produced from Meteoswiss products, hincasts use meteostation data and forecasts use the Cosmo-2e 5 day ensemble forecast (VNXZ32). Where rivers inputs are used this data is sourced from Bafu. This model is calibrated using in-situ measuresuments collected by a number of 3rd parties.",
                                                "learnMore": "https://medium.com/@runnalls.james/operational-1d-lake-modeling-with-simstrat-dc34964bfe08",
                                                "tags": ["5 day forecast", "Timeseries", "Heatmap"]
                                            }),

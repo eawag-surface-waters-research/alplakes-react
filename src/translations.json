@@ -841,6 +841,12 @@
     "FR": "Sprechen Sie mit mir über:",
     "IT": "Parlami di:"
   },
+  "repositories": {
+    "EN": "Repositories",
+    "DE": "Repositorien",
+    "FR": "Dépôts",
+    "IT": "Repository"
+  },
   "c": {
     "EN": "",
     "DE": "",

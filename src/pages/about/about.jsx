@@ -114,33 +114,43 @@ class About extends Component {
               <img src={runnallja} alt="James" />
               <div className="job">Software Engineer</div>
               <div className="email">james.runnalls@eawag.ch</div>
-              <div className="contact-head">{Translations["talk"][language]}</div>
+              <div className="contact-head">
+                {Translations["talk"][language]}
+              </div>
               <div className="contact">Bug reports, new features</div>
             </div>
             <div className="person">
               <img src={bouffada} alt="Damien" />
               <div className="job">Group Leader</div>
               <div className="email">damien.bouffard@eawag.ch</div>
-              <div className="contact-head">{Translations["talk"][language]}</div>
+              <div className="contact-head">
+                {Translations["talk"][language]}
+              </div>
               <div className="contact">3D models, particle tracking</div>
             </div>
             <div className="person">
               <img src={odermada} alt="Dani" />
               <div className="job">Group Leader</div>
               <div className="email">daniel.odermatt@eawag.ch</div>
-              <div className="contact-head">{Translations["talk"][language]}</div>
+              <div className="contact-head">
+                {Translations["talk"][language]}
+              </div>
               <div className="contact">Remote sensing products</div>
             </div>
             <div className="person">
               <img src={schmidma} alt="Martin" />
               <div className="job">Group Leader</div>
               <div className="email">martin.schmid@eawag.ch</div>
-              <div className="contact-head">{Translations["talk"][language]}</div>
+              <div className="contact-head">
+                {Translations["talk"][language]}
+              </div>
               <div className="contact">1D models</div>
             </div>
           </div>
           <div className="section-content"></div>
-          <div className="section-title">{Translations["projects"][language]}</div>
+          <div className="section-title">
+            {Translations["projects"][language]}
+          </div>
           <div className="section-content">
             <div className="sub-header">Alplakes</div>
             <div className="projects">
@@ -221,7 +231,61 @@ class About extends Component {
               </p>
             </div>
           </div>
-          <div className="section-title">{Translations["contributors"][language]}</div>
+          <div className="section-title">
+            {Translations["repositories"][language]}
+          </div>
+          <div className="section-content">
+            <a href="https://github.com/eawag-surface-waters-research/alplakes-simulations">
+              <div className="sub-header">
+                Alplakes 3D Simulations{" "}
+                <div className="link">
+                  https://github.com/eawag-surface-waters-research/alplakes-simulations
+                </div>
+              </div>
+              <div className="projects">
+                Three dimensional hydrodynamic simulations for the Alplakes
+                project
+              </div>
+            </a>
+            <a href="https://github.com/Eawag-AppliedSystemAnalysis/operational-simstrat">
+              <div className="sub-header">
+                Simstrat 1D Simulations
+                <div className="link">
+                  https://github.com/Eawag-AppliedSystemAnalysis/operational-simstrat
+                </div>
+              </div>
+              <div className="projects">
+                One dimensional hydrodynamic simulations for 82 lakes in
+                Switzerland
+              </div>
+            </a>
+            <a href="https://github.com/eawag-surface-waters-research/sencast">
+              <div className="sub-header">
+                Sencast
+                <div className="link">
+                  https://github.com/eawag-surface-waters-research/sencast
+                </div>
+              </div>
+              <div className="projects">
+                Sencast is a toolbox to download and derive water quality
+                parameters from satellite images
+              </div>
+            </a>
+            <a href="https://github.com/eawag-surface-waters-research/alplakes-react">
+              <div className="sub-header">
+                Website Frontend
+                <div className="link">
+                  https://github.com/eawag-surface-waters-research/alplakes-react
+                </div>
+              </div>
+              <div className="projects">
+                React application for the Alplakes front-end
+              </div>
+            </a>
+          </div>
+          <div className="section-title">
+            {Translations["contributors"][language]}
+          </div>
           <div className="section-content">
             <div className="sub-header">2024</div>
             <div className="projects">
@@ -242,7 +306,9 @@ class About extends Component {
               Adrien, Schmid Martin, Soulignac Frédéric, Odermatt, Daniel
             </div>
           </div>
-          <div className="section-title">{Translations["publications"][language]}</div>
+          <div className="section-title">
+            {Translations["publications"][language]}
+          </div>
           <div className="section-content">
             <div className="sub-header">Model development</div>
             <p>

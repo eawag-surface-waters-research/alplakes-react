@@ -134,10 +134,13 @@
     margin-bottom: 12px;
 }
 
+.main .about .sub-header .link {
+    font-size: 10px;
+}
+
 .main .about a {
     text-decoration: none;
     color: black;
-    font-weight: bold;
 }
 
 .main.dark .about a {
