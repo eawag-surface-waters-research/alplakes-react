@@ -116,3 +116,11 @@
   text-align: center;
   font-size: 12px;
 }
+
+.main .tile-class.leaflet-tile {
+  filter: grayscale(100%) !important;
+}
+
+.main.dark .tile-class.leaflet-tile {
+  filter: brightness(2) contrast(0.8) !important;
+}

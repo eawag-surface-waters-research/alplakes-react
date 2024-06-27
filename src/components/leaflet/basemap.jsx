@@ -12,12 +12,13 @@ import "./leaflet_geotiff";
 import "./leaflet_colorpicker";
 import "./leaflet_customtooltip";
 import "./leaflet_customcontrol";
+import "./leaflet_tileclass";
 import "./css/leaflet.css";
 
 class Basemap extends Component {
   state = {
-    darkMap: "clqz0bzlt017d01qw5xi9ex6x",
-    lightMap: "clg4u62lq009a01oa5z336xn7",
+    darkMap: "dark_all",
+    lightMap: "light_all",
   };
   find = (list, parameter, value) => {
     return list.find((l) => l[parameter] === value);
@@ -88,15 +89,16 @@ class Basemap extends Component {
     }
     var { darkMap, lightMap } = this.state;
     var { dark } = this.props;
-    var mapCode = dark ? darkMap : lightMap;
+    var mapID = dark ? darkMap : lightMap;
     if (prevProps.basemap !== this.props.basemap) {
       var basemap;
-      if (basemap === "default") {
-        basemap = L.tileLayer(
-          `https://api.mapbox.com/styles/v1/jamesrunnalls/${mapCode}/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiamFtZXNydW5uYWxscyIsImEiOiJjazk0ZG9zd2kwM3M5M2hvYmk3YW0wdW9yIn0.uIJUZoDgaC2LfdGtgMz0cQ`,
+      if (this.props.basemap === "default") {
+        basemap = L.tileLayer.default(
+          `https://{s}.basemaps.cartocdn.com/${mapID}/{z}/{x}/{y}{r}.png`,
           {
             maxZoom: 19,
-            attribution: "&copy; <a href='https://www.mapbox.com/'>mapbox</a>",
+            attribution:
+              '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
           }
         );
       } else {
@@ -113,11 +115,12 @@ class Basemap extends Component {
       prevProps.dark !== this.props.dark &&
       this.props.basemap === "default"
     ) {
-      basemap = L.tileLayer(
-        `https://api.mapbox.com/styles/v1/jamesrunnalls/${mapCode}/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiamFtZXNydW5uYWxscyIsImEiOiJjazk0ZG9zd2kwM3M5M2hvYmk3YW0wdW9yIn0.uIJUZoDgaC2LfdGtgMz0cQ`,
+      basemap = L.tileLayer.default(
+        `https://{s}.basemaps.cartocdn.com/${mapID}/{z}/{x}/{y}{r}.png`,
         {
           maxZoom: 19,
-          attribution: "&copy; <a href='https://www.mapbox.com/'>mapbox</a>",
+          attribution:
+            '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
         }
       );
       basemap.addTo(this.map);
@@ -147,12 +150,13 @@ class Basemap extends Component {
       attributionControl: false,
     });
     this.map.doubleClickZoom.disable();
-    var mapCode = dark ? darkMap : lightMap;
-    var basemap = L.tileLayer(
-      `https://api.mapbox.com/styles/v1/jamesrunnalls/${mapCode}/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiamFtZXNydW5uYWxscyIsImEiOiJjazk0ZG9zd2kwM3M5M2hvYmk3YW0wdW9yIn0.uIJUZoDgaC2LfdGtgMz0cQ`,
+    var mapID = dark ? darkMap : lightMap;
+    var basemap = L.tileLayer.default(
+      `https://{s}.basemaps.cartocdn.com/${mapID}/{z}/{x}/{y}{r}.png`,
       {
         maxZoom: 19,
-        attribution: "&copy; <a href='https://www.mapbox.com/'>mapbox</a>",
+        attribution:
+          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
       }
     );
     this.layerStore["basemap"] = basemap;

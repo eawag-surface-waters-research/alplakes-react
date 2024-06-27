@@ -7,8 +7,8 @@
   "sentinel3_wms": "https://creodias.sentinel-hub.com/ogc/wms/fea4245d-9a3b-4337-8cc2-9bbdbd22ff1a",
   "basemaps": {
     "default": {
-      "url": "https://api.mapbox.com/styles/v1/jamesrunnalls/clg4u62lq009a01oa5z336xn7/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiamFtZXNydW5uYWxscyIsImEiOiJjazk0ZG9zd2kwM3M5M2hvYmk3YW0wdW9yIn0.uIJUZoDgaC2LfdGtgMz0cQ",
-      "attribution": "&copy; <a href='https://www.mapbox.com/'>mapbox</a>",
+      "url": "https://{s}.basemaps.cartocdn.com/${mapID}/{z}/{x}/{y}{r}.png",
+      "attribution": "&copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors &copy; <a href='https://carto.com/attributions'>CARTO</a>",
       "title": "Default"
     },
     "satellite": {

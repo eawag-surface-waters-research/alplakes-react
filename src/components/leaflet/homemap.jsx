@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import L from "leaflet";
 import { dayName, formatDateYYYYMMDD } from "./functions";
 import Translations from "../../translations.json";
+import "./leaflet_tileclass";
 import "./css/leaflet.css";
 
 class MapLegend extends Component {
@@ -143,8 +144,8 @@ class HomeMap extends Component {
     day: "",
     minZoom: 6,
     maxZoom: 13,
-    darkMap: "clqz0bzlt017d01qw5xi9ex6x",
-    lightMap: "clujqsjw400hd01qq03atg71i",
+    darkMap: "dark_all",
+    lightMap: "light_all",
     parameter: "temperature",
   };
   setParameter = (parameter) => {
@@ -382,11 +383,12 @@ class HomeMap extends Component {
       var { darkMap, lightMap } = this.state;
       var mapID = this.props.dark ? darkMap : lightMap;
       this.map.removeLayer(this.tiles);
-      this.tiles = L.tileLayer(
-        `https://api.mapbox.com/styles/v1/jamesrunnalls/${mapID}/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiamFtZXNydW5uYWxscyIsImEiOiJjazk0ZG9zd2kwM3M5M2hvYmk3YW0wdW9yIn0.uIJUZoDgaC2LfdGtgMz0cQ`,
+      this.tiles = L.tileLayer.default(
+        `https://{s}.basemaps.cartocdn.com/${mapID}/{z}/{x}/{y}{r}.png`,
         {
           maxZoom: 19,
-          attribution: "&copy; <a href='https://www.mapbox.com/'>mapbox</a>",
+          attribution:
+            '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
         }
       ).addTo(this.map);
     }
@@ -409,11 +411,12 @@ class HomeMap extends Component {
     this.map = map;
 
     var mapID = dark ? darkMap : lightMap;
-    this.tiles = L.tileLayer(
-      `https://api.mapbox.com/styles/v1/jamesrunnalls/${mapID}/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiamFtZXNydW5uYWxscyIsImEiOiJjazk0ZG9zd2kwM3M5M2hvYmk3YW0wdW9yIn0.uIJUZoDgaC2LfdGtgMz0cQ`,
+    this.tiles = L.tileLayer.default(
+      `https://{s}.basemaps.cartocdn.com/${mapID}/{z}/{x}/{y}{r}.png`,
       {
         maxZoom: 19,
-        attribution: "&copy; <a href='https://www.mapbox.com/'>mapbox</a>",
+        attribution:
+          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
       }
     ).addTo(this.map);
     L.control
