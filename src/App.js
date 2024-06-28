@@ -51,6 +51,12 @@ class App extends Component {
     return (
       <React.Fragment>
         <div className={dark ? "main dark" : "main"}>
+          <div className="upgrade-message">
+            From July Alplakes will have a new look. With more lakes and a
+            redesigned interface we hope to provide users with an even better
+            experience. For those who want a preview of the new site click{" "}
+            <a href="https://pr-28.d21l70hd8m002c.amplifyapp.com/">here</a>.
+          </div>
           <div
             className={dark ? "background-color dark" : "background-color"}
           />

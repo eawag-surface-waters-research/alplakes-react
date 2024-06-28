@@ -135,6 +135,19 @@
   animation-duration: 1s;
 }
 
+.upgrade-message {
+  position: fixed;
+  bottom: 0;
+  z-index: 9999;
+  background-color: #d23838;
+  padding: 20px;
+  left: 60px;
+  width: calc(100% - 120px);
+  box-sizing: border-box;
+  border-radius: 12px 12px 0 0;
+  color: white;
+}
+
 @keyframes bounce {
   0% {
     opacity: 0;
@@ -152,5 +165,13 @@
 
   100% {
     transform: translateY(0) rotate(-45deg);
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .upgrade-message {
+    left: 0;
+    width: 100%;
+    border-radius: 0;
   }
 }
