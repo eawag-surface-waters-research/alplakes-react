@@ -1,5 +1,6 @@
 .colorbar {
-    color: #353434;
+    cursor: pointer;
+    user-select: none;
 }
 
 .colorbar .bar {
@@ -18,5 +19,6 @@
     .colorbar .bar {
         height: 12px;
         width: 120px;
+        font-size: 11px;
     }
 }

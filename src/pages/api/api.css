@@ -1,27 +1,109 @@
 .main .api-container {
   width: 100%;
-  max-width: 1200px;
+  max-width: 1000px;
   margin: auto;
-  margin-top: 100px;
-  border-radius: 12px;
-  padding: 2px 22px;
+  padding: 2px var(--padding);
   box-sizing: border-box;
+  min-height: calc(100vh - var(--header-height) - var(--footer-full-height));
 }
 
-.main.dark .api-container .swagger-ui {
+.main .api-container .header {
+  font-size: 40px;
+  margin-top: 18px;
+  color: var(--background-font-color);
+}
+
+.main .api-container .text {
+  font-size: 18px;
+  margin: var(--padding) 0;
+}
+
+.main .api-container .contact {
+  margin-bottom: 32px;
+  margin-top: 12px;
+  font-size: 14px;
+}
+
+.main .api-container .error {
+  font-size: 50px;
+}
+
+.main .api-container .error .suberror {
+  font-size: 30px;
+}
+
+.main .api-container .error img {
+  opacity: 0.03;
+  position: fixed;
+  width: 100%;
+  left: 0;
+  top: 50%;
+  transform: translate(0, -50%);
+  z-index: -1;
+}
+
+.main.dark .api-container .error img {
+  -webkit-filter: invert(100%);
+  filter: invert(100%);
+}
+
+.main.dark .api-container .swagger-ui .opblock-body {
   filter: invert(88%) hue-rotate(180deg);
 }
 
-.main.dark .api-container .swagger-ui .highlight-code {
-  filter: invert(100%) hue-rotate(180deg);
-}
-
 .main .api-container .swagger-ui .info {
-  margin: 18px 0;
+  display: none;
 }
 
 .main .api-container .swagger-ui .wrapper {
   padding: 0;
+}
+
+.swagger-ui .opblock.opblock-get .opblock-summary-method {
+  background: var(--highlight-color);
+}
+
+.swagger-ui .opblock.opblock-get .opblock-summary {
+  border-color: var(--border-color);
+}
+
+.swagger-ui .opblock.opblock-get {
+  background: none;
+  border-color: var(--border-color);
+}
+
+.swagger-ui .opblock.opblock-get .tab-header .tab-item.active h4 span:after {
+  background: var(--border-color);
+}
+
+.swagger-ui .opblock {
+  box-shadow: none;
+}
+
+.swagger-ui .opblock-tag {
+  border: none;
+}
+
+.swagger-ui .parameters-col_description input {
+  color: var(--background-font-color);
+}
+
+.swagger-ui a.nostyle {
+  color: var(--background-font-color);
+}
+
+.swagger-ui .opblock .opblock-summary-description {
+  color: var(--background-font-color);
+}
+
+.swagger-ui svg.arrow {
+  fill: var(--background-font-color);
+}
+
+.swagger-ui .opblock-tag.no-desc span {
+  border-bottom: 2px solid var(--highlight-color);
+  font-size: 28px;
+  font-weight: normal;
 }
 
 @media screen and (max-width: 500px) {

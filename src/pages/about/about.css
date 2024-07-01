@@ -1,20 +1,132 @@
 .main .about {
     width: 100%;
-    max-width: 1200px;
+    max-width: 1000px;
     margin: auto;
-    margin-top: 170px;
-    padding: 18px 22px;
-    border-radius: 12px;
+    padding: 0 var(--padding);
+    border-radius: 22px;
     box-sizing: border-box;
 }
 
-.main.dark .about {
-    color: #e5e5e5;
+.main .about .section-title {
+    font-size: 28px;
+    border-bottom: 2px solid var(--highlight-color);
+    width: fit-content;
+    margin-bottom: 32px;
 }
 
+.main .about .section-content {
+    display: inline-block;
+    margin-bottom: var(--padding);
+}
+
+.main .about .section-content .intro {
+    margin-top: calc(var(--padding));
+    margin-bottom: var(--padding);
+    font-size: 21px;
+}
+
+.main .about .section-content .promos {
+    text-align: center;
+}
+
+.main .about .section-content .promo {
+    background-color: var(--background-color);
+    margin-right: var(--padding);
+    display: inline-block;
+    border-radius: 22px;
+    box-sizing: border-box;
+    text-align: left;
+    position: relative;
+    margin-bottom: 10px;
+}
+
+.main .about .section-content .promo .number {
+    display: inline-block;
+    font-size: 64px;
+    width: 70px;
+    color: var(--highlight-color);
+    position: relative;
+    z-index: 1;
+}
+
+.main .about .section-content .promo .text {
+    display: inline-block;
+    font-size: 14px;
+    padding: 10px 20px 10px 10px;
+    position: relative;
+    z-index: 1;
+}
+
+.main .about .section-content .promo .text .upper {
+    font-size: 10px;
+    opacity: 0.8;
+}
+
+.main .about .section-content .promo .text .parameter {
+    font-size: 16px;
+    padding-top: 4px;
+    padding-bottom: 2px;
+}
+
+.main .about .section-content .promo img {
+    max-height: 60%;
+    filter: invert(100%);
+    position: absolute;
+    right: 8px;
+    z-index: 0;
+    top: 10%;
+    max-width: 50px;
+    opacity: 0.2;
+}
+
+.main.dark .about .section-content .promo img {
+    filter: invert(0%);
+}
+
+.main .about .section-content .promo .text .dates {
+    font-size: 12px;
+    font-weight: bold;
+    opacity: 0.6;
+}
+
+.main .about .section-content .person {
+    width: 190px;
+    display: inline-block;
+    margin-right: var(--padding);
+    margin-top: var(--padding);
+    vertical-align: top;
+}
+
+.main .about .section-content .person img {
+    width: 100%;
+    border-bottom: 2px solid var(--highlight-color);
+}
+
+.main .about .section-content .person .job {
+    font-size: 20px;
+}
+
+.main .about .section-content .person .email {
+    font-size: 14px;
+    text-decoration: underline;
+}
+
+.main .about .section-content .person .contact-head {
+    margin-top: 12px;
+    font-size: 14px;
+    margin-bottom: 4px;
+}
+
+.main .about .section-content .projects {
+    margin-bottom: 18px;
+}
+
+
+
 .main .about .header {
-    font-size: 28px;
-    margin-bottom: 8px;
+    font-size: 40px;
+    margin-top: 18px;
+    color: var(--background-font-color);
 }
 
 .main .about .sub-header {
@@ -22,10 +134,13 @@
     margin-bottom: 12px;
 }
 
+.main .about .sub-header .link {
+    font-size: 10px;
+}
+
 .main .about a {
     text-decoration: none;
     color: black;
-    font-weight: bold;
 }
 
 .main.dark .about a {
@@ -34,6 +149,7 @@
 
 .main .about p {
     margin-bottom: 18px;
+    font-size: 16px;
 }
 
 .main .about .title {
@@ -73,6 +189,14 @@
     .main .about .images img {
         height: 28px;
         padding: 12px;
+    }
+
+    .main .about .section-content .promos {
+        margin-top: 12px;
+    }
+
+    .main .about .section-content .person {
+        width: calc(50% - var(--padding));
     }
 }
 

@@ -1,13 +1,129 @@
 import axios from "axios";
 import CONFIG from "../../config.json";
 
-const stringToDate = (date) => {
+export const copy = (data) => {
+  return JSON.parse(JSON.stringify(data));
+};
+
+export const parseSubtitle = (title, names) => {
+  names = Object.values(names);
+  names = [...new Set(names)].filter((n) => n !== title);
+  return names.join(" • ");
+};
+
+const satelliteStringToDate = (date) => {
   return new Date(
-    `${date.slice(0, 4)}-${date.slice(5, 7)}-${date.slice(8, 10)}T${date.slice(
-      11,
-      13
-    )}:00:00.000+00:00`
+    `${date.slice(0, 4)}-${date.slice(4, 6)}-${date.slice(6, 8)}T${date.slice(
+      9,
+      11
+    )}:${date.slice(11, 13)}:00.000+00:00`
   );
+};
+
+export const processSatelliteFiles = (
+  files,
+  available,
+  max_pixels,
+  layer_id,
+  unit,
+  satellite
+) => {
+  for (let file of files) {
+    let time = satelliteStringToDate(file.dt);
+    let date = formatDate(time);
+    let url = CONFIG.sencast_bucket + "/" + file.k;
+    let split = file.k.split("_");
+    let tile = split[split.length - 1].split(".")[0];
+    let satellite = split[0].split("/")[2];
+    let percent = Math.ceil((parseFloat(file.vp) / max_pixels) * 100);
+    let { min, max, mean: ave } = file;
+    let image = {
+      url,
+      time,
+      tile,
+      satellite,
+      percent,
+      ave,
+      min,
+      max,
+      layer_id,
+      unit,
+    };
+    if (date in available) {
+      available[date].images.push(image);
+      available[date].max_percent = Math.max(
+        available[date].max_percent,
+        percent
+      );
+      available[date].max = Math.max(available[date].max, max);
+      let total_percent = available[date].images
+        .map((i) => i.percent)
+        .reduce((acc, currentValue) => acc + currentValue, 0);
+      available[date].ave = weightedAverage(
+        available[date].images.map((i) => i.ave),
+        available[date].images.map((i) => i.percent / total_percent)
+      );
+    } else {
+      available[date] = {
+        images: [image],
+        max_percent: percent,
+        ave,
+        min,
+        max,
+        time,
+      };
+    }
+  }
+  return available;
+};
+
+export const filterImages = (
+  all_images,
+  filterPixelCoverage,
+  filterSatellite
+) => {
+  var available = {};
+  for (let date of Object.keys(all_images)) {
+    let day = JSON.parse(JSON.stringify(all_images[date]));
+    day.time = new Date(day.time);
+    day.images = day.images
+      .filter((i) => i.percent > filterPixelCoverage)
+      .map((i) => {
+        i.time = new Date(i.time);
+        return i;
+      });
+    if (filterSatellite) {
+      day.images = day.images.filter((i) =>
+        i.satellite.includes(filterSatellite)
+      );
+    }
+    if (day.images.length > 0) {
+      available[date] = day;
+    }
+  }
+  return available;
+};
+
+export const compareDates = (date1, date2) => {
+  return date1 - date2;
+};
+
+const weightedAverage = (values, weights) => {
+  if (
+    values.length !== weights.length ||
+    values.length === 0 ||
+    weights.length === 0
+  ) {
+    throw new Error(
+      "Values and weights arrays must have the same length and cannot be empty."
+    );
+  }
+  const sumOfProducts = values.reduce(
+    (acc, value, index) => acc + value * weights[index],
+    0
+  );
+  const sumOfWeights = weights.reduce((acc, weight) => acc + weight, 0);
+  return sumOfProducts / sumOfWeights;
 };
 
 export const parseAPITime = (date) => {
@@ -17,6 +133,35 @@ export const parseAPITime = (date) => {
       10
     )}:${date.slice(10, 12)}:00.000+00:00`
   );
+};
+
+export const getDoyArray = () => {
+  const datesArray = [];
+  const startDate = new Date(new Date().getFullYear(), 0, 1);
+  for (let i = 0; i < 366; i++) {
+    const currentDate = new Date(startDate);
+    currentDate.setDate(startDate.getDate() + i);
+    datesArray.push(currentDate);
+  }
+  return datesArray;
+};
+
+export const removeLeap = (array) => {
+  if (array.length === 366) {
+    return [...array.slice(0, 58), ...array.slice(59)];
+  } else {
+    return array;
+  }
+};
+
+export const formatSencastDay = (datetime) => {
+  var a = new Date(datetime);
+  var year = a.getFullYear();
+  var month = a.getMonth() + 1;
+  var date = a.getDate();
+  return `${String(year)}${month < 10 ? "0" + month : month}${
+    date < 10 ? "0" + date : date
+  }`;
 };
 
 export const formatDate = (datetime) => {
@@ -39,6 +184,10 @@ export const formatAPIDate = (datetime) => {
   }`;
 };
 
+export const hour = () => {
+  return Math.round((new Date().getTime() + 1800000) / 3600000) * 3600 - 3600;
+};
+
 export const formatAPIDatetime = (datetime) => {
   var a = new Date(datetime);
   var year = a.getFullYear();
@@ -59,6 +208,8 @@ export const formatDateLong = (datetime, months) => {
   return `${date} ${month} ${String(year)}`;
 };
 
+export const parseSimstratDatetime = (string) => {};
+
 export const formatTime = (datetime) => {
   var a = new Date(datetime);
   var hour = a.getHours();
@@ -66,6 +217,18 @@ export const formatTime = (datetime) => {
   return `${hour < 10 ? "0" + hour : hour}:${
     minute < 10 ? "0" + minute : minute
   }`;
+};
+
+export const formatDateTime = (datetime, months) => {
+  var a = new Date(datetime);
+  var hour = a.getHours();
+  var minute = a.getMinutes();
+  var year = a.getFullYear();
+  var month = months[a.getMonth()];
+  var date = a.getDate();
+  return `${hour < 10 ? "0" + hour : hour}:${
+    minute < 10 ? "0" + minute : minute
+  } ${date} ${month} ${String(year).slice(-2)}`;
 };
 
 export const closestIndex = (num, arr) => {
@@ -81,6 +244,28 @@ export const closestIndex = (num, arr) => {
     }
   }
   return index;
+};
+
+export const findClosest = (array, key, value) => {
+  let closest = null;
+  let minDiff = Infinity;
+
+  for (let i = 0; i < array.length; i++) {
+    let diff = Math.abs(array[i][key] - value);
+    if (diff < minDiff) {
+      minDiff = diff;
+      closest = array[i];
+    }
+  }
+
+  return closest;
+};
+
+export const closestValue = (target, arr) => {
+  const sortedArr = arr
+    .slice()
+    .sort((a, b) => Math.abs(a - target) - Math.abs(b - target));
+  return sortedArr[0];
 };
 
 export const interpolateData = (value, data) => {
@@ -111,94 +296,6 @@ export const relativeDate = (days) => {
   return result;
 };
 
-const loading = (message) => {
-  if (document.getElementById("loading")) {
-    document.getElementById("loading-text").innerHTML = message;
-    document.getElementById("loading").style.visibility = "visible";
-  }
-};
-
-const loaded = () => {
-  if (document.getElementById("loading")) {
-    document.getElementById("loading").style.visibility = "hidden";
-  }
-};
-
-export const setCustomPeriod = async (
-  customPeriod,
-  period,
-  minDate,
-  maxDate,
-  depth,
-  depths,
-  missingDates
-) => {
-  if (customPeriod.type === "alplakes_hydrodynamic") {
-    var data;
-    if ("bucket" in customPeriod) {
-      try {
-        ({ data } = await axios.get(
-          CONFIG.alplakes_bucket + customPeriod.bucket
-        ));
-      } catch (e) {
-        ({ data } = await axios.get(CONFIG.alplakes_api + customPeriod.end));
-      }
-    } else {
-      ({ data } = await axios.get(CONFIG.alplakes_api + customPeriod.end));
-    }
-    minDate = stringToDate(data.start_date).getTime();
-    maxDate = stringToDate(data.end_date).getTime();
-    var startDate = maxDate + customPeriod.start * 8.64e7;
-    if ("depths" in data) {
-      depths = data.depths;
-      let index = closestIndex(depth, depths);
-      depth = depths[index];
-    }
-    if ("missing_weeks" in data) {
-      missingDates = data.missing_weeks;
-    }
-    return {
-      period: [startDate, maxDate],
-      minDate,
-      maxDate,
-      depths,
-      depth,
-      missingDates,
-    };
-  } else {
-    console.error("Custom period type not recognised.");
-    return { period, minDate, maxDate, depths, depth };
-  }
-};
-
-export const getFrozen = async (lake) => {
-  var frozen = false;
-  try {
-    var { data } = await axios.get(
-      CONFIG.alplakes_bucket + "/simulations/ice.json"
-    );
-    var today = new Date();
-    if (lake in data) {
-      var ice = data[lake];
-      for (var i = 0; i < ice.length; i++) {
-        if (ice[i].length === 1) {
-          if (today > parseDay(ice[i][0].toString())) frozen = true;
-        } else if (ice[i].length === 2) {
-          if (
-            today > parseDay(ice[i][0].toString()) &&
-            today < parseDay(ice[i][1].toString())
-          )
-            frozen = true;
-        }
-      }
-    }
-    return frozen;
-  } catch (e) {
-    console.log(e);
-    return frozen;
-  }
-};
-
 export const getProfileAlplakesHydrodynamic = async (
   api,
   model,
@@ -212,7 +309,6 @@ export const getProfileAlplakesHydrodynamic = async (
   try {
     const { data } = await axios.get(url);
     if (data.distance > 500) {
-      alert("Point outside of lake.");
       return false;
     }
     return data;
@@ -229,7 +325,6 @@ export const getTransectAlplakesHydrodynamic = async (
   period,
   latlng
 ) => {
-  loading("Requesting transect from the server");
   latlng.pop();
   const url = `${api}/simulations/transect/${model}/${lake}/${formatAPIDatetime(
     period[0]
@@ -239,11 +334,9 @@ export const getTransectAlplakesHydrodynamic = async (
   try {
     const { data } = await axios.get(url);
     data.time = data.time.map((d) => parseDate(d));
-    loaded();
     return data;
   } catch (e) {
     console.error(e);
-    loaded();
     return false;
   }
 };

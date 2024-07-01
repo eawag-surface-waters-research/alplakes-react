@@ -2,10 +2,11 @@ import L from "leaflet";
 
 L.Control.MarkerDraw = L.Control.extend({
   options: {
-    position: "topright",
+    position: "topleft",
     markerIconUrl: "marker-icon.png",
     fire: false,
     layer: false,
+    id: "map",
   },
 
   onAdd: function (map) {
@@ -34,7 +35,7 @@ L.Control.MarkerDraw = L.Control.extend({
 
   onRemove: function (map) {
     L.DomUtil.removeClass(this._container, "leaflet-draw-enabled");
-    document.getElementById("map").style.removeProperty("cursor");
+    document.getElementById(this.options.id).style.removeProperty("cursor");
   },
 
   _toggleAdding: function (e) {
@@ -51,7 +52,7 @@ L.Control.MarkerDraw = L.Control.extend({
     this._isAdding = true;
     this._map.dragging.disable();
     L.DomUtil.addClass(this._container, "leaflet-draw-enabled");
-    document.getElementById("map").style.cursor = "crosshair";
+    document.getElementById(this.options.id).style.cursor = "crosshair";
     this._map.on("click", this._addMarker, this);
     if (this._marker) {
       this._marker.remove();
@@ -68,7 +69,7 @@ L.Control.MarkerDraw = L.Control.extend({
     this._isAdding = false;
     this._map.dragging.enable();
     L.DomUtil.removeClass(this._container, "leaflet-draw-enabled");
-    document.getElementById("map").style.removeProperty("cursor");
+    document.getElementById(this.options.id).style.removeProperty("cursor");
     this._map.off("click", this._addMarker, this);
     if (this._textbox) {
       this._map.getContainer().removeChild(this._textbox);

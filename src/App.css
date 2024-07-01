@@ -1,19 +1,98 @@
+/* Alplakes Master CSS */
+
+
+/* Fonts */
+
 @font-face {
   font-family: "exo";
   src: url("fonts/exo/Exo-Italic-VariableFont_wght.ttf") format("truetype-variations");
   font-weight: 1 999;
 }
 
+/* Variables */
+
+:root {
+  --background-color: rgba(255, 255, 255, 255);
+  --background-font-color: rgb(50, 50, 50);
+  --background-suble-font-color: rgb(117, 117, 117);
+  --box-color: rgb(247 247 247);
+  --box-font-color: rgb(0, 0, 0);
+  --box-inner-color: rgb(227, 227, 227);
+  --border-color: #ddd;
+  --box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  --box-shadow-hover: rgba(0, 0, 0, 0.24) 0px 1px 6px;
+  --footer-height: 48px;
+  --footer-full-height: 114px;
+  --padding: 40px;
+  --list-width: 650px;
+  --sidebar-width: 450px;
+  --settings-width: 400px;
+  --selector-height: 50px;
+  --input-shadow: inset 0 1px 2px rgba(0, 0, 0, .39), 0 0 1px #FFF, 0 1px 0 #FFF;
+  --info-height: 36px;
+  --map-border-color: rgb(204, 204, 204);
+  --button-fill-color: black;
+  --button-text-color: white;
+  --highlight-color: rgba(68, 188, 167, 1);
+  --highlight-color-fill: rgba(68, 188, 167, 0.2);
+  --highlight-color-subtle: rgba(68, 188, 167, 0.5);
+  --header-text-color: rgb(59, 59, 59);
+  --pulse-color: rgb(160, 160, 160);
+  --map-color: rgb(236, 236, 236);
+  --map-button: rgba(0, 0, 0, 0.8);
+  --cell-size: 32px;
+  --legend-color: rgb(236 236 236 / 47%);
+  color-scheme: light;
+}
+
+:root {
+  --search-height: calc(var(--padding) + 95px);
+  --header-height: calc(var(--padding) * 2 + 30px);
+}
+
+.dark {
+  --background-color: rgba(29, 30, 32, 255);
+  --background-font-color: #cccccc;
+  --box-color: #232323;
+  --box-font-color: #e5e5e5;
+  --box-inner-color: #282828;
+  --input-shadow: inset 0 1px 2px rgb(44 44 44), 0 0 1px #bdbdbd, 0 1px 0 #464646;
+  --border-color: #434343;
+  --button-fill-color: white;
+  --button-text-color: black;
+  --header-text-color: rgb(207, 202, 202);
+  --pulse-color: rgb(136 136 136);
+  --map-color: rgb(41, 41, 41);
+  --box-shadow: rgb(255 255 255 / 16%) 0px 1px 4px;
+  --box-shadow-hover: rgb(255 255 255 / 16%) 0px 1px 8px;
+  --legend-color: rgb(41 41 41 / 65%);
+}
+
+@media screen and (max-width: 1200px) {
+  :root {
+    --padding: 20px;
+    --list-width: 50%;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  :root {
+    --list-width: 100%;
+    --padding: 12px;
+    --search-height: calc(var(--padding) * 3 + 98px);
+    --header-height: calc(var(--padding) * 2 + 22px);
+  }
+}
+
+
+/* Whole site settings */
+
 .main {
-  font-family: "Roboto", "Arial", sans-serif;
-  color: rgb(15, 15, 15);
+  font-family: "Frutiger Neue LT Pro", "Arial", sans-serif;
+  color: var(--background-font-color);
 }
 
-.main.dark {
-  color: #e5e5e5;
-}
-
-.background-color {
+.main .background {
   position: fixed;
   width: 100%;
   height: 100%;
@@ -21,157 +100,27 @@
   pointer-events: none;
   top: 0;
   left: 0;
+  background-color: var(--background-color);
 }
 
-.background-color.dark {
-  background-color: rgb(15, 15, 15);
+.main .content {
+  position: relative;
 }
 
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+.tooltip-hover {
+  background-color: var(--background-color);
+  border-bottom: 2px solid var(--highlight-color);
+  border-radius: 12px;
+  padding: 5px 8px;
+  box-shadow: var(--box-shadow);
+  text-align: center;
+  font-size: 12px;
 }
 
-::-webkit-scrollbar-thumb {
-  background: #888;
-  border-radius: 4px;
+.main .tile-class.leaflet-tile {
+  filter: grayscale(100%) !important;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: #aaa;
-}
-
-::-moz-scrollbar-thumb {
-  background: #888;
-  border-radius: 4px;
-}
-
-::-moz-scrollbar-thumb:hover {
-  background: #aaa;
-}
-
-::-ms-scrollbar-thumb {
-  background: #888;
-  border-radius: 4px;
-}
-
-::-ms-scrollbar-thumb:hover {
-  background: #aaa;
-}
-
-::-webkit-scrollbar-track {
-  background: rgb(15, 15, 15);
-}
-
-::-moz-scrollbar-track {
-  background: rgb(15, 15, 15);
-}
-
-::-ms-scrollbar-track {
-  background: rgb(15, 15, 15);
-}
-
-.marker {
-  position: absolute;
-  top: 40%;
-  left: 50%;
-  border-radius: 50%;
-  border: 8px solid hsl(67, 13%, 13%);
-  width: 8px;
-  height: 8px;
-}
-
-.marker::after {
-  position: absolute;
-  content: "";
-  width: 0px;
-  height: 0px;
-  bottom: -30px;
-  left: -6px;
-  border: 10px solid transparent;
-  border-top: 17px solid hsl(67, 13%, 13%);
-}
-
-/* Map markers */
-
-.dot {
-  height: 8px;
-  width: 8px;
-  border-radius: 50%;
-  display: inline-block;
-}
-
-.pin {
-  width: 30px;
-  height: 30px;
-  border-radius: 50% 50% 50% 0;
-  background: white;
-  position: absolute;
-  transform: rotate(-45deg);
-  left: 50%;
-  top: 50%;
-  margin: -20px 0 0 -20px;
-  border: 2px solid transparent;
-  transition: 0.33s ease-in-out all;
-}
-
-.pin:after {
-  content: "";
-  width: 14px;
-  height: 14px;
-  margin: 8px 0 0 8px;
-  background: #e6e6e6;
-  position: absolute;
-  border-radius: 50%;
-}
-
-.pin:hover {
-  border: 2px solid orange !important;
-}
-
-.bounce {
-  animation-name: bounce;
-  animation-fill-mode: both;
-  animation-duration: 1s;
-}
-
-.upgrade-message {
-  position: fixed;
-  bottom: 0;
-  z-index: 9999;
-  background-color: #d23838;
-  padding: 20px;
-  left: 60px;
-  width: calc(100% - 120px);
-  box-sizing: border-box;
-  border-radius: 12px 12px 0 0;
-  color: white;
-}
-
-@keyframes bounce {
-  0% {
-    opacity: 0;
-    transform: translateY(-2000px) rotate(-45deg);
-  }
-
-  60% {
-    opacity: 1;
-    transform: translateY(30px) rotate(-45deg);
-  }
-
-  80% {
-    transform: translateY(-10px) rotate(-45deg);
-  }
-
-  100% {
-    transform: translateY(0) rotate(-45deg);
-  }
-}
-
-@media screen and (max-width: 700px) {
-  .upgrade-message {
-    left: 0;
-    width: 100%;
-    border-radius: 0;
-  }
+.main.dark .tile-class.leaflet-tile {
+  filter: brightness(2) contrast(0.8) !important;
 }

@@ -2,11 +2,14 @@
   "alplakes_api": "https://alplakes-api.eawag.ch",
   "alplakes_bucket": "https://alplakes-eawag.s3.eu-central-1.amazonaws.com",
   "sencast_bucket": "https://eawagrs.s3.eu-central-1.amazonaws.com",
+  "datalakes_api": "https://api.datalakes-eawag.ch",
+  "sentinel2_wms": "https://services.sentinel-hub.com/ogc/wms/a595b5c3-8963-4076-98ad-5cbe7e9d7999",
+  "sentinel3_wms": "https://creodias.sentinel-hub.com/ogc/wms/fea4245d-9a3b-4337-8cc2-9bbdbd22ff1a",
   "basemaps": {
     "default": {
-      "url": "https://wmts.geo.admin.ch/1.0.0/ch.swisstopo.pixelkarte-grau/default/current/3857/{z}/{x}/{y}.jpeg",
-      "attribution": "<a title='Swiss Federal Office of Topography' href='https://www.swisstopo.admin.ch/'>swisstopo</a>",
-      "title": "Swisstopo"
+      "url": "https://{s}.basemaps.cartocdn.com/${mapID}/{z}/{x}/{y}{r}.png",
+      "attribution": "&copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors &copy; <a href='https://carto.com/attributions'>CARTO</a>",
+      "title": "Default"
     },
     "satellite": {
       "url": "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
@@ -17,11 +20,6 @@
       "url": "https://wmts.geo.admin.ch/1.0.0/ch.swisstopo.pixelkarte-farbe/default/current/3857/{z}/{x}/{y}.jpeg",
       "attribution": "<a title='Swiss Federal Office of Topography' href='https://www.swisstopo.admin.ch/'>swisstopo</a>",
       "title": "Swisstopo"
-    },
-    "dark": {
-      "url": "https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png",
-      "attribution": "&copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors &copy; <a href='https://carto.com/attributions'>CARTO</a>",
-      "title": "Dark"
     }
   }
 }

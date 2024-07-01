@@ -71,6 +71,7 @@ export const formatNumber = (num) => {
 };
 
 export const languageOptions = (name) => {
+  name = name.toLowerCase()
   var lang = {
     de: {
       decimal: ",",

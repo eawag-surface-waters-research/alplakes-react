@@ -22,6 +22,7 @@ import {
   zoom as d3zoom,
   format,
   timeFormatDefaultLocale,
+  curveNatural,
 } from "d3";
 
 import {
@@ -50,44 +51,40 @@ const plotlinegraph = (div, data, options = {}) => {
     }
   }
 
-  try {
-    verifyDiv(div);
+  verifyDiv(div);
 
-    data = processData(data);
-    if (data.length < 1) return;
-    options = processOptions(div, data, options);
+  data = processData(data);
+  if (data.length < 1) return;
+  options = processOptions(div, data, options);
 
-    var { xDomain, yDomain, x2Domain, y2Domain } = dataExtents(data, options);
+  var { xDomain, yDomain, x2Domain, y2Domain } = dataExtents(data, options);
 
-    const context = addCanvas(div, options);
-    const svg = addSVG(div, options);
+  const context = addCanvas(div, options);
+  const svg = addSVG(div, options);
 
-    timeFormatDefaultLocale(languageOptions(options.language));
+  timeFormatDefaultLocale(languageOptions(options.language));
 
-    var xAxis = addXAxis(svg, xDomain, x2Domain, options);
-    var yAxis = addYAxis(svg, yDomain, y2Domain, options);
+  var xAxis = addXAxis(svg, xDomain, x2Domain, options);
+  var yAxis = addYAxis(svg, yDomain, y2Domain, options);
 
-    addInteractionBoxes(svg, div, options);
+  addInteractionBoxes(svg, div, options);
 
-    if (options.title) addTitle(svg, div, options);
-    if (options.border) addBorder(svg, options);
-    if (options.backgroundColor) addBackground(div, options);
-    if (options.setDownloadGraph)
-      options.setDownloadGraph(() => downloadGraph(div, options));
-    if (options.setDownloadGraphDiv)
-      select("#" + options.setDownloadGraphDiv).on("click", function () {
-        downloadGraph(div, options);
-      });
+  if (options.title) addTitle(svg, div, options);
+  if (options.border) addBorder(svg, options);
+  if (options.backgroundColor) addBackground(div, options);
+  if (options.setDownloadGraph)
+    options.setDownloadGraph(() => downloadGraph(div, options));
+  if (options.setDownloadGraphDiv)
+    select("#" + options.setDownloadGraphDiv).on("click", function () {
+      downloadGraph(div, options);
+    });
 
-    var plot = addPlottingArea(div, svg, options);
-    if (options.legend) addLegend(svg, div, data, options);
-    if (options.lines) plotLines(div, plot, data, xAxis, yAxis);
-    if (options.scatter) plotScatter(context, data, xAxis, yAxis, options);
-    if (options.zoom) addZoom(plot, context, data, div, xAxis, yAxis, options);
-    if (options.tooltip) addTooltip(data, div, xAxis, yAxis, options);
-  } catch (e) {
-    console.error(e);
-  }
+  var plot = addPlottingArea(div, svg, options);
+  if (options.legend) addLegend(svg, div, data, options);
+  if (options.lines) plotLines(div, plot, data, xAxis, yAxis, options.curve);
+  if (options.scatter) plotScatter(context, data, xAxis, yAxis, options);
+  if (options.zoom) addZoom(plot, context, data, div, xAxis, yAxis, options);
+  if (options.tooltip) addTooltip(data, div, xAxis, yAxis, options);
 };
 
 const addPlottingArea = (div, svg, options) => {
@@ -149,6 +146,7 @@ const processOptions = (div, data, userOptions) => {
     { name: "yMin", default: false, verify: verifyNumber },
     { name: "xLog", default: false, verify: verifyBool },
     { name: "yLog", default: false, verify: verifyBool },
+    { name: "curve", default: false, verify: verifyBool },
     { name: "scatter", default: false, verify: verifyBool },
     { name: "lines", default: true, verify: verifyBool },
     { name: "grid", default: false, verify: verifyBool },
@@ -167,6 +165,7 @@ const processOptions = (div, data, userOptions) => {
     { name: "setDownloadGraph", default: false, verify: verifyFunction },
     { name: "setDownloadGraphDiv", default: false, verify: verifyString },
     { name: "hover", default: false, verify: verifyFunction },
+    { name: "onClick", default: false, verify: verifyFunction },
     {
       name: "backgroundColor",
       default: false,
@@ -243,7 +242,7 @@ const processOptions = (div, data, userOptions) => {
         options.marginTop = options.fontSize + 2;
       }
     } else {
-      options.marginTop = 10;
+      options.marginTop = 0;
     }
   }
 
@@ -275,8 +274,23 @@ const dataExtents = (data, options) => {
   var y2domarr = [];
   var x2domarr = [];
   for (var i = 0; i < data.length; i++) {
-    let xext = extent(data[i].x);
-    let yext = extent(data[i].y);
+    var xext, yext;
+    if (
+      "confidenceAxis" in data[i] &&
+      "upper" in data[i] &&
+      "lower" in data[i]
+    ) {
+      if (data[i]["confidenceAxis"] === "y") {
+        yext = extent([...data[i]["upper"], ...data[i]["lower"], ...data[i].y]);
+        xext = extent(data[i].x);
+      } else {
+        xext = extent([...data[i]["upper"], ...data[i]["lower"], ...data[i].x]);
+        yext = extent(data[i].y);
+      }
+    } else {
+      xext = extent(data[i].x);
+      yext = extent(data[i].y);
+    }
     if (data[i].yaxis === "y2") {
       y2domarr.push(yext);
     } else {
@@ -293,10 +307,10 @@ const dataExtents = (data, options) => {
   var y2Domain = getDomain(y2domarr);
   var x2Domain = getDomain(x2domarr);
 
-  if (options.xMin) xDomain[0] = options.xMin
-  if (options.xMax) xDomain[1] = options.xMax
-  if (options.yMin) yDomain[0] = options.yMin
-  if (options.yMax) yDomain[1] = options.yMax
+  if (options.xMin) xDomain[0] = options.xMin;
+  if (options.xMax) xDomain[1] = options.xMax;
+  if (options.yMin) yDomain[0] = options.yMin;
+  if (options.yMax) yDomain[1] = options.yMax;
 
   return { xDomain, yDomain, x2Domain, y2Domain };
 };
@@ -402,6 +416,7 @@ const addBottomAxis = (svg, xDomain, options) => {
       )
       .attr("x", 6)
       .attr("dx", `${options.fontSize}px`)
+      .attr("fill", "currentColor")
       .style("font-size", `${options.fontSize}px`)
       .style("text-anchor", "end")
       .text(xAxisLabel);
@@ -458,6 +473,7 @@ const addTopAxis = (svg, x2Domain, options) => {
       )
       .attr("x", 6)
       .attr("dx", `${options.fontSize}px`)
+      .attr("fill", "currentColor")
       .style("font-size", `${options.fontSize}px`)
       .style("text-anchor", "end")
       .text(xAxisLabel);
@@ -526,6 +542,7 @@ const addLeftAxis = (svg, yDomain, options) => {
       .attr("y", 0 - options.marginLeft)
       .attr("x", 0 - options.canvasHeight / 2)
       .attr("dy", `${options.fontSize}px`)
+      .attr("fill", "currentColor")
       .style("font-size", `${options.fontSize}px`)
       .style("text-anchor", "middle")
       .text(yAxisLabel);
@@ -580,6 +597,7 @@ const addRightAxis = (svg, y2Domain, options) => {
       )
       .attr("x", 0 - options.canvasHeight / 2)
       .attr("dy", `${options.fontSize}px`)
+      .attr("fill", "currentColor")
       .style("font-size", `${options.fontSize}px`)
       .style("fill", options.dualaxisColor)
       .style("text-anchor", "middle")
@@ -595,6 +613,7 @@ const addTitle = (svg, div, options) => {
     .attr("y", 2 - options.marginTop / 2)
     .attr("id", "title_" + div)
     .attr("text-anchor", "middle")
+    .attr("fill", "currentColor")
     .style("z-index", 3)
     .style("font-size", `${options.fontSize + 2}px`)
     .style("text-decoration", "underline")
@@ -607,12 +626,13 @@ const addLegend = (svg, div, data, options) => {
     var legendblock = svg
       .append("g")
       .attr("id", "legend_" + div)
+      .attr("class", "legend")
       .attr("pointer-events", "none");
 
     var legendbackground = legendblock
       .append("rect")
-      .style("fill", "white")
-      .style("opacity", 0.6);
+      .style("fill", "currentColor")
+      .style("opacity", 0.1);
 
     var x = options.canvasWidth - 10;
     var textAnchor = "end";
@@ -630,9 +650,11 @@ const addLegend = (svg, div, data, options) => {
       };
     }
 
+    var legendData = data.filter((d) => d.name !== false);
+
     legendblock
       .selectAll("legendtext")
-      .data(data)
+      .data(legendData)
       .enter()
       .append("text")
       .attr("x", x)
@@ -674,6 +696,7 @@ const addBorder = (svg, options) => {
 };
 
 const addTooltip = (data, div, xAxis, yAxis, options) => {
+  var max_distance = 20;
   var zoombox = select(`#interact_${div}`);
   var tooltip = select("#" + div)
     .append("div")
@@ -692,8 +715,7 @@ const addTooltip = (data, div, xAxis, yAxis, options) => {
       var hoverY =
         event.layerY - options.marginTop || event.offsetY - options.marginTop;
       var { idx, idy, distance } = closest(data, hoverX, hoverY, xAxis, yAxis);
-
-      if (distance < 60) {
+      if (distance < max_distance) {
         var xval, yval;
         var xu = "";
         var yu = "";
@@ -729,6 +751,10 @@ const addTooltip = (data, div, xAxis, yAxis, options) => {
           `<tr><td>x:</td><td>${xval} ${xu}</td></tr>` +
           `<tr><td>y:</td><td>${yval} ${yu}</td></tr>` +
           "</tbody></table>";
+
+        if ("tooltip" in data[idx]) {
+          html = data[idx].tooltip[idy] + html;
+        }
 
         if (hoverX > options.width / 2) {
           tooltip
@@ -776,7 +802,7 @@ const addTooltip = (data, div, xAxis, yAxis, options) => {
         }
 
         if (options.hover) options.hover({ idx, idy });
-      } else if (distance > 200) {
+      } else {
         tooltip.style("opacity", 0);
         if (options.hover) options.hover({ mousex: false, mousey: false });
       }
@@ -789,6 +815,19 @@ const addTooltip = (data, div, xAxis, yAxis, options) => {
   zoombox.on("mouseout", () => {
     tooltip.style("opacity", 0);
     if (options.hover) options.hover({ mousex: false, mousey: false });
+  });
+
+  zoombox.on("click", (event) => {
+    var hoverX =
+      event.layerX - options.marginLeft || event.offsetX - options.marginLeft;
+    var hoverY =
+      event.layerY - options.marginTop || event.offsetY - options.marginTop;
+    var { idx, idy, distance } = closest(data, hoverX, hoverY, xAxis, yAxis);
+    if (distance < max_distance) {
+      if (typeof options.onClick === "function") {
+        options.onClick({ x: data[idx].x[idy], y: data[idx].y[idy] });
+      }
+    }
   });
 };
 
@@ -840,7 +879,7 @@ const downloadGraph = (div, options) => {
   title.style("opacity", "0");
 };
 
-const plotLines = (div, g, data, xAxis, yAxis) => {
+const plotLines = (div, g, data, xAxis, yAxis, curve) => {
   g.selectAll("path").remove();
   for (let j = 0; j < data.length; j++) {
     plotConfidenceInterval(
@@ -851,32 +890,62 @@ const plotLines = (div, g, data, xAxis, yAxis) => {
     );
   }
   for (let j = 0; j < data.length; j++) {
-    g.append("path")
-      .datum(data[j].x)
-      .attr("id", `line_${j}_${div}`)
-      .attr("fill", "none")
-      .attr("stroke", data[j].lineColor)
-      .attr("stroke-width", data[j].lineWeight)
-      .attr(
-        "d",
-        line()
-          .x(function (d) {
-            return xAxis[data[j].xaxis].ax(d);
-          })
-          .y(function (d, i) {
-            return yAxis[data[j].yaxis].ax(data[j].y[i]);
-          })
-          .defined(function (d, i) {
-            if (
-              isNumeric(xAxis[data[j].xaxis].ax(d)) &&
-              isNumeric(yAxis[data[j].yaxis].ax(data[j].y[i]))
-            ) {
-              return true;
-            } else {
-              return false;
-            }
-          })
-      );
+    if (curve) {
+      g.append("path")
+        .datum(data[j].x)
+        .attr("id", `line_${j}_${div}`)
+        .attr("fill", "none")
+        .attr("stroke", data[j].lineColor)
+        .attr("stroke-width", data[j].lineWeight)
+        .attr(
+          "d",
+          line()
+            .x(function (d) {
+              return xAxis[data[j].xaxis].ax(d);
+            })
+            .y(function (d, i) {
+              return yAxis[data[j].yaxis].ax(data[j].y[i]);
+            })
+            .curve(curveNatural)
+            .defined(function (d, i) {
+              if (
+                isNumeric(xAxis[data[j].xaxis].ax(d)) &&
+                isNumeric(yAxis[data[j].yaxis].ax(data[j].y[i]))
+              ) {
+                return true;
+              } else {
+                return false;
+              }
+            })
+        );
+    } else {
+      g.append("path")
+        .datum(data[j].x)
+        .attr("id", `line_${j}_${div}`)
+        .attr("fill", "none")
+        .attr("stroke", data[j].lineColor)
+        .attr("stroke-width", data[j].lineWeight)
+        .attr(
+          "d",
+          line()
+            .x(function (d) {
+              return xAxis[data[j].xaxis].ax(d);
+            })
+            .y(function (d, i) {
+              return yAxis[data[j].yaxis].ax(data[j].y[i]);
+            })
+            .defined(function (d, i) {
+              if (
+                isNumeric(xAxis[data[j].xaxis].ax(d)) &&
+                isNumeric(yAxis[data[j].yaxis].ax(data[j].y[i]))
+              ) {
+                return true;
+              } else {
+                return false;
+              }
+            })
+        );
+    }
   }
 };
 
@@ -954,13 +1023,28 @@ const plotConfidenceInterval = (g, data, xAxis, yAxis) => {
 const plotScatter = (context, data, xAxis, yAxis, options) => {
   context.clearRect(0, 0, options.canvasWidth, options.canvasHeight);
   for (var i = 0; i < data.length; i++) {
-    for (var j = 0; j < data[i].x.length; j++) {
-      context.beginPath();
-      context.strokeStyle = data[i].lineColor;
-      const px = xAxis[data[i].xaxis].ax(data[i].x[j]);
-      const py = yAxis[data[i].yaxis].ax(data[i].y[j]);
-      context.arc(px, py, 2.5, 0, 2 * Math.PI, true);
-      context.stroke();
+    if ("symbol" in data[i] && data[i].symbol === "x") {
+      for (let j = 0; j < data[i].x.length; j++) {
+        context.beginPath();
+        context.strokeStyle = data[i].lineColor;
+        const px = xAxis[data[i].xaxis].ax(data[i].x[j]);
+        const py = yAxis[data[i].yaxis].ax(data[i].y[j]);
+        const crossSize = 3;
+        context.moveTo(px - crossSize, py - crossSize);
+        context.lineTo(px + crossSize, py + crossSize);
+        context.moveTo(px + crossSize, py - crossSize);
+        context.lineTo(px - crossSize, py + crossSize);
+        context.stroke();
+      }
+    } else {
+      for (let j = 0; j < data[i].x.length; j++) {
+        context.beginPath();
+        context.strokeStyle = data[i].lineColor;
+        const px = xAxis[data[i].xaxis].ax(data[i].x[j]);
+        const py = yAxis[data[i].yaxis].ax(data[i].y[j]);
+        context.arc(px, py, 2.5, 0, 2 * Math.PI, true);
+        context.stroke();
+      }
     }
   }
 };
@@ -1096,7 +1180,7 @@ const addZoom = (g, context, data, div, xAxis, yAxis, options) => {
         yAxis.y2.axis.scale(yAxis.y2.ax);
         yAxis.y2.g.call(yAxis.y2.axis);
       }
-      if (options.lines) plotLines(div, g, data, xAxis, yAxis);
+      if (options.lines) plotLines(div, g, data, xAxis, yAxis, options.curve);
       if (options.scatter) plotScatter(context, data, xAxis, yAxis, options);
       xAxis.x.ref = xAxis.x.ax;
       if (options.dualaxis === "x2") xAxis.x2.ref = xAxis.x2.ax;
@@ -1113,7 +1197,7 @@ const addZoom = (g, context, data, div, xAxis, yAxis, options) => {
       xAxis.x.ax = t.rescaleX(xAxis.x.ref);
       xAxis.x.axis.scale(xAxis.x.ax);
       xAxis.x.g.call(xAxis.x.axis);
-      if (options.lines) plotLines(div, g, data, xAxis, yAxis);
+      if (options.lines) plotLines(div, g, data, xAxis, yAxis, options.curve);
       if (options.scatter) plotScatter(context, data, xAxis, yAxis, options);
       xAxis.x.ref = xAxis.x.ax;
       zoomboxx.call(zoom.transform, zoomIdentity);
@@ -1127,7 +1211,7 @@ const addZoom = (g, context, data, div, xAxis, yAxis, options) => {
       xAxis.x2.ax = t.rescaleX(xAxis.x2.ref);
       xAxis.x2.axis.scale(xAxis.x2.ax);
       xAxis.x2.g.call(xAxis.x2.axis);
-      if (options.lines) plotLines(div, g, data, xAxis, yAxis);
+      if (options.lines) plotLines(div, g, data, xAxis, yAxis, options.curve);
       if (options.scatter) plotScatter(context, data, xAxis, yAxis, options);
       xAxis.x2.ref = xAxis.x2.ax;
       zoomboxx2.call(zoom.transform, zoomIdentity);
@@ -1141,7 +1225,7 @@ const addZoom = (g, context, data, div, xAxis, yAxis, options) => {
       yAxis.y.ax = t.rescaleY(yAxis.y.ref);
       yAxis.y.axis.scale(yAxis.y.ax);
       yAxis.y.g.call(yAxis.y.axis);
-      if (options.lines) plotLines(div, g, data, xAxis, yAxis);
+      if (options.lines) plotLines(div, g, data, xAxis, yAxis, options.curve);
       if (options.scatter) plotScatter(context, data, xAxis, yAxis, options);
       yAxis.y.ref = yAxis.y.ax;
       zoomboxy.call(zoom.transform, zoomIdentity);
@@ -1155,7 +1239,7 @@ const addZoom = (g, context, data, div, xAxis, yAxis, options) => {
       yAxis.y2.ax = t.rescaleY(yAxis.y2.ref);
       yAxis.y2.axis.scale(yAxis.y2.ax);
       yAxis.y2.g.call(yAxis.y2.axis);
-      if (options.lines) plotLines(div, g, data, xAxis, yAxis);
+      if (options.lines) plotLines(div, g, data, xAxis, yAxis, options.curve);
       if (options.scatter) plotScatter(context, data, xAxis, yAxis, options);
       yAxis.y2.ref = yAxis.y2.ax;
       zoomboxy2.call(zoom.transform, zoomIdentity);

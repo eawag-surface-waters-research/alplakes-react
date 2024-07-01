@@ -2,9 +2,10 @@ import L from "leaflet";
 
 L.Control.PolylineDraw = L.Control.extend({
   options: {
-    position: "topright",
+    position: "topleft",
     fire: false,
     layer: false,
+    id: "map",
   },
 
   onAdd: function (map) {
@@ -34,7 +35,7 @@ L.Control.PolylineDraw = L.Control.extend({
     this._isDrawing = false;
     this._map.dragging.enable();
     L.DomUtil.removeClass(this._container, "leaflet-draw-enabled");
-    document.getElementById("map").style.removeProperty("cursor");
+    document.getElementById(this.options.id).style.removeProperty("cursor");
     this._map.off("click", this._addPoint, this);
     this._map.off("mousemove", this._updatePreview, this);
     this._map.off("keydown", this._finishDrawingOnKeyPress, this);
@@ -65,7 +66,7 @@ L.Control.PolylineDraw = L.Control.extend({
     this._isDrawing = true;
     this._map.dragging.disable();
     L.DomUtil.addClass(this._container, "leaflet-draw-enabled");
-    document.getElementById("map").style.cursor = "crosshair";
+    document.getElementById(this.options.id).style.cursor = "crosshair";
     this._map.on("click", this._addPoint, this);
     this._map.on("mousemove", this._updatePreview, this);
     this._map.on("keydown", this._finishDrawingOnKeyPress, this);
@@ -100,7 +101,7 @@ L.Control.PolylineDraw = L.Control.extend({
     this._isDrawing = false;
     this._map.dragging.enable();
     L.DomUtil.removeClass(this._container, "leaflet-draw-enabled");
-    document.getElementById("map").style.removeProperty("cursor");
+    document.getElementById(this.options.id).style.removeProperty("cursor");
     this._map.off("click", this._addPoint, this);
     this._map.off("mousemove", this._updatePreview, this);
     this._map.off("keydown", this._finishDrawingOnKeyPress, this);

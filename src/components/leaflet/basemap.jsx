@@ -1,107 +1,142 @@
 import React, { Component } from "react";
 import L from "leaflet";
 import CONFIG from "../../config.json";
-import { flyToBounds, addLayer, updateLayer, removeLayer } from "./functions";
+import {
+  flyToBounds,
+  addLayer,
+  updateLayer,
+  removeLayer,
+  loaded,
+} from "./functions";
 import "./leaflet_geotiff";
 import "./leaflet_colorpicker";
 import "./leaflet_customtooltip";
 import "./leaflet_customcontrol";
+import "./leaflet_tileclass";
 import "./css/leaflet.css";
 
 class Basemap extends Component {
+  state = {
+    darkMap: "dark_all",
+    lightMap: "light_all",
+  };
   find = (list, parameter, value) => {
     return list.find((l) => l[parameter] === value);
   };
   async componentDidUpdate(prevProps) {
-    const {
-      updates,
-      updated,
-      metadata,
-      layers,
-      period,
-      datetime,
-      depth,
-      setSimpleline,
-      unlock,
-      getTransect,
-      getProfile,
-      startAnimation,
-      bucket,
-    } = this.props;
+    const { updates, updated, metadata, layers, error } = this.props;
     if (updates.length > 0) {
       updated();
+      var initialLoad = false;
+      if (updates.find((u) => u.event === "initialLoad")) initialLoad = true;
       for (var update of updates) {
+        var layer = this.find(layers, "id", update.id);
         if (update.event === "clear") {
           this.layer.clearLayers();
         } else if (update.event === "bounds") {
           await flyToBounds(metadata.bounds, this.map);
+        } else if (update.event === "initialLoad") {
+          var element = document.getElementById(update.id);
+          if (element) {
+            element.style.opacity = 0;
+          }
+          this.layerStore["basemap"].addTo(this.map);
         } else if (update.event === "addLayer") {
           try {
-            await addLayer(
-              this.find(layers, "id", update.id),
-              period,
+            layer = await addLayer(
+              layer,
+              layers,
               this.dataStore,
               this.layerStore,
               this.map,
-              datetime,
-              depth,
-              setSimpleline,
-              getTransect,
-              getProfile,
-              bucket
+              initialLoad,
+              this.props
             );
           } catch (e) {
-            console.error(
-              "Failed to add layer",
-              this.find(layers, "id", update.id)
-            );
+            loaded(this.props.loadingId);
             console.error(e);
-            window.alert(
+            error(
               `Failed to add layer ${
-                this.find(layers, "id", update.id).properties.parameter
-              }, try a different time period.`
+                this.find(layers, "id", update.id).parameter
+              }.`
             );
           }
         } else if (update.event === "updateLayer") {
-          updateLayer(
-            this.find(layers, "id", update.id),
+          layer = await updateLayer(
+            layer,
             this.dataStore,
             this.layerStore,
             this.map,
-            datetime,
-            depth
+            this.props
           );
         } else if (update.event === "removeLayer") {
-          removeLayer(
-            this.find(layers, "id", update.id),
-            this.layerStore,
-            this.map
-          );
-        } else if (update.event === "play") {
-          startAnimation();
+          layer = removeLayer(layer, this.layerStore, this.map);
         }
+        this.props.setLayers(layers);
       }
-      unlock();
       this.map.triggerLayersUpdate();
     }
+    if (prevProps.active !== this.props.active) {
+      setTimeout(() => {
+        this.map.fitBounds(
+          L.latLngBounds(
+            L.latLng(metadata.bounds.southWest),
+            L.latLng(metadata.bounds.northEast)
+          ),
+          { padding: [20, 20], animate: false }
+        );
+      }, 50);
+    }
+    var { darkMap, lightMap } = this.state;
+    var { dark } = this.props;
+    var mapID = dark ? darkMap : lightMap;
     if (prevProps.basemap !== this.props.basemap) {
-      var basemap = L.tileLayer(CONFIG.basemaps[this.props.basemap].url, {
-        maxZoom: 19,
-        attribution: CONFIG.basemaps[this.props.basemap].attribution,
-      });
+      var basemap;
+      if (this.props.basemap === "default") {
+        basemap = L.tileLayer.default(
+          `https://{s}.basemaps.cartocdn.com/${mapID}/{z}/{x}/{y}{r}.png`,
+          {
+            maxZoom: 19,
+            attribution:
+              '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+          }
+        );
+      } else {
+        basemap = L.tileLayer(CONFIG.basemaps[this.props.basemap].url, {
+          maxZoom: 19,
+          attribution: CONFIG.basemaps[this.props.basemap].attribution,
+        });
+      }
       basemap.addTo(this.map);
       var old_basemap = this.layerStore["basemap"];
       this.map.removeLayer(old_basemap);
       this.layerStore["basemap"] = basemap;
+    } else if (
+      prevProps.dark !== this.props.dark &&
+      this.props.basemap === "default"
+    ) {
+      basemap = L.tileLayer.default(
+        `https://{s}.basemaps.cartocdn.com/${mapID}/{z}/{x}/{y}{r}.png`,
+        {
+          maxZoom: 19,
+          attribution:
+            '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+        }
+      );
+      basemap.addTo(this.map);
+      var old_basemap2 = this.layerStore["basemap"];
+      this.map.removeLayer(old_basemap2);
+      this.layerStore["basemap"] = basemap;
     }
   }
   async componentDidMount() {
-    var { openSidebar } = this.props;
+    var { darkMap, lightMap } = this.state;
+    var { dark, mapId } = this.props;
     this.dataStore = {};
     this.layerStore = {};
     var center = [46.9, 8.2];
     var zoom = 8;
-    this.map = L.map("map", {
+    this.map = L.map(mapId, {
       preferCanvas: true,
       center: center,
       zoom: zoom,
@@ -114,46 +149,25 @@ class Basemap extends Component {
       zoomAnimation: true,
     });
     this.map.doubleClickZoom.disable();
-
-    var basemap = L.tileLayer(CONFIG.basemaps["default"].url, {
-      maxZoom: 19,
-      attribution: CONFIG.basemaps["default"].attribution,
-    });
-    this.map.addLayer(basemap);
+    var mapID = dark ? darkMap : lightMap;
+    var basemap = L.tileLayer.default(
+      `https://{s}.basemaps.cartocdn.com/${mapID}/{z}/{x}/{y}{r}.png`,
+      {
+        maxZoom: 19,
+        attribution:
+          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+      }
+    );
     this.layerStore["basemap"] = basemap;
     this.layerStore["labels"] = L.layerGroup([]).addTo(this.map);
-
     this.layer = L.layerGroup([]).addTo(this.map);
-
-    L.control
-      .custom({
-        position: "topleft",
-        content: `<div class="bar-container">
-                    <div class="bar"></div>
-                    <div class="ball ball1"></div>
-                  </div>
-                  <div class="bar-container">
-                    <div class="bar"></div>
-                    <div class="ball ball2"></div>
-                  </div>
-                  <div class="bar-container">
-                    <div class="bar"></div>
-                    <div class="ball ball3"></div>
-                  </div>`,
-        classes: "leaflet-settings-control",
-        events: {
-          click: function () {
-            openSidebar();
-          },
-        },
-      })
-      .addTo(this.map);
   }
 
   render() {
+    const { mapId } = this.props;
     return (
       <React.Fragment>
-        <div id="map"></div>
+        <div id={mapId} className="leaflet-map"></div>
       </React.Fragment>
     );
   }

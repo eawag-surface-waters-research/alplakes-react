@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import * as d3 from "d3";
-import isEqual from "lodash/isEqual";
 import GraphHeader from "../graphheader/graphheader";
 import plotlinegraph from "./plotlinegraph";
 import "./linegraph.css";
@@ -99,7 +98,10 @@ class D3LineGraph extends Component {
           csvContent = csvContent + "\n";
         }
       }
-      var name = title.split(" ").join("_") + ".csv";
+      var name = "linegraph_data.csv";
+      if (title) {
+        name = title.split(" ").join("_") + ".csv";
+      }
       var encodedUri = encodeURI(csvContent);
       var link = document.createElement("a");
       link.setAttribute("href", encodedUri);
@@ -116,7 +118,10 @@ class D3LineGraph extends Component {
   downloadJSON = () => {
     var { data, xlabel, xunits, ylabel, yunits, title } = this.props;
     var arr = { ...{ xlabel, xunits, ylabel, yunits, title }, ...data };
-    var name = title.split(" ").join("_") + ".json";
+    var name = "linegraph_data.json";
+    if (title) {
+      name = title.split(" ").join("_") + ".json";
+    }
     var encodedUri =
       "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(arr));
     var link = document.createElement("a");
@@ -207,7 +212,7 @@ class D3LineGraph extends Component {
       y2units,
       xmax,
       xmin,
-      ymax, 
+      ymax,
       ymin,
       xscale,
       yscale,
@@ -219,26 +224,39 @@ class D3LineGraph extends Component {
       simple,
       yReverse,
       xReverse,
-      plotdots,
+      scatter,
+      lines,
       box,
       grid,
       language,
+      onClick,
+      curve,
+      marginLeft,
+      marginTop,
     } = this.props;
     var { graphid, fontSize } = this.state;
     if (this.props.header !== false) fontSize = this.props.fontSize;
 
+    var lineColor = "black";
+    if ("dark" in this.props && this.props.dark) lineColor = "white";
+
+    if (!Array.isArray(data)) {
+      data = [data];
+    }
+
     for (var i = 0; i < data.length; i++) {
-      data[i]["lineColor"] = lcolor[i] ? lcolor[i] : "black";
-      data[i]["lineWeight"] = lweight[i] ? lweight[i] : 1;
-      data[i]["name"] = legend && legend[i] ? legend[i].text : "";
-      data[i]["xaxis"] = legend && legend[i] ? legend[i].xaxis : "x";
-      data[i]["yaxis"] = legend && legend[i] ? legend[i].yaxis : "y";
-      data[i]["upper"] =
-        confidence && confidence[i] ? confidence[i].CI_upper : "";
-      data[i]["lower"] =
-        confidence && confidence[i] ? confidence[i].CI_lower : "";
-      data[i]["confidenceAxis"] = confidence && confidence[i] ? "y" : "";
-      data[i]["confidenceAxis"] = confidence && confidence[i] ? "y" : "";
+      if (!("lineColor" in data[i]))
+        data[i]["lineColor"] = lcolor[i] ? lcolor[i] : lineColor;
+      if (!("lineWeight" in data[i]))
+        data[i]["lineWeight"] = lweight[i] ? lweight[i] : 1;
+      if (!("upper" in data[i]))
+        data[i]["upper"] =
+          confidence && confidence[i] ? confidence[i].CI_upper : "";
+      if (!("lower" in data[i]))
+        data[i]["lower"] =
+          confidence && confidence[i] ? confidence[i].CI_lower : "";
+      if (!("confidenceAxis" in data[i]))
+        data[i]["confidenceAxis"] = confidence && confidence[i] ? "y" : "";
     }
     var options = {
       language,
@@ -259,14 +277,20 @@ class D3LineGraph extends Component {
       yReverse,
       xReverse,
       fontSize,
-      scatter: plotdots,
+      curve: curve,
+      scatter: scatter,
+      lines: lines,
       tooltip: !simple,
       setDownloadGraphDiv: "png" + graphid,
+      onClick: onClick,
+      legend: legend,
     };
-    if (xmax) options["xMax"] = xmax
-    if (xmin) options["xMin"] = xmin
-    if (ymax) options["yMax"] = ymax
-    if (ymin) options["yMin"] = ymin
+    if (marginLeft) options["marginLeft"] = marginLeft;
+    if (marginTop) options["marginTop"] = marginTop;
+    if (xmax) options["xMax"] = xmax;
+    if (xmin) options["xMin"] = xmin;
+    if (ymax) options["yMax"] = ymax;
+    if (ymin) options["yMin"] = ymin;
     plotlinegraph("vis" + graphid, data, options);
   };
 
@@ -288,17 +312,12 @@ class D3LineGraph extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (!isEqual(prevProps, this.props)) {
-      this.plot();
-    }
-    if (prevState.fontSize !== this.state.fontSize) {
-      this.plot();
-    }
+    this.plot();
   }
 
   render() {
     var { graphid, download, fullscreen, fontSize } = this.state;
-    var { title, simple } = this.props;
+    var { title, simple, clearPlot } = this.props;
     return simple ? (
       <div className="linegraph-graph" id={"vis" + graphid} />
     ) : (
@@ -317,6 +336,7 @@ class D3LineGraph extends Component {
                 editFontSize={this.editFontSize}
                 downloadJSON={this.downloadJSON}
                 downloadCSV={this.downloadCSV}
+                clearPlot={clearPlot}
               />
             </div>
           )}

@@ -1,95 +1,117 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 import Translate from "../../translations.json";
-import lightLogo from "../../img/text-logo-black.png";
-import darkLogo from "../../img/text-logo-white.png";
-import lakes_img from "../../img/lakes.png";
-import api_img from "../../img/api.png";
-import about_img from "../../img/about.png";
-import lakes_img_dark from "../../img/lakes_dark.png";
-import api_img_dark from "../../img/api_dark.png";
-import about_img_dark from "../../img/about_dark.png";
+import logo from "../../img/icon_text.png";
+import logo_dark from "../../img/icon_text_dark.png";
+import eawag_logo from "../../img/eawag_logo.png";
+import esa_logo from "../../img/esa_logo.png";
+import trento_logo from "../../img/trento_logo.png";
 import dark_icon from "../../img/dark.png";
 import light_icon from "../../img/light.png";
 import "./navbar.css";
+import Toggle from "../sliders/toggle";
 
 class NavBar extends Component {
+  state = {
+    menu: false,
+  };
+  toggleMenu = () => {
+    this.setState({ menu: !this.state.menu });
+  };
   render() {
-    var selected = "lakes";
-    if (window.location.href.includes("/api")) selected = "api";
-    if (window.location.href.includes("/about")) selected = "about";
-    var { language, languages, setLanguage, dark, toggleDark } = this.props;
+    var { menu } = this.state;
+    var { language, languages, setLanguage, dark, toggleDark, relative } =
+      this.props;
     return (
       <React.Fragment>
-        <div className={dark ? "navbar dark" : "navbar"}>
+        <div className={relative ? "navbar relative" : "navbar"}>
           <NavLink to="/">
-            <img
-              src={dark ? darkLogo : lightLogo}
-              className="icon"
-              alt="Alplakes logo"
-            />
+            <div className="home-nav">
+              <img
+                src={dark ? logo_dark : logo}
+                className="icon"
+                alt="Alplakes logo"
+              />
+            </div>
           </NavLink>
-          <div className="language">
-            <button
-              className="dark-switch"
-              onClick={toggleDark}
-              title={dark ? "Switch to light theme" : "Switch to dark theme"}
-            >
-              <img src={dark ? light_icon : dark_icon} alt="Light switch" />
-            </button>
-            <select
-              value={language}
-              onChange={setLanguage}
-              title="Switch language"
-            >
-              {languages.map((l) => (
-                <option value={l} key={"language_" + l}>
-                  {l}
-                </option>
-              ))}
-            </select>
-          </div>
+
           <div className="desktop-nav">
-            <NavLink
-              className={selected === "lakes" ? "nav-item active" : "nav-item"}
-              to="/"
-            >
-              <div className="nav-text">{Translate.lakes[language]}</div>
+            <NavLink className="nav-item" to="/">
+              <div className="nav-text">Lakes</div>
             </NavLink>
-            <NavLink
-              className={selected === "api" ? "nav-item active" : "nav-item"}
-              to="/api"
-            >
+            <NavLink className="nav-item" to="/api">
               <div className="nav-text">API</div>
             </NavLink>
-            <NavLink
-              className={selected === "about" ? "nav-item active" : "nav-item"}
-              to="/about"
-            >
+            <NavLink className="nav-item" to="/about">
               <div className="nav-text">{Translate.about[language]}</div>
             </NavLink>
+            <div className="nav-item">
+              <div className="nav-select">
+                <select
+                  value={language}
+                  onChange={setLanguage}
+                  title="Switch language"
+                >
+                  {languages.map((l) => (
+                    <option value={l} key={"language_" + l}>
+                      {l}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
           </div>
 
           <div className="mobile-nav">
-            <div className="dropdown">
-              <button className="dropbtn" title="Menu">
-                <div className="bar"></div>
-                <div className="bar"></div>
-                <div className="bar"></div>
-              </button>
-              <div className="dropdown-content">
-                <NavLink to="/">
-                  <img alt="Lakes" src={dark ? lakes_img_dark : lakes_img} />
-                  Lakes
-                </NavLink>
-                <NavLink to="/api">
-                  <img alt="API" src={dark ? api_img_dark : api_img} />
-                  API
-                </NavLink>
-                <NavLink to="/about">
-                  <img alt="About" src={dark ? about_img_dark : about_img} />
-                  About
-                </NavLink>
+            <div className="nav-header">
+              <div
+                className="nav-toggle"
+                title="Menu"
+                onClick={this.toggleMenu}
+              >
+                <div className={menu ? "bar x" : "bar"}></div>
+                <div className={menu ? "bar x" : "bar"}></div>
+                <div className={menu ? "bar x" : "bar"}></div>
+              </div>
+            </div>
+            <div className={menu ? "nav-content" : "nav-content hide"}>
+              <div className="nav-row">
+                <NavLink to="/">{Translate.lakes[language]}</NavLink>
+              </div>
+              <div className="nav-row">
+                <NavLink to="/api">API</NavLink>
+              </div>
+              <div className="nav-row">
+                <NavLink to="/about">{Translate.about[language]}</NavLink>
+              </div>
+              <div className="nav-row">
+                <div className="mode">
+                  <Toggle
+                    left={<img src={light_icon} alt="light" />}
+                    right={<img src={dark_icon} alt="dark" />}
+                    onChange={toggleDark}
+                    checked={dark}
+                  />
+                </div>
+              </div>
+              <div className="nav-row">
+                <select
+                  value={language}
+                  onChange={setLanguage}
+                  title="Switch language"
+                >
+                  {languages.map((l) => (
+                    <option value={l} key={"language_" + l}>
+                      {l}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="nav-footer">
+                <img src={eawag_logo} alt="Eawag" />
+                <img src={esa_logo} alt="Esa" />
+                <img src={trento_logo} alt="Trento" />
               </div>
             </div>
           </div>

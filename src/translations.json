@@ -23,31 +23,53 @@
     "FR": "Ajouter des calques",
     "IT": "Aggiungi strati"
   },
-  "descriptions": {
-    "EN": [
-      "Situated ",
-      " above sea level with a surface area of ",
-      ", an average depth of ",
-      ", and a maximum depth of "
-    ],
-    "DE": [
-      "",
-      " über dem Meeresspiegel gelegen, mit einer Fläche von ",
-      ", einer durchschnittlichen Tiefe von ",
-      " und einer maximalen Tiefe von "
-    ],
-    "FR": [
-      "Situé à ",
-      " d'altitude avec une superficie de ",
-      ", une profondeur moyenne de ",
-      " et une profondeur maximale de "
-    ],
-    "IT": [
-      "Situato a ",
-      " sul livello del mare con una superficie di ",
-      ", una profondità media di ",
-      " e una profondità massima di "
-    ]
+  "surfacetemperature": {
+    "EN": "Surface temperature",
+    "DE": "Oberflächentemperatur",
+    "FR": "Température superficielle",
+    "IT": "Temperatura superficiale"
+  },
+  "icecover": {
+    "EN": "Ice cover",
+    "DE": "Eisdecke",
+    "FR": "Couverture de glace",
+    "IT": "Copertura di ghiaccio"
+  },
+  "bottomoxygen": {
+    "EN": "Bottom oxygen",
+    "DE": "Bodensauerstoff",
+    "FR": "Oxygène inférieur",
+    "IT": "Ossigeno sul fondo"
+  },
+  "summary": {
+    "EN": "Monitoring and forecasting for lakes across the European alpine region",
+    "DE": "Überwachung und Vorhersage von Seen im gesamten europäischen Alpenraum",
+    "FR": "Surveillance et la prévision des lacs dans toute la région alpine européenne",
+    "IT": "Monitoraggio e previsione dei laghi nella regione alpina europea"
+  },
+  "results": {
+    "EN": "results",
+    "DE": "résultats",
+    "FR": "Ergebnisse",
+    "IT": "risultati"
+  },
+  "noresults": {
+    "EN": "Your search returned 0 results. If the lake you are looking for is not on Alplakes we would be happy to hear from you.",
+    "DE": "Ihre Suche ergab 0 Ergebnisse. Wenn der von Ihnen gesuchte See nicht auf Alplakes liegt, würden wir uns freuen, von Ihnen zu hören.",
+    "FR": "Votre recherche a renvoyé 0 résultat. Si le lac que vous recherchez ne se trouve pas sur Alplakes, nous serions heureux de vous entendre.",
+    "IT": "La tua ricerca ha prodotto 0 risultati. Se il lago che stai cercando non si trova su Alplakes saremo felici di sentire la tua opinione."
+  },
+  "readmore": {
+    "EN": "Read more",
+    "DE": "Mehr lesen",
+    "FR": "En savoir plus",
+    "IT": "Per saperne di più"
+  },
+  "today": {
+    "EN": "Today",
+    "DE": "Heute",
+    "FR": "Aujourd'hui",
+    "IT": "Oggi"
   },
   "sortby": {
     "EN": "Sort By",
@@ -91,6 +113,42 @@
     "FR": "Fin",
     "IT": "Termine"
   },
+  "frozen": {
+    "EN": "Frozen",
+    "DE": "Gefroren",
+    "FR": "Congelée",
+    "IT": "Congelato"
+  },
+  "unfrozen": {
+    "EN": "Unfrozen",
+    "DE": "Aufgetaut",
+    "FR": "Dégelé",
+    "IT": "Scongelato"
+  },
+  "forecast": {
+    "EN": "Temperature forecast",
+    "DE": "Temperaturvorhersage",
+    "FR": "Prévisions de température",
+    "IT": "Previsioni della temperatura"
+  },
+  "for": {
+    "EN": "for",
+    "DE": "für",
+    "FR": "pour",
+    "IT": "per"
+  },
+  "offline": {
+    "EN": "Forecast offline. Other datasets are available.",
+    "DE": "Vorhersage offline. Weitere Datensätze sind verfügbar.",
+    "FR": "Prévisions hors ligne. D'autres ensembles de données sont disponibles.",
+    "IT": "Previsioni offline. Sono disponibili altri set di dati."
+  },
+  "more": {
+    "EN": "More",
+    "DE": "Mehr",
+    "FR": "Plus",
+    "IT": "Di più"
+  },
   "watertemperature": {
     "EN": "Water temperature",
     "DE": "Wassertemperatur",
@@ -121,11 +179,23 @@
     "FR": "Secchi",
     "IT": "Secchi"
   },
+  "oxygensat": {
+    "EN": "O2 saturation",
+    "DE": "Sauerstoffsättigung",
+    "FR": "Saturation d'oxygène",
+    "IT": "Saturazione di ossigeno"
+  },
   "turbidity": {
     "EN": "Turbidity",
     "DE": "Trübung",
     "FR": "Turbidité",
     "IT": "Torbidità"
+  },
+  "forelule": {
+    "EN": "Forel Ule",
+    "DE": "Forel Ule",
+    "FR": "Forel Ule",
+    "IT": "Forel Ule"
   },
   "tsm": {
     "EN": "Turbidity",
@@ -163,17 +233,83 @@
     "FR": "Thermocline",
     "IT": "termoclino"
   },
+  "click": {
+    "EN": "Click for more",
+    "DE": "Klicken Sie für mehr",
+    "FR": "Cliquez pour en savoir plus",
+    "IT": "Fare clic per ulteriori informazioni"
+  },
+  "satelliteDescription": {
+    "EN": "Filter for lakes with satellite derived products",
+    "DE": "Filtern für Seen mit satellitengestützten Produkten",
+    "FR": "Filtrer pour les lacs avec produits dérivés du satellite",
+    "IT": "Filtra per laghi con prodotti di derivazione satellitare"
+  },
+  "threedDescription": {
+    "EN": "Filter for lakes with 3D hydrodynamic models",
+    "DE": "Filtern für Seen mit hydrodynamischen 3D-Modellen",
+    "FR": "Filtrer pour lacs avec modèles hydrodynamiques 3D",
+    "IT": "Filtra per laghi con modelli idrodinamici 3D"
+  },
+  "onedDescription": {
+    "EN": "Filter for lakes with 1D hydrodynamic models",
+    "DE": "Filtern für Seen mit hydrodynamischen 1D-Modellen",
+    "FR": "Filtrer pour les lacs avec modèles hydrodynamiques 1D",
+    "IT": "Filtra per laghi con modelli idrodinamici 1D"
+  },
+  "liveDescription": {
+    "EN": "Filter for lakes with live monitoring stations",
+    "DE": "Filtern für Seen mit Live-Überwachungsstationen",
+    "FR": "Filtrer pour les lacs avec stations de surveillance en direct",
+    "IT": "Filtra per laghi con stazioni di monitoraggio in tempo reale"
+  },
+  "insituDescription": {
+    "EN": "Filter for lakes with insitu measurements",
+    "DE": "Filtern für Seen mit In-situ-Messungen",
+    "FR": "Filtrer pour lacs avec mesures in situ",
+    "IT": "Filtra per laghi con misurazioni in situ"
+  },
+  "removeFilters": {
+    "EN": "Remove filters",
+    "DE": "Filter entfernen",
+    "FR": "Supprimer les filtres",
+    "IT": "Rimuovi filtri"
+  },
+  "satellite": {
+    "EN": "Satellite",
+    "DE": "Satelliten",
+    "FR": "Satellite",
+    "IT": "Satellitare"
+  },
+  "all": {
+    "EN": "All",
+    "DE": "Alle",
+    "FR": "Toute",
+    "IT": "Tutta"
+  },
+  "live": {
+    "EN": "Live",
+    "DE": "Live",
+    "FR": "En direct",
+    "IT": "Dal vivo"
+  },
+  "insitu": {
+    "EN": "Insitu",
+    "DE": "Vor Ort",
+    "FR": "In situ",
+    "IT": "Sul posto"
+  },
   "play": {
-    "EN": "Play (Spacebar)",
-    "DE": "Spielen (Leertaste)",
-    "FR": "Jouer (barre d'espace)",
-    "IT": "Riproduci (barra spaziatrice)"
+    "EN": "Play",
+    "DE": "Spielen",
+    "FR": "Jouer",
+    "IT": "Riproduci"
   },
   "next": {
-    "EN": "Next (Right arrow)",
-    "DE": "Weiter (Pfeil nach rechts)",
-    "FR": "Suivant (Flèche droite)",
-    "IT": "Successivo (freccia destra)"
+    "EN": "Next",
+    "DE": "Weiter",
+    "FR": "Suivant",
+    "IT": "Successivo"
   },
   "settings": {
     "EN": "Settings",
@@ -198,6 +334,12 @@
     "DE": "Melde Probleme",
     "FR": "Signaler un problème",
     "IT": "Rapporto"
+  },
+  "loadingLakes": {
+    "EN": "Loading lakes...",
+    "DE": "Seen werden geladen...",
+    "FR": "Chargement des lacs...",
+    "IT": "Caricamento laghi..."
   },
   "axis": {
     "DE": {
@@ -393,6 +535,36 @@
       ]
     }
   },
+  "threed": {
+    "EN": "3D Model",
+    "DE": "3D-Modell",
+    "FR": "Modèle 3D",
+    "IT": "Modello 3D"
+  },
+  "oned": {
+    "EN": "1D Model",
+    "DE": "1D-Modell",
+    "FR": "Modèle 1D",
+    "IT": "Modello 1D"
+  },
+  "heatmap": {
+    "EN": "Heatmap",
+    "DE": "Heatmap",
+    "FR": "Carte de chaleur",
+    "IT": "Mappa di calore"
+  },
+  "doy": {
+    "EN": "Day of year",
+    "DE": "Tag des Jahres",
+    "FR": "Jour de l'année",
+    "IT": "Giorno dell'anno"
+  },
+  "linegraph": {
+    "EN": "Linegraph",
+    "DE": "Liniendiagramm",
+    "FR": "Graphique linéaire",
+    "IT": "Grafico a linee"
+  },
   "alplakes_hydrodynamic": {
     "EN": "3D Model",
     "DE": "3D-Modell",
@@ -429,7 +601,259 @@
     "FR": "Satellite",
     "IT": "Satellitare"
   },
-  "demo": {
+  "surfaceArea": {
+    "EN": "Surface area",
+    "DE": "Oberfläche",
+    "FR": "Superficie",
+    "IT": "Superficie"
+  },
+  "maxDepth": {
+    "EN": "Max depth",
+    "DE": "Maximale Tiefe",
+    "FR": "Profondeur max",
+    "IT": "Profondità massima"
+  },
+  "volume": {
+    "EN": "Volume",
+    "DE": "Volumen",
+    "FR": "Volume",
+    "IT": "Volume"
+  },
+  "averageDepth": {
+    "EN": "Average depth",
+    "DE": "Durchschnittliche Tiefe",
+    "FR": "Profondeur moyenne",
+    "IT": "Profondità media"
+  },
+  "residenceTime": {
+    "EN": "Residence time",
+    "DE": "Verweilzeit",
+    "FR": "Temps de séjour",
+    "IT": "Tempo di residenza"
+  },
+  "geothermalFlux": {
+    "EN": "Geothermal flux",
+    "DE": "Geothermischer Fluss",
+    "FR": "Flux géothermique",
+    "IT": "Flusso geotermico"
+  },
+  "mixingRegime": {
+    "EN": "Mixing Regime",
+    "DE": "Mischregime",
+    "FR": "Régime de mélange",
+    "IT": "Regime di miscelazione"
+  },
+  "trophicState": {
+    "EN": "Trophic State",
+    "DE": "Trophischer Zustand",
+    "FR": "État trophique",
+    "IT": "Stato trofico"
+  },
+  "lakeProperties": {
+    "EN": "Lake Properties",
+    "DE": "Seegrundstücke",
+    "FR": "Propriétés du lac",
+    "IT": "Proprietà del lago"
+  },
+  "lakePropertiesDesc": {
+    "EN": "Key physical properties",
+    "DE": "Wichtige physikalische Eigenschaften",
+    "FR": "Propriétés physiques clés",
+    "IT": "Principali proprietà fisiche"
+  },
+  "type": {
+    "EN": "Type",
+    "DE": "Typ",
+    "FR": "Taper",
+    "IT": "Tipo"
+  },
+  "availableData": {
+    "EN": "Available Data",
+    "DE": "Verfügbare Daten",
+    "FR": "Données disponibles",
+    "IT": "Dati disponibili"
+  },
+  "availableDataDesc": {
+    "EN": "Learn more about how our datasets are produced.",
+    "DE": "Erfahren Sie mehr darüber, wie unsere Datensätze erstellt werden.",
+    "FR": "Apprenez-en davantage sur la façon dont nos ensembles de données sont produits.",
+    "IT": "Scopri di più su come vengono prodotti i nostri set di dati."
+  },
+  "learnMore": {
+    "EN": "Learn more",
+    "DE": "Erfahren Sie mehr",
+    "FR": "Apprendre encore plus",
+    "IT": "Saperne di più"
+  },
+  "seeMore": {
+    "EN": "See more on ",
+    "DE": "Mehr erfahren auf ",
+    "FR": "En savoir plus sur ",
+    "IT": "Vedi di più su "
+  },
+  "view": {
+    "EN": "View",
+    "DE": "Sicht",
+    "FR": "Voir",
+    "IT": "View"
+  },
+  "insituData": {
+    "EN": "Insitu Data",
+    "DE": "In-situ-Daten",
+    "FR": "Données Insitu",
+    "IT": "Dati in loco"
+  },
+  "insituDataDesc": {
+    "EN": "Selected field measurements from ",
+    "DE": "Ausgewählte Feldmessungen von ",
+    "FR": "Mesures de terrain sélectionnées à partir de ",
+    "IT": "Misurazioni sul campo selezionate da "
+  },
+  "bathymetry": {
+    "EN": "Bathymetry",
+    "DE": "Bathymetrie",
+    "FR": "Bathymétrie",
+    "IT": "Batimetria"
+  },
+  "latestEvents": {
+    "EN": "Latest Events",
+    "DE": "Letzte Veranstaltungen",
+    "FR": "Derniers évènements",
+    "IT": "Ultimi eventi"
+  },
+  "noEvents": {
+    "EN": "No events have been reported.",
+    "DE": "Es wurden keine Ereignisse gemeldet.",
+    "FR": "Aucun événement n'a été signalé.",
+    "IT": "Non è stato segnalato alcun evento."
+  },
+  "feedback": {
+    "EN": "Feedback",
+    "DE": "Rückmeldung",
+    "FR": "Retour",
+    "IT": "Feedback"
+  },
+  "feedbackText": {
+    "EN": "Thank you for taking the time to provide feedback. Please include a brief message detailing your thoughts and suggestions, and if you're open to further discussion, kindly provide your email address. We appreciate your input!",
+    "DE": "Vielen Dank, dass Sie sich die Zeit genommen haben, uns Feedback zu geben. Bitte fügen Sie eine kurze Nachricht mit Ihren Gedanken und Vorschlägen bei. Wenn Sie offen für weitere Diskussionen sind, geben Sie bitte Ihre E-Mail-Adresse an. Wir freuen uns über Ihren Beitrag!",
+    "FR": "Merci d'avoir pris le temps de donner votre avis. Veuillez inclure un bref message détaillant vos réflexions et suggestions, et si vous êtes ouvert à une discussion plus approfondie, veuillez fournir votre adresse e-mail. Nous apprécions votre contribution !",
+    "IT": "Grazie per aver dedicato del tempo per fornire un feedback. Per favore includi un breve messaggio che dettaglia i tuoi pensieri e suggerimenti e, se sei disponibile a ulteriori discussioni, fornisci gentilmente il tuo indirizzo email. Apprezziamo il tuo contributo!"
+  },
+  "addFeedback": {
+    "EN": "Add your feedback here",
+    "DE": "Geben Sie hier Ihr Feedback ein",
+    "FR": "Ajoutez vos commentaires ici",
+    "IT": "Aggiungi il tuo feedback qui"
+  },
+  "emailAddress": {
+    "EN": "Email address",
+    "DE": "E-Mail-Adresse",
+    "FR": "Adresse e-mail",
+    "IT": "Indirizzo e-mail"
+  },
+  "shareFeedback": {
+    "EN": "Share feedback",
+    "DE": "Feedback teilen",
+    "FR": "Partager vos commentaires",
+    "IT": "Condividi feedback"
+  },
+  "thanksFeedback": {
+    "EN": "Thanks for providing feedback!",
+    "DE": "Feedback teilen",
+    "FR": "Partager vos commentaires",
+    "IT": "Condividi feedback"
+  },
+  "errorFeedback": {
+    "EN": "Failed to submit feedback please directly email james.runnalls@eawag.ch",
+    "DE": "Wenn das Senden von Feedback fehlgeschlagen ist, senden Sie bitte direkt eine E-Mail an james.runnalls@eawag.ch",
+    "FR": "Échec de la soumission des commentaires, veuillez envoyer un e-mail directement à james.runnalls@eawag.ch",
+    "IT": "Impossibile inviare il feedback, inviare direttamente un'e-mail a james.runnalls@eawag.ch"
+  },
+  "forecast5": {
+    "EN": "5 day forecast",
+    "DE": "5-Tage-Vorhersage",
+    "FR": "Prévisions sur 5 jours",
+    "IT": "Previsioni a 5 giorni"
+  },
+  "apiHeader": {
+    "EN": "API Documentation",
+    "DE": "API-Dokumentation",
+    "FR": "Documentation API",
+    "IT": "Documentazione dell'API"
+  },
+  "apiDesc": {
+    "EN": "Discover the public endpoints driving alplakes.eawag.ch, connect to them, and leverage our data for your applications.",
+    "DE": "Entdecken Sie die öffentlichen Endpunkte von alplakes.eawag.ch, stellen Sie eine Verbindung zu ihnen her und nutzen Sie unsere Daten für Ihre Anwendungen.",
+    "FR": "Découvrez les points de terminaison publics qui pilotent alplakes.eawag.ch, connectez-vous à eux et exploitez nos données pour vos applications.",
+    "IT": "Scopri gli endpoint pubblici che guidano alplakes.eawag.ch, connettiti ad essi e sfrutta i nostri dati per le tue applicazioni."
+  },
+  "apiContact": {
+    "EN": "See our about page for any questions regarding the API.",
+    "DE": "Bei Fragen zur API besuchen Sie unsere Infoseite.",
+    "FR": "Consultez notre page À propos pour toute question concernant l'API.",
+    "IT": "Consulta la nostra pagina Informazioni per qualsiasi domanda riguardante l'API."
+  },
+  "apiWarning": {
+    "EN": "",
+    "DE": "API-Dokumentation ist nur auf Englisch verfügbar.",
+    "FR": "La documentation de l'API est uniquement disponible en anglais.",
+    "IT": "La documentazione API è disponibile solo in inglese."
+  },
+  "aboutTitle": {
+    "EN": "Forecasting and monitoring alpine lakes",
+    "DE": "Prognose und Überwachung alpiner Seen",
+    "FR": "Prévision et surveillance des lacs alpins",
+    "IT": "Previsione e monitoraggio dei laghi alpini"
+  },
+  "aboutIntro": {
+    "EN": "Alplakes is an interactive web application offering public access to operational simulations and remote sensing products for lakes across the European alpine region. This platform consolidates outputs from several research projects, providing a comprehensive digital twin for each lake. Alplakes is designed to be user-friendly, allowing a diverse group of users to easily access the latest lake models and remote sensing products produced by the research community.",
+    "DE": "Alplakes ist eine interaktive Webanwendung, die der Öffentlichkeit Zugang zu Betriebssimulationen und Fernerkundungsprodukten für Seen im gesamten europäischen Alpenraum bietet. Diese Plattform konsolidiert Ergebnisse aus mehreren Forschungsprojekten und bietet einen umfassenden digitalen Zwilling für jeden See. Alplakes ist benutzerfreundlich gestaltet und ermöglicht einer vielfältigen Benutzergruppe den einfachen Zugriff auf die neuesten Seemodelle und Fernerkundungsprodukte der Forschungsgemeinschaft.",
+    "FR": "Alplakes est une application Web interactive offrant un accès public à des simulations opérationnelles et à des produits de télédétection pour les lacs de la région alpine européenne. Cette plateforme consolide les résultats de plusieurs projets de recherche, fournissant un jumeau numérique complet pour chaque lac. Alplakes est conçu pour être convivial, permettant à un groupe diversifié d'utilisateurs d'accéder facilement aux derniers modèles de lacs et produits de télédétection produits par la communauté des chercheurs.",
+    "IT": "Alplakes è un'applicazione web interattiva che offre accesso pubblico a simulazioni operative e prodotti di telerilevamento per i laghi della regione alpina europea. Questa piattaforma consolida i risultati di diversi progetti di ricerca, fornendo un gemello digitale completo per ciascun lago. Alplakes è progettato per essere facile da usare, consentendo a un gruppo eterogeneo di utenti di accedere facilmente agli ultimi modelli di laghi e ai prodotti di telerilevamento prodotti dalla comunità di ricerca."
+  },
+  "getInTouch": {
+    "EN": "Get in touch",
+    "DE": "In Kontakt kommen",
+    "FR": "Entrer en contact",
+    "IT": "Mettiti in contatto"
+  },
+  "getInTouchDesc": {
+    "EN": "We encourage the use of our products. Please do not hesitate to contact us in case you have feedback or are interested in collaborating.",
+    "DE": "Wir ermutigen Sie, unsere Produkte zu verwenden. Bitte zögern Sie nicht, uns zu kontaktieren, wenn Sie Feedback haben oder an einer Zusammenarbeit interessiert sind.",
+    "FR": "Nous encourageons l'utilisation de nos produits. N'hésitez pas à nous contacter si vous avez des commentaires ou si vous êtes intéressé à collaborer.",
+    "IT": "Incoraggiamo l'uso dei nostri prodotti. Non esitate a contattarci nel caso abbiate feedback o siate interessati a collaborare."
+  },
+  "projects": {
+    "EN": "Projects",
+    "DE": "Projekte",
+    "FR": "Projets",
+    "IT": "Progetti"
+  },
+  "contributors": {
+    "EN": "List of contributors",
+    "DE": "Liste der Mitwirkenden",
+    "FR": "Liste des contributeurs",
+    "IT": "Elenco dei contributori"
+  },
+  "publications": {
+    "EN": "Related Publications",
+    "DE": "Liste der Mitwirkenden",
+    "FR": "Liste des contributeurs",
+    "IT": "Elenco dei contributori"
+  },
+  "talk": {
+    "EN": "Talk to me about:",
+    "DE": "Parlez-moi de :",
+    "FR": "Sprechen Sie mit mir über:",
+    "IT": "Parlami di:"
+  },
+  "repositories": {
+    "EN": "Repositories",
+    "DE": "Repositorien",
+    "FR": "Dépôts",
+    "IT": "Repository"
+  },
+  "c": {
     "EN": "",
     "DE": "",
     "FR": "",

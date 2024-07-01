@@ -19,47 +19,38 @@ class App extends Component {
         ? false
         : JSON.parse(localStorage.getItem("dark")),
   };
-  delectLighting = () => {};
   setLanguage = (event) => {
     localStorage.setItem("language", JSON.stringify(event.target.value));
     this.setState({ language: event.target.value });
   };
   toggleDark = () => {
+    if (this.state.dark) {
+      document.documentElement.style.colorScheme = "light";
+    } else {
+      document.documentElement.style.colorScheme = "dark";
+    }
     localStorage.setItem("dark", JSON.stringify(!this.state.dark));
     this.setState({ dark: !this.state.dark });
   };
   componentDidMount() {
-    var url = window.location.href;
-    var { languages } = this.state;
-    for (let language of languages) {
-      if (url.includes("?" + language.toLowerCase())) {
-        this.setState({ language });
-      }
-    }
-    if (
-      JSON.parse(localStorage.getItem("dark")) === null &&
-      window.matchMedia
-    ) {
-      if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+    if (JSON.parse(localStorage.getItem("dark")) === null) {
+      if (
+        window.matchMedia &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches
+      ) {
+        document.documentElement.style.colorScheme = "dark";
         this.setState({ dark: true });
       }
+    } else if (JSON.parse(localStorage.getItem("dark"))) {
+      document.documentElement.style.colorScheme = "dark";
     }
-    return "light";
   }
   render() {
     var { dark } = this.state;
     return (
       <React.Fragment>
         <div className={dark ? "main dark" : "main"}>
-          <div className="upgrade-message">
-            From July Alplakes will have a new look. With more lakes and a
-            redesigned interface we hope to provide users with an even better
-            experience. For those who want a preview of the new site click{" "}
-            <a href="https://pr-28.d21l70hd8m002c.amplifyapp.com/">here</a>.
-          </div>
-          <div
-            className={dark ? "background-color dark" : "background-color"}
-          />
+          <div className="background" />
           <BrowserRouter>
             <Routes>
               <Route
@@ -109,6 +100,7 @@ class App extends Component {
                       {...this.state}
                       setLanguage={this.setLanguage}
                       toggleDark={this.toggleDark}
+                      history={this.props.history}
                     />
                   </ErrorBoundary>
                 }
