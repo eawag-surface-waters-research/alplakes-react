@@ -639,7 +639,7 @@ def make_layers(data, sd):
             "source": "sencast",
             "summaryGraph": "satellite_timeseries",
             "displayOptions": {
-                "paletteName": "Rainbow",
+                "paletteName": "Forel Ule",
                 "zIndex": 2,
                 "opacity": 1,
                 "convolve": 2,
