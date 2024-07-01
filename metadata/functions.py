@@ -176,6 +176,10 @@ def make_modules(data, sd):
                 "IT": "Modello 1D"
             },
             "component": "graph",
+            "labels": {
+                "topLeft": "simstratAverage",
+                "topRight": "simstratDatetime"
+            },
             "defaults": ["temperature_linegraph"]
         })
     if sd and "sentinel3" in sd and "chla" in sd["sentinel3"]:

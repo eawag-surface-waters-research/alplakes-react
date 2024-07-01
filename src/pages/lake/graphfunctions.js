@@ -2,7 +2,13 @@ import axios from "axios";
 import CONFIG from "../../config.json";
 import COLORS from "../../components/colors/colors.json";
 import Translate from "../../translations.json";
-import { formatAPIDatetime, getDoyArray, removeLeap, hour } from "./functions";
+import {
+  formatAPIDatetime,
+  getDoyArray,
+  removeLeap,
+  hour,
+  closestDateIndex,
+} from "./functions";
 
 export const loading = (message, id) => {
   var parent = document.getElementById(id);
@@ -279,11 +285,14 @@ const addSimstratLinegraph = async (layer, language) => {
     ylabel: Translate[layer.parameter][language],
     yunits: layer.unit,
     curve: true,
+    padding: true,
   };
   layer.displayOptions = { ...layer.displayOptions, ...options };
   var x = data.time.map((t) => new Date(t));
   var y = data[source.parameter];
   layer.displayOptions.data = { x, y };
+  let cdi = closestDateIndex(new Date(), x);
+  layer.displayOptions.labels = { time: x[cdi], value: y[cdi] };
   return layer;
 };
 

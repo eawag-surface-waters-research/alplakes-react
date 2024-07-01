@@ -129,7 +129,7 @@ class Lake extends Component {
     }
     try {
       var { data } = await axios.get(
-        CONFIG.alplakes_bucket + `/static/website/metadata/v2/${id}.json`
+        CONFIG.alplakes_bucket + `/static/website/metadata/master/${id}.json`
       );
       const { metadata, modules, layers, datasets } = data;
       layers.map((l) => {

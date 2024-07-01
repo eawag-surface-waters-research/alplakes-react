@@ -1819,29 +1819,6 @@
     "trophic_state": "Oligotrophic"
   },
   {
-    "key": "steinsee",
-    "name": {
-      "EN": "Steinsee",
-      "DE": "Steinsee",
-      "FR": "Steinsee",
-      "IT": "Steinsee"
-    },
-    "area": 0.116,
-    "ave_depth": "NA",
-    "max_depth": 19.1,
-    "elevation": 1933.0,
-    "latitude": 46.725,
-    "longitude": 8.433,
-    "flags": ["swiss"],
-    "type": "Natural",
-    "volume": 0.00098,
-    "residence_time": "NA",
-    "mixing_regime": "Dimictic",
-    "geothermal_flux": 0.06,
-    "trophic_state": "Oligotrophic",
-    "datalakes_id": 122
-  },
-  {
     "key": "barchetsee",
     "name": {
       "EN": "Barchetsee",

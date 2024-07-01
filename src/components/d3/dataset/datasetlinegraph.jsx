@@ -4,14 +4,25 @@ import { deepCopy } from "./functions";
 
 class DatasetLinegraph extends Component {
   render() {
-    var { dark, data, ylabel, yunits, xlabel, xunits, curve, language } =
-      this.props;
+    var {
+      dark,
+      data,
+      ylabel,
+      yunits,
+      xlabel,
+      xunits,
+      curve,
+      language,
+      padding,
+    } = this.props;
     var inputData = [];
     if (data !== undefined) {
       inputData = deepCopy(data);
     }
     return (
-      <React.Fragment>
+      <div
+        className={padding === true ? "dataset-linegraph padding" : "dataset-linegraph"}
+      >
         {data && (
           <D3LineGraph
             data={inputData}
@@ -20,14 +31,16 @@ class DatasetLinegraph extends Component {
             xunits={xunits}
             yunits={yunits}
             dark={dark}
-            marginTop={20}
+            marginTop={1}
+            marginRight={1}
+            marginBottom={20}
             lcolor={[]}
             lweight={[]}
             curve={curve}
             language={language}
           />
         )}
-      </React.Fragment>
+      </div>
     );
   }
 }

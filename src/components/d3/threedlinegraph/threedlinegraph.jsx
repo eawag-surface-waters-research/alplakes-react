@@ -45,6 +45,8 @@ class ThreedLinegraph extends Component {
           header={true}
           curve={true}
           marginLeft={60}
+          marginTop={1}
+          marginRight={1}
           clearPlot={clearPlot}
         />
       </React.Fragment>

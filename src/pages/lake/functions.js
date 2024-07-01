@@ -184,6 +184,19 @@ export const formatAPIDate = (datetime) => {
   }`;
 };
 
+export const closestDateIndex = (targetDate, dateList) => {
+  let closest = Infinity;
+  let index = 0;
+  for (let i = 0; i < dateList.length; i++) {
+    const diff = Math.abs(dateList[i].getTime() - targetDate.getTime());
+    if (diff < closest) {
+      closest = diff;
+      index = i;
+    }
+  }
+  return index;
+};
+
 export const hour = () => {
   return Math.round((new Date().getTime() + 1800000) / 3600000) * 3600 - 3600;
 };

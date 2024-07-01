@@ -477,6 +477,8 @@ class D3HeatMap extends Component {
                     yReverse={yReverse}
                     lcolor={lcolor}
                     lweight={[1]}
+                    marginTop={1}
+                    marginRight={1}
                     bcolor={["white"]}
                     simple={false}
                     scatter={false}
@@ -505,6 +507,8 @@ class D3HeatMap extends Component {
                   scatter={false}
                   curve={true}
                   marginLeft={58}
+                  marginTop={1}
+                  marginRight={1}
                   xscale={TimeLabels.includes(xlabel) ? "Time" : ""}
                   yscale={TimeLabels.includes(zlabel) ? "Time" : ""}
                   simple={false}

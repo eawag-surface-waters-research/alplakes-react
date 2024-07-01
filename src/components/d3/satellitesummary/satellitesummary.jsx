@@ -76,6 +76,8 @@ class SatelliteSummary extends Component {
             xmin={xmin}
             ymax={ymax}
             ymin={ymin}
+            marginTop={1}
+            marginRight={1}
             xscale={"Time"}
             yscale={""}
             legend={false}

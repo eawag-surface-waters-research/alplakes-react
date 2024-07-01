@@ -7,6 +7,7 @@ import settings_icon from "../../img/options.png";
 import Loading from "../../components/loading/loading";
 import DatasetLinegraph from "../../components/d3/dataset/datasetlinegraph";
 import InitialLoading from "../../components/loading/initialloading";
+import ModuleLabels from "../../components/modulelabels/modulelabels";
 
 class Graph extends Component {
   state = {
@@ -134,8 +135,8 @@ class Graph extends Component {
     );
   }
   render() {
-    var { language, dark } = this.props;
-    var { sidebar, layers, loadingId, initialLoad } = this.state;
+    var { language, dark, module } = this.props;
+    var { sidebar, layers, loadingId, initialLoad, selection } = this.state;
     var heat_layer = false;
     var heat_layers = layers.filter((d) => d.active && d.display === "heat");
     if (heat_layers.length > 0) {
@@ -151,6 +152,12 @@ class Graph extends Component {
     return (
       <div className="module-component graph">
         <div className="plot">
+          <ModuleLabels
+            module={module}
+            layers={layers}
+            selection={selection}
+            language={language}
+          />
           {heat_layer && (
             <DatasetHeatmap
               {...heat_layer.displayOptions}

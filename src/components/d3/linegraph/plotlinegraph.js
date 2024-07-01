@@ -149,7 +149,7 @@ const processOptions = (div, data, userOptions) => {
     { name: "curve", default: false, verify: verifyBool },
     { name: "scatter", default: false, verify: verifyBool },
     { name: "lines", default: true, verify: verifyBool },
-    { name: "grid", default: false, verify: verifyBool },
+    { name: "grid", default: true, verify: verifyBool },
     { name: "border", default: false, verify: verifyBool },
     { name: "xPadding", default: false, verify: verifyBool },
     { name: "yPadding", default: true, verify: verifyBool },
@@ -1268,7 +1268,7 @@ const addZoom = (g, context, data, div, xAxis, yAxis, options) => {
       yAxis.y2.axis.scale(yAxis.y2.base);
       yAxis.y2.g.call(yAxis.y2.axis);
     }
-    if (options.lines) plotLines(div, g, data, xAxis, yAxis);
+    if (options.lines) plotLines(div, g, data, xAxis, yAxis, options.curve);
     if (options.scatter) plotScatter(context, data, xAxis, yAxis, options);
     if (options.grid) editTicks(xAxis, yAxis);
   });

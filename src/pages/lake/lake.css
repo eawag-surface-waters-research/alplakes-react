@@ -1580,7 +1580,18 @@
     box-sizing: border-box;
 }
 
-.main .lake .content .module.active .display .module-component.graph .plot {
+.main .lake .content .module .display .module-component.graph .plot .dataset-linegraph {
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    padding: 24px 8px 12px 8px;
+}
+
+.main .lake .content .module .display .module-component.graph .plot .dataset-linegraph.padding {
+    padding: 60px 8px 12px 8px;
+}
+
+.main .lake .content .module.active .display .module-component.graph .plot .dataset-linegraph {
     padding: 0;
 }
 
@@ -1625,11 +1636,11 @@
     display: block;
 }
 
-.main .lake .content .module .display .module-component .plot .map .labels {
+.main .lake .content .module .display .module-component .plot .labels {
     display: block;
 }
 
-.main .lake .content .module .display .module-component .plot .map .labels .topLeft {
+.main .lake .content .module .display .module-component .plot .labels .topLeft {
     position: absolute;
     left: 18px;
     top: 18px;
@@ -1642,7 +1653,7 @@
     border-radius: 8px;
 }
 
-.main .lake .content .module .display .module-component .plot .map .labels .topRight {
+.main .lake .content .module .display .module-component .plot .labels .topRight {
     color: var(--background-suble-font-color);
     display: block;
     font-size: 18px;
@@ -1652,7 +1663,7 @@
     z-index: 9991;
 }
 
-.main .lake .content .module.active .display .module-component .plot .map .labels {
+.main .lake .content .module.active .display .module-component .plot .labels {
     display: none;
 }
 

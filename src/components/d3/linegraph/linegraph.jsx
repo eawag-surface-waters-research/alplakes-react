@@ -233,6 +233,8 @@ class D3LineGraph extends Component {
       curve,
       marginLeft,
       marginTop,
+      marginRight,
+      marginBottom,
     } = this.props;
     var { graphid, fontSize } = this.state;
     if (this.props.header !== false) fontSize = this.props.fontSize;
@@ -287,6 +289,8 @@ class D3LineGraph extends Component {
     };
     if (marginLeft) options["marginLeft"] = marginLeft;
     if (marginTop) options["marginTop"] = marginTop;
+    if (marginRight) options["marginRight"] = marginRight;
+    if (marginBottom) options["marginBottom"] = marginBottom;
     if (xmax) options["xMax"] = xmax;
     if (xmin) options["xMin"] = xmin;
     if (ymax) options["yMax"] = ymax;

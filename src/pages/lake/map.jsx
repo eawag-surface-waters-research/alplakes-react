@@ -15,7 +15,7 @@ import {
   getProfileAlplakesHydrodynamic,
 } from "./functions";
 import SummaryGraph from "./summarygraph";
-import MapLabels from "../../components/maplabels/maplabels";
+import ModuleLabels from "../../components/modulelabels/modulelabels";
 
 class Map extends Component {
   state = {
@@ -348,7 +348,7 @@ class Map extends Component {
             <div className="layer-loading" id={loadingId}>
               <Loading />
             </div>
-            <MapLabels
+            <ModuleLabels
               module={module}
               layers={layers}
               selection={selection}
