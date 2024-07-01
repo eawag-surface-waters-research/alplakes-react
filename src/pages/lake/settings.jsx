@@ -13,6 +13,7 @@ import rgb_icon from "../../img/rgb.png";
 import particles_icon from "../../img/particles.png";
 import thermocline_icon from "../../img/thermocline.png";
 import oxygen_icon from "../../img/oxygen.png";
+import forel_icon from "../../img/forel.png";
 
 class Selection extends Component {
   render() {
@@ -198,6 +199,7 @@ class Settings extends Component {
       particles: particles_icon,
       thermocline: thermocline_icon,
       oxygensat: oxygen_icon,
+      forelule: forel_icon,
     },
     activeAdd: false,
   };

@@ -191,6 +191,12 @@
     "FR": "Turbidité",
     "IT": "Torbidità"
   },
+  "forelule": {
+    "EN": "Forel Ule",
+    "DE": "Forel Ule",
+    "FR": "Forel Ule",
+    "IT": "Forel Ule"
+  },
   "tsm": {
     "EN": "Turbidity",
     "DE": "Trübung",

@@ -627,6 +627,46 @@ def make_layers(data, sd):
                 }
             }
         })
+    if sd and "sentinel3" in sd and "forel_ule" in sd["sentinel3"]:
+        layers.append({
+            "id": "satellite_forelule",
+            "type": "satellite",
+            "playControls": False,
+            "depth": False,
+            "parameter": "forelule",
+            "unit": "",
+            "display": "tiff",
+            "source": "sencast",
+            "summaryGraph": "satellite_timeseries",
+            "displayOptions": {
+                "paletteName": "Rainbow",
+                "zIndex": 2,
+                "opacity": 1,
+                "convolve": 2,
+                "wms": False,
+                "min": 1,
+                "max": 21,
+                "dataMin": 1,
+                "dataMax": 21,
+                "coverage": 10
+            },
+            "sources": {
+                "sencast": {
+                    "type": "sencast_tiff",
+                    "models": [
+                        {
+                            "model": "Sentinel3",
+                            "metadata": "/metadata/sentinel3/{lake}_forel_ule.json"
+                        }
+                    ],
+                    "bucket": "/metadata/sentinel3/{lake}_forel_ule_latest.json",
+                    "description": "Water color on the Forel Ule scale processed from satellite data using the Sencast python package.",
+                    "learnMore": "https://medium.com/@runnalls.james/water-quality-products-from-remote-sensing-data-using-sencast-e48449bd6aa8",
+                    "onActivate": True,
+                    "tags": ["Sentinel 3", "2024 - Now"]
+                }
+            }
+        })
     return layers
 
 
