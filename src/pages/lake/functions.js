@@ -354,6 +354,11 @@ export const getTransectAlplakesHydrodynamic = async (
   }
 };
 
+export const capitalize = (string) => {
+  if (string.length === 0) return string;
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
 const parseDate = (str) => {
   const d = new Date(
     `${str.slice(0, 4)}-${str.slice(4, 6)}-${str.slice(6, 8)}T${str.slice(

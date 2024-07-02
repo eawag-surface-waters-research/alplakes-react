@@ -25,6 +25,10 @@ datalakes_datasets = sorted(datalakes_datasets, key=lambda d: d['maxdatetime'], 
 response = requests.get("https://api.datalakes-eawag.ch/selectiontables/parameters")
 datalakes_parameters = response.json()
 
+# Load Simstrat Data
+response = requests.get("https://raw.githubusercontent.com/Eawag-AppliedSystemAnalysis/operational-simstrat/master/static/lake_parameters.json")
+simstrat = response.json()
+
 s3 = boto3.client('s3')
 
 # Create files
@@ -67,7 +71,7 @@ for lake in metadata:
     data["metadata"]["available"] = func.make_available(sat, threed, oned)
     data["modules"] = func.make_modules(lake, satellite_data)
     data["layers"] = func.make_layers(lake, satellite_data)
-    data["datasets"] = func.make_datasets(lake)
+    data["datasets"] = func.make_datasets(lake, simstrat)
 
     if "insitu" in data["metadata"] and len(data["metadata"]["insitu"]) > 0:
         home["filters"].append("insitu")

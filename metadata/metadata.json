@@ -742,7 +742,7 @@
     "latitude": 46.968,
     "longitude": 8.321,
     "flags": ["swiss"],
-    "simstrat": "lucernealpnachersee",
+    "simstrat": ["lucernealpnachersee"],
     "datalakes_id": 30,
     "surface_area": 4.5,
     "type": "Natural",

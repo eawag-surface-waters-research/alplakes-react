@@ -674,17 +674,22 @@ def make_layers(data, sd):
     return layers
 
 
-def simstrat_source(models, obj):
+def simstrat_source(models, simstrat, obj):
     out = {}
     for model in models:
         s = obj.copy()
+        properties = [d for d in simstrat if d["key"] == model][0]
+        if "performance" in properties and s["parameter"] in properties["performance"]:
+            s["performance"] = properties["performance"][s["parameter"]]
+        if "name" in properties:
+            s["name"] = properties["name"]
         s["lake"] = model
         s["label"] = "Simstrat {}".format(model)
         out["simstrat_{}".format(model)] = s
     return out
 
 
-def make_datasets(data):
+def make_datasets(data, simstrat):
     datasets = []
     if data["simstrat"] != False:
         datasets = [{
@@ -694,7 +699,7 @@ def make_datasets(data):
             "unit": "°C",
             "display": "heat",
             "source": "simstrat_{}".format(data["simstrat"][0]),
-            "sources": simstrat_source(data["simstrat"],
+            "sources": simstrat_source(data["simstrat"], simstrat,
                                        {
                                            "data_access": "simstrat_heatmap",
                                            "model": "simstrat",
@@ -715,7 +720,7 @@ def make_datasets(data):
                 "unit": "%",
                 "display": "heat",
                 "source": "simstrat_{}".format(data["simstrat"][0]),
-                "sources": simstrat_source(data["simstrat"],
+                "sources": simstrat_source(data["simstrat"], simstrat,
                                            {
                                                "data_access": "simstrat_heatmap",
                                                "model": "simstrat",
@@ -736,7 +741,7 @@ def make_datasets(data):
                 "unit": "°C",
                 "display": "line",
                 "source": "simstrat_{}".format(data["simstrat"][0]),
-                "sources": simstrat_source(data["simstrat"],
+                "sources": simstrat_source(data["simstrat"], simstrat,
                                            {
                                                "data_access": "simstrat_linegraph",
                                                "model": "simstrat",
@@ -754,7 +759,7 @@ def make_datasets(data):
                 "unit": "°C",
                 "display": "doy",
                 "source": "simstrat_{}".format(data["simstrat"][0]),
-                "sources": simstrat_source(data["simstrat"],
+                "sources": simstrat_source(data["simstrat"], simstrat,
                                            {
                                                "data_access": "simstrat_doy",
                                                "model": "simstrat",

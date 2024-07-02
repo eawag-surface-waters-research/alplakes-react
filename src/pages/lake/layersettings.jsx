@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import DatePicker from "react-datepicker";
+import enGB from "date-fns/locale/en-GB";
 import ColorRamp from "../../components/colors/colorramp";
 import Translate from "../../translations.json";
 import CONFIG from "../../config.json";
@@ -10,6 +11,7 @@ import {
   parseDay,
   closestValue,
   formatSencastDay,
+  capitalize,
 } from "./functions";
 import "react-datepicker/dist/react-datepicker.css";
 import "./lake.css";
@@ -122,11 +124,14 @@ class Period extends Component {
     missingDates = missingDates ? missingDates : [];
     var { period, maxPeriodDate } = this.state;
     const locale = {
+      ...enGB,
       localize: {
+        ...enGB.localize,
         day: (n) => Translate.axis[language].shortDays[n],
         month: (n) => Translate.axis[language].months[n],
       },
       formatLong: {
+        ...enGB.formatLong,
         date: () => "dd/mm/yyyy",
       },
     };
@@ -1290,6 +1295,7 @@ class Heat extends Component {
   render() {
     var { language, layer } = this.props;
     var { palette, paletteName, period, minDate, maxDate } = this.props.options;
+    var source = layer.sources[layer.source];
     return (
       <div className="layer-settings">
         <div className="setting">
@@ -1297,11 +1303,27 @@ class Heat extends Component {
           <select value={layer.source} onChange={this.setSource}>
             {Object.keys(layer.sources).map((s) => (
               <option value={s} key={s}>
-                {s}
+                {layer.sources[s].name} ({capitalize(layer.sources[s].model)})
               </option>
             ))}
           </select>
         </div>
+        {"performance" in source && (
+          <div className="setting">
+            <div className="label">Performance</div>
+            <div>
+              {Object.keys(source.performance.rmse).map((k) => (
+                <div key={k} className="performance">
+                  <div className="performance-value">
+                    {source.performance.rmse[k]}
+                    <div className="performance-unit">{layer.unit}</div>
+                  </div>
+                  <div className="performance-name">{capitalize(k)} RMSE</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
         {period && (
           <div className="setting">
             <div className="label">Period</div>
@@ -1357,6 +1379,7 @@ class Line extends Component {
   render() {
     var { language, layer } = this.props;
     var { period, minDate, maxDate, depth, depths } = this.props.options;
+    var source = layer.sources[layer.source];
     return (
       <div className="layer-settings">
         <div className="setting">
@@ -1364,11 +1387,27 @@ class Line extends Component {
           <select value={layer.source} onChange={this.setSource}>
             {Object.keys(layer.sources).map((s) => (
               <option value={s} key={s}>
-                {s}
+                {layer.sources[s].name} ({capitalize(layer.sources[s].model)})
               </option>
             ))}
           </select>
         </div>
+        {"performance" in source && (
+          <div className="setting">
+            <div className="label">Performance</div>
+            <div>
+              {Object.keys(source.performance.rmse).map((k) => (
+                <div key={k} className="performance">
+                  <div className="performance-value">
+                    {source.performance.rmse[k]}
+                    <div className="performance-unit">{layer.unit}</div>
+                  </div>
+                  <div className="performance-name">{capitalize(k)} RMSE</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
         {period && (
           <div className="setting">
             <div className="label">Period</div>
@@ -1407,6 +1446,7 @@ class Doy extends Component {
 
   render() {
     var { layer } = this.props;
+    var source = layer.sources[layer.source];
     return (
       <div className="layer-settings">
         <div className="setting">
@@ -1414,11 +1454,27 @@ class Doy extends Component {
           <select value={layer.source} onChange={this.setSource}>
             {Object.keys(layer.sources).map((s) => (
               <option value={s} key={s}>
-                {s}
+                {layer.sources[s].name} ({capitalize(layer.sources[s].model)})
               </option>
             ))}
           </select>
         </div>
+        {"performance" in source && (
+          <div className="setting">
+            <div className="label">Performance</div>
+            <div>
+              {Object.keys(source.performance.rmse).map((k) => (
+                <div key={k} className="performance">
+                  <div className="performance-value">
+                    {source.performance.rmse[k]}
+                    <div className="performance-unit">{layer.unit}</div>
+                  </div>
+                  <div className="performance-name">{capitalize(k)} RMSE</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     );
   }
@@ -1472,7 +1528,7 @@ class LayerSettings extends Component {
       return (
         <Doy id={layer.id} options={layer.displayOptions} {...this.props} />
       );
-    }else {
+    } else {
       return <div className="layer-settings"></div>;
     }
   }

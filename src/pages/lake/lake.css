@@ -1318,6 +1318,26 @@
     color: var(--background-suble-font-color);
 }
 
+.main .lake .content .module.active .display .module-component .sidebar .layer-settings .setting .performance {
+    padding: 5px 20px 0px 0px;
+    display: inline-block;
+    text-align: center;
+}
+
+.main .lake .content .module.active .display .module-component .sidebar .layer-settings .setting .performance .performance-value {
+    font-size: 22px;
+}
+
+.main .lake .content .module.active .display .module-component .sidebar .layer-settings .setting .performance .performance-value .performance-unit {
+    display: inline-block;
+    font-size: 16px;
+}
+
+.main .lake .content .module.active .display .module-component .sidebar .layer-settings .setting .performance .performance-name {
+    color: var(--background-suble-font-color);
+    font-size: 12px;
+}
+
 .main .lake .content .module.active .display .module-component .sidebar .layer-settings .setting .value {
     float: right;
 }
