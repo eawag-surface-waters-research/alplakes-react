@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Helmet } from "react-helmet";
 import axios from "axios";
 import { NavLink } from "react-router-dom";
 import NavBar from "../../components/navbar/navbar";
@@ -492,7 +493,6 @@ class Home extends Component {
     window.removeEventListener("keydown", this.focusSearchBar);
   }
   render() {
-    document.title = "Alplakes";
     var { language, dark } = this.props;
     var {
       list,
@@ -534,6 +534,13 @@ class Home extends Component {
     ];
     return (
       <div className="home">
+        <Helmet>
+          <title>Alplakes</title>
+          <meta
+            name="description"
+            content="Monitoring and forecasting of lakes across the European alpine region."
+          />
+        </Helmet>
         <NavBar {...this.props} small={true} />
         <div
           className={parameters[parameter].beta ? "content beta" : "content"}

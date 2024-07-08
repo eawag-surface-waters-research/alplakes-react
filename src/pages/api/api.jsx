@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Helmet } from "react-helmet";
 import NavBar from "../../components/navbar/navbar";
 import SwaggerUI from "swagger-ui-react";
 import "swagger-ui-react/swagger-ui.css";
@@ -22,11 +23,17 @@ class API extends Component {
     }
   }
   render() {
-    document.title = "API | Alplakes";
     var { language } = this.props;
     var { error } = this.state;
     return (
       <React.Fragment>
+        <Helmet>
+          <title>API | Alplakes</title>
+          <meta
+            name="description"
+            content="Discover the public endpoints powering Alplakes, connect to them, and leverage our data for your applications."
+          />
+        </Helmet>
         <NavBar {...this.props} relative={true} />
         <div className="api-container">
           <div className="header"> {Translations["apiHeader"][language]}</div>

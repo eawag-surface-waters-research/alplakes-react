@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Helmet } from "react-helmet";
 import axios from "axios";
 import NavBar from "../../components/navbar/navbar";
 import Footer from "../../components/footer/footer";
@@ -162,13 +163,21 @@ class Lake extends Component {
     var { language } = this.props;
     var title = "";
     var subtitle = "";
+    var documentTitle = "Alplakes";
     if ("name" in metadata) {
-      document.title = metadata.name[language] + " | Alplakes";
+      documentTitle = metadata.name[language] + " | Alplakes";
       title = metadata.name[language];
       subtitle = parseSubtitle(title, metadata.name);
     }
     return (
       <div className={active_module ? "lake noscroll" : "lake"}>
+        <Helmet>
+          <title>{documentTitle}</title>
+          <meta
+            name="description"
+            content="View the latest temperature forecast and water quality information."
+          />
+        </Helmet>
         <NavBar {...this.props} relative={true} />
         {error ? (
           <NotFound id={id} text={true} />

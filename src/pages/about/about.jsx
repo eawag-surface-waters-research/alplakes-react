@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Helmet } from "react-helmet";
 import NavBar from "../../components/navbar/navbar";
 import Footer from "../../components/footer/footer";
 import NumberIncreaser from "../../components/numberincreaser/numberincreaser";
@@ -44,7 +45,6 @@ class About extends Component {
     window.scrollTo(0, 0);
   }
   render() {
-    document.title = "About | Alplakes";
     var { language } = this.props;
     var end = new Date().getFullYear();
     var products = [
@@ -96,6 +96,13 @@ class About extends Component {
     ];
     return (
       <div className="main">
+        <Helmet>
+          <title>About | Alplakes</title>
+          <meta
+            name="description"
+            content="Learn more about the Alplakes project and our partners."
+          />
+        </Helmet>
         <NavBar {...this.props} relative={true} />
         <div className="about">
           <div className="section-content">
