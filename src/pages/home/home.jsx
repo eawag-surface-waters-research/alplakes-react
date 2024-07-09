@@ -456,7 +456,7 @@ class Home extends Component {
     try {
       ({ data: forecast } = await axios.get(
         CONFIG.alplakes_bucket +
-          `/simulations/forecast2.json?timestamp=${
+          `/simulations/forecast.json?timestamp=${
             Math.round((new Date().getTime() + 1800000) / 3600000) * 3600 - 3600
           }`
       ));
