@@ -306,6 +306,24 @@ def make_modules(data, sd):
             "component": "graph",
             "defaults": ["temperature_doy"]
         })
+    if "current_temperature" in data:
+        modules.insert(1, {
+            "id": "current_temperature_points",
+            "title": {
+                "EN": "Current Temperature",
+                "DE": "Aktuelle Temperatur",
+                "FR": "Température actuelle",
+                "IT": "Temperatura attuale"
+            },
+            "subtitle": {
+                "EN": "Measurements",
+                "DE": "Messungen",
+                "FR": "Des mesures",
+                "IT": "Misure"
+            },
+            "component": "map",
+            "defaults": ["current_temperature"]
+        })
     return modules
 
 
@@ -486,6 +504,34 @@ def make_layers(data, sd):
                 }
             }
         ]
+    if "current_temperature" in data:
+        layers.append({
+            "id": "current_temperature",
+            "type": "measurements",
+            "playControls": False,
+            "depth": False,
+            "parameter": "temperature",
+            "unit": "°C",
+            "display": "points",
+            "source": "various",
+            "displayOptions": {
+                "paletteName": "Rainbow",
+                "zIndex": 5,
+                "opacity": 1,
+                "min": 5,
+                "max": 25,
+            },
+            "sources": {
+                "various": {
+                    "type": "current_temperature_points",
+                    "url": "https://alplakes-eawag.s3.eu-central-1.amazonaws.com/insitu/summary/water_temperature.geojson",
+                    "description": "Assorted near real-time temperature measurements from around Switzerland, sourced from Bafu, Kanton Zurich, Kanton Thurgau and Datalakes.",
+                    "learnMore": "",
+                    "onActivate": True,
+                    "tags": ["Measurement", "Now"]
+                }
+            }
+        })
     if sd and "sentinel3" in sd and "chla" in sd["sentinel3"]:
         layers.append({
             "id": "satellite_chlorophyll",

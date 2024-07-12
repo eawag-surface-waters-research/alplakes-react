@@ -559,10 +559,16 @@
     "FR": "Jour de l'année",
     "IT": "Giorno dell'anno"
   },
+  "measurements": {
+    "EN": "Measurements",
+    "DE": "Messungen",
+    "FR": "Des mesures",
+    "IT": "Misure"
+  },
   "linegraph": {
     "EN": "Linegraph",
     "DE": "Liniendiagramm",
-    "FR": "Graphique linéaire",
+    "FR": "Des mesures",
     "IT": "Grafico a linee"
   },
   "alplakes_hydrodynamic": {

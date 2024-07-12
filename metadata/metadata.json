@@ -24,6 +24,7 @@
     "swiss_bathy": true,
     "sediment_oxygen_uptake_rate": -37.5,
     "default_depth": 0.7,
+    "current_temperature": true,
     "alplakes": {
       "3D_temperature": [
         { "name": "Lausanne", "latlng": [46.50995, 6.61172] },

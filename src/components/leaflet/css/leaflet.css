@@ -813,6 +813,14 @@ svg.leaflet-image-layer.leaflet-interactive path {
   user-select: none;
 }
 
+.leaflet-tooltip.current_temperature_tooltip {
+  background-color: var(--highlight-color);
+  color: white;
+  padding: 2px 4px;
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
 .leaflet-tooltip a {
   padding: 2px 8px;
   box-sizing: border-box;

@@ -4,7 +4,7 @@ import requests
 import functions as func
 
 upload = True
-bucket_folder = "static/website/metadata/master"
+bucket_folder = "static/website/metadata/insitu"
 
 # Load Metadata
 with open("metadata.json") as f:
@@ -102,6 +102,14 @@ if upload:
         'files/list.json',
         'alplakes-eawag',
         '{}/list.json'.format(bucket_folder),
+        ExtraArgs={
+            'ContentType': 'application/json',
+        },
+    )
+    s3.upload_file(
+        'lakes.geojson',
+        'alplakes-eawag',
+        '{}/lakes.geojson'.format(bucket_folder),
         ExtraArgs={
             'ContentType': 'application/json',
         },

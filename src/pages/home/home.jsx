@@ -471,7 +471,7 @@ class Home extends Component {
     var { parameter, parameters } = this.state;
     var geometry, forecast;
     const { data: list } = await axios.get(
-      CONFIG.alplakes_bucket + "/static/website/metadata/master/list.json"
+      CONFIG.alplakes_bucket + `/static/website/metadata/${CONFIG.branch}/list.json`
     );
     try {
       ({ data: forecast } = await axios.get(
@@ -485,7 +485,7 @@ class Home extends Component {
     }
     try {
       ({ data: geometry } = await axios.get(
-        CONFIG.alplakes_bucket + "/static/website/metadata/master/lakes.geojson"
+        CONFIG.alplakes_bucket + `/static/website/metadata/${CONFIG.branch}/lakes.geojson`
       ));
       geometry = geometry.features.reduce((obj, item) => {
         obj[item.properties.key] = item.geometry.coordinates;

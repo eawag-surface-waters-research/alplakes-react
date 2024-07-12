@@ -624,7 +624,12 @@
     background-color: #26423d;
     opacity: 0.8;
     background: linear-gradient(135deg, #4aa09155 25%, transparent 25%) -9px 0/ 18px 18px, linear-gradient(225deg, #4aa091 25%, transparent 25%) -9px 0/ 18px 18px, linear-gradient(315deg, #4aa09155 25%, transparent 25%) 0px 0/ 18px 18px, linear-gradient(45deg, #4aa091 25%, #26423d 25%) 0px 0/ 18px 18px;
+}
 
+.main .lake .content .measurements {
+    background-color: #26423d;
+    opacity: 0.8;
+    background: linear-gradient(135deg, #4aa09155 25%, transparent 25%) -9px 0/ 18px 18px, linear-gradient(225deg, #4aa091 25%, transparent 25%) -9px 0/ 18px 18px, linear-gradient(315deg, #4aa09155 25%, transparent 25%) 0px 0/ 18px 18px, linear-gradient(45deg, #4aa091 25%, #26423d 25%) 0px 0/ 18px 18px;
 }
 
 .main .lake .content .module .display .module-component .sidebar .active-apps .app.filled:active {

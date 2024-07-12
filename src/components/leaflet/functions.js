@@ -360,6 +360,8 @@ export const addLayer = async (
     );
   } else if (source.type === "alplakes_profile") {
     return await addAlplakesProfile(layer, layerStore, map, mapId, getProfile);
+  } else if (source.type === "current_temperature_points") {
+    return await addAlplakesMeasurements(layer, layerStore, map, loadingId);
   }
 };
 
@@ -403,6 +405,8 @@ export const removeLayer = async (layer, layerStore, map) => {
     return removeAlplakesProfile(layer, layerStore, map);
   } else if (source.type === "alplakes_particles") {
     return removeAlplakesParticles(layer, layerStore, map);
+  } else if (source.type === "current_temperature_points") {
+    return await removeAlplakesMeasurements(layer, layerStore, map);
   }
 };
 
@@ -1341,5 +1345,69 @@ const removeAlplakesProfile = (layer, layerStore, map) => {
   var leaflet = getNested(layerStore, path);
   leaflet.control.remove(map);
   map.removeLayer(leaflet.layer);
+  setNested(layerStore, path, null);
+};
+
+const addAlplakesMeasurements = async (layer, layerStore, map, loadingId) => {
+  loading("Collecting metadata", loadingId);
+  var source = layer.sources[layer.source];
+  var path = [source.type];
+  var leaflet_layer = L.layerGroup([]).addTo(map);
+  let now = new Date();
+  now.setDate(now.getDate() - 1);
+  let { data } = await axios.get(source.url);
+  for (let i = 0; i < data["features"].length; i++) {
+    let station = data["features"][i];
+    let time = new Date(station.properties.last_time * 1000);
+    var marker;
+    if (station.properties.icon === "river") {
+      marker = L.marker(
+        [station.geometry.coordinates[1], station.geometry.coordinates[0]],
+        {
+          icon: L.divIcon({
+            className: "custom-square-marker",
+            html: "<div></div>",
+            iconSize: [10, 10],
+            iconAnchor: [5, 5],
+          }),
+          value: station.properties.last_value,
+        }
+      ).addTo(leaflet_layer);
+    } else {
+      marker = L.marker(
+        [station.geometry.coordinates[1], station.geometry.coordinates[0]],
+        {
+          icon: L.divIcon({
+            className: "custom-circle-marker",
+            html: "<div></div>",
+            iconSize: [14, 14], // Adjust the size to your needs
+            iconAnchor: [7, 7], // Anchor in the center of the circle
+          }),
+          value: station.properties.latest_value,
+        }
+      ).addTo(leaflet_layer);
+    }
+    var show =
+      time > now &&
+      "lake" in station.properties &&
+      station.properties.lake === layer.lake;
+    marker.bindTooltip(round(station.properties.last_value, 2) + layer.unit, {
+      direction: "top",
+      permanent: show,
+      className: "current_temperature_tooltip",
+      offset: [0, -2],
+    });
+    marker.bindPopup("This is a popup!");
+  }
+  setNested(layerStore, path, leaflet_layer);
+  loaded(loadingId);
+  return layer;
+};
+
+const removeAlplakesMeasurements = (layer, layerStore, map) => {
+  var source = layer.sources[layer.source];
+  var path = [source.type];
+  var leaflet = getNested(layerStore, path);
+  map.removeLayer(leaflet);
   setNested(layerStore, path, null);
 };

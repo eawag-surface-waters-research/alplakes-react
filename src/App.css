@@ -124,3 +124,22 @@
 .main.dark .tile-class.leaflet-tile {
   filter: brightness(2) contrast(0.8) !important;
 }
+
+/* Map icons */
+
+.custom-square-marker {
+  width: 8px;
+  height: 8px;
+  background-color: var(--highlight-color);
+  border: 2px solid white;
+  box-sizing: border-box;
+}
+
+.custom-circle-marker div {
+  width: 14px;
+  height: 14px;
+  background-color: var(--highlight-color);
+  border: 2px solid white;
+  border-radius: 50%;
+  box-sizing: border-box;
+}
