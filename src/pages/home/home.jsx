@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import axios from "axios";
 import { NavLink } from "react-router-dom";
@@ -68,6 +69,15 @@ class Search extends Component {
       }
     };
   };
+  handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      var { sortedList } = this.props;
+      var visible = sortedList.filter((s) => s.display)
+      if (visible.length === 1) {
+        this.props.navigate(visible[0].key);
+      }
+    }
+  };
   render() {
     var {
       setFilter,
@@ -92,6 +102,7 @@ class Search extends Component {
           }
           value={search}
           onChange={setSearch}
+          onKeyDown={this.handleKeyDown}
           id="search"
         />
         <img src={searchIcon} alt="Search Icon" />
@@ -125,6 +136,15 @@ class Search extends Component {
     );
   }
 }
+
+const withNavigate = (Component) => {
+  return (props) => {
+    const navigate = useNavigate();
+    return <Component {...props} navigate={navigate} />;
+  };
+};
+
+const SearchWithNavigate = withNavigate(Search);
 
 class List extends Component {
   render() {
@@ -545,7 +565,7 @@ class Home extends Component {
         <div
           className={parameters[parameter].beta ? "content beta" : "content"}
         >
-          <Search
+          <SearchWithNavigate
             setFilter={this.setFilter}
             setSearch={this.setSearch}
             search={search}
@@ -554,6 +574,7 @@ class Home extends Component {
             filterTypes={filterTypes}
             results={results}
             loaded={list.length > 0}
+            sortedList={sortedList}
           />
           <List
             language={language}
