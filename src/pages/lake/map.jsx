@@ -363,6 +363,7 @@ class Map extends Component {
               metadata={metadata}
               active={active}
               mapId={mapId}
+              language={language}
               getProfile={this.getProfile}
               getTransect={this.getTransect}
               updated={this.updated}

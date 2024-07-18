@@ -859,6 +859,24 @@
     "FR": "Dépôts",
     "IT": "Repository"
   },
+  "lastreading": {
+    "EN": "Last reading",
+    "DE": "Letzter Messwert",
+    "FR": "Dernière valeur mesurée",
+    "IT": "Ultimo valore misurato"
+  },
+  "source": {
+    "EN": "Source",
+    "DE": "Quelle",
+    "FR": "Source",
+    "IT": "Fonte"
+  },
+  "viewdataset": {
+    "EN": "View dataset",
+    "DE": "Datensatz anzeigen",
+    "FR": "Afficher l'ensemble de données",
+    "IT": "Visualizza set di dati"
+  },
   "c": {
     "EN": "",
     "DE": "",

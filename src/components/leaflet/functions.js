@@ -4,6 +4,7 @@ import axios from "axios";
 import COLORS from "../colors/colors.json";
 import CONFIG from "../../config.json";
 import leaflet_marker from "../../img/leaflet_marker.png";
+import Translate from "../../translations.json";
 import "./leaflet_raster";
 import "./leaflet_streamlines";
 import "./leaflet_floatgeotiff";
@@ -38,6 +39,48 @@ const getNested = (obj, args) => {
 
 const addMinutes = (date, minutes) => {
   return new Date(date.getTime() + minutes * 60000);
+};
+
+const getColor = (value, min, max, palette) => {
+  if (value === null || isNaN(value)) {
+    return false;
+  }
+  if (value > max) {
+    return palette[palette.length - 1].color;
+  }
+  if (value < min) {
+    return palette[0].color;
+  }
+  var loc = (value - min) / (max - min);
+
+  var index = 0;
+  for (var i = 0; i < palette.length - 1; i++) {
+    if (loc >= palette[i].point && loc <= palette[i + 1].point) {
+      index = i;
+    }
+  }
+  var color1 = palette[index].color;
+  var color2 = palette[index + 1].color;
+
+  var f =
+    (loc - palette[index].point) /
+    (palette[index + 1].point - palette[index].point);
+
+  var rgb = [
+    color1[0] + (color2[0] - color1[0]) * f,
+    color1[1] + (color2[1] - color1[1]) * f,
+    color1[2] + (color2[2] - color1[2]) * f,
+  ];
+
+  return rgb;
+};
+
+const formatTime = (date) => {
+  let hours = date.getHours();
+  let minutes = date.getMinutes();
+  hours = hours.toString().padStart(2, "0");
+  minutes = minutes.toString().padStart(2, "0");
+  return `${hours}:${minutes}`;
 };
 
 export const toRadians = (degrees) => {
@@ -99,6 +142,21 @@ const formatDate = (datetime, offset = 0) => {
   }${hour < 10 ? "0" + hour : hour}${minute < 10 ? "0" + minute : minute}`;
 };
 
+const formatDatetime = (datetime, offset = 0) => {
+  var a = new Date(datetime).getTime();
+  a = new Date(a + offset);
+  var year = a.getFullYear();
+  var month = a.getMonth() + 1;
+  var date = a.getDate();
+  var hour = a.getHours();
+  var minute = a.getMinutes();
+  return `${hour < 10 ? "0" + hour : hour}:${
+    minute < 10 ? "0" + minute : minute
+  } ${date < 10 ? "0" + date : date}.${
+    month < 10 ? "0" + month : month
+  }.${String(year)}`;
+};
+
 const formatSencastDay = (datetime) => {
   var a = new Date(datetime);
   var year = a.getFullYear();
@@ -107,6 +165,13 @@ const formatSencastDay = (datetime) => {
   return `${String(year)}${month < 10 ? "0" + month : month}${
     date < 10 ? "0" + date : date
   }`;
+};
+
+const capitalize = (string) => {
+  if (string.length === 0) {
+    return string;
+  }
+  return string.charAt(0).toUpperCase() + string.slice(1);
 };
 
 const formatDateIso = (datetime) => {
@@ -309,6 +374,7 @@ export const addLayer = async (
 ) => {
   var {
     period,
+    language,
     datetime,
     depth,
     getTransect,
@@ -361,7 +427,13 @@ export const addLayer = async (
   } else if (source.type === "alplakes_profile") {
     return await addAlplakesProfile(layer, layerStore, map, mapId, getProfile);
   } else if (source.type === "current_temperature_points") {
-    return await addAlplakesMeasurements(layer, layerStore, map, loadingId);
+    return await addAlplakesMeasurements(
+      layer,
+      layerStore,
+      map,
+      loadingId,
+      language
+    );
   }
 };
 
@@ -1348,25 +1420,49 @@ const removeAlplakesProfile = (layer, layerStore, map) => {
   setNested(layerStore, path, null);
 };
 
-const addAlplakesMeasurements = async (layer, layerStore, map, loadingId) => {
+const addAlplakesMeasurements = async (
+  layer,
+  layerStore,
+  map,
+  loadingId,
+  language
+) => {
   loading("Collecting metadata", loadingId);
   var source = layer.sources[layer.source];
   var path = [source.type];
   var leaflet_layer = L.layerGroup([]).addTo(map);
-  let now = new Date();
-  now.setDate(now.getDate() - 1);
-  let { data } = await axios.get(source.url);
+  if ("paletteName" in layer.displayOptions) {
+    layer.displayOptions.palette = COLORS[layer.displayOptions.paletteName];
+  }
+  let minDate = new Date();
+  minDate.setHours(0, 0, 0, 0);
+  let { data } = await axios.get(
+    source.url + `?timestamp=${new Date().getTime()}`
+  );
   for (let i = 0; i < data["features"].length; i++) {
     let station = data["features"][i];
     let time = new Date(station.properties.last_time * 1000);
     var marker;
+    var color = getColor(
+      station.properties.last_value,
+      layer.displayOptions.min,
+      layer.displayOptions.max,
+      layer.displayOptions.palette
+    );
+    var updated = time > minDate;
+    var show =
+      updated &&
+      "lake" in station.properties &&
+      station.properties.lake === layer.lake;
     if (station.properties.icon === "river") {
       marker = L.marker(
         [station.geometry.coordinates[1], station.geometry.coordinates[0]],
         {
           icon: L.divIcon({
             className: "custom-square-marker",
-            html: "<div></div>",
+            html: `<div style="background-color: rgb(${color[0]},${color[1]},${
+              color[2]
+            });opacity: ${updated ? 1 : 0.3}"></div>`,
             iconSize: [10, 10],
             iconAnchor: [5, 5],
           }),
@@ -1379,25 +1475,43 @@ const addAlplakesMeasurements = async (layer, layerStore, map, loadingId) => {
         {
           icon: L.divIcon({
             className: "custom-circle-marker",
-            html: "<div></div>",
-            iconSize: [14, 14], // Adjust the size to your needs
-            iconAnchor: [7, 7], // Anchor in the center of the circle
+            html: `<div style="background-color: rgb(${color[0]},${color[1]},${
+              color[2]
+            });opacity: ${updated ? 1 : 0.3}"></div>`,
+            iconSize: [14, 14],
+            iconAnchor: [7, 7],
           }),
           value: station.properties.latest_value,
         }
       ).addTo(leaflet_layer);
     }
-    var show =
-      time > now &&
-      "lake" in station.properties &&
-      station.properties.lake === layer.lake;
-    marker.bindTooltip(round(station.properties.last_value, 2) + layer.unit, {
-      direction: "top",
-      permanent: show,
-      className: "current_temperature_tooltip",
-      offset: [0, -2],
-    });
-    marker.bindPopup("This is a popup!");
+    marker.bindTooltip(
+      `<div class="value">${
+        round(station.properties.last_value, 2) + layer.unit
+      }</div><div class="time">${
+        updated ? formatTime(time) : formatDatetime(time)
+      }</div>`,
+      {
+        direction: "top",
+        permanent: show,
+        className: "current_temperature_tooltip",
+        offset: [0, -2],
+      }
+    );
+    var { label, source: dataSource, url, icon } = station.properties;
+    marker.bindPopup(
+      `<div class=title>${label}</div><table><tr><td>${
+        Translate.lastreading[language]
+      }</td><td>${
+        round(station.properties.last_value, 2) + layer.unit
+      }</td></tr><tr><td></td><td>${formatDatetime(time)}</td></tr><tr><td>${
+        Translate.type[language]
+      }</td><td>${capitalize(icon)} station</td></tr><tr><td>${
+        Translate.source[language]
+      }</td><td>${dataSource}</td></tr></table><a class="external-link" href="${url}" target="_blank">${
+        Translate.viewdataset[language]
+      }</a>`
+    );
   }
   setNested(layerStore, path, leaflet_layer);
   loaded(loadingId);

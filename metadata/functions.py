@@ -178,7 +178,7 @@ def make_modules(data, sd):
             "component": "graph",
             "labels": {
                 "topLeft": "simstratAverage",
-                "topRight": "simstratDatetime"
+                "topRight": "forecast5"
             },
             "defaults": ["temperature_linegraph"]
         })
@@ -515,7 +515,7 @@ def make_layers(data, sd):
             "display": "points",
             "source": "various",
             "displayOptions": {
-                "paletteName": "Rainbow",
+                "paletteName": "Bafu Continuous",
                 "zIndex": 5,
                 "opacity": 1,
                 "min": 5,

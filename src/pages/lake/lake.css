@@ -346,6 +346,32 @@
     display: block;
 }
 
+.main .lake .content .module .leaflet-popup .leaflet-popup-content-wrapper, .leaflet-popup-tip {
+    background-color: var(--box-color);
+}
+
+.main .lake .content .module .leaflet-popup .title {
+    color: var(--background-font-color);
+}
+
+.main .lake .content .module .leaflet-popup table {
+    color: var(--background-suble-font-color);
+    margin-bottom: 12px;
+    width: 100%;
+}
+
+.main .lake .content .module .leaflet-popup .leaflet-popup-content {
+    min-width: 250px
+}
+
+.main .lake .content .module .leaflet-popup .external-link {
+    color: white;
+    background-color: var(--highlight-color);
+    text-decoration: none;
+    padding: 6px 12px;
+    border-radius: 8px;
+}
+
 .main .lake .content .module .close {
     display: none;
 }
