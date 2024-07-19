@@ -7,7 +7,6 @@ import Legend from "../../components/legend/legend";
 import PlayerControls from "../../components/playercontrols/playercontrols";
 import Settings from "./settings";
 import CONFIG from "../../config.json";
-import settings_icon from "../../img/options.png";
 import {
   relativeDate,
   copy,
@@ -36,17 +35,10 @@ class Map extends Component {
     period: [relativeDate(-2).getTime(), relativeDate(3).getTime()],
     layers: [],
     selection: false,
-    sidebar: false,
     firstActive: true,
   };
   updated = () => {
     this.setState({ updates: [] });
-  };
-  openSidebar = () => {
-    this.setState({ sidebar: true });
-  };
-  closeSidebar = () => {
-    this.setState({ sidebar: false });
   };
   setBasemap = (event) => {
     this.setState({ basemap: event.target.value });
@@ -325,14 +317,21 @@ class Map extends Component {
     });
   }
   render() {
-    var { dark, language, metadata, module, active } = this.props;
+    var {
+      dark,
+      language,
+      metadata,
+      module,
+      active,
+      settings,
+      graph,
+    } = this.props;
     var {
       mapFullscreen,
       graphFullscreen,
       intialLoadId,
       loadingId,
       playControls,
-      sidebar,
       selection,
       layers,
       mapId,
@@ -354,9 +353,6 @@ class Map extends Component {
               selection={selection}
               language={language}
             />
-            <div className="settings" onClick={this.openSidebar}>
-              <img src={settings_icon} alt="Settings" />
-            </div>
             <Basemap
               {...this.state}
               dark={dark}
@@ -403,10 +399,7 @@ class Map extends Component {
             />
           </div>
         </div>
-        <div className={sidebar ? "sidebar open" : "sidebar"}>
-          <div className="close-sidebar" onClick={this.closeSidebar}>
-            &times;
-          </div>
+        <div className={settings ? "sidebar open" : "sidebar"}>
           <Settings
             {...this.state}
             language={language}

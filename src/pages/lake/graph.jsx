@@ -3,7 +3,6 @@ import DatasetHeatmap from "../../components/d3/dataset/datasetheatmap";
 import Settings from "./settings";
 import { copy } from "./functions";
 import { addLayer, updateLayer, removeLayer, loaded } from "./graphfunctions";
-import settings_icon from "../../img/options.png";
 import Loading from "../../components/loading/loading";
 import DatasetLinegraph from "../../components/d3/dataset/datasetlinegraph";
 import InitialLoading from "../../components/loading/initialloading";
@@ -11,18 +10,11 @@ import ModuleLabels from "../../components/modulelabels/modulelabels";
 
 class Graph extends Component {
   state = {
-    sidebar: false,
     selection: false,
     updates: [],
     layers: [],
     loadingId: "load_" + Math.round(Math.random() * 100000),
     initialLoad: true,
-  };
-  openSidebar = () => {
-    this.setState({ sidebar: true });
-  };
-  closeSidebar = () => {
-    this.setState({ sidebar: false });
   };
   addLayer = (id) => {
     var { layers, updates } = this.state;
@@ -135,8 +127,8 @@ class Graph extends Component {
     );
   }
   render() {
-    var { language, dark, module } = this.props;
-    var { sidebar, layers, loadingId, initialLoad, selection } = this.state;
+    var { language, dark, module, settings } = this.props;
+    var { layers, loadingId, initialLoad, selection } = this.state;
     var heat_layer = false;
     var heat_layers = layers.filter((d) => d.active && d.display === "heat");
     if (heat_layers.length > 0) {
@@ -172,9 +164,6 @@ class Graph extends Component {
               language={language}
             />
           )}
-          <div className="settings" onClick={this.openSidebar}>
-            <img src={settings_icon} alt="Settings" />
-          </div>
           {initialLoad && (
             <div className="initial-load">
               <InitialLoading />
@@ -184,10 +173,7 @@ class Graph extends Component {
             <Loading />
           </div>
         </div>
-        <div className={sidebar ? "sidebar open" : "sidebar"}>
-          <div className="close-sidebar" onClick={this.closeSidebar}>
-            &times;
-          </div>
+        <div className={settings ? "sidebar open" : "sidebar"}>
           <Settings
             {...this.state}
             language={language}

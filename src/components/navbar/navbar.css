@@ -5,7 +5,7 @@
   top: 0;
   z-index: 999999;
   background-color: var(--background-color);
-  height: calc(var(--padding) * 2 + 30px);
+  height: var(--header-height);
 }
 
 .navbar.relative {
@@ -241,7 +241,6 @@
   }
 
   .navbar {
-    height: calc(var(--padding) * 2 + 22px);
     z-index: 9999999;
 
   }

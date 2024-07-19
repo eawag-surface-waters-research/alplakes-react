@@ -330,6 +330,34 @@
     cursor: default;
 }
 
+.main .lake .content .module .module-inner .mobile-nav {
+    position: fixed;
+    bottom: 0;
+    height: calc(var(--header-height) + var(--padding));
+    left: 0;
+    background-color: var(--background-color);
+    width: 100%;
+    display: none;
+    padding: calc(var(--padding)/2) 0;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.main .lake .content .module .module-inner .mobile-nav .icon {
+    height: var(--header-height);
+    display: inline-block;
+    margin: 0 var(--padding);
+    cursor: pointer;
+}
+
+.main .lake .content .module .module-inner .mobile-nav .icon img {
+    height: calc(100% - 20px);
+}
+
+.main .lake .content .module .module-inner .mobile-nav .icon .label{
+    font-size: 14px;
+}
+
 .main .lake .content .module .leaflet-control-attribution {
     display: none;
 }
@@ -346,7 +374,8 @@
     display: block;
 }
 
-.main .lake .content .module .leaflet-popup .leaflet-popup-content-wrapper, .leaflet-popup-tip {
+.main .lake .content .module .leaflet-popup .leaflet-popup-content-wrapper,
+.leaflet-popup-tip {
     background-color: var(--box-color);
 }
 
@@ -396,6 +425,7 @@
     display: none;
     margin-top: var(--padding);
     margin-left: var(--padding);
+    height: calc(var(--header-height) - var(--padding));
 }
 
 .main .lake .content .module .active-title .title {
@@ -404,6 +434,8 @@
 
 .main .lake .content .module .active-title .subtitle {
     font-size: 14px;
+    height: 16px;
+    overflow: hidden;
 }
 
 .main .lake .content .module.active .active-title {
@@ -419,7 +451,7 @@
 }
 
 .main .lake .content .module.active .display {
-    height: 100%;
+    height: calc(100% - var(--header-height));
     width: 100%;
     border-radius: 0;
     pointer-events: all;
@@ -449,10 +481,10 @@
 
 .main .lake .content .module .display .module-component .sidebar {
     display: none;
-    height: calc(100% - var(--header-height) - var(--padding));
+    height: calc(100% - var(--padding) * 2);
     vertical-align: top;
     width: var(--settings-width);
-    margin: calc(var(--padding) - 12px) var(--padding);
+    margin: 0 var(--padding) var(--padding);
     position: relative;
 }
 
@@ -508,7 +540,7 @@
     border-radius: 12px;
     padding: calc(var(--padding) / 2) calc(var(--padding) / 4) calc(var(--padding) / 2) calc(var(--padding) / 2);
     margin-top: calc(var(--padding)/2);
-    height: calc(100% - 131px - var(--padding) * 1.5);
+    height: calc(100% - 118px - var(--padding));
     border: 1px solid var(--border-color);
 }
 
@@ -1574,28 +1606,13 @@
 }
 
 .main .lake .content .module.active .display .module-component .plot {
-    width: calc(100% - var(--settings-width) - var(--padding) * 3);
+    width: calc(100% - var(--settings-width) - var(--padding)* 3);
     border: none;
     box-sizing: border-box;
     overflow: hidden;
-    margin-left: var(--padding);
-    height: calc(100% - var(--header-height) - var(--padding));
-    margin-top: calc(var(--padding) - 12px);
+    margin: 0 0 var(--padding) var(--padding);
+    height: calc(100% - var(--padding));
     position: relative;
-}
-
-.main .lake .content .module .display .module-component .plot .settings {
-    background-color: var(--background-color);
-    position: fixed;
-    right: 50px;
-    top: 0px;
-    z-index: 9999;
-    padding: 18px 8px 10px 12px;
-    display: none;
-}
-
-.main .lake .content .module .display .module-component .plot .settings img {
-    height: 26px;
 }
 
 .main.dark .lake .content .module .display .module-component .plot .settings img {
@@ -2170,7 +2187,7 @@
 
     .main .lake .content .module .active-title {
         margin: var(--padding);
-        max-width: calc(100% - 110px);
+        max-width: 100%;
     }
 
     .main .lake .content .modules .mobile-title {
@@ -2181,10 +2198,19 @@
         display: block;
     }
 
+    .main .lake .content .module.active .display {
+        height: calc(100% - var(--header-height) * 2 - var(--padding));
+        border: none;
+    }
+
+    .main .lake .content .module.active .close {
+        display: none;
+    }
+
     .main .lake .content .module.active .display .module-component .plot {
         width: 100%;
         margin: 0;
-        height: calc(100% - var(--header-height) - var(--padding))
+        height: calc(100% - var(--padding));
     }
 
     .main .lake .content .module.active .display .module-component .plot .map {
@@ -2195,15 +2221,18 @@
         border-radius: 0;
     }
 
+    .main .lake .content .module.active .display .module-component.graph .plot .dataset-linegraph {
+        padding: var(--padding);
+    }
+
     .main .lake .content .module.active .display .module-component .sidebar {
         position: fixed;
         top: 0;
         right: 0;
         z-index: 9999;
-        background-color: var(--background-color);
         margin: 0;
-        padding: 50px var(--padding) 0 var(--padding);
-        height: 100%;
+        padding:  var(--padding) var(--padding) 0 var(--padding) ;
+        height: calc(100% - var(--header-height) - var(--padding));
         overflow-y: none;
         display: none;
         max-width: 100%;
@@ -2240,17 +2269,24 @@
     }
 
     .main .lake .content .module .display .module-component .sidebar .active-apps .selection {
-        border-radius: 12px 12px 0 0;
-        height: calc(100% - 98px);
+        height: calc(100% - 98px - var(--padding));
     }
 
     .main .lake .content .module.active .display .module-component .plot .map {
-        height: 50%;
+        height: 100%;
     }
 
     .main .lake .content .module.active .display .module-component .plot .graph {
-        height: calc(50% - var(--padding) * 2);
+        height: calc(50% - var(--padding)* 2);
         padding: 12px;
+        position: fixed;
+        bottom: calc(var(--header-height) + var(--padding));
+        z-index: 9999;
+        background-color: var(--box-color);
+        border-radius: 0;
+    }
+    .main .lake .content .module.active .module-inner .mobile-nav {
+        display: block;
     }
 
 }
