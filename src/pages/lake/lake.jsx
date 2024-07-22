@@ -29,13 +29,9 @@ class NotFound extends Component {
 class Module extends Component {
   state = {
     graph: false,
-    settings: false,
   };
   toggleGraph = () => {
     this.setState({ graph: !this.state.graph });
-  };
-  toggleSettings = () => {
-    this.setState({ settings: !this.state.settings });
   };
   render() {
     var {
@@ -49,7 +45,7 @@ class Module extends Component {
       dark,
       datasets,
     } = this.props;
-    var { settings, graph } = this.state;
+    var { graph } = this.state;
     var title = metadata.name[language];
     var subtitle = parseSubtitle(title, metadata.name);
     return (
@@ -80,7 +76,6 @@ class Module extends Component {
                 module={module}
                 layers={layers}
                 active={active}
-                settings={settings}
                 graph={graph}
               />
             )}
@@ -93,7 +88,6 @@ class Module extends Component {
                 module={module}
                 datasets={datasets}
                 active={active}
-                settings={settings}
               />
             )}
           </div>
@@ -102,22 +96,6 @@ class Module extends Component {
             <div className="subtitle">{module.subtitle[language]}</div>
             <div className="arrow">
               <img src={arrow} alt="Arrow" />
-            </div>
-          </div>
-          <div className="mobile-nav">
-            {module.component === "map" && (
-              <div className="icon" onClick={this.toggleGraph}>
-                <img src={arrow} />
-                <div className="label">Graph</div>
-              </div>
-            )}
-            <div className="icon" onClick={this.toggleSettings}>
-              <img src={arrow} />
-              <div className="label">Layers</div>
-            </div>
-            <div className="icon" onClick={closeActiveModule}>
-              <img src={arrow} />
-              <div className="label">Close</div>
             </div>
           </div>
         </div>

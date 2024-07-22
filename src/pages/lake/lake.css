@@ -354,7 +354,7 @@
     height: calc(100% - 20px);
 }
 
-.main .lake .content .module .module-inner .mobile-nav .icon .label{
+.main .lake .content .module .module-inner .mobile-nav .icon .label {
     font-size: 14px;
 }
 
@@ -544,6 +544,26 @@
     border: 1px solid var(--border-color);
 }
 
+.main .lake .content .module .display .module-component .sidebar .active-apps .selection .selection-title {
+    display: none;
+    text-align: left;
+    font-size: 18px;
+    padding: 0 4px;
+    margin-bottom: var(--padding);
+}
+
+.main .lake .content .module .display .module-component .sidebar .active-apps .selection .selection-close {
+    position: absolute;
+    font-size: 26px;
+    color: var(--background-font-color);
+    top: 0;
+    right: 0;
+    cursor: pointer;
+    transition: all .2s ease-in-out;
+    padding: calc(var(--padding) / 2);
+    line-height: 26px;
+}
+
 .main .lake .content .module .display .module-component .sidebar .active-apps .selection .selection-inner {
     height: 100%;
     overflow-y: auto;
@@ -558,17 +578,17 @@
 }
 
 .main .lake .content .module .display .module-component .sidebar .active-apps .selection .selection-inner::-webkit-scrollbar-thumb {
-    background: var(--background-suble-font-color);
+    background: var(--border-color);
     border-radius: 2px;
 }
 
 .main .lake .content .module .display .module-component .sidebar .active-apps .selection .selection-inner::-moz-scrollbar-thumb {
-    background: var(--background-suble-font-color);
+    background: var(--border-color);
     border-radius: 2px;
 }
 
 .main .lake .content .module .display .module-component .sidebar .active-apps .selection .selection-inner::-ms-scrollbar-thumb {
-    background: var(--background-suble-font-color);
+    background: var(--border-color);
     border-radius: 2px;
 }
 
@@ -627,7 +647,7 @@
     vertical-align: top;
     box-shadow: var(--box-shadow);
     text-align: center;
-    opacity: 0.65;
+    opacity: 0.5;
 }
 
 
@@ -789,7 +809,7 @@
 }
 
 .main .lake .content .module .display .module-component .sidebar .add-layers .layers {
-    height: calc(100% - 39px);
+    height: calc(100% - var(--padding)* 2);
     overflow-y: auto;
     box-sizing: border-box;
     overflow-x: hidden;
@@ -1698,6 +1718,7 @@
     justify-content: center;
     display: none;
     visibility: visible;
+    width: 185px;
 }
 
 .main .lake .content .module.active .display .module-component .plot .layer-loading {
@@ -2199,12 +2220,8 @@
     }
 
     .main .lake .content .module.active .display {
-        height: calc(100% - var(--header-height) * 2 - var(--padding));
+        height: calc(100% - var(--header-height) - var(--app-area-height));
         border: none;
-    }
-
-    .main .lake .content .module.active .close {
-        display: none;
     }
 
     .main .lake .content .module.active .display .module-component .plot {
@@ -2225,30 +2242,13 @@
         padding: var(--padding);
     }
 
-    .main .lake .content .module.active .display .module-component .sidebar {
-        position: fixed;
-        top: 0;
-        right: 0;
-        z-index: 9999;
-        margin: 0;
-        padding:  var(--padding) var(--padding) 0 var(--padding) ;
-        height: calc(100% - var(--header-height) - var(--padding));
-        overflow-y: none;
-        display: none;
-        max-width: 100%;
-        box-sizing: border-box;
-    }
-
     .main .lake .content .module.active .display .module-component .sidebar.open {
         display: block;
+        padding: 0;
     }
 
     .main .lake .content .module.active .display .module-component .sidebar .close-sidebar {
         display: block;
-    }
-
-    .main .lake .content .module .display .module-component .sidebar .active-apps {
-        height: calc(100% - 50px);
     }
 
     .main .lake .content .module .display .module-component .sidebar .active-apps .app {
@@ -2256,8 +2256,24 @@
     }
 
     .main .lake .content .module .display .module-component .sidebar .add-layers {
-        width: 100vw;
+        position: fixed;
+        top: calc(var(--header-height) + var(--padding) * 2);
+        left: 0;
+        width: 100%;
+        height: calc(100% - var(--header-height) - var(--app-area-height) - var(--padding) * 2);
+        border-radius: 12px 12px 0 0;
         border: none;
+        border-top: 1px solid var(--border-color);
+        padding: var(--padding);
+        margin: 0;
+        box-sizing: border-box;
+        opacity: 0.98;
+        z-index: 9999;
+    }
+
+    .main .lake .content .module .display .module-component .sidebar .add-layers .layers-title {
+        font-size: 18px;
+        margin-bottom: var(--padding);
     }
 
     .main .lake .content .module.active .display .module-component .plot .settings {
@@ -2269,7 +2285,40 @@
     }
 
     .main .lake .content .module .display .module-component .sidebar .active-apps .selection {
-        height: calc(100% - 98px - var(--padding));
+        position: fixed;
+        top: calc(var(--header-height) + var(--padding) * 2);
+        left: 0;
+        width: 100%;
+        height: calc(100% - var(--header-height) - var(--app-area-height) - var(--padding) * 2);
+        border-radius: 12px 12px 0 0;
+        border: none;
+        border-top: 1px solid var(--border-color);
+        padding: var(--padding);
+        margin: 0;
+        box-sizing: border-box;
+        opacity: 0.98;
+        z-index: 9999;
+    }
+
+    .main .lake .content .module .display .module-component .sidebar .active-apps .selection .selection-title {
+        display: block;
+    }
+
+    .main .lake .content .module .display .module-component .sidebar .active-apps .selection .selection-inner {
+        height: calc(100% - 26px);
+    }
+
+    .main .lake .content .module .display .module-component .sidebar .active-apps .selection.hidden {
+        display: none;
+    }
+
+    .main .lake .content .module .display .module-component .sidebar .active-apps .app-area {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        left: 0;
+        background-color: var(--background-color);
+        border: none;
     }
 
     .main .lake .content .module.active .display .module-component .plot .map {
@@ -2277,14 +2326,22 @@
     }
 
     .main .lake .content .module.active .display .module-component .plot .graph {
-        height: calc(50% - var(--padding)* 2);
+        height: calc(50% - var(--header-height) / 2 - var(--app-area-height) / 2);
         padding: 12px;
         position: fixed;
-        bottom: calc(var(--header-height) + var(--padding));
-        z-index: 9999;
+        bottom: var(--app-area-height);
+        z-index: 999;
         background-color: var(--box-color);
-        border-radius: 0;
+        border-radius: 12px 12px 0 0;
+        opacity: 0.98;
+        border-top: 1px solid var(--border-color);
+
     }
+
+    .main .lake .content .module.active .display .module-component .plot .graph.hidden {
+        z-index: -1;
+    }
+
     .main .lake .content .module.active .module-inner .mobile-nav {
         display: block;
     }

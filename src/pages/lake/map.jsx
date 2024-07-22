@@ -36,6 +36,8 @@ class Map extends Component {
     layers: [],
     selection: false,
     firstActive: true,
+    settings: false,
+    activeAdd: false,
   };
   updated = () => {
     this.setState({ updates: [] });
@@ -53,6 +55,9 @@ class Map extends Component {
 
   toggleLegend = () => {
     this.setState({ legend: !this.state.legend });
+  };
+  toggleActiveAdd = () => {
+    this.setState({ activeAdd: !this.state.activeAdd, settings: false });
   };
   toggleMapFullscreen = () => {
     this.setState({ mapFullscreen: !this.state.mapFullscreen }, () => {
@@ -109,6 +114,7 @@ class Map extends Component {
         updates,
         selection: id,
         playControls,
+        settings: false,
       });
     }
   };
@@ -121,7 +127,7 @@ class Map extends Component {
       var selection = false;
       let stillActive = layers.filter((l) => l.active);
       if (stillActive.length > 0) selection = stillActive[0].id;
-      this.setState({ layers, updates, selection });
+      this.setState({ layers, updates, selection, settings: false });
     }
   };
   updateOptions = (id, options) => {
@@ -131,9 +137,17 @@ class Map extends Component {
     this.setState({ layers, updates });
   };
   setSelection = (selection) => {
+    var { settings } = this.state;
     if (selection !== this.state.selection) {
-      this.setState({ selection });
+      this.setState({ selection, settings: true, activeAdd: false });
+    } else if (settings) {
+      this.setState({ settings: false });
+    } else {
+      this.setState({ settings: true, activeAdd: false });
     }
+  };
+  closeSettings = () => {
+    this.setState({ settings: false });
   };
   closeSelection = () => {
     this.setState({ selection: false });
@@ -317,15 +331,7 @@ class Map extends Component {
     });
   }
   render() {
-    var {
-      dark,
-      language,
-      metadata,
-      module,
-      active,
-      settings,
-      graph,
-    } = this.props;
+    var { dark, language, metadata, module, active, graph } = this.props;
     var {
       mapFullscreen,
       graphFullscreen,
@@ -336,6 +342,7 @@ class Map extends Component {
       layers,
       mapId,
       datetime,
+      settings,
     } = this.state;
     return (
       <div className="module-component">
@@ -386,7 +393,15 @@ class Map extends Component {
               fullscreen={mapFullscreen}
             />
           </div>
-          <div className={graphFullscreen ? "graph fullscreen" : "graph"}>
+          <div
+            className={
+              !graph
+                ? "graph hidden"
+                : graphFullscreen
+                ? "graph fullscreen"
+                : "graph"
+            }
+          >
             <SummaryGraph
               active={active}
               selection={selection}
@@ -399,7 +414,7 @@ class Map extends Component {
             />
           </div>
         </div>
-        <div className={settings ? "sidebar open" : "sidebar"}>
+        <div className="sidebar open">
           <Settings
             {...this.state}
             language={language}
@@ -411,6 +426,9 @@ class Map extends Component {
             setPeriod={this.setPeriod}
             setDepth={this.setDepth}
             active={active}
+            open={settings}
+            toggleActiveAdd={this.toggleActiveAdd}
+            closeSettings={this.closeSettings}
           />
         </div>
       </div>
