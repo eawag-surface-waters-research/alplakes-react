@@ -520,7 +520,7 @@
   border: 1px solid var(--border-color);
   border-radius: 22px;
   box-shadow: var(--box-shadow);
-  z-index: 9;
+  z-index: 9999;
   display: none;
 }
 
@@ -831,7 +831,7 @@
   .main .home .content .home-map #map {
     border: none;
     border-radius: 0;
-    height: calc(100% - 66px);
+    height: 100%;
   }
 
   .main .home .content .home-map {
@@ -840,7 +840,7 @@
     width: 100%;
     top: var(--header-height);
     width: 100%;
-    height: calc(100% - var(--header-height));
+    height: calc(100% - var(--header-height) - var(--day-selector-height));
     opacity: 1;
     z-index: 9999;
     margin: 0;
@@ -855,6 +855,10 @@
 
   .main .home .content .map-button {
     display: block;
+  }
+
+  .main .home .content .map-button.map-view {
+    bottom: calc(var(--day-selector-height) + var(--padding)* 2);
   }
 
   .main .home .content .home-map .fullscreen {
@@ -887,7 +891,7 @@
   }
 
   .main .home .content .home-map .parameter-selector {
-    top: 66px;
+    top: var(--padding);
     left: var(--padding);
   }
 
@@ -905,7 +909,8 @@
     bottom: 0;
     transform: none;
     background-color: var(--background-color);
-    border-top: 1px solid var(--border-color);
+    height: var(--day-selector-height);
+    position: fixed;
   }
 
   .main .home .content .home-map #map .day-selector .day-outer {

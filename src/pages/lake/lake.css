@@ -330,6 +330,34 @@
     cursor: default;
 }
 
+.main .lake .content .module .module-inner .mobile-nav {
+    position: fixed;
+    bottom: 0;
+    height: calc(var(--header-height) + var(--padding));
+    left: 0;
+    background-color: var(--background-color);
+    width: 100%;
+    display: none;
+    padding: calc(var(--padding)/2) 0;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.main .lake .content .module .module-inner .mobile-nav .icon {
+    height: var(--header-height);
+    display: inline-block;
+    margin: 0 var(--padding);
+    cursor: pointer;
+}
+
+.main .lake .content .module .module-inner .mobile-nav .icon img {
+    height: calc(100% - 20px);
+}
+
+.main .lake .content .module .module-inner .mobile-nav .icon .label {
+    font-size: 14px;
+}
+
 .main .lake .content .module .leaflet-control-attribution {
     display: none;
 }
@@ -346,7 +374,8 @@
     display: block;
 }
 
-.main .lake .content .module .leaflet-popup .leaflet-popup-content-wrapper, .leaflet-popup-tip {
+.main .lake .content .module .leaflet-popup .leaflet-popup-content-wrapper,
+.leaflet-popup-tip {
     background-color: var(--box-color);
 }
 
@@ -396,6 +425,7 @@
     display: none;
     margin-top: var(--padding);
     margin-left: var(--padding);
+    height: calc(var(--header-height) - var(--padding));
 }
 
 .main .lake .content .module .active-title .title {
@@ -404,6 +434,8 @@
 
 .main .lake .content .module .active-title .subtitle {
     font-size: 14px;
+    height: 16px;
+    overflow: hidden;
 }
 
 .main .lake .content .module.active .active-title {
@@ -419,7 +451,7 @@
 }
 
 .main .lake .content .module.active .display {
-    height: 100%;
+    height: calc(100% - var(--header-height));
     width: 100%;
     border-radius: 0;
     pointer-events: all;
@@ -449,10 +481,10 @@
 
 .main .lake .content .module .display .module-component .sidebar {
     display: none;
-    height: calc(100% - var(--header-height) - var(--padding));
+    height: calc(100% - var(--padding) * 2);
     vertical-align: top;
     width: var(--settings-width);
-    margin: calc(var(--padding) - 12px) var(--padding);
+    margin: 0 var(--padding) var(--padding);
     position: relative;
 }
 
@@ -508,8 +540,28 @@
     border-radius: 12px;
     padding: calc(var(--padding) / 2) calc(var(--padding) / 4) calc(var(--padding) / 2) calc(var(--padding) / 2);
     margin-top: calc(var(--padding)/2);
-    height: calc(100% - 131px - var(--padding) * 1.5);
+    height: calc(100% - 118px - var(--padding));
     border: 1px solid var(--border-color);
+}
+
+.main .lake .content .module .display .module-component .sidebar .active-apps .selection .selection-title {
+    display: none;
+    text-align: left;
+    font-size: 18px;
+    padding: 0 4px;
+    margin-bottom: var(--padding);
+}
+
+.main .lake .content .module .display .module-component .sidebar .active-apps .selection .selection-close {
+    position: absolute;
+    font-size: 26px;
+    color: var(--background-font-color);
+    top: 0;
+    right: 0;
+    cursor: pointer;
+    transition: all .2s ease-in-out;
+    padding: calc(var(--padding) / 2);
+    line-height: 26px;
 }
 
 .main .lake .content .module .display .module-component .sidebar .active-apps .selection .selection-inner {
@@ -526,17 +578,17 @@
 }
 
 .main .lake .content .module .display .module-component .sidebar .active-apps .selection .selection-inner::-webkit-scrollbar-thumb {
-    background: var(--background-suble-font-color);
+    background: var(--border-color);
     border-radius: 2px;
 }
 
 .main .lake .content .module .display .module-component .sidebar .active-apps .selection .selection-inner::-moz-scrollbar-thumb {
-    background: var(--background-suble-font-color);
+    background: var(--border-color);
     border-radius: 2px;
 }
 
 .main .lake .content .module .display .module-component .sidebar .active-apps .selection .selection-inner::-ms-scrollbar-thumb {
-    background: var(--background-suble-font-color);
+    background: var(--border-color);
     border-radius: 2px;
 }
 
@@ -595,7 +647,7 @@
     vertical-align: top;
     box-shadow: var(--box-shadow);
     text-align: center;
-    opacity: 0.65;
+    opacity: 0.5;
 }
 
 
@@ -757,7 +809,7 @@
 }
 
 .main .lake .content .module .display .module-component .sidebar .add-layers .layers {
-    height: calc(100% - 39px);
+    height: calc(100% - var(--padding)* 2);
     overflow-y: auto;
     box-sizing: border-box;
     overflow-x: hidden;
@@ -1574,28 +1626,13 @@
 }
 
 .main .lake .content .module.active .display .module-component .plot {
-    width: calc(100% - var(--settings-width) - var(--padding) * 3);
+    width: calc(100% - var(--settings-width) - var(--padding)* 3);
     border: none;
     box-sizing: border-box;
     overflow: hidden;
-    margin-left: var(--padding);
-    height: calc(100% - var(--header-height) - var(--padding));
-    margin-top: calc(var(--padding) - 12px);
+    margin: 0 0 var(--padding) var(--padding);
+    height: calc(100% - var(--padding));
     position: relative;
-}
-
-.main .lake .content .module .display .module-component .plot .settings {
-    background-color: var(--background-color);
-    position: fixed;
-    right: 50px;
-    top: 0px;
-    z-index: 9999;
-    padding: 18px 8px 10px 12px;
-    display: none;
-}
-
-.main .lake .content .module .display .module-component .plot .settings img {
-    height: 26px;
 }
 
 .main.dark .lake .content .module .display .module-component .plot .settings img {
@@ -1681,6 +1718,7 @@
     justify-content: center;
     display: none;
     visibility: visible;
+    width: 185px;
 }
 
 .main .lake .content .module.active .display .module-component .plot .layer-loading {
@@ -2100,6 +2138,19 @@
     visibility: visible;
 }
 
+.main .lake .content .module.active .display .module-component .toggle-graph {
+    color: var(--background-font-color);
+    position: absolute;
+    width: 100%;
+    background-color: var(--box-color);
+    bottom: var(--app-area-height);
+    height: 40px;
+    text-align: center;
+    padding: 12px;
+    box-sizing: border-box;
+    display: none;
+}
+
 .main .lake .content .module .link {
     width: 100%;
     padding: 20px;
@@ -2170,7 +2221,7 @@
 
     .main .lake .content .module .active-title {
         margin: var(--padding);
-        max-width: calc(100% - 110px);
+        max-width: 100%;
     }
 
     .main .lake .content .modules .mobile-title {
@@ -2181,45 +2232,52 @@
         display: block;
     }
 
+    .main .lake .content .module.active .display {
+        height: calc(100% - var(--header-height) - var(--app-area-height) - var(--padding));
+        border: none;
+    }
+
+    .main .lake .content .module.active .display .module-component {
+        height: calc(100% - 40px);
+    }
+
+    .main .lake .content .module.active .display .module-component.graph {
+        height: 100%;
+    }
+
     .main .lake .content .module.active .display .module-component .plot {
         width: 100%;
         margin: 0;
-        height: calc(100% - var(--header-height) - var(--padding))
+        height: 100%;
     }
 
     .main .lake .content .module.active .display .module-component .plot .map {
         border-radius: 0;
     }
 
+    .main .lake .content .module.active .display .module-component .plot .map.small {
+        height: 60%;
+    }
+
     .main .lake .content .module .display .module-component .plot .map .gradient {
         border-radius: 0;
     }
 
-    .main .lake .content .module.active .display .module-component .sidebar {
-        position: fixed;
-        top: 0;
-        right: 0;
-        z-index: 9999;
-        background-color: var(--background-color);
-        margin: 0;
-        padding: 50px var(--padding) 0 var(--padding);
-        height: 100%;
-        overflow-y: none;
-        display: none;
-        max-width: 100%;
-        box-sizing: border-box;
+    .main .lake .content .module.active .display .module-component.graph .plot .dataset-linegraph {
+        padding: var(--padding);
+    }
+
+    .main .lake .content .module.active .display .module-component .toggle-graph {
+        display: block;
     }
 
     .main .lake .content .module.active .display .module-component .sidebar.open {
         display: block;
+        padding: 0;
     }
 
     .main .lake .content .module.active .display .module-component .sidebar .close-sidebar {
         display: block;
-    }
-
-    .main .lake .content .module .display .module-component .sidebar .active-apps {
-        height: calc(100% - 50px);
     }
 
     .main .lake .content .module .display .module-component .sidebar .active-apps .app {
@@ -2227,8 +2285,24 @@
     }
 
     .main .lake .content .module .display .module-component .sidebar .add-layers {
-        width: 100vw;
+        position: fixed;
+        top: calc(var(--header-height) + var(--padding) * 2);
+        left: 0;
+        width: 100%;
+        height: calc(100% - var(--header-height) - var(--app-area-height) - var(--padding) * 2);
+        border-radius: 0;
         border: none;
+        border-top: 1px solid var(--border-color);
+        padding: var(--padding);
+        margin: 0;
+        box-sizing: border-box;
+        opacity: 0.98;
+        z-index: 9999;
+    }
+
+    .main .lake .content .module .display .module-component .sidebar .add-layers .layers-title {
+        font-size: 18px;
+        margin-bottom: var(--padding);
     }
 
     .main .lake .content .module.active .display .module-component .plot .settings {
@@ -2240,17 +2314,67 @@
     }
 
     .main .lake .content .module .display .module-component .sidebar .active-apps .selection {
-        border-radius: 12px 12px 0 0;
-        height: calc(100% - 98px);
+        position: fixed;
+        top: calc(var(--header-height) + var(--padding) * 2);
+        left: 0;
+        width: 100%;
+        height: calc(100% - var(--header-height) - var(--app-area-height) - var(--padding) * 2);
+        border-radius: 0;
+        border: none;
+        border-top: 1px solid var(--border-color);
+        padding: var(--padding);
+        margin: 0;
+        box-sizing: border-box;
+        opacity: 0.98;
+        z-index: 9999;
+    }
+
+    .main .lake .content .module .display .module-component .sidebar .active-apps .selection .selection-title {
+        display: block;
+    }
+
+    .main .lake .content .module .display .module-component .sidebar .active-apps .selection .selection-inner {
+        height: calc(100% - 26px);
+    }
+
+    .main .lake .content .module .display .module-component .sidebar .active-apps .selection.hidden {
+        display: none;
+    }
+
+    .main .lake .content .module .display .module-component .sidebar .active-apps .app-area {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        left: 0;
+        background-color: var(--background-color);
+        border: none;
     }
 
     .main .lake .content .module.active .display .module-component .plot .map {
-        height: 50%;
+        height: 100%;
     }
 
     .main .lake .content .module.active .display .module-component .plot .graph {
-        height: calc(50% - var(--padding) * 2);
+        height: 40%;
         padding: 12px;
+        bottom: 0;
+        z-index: 999;
+        background-color: var(--background-color);
+        border-radius: 0;
+        margin: 0;
+
+    }
+
+    .main .lake .content .module .display .module-component .sidebar .active-apps .app.filled.active .join {
+        display: none;
+    }
+
+    .main .lake .content .module.active .display .module-component .plot .graph.hidden {
+        z-index: -1;
+    }
+
+    .main .lake .content .module.active .module-inner .mobile-nav {
+        display: block;
     }
 
 }

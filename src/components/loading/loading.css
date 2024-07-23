@@ -236,7 +236,7 @@
 .loading-text-x10 {
     display: inline-block;
     font-size: 12px;
-    max-width: 125px;
+    width: 125px;
     margin: 0 12px;
     line-height: 16px;
 }

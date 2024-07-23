@@ -7,7 +7,6 @@ import Legend from "../../components/legend/legend";
 import PlayerControls from "../../components/playercontrols/playercontrols";
 import Settings from "./settings";
 import CONFIG from "../../config.json";
-import settings_icon from "../../img/options.png";
 import {
   relativeDate,
   copy,
@@ -16,6 +15,7 @@ import {
 } from "./functions";
 import SummaryGraph from "./summarygraph";
 import ModuleLabels from "../../components/modulelabels/modulelabels";
+import Translate from "../../translations.json";
 
 class Map extends Component {
   state = {
@@ -36,17 +36,12 @@ class Map extends Component {
     period: [relativeDate(-2).getTime(), relativeDate(3).getTime()],
     layers: [],
     selection: false,
-    sidebar: false,
     firstActive: true,
+    settings: false,
+    activeAdd: false,
   };
   updated = () => {
     this.setState({ updates: [] });
-  };
-  openSidebar = () => {
-    this.setState({ sidebar: true });
-  };
-  closeSidebar = () => {
-    this.setState({ sidebar: false });
   };
   setBasemap = (event) => {
     this.setState({ basemap: event.target.value });
@@ -61,6 +56,9 @@ class Map extends Component {
 
   toggleLegend = () => {
     this.setState({ legend: !this.state.legend });
+  };
+  toggleActiveAdd = () => {
+    this.setState({ activeAdd: !this.state.activeAdd, settings: false });
   };
   toggleMapFullscreen = () => {
     this.setState({ mapFullscreen: !this.state.mapFullscreen }, () => {
@@ -117,6 +115,7 @@ class Map extends Component {
         updates,
         selection: id,
         playControls,
+        settings: false,
       });
     }
   };
@@ -129,7 +128,7 @@ class Map extends Component {
       var selection = false;
       let stillActive = layers.filter((l) => l.active);
       if (stillActive.length > 0) selection = stillActive[0].id;
-      this.setState({ layers, updates, selection });
+      this.setState({ layers, updates, selection, settings: false });
     }
   };
   updateOptions = (id, options) => {
@@ -139,12 +138,17 @@ class Map extends Component {
     this.setState({ layers, updates });
   };
   setSelection = (selection) => {
+    var { settings } = this.state;
     if (selection !== this.state.selection) {
-      this.setState({ selection });
+      this.setState({ selection, settings: true, activeAdd: false });
+    } else if (settings) {
+      this.setState({ settings: false });
+    } else {
+      this.setState({ settings: true, activeAdd: false });
     }
   };
-  closeSelection = () => {
-    this.setState({ selection: false });
+  closeSettings = () => {
+    this.setState({ settings: false });
   };
   setDepthAndPeriod = (depth, period, datetime) => {
     if (depth !== this.state.depth || period !== this.state.period) {
@@ -237,6 +241,7 @@ class Map extends Component {
     if (data) {
       layer.displayOptions.data = data;
       this.setState({ layers });
+      this.props.showGraph();
     } else {
       this.error(
         "Failed to collect transect from the server. Please try again."
@@ -262,6 +267,7 @@ class Map extends Component {
     if (data) {
       layer.displayOptions.data = data;
       this.setState({ layers });
+      this.props.showGraph();
     } else {
       this.error(
         "Failed to collect profile from the server. Please try again."
@@ -325,23 +331,28 @@ class Map extends Component {
     });
   }
   render() {
-    var { dark, language, metadata, module, active } = this.props;
+    var { dark, language, metadata, module, active, graph, toggleGraph } =
+      this.props;
     var {
       mapFullscreen,
       graphFullscreen,
       intialLoadId,
       loadingId,
       playControls,
-      sidebar,
       selection,
       layers,
       mapId,
       datetime,
+      settings,
     } = this.state;
     return (
       <div className="module-component">
         <div className="plot">
-          <div className={mapFullscreen ? "map fullscreen" : "map"}>
+          <div
+            className={
+              mapFullscreen ? "map fullscreen" : graph ? "map small" : "map"
+            }
+          >
             <div className="initial-load" id={intialLoadId}>
               <InitialLoading />
             </div>
@@ -354,9 +365,6 @@ class Map extends Component {
               selection={selection}
               language={language}
             />
-            <div className="settings" onClick={this.openSidebar}>
-              <img src={settings_icon} alt="Settings" />
-            </div>
             <Basemap
               {...this.state}
               dark={dark}
@@ -390,7 +398,15 @@ class Map extends Component {
               fullscreen={mapFullscreen}
             />
           </div>
-          <div className={graphFullscreen ? "graph fullscreen" : "graph"}>
+          <div
+            className={
+              !graph
+                ? "graph hidden"
+                : graphFullscreen
+                ? "graph fullscreen"
+                : "graph"
+            }
+          >
             <SummaryGraph
               active={active}
               selection={selection}
@@ -403,10 +419,12 @@ class Map extends Component {
             />
           </div>
         </div>
-        <div className={sidebar ? "sidebar open" : "sidebar"}>
-          <div className="close-sidebar" onClick={this.closeSidebar}>
-            &times;
-          </div>
+        <div className="toggle-graph" onClick={toggleGraph}>
+          {graph
+            ? Translate.closegraph[language]
+            : Translate.opengraph[language]}
+        </div>
+        <div className="sidebar open">
           <Settings
             {...this.state}
             language={language}
@@ -418,6 +436,9 @@ class Map extends Component {
             setPeriod={this.setPeriod}
             setDepth={this.setDepth}
             active={active}
+            open={settings}
+            toggleActiveAdd={this.toggleActiveAdd}
+            closeSettings={this.closeSettings}
           />
         </div>
       </div>

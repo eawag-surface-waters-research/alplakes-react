@@ -17,7 +17,7 @@ import forel_icon from "../../img/forel.png";
 
 class Selection extends Component {
   render() {
-    var { selection, layers } = this.props;
+    var { selection, layers, open, closeSettings, language } = this.props;
     if (selection === false) {
       return;
     } else {
@@ -25,7 +25,11 @@ class Selection extends Component {
       var source = layer.sources[layer.source];
       return (
         <React.Fragment>
-          <div className="selection">
+          <div className={open ? "selection" : "selection hidden"}>
+            <div className="selection-title" onClick={closeSettings}>
+              {Translate.settings[language]}
+              <div className="selection-close">&#10005;</div>
+            </div>
             <div className="selection-inner">
               <div className="layer-description">
                 <ShowMoreText
@@ -201,25 +205,22 @@ class Settings extends Component {
       oxygensat: oxygen_icon,
       forelule: forel_icon,
     },
-    activeAdd: false,
-  };
-  toggleActiveAdd = () => {
-    this.setState({ activeAdd: !this.state.activeAdd });
   };
   render() {
-    var { images, activeAdd } = this.state;
+    var { activeAdd, toggleActiveAdd } = this.props;
+    var { images } = this.state;
     return (
       <React.Fragment>
         <ActiveApps
           {...this.props}
           images={images}
-          toggleActiveAdd={this.toggleActiveAdd}
+          toggleActiveAdd={toggleActiveAdd}
         />
         <AddLayers
           {...this.props}
           images={images}
           activeAdd={activeAdd}
-          toggleActiveAdd={this.toggleActiveAdd}
+          toggleActiveAdd={toggleActiveAdd}
         />
       </React.Fragment>
     );

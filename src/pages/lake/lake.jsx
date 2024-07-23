@@ -27,6 +27,17 @@ class NotFound extends Component {
 }
 
 class Module extends Component {
+  state = {
+    graph: false,
+  };
+  toggleGraph = () => {
+    this.setState({ graph: !this.state.graph });
+  };
+  showGraph = () => {
+    if (!this.state.graph) {
+      this.setState({ graph: true });
+    }
+  };
   render() {
     var {
       module,
@@ -39,6 +50,7 @@ class Module extends Component {
       dark,
       datasets,
     } = this.props;
+    var { graph } = this.state;
     var title = metadata.name[language];
     var subtitle = parseSubtitle(title, metadata.name);
     return (
@@ -49,10 +61,14 @@ class Module extends Component {
         }}
       >
         <div className="module-inner">
-          <div className="close" onClick={closeActiveModule}>
+          <div
+            className="close"
+            onClick={closeActiveModule}
+            title="Close module"
+          >
             &times;
           </div>
-          <div className="active-title">
+          <div className="active-title" onClick={closeActiveModule}>
             <div className="title">{title}</div>
             <div className="subtitle">{subtitle}</div>
           </div>
@@ -65,6 +81,9 @@ class Module extends Component {
                 module={module}
                 layers={layers}
                 active={active}
+                graph={graph}
+                toggleGraph={this.toggleGraph}
+                showGraph={this.showGraph}
               />
             )}
             {module.component === "graph" && (

@@ -24,24 +24,19 @@ class SummaryGraph extends Component {
     setLayers(layers);
   };
   render() {
-    var {
-      layers,
-      selection,
-      active,
-      language,
-      dark,
-      datetime,
-    } = this.props;
+    var { layers, selection, active, language, dark, datetime } = this.props;
     var layer = layers.find((l) => l.id === selection);
     var plot = false;
     if (active && layer && "summaryGraph" in layer) plot = layer.summaryGraph;
+    var label = layer ? Translations[layer.parameter][language] : "";
     switch (plot) {
       default:
-        return <React.Fragment></React.Fragment>;
+        return (
+          <React.Fragment>
+            <div className="graph-temp">{Translations.noplot[language]} {label}</div>
+          </React.Fragment>
+        );
       case "satellite_timeseries":
-        var label = layer.parameter
-          ? Translations[layer.parameter][language]
-          : "";
         return (
           <React.Fragment>
             <SatelliteSummary
@@ -69,7 +64,6 @@ class SummaryGraph extends Component {
         } else {
           return (
             <React.Fragment>
-              {" "}
               <div className="graph-temp">
                 Add a marker to see the profile plotted here.
               </div>

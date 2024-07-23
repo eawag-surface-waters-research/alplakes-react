@@ -72,7 +72,7 @@ class Search extends Component {
   handleKeyDown = (event) => {
     if (event.key === "Enter") {
       var { sortedList } = this.props;
-      var visible = sortedList.filter((s) => s.display)
+      var visible = sortedList.filter((s) => s.display);
       if (visible.length === 1) {
         this.props.navigate(visible[0].key);
       }
@@ -471,7 +471,8 @@ class Home extends Component {
     var { parameter, parameters } = this.state;
     var geometry, forecast;
     const { data: list } = await axios.get(
-      CONFIG.alplakes_bucket + `/static/website/metadata/${CONFIG.branch}/list.json`
+      CONFIG.alplakes_bucket +
+        `/static/website/metadata/${CONFIG.branch}/list.json`
     );
     try {
       ({ data: forecast } = await axios.get(
@@ -485,7 +486,8 @@ class Home extends Component {
     }
     try {
       ({ data: geometry } = await axios.get(
-        CONFIG.alplakes_bucket + `/static/website/metadata/${CONFIG.branch}/lakes.geojson`
+        CONFIG.alplakes_bucket +
+          `/static/website/metadata/${CONFIG.branch}/lakes.geojson`
       ));
       geometry = geometry.features.reduce((obj, item) => {
         obj[item.properties.key] = item.geometry.coordinates;
@@ -589,12 +591,6 @@ class Home extends Component {
             favorites={favorites}
           />
           <div className={fullscreen ? "home-map" : "home-map hide"}>
-            <div className="fullscreen" onClick={this.toggleFullscreen}>
-              <div className="label">
-                <div className="arrow">&#8592;</div>
-                <div className="text">Back</div>
-              </div>
-            </div>
             <HomeMap
               list={list}
               dark={dark}
@@ -605,8 +601,11 @@ class Home extends Component {
               setParameter={this.setParameter}
             />
           </div>
-          <div className="map-button" onClick={this.toggleFullscreen}>
-            Map
+          <div
+            className={fullscreen ? "map-button map-view" : "map-button"}
+            onClick={this.toggleFullscreen}
+          >
+            {fullscreen ? "Search" : "Map"}
           </div>
         </div>
         <Footer {...this.props} small={true} />
