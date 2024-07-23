@@ -33,6 +33,11 @@ class Module extends Component {
   toggleGraph = () => {
     this.setState({ graph: !this.state.graph });
   };
+  showGraph = () => {
+    if (!this.state.graph) {
+      this.setState({ graph: true });
+    }
+  };
   render() {
     var {
       module,
@@ -78,6 +83,7 @@ class Module extends Component {
                 active={active}
                 graph={graph}
                 toggleGraph={this.toggleGraph}
+                showGraph={this.showGraph}
               />
             )}
             {module.component === "graph" && (

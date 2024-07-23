@@ -241,6 +241,7 @@ class Map extends Component {
     if (data) {
       layer.displayOptions.data = data;
       this.setState({ layers });
+      this.props.showGraph();
     } else {
       this.error(
         "Failed to collect transect from the server. Please try again."
@@ -266,6 +267,7 @@ class Map extends Component {
     if (data) {
       layer.displayOptions.data = data;
       this.setState({ layers });
+      this.props.showGraph();
     } else {
       this.error(
         "Failed to collect profile from the server. Please try again."
