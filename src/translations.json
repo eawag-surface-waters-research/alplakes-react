@@ -877,6 +877,24 @@
     "FR": "Afficher l'ensemble de données",
     "IT": "Visualizza set di dati"
   },
+  "noplot": {
+    "EN": "No plot available for",
+    "DE": "Kein Grundstück verfügbar für",
+    "FR": "Aucun terrain disponible pour",
+    "IT": "Nessuna trama disponibile per"
+  },
+  "opengraph": {
+    "EN": "Open graph",
+    "DE": "Graph öffnen",
+    "FR": "Ouvrir graphique",
+    "IT": "Grafico aperto"
+  },
+  "closegraph": {
+    "EN": "Close graph",
+    "DE": "Graph schließen",
+    "FR": "Fermer le graphique",
+    "IT": "Chiudi il grafico"
+  },
   "c": {
     "EN": "",
     "DE": "",

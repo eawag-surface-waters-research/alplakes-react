@@ -2138,6 +2138,19 @@
     visibility: visible;
 }
 
+.main .lake .content .module.active .display .module-component .toggle-graph {
+    color: var(--background-font-color);
+    position: absolute;
+    width: 100%;
+    background-color: var(--box-color);
+    bottom: var(--app-area-height);
+    height: 40px;
+    text-align: center;
+    padding: 12px;
+    box-sizing: border-box;
+    display: none;
+}
+
 .main .lake .content .module .link {
     width: 100%;
     padding: 20px;
@@ -2220,18 +2233,30 @@
     }
 
     .main .lake .content .module.active .display {
-        height: calc(100% - var(--header-height) - var(--app-area-height));
+        height: calc(100% - var(--header-height) - var(--app-area-height) - var(--padding));
         border: none;
+    }
+
+    .main .lake .content .module.active .display .module-component {
+        height: calc(100% - 40px);
+    }
+
+    .main .lake .content .module.active .display .module-component.graph {
+        height: 100%;
     }
 
     .main .lake .content .module.active .display .module-component .plot {
         width: 100%;
         margin: 0;
-        height: calc(100% - var(--padding));
+        height: 100%;
     }
 
     .main .lake .content .module.active .display .module-component .plot .map {
         border-radius: 0;
+    }
+
+    .main .lake .content .module.active .display .module-component .plot .map.small {
+        height: 60%;
     }
 
     .main .lake .content .module .display .module-component .plot .map .gradient {
@@ -2240,6 +2265,10 @@
 
     .main .lake .content .module.active .display .module-component.graph .plot .dataset-linegraph {
         padding: var(--padding);
+    }
+
+    .main .lake .content .module.active .display .module-component .toggle-graph {
+        display: block;
     }
 
     .main .lake .content .module.active .display .module-component .sidebar.open {
@@ -2261,7 +2290,7 @@
         left: 0;
         width: 100%;
         height: calc(100% - var(--header-height) - var(--app-area-height) - var(--padding) * 2);
-        border-radius: 12px 12px 0 0;
+        border-radius: 0;
         border: none;
         border-top: 1px solid var(--border-color);
         padding: var(--padding);
@@ -2290,7 +2319,7 @@
         left: 0;
         width: 100%;
         height: calc(100% - var(--header-height) - var(--app-area-height) - var(--padding) * 2);
-        border-radius: 12px 12px 0 0;
+        border-radius: 0;
         border: none;
         border-top: 1px solid var(--border-color);
         padding: var(--padding);
@@ -2326,16 +2355,18 @@
     }
 
     .main .lake .content .module.active .display .module-component .plot .graph {
-        height: calc(50% - var(--header-height) / 2 - var(--app-area-height) / 2);
+        height: 40%;
         padding: 12px;
-        position: fixed;
-        bottom: var(--app-area-height);
+        bottom: 0;
         z-index: 999;
-        background-color: var(--box-color);
-        border-radius: 12px 12px 0 0;
-        opacity: 0.98;
-        border-top: 1px solid var(--border-color);
+        background-color: var(--background-color);
+        border-radius: 0;
+        margin: 0;
 
+    }
+
+    .main .lake .content .module .display .module-component .sidebar .active-apps .app.filled.active .join {
+        display: none;
     }
 
     .main .lake .content .module.active .display .module-component .plot .graph.hidden {

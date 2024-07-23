@@ -77,6 +77,7 @@ class Module extends Component {
                 layers={layers}
                 active={active}
                 graph={graph}
+                toggleGraph={this.toggleGraph}
               />
             )}
             {module.component === "graph" && (

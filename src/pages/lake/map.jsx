@@ -15,6 +15,7 @@ import {
 } from "./functions";
 import SummaryGraph from "./summarygraph";
 import ModuleLabels from "../../components/modulelabels/modulelabels";
+import Translate from "../../translations.json";
 
 class Map extends Component {
   state = {
@@ -148,9 +149,6 @@ class Map extends Component {
   };
   closeSettings = () => {
     this.setState({ settings: false });
-  };
-  closeSelection = () => {
-    this.setState({ selection: false });
   };
   setDepthAndPeriod = (depth, period, datetime) => {
     if (depth !== this.state.depth || period !== this.state.period) {
@@ -331,7 +329,8 @@ class Map extends Component {
     });
   }
   render() {
-    var { dark, language, metadata, module, active, graph } = this.props;
+    var { dark, language, metadata, module, active, graph, toggleGraph } =
+      this.props;
     var {
       mapFullscreen,
       graphFullscreen,
@@ -347,7 +346,11 @@ class Map extends Component {
     return (
       <div className="module-component">
         <div className="plot">
-          <div className={mapFullscreen ? "map fullscreen" : "map"}>
+          <div
+            className={
+              mapFullscreen ? "map fullscreen" : graph ? "map small" : "map"
+            }
+          >
             <div className="initial-load" id={intialLoadId}>
               <InitialLoading />
             </div>
@@ -413,6 +416,11 @@ class Map extends Component {
               setLayers={this.setLayers}
             />
           </div>
+        </div>
+        <div className="toggle-graph" onClick={toggleGraph}>
+          {graph
+            ? Translate.closegraph[language]
+            : Translate.opengraph[language]}
         </div>
         <div className="sidebar open">
           <Settings
