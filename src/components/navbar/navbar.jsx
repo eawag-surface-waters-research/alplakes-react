@@ -3,9 +3,6 @@ import { NavLink } from "react-router-dom";
 import Translate from "../../translations.json";
 import logo from "../../img/icon_text.png";
 import logo_dark from "../../img/icon_text_dark.png";
-import eawag_logo from "../../img/eawag_logo.png";
-import esa_logo from "../../img/esa_logo.png";
-import trento_logo from "../../img/trento_logo.png";
 import dark_icon from "../../img/dark.png";
 import light_icon from "../../img/light.png";
 import "./navbar.css";
@@ -75,15 +72,15 @@ class NavBar extends Component {
               </div>
             </div>
             <div className={menu ? "nav-content" : "nav-content hide"}>
-              <div className="nav-row">
-                <NavLink to="/">{Translate.lakes[language]}</NavLink>
-              </div>
-              <div className="nav-row">
-                <NavLink to="/api">API</NavLink>
-              </div>
-              <div className="nav-row">
-                <NavLink to="/about">{Translate.about[language]}</NavLink>
-              </div>
+              <NavLink to="/">
+                <div className="nav-row">{Translate.lakes[language]}</div>
+              </NavLink>
+              <NavLink to="/api">
+                <div className="nav-row">API</div>
+              </NavLink>
+              <NavLink to="/about">
+                <div className="nav-row">{Translate.about[language]}</div>
+              </NavLink>
               <div className="nav-row">
                 <div className="mode">
                   <Toggle
@@ -93,8 +90,6 @@ class NavBar extends Component {
                     checked={dark}
                   />
                 </div>
-              </div>
-              <div className="nav-row">
                 <select
                   value={language}
                   onChange={setLanguage}
@@ -106,12 +101,6 @@ class NavBar extends Component {
                     </option>
                   ))}
                 </select>
-              </div>
-
-              <div className="nav-footer">
-                <img src={eawag_logo} alt="Eawag" />
-                <img src={esa_logo} alt="Esa" />
-                <img src={trento_logo} alt="Trento" />
               </div>
             </div>
           </div>

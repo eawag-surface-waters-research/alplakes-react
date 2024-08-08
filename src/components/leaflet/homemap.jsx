@@ -360,7 +360,7 @@ class HomeMap extends Component {
   componentDidUpdate(prevProps) {
     var { day } = this.state;
     var { list, language } = this.props;
-    if (this.plot && this.props.list.length > 0) {
+    if (this.plot && list.length > 0) {
       const days = Object.keys(list[0].forecast.summary);
       day = days[0];
       this.plotPolygons(day);
