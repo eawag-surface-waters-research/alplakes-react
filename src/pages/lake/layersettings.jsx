@@ -1475,6 +1475,48 @@ class Doy extends Component {
             </div>
           </div>
         )}
+        <div className="setting">
+          <div className="label">Legend</div>
+          <div className="legend">
+            {"min_date" in source && (
+              <div className="date">
+                Reference period {source["min_date"].getFullYear()} -{" "}
+                {source["max_date"].getFullYear()}
+              </div>
+            )}
+            <div className="item">
+              <div className="box" style={{ opacity: 0.3 }}></div>
+              <div className="text">25.-75 Percentile</div>
+            </div>
+            <div className="item">
+              <div className="box"></div>
+              <div className="text">05.-95 Percentile</div>
+            </div>
+            <div className="item">
+              <div className="line" style={{ borderColor: "#ff7d45" }}></div>
+              <div className="text">{new Date().getFullYear()}</div>
+            </div>
+            <div className="item">
+              <div className="line" style={{ borderColor: "#ffc045" }}></div>
+              <div className="text">{new Date().getFullYear() - 1}</div>
+            </div>
+            <div className="item">
+              <div className="line" style={{ borderColor: "lightGrey" }}></div>
+              <div className="text">Max</div>
+            </div>
+            <div className="item">
+              <div
+                className="line"
+                style={{ borderColor: "var(--background-font-color)" }}
+              ></div>
+              <div className="text">Mean</div>
+            </div>
+            <div className="item">
+              <div className="line" style={{ borderColor: "lightGrey" }}></div>
+              <div className="text">Min</div>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }

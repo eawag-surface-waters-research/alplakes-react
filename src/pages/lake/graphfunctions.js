@@ -157,9 +157,14 @@ const addSimstratDoy = async (layer, language) => {
       console.error("Failed to collect DOY from API.");
     }
   }
-
   var x = removeLeap(getDoyArray());
   var display = [];
+  if ("min_date" in data) {
+    source["min_date"] = new Date(data["min_date"])
+  }
+  if ("max_date" in data) {
+    source["max_date"] = new Date(data["max_date"])
+  }
   if ("min" in data)
     display.push({
       x,

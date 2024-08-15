@@ -1401,6 +1401,40 @@
     color: var(--background-suble-font-color);
 }
 
+.main .lake .content .module.active .display .module-component .sidebar .layer-settings .setting .legend {
+    background-color: var(--background-color);
+    width: 100%;
+    padding: 12px;
+    box-sizing: border-box;
+    border-radius: 8px;
+}
+
+.main .lake .content .module.active .display .module-component .sidebar .layer-settings .setting .legend .date {
+    margin-bottom: 12px;
+}
+
+.main .lake .content .module.active .display .module-component .sidebar .layer-settings .setting .legend .item .box {
+    display: inline-block;
+    width: 30px;
+    height: 10px;
+    background-color: grey;
+    opacity: 0.15;
+    margin-right: 12px;
+}
+
+.main .lake .content .module.active .display .module-component .sidebar .layer-settings .setting .legend .item .line {
+    display: inline-block;
+    width: 30px;
+    height: 5px;
+    margin-bottom: 5px;
+    margin-right: 12px;
+    border-bottom: 1px solid grey;
+}
+
+.main .lake .content .module.active .display .module-component .sidebar .layer-settings .setting .legend .item .text {
+    display: inline-block;
+}
+
 .main .lake .content .module.active .display .module-component .sidebar .layer-settings .setting .performance {
     padding: 5px 20px 0px 0px;
     display: inline-block;
