@@ -7,6 +7,7 @@ import NavBar from "../../components/navbar/navbar";
 import HomeGraph from "../../components/d3/homegraph/homegraph";
 import Translations from "../../translations.json";
 import searchIcon from "../../img/search.png";
+import mapIcon from "../../img/map.png";
 import depth_icon from "../../img/depth.png";
 import area_icon from "../../img/area.png";
 import elevation_icon from "../../img/elevation.png";
@@ -606,6 +607,7 @@ class Home extends Component {
             onClick={this.toggleFullscreen}
           >
             {fullscreen ? "Search" : "Map"}
+            <img src={fullscreen ? searchIcon : mapIcon} alt={fullscreen ? "Search" : "Map"} />
           </div>
         </div>
         <Footer {...this.props} small={true} />

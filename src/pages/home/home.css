@@ -64,7 +64,7 @@
 .main .home .content .search .filters {
   height: calc(28.5px + var(--padding) / 2);
   overflow: hidden;
-  padding: 0 12px;
+  padding: 0 4px;
 }
 
 .main .home .content .search .filters .filter {
@@ -517,12 +517,23 @@
   left: 50%;
   transform: translate(-50%, 0);
   padding: var(--padding) 40px;
-  background-color: var(--background-color);
+  background-color: var(--box-color);
   border: 1px solid var(--border-color);
   border-radius: 22px;
-  box-shadow: var(--box-shadow);
   z-index: 9999;
   display: none;
+}
+
+.main .home .content .map-button img {
+  height: 14px;
+  margin-left: 10px;
+  margin-bottom: 0px;
+  opacity: 0.8;
+}
+
+.main.dark .home .content .map-button img {
+  -webkit-filter: invert(100%);
+  filter: invert(100%);
 }
 
 .main .home .content .logos {
@@ -646,6 +657,7 @@
   border-radius: 22px;
   display: inline-block;
   box-shadow: var(--box-shadow);
+  border: 1px solid var(--border-color);
 }
 
 .main .home .content .home-map #map .day-selector .day-outer .day-inner {
@@ -683,6 +695,7 @@
   box-shadow: var(--box-shadow);
   margin-right: calc(var(--padding) / 3);
   text-align: center;
+  border: 1px solid var(--border-color);
 }
 
 .main .home .content .home-map .parameter-selector .parameter .inner {
@@ -839,7 +852,7 @@
     position: fixed;
     left: 0;
     width: 100%;
-    top: var(--header-height);
+    top: calc(var(--header-height) + var(--day-selector-height));
     width: 100%;
     height: calc(100% - var(--header-height) - var(--day-selector-height));
     opacity: 1;
@@ -856,10 +869,6 @@
 
   .main .home .content .map-button {
     display: block;
-  }
-
-  .main .home .content .map-button.map-view {
-    bottom: calc(var(--day-selector-height) + var(--padding)* 2);
   }
 
   .main .home .content .home-map .fullscreen {
@@ -907,7 +916,7 @@
   .main .home .content .home-map #map .day-selector {
     width: 100%;
     left: 0;
-    bottom: 0;
+    top: var(--header-height);
     transform: none;
     background-color: var(--background-color);
     height: var(--day-selector-height);
@@ -916,6 +925,7 @@
 
   .main .home .content .home-map #map .day-selector .day-outer {
     box-shadow: none;
+    border: none;
     padding: 12px 24px;
   }
 
@@ -944,9 +954,8 @@
   }
 
   .main .home .content .search img {
-    top: calc(var(--padding) + 10px);
-    left: calc(var(--padding) * 2);
-    height: 18px;
+    top: calc(var(--padding) + 12px);
+    left: calc(var(--padding)* 2 + 5px);
   }
 
   .main .home .content .search .filters {
@@ -984,11 +993,6 @@
   .main .home .content .logos {
     display: none;
   }
-
-  .main .home .content .search input {
-    padding: 8px 8px 8px 45px;
-  }
-
 }
 
 @media screen and (max-width: 500px) {

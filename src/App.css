@@ -19,7 +19,7 @@
   --box-font-color: rgb(0, 0, 0);
   --box-inner-color: rgb(227, 227, 227);
   --border-color: #ddd;
-  --box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  --box-shadow: rgba(0, 0, 0, 0.14) 0px 1px 5px;
   --box-shadow-hover: rgba(0, 0, 0, 0.24) 0px 1px 6px;
   --footer-height: 48px;
   --footer-full-height: 114px;
@@ -53,9 +53,9 @@
 }
 
 .dark {
-  --background-color: rgba(29, 30, 32, 255);
+  --background-color: hsl(232, 11%, 15%);
   --background-font-color: #cccccc;
-  --box-color: #232323;
+  --box-color: hsl(233, 8%, 19%);
   --box-font-color: #e5e5e5;
   --box-inner-color: #282828;
   --input-shadow: inset 0 1px 2px rgb(44 44 44), 0 0 1px #bdbdbd, 0 1px 0 #464646;
@@ -65,7 +65,7 @@
   --header-text-color: rgb(207, 202, 202);
   --pulse-color: rgb(136 136 136);
   --map-color: rgb(41, 41, 41);
-  --box-shadow: rgb(255 255 255 / 16%) 0px 1px 4px;
+  --box-shadow: 0 0 0 1px hsla(230, 13%, 9%, 0.075), 0 0.3px 0.4px hsla(230, 13%, 9%, 0.02), 0 0.9px 1.5px hsla(230, 13%, 9%, 0.045), 0 3.5px 6px hsla(230, 13%, 9%, 0.09);
   --box-shadow-hover: rgb(255 255 255 / 16%) 0px 1px 8px;
   --legend-color: rgb(41 41 41 / 65%);
 }
@@ -80,7 +80,7 @@
 @media screen and (max-width: 800px) {
   :root {
     --list-width: 100%;
-    --padding: 12px;
+    --padding: 14px;
     --search-height: calc(var(--padding) * 3 + 98px);
     --header-height: calc(var(--padding) * 2 + 32px);
   }
