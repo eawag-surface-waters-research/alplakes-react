@@ -82,7 +82,7 @@
     --list-width: 100%;
     --padding: 14px;
     --search-height: calc(var(--padding) * 3 + 98px);
-    --header-height: calc(var(--padding) * 2 + 32px);
+    --header-height: calc(var(--padding) * 2 + 26px);
   }
 }
 

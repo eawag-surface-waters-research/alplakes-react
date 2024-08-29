@@ -951,6 +951,12 @@
     background-color: var(--background-color);
     z-index: 999;
     padding: var(--padding);
+    position: relative;
+    top: unset;
+  }
+
+  .main .home .content .list {
+    padding-top: 0;
   }
 
   .main .home .content .search img {

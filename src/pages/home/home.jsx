@@ -371,6 +371,9 @@ class Home extends Component {
         : JSON.parse(localStorage.getItem("favorites")),
   };
   toggleFullscreen = () => {
+    if (this.state.fullscreen) {
+      window.scroll(0, 0);
+    }
     this.setState({ fullscreen: !this.state.fullscreen }, () => {
       window.dispatchEvent(new Event("resize"));
     });
@@ -607,7 +610,10 @@ class Home extends Component {
             onClick={this.toggleFullscreen}
           >
             {fullscreen ? "Search" : "Map"}
-            <img src={fullscreen ? searchIcon : mapIcon} alt={fullscreen ? "Search" : "Map"} />
+            <img
+              src={fullscreen ? searchIcon : mapIcon}
+              alt={fullscreen ? "Search" : "Map"}
+            />
           </div>
         </div>
         <Footer {...this.props} small={true} />

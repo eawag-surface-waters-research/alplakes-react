@@ -111,4 +111,13 @@
     margin-top: 45px;
     padding: 2px 8px;
   }
+  .main .api-container .header {
+    font-size: 26px;
+  }
+  .main .api-container .text {
+    font-size: 16px;
+  }
+  .swagger-ui .opblock-tag.no-desc span {
+    font-size: 22px;
+  }
 }
