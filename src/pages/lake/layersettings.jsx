@@ -1395,17 +1395,19 @@ class Line extends Component {
         {"performance" in source && (
           <div className="setting">
             <div className="label">Performance</div>
-            <div>
-              {Object.keys(source.performance.rmse).map((k) => (
-                <div key={k} className="performance">
-                  <div className="performance-value">
-                    {source.performance.rmse[k]}
-                    <div className="performance-unit">{layer.unit}</div>
+            {"rmse" in source["performance"] && (
+              <div>
+                {Object.keys(source.performance.rmse).map((k) => (
+                  <div key={k} className="performance">
+                    <div className="performance-value">
+                      {Math.round(source.performance.rmse[k] * 100) / 100}
+                      <div className="performance-unit">{layer.unit}</div>
+                    </div>
+                    <div className="performance-name">{capitalize(k)} RMSE</div>
                   </div>
-                  <div className="performance-name">{capitalize(k)} RMSE</div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            )}
           </div>
         )}
         {period && (

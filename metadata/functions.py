@@ -725,8 +725,8 @@ def simstrat_source(models, simstrat, obj):
     for model in models:
         s = obj.copy()
         properties = [d for d in simstrat if d["key"] == model][0]
-        if "performance" in properties and s["parameter"] in properties["performance"]:
-            s["performance"] = properties["performance"][s["parameter"]]
+        if "performance" in properties:
+            s["performance"] = properties["performance"]
         if "name" in properties:
             s["name"] = properties["name"]
         s["lake"] = model
