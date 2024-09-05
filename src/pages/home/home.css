@@ -1010,4 +1010,8 @@
   .main .home .content .list .product-list .list-item .properties .right {
     display: none;
   }
+
+  .main .home .content .list .product-list .list-item .summary .summary-table .inner .ave {
+    font-size: 18px;
+  }
 }
