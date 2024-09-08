@@ -24,10 +24,10 @@
     "IT": "Aggiungi strati"
   },
   "surfacetemperature": {
-    "EN": "Surface temperature",
-    "DE": "Oberflächentemperatur",
-    "FR": "Température superficielle",
-    "IT": "Temperatura superficiale"
+    "EN": "Water temperature",
+    "DE": "Wassertemperatur",
+    "FR": "Température de l'eau",
+    "IT": "Temperatura dell'acqua"
   },
   "icecover": {
     "EN": "Ice cover",
