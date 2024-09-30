@@ -27,7 +27,7 @@
 .main .home .content .search input {
   width: 100%;
   font-size: 18px;
-  padding: 12px 8px 12px 60px;
+  padding: 12px 18px 12px 60px;
   background-color: var(--background-color);
   color: var(--box-font-color);
   border-radius: 24px;

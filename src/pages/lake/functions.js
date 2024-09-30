@@ -346,7 +346,6 @@ export const getTransectAlplakesHydrodynamic = async (
     .join(",")}/${latlng.map((l) => l.lng).join(",")}`;
   try {
     const { data } = await axios.get(url);
-    data.time = data.time.map((d) => parseDate(d));
     return data;
   } catch (e) {
     console.error(e);
@@ -358,16 +357,6 @@ export const capitalize = (string) => {
   if (string.length === 0) return string;
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
-
-const parseDate = (str) => {
-  const d = new Date(
-    `${str.slice(0, 4)}-${str.slice(4, 6)}-${str.slice(6, 8)}T${str.slice(
-      8,
-      10
-    )}:${str.slice(10, 12)}:00.000+00:00`
-  );
-  return d.getTime();
-};
 
 export const parseDay = (yyyymmdd) => {
   const year = parseInt(yyyymmdd.substring(0, 4), 10);
