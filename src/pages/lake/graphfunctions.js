@@ -241,7 +241,6 @@ const addSimstratDoy = async (layer, language) => {
       lineColor: "#ffc045",
     });
   }
-  console.log(display)
   var start = new Date(new Date().getFullYear(), 0, 1, 0, 0);
   var end = new Date();
   end.setDate(end.getDate() + 5);
