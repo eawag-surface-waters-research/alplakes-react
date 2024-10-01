@@ -293,11 +293,15 @@ export const parseAPITime = (date) => {
 };
 
 const stringToDate = (date) => {
+  let time = "00";
+  if (date.length > 10) {
+    time = date.slice(11, 13);
+  }
   return new Date(
-    `${date.slice(0, 4)}-${date.slice(5, 7)}-${date.slice(8, 10)}T${date.slice(
-      11,
-      13
-    )}:00:00.000+00:00`
+    `${date.slice(0, 4)}-${date.slice(5, 7)}-${date.slice(
+      8,
+      10
+    )}T${time}:00:00.000+00:00`
   );
 };
 
@@ -546,6 +550,9 @@ const getAlplakesHydrodynamicMetadata = async (layer, depth, datetime) => {
       `${CONFIG.alplakes_api}/simulations/metadata/${source.model}/${layer.lake}`
     ));
   }
+  if (data.end_date.length === 10){
+    data.end_date = data.end_date + " 21:00"
+  }
   source.minDate = stringToDate(data.start_date).getTime();
   source.maxDate = stringToDate(data.end_date).getTime();
   source.height = data.height;
@@ -553,6 +560,10 @@ const getAlplakesHydrodynamicMetadata = async (layer, depth, datetime) => {
   var startDate = source.maxDate + source.start * 8.64e7;
   if ("depths" in data) {
     source.depths = data.depths;
+    let index = closestIndex(depth, source.depths);
+    depth = source.depths[index];
+  } else if ("depth" in data) {
+    source.depths = data.depth;
     let index = closestIndex(depth, source.depths);
     depth = source.depths[index];
   }

@@ -18,6 +18,19 @@ export const loading = (message, id) => {
   }
 };
 
+const stringToDate = (date) => {
+  let time = "00";
+  if (date.length > 10) {
+    time = date.slice(11, 13);
+  }
+  return new Date(
+    `${date.slice(0, 4)}-${date.slice(5, 7)}-${date.slice(
+      8,
+      10
+    )}T${time}:00:00.000+00:00`
+  );
+};
+
 export const loaded = (id) => {
   if (document.getElementById(id)) {
     document.getElementById(id).style.visibility = "hidden";
@@ -61,9 +74,18 @@ const simstratMetadata = async (model, lake) => {
     ));
   }
 
-  var maxDate = new Date(metadata.end_date);
-  var minDate = new Date(metadata.start_date);
-  var depths = metadata.depths;
+  if (metadata.end_date.length === 10) {
+    metadata.end_date = metadata.end_date + " 22:00";
+  }
+
+  var maxDate = stringToDate(metadata.end_date);
+  var minDate = stringToDate(metadata.start_date);
+  var depths;
+  if ("depths" in metadata) {
+    depths = metadata.depths;
+  } else {
+    depths = metadata.depth;
+  }
   return { minDate, maxDate, depths };
 };
 
@@ -84,9 +106,9 @@ const addSimstratHeatmap = async (layer, language, loadingId) => {
     ({ data } = await axios.get(
       `${CONFIG.alplakes_api}/simulations/1d/depthtime/${source.model}/${
         source.lake
-      }/${source.parameter}/${formatAPIDatetime(start)}/${formatAPIDatetime(
-        maxDate
-      )}`
+      }/${formatAPIDatetime(start)}/${formatAPIDatetime(maxDate)}?variables=${
+        source.parameter
+      }`
     ));
   }
   var options = {
@@ -106,8 +128,18 @@ const addSimstratHeatmap = async (layer, language, loadingId) => {
   }
   layer.displayOptions = { ...layer.displayOptions, ...options };
   var x = data.time.map((t) => new Date(t));
-  var y = data.depths;
-  var z = data[source.parameter];
+  var y;
+  if ("depths" in data) {
+    y = data.depths;
+  } else {
+    y = data.depth["data"];
+  }
+  var z;
+  if ("variables" in data) {
+    z = data["variables"][source.parameter]["data"];
+  } else {
+    z = data[source.parameter];
+  }
   layer.displayOptions.data = { x, y, z };
   return layer;
 };
@@ -120,13 +152,13 @@ const updateSimstratHeatmap = async (layer, loadingId) => {
     var { data } = await axios.get(
       `${CONFIG.alplakes_api}/simulations/1d/depthtime/${source.model}/${
         source.lake
-      }/${source.parameter}/${formatAPIDatetime(period[0])}/${formatAPIDatetime(
+      }/${formatAPIDatetime(period[0])}/${formatAPIDatetime(
         period[1]
-      )}`
+      )}?variables=${source.parameter}`
     );
     var x = data.time.map((t) => new Date(t));
-    var y = data.depths;
-    var z = data[source.parameter];
+    var y = data.depth["data"];
+    var z = data["variables"][source.parameter]["data"];
     layer.displayOptions.data = { x, y, z };
     layer.displayOptions.updatePeriod = false;
   }
@@ -160,10 +192,10 @@ const addSimstratDoy = async (layer, language) => {
   var x = removeLeap(getDoyArray());
   var display = [];
   if ("min_date" in data) {
-    source["min_date"] = new Date(data["min_date"])
+    source["min_date"] = new Date(data["min_date"]);
   }
   if ("max_date" in data) {
-    source["max_date"] = new Date(data["max_date"])
+    source["max_date"] = new Date(data["max_date"]);
   }
   if ("min" in data)
     display.push({
@@ -225,9 +257,9 @@ const addSimstratDoy = async (layer, language) => {
       ({ data: currentData } = await axios.get(
         `${CONFIG.alplakes_api}/simulations/1d/point/${source.model}/${
           source.lake
-        }/${source.parameter}/${formatAPIDatetime(start)}/${formatAPIDatetime(
+        }/${formatAPIDatetime(start)}/${formatAPIDatetime(
           end
-        )}/${layer.displayOptions.depth}?resample=daily`
+        )}/${layer.displayOptions.depth}?variables=${source.parameter}&resample=daily`
       ));
     } catch (e) {
       console.error("Failed to collect current year from API.");
@@ -236,7 +268,12 @@ const addSimstratDoy = async (layer, language) => {
 
   if (currentData !== false) {
     var xx = currentData.time.map((t) => new Date(t));
-    var yy = currentData[source.parameter];
+    var yy;
+    if ("variables" in currentData){
+      yy = currentData["variables"][source.parameter]["data"];
+    } else {
+      yy = currentData[source.parameter];
+    }
     display.push({
       x: xx,
       y: yy,
@@ -269,14 +306,15 @@ const addSimstratLinegraph = async (layer, language) => {
         source.lake
       }/linegraph_${source.parameter}.json?timestamp=${hour()}`
     ));
+    throw new Error("Test")
   } catch (e) {
     console.error("Failed to collect linegraph from S3.");
     ({ data } = await axios.get(
       `${CONFIG.alplakes_api}/simulations/1d/point/${source.model}/${
         source.lake
-      }/${source.parameter}/${formatAPIDatetime(start)}/${formatAPIDatetime(
+      }/${formatAPIDatetime(start)}/${formatAPIDatetime(
         maxDate
-      )}/${depth}`
+      )}/${depth}?variables=${source.parameter}`
     ));
   }
   var options = {
@@ -294,7 +332,12 @@ const addSimstratLinegraph = async (layer, language) => {
   };
   layer.displayOptions = { ...layer.displayOptions, ...options };
   var x = data.time.map((t) => new Date(t));
-  var y = data[source.parameter];
+  var y;
+  if ("variables" in data){
+    y = data["variables"][source.parameter]["data"]
+  } else {
+    y = data[source.parameter]
+  }
   layer.displayOptions.data = { x, y };
   let cdi = closestDateIndex(new Date(), x);
   layer.displayOptions.labels = { time: x[cdi], value: y[cdi] };
@@ -309,12 +352,12 @@ const updateSimstratLinegraph = async (layer, loadingId) => {
     var { data } = await axios.get(
       `${CONFIG.alplakes_api}/simulations/1d/point/${source.model}/${
         source.lake
-      }/${source.parameter}/${formatAPIDatetime(period[0])}/${formatAPIDatetime(
+      }/${formatAPIDatetime(period[0])}/${formatAPIDatetime(
         period[1]
-      )}/${depth}`
+      )}/${depth}?variables=${source.parameter}`
     );
     var x = data.time.map((t) => new Date(t));
-    var y = data[source.parameter];
+    var y = data["variables"][source.parameter]["data"];
     layer.displayOptions.data = { x, y };
     layer.displayOptions.updatePeriod = false;
   }
