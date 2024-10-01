@@ -191,56 +191,57 @@ const addSimstratDoy = async (layer, language) => {
   }
   var x = removeLeap(getDoyArray());
   var display = [];
-  if ("min_date" in data) {
-    source["min_date"] = new Date(data["min_date"]);
+  if ("start_time" in data) {
+    source["min_date"] = new Date(data["start_time"]);
   }
-  if ("max_date" in data) {
-    source["max_date"] = new Date(data["max_date"]);
+  if ("end_time" in data) {
+    source["max_date"] = new Date(data["end_time"]);
   }
-  if ("min" in data)
+  if ("min" in data["variables"])
     display.push({
       x,
-      y: removeLeap(data.min),
+      y: removeLeap(data["variables"].min["data"]),
       name: false,
       lineColor: "lightgrey",
     });
-  if ("max" in data)
+  if ("max" in data["variables"])
     display.push({
       x,
-      y: removeLeap(data.max),
+      y: removeLeap(data["variables"].max["data"]),
       name: false,
       lineColor: "lightgrey",
     });
-  if ("perc5" in data && "perc95" in data) {
+  if ("perc5" in data["variables"] && "perc95" in data["variables"]) {
     display.push({
       confidenceAxis: "y",
-      upper: removeLeap(data.perc95),
-      lower: removeLeap(data.perc5),
+      upper: removeLeap(data["variables"].perc95["data"]),
+      lower: removeLeap(data["variables"].perc5["data"]),
       x,
-      y: removeLeap(data.mean),
+      y: removeLeap(data["variables"].mean["data"]),
       lineColor: "grey",
       name: false,
     });
   }
-  if ("perc25" in data && "perc75" in data) {
+  if ("perc25" in data["variables"] && "perc75" in data["variables"]) {
     display.push({
       confidenceAxis: "y",
-      upper: removeLeap(data.perc75),
-      lower: removeLeap(data.perc25),
+      upper: removeLeap(data["variables"].perc75["data"]),
+      lower: removeLeap(data["variables"].perc25["data"]),
       x,
-      y: removeLeap(data.mean),
+      y: removeLeap(data["variables"].mean["data"]),
       lineColor: "grey",
       name: false,
     });
   }
-  if ("lastyear" in data) {
+  if ("lastyear" in data["variables"]) {
     display.push({
       x,
-      y: removeLeap(data.lastyear),
+      y: removeLeap(data["variables"].lastyear["data"]),
       name: new Date().getFullYear() - 1,
       lineColor: "#ffc045",
     });
   }
+  console.log(display)
   var start = new Date(new Date().getFullYear(), 0, 1, 0, 0);
   var end = new Date();
   end.setDate(end.getDate() + 5);
@@ -306,7 +307,6 @@ const addSimstratLinegraph = async (layer, language) => {
         source.lake
       }/linegraph_${source.parameter}.json?timestamp=${hour()}`
     ));
-    throw new Error("Test")
   } catch (e) {
     console.error("Failed to collect linegraph from S3.");
     ({ data } = await axios.get(
