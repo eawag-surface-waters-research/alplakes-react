@@ -80,12 +80,7 @@ const simstratMetadata = async (model, lake) => {
 
   var maxDate = stringToDate(metadata.end_date);
   var minDate = stringToDate(metadata.start_date);
-  var depths;
-  if ("depths" in metadata) {
-    depths = metadata.depths;
-  } else {
-    depths = metadata.depth;
-  }
+  var depths = metadata.depth;
   return { minDate, maxDate, depths };
 };
 
@@ -128,18 +123,8 @@ const addSimstratHeatmap = async (layer, language, loadingId) => {
   }
   layer.displayOptions = { ...layer.displayOptions, ...options };
   var x = data.time.map((t) => new Date(t));
-  var y;
-  if ("depths" in data) {
-    y = data.depths;
-  } else {
-    y = data.depth["data"];
-  }
-  var z;
-  if ("variables" in data) {
-    z = data["variables"][source.parameter]["data"];
-  } else {
-    z = data[source.parameter];
-  }
+  var y = data.depth["data"];
+  var z = data["variables"][source.parameter]["data"];
   layer.displayOptions.data = { x, y, z };
   return layer;
 };
@@ -257,9 +242,9 @@ const addSimstratDoy = async (layer, language) => {
       ({ data: currentData } = await axios.get(
         `${CONFIG.alplakes_api}/simulations/1d/point/${source.model}/${
           source.lake
-        }/${formatAPIDatetime(start)}/${formatAPIDatetime(
-          end
-        )}/${layer.displayOptions.depth}?variables=${source.parameter}&resample=daily`
+        }/${formatAPIDatetime(start)}/${formatAPIDatetime(end)}/${
+          layer.displayOptions.depth
+        }?variables=${source.parameter}&resample=daily`
       ));
     } catch (e) {
       console.error("Failed to collect current year from API.");
@@ -268,12 +253,7 @@ const addSimstratDoy = async (layer, language) => {
 
   if (currentData !== false) {
     var xx = currentData.time.map((t) => new Date(t));
-    var yy;
-    if ("variables" in currentData){
-      yy = currentData["variables"][source.parameter]["data"];
-    } else {
-      yy = currentData[source.parameter];
-    }
+    var yy = currentData["variables"][source.parameter]["data"];
     display.push({
       x: xx,
       y: yy,
@@ -331,12 +311,7 @@ const addSimstratLinegraph = async (layer, language) => {
   };
   layer.displayOptions = { ...layer.displayOptions, ...options };
   var x = data.time.map((t) => new Date(t));
-  var y;
-  if ("variables" in data){
-    y = data["variables"][source.parameter]["data"]
-  } else {
-    y = data[source.parameter]
-  }
+  var y = data["variables"][source.parameter]["data"];
   layer.displayOptions.data = { x, y };
   let cdi = closestDateIndex(new Date(), x);
   layer.displayOptions.labels = { time: x[cdi], value: y[cdi] };

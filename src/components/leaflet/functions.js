@@ -558,15 +558,9 @@ const getAlplakesHydrodynamicMetadata = async (layer, depth, datetime) => {
   source.height = data.height;
   source.width = data.width;
   var startDate = source.maxDate + source.start * 8.64e7;
-  if ("depths" in data) {
-    source.depths = data.depths;
-    let index = closestIndex(depth, source.depths);
-    depth = source.depths[index];
-  } else if ("depth" in data) {
-    source.depths = data.depth;
-    let index = closestIndex(depth, source.depths);
-    depth = source.depths[index];
-  }
+  source.depths = data.depth;
+  let index = closestIndex(depth, source.depths);
+  depth = source.depths[index];
   if ("missing_weeks" in data) {
     source.missingDates = data.missing_weeks;
   }
