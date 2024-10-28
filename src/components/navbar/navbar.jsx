@@ -73,13 +73,19 @@ class NavBar extends Component {
             </div>
             <div className={menu ? "nav-content" : "nav-content hide"}>
               <NavLink to="/">
-                <div className="nav-row">{Translate.lakes[language]}</div>
+                <div className="nav-row">
+                  {Translate.lakes[language]} <div className="arrow">{">"}</div>
+                </div>
               </NavLink>
               <NavLink to="/api">
-                <div className="nav-row">API</div>
+                <div className="nav-row">
+                  API <div className="arrow">{">"}</div>
+                </div>
               </NavLink>
               <NavLink to="/about">
-                <div className="nav-row">{Translate.about[language]}</div>
+                <div className="nav-row">
+                  {Translate.about[language]} <div className="arrow">{">"}</div>
+                </div>
               </NavLink>
               <div className="nav-row">
                 <div className="mode">
@@ -103,6 +109,10 @@ class NavBar extends Component {
                 </select>
               </div>
             </div>
+            <div
+              className={menu ? "nav-close" : "nav-close hide"}
+              onClick={this.toggleMenu}
+            ></div>
           </div>
         </div>
       </React.Fragment>

@@ -72,7 +72,7 @@
 
 @media screen and (max-width: 1200px) {
   :root {
-    --padding: 20px;
+    --padding: 24px;
     --list-width: 50%;
   }
 }
@@ -80,7 +80,7 @@
 @media screen and (max-width: 800px) {
   :root {
     --list-width: 100%;
-    --padding: 14px;
+    --padding: 16px;
     --search-height: calc(var(--padding) * 3 + 98px);
     --header-height: calc(var(--padding) * 2 + 26px);
   }
