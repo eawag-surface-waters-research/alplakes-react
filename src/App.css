@@ -4,8 +4,14 @@
 /* Fonts */
 
 @font-face {
-  font-family: "exo";
-  src: url("fonts/exo/Exo-Italic-VariableFont_wght.ttf") format("truetype-variations");
+  font-family: "DM_Sans";
+  src: url("fonts/DM_Sans/DMSans-VariableFont_opsz\,wght.ttf") format("truetype-variations");
+  font-weight: 1 999;
+}
+
+@font-face {
+  font-family: "DM_Sans_Italic";
+  src: url("fonts/DM_Sans/DMSans-Italic-VariableFont_opsz\,wght.ttf") format("truetype-variations");
   font-weight: 1 999;
 }
 
@@ -21,6 +27,7 @@
   --border-color: #ddd;
   --box-shadow: rgba(0, 0, 0, 0.14) 0px 1px 5px;
   --box-shadow-hover: rgba(0, 0, 0, 0.24) 0px 1px 6px;
+  --content-width: 1280px;
   --footer-height: 48px;
   --footer-full-height: 114px;
   --padding: 40px;
@@ -90,8 +97,37 @@
 /* Whole site settings */
 
 .main {
-  font-family: "Frutiger Neue LT Pro", "Arial", sans-serif;
+  font-family: "DM_Sans", "Frutiger Neue LT Pro", "Arial", sans-serif;
   color: var(--background-font-color);
+  font-size: 16px;
+}
+
+h1 {
+  font-size: 32px;
+  font-weight: 600;
+  margin-bottom: 24px;
+}
+
+h2 {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+h3 {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+h4 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+p {
+  margin-bottom: 24px;
 }
 
 .main .background {
@@ -126,6 +162,9 @@
 .main.dark .tile-class.leaflet-tile {
   filter: brightness(2) contrast(0.8) !important;
 }
+
+
+
 
 /* Map icons */
 

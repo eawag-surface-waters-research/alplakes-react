@@ -62,7 +62,7 @@
 }
 
 .main .home .content .search .filters {
-  height: calc(28.5px + var(--padding) / 2);
+  height: calc(32px + var(--padding) / 2);
   overflow: hidden;
   padding: 0 4px;
 }

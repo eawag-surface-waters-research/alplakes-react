@@ -5,6 +5,7 @@ import Home from "./pages/home/home";
 import Lake from "./pages/lake/lake";
 import API from "./pages/api/api";
 import About from "./pages/about/about";
+import Models from "./pages/models/models";
 import "./App.css";
 
 class App extends Component {
@@ -71,6 +72,19 @@ class App extends Component {
                 element={
                   <ErrorBoundary {...this.props} {...this.state}>
                     <API
+                      {...this.state}
+                      setLanguage={this.setLanguage}
+                      toggleDark={this.toggleDark}
+                    />
+                  </ErrorBoundary>
+                }
+                exact
+              />
+              <Route
+                path="/models"
+                element={
+                  <ErrorBoundary {...this.props} {...this.state}>
+                    <Models
                       {...this.state}
                       setLanguage={this.setLanguage}
                       toggleDark={this.toggleDark}

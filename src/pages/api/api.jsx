@@ -36,7 +36,7 @@ class API extends Component {
         </Helmet>
         <NavBar {...this.props} relative={true} />
         <div className="api-container">
-          <div className="header"> {Translations["apiHeader"][language]}</div>
+          <h1 className="header"> {Translations["apiHeader"][language]}</h1>
           <div className="text">{Translations["apiDesc"][language]}</div>
           <div className="contact">
             {Translations["apiContact"][language]}{" "}

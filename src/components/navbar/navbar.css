@@ -230,7 +230,8 @@
 }
 
 .navbar .mobile-nav .nav-content a .nav-row {
-  font-size: 30px;
+  font-size: 24px;
+  font-weight: 500;
   color: var(--background-font-color);
 }
 

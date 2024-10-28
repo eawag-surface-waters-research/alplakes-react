@@ -1,0 +1,24 @@
+.main .models {
+    width: 100%;
+    max-width: var(--content-width);
+    margin: auto;
+    padding: 0 var(--padding);
+    border-radius: 22px;
+    box-sizing: border-box;
+}
+
+.main .models .section-title {
+    font-size: 28px;
+    border-bottom: 2px solid var(--highlight-color);
+    width: fit-content;
+    margin-bottom: 32px;
+}
+
+
+@media screen and (max-width: 500px) {
+    .main .models {
+        margin-top: 60px;
+        padding: var(--padding);
+        overflow: hidden;
+    }
+}

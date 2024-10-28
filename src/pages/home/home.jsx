@@ -559,7 +559,7 @@ class Home extends Component {
       },
     ];
     return (
-      <div className="home">
+      <React.Fragment>
         <Helmet>
           <title>Alplakes</title>
           <meta
@@ -568,56 +568,58 @@ class Home extends Component {
           />
         </Helmet>
         <NavBar {...this.props} small={true} />
-        <div
-          className={parameters[parameter].beta ? "content beta" : "content"}
-        >
-          <SearchWithNavigate
-            setFilter={this.setFilter}
-            setSearch={this.setSearch}
-            search={search}
-            language={language}
-            filters={filters}
-            filterTypes={filterTypes}
-            results={results}
-            loaded={list.length > 0}
-            sortedList={sortedList}
-          />
-          <List
-            language={language}
-            sortedList={sortedList}
-            search={search}
-            parameter={parameter}
-            parameters={parameters}
-            results={results}
-            filterTypes={filterTypes}
-            filters={filters}
-            setFavorties={this.setFavorties}
-            favorites={favorites}
-          />
-          <div className={fullscreen ? "home-map" : "home-map hide"}>
-            <HomeMap
-              list={list}
-              dark={dark}
+        <div className="home">
+          <div
+            className={parameters[parameter].beta ? "content beta" : "content"}
+          >
+            <SearchWithNavigate
+              setFilter={this.setFilter}
+              setSearch={this.setSearch}
+              search={search}
               language={language}
-              setBounds={this.setBounds}
+              filters={filters}
+              filterTypes={filterTypes}
+              results={results}
+              loaded={list.length > 0}
+              sortedList={sortedList}
+            />
+            <List
+              language={language}
+              sortedList={sortedList}
+              search={search}
               parameter={parameter}
               parameters={parameters}
-              setParameter={this.setParameter}
+              results={results}
+              filterTypes={filterTypes}
+              filters={filters}
+              setFavorties={this.setFavorties}
+              favorites={favorites}
             />
+            <div className={fullscreen ? "home-map" : "home-map hide"}>
+              <HomeMap
+                list={list}
+                dark={dark}
+                language={language}
+                setBounds={this.setBounds}
+                parameter={parameter}
+                parameters={parameters}
+                setParameter={this.setParameter}
+              />
+            </div>
+            <div
+              className={fullscreen ? "map-button map-view" : "map-button"}
+              onClick={this.toggleFullscreen}
+            >
+              {fullscreen ? "Search" : "Map"}
+              <img
+                src={fullscreen ? searchIcon : mapIcon}
+                alt={fullscreen ? "Search" : "Map"}
+              />
+            </div>
           </div>
-          <div
-            className={fullscreen ? "map-button map-view" : "map-button"}
-            onClick={this.toggleFullscreen}
-          >
-            {fullscreen ? "Search" : "Map"}
-            <img
-              src={fullscreen ? searchIcon : mapIcon}
-              alt={fullscreen ? "Search" : "Map"}
-            />
-          </div>
+          <Footer {...this.props} small={true} />
         </div>
-        <Footer {...this.props} small={true} />
-      </div>
+      </React.Fragment>
     );
   }
 }

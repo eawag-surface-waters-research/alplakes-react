@@ -15,87 +15,14 @@ import schmidma from "../../img/schmidma.jpg";
 import Translations from "../../translations.json";
 import "./about.css";
 
-class Promos extends Component {
-  render() {
-    var { types } = this.props;
-    return (
-      <React.Fragment>
-        <div className="promos">
-          {types.map((t) => (
-            <div className="promo" key={t["id"]}>
-              <div className="number">
-                <NumberIncreaser targetValue={t["value"]} />
-              </div>
-              <div className="text">
-                <div className="upper">lakes with</div>
-                <div className="parameter">{t["long_name"]}</div>
-                <div className="dates">{t["dates"]}</div>
-              </div>
-              <img src={t["icon"]} alt={t["long_name"]} />
-            </div>
-          ))}
-        </div>
-      </React.Fragment>
-    );
-  }
-}
-
 class About extends Component {
   componentDidMount() {
     window.scrollTo(0, 0);
   }
   render() {
     var { language } = this.props;
-    var end = new Date().getFullYear();
-    var products = [
-      {
-        id: "3D",
-        short_name: "3D",
-        long_name: "3D models",
-        icon: threed_icon,
-        start: "2019",
-        end: end,
-        value: 12,
-      },
-      {
-        id: "1D",
-        short_name: "1D",
-        long_name: "1D models",
-        icon: oned_icon,
-        start: "1981",
-        end: end,
-        value: 85,
-      },
-      {
-        id: "live",
-        short_name: "Live",
-        long_name: "live data",
-        icon: live_icon,
-        start: "2019",
-        end: end,
-        value: 5,
-      },
-      {
-        id: "satellite",
-        short_name: "Satellite",
-        long_name: "satellite products",
-        icon: satellite_icon,
-        start: "2015",
-        end: end,
-        value: 12,
-      },
-      {
-        id: "insitu",
-        short_name: "Insitu",
-        long_name: "insitu data",
-        icon: insitu_icon,
-        start: "2019",
-        end: end,
-        value: 27,
-      },
-    ];
     return (
-      <div className="main">
+      <React.Fragment>
         <Helmet>
           <title>About | Alplakes</title>
           <meta
@@ -106,11 +33,8 @@ class About extends Component {
         <NavBar {...this.props} relative={true} />
         <div className="about">
           <div className="section-content">
-            <div className="header">{Translations["aboutTitle"][language]}</div>
+            <h1 className="header">{Translations["aboutTitle"][language]}</h1>
             <div className="intro">{Translations["aboutIntro"][language]}</div>
-            <div className="intro-promos">
-              <Promos types={products} />
-            </div>
           </div>
           <div className="section-title">
             {Translations["getInTouch"][language]}
@@ -440,7 +364,7 @@ class About extends Component {
           </div>
         </div>
         <Footer {...this.props} />
-      </div>
+      </React.Fragment>
     );
   }
 }

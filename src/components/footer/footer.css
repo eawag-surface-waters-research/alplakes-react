@@ -6,6 +6,8 @@
     z-index: 1;
     margin-top: var(--padding);
     padding: calc(var(--padding) / 2) var(--padding);
+    max-width: var(--content-width);
+    margin: auto;
 }
 
 .footer.small {

@@ -1,6 +1,6 @@
 .main .about {
     width: 100%;
-    max-width: 1000px;
+    max-width: var(--content-width);
     margin: auto;
     padding: 0 var(--padding);
     border-radius: 22px;
@@ -17,76 +17,6 @@
 .main .about .section-content {
     display: inline-block;
     margin-bottom: var(--padding);
-}
-
-.main .about .section-content .intro {
-    margin-top: calc(var(--padding));
-    margin-bottom: var(--padding);
-    font-size: 21px;
-}
-
-.main .about .section-content .promos {
-    text-align: center;
-}
-
-.main .about .section-content .promo {
-    background-color: var(--background-color);
-    margin-right: var(--padding);
-    display: inline-block;
-    border-radius: 22px;
-    box-sizing: border-box;
-    text-align: left;
-    position: relative;
-    margin-bottom: 10px;
-}
-
-.main .about .section-content .promo .number {
-    display: inline-block;
-    font-size: 64px;
-    width: 70px;
-    color: var(--highlight-color);
-    position: relative;
-    z-index: 1;
-}
-
-.main .about .section-content .promo .text {
-    display: inline-block;
-    font-size: 14px;
-    padding: 10px 20px 10px 10px;
-    position: relative;
-    z-index: 1;
-}
-
-.main .about .section-content .promo .text .upper {
-    font-size: 10px;
-    opacity: 0.8;
-}
-
-.main .about .section-content .promo .text .parameter {
-    font-size: 16px;
-    padding-top: 4px;
-    padding-bottom: 2px;
-}
-
-.main .about .section-content .promo img {
-    max-height: 60%;
-    filter: invert(100%);
-    position: absolute;
-    right: 8px;
-    z-index: 0;
-    top: 10%;
-    max-width: 50px;
-    opacity: 0.2;
-}
-
-.main.dark .about .section-content .promo img {
-    filter: invert(0%);
-}
-
-.main .about .section-content .promo .text .dates {
-    font-size: 12px;
-    font-weight: bold;
-    opacity: 0.6;
 }
 
 .main .about .section-content .person {
@@ -124,7 +54,6 @@
 
 
 .main .about .header {
-    font-size: 40px;
     margin-top: 18px;
     color: var(--background-font-color);
 }
@@ -209,8 +138,5 @@
     .main .about .header {
         font-size: 26px;
         margin: none;
-    }
-    .main .about .section-content .intro {
-        font-size: 16px;
     }
 }

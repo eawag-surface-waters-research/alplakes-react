@@ -33,6 +33,9 @@ s3 = boto3.client('s3')
 
 # Create files
 home_list = []
+one_dimensional_list = []
+three_dimensional_list = []
+
 for lake in metadata:
     sat = False
     threed = False
@@ -49,6 +52,18 @@ for lake in metadata:
     data = {"metadata": lake.copy()}
     key = lake["key"]
     if 'alplakes' in data["metadata"]:
+        response = requests.get("https://alplakes-api.eawag.ch/simulations/metadata/delft3d-flow/{}".format(lake["key"]))
+        model_metadata = response.json()
+        three_dimensional_list.append(
+            {"link": lake["key"],
+            "name": lake["key"],
+            "model": "Delft3D-flow",
+            "area": lake["area"],
+            "elevation": lake["elevation"],
+            "depth": lake["max_depth"],
+            "timeframe": "{}-{}".format(model_metadata["start_date"][0:4], model_metadata["end_date"][0:4]),
+            "overallrmse": round(lake["alplakes"]["performance"]["rmse"]["overall"], 2)
+            })
         home["filters"].append("3D")
         threed = True
         del data["metadata"]['alplakes']
@@ -57,6 +72,23 @@ for lake in metadata:
     if "simstrat" not in lake:
         lake["simstrat"] = [key]
     if lake["simstrat"] != False:
+        for k in lake["simstrat"]:
+            simstrat_metadata = [s for s in simstrat if s["key"] == k][0]
+            response = requests.get(
+                "https://alplakes-api.eawag.ch/simulations/1d/metadata/simstrat/{}".format(k))
+            model_metadata = response.json()
+            one_dimensional_list.append(
+                {"link": lake["key"],
+                 "name": k,
+                 "model": "Simstrat",
+                 "area": lake["area"],
+                 "elevation": lake["elevation"],
+                 "depth": lake["max_depth"],
+                 "timeframe": "{}-{}".format(model_metadata["start_date"][0:4], model_metadata["end_date"][0:4]),
+                 "overallrmse": round(simstrat_metadata["performance"]["rmse"]["overall"], 2),
+                 "surfacermse": round(simstrat_metadata["performance"]["rmse"]["surface"], 2),
+                 "bottomrmse": round(simstrat_metadata["performance"]["rmse"]["bottom"], 2)
+                 })
         oned = True
         home["filters"].append("1D")
     satellite_data = False
@@ -97,11 +129,31 @@ for lake in metadata:
 
 with open('files/list.json', 'w') as json_file:
     json_file.write(json.dumps(home_list, separators=(',', ':'), ensure_ascii=False))
+with open('files/one_dimensional.json', 'w') as json_file:
+    json_file.write(json.dumps(one_dimensional_list, separators=(',', ':'), ensure_ascii=False))
+with open('files/three_dimensional.json', 'w') as json_file:
+    json_file.write(json.dumps(three_dimensional_list, separators=(',', ':'), ensure_ascii=False))
 if upload:
     s3.upload_file(
         'files/list.json',
         'alplakes-eawag',
         '{}/list.json'.format(bucket_folder),
+        ExtraArgs={
+            'ContentType': 'application/json',
+        },
+    )
+    s3.upload_file(
+        'files/one_dimensional.json',
+        'alplakes-eawag',
+        '{}/one_dimensional.json'.format(bucket_folder),
+        ExtraArgs={
+            'ContentType': 'application/json',
+        },
+    )
+    s3.upload_file(
+        'files/three_dimensional.json',
+        'alplakes-eawag',
+        '{}/three_dimensional.json'.format(bucket_folder),
         ExtraArgs={
             'ContentType': 'application/json',
         },
