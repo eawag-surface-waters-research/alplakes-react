@@ -16,11 +16,16 @@
     position: sticky;
     top: var(--padding);
     padding-left: var(--padding);
+    width: 200px;
 }
 
 .main .about .sidebar .link {
     padding: 4px;
     cursor: pointer;
+}
+
+.main .about .sidebar .link:hover {
+    font-weight: 600;
 }
 
 .main .about .content {
@@ -31,6 +36,10 @@
     max-width: 100%;
 }
 
+.main .about h2 {
+    margin-top: 40px;
+}
+
 @media screen and (max-width: 1000px) {
     .main .about .sidebar {
         display: none;
@@ -38,9 +47,9 @@
 }
 
 .main .about .content .person {
-    width: 190px;
+    width: 163px;
     display: inline-block;
-    margin-right: var(--padding);
+    margin-right: 16px;
     margin-bottom: var(--padding);
     vertical-align: top;
 }
@@ -51,7 +60,7 @@
 }
 
 .main .about .content .person .name {
-    font-size: 20px;
+    font-size: 18px;
 }
 
 .main .about .content .person .job {

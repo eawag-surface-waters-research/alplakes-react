@@ -13,6 +13,17 @@ class Models extends Component {
     one_dimensional: [],
     three_dimensional: [],
   };
+  constructor(props) {
+    super(props);
+    this.threed = React.createRef();
+    this.oned = React.createRef();
+    this.remotesensing = React.createRef();
+  }
+  scrollToSection = (sectionRef) => {
+    if (sectionRef.current) {
+      sectionRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  };
   async componentDidMount() {
     window.scrollTo(0, 0);
     try {
@@ -50,7 +61,7 @@ class Models extends Component {
               the models performance and provides access to downloads related to
               them.
             </p>
-            <div id="3d">
+            <div ref={this.threed}>
               <h2>3D Hydrodynamic</h2>
               <p>
                 3D hydrodynamic lake models simulate water movement,
@@ -76,13 +87,14 @@ class Models extends Component {
               <p>
                 A set of example input files are provided for users that want to
                 adapt the models to their own purposes. These files can also be
-                generated using the code available <a href="">here</a>. Please
+                generated using the code available <a href="https://github.com/eawag-surface-waters-research/alplakes-simulations">here</a>. Please
                 note users outside of Eawag will need to update the weather data
                 collection functions as we are not permitted to distribute
                 weather data.
               </p>
+              <select></select><select></select>
             </div>
-            <div id="1d">
+            <div ref={this.oned}>
               <h2>1D Hydrodynamic</h2>
               <p>
                 1D lake models simplify lake processes by representing the lake
@@ -99,14 +111,31 @@ class Models extends Component {
               </p>
               <SortableTable data={one_dimensional} />
             </div>
-            <div id="rs"></div>
+            <div ref={this.remotesensing}>
+              <h2>Remote Sensing</h2>
+            </div>
           </div>
           <div className="sidebar">
             <div className="sidebar-inner">
               <h3>Contents</h3>
-              <div className="link">&#x2022; 3D Hydrodynamic</div>
-              <div className="link">&#x2022; 1D Hydrodynamic</div>
-              <div className="link">&#x2022; Remote Sensing</div>
+              <div
+                className="link"
+                onClick={() => this.scrollToSection(this.threed)}
+              >
+                &#x2022; 3D Hydrodynamic
+              </div>
+              <div
+                className="link"
+                onClick={() => this.scrollToSection(this.oned)}
+              >
+                &#x2022; 1D Hydrodynamic
+              </div>
+              <div
+                className="link"
+                onClick={() => this.scrollToSection(this.remotesensing)}
+              >
+                &#x2022; Remote Sensing
+              </div>
             </div>
           </div>
         </div>

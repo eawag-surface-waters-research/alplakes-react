@@ -16,11 +16,16 @@
     position: sticky;
     top: var(--padding);
     padding-left: var(--padding);
+    width: 200px;
 }
 
 .main .models .sidebar .link {
     padding: 4px;
     cursor: pointer;
+}
+
+.main .models .sidebar .link:hover {
+    font-weight: 600;
 }
 
 .main .models .content {

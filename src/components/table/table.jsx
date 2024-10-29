@@ -10,8 +10,11 @@ const SortableTable = ({ data }) => {
     ),
   ];
 
-  // Set up state for sorting
+  // State for sorting
   const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
+
+  // State for fullscreen toggle
+  const [isFullscreen, setIsFullscreen] = useState(false);
 
   // Sorting function
   const sortedRows = [...rows].sort((a, b) => {
@@ -24,7 +27,7 @@ const SortableTable = ({ data }) => {
     return 0;
   });
 
-  // Function to request sorting
+  // Request sorting
   const handleSort = (key) => {
     let direction = "asc";
     if (sortConfig.key === key && sortConfig.direction === "asc") {
@@ -35,34 +38,51 @@ const SortableTable = ({ data }) => {
 
   columns = columns.filter((c) => c !== "key");
 
+  // Toggle fullscreen mode
+  const toggleFullscreen = () => setIsFullscreen((prev) => !prev);
+
   return (
-    <div className="table-outer-container">
-      <table className="table-styling">
-        <thead>
-          <tr>
-            {columns.map((column) => (
-              <th key={column} onClick={() => handleSort(column)}>
-                {column} &#x25b4;&#x25be;
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {sortedRows.map((row, index) => (
-            <tr
-              key={index}
-              onClick={() => row.link && window.open(row.link, "_blank")}
-              style={{ cursor: row.link ? "pointer" : "default" }}
-            >
+    <div
+      className={`table-outer-container ${isFullscreen ? "fullscreen" : ""}`}
+    >
+      <div className="table-inner-container">
+        <table className="table-styling">
+          <thead>
+            <tr>
               {columns.map((column) => (
-                <td key={column}>
-                  {row[column] !== undefined ? row[column] : "NaN"}
-                </td>
+                <th
+                  key={column}
+                  onClick={() => handleSort(column)}
+                  style={{ textAlign: column === "name" ? "left" : "center" }}
+                >
+                  {column} &#x25b4;&#x25be;
+                </th>
               ))}
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {sortedRows.map((row, index) => (
+              <tr
+                key={index}
+                onClick={() => row.link && window.open(row.link, "_blank")}
+                style={{ cursor: row.link ? "pointer" : "default" }}
+              >
+                {columns.map((column) => (
+                  <td
+                    key={column}
+                    style={{ textAlign: column === "name" ? "left" : "center" }}
+                  >
+                    {row[column] !== undefined ? row[column] : "NaN"}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <button className="expand" onClick={toggleFullscreen}>
+        {isFullscreen ? "Close" : "Expand"}
+      </button>
     </div>
   );
 };

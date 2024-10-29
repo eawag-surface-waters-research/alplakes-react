@@ -1,3 +1,7 @@
+.main .lake .content {
+    margin-top: var(--padding);
+}
+
 .main .lake .not-found {
     height: calc(100vh - var(--header-height) - 2* var(--padding) - 34px);
     display: flex;
@@ -227,7 +231,7 @@
     border-radius: 12px;
     padding: 12px;
     margin-top: 8px;
-    background-color: var(--background-color);
+    background-color: var(--box-color);
     color: var(--background-font-color);
     font-family: "Frutiger Neue LT Pro", "Arial", sans-serif;
     box-sizing: border-box;
@@ -239,7 +243,7 @@
     border-radius: 12px;
     padding: 12px;
     margin-top: 8px;
-    background-color: var(--background-color);
+    background-color: var(--box-color);
     color: var(--background-font-color);
     box-sizing: border-box;
 }
@@ -303,6 +307,7 @@
     margin-left: calc(var(--padding));
     margin-bottom: var(--padding);
     cursor: pointer;
+    background-color: var(--box-color);
 }
 
 .main .lake .content .module:hover {

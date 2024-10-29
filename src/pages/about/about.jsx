@@ -79,7 +79,6 @@ class About extends Component {
                 </div>
                 <div className="contact">3D models, particle tracking</div>
               </div>
-              <br/>
               <div className="person">
                 <img src={odermada} alt="Dani" />
                 <div className="name">Daniel Odermatt</div>
@@ -90,7 +89,7 @@ class About extends Component {
                 </div>
                 <div className="contact">Remote sensing products</div>
               </div>
-              <div className="person">
+              <div className="person" style={{ margin: 0 }}>
                 <img src={schmidma} alt="Martin" />
                 <div className="name">Martin Schmid</div>
                 <div className="job">Group Leader</div>

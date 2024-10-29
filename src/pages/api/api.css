@@ -5,6 +5,7 @@
   padding: 0 var(--padding);
   margin-top: var(--top-margin);
   min-height: calc(100vh - var(--header-height) - var(--footer-full-height));
+  box-sizing: border-box;
 }
 
 .main .api-container .header {
