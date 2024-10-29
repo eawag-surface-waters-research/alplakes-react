@@ -37,7 +37,12 @@ class API extends Component {
         <NavBar {...this.props} relative={true} />
         <div className="api-container">
           <h1 className="header"> {Translations["apiHeader"][language]}</h1>
-          <div className="text">{Translations["apiDesc"][language]}</div>
+          <p>
+            Alplakes API connects you to lake products produced by the SURF
+            department at EAWAG. This includes terabytes of simulation data and
+            remote sensing products. The API supports geospatial and temporal
+            queries, allowing access to subsets of the data for easier handling.
+          </p>
           <div className="contact">
             {Translations["apiContact"][language]}{" "}
             {Translations["apiWarning"][language]}
@@ -46,7 +51,11 @@ class API extends Component {
             <div className="error">
               <img src={unpluggedIcon} alt="unplugged" />
               We are experiencing connection issues.
-              <div className="suberror">Try accessing the documentation directly <a href={`${CONFIG.alplakes_api}/docs`}>here</a> or try again later.</div>
+              <div className="suberror">
+                Try accessing the documentation directly{" "}
+                <a href={`${CONFIG.alplakes_api}/docs`}>here</a> or try again
+                later.
+              </div>
             </div>
           ) : (
             <SwaggerUI

@@ -1,0 +1,36 @@
+.table-outer-container {
+    max-height: 300px;
+    overflow: auto;
+    margin-bottom: 24px;
+}
+
+table.table-styling {
+    border-collapse: collapse;
+}
+
+table.table-styling thead {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+  }
+
+table.table-styling td,
+table.table-styling th {
+    padding: 8px 16px;
+}
+
+table.table-styling tr:nth-child(even) {
+    background-color: var(--box-color);
+}
+
+table.table-styling tr:hover {
+    background-color: var(--highlight-color-subtle);
+}
+
+table.table-styling th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: var(--highlight-color);
+    color: white;
+}

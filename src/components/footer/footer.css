@@ -6,8 +6,8 @@
     z-index: 1;
     margin-top: var(--padding);
     padding: calc(var(--padding) / 2) var(--padding);
-    max-width: var(--content-width);
     margin: auto;
+    max-width: var(--max-width);
 }
 
 .footer.small {
@@ -17,7 +17,15 @@
     right: var(--padding);
     font-size: 14px;
     padding: 12px 4px;
+    max-width: calc(var(--max-width) - var(--list-width));
 }
+
+@media screen and (min-width: 1920px) {
+    .footer.small {
+      right: calc(100% / 2 - var(--max-width) / 2);
+    }
+  
+  }
 
 .footer.medium {
     width: calc(100% - var(--sidebar-width) - var(--padding));

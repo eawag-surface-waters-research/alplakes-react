@@ -1,12 +1,10 @@
 import React, { useState } from "react";
+import "./table.css";
 
 const SortableTable = ({ data }) => {
-  // Convert the dictionary to an array of objects
   const rows = Object.entries(data).map(([key, value]) => ({ key, ...value }));
 
-  // Collect all unique keys for columns, excluding "link"
-  const columns = [
-    "key",
+  var columns = [
     ...new Set(
       rows.flatMap((row) => Object.keys(row).filter((k) => k !== "link"))
     ),
@@ -35,33 +33,37 @@ const SortableTable = ({ data }) => {
     setSortConfig({ key, direction });
   };
 
+  columns = columns.filter((c) => c !== "key");
+
   return (
-    <table>
-      <thead>
-        <tr>
-          {columns.map((column) => (
-            <th key={column} onClick={() => handleSort(column)}>
-              {column}
-            </th>
-          ))}
-        </tr>
-      </thead>
-      <tbody>
-        {sortedRows.map((row, index) => (
-          <tr
-            key={index}
-            onClick={() => row.link && window.open(row.link, "_blank")}
-            style={{ cursor: row.link ? "pointer" : "default" }}
-          >
+    <div className="table-outer-container">
+      <table className="table-styling">
+        <thead>
+          <tr>
             {columns.map((column) => (
-              <td key={column}>
-                {row[column] !== undefined ? row[column] : "NaN"}
-              </td>
+              <th key={column} onClick={() => handleSort(column)}>
+                {column} &#x25b4;&#x25be;
+              </th>
             ))}
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {sortedRows.map((row, index) => (
+            <tr
+              key={index}
+              onClick={() => row.link && window.open(row.link, "_blank")}
+              style={{ cursor: row.link ? "pointer" : "default" }}
+            >
+              {columns.map((column) => (
+                <td key={column}>
+                  {row[column] !== undefined ? row[column] : "NaN"}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 };
 

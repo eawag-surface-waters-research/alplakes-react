@@ -2,46 +2,70 @@
     width: 100%;
     max-width: var(--content-width);
     margin: auto;
+    margin-top: var(--top-margin);
     padding: 0 var(--padding);
-    border-radius: 22px;
+    text-align: center;
     box-sizing: border-box;
 }
 
-.main .about .section-title {
-    font-size: 28px;
-    border-bottom: 2px solid var(--highlight-color);
-    width: fit-content;
-    margin-bottom: 32px;
-}
-
-.main .about .section-content {
+.main .about .sidebar {
     display: inline-block;
-    margin-bottom: var(--padding);
+    vertical-align: top;
+    text-align: left;
+    margin-top: 66px;
+    position: sticky;
+    top: var(--padding);
+    padding-left: var(--padding);
 }
 
-.main .about .section-content .person {
+.main .about .sidebar .link {
+    padding: 4px;
+    cursor: pointer;
+}
+
+.main .about .content {
+    height: 100%;
+    display: inline-block;
+    width: var(--text-width);
+    text-align: left;
+    max-width: 100%;
+}
+
+@media screen and (max-width: 1000px) {
+    .main .about .sidebar {
+        display: none;
+    }
+}
+
+.main .about .content .person {
     width: 190px;
     display: inline-block;
     margin-right: var(--padding);
-    margin-top: var(--padding);
+    margin-bottom: var(--padding);
     vertical-align: top;
 }
 
-.main .about .section-content .person img {
+.main .about .content .person img {
     width: 100%;
     border-bottom: 2px solid var(--highlight-color);
 }
 
-.main .about .section-content .person .job {
+.main .about .content .person .name {
     font-size: 20px;
 }
 
-.main .about .section-content .person .email {
-    font-size: 14px;
-    text-decoration: underline;
+.main .about .content .person .job {
+    font-size: 16px;
+    font-weight: 200;
 }
 
-.main .about .section-content .person .contact-head {
+.main .about .content .person .email {
+    font-size: 12px;
+    text-decoration: underline;
+    color: var(--link-color);
+}
+
+.main .about .content .person .contact-head {
     margin-top: 12px;
     font-size: 14px;
     margin-bottom: 4px;
@@ -49,6 +73,28 @@
 
 .main .about .section-content .projects {
     margin-bottom: 18px;
+}
+
+.main .about .parameter {
+    padding: 8px 0;
+}
+
+.main .about .parameter .circle {
+    width: 32px;
+    height: 32px;
+    background-color: var(--highlight-color);
+    border-radius: 50%;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 16px;
+    text-align: center;
+}
+
+.main .about .parameter .text {
+    display: inline-block;
+    padding-left: 8px;
 }
 
 
@@ -68,17 +114,17 @@
 }
 
 .main .about a {
-    text-decoration: none;
-    color: black;
+    color: var(--link-color);
 }
 
-.main.dark .about a {
-    color: #e5e5e5;
+.main .about a.link {
+    display: block;
+    padding: 4px 0;
 }
 
-.main .about p {
-    margin-bottom: 18px;
-    font-size: 16px;
+.main .about a.repo {
+    display: block;
+    margin-bottom: 16px;
 }
 
 .main .about .title {
@@ -120,11 +166,7 @@
         padding: 12px;
     }
 
-    .main .about .section-content .promos {
-        margin-top: 12px;
-    }
-
-    .main .about .section-content .person {
+    .main .about .content .person {
         width: calc(50% - var(--padding));
     }
 }
@@ -135,6 +177,7 @@
         padding: var(--padding);
         overflow: hidden;
     }
+
     .main .about .header {
         font-size: 26px;
         margin: none;

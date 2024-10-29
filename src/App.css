@@ -18,16 +18,19 @@
 /* Variables */
 
 :root {
-  --background-color: rgba(255, 255, 255, 255);
+  --background-color: #F3F4F6;
   --background-font-color: rgb(50, 50, 50);
   --background-suble-font-color: rgb(117, 117, 117);
-  --box-color: rgb(247 247 247);
+  --box-color: rgb(255, 255, 255);
   --box-font-color: rgb(0, 0, 0);
   --box-inner-color: rgb(227, 227, 227);
   --border-color: #ddd;
   --box-shadow: rgba(0, 0, 0, 0.14) 0px 1px 5px;
   --box-shadow-hover: rgba(0, 0, 0, 0.24) 0px 1px 6px;
   --content-width: 1280px;
+  --text-width: 700px;
+  --max-width: 1920px;
+  --top-margin: 56px;
   --footer-height: 48px;
   --footer-full-height: 114px;
   --padding: 40px;
@@ -41,8 +44,9 @@
   --button-fill-color: black;
   --button-text-color: white;
   --highlight-color: rgba(68, 188, 167, 1);
+  --link-color: #5594CC;
   --highlight-color-fill: rgba(68, 188, 167, 0.2);
-  --highlight-color-subtle: rgba(68, 188, 167, 0.5);
+  --highlight-color-subtle: #EEF9F7;
   --header-text-color: rgb(59, 59, 59);
   --pulse-color: rgb(160, 160, 160);
   --map-color: rgb(236, 236, 236);
@@ -55,8 +59,8 @@
 }
 
 :root {
-  --search-height: calc(var(--padding) + 95px);
-  --header-height: calc(var(--padding) * 2 + 30px);
+  --search-height: calc(var(--padding) * 2 + 105px);
+  --header-height: calc(var(--padding) + 30px);
 }
 
 .dark {
@@ -122,7 +126,7 @@ h3 {
 
 h4 {
   font-size: 18px;
-  font-weight: 600;
+  font-weight: 400;
   margin-bottom: 8px;
 }
 

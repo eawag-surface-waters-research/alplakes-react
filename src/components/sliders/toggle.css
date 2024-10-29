@@ -2,7 +2,7 @@
     padding: 4px;
     border: 1px solid var(--border-color);
     border-radius: 22px;
-    background-color: var(--background-color);
+    background-color: var(--box-color);
     width: fit-content;
     width: 100%;
     user-select: none;
@@ -15,7 +15,7 @@
     grid-template-columns: repeat(2, 1fr);
     width: 100%;
     border-radius: 20px;
-    background: var(--background-color);
+    background: var(--box-color);
     cursor: pointer;
     margin: auto;
 }

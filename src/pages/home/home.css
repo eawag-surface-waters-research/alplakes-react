@@ -1,5 +1,8 @@
 .main .home .content {
+  max-width: var(--max-width);
+  margin: auto;
   margin-top: var(--header-height);
+  padding: 0 var(--padding);
 }
 
 .main .home .content .search {
@@ -8,9 +11,11 @@
   max-width: 100%;
   top: var(--header-height);
   background-color: var(--background-color);
-  padding: 0 var(--padding) 0 var(--padding);
+  padding-top: var(--padding);
+  padding-right: var(--padding);
   box-sizing: border-box;
   z-index: 9999;
+  height: var(--search-height);
 }
 
 .main .home .content .search .explore {
@@ -28,7 +33,7 @@
   width: 100%;
   font-size: 18px;
   padding: 12px 18px 12px 60px;
-  background-color: var(--background-color);
+  background-color: var(--box-color);
   color: var(--box-font-color);
   border-radius: 24px;
   box-sizing: border-box;
@@ -51,9 +56,9 @@
 
 .main .home .content .search img {
   position: absolute;
-  left: calc(var(--padding) + 24px);
+  left: 24px;
   height: 22px;
-  top: 12px;
+  top: calc(var(--padding) + 12px);
 }
 
 .main.dark .home .content .search img {
@@ -118,7 +123,7 @@
 
 .main .home .content .list .product-wrapper {
   background-color: var(--background-color);
-  margin: 0 var(--padding);
+  margin-right: var(--padding);
 }
 
 .main .home .content .search .results {
@@ -556,10 +561,11 @@
 
 .main .home .content .home-map {
   position: fixed;
-  top: calc(var(--header-height));
+  top: calc(var(--header-height) + var(--padding));
   right: var(--padding);
-  width: calc(100% - var(--list-width) - var(--padding));
-  height: calc(100% - var(--header-height) - var(--footer-height) - var(--padding));
+  width: calc(100% - var(--list-width) - var(--padding) * 2);
+  max-width: calc(var(--max-width) - var(--list-width));
+  height: calc(100% - var(--header-height) - var(--footer-height) - var(--padding) * 2);
   box-sizing: border-box;
   background-color: var(--background-color);
   border-radius: 22px;
@@ -653,7 +659,7 @@
 
 .main .home .content .home-map #map .day-selector .day-outer {
   padding: 0 24px;
-  background-color: var(--background-color);
+  background-color: var(--box-color);
   border-radius: 22px;
   display: inline-block;
   box-shadow: var(--box-shadow);
@@ -690,7 +696,7 @@
   width: 55px;
   height: 55px;
   cursor: pointer;
-  background-color: var(--background-color);
+  background-color: var(--box-color);
   border-radius: 8px;
   box-shadow: var(--box-shadow);
   margin-right: calc(var(--padding) / 3);
@@ -704,7 +710,7 @@
   width: calc(100% - 10px * 2);
   height: calc(100% - 8px * 2);
   box-sizing: border-box;
-  border-bottom: 2px solid var(--background-color);
+  border-bottom: 2px solid var(--box-color);
 }
 
 
@@ -1014,4 +1020,11 @@
   .main .home .content .list .product-list .list-item .summary .summary-table .inner .ave {
     font-size: 18px;
   }
+}
+
+@media screen and (min-width: 1920px) {
+  .main .home .content .home-map {
+    right: calc(100% / 2 - var(--max-width) / 2);
+  }
+
 }
