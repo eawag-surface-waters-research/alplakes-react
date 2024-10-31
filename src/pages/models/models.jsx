@@ -87,12 +87,16 @@ class Models extends Component {
               <p>
                 A set of example input files are provided for users that want to
                 adapt the models to their own purposes. These files can also be
-                generated using the code available <a href="https://github.com/eawag-surface-waters-research/alplakes-simulations">here</a>. Please
-                note users outside of Eawag will need to update the weather data
-                collection functions as we are not permitted to distribute
-                weather data.
+                generated using the code available{" "}
+                <a href="https://github.com/eawag-surface-waters-research/alplakes-simulations">
+                  here
+                </a>
+                . Please note users outside of Eawag will need to update the
+                weather data collection functions as we are not permitted to
+                distribute weather data.
               </p>
-              <select></select><select></select>
+              <select></select>
+              <select></select>
             </div>
             <div ref={this.oned}>
               <h2>1D Hydrodynamic</h2>
@@ -117,24 +121,24 @@ class Models extends Component {
           </div>
           <div className="sidebar">
             <div className="sidebar-inner">
-              <h3>Contents</h3>
+              <h2>Contents</h2>
               <div
                 className="link"
                 onClick={() => this.scrollToSection(this.threed)}
               >
-                &#x2022; 3D Hydrodynamic
+                3D Hydrodynamic
               </div>
               <div
                 className="link"
                 onClick={() => this.scrollToSection(this.oned)}
               >
-                &#x2022; 1D Hydrodynamic
+                1D Hydrodynamic
               </div>
               <div
                 className="link"
                 onClick={() => this.scrollToSection(this.remotesensing)}
               >
-                &#x2022; Remote Sensing
+                Remote Sensing
               </div>
             </div>
           </div>

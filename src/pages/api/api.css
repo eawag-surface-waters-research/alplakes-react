@@ -99,9 +99,46 @@
 }
 
 .swagger-ui .opblock-tag.no-desc span {
-  border-bottom: 2px solid var(--highlight-color);
-  font-size: 28px;
-  font-weight: normal;
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.swagger-ui .opblock .opblock-section-header,
+.swagger-ui input[type=email],
+.swagger-ui input[type=file],
+.swagger-ui input[type=password],
+.swagger-ui input[type=search],
+.swagger-ui input[type=text],
+.swagger-ui textarea,
+.swagger-ui select {
+  background-color: var(--background-color);
+}
+
+.swagger-ui input[disabled],
+.swagger-ui select[disabled],
+.swagger-ui textarea[disabled] {
+  background-color: var(--box-color);
+}
+
+.swagger-ui,
+.swagger-ui select,
+.swagger-ui .btn,
+.swagger-ui .response-col_status,
+.swagger-ui .response-col_links,
+.swagger-ui .opblock .opblock-section-header h4,
+.swagger-ui .opblock-description-wrapper p,
+.swagger-ui .opblock-external-docs-wrapper p,
+.swagger-ui .opblock-title_normal p,
+.swagger-ui table thead tr td,
+.swagger-ui table thead tr th,
+.swagger-ui .responses-inner h4,
+.swagger-ui .responses-inner h5,
+.swagger-ui .opblock-description-wrapper,
+.swagger-ui .opblock-external-docs-wrapper,
+.swagger-ui .opblock-title_normal,
+.swagger-ui .parameter__name {
+  color: var(--background-font-color);
 }
 
 @media screen and (max-width: 500px) {

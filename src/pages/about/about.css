@@ -16,11 +16,18 @@
     position: sticky;
     top: var(--padding);
     padding-left: var(--padding);
+}
+
+.main .about .sidebar .sidebar-inner {
+    background-color: var(--box-color);
+    padding: 16px 24px;
+    border-radius: 16px;
+    border: 1px solid var(--border-color);
     width: 200px;
 }
 
 .main .about .sidebar .link {
-    padding: 4px;
+    margin-bottom: 8px;
     cursor: pointer;
 }
 
@@ -36,7 +43,7 @@
     max-width: 100%;
 }
 
-.main .about h2 {
+.main .about .content h2 {
     margin-top: 40px;
 }
 
@@ -56,7 +63,7 @@
 
 .main .about .content .person img {
     width: 100%;
-    border-bottom: 2px solid var(--highlight-color);
+    border-bottom: 4px solid var(--highlight-color);
 }
 
 .main .about .content .person .name {

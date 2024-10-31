@@ -16,11 +16,18 @@
     position: sticky;
     top: var(--padding);
     padding-left: var(--padding);
+}
+
+.main .models .sidebar .sidebar-inner {
+    background-color: var(--box-color);
+    padding: 16px 24px;
+    border-radius: 16px;
+    border: 1px solid var(--border-color);
     width: 200px;
 }
 
 .main .models .sidebar .link {
-    padding: 4px;
+    margin-bottom: 8px;
     cursor: pointer;
 }
 

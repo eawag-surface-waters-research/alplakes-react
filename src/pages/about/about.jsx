@@ -47,7 +47,7 @@ class About extends Component {
               Alpine region.
             </p>
             <p>
-              We integrate hydrodynamic models and remote sensing products
+              We integrate models and remote sensing products
               developed by the research community, operating them in
               near-real-time to provide the most up-to-date and accurate
               information available.
@@ -411,36 +411,36 @@ class About extends Component {
           </div>
           <div className="sidebar">
             <div className="sidebar-inner">
-              <h3>Contents</h3>
+              <h2>Contents</h2>
               <div
                 className="link"
                 onClick={() => this.scrollToSection(this.contact)}
               >
-                &#x2022; Contact us
+                Contact us
               </div>
               <div
                 className="link"
                 onClick={() => this.scrollToSection(this.projects)}
               >
-                &#x2022; Contributing projects
+                Contributing projects
               </div>
               <div
                 className="link"
                 onClick={() => this.scrollToSection(this.people)}
               >
-                &#x2022; Contributing people
+                Contributing people
               </div>
               <div
                 className="link"
                 onClick={() => this.scrollToSection(this.opensource)}
               >
-                &#x2022; Open source
+                Open source
               </div>
               <div
                 className="link"
                 onClick={() => this.scrollToSection(this.publications)}
               >
-                &#x2022; Related publications
+                Related publications
               </div>
             </div>
           </div>
