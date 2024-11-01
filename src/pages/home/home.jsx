@@ -5,15 +5,16 @@ import axios from "axios";
 import { NavLink } from "react-router-dom";
 import NavBar from "../../components/navbar/navbar";
 import HomeGraph from "../../components/d3/homegraph/homegraph";
+import HomeMap from "../../components/leaflet/homemap";
+import Footer from "../../components/footer/footer";
 import Translations from "../../translations.json";
 import searchIcon from "../../img/search.png";
 import mapIcon from "../../img/map.png";
-import depth_icon from "../../img/depth.png";
-import area_icon from "../../img/area.png";
-import elevation_icon from "../../img/elevation.png";
-import temperature_icon from "../../img/temperature_simple.png";
-import ice_icon from "../../img/ice_simple.png";
-import oxygen_icon from "../../img/oxygen_simple.png";
+import threedIcon from "../../img/3dicon.png";
+import onedIcon from "../../img/1dicon.png";
+import satelliteIcon from "../../img/satelliteicon.png";
+import insituIcon from "../../img/insituicon.png";
+import sortIcon from "../../img/sort.png";
 import {
   onMouseOver,
   onMouseOut,
@@ -24,29 +25,29 @@ import {
 } from "./functions";
 import CONFIG from "../../config.json";
 import "./home.css";
-import HomeMap from "../../components/leaflet/homemap";
-import Footer from "../../components/footer/footer";
-import PolygonGraph from "../../components/leaflet/polygon";
 
 class ListSkeleton extends Component {
   render() {
     return (
       <React.Fragment>
-        {[...Array(85).keys()].map((a) => (
+        {[...Array(15).keys()].map((a) => (
           <div className="list-item-skeleton" key={a}>
-            <div className="lake-shape-skeleton pulse"></div>
             <div className="text-skeleton">
-              <div className="name-skeleton pulse"></div>
-              <div className="parameters-skeleton pulse"></div>
-              <div className="graph-title-skeleton pulse"></div>
+              <div className="name-skeleton pulse" />
+            </div>
+            <div className="logos-skeleton">
+              <div className="logo-skeleton" />
+              <div className="logo-skeleton" />
+              <div className="logo-skeleton" />
             </div>
             <div className="sketelon-graph">
-              <div className="skeleton-block pulse-border"></div>
-              <div className="skeleton-block pulse-border"></div>
-              <div className="skeleton-block pulse-border"></div>
-              <div className="skeleton-block pulse-border"></div>
-              <div className="skeleton-block pulse-border right"></div>
+              <div className="skeleton-block pulse-border" />
+              <div className="skeleton-block pulse-border" />
+              <div className="skeleton-block pulse-border" />
+              <div className="skeleton-block pulse-border" />
+              <div className="skeleton-block pulse-border right" />
             </div>
+            <div className="skeleton-data" />
           </div>
         ))}
       </React.Fragment>
@@ -89,44 +90,62 @@ class Search extends Component {
       filterTypes,
       results,
       loaded,
+      sort,
+      setSort,
+      ascending,
+      toggleAscending,
     } = this.props;
-    var ft = JSON.parse(JSON.stringify(filterTypes));
-    ft.sort(this.compareDicts(filters));
     return (
       <div className="search">
-        <input
-          type="search"
-          placeholder={
-            Translations.search[language] +
-            " " +
-            Translations.lakes[language].toLowerCase()
-          }
-          value={search}
-          onChange={setSearch}
-          onKeyDown={this.handleKeyDown}
-          id="search"
-        />
-        <img src={searchIcon} alt="Search Icon" />
+        <div className="search-bar">
+          <input
+            type="search"
+            placeholder={
+              Translations.search[language] +
+              " " +
+              Translations.lakes[language].toLowerCase()
+            }
+            value={search}
+            onChange={setSearch}
+            onKeyDown={this.handleKeyDown}
+            id="search"
+          />
+          <img src={searchIcon} alt="Search Icon" className="search-icon" />
+          <div className="description">
+            Forecasts and monitoring of alpine lakes
+          </div>
+        </div>
         <div className="filters">
-          {filters.length > 0 && (
-            <div
-              className="filter remove"
-              onClick={() => setFilter(false)}
-              title={Translations.removeFilters[language]}
-            >
-              &#215;
-            </div>
-          )}
-          {ft.map((f) => (
+          {filterTypes.map((f) => (
             <div
               className={filters.includes(f.id) ? "filter selected" : "filter"}
               key={f.id}
               onClick={() => setFilter(f.id)}
               title={f.description}
             >
-              {f.name}
+              <div className="left-filter">
+                <img src={f.icon} alt={f.description} />
+              </div>
+              <div className="right-filter">{f.name}</div>
+              <div className="close">&#215;</div>
             </div>
           ))}
+        </div>
+        <div className="sort">
+          <img
+            src={sortIcon}
+            alt="Sort"
+            onClick={toggleAscending}
+            className={ascending ? "asc" : ""}
+          />
+          <select value={sort} onChange={setSort}>
+            <option value="" disabled>
+              Sort
+            </option>
+            <option value="elevation">Elevation</option>
+            <option value="max_depth">Depth</option>
+            <option value="area">Surface Area</option>
+          </select>
         </div>
         <div className="results">
           {loaded
@@ -154,8 +173,6 @@ class List extends Component {
       sortedList,
       results,
       search,
-      parameter,
-      parameters,
       filterTypes,
       filters,
       setFavorties,
@@ -176,8 +193,6 @@ class List extends Component {
                 lake={lake}
                 language={language}
                 key={lake.key}
-                parameter={parameter}
-                parameters={parameters}
                 filterTypes={filterTypes}
                 filters={filters}
                 setFavorties={setFavorties}
@@ -193,17 +208,10 @@ class List extends Component {
 
 class ListItem extends Component {
   render() {
-    var {
-      lake,
-      language,
-      parameter,
-      parameters,
-      filterTypes,
-      filters,
-      setFavorties,
-      favorites,
-    } = this.props;
+    var { lake, language, filterTypes, filters, setFavorties, favorites } =
+      this.props;
     var selected = favorites.includes(lake.key);
+    console.log(filterTypes);
     return (
       <NavLink to={`/${lake.key}`}>
         <div
@@ -216,56 +224,17 @@ class ListItem extends Component {
           title={Translations.click[language]}
         >
           <div className="properties">
-            <div className="polygon">
-              <PolygonGraph geometry={lake.geometry} />
-            </div>
             <div className="left">
               {lake.name[language]}
-              {selected ? (
-                <div
-                  className="favorite full"
-                  title="Remove"
-                  onClick={(event) => {
-                    event.preventDefault();
-                    setFavorties(lake.key);
-                  }}
-                >
-                  &#9733;
-                </div>
-              ) : (
-                <div
-                  className="favorite"
-                  title="Save"
-                  onClick={(event) => {
-                    event.preventDefault();
-                    setFavorties(lake.key);
-                  }}
-                >
-                  &#9734;
-                </div>
-              )}
-              <div className="label">
-                <div className="property">
-                  <div className="icon">
-                    <img src={depth_icon} alt="depth" />
-                  </div>
-                  <div className="text">{lake.max_depth} m</div>
-                </div>
-                <div className="property">
-                  <div className="icon">
-                    <img src={area_icon} alt="area" />
-                  </div>
-                  <div className="text"> {lake.area} km&#178;</div>
-                </div>
-                <div className="property">
-                  <div className="icon">
-                    <img src={elevation_icon} alt="elevation" />
-                  </div>
-                  <div className="text">{lake.elevation} m.a.s.l.</div>
-                </div>
-                <div className="header">
-                  {`${Translations[parameters[parameter].label][language]}`}
-                </div>
+              <div
+                className={selected ? "favorite full" : "favorite"}
+                title={selected ? "Remove" : "Save"}
+                onClick={(event) => {
+                  event.preventDefault();
+                  setFavorties(lake.key);
+                }}
+              >
+                &#9733;
               </div>
             </div>
             <div className="right">
@@ -273,31 +242,23 @@ class ListItem extends Component {
                 {filterTypes
                   .filter((f) => lake.filters.includes(f.id))
                   .map((f) => (
-                    <div
-                      className={
-                        filters.includes(f.id) ? "type select" : "type"
-                      }
+                    <img
+                      className={filters.includes(f.id) ? "select" : ""}
                       key={f.id}
-                    >
-                      {f.name}
-                    </div>
+                      src={f.icon}
+                      alt={f.description}
+                    />
                   ))}
-                <div className="type plus">+</div>
               </div>
             </div>
           </div>
           <div className="summary">
             {(!lake.forecast.available ||
-              lake.forecast.value[parameter].length === 0) && (
+              lake.forecast.value["temperature"].length === 0) && (
               <div className="offline">{Translations.offline[language]}</div>
             )}
             <div className="summary-table">
-              <SummaryTable
-                forecast={lake.forecast}
-                language={language}
-                parameter={parameter}
-                parameters={parameters}
-              />
+              <SummaryTable forecast={lake.forecast} language={language} />
             </div>
           </div>
         </div>
@@ -308,19 +269,15 @@ class ListItem extends Component {
 
 class SummaryTable extends Component {
   render() {
-    var { forecast, language, parameter, parameters } = this.props;
+    var { forecast, language } = this.props;
     return (
       <React.Fragment>
         {Object.keys(forecast.summary).map((day, i, arr) =>
-          forecast.summary[day][parameter] === false ? null : (
+          forecast.summary[day]["temperature"] === false ? null : (
             <div key={day} className={i === 0 ? "inner start" : "inner"}>
               <div className="ave">
-                {forecast.summary[day][parameter]}
-                <div
-                  className={parameter === "temperature" ? "unit full" : "unit"}
-                >
-                  {parameters[parameter].unit}
-                </div>
+                {forecast.summary[day]["temperature"]}
+                <div className="unit full">{"°"}</div>
               </div>
               <div className="day">{dayName(day, language, Translations)}</div>
             </div>
@@ -328,7 +285,7 @@ class SummaryTable extends Component {
         )}
         <HomeGraph
           dt={forecast.dt}
-          value={forecast.value[parameter]}
+          value={forecast.value["temperature"]}
           dtMin={forecast.dtMin}
           dtMax={forecast.dtMax}
         />
@@ -341,30 +298,11 @@ class Home extends Component {
   state = {
     list: [],
     search: "",
+    sort: "",
+    ascending: false,
     filters: [],
     boundingBox: false,
     fullscreen: false,
-    parameter: "temperature",
-    parameters: {
-      temperature: {
-        label: "surfacetemperature",
-        unit: "°",
-        img: temperature_icon,
-        beta: false,
-      },
-      ice: {
-        label: "icecover",
-        unit: "m",
-        img: ice_icon,
-        beta: true,
-      },
-      oxygen: {
-        label: "bottomoxygen",
-        unit: "%",
-        img: oxygen_icon,
-        beta: true,
-      },
-    },
     favorites:
       JSON.parse(localStorage.getItem("favorites")) === null
         ? []
@@ -377,6 +315,9 @@ class Home extends Component {
     this.setState({ fullscreen: !this.state.fullscreen }, () => {
       window.dispatchEvent(new Event("resize"));
     });
+  };
+  toggleAscending = () => {
+    this.setState({ ascending: !this.state.ascending });
   };
   setBounds = (boundingBox) => {
     this.setState({ boundingBox });
@@ -399,46 +340,59 @@ class Home extends Component {
     list = searchList(search, list);
     this.setState({ list });
   };
-  sortList = (list, filters, favorites) => {
+  setSort = (event) => {
+    this.setState({ sort: event.target.value });
+  };
+  sortList = (list, filters, favorites, sort, ascending) => {
     var { boundingBox } = this.state;
     list.sort((a, b) => {
-      // 1. Sort by favorites
-      if (favorites.includes(a.key) && !favorites.includes(b.key)) {
-        return -1;
-      }
-      if (!favorites.includes(a.key) && favorites.includes(b.key)) {
-        return 1;
-      }
-      // 2. Sort if in map area
-      if (boundingBox) {
-        if (
-          inBounds(a.latitude, a.longitude, boundingBox) &&
-          !inBounds(b.latitude, b.longitude, boundingBox)
-        ) {
+      if (sort !== "") {
+        if (a[sort] < b[sort]) {
+          return ascending ? -1 : 1;
+        }
+        if (a[sort] > b[sort]) {
+          return ascending ? 1 : -11;
+        }
+        return 0;
+      } else {
+        // 1. Sort by favorites
+        if (favorites.includes(a.key) && !favorites.includes(b.key)) {
           return -1;
         }
-        if (
-          !inBounds(a.latitude, a.longitude, boundingBox) &&
-          inBounds(b.latitude, b.longitude, boundingBox)
-        ) {
+        if (!favorites.includes(a.key) && favorites.includes(b.key)) {
           return 1;
         }
+        // 2. Sort if in map area
+        if (boundingBox) {
+          if (
+            inBounds(a.latitude, a.longitude, boundingBox) &&
+            !inBounds(b.latitude, b.longitude, boundingBox)
+          ) {
+            return -1;
+          }
+          if (
+            !inBounds(a.latitude, a.longitude, boundingBox) &&
+            inBounds(b.latitude, b.longitude, boundingBox)
+          ) {
+            return 1;
+          }
+        }
+        // 3. Sort if forecast available
+        if (a.forecast.available && !b.forecast.available) {
+          return -1;
+        }
+        if (!a.forecast.available && b.forecast.available) {
+          return 1;
+        }
+        // 4. Sort by surface area
+        if (a.area < b.area) {
+          return 1;
+        }
+        if (a.area > b.area) {
+          return -1;
+        }
+        return 0;
       }
-      // 3. Sort if forecast available
-      if (a.forecast.available && !b.forecast.available) {
-        return -1;
-      }
-      if (!a.forecast.available && b.forecast.available) {
-        return 1;
-      }
-      // 4. Sort by surface area
-      if (a.area < b.area) {
-        return 1;
-      }
-      if (a.area > b.area) {
-        return -1;
-      }
-      return 0;
     });
     list = list.map((l) => {
       if (filters.includes("all")) {
@@ -449,9 +403,6 @@ class Home extends Component {
       return l;
     });
     return list;
-  };
-  setParameter = (parameter) => {
-    this.setState({ parameter });
   };
   setFavorties = (favorite) => {
     var { favorites } = this.state;
@@ -472,7 +423,6 @@ class Home extends Component {
   };
   async componentDidMount() {
     window.addEventListener("keydown", this.focusSearchBar);
-    var { parameter, parameters } = this.state;
     var geometry, forecast;
     const { data: list } = await axios.get(
       CONFIG.alplakes_bucket +
@@ -503,11 +453,9 @@ class Home extends Component {
     list.map((l) => {
       l.display = true;
       l.geometry = false;
-      l.forecast = summariseData(
-        forecast[l.key],
-        parameter,
-        Object.keys(parameters)
-      );
+      l.forecast = summariseData(forecast[l.key], "temperature", [
+        "temperature",
+      ]);
       if (l.key in geometry) {
         l.geometry = geometry[l.key];
       }
@@ -520,42 +468,34 @@ class Home extends Component {
   }
   render() {
     var { language, dark } = this.props;
-    var {
-      list,
-      search,
-      filters,
-      fullscreen,
-      parameter,
-      parameters,
-      favorites,
-    } = this.state;
-    var sortedList = this.sortList(list, filters, favorites);
+    var { list, search, filters, fullscreen, favorites, sort, ascending } =
+      this.state;
+    var sortedList = this.sortList(list, filters, favorites, sort, ascending);
     var results = sortedList.filter((l) => l.display && !l.filter).length;
     var filterTypes = [
       {
         id: "3D",
-        name: "3D",
+        name: "3D Model",
         description: Translations.threedDescription[language],
+        icon: threedIcon,
+      },
+      {
+        id: "1D",
+        name: "1D Model",
+        description: Translations.onedDescription[language],
+        icon: onedIcon,
       },
       {
         id: "satellite",
         name: Translations.satellite[language],
         description: Translations.satelliteDescription[language],
-      },
-      {
-        id: "1D",
-        name: "1D",
-        description: Translations.onedDescription[language],
-      },
-      {
-        id: "live",
-        name: Translations.live[language],
-        description: Translations.liveDescription[language],
+        icon: satelliteIcon,
       },
       {
         id: "insitu",
         name: Translations.insitu[language],
         description: Translations.insituDescription[language],
+        icon: insituIcon,
       },
     ];
     return (
@@ -569,9 +509,7 @@ class Home extends Component {
         </Helmet>
         <NavBar {...this.props} small={true} />
         <div className="home">
-          <div
-            className={parameters[parameter].beta ? "content beta" : "content"}
-          >
+          <div className="content">
             <SearchWithNavigate
               setFilter={this.setFilter}
               setSearch={this.setSearch}
@@ -582,13 +520,15 @@ class Home extends Component {
               results={results}
               loaded={list.length > 0}
               sortedList={sortedList}
+              sort={sort}
+              setSort={this.setSort}
+              ascending={ascending}
+              toggleAscending={this.toggleAscending}
             />
             <List
               language={language}
               sortedList={sortedList}
               search={search}
-              parameter={parameter}
-              parameters={parameters}
               results={results}
               filterTypes={filterTypes}
               filters={filters}
@@ -601,9 +541,6 @@ class Home extends Component {
                 dark={dark}
                 language={language}
                 setBounds={this.setBounds}
-                parameter={parameter}
-                parameters={parameters}
-                setParameter={this.setParameter}
               />
             </div>
             <div

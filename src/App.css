@@ -27,6 +27,7 @@
   --border-color: #ddd;
   --box-shadow: rgba(0, 0, 0, 0.14) 0px 1px 5px;
   --box-shadow-hover: rgba(0, 0, 0, 0.24) 0px 1px 6px;
+  --star-color: #E9C00A;
   --content-width: 1280px;
   --text-width: 700px;
   --max-width: 1920px;
@@ -34,7 +35,7 @@
   --footer-height: 48px;
   --footer-full-height: 114px;
   --padding: 40px;
-  --list-width: 650px;
+  --list-width: 500px;
   --sidebar-width: 450px;
   --settings-width: 400px;
   --selector-height: 50px;
@@ -59,7 +60,7 @@
 }
 
 :root {
-  --search-height: calc(var(--padding) * 2 + 105px);
+  --search-height: 247px;
   --header-height: calc(var(--padding) + 30px);
 }
 
