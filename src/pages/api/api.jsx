@@ -43,10 +43,7 @@ class API extends Component {
             remote sensing products. The API supports geospatial and temporal
             queries, allowing access to subsets of the data for easier handling.
           </p>
-          <div className="contact">
-            {Translations["apiContact"][language]}{" "}
-            {Translations["apiWarning"][language]}
-          </div>
+          <p>Please email <a href="mailto:james.runnalls@eawag.ch">james.runnalls@eawag.ch</a> for any questions regarding the API or to be kept informed of any future updates.</p>
           {error ? (
             <div className="error">
               <img src={unpluggedIcon} alt="unplugged" />
