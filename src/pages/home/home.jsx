@@ -127,7 +127,6 @@ class Search extends Component {
                 <img src={f.icon} alt={f.description} />
               </div>
               <div className="right-filter">{f.name}</div>
-              <div className="close">&#215;</div>
             </div>
           ))}
         </div>

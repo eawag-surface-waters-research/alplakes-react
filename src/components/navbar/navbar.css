@@ -11,7 +11,7 @@
 .navbar .navbar-inner {
   max-width: var(--max-width);
   margin: auto;
-  padding: calc(var(--padding)* 0.5) var(--padding);
+  padding: calc(var(--padding) / 2) var(--padding);
 }
 
 .navbar.relative {
@@ -254,10 +254,10 @@
   filter: invert(100%)
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 1000px) {
   .navbar.relative {
     position: fixed;
-    background-color: var(--background-color);
+    background-color: var(--box-color);
     z-index: 99999;
   }
 
@@ -276,5 +276,9 @@
   .navbar {
     z-index: 9999999;
 
+  }
+
+  .navbar .navbar-inner {
+    padding: var(--padding);
   }
 }

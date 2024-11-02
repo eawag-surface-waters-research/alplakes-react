@@ -22,10 +22,10 @@
 
 @media screen and (min-width: 1920px) {
     .footer.small {
-      right: calc(100% / 2 - var(--max-width) / 2);
+        right: calc(100% / 2 - var(--max-width) / 2);
     }
-  
-  }
+
+}
 
 .footer.medium {
     width: calc(100% - var(--sidebar-width) - var(--padding));
@@ -122,8 +122,20 @@
     }
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 1000px) {
     .footer {
-        display: none;
+        margin-bottom: calc(var(--padding)/2);
+    }
+
+    .footer.small {
+        position: relative;
+        width: 100%;
+        padding: 12px var(--padding);
+        box-sizing: border-box;
+        right: unset;
+    }
+
+    .footer .left img {
+        height: 24px;
     }
 }

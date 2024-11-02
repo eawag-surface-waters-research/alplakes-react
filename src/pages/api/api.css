@@ -142,9 +142,6 @@
 }
 
 @media screen and (max-width: 500px) {
-  .main .api-container {
-    margin-top: 45px;
-  }
 
   .main .api-container .header {
     font-size: 26px;

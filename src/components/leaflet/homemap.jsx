@@ -109,7 +109,9 @@ class HomeMap extends Component {
           },
           {
             style: {
-              fillColor: this.getColor(lake.forecast.summary[day]["temperature"]),
+              fillColor: this.getColor(
+                lake.forecast.summary[day]["temperature"]
+              ),
               weight: 0.5,
               opacity: 1,
               color: "grey",
@@ -129,6 +131,7 @@ class HomeMap extends Component {
     var { list, language } = this.props;
     var zoom = this.map.getZoom();
     for (let lake of list) {
+      let value = lake.forecast.summary[day]["temperature"] === false;
       this.labels[lake.key].marker = L.marker([lake.latitude, lake.longitude], {
         icon: L.divIcon({
           className: "leaflet-mouse-marker",
@@ -137,10 +140,12 @@ class HomeMap extends Component {
         }),
       })
         .bindTooltip(
-          `<a class="temperature-label" href="/${lake.key}" title='${
-            Translations.click[language]
-          }'><div class="name">${lake.name[language]}</div>${
-            lake.forecast.summary[day]["temperature"] === false
+          `<a class="temperature-label${value ? " empty" : ""}" href="/${
+            lake.key
+          }" title='${Translations.click[language]}'><div class="name">${
+            lake.name[language]
+          }</div>${
+            value
               ? ""
               : `<div class="value">${lake.forecast.summary[day]["temperature"]}°</div>`
           }</a>`,

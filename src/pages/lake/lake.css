@@ -331,7 +331,7 @@
     margin: 0;
     border: none;
     border-radius: 0;
-    background-color: var(--background-color);
+    background-color: var(--box-color);
     cursor: default;
 }
 
@@ -431,6 +431,7 @@
     margin-top: var(--padding);
     margin-left: var(--padding);
     height: calc(var(--header-height) - var(--padding));
+    margin-bottom: var(--padding);
 }
 
 .main .lake .content .module .active-title .title {
@@ -456,11 +457,11 @@
 }
 
 .main .lake .content .module.active .display {
-    height: calc(100% - var(--header-height));
+    height: calc(100% - var(--header-height) - var(--padding));
     width: 100%;
     border-radius: 0;
     pointer-events: all;
-    background-color: var(--background-color);
+    background-color: var(--box-color);
 }
 
 .main .lake .content .module .display .module-component {
@@ -535,13 +536,13 @@
 }
 
 .main .lake .content .module .display .module-component .sidebar .active-apps .app-area {
-    background-color: var(--box-color);
+    background-color: var(--background-color);
     border-radius: 12px;
     border: 1px solid var(--border-color);
 }
 
 .main .lake .content .module .display .module-component .sidebar .active-apps .selection {
-    background-color: var(--box-color);
+    background-color: var(--background-color);
     border-radius: 12px;
     padding: calc(var(--padding) / 2) calc(var(--padding) / 4) calc(var(--padding) / 2) calc(var(--padding) / 2);
     margin-top: calc(var(--padding)/2);
@@ -627,12 +628,12 @@
     position: absolute;
     width: 42px;
     height: calc(var(--padding)/2);
-    background-color: var(--box-color);
+    background-color: var(--background-color);
     bottom: calc(-42px - var(--padding)/2);
     left: 8px;
     display: none;
-    border-top: 1px solid var(--box-color);
-    border-bottom: 1px solid var(--box-color);
+    border-top: 1px solid var(--background-color);
+    border-bottom: 1px solid var(--background-color);
     border-left: 1px solid var(--border-color);
     border-right: 1px solid var(--border-color);
 }
@@ -724,7 +725,7 @@
     position: absolute;
     top: -10px;
     left: -10px;
-    line-height: 10px;
+    line-height: 13px;
     padding: 1px;
     background-color: var(--background-color);
     border-radius: 22px;
@@ -736,7 +737,9 @@
     transition: color 0.5s;
     border: 1px solid var(--border-color);
     color: var(--background-suble-font-color);
+    -webkit-user-select: none;
     user-select: none;
+    font-size: 24px;
 }
 
 .main .lake .content .module .display .module-component .sidebar .active-apps .app .remove:hover {
@@ -1470,7 +1473,7 @@
     border: none;
     padding: 4px 10px;
     box-sizing: border-box;
-    background-color: var(--background-color);
+    background-color: var(--box-color);
     color: var(--background-font-color);
 }
 
@@ -1584,7 +1587,7 @@
     display: inline-block;
     font-size: 14px;
     width: 100%;
-    background-color: var(--background-color);
+    background-color: var(--box-color);
     cursor: pointer;
     padding: 4px 8px;
     text-align: left;
@@ -1599,7 +1602,7 @@
 .main .lake .content .module.active .display .module-component .sidebar .layer-settings .react-datepicker-wrapper input {
     display: inline-block;
     font-size: 18px;
-    background-color: var(--background-color);
+    background-color: var(--box-color);
     cursor: pointer;
     padding: 8px 12px;
     text-align: left;
@@ -2181,7 +2184,7 @@
     color: var(--background-font-color);
     position: absolute;
     width: 100%;
-    background-color: var(--box-color);
+    background-color: var(--background-color);
     bottom: var(--app-area-height);
     height: 40px;
     text-align: center;
