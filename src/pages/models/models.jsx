@@ -8,10 +8,300 @@ import CONFIG from "../../config.json";
 import "./models.css";
 import SortableTable from "../../components/table/table";
 
+class ModelInputs extends Component {
+  state = {
+    model_list: [],
+    model: "",
+    lake_list: [],
+    lake: "",
+  };
+  setModel = (event) => {
+    const { list } = this.props;
+    var model = event.target.value;
+    var lake_list = list.filter((l) => l.model === model).map((l) => l.name);
+    var lake = lake_list[0];
+    this.setState({ model, lake_list, lake });
+  };
+  setLake = (event) => {
+    var lake = event.target.value;
+    this.setState({ lake });
+  };
+  componentDidUpdate() {
+    const { list } = this.props;
+    if (list.length > 0 && this.state.model_list.length === 0) {
+      var model_list = [...new Set(list.map((l) => l.model))];
+      var model = model_list[0];
+      var lake_list = list.filter((l) => l.model === model).map((l) => l.name);
+      var lake = lake_list[0];
+      this.setState({ model_list, model, lake_list, lake });
+    }
+  }
+  render() {
+    const { subfolder } = this.props;
+    const { model_list, model, lake_list, lake } = this.state;
+    const link = subfolder
+      ? `${
+          CONFIG.alplakes_bucket
+        }/simulations/${model.toLowerCase()}/downloads/${lake.toLowerCase()}/${lake.toLowerCase()}.zip`
+      : `${
+          CONFIG.alplakes_bucket
+        }/simulations/${model.toLowerCase()}/downloads/${lake.toLowerCase()}.zip`;
+    return (
+      <div className="downloads">
+        <select value={model} onChange={this.setModel}>
+          {model_list.map((m) => (
+            <option key={m} value={m}>
+              {m}
+            </option>
+          ))}
+        </select>
+        <select value={lake} onChange={this.setLake}>
+          {lake_list.map((m) => (
+            <option key={m} value={m}>
+              {m}
+            </option>
+          ))}
+        </select>
+        <a href={link}>
+          <button className="download">Download</button>
+        </a>
+      </div>
+    );
+  }
+}
+
+class ThreeDimensionalResults extends Component {
+  state = {
+    model_list: [],
+    model: "",
+    lake_list: [],
+    lake: "",
+    week_list: [],
+    week: "",
+  };
+  setModel = async (event) => {
+    const { list } = this.props;
+    var model = event.target.value;
+    var lake_list = list.filter((l) => l.model === model).map((l) => l.name);
+    var lake = lake_list[0];
+    var data = await this.getMetadata(model.toLowerCase(), lake.toLowerCase());
+    var week_list = this.getWeeks(data.start_date, data.end_date);
+    var week = week_list[0];
+    this.setState({ model, lake_list, lake, week_list, week });
+  };
+  setLake = async (event) => {
+    const { model } = this.state;
+    var lake = event.target.value;
+    var data = await this.getMetadata(model.toLowerCase(), lake.toLowerCase());
+    var week_list = this.getWeeks(data.start_date, data.end_date);
+    var week = week_list[0];
+    this.setState({ lake, week_list, week });
+  };
+  setWeek = (event) => {
+    var week = event.target.value;
+    this.setState({ week });
+  };
+  getMetadata = async (model, lake) => {
+    var data;
+    try {
+      ({ data } = await axios.get(
+        `${
+          CONFIG.alplakes_bucket
+        }/simulations/${model}/cache/${lake}/metadata.json?timestamp=${
+          Math.round((new Date().getTime() + 1800000) / 3600000) * 3600 - 3600
+        }`
+      ));
+    } catch (e) {
+      ({ data } = await axios.get(
+        `${CONFIG.alplakes_api}/simulations/metadata/${model}/${lake}`
+      ));
+    }
+    return data;
+  };
+  formatAPIDate = (datetime) => {
+    var a = new Date(datetime);
+    var year = a.getFullYear();
+    var month = a.getMonth() + 1;
+    var date = a.getDate();
+    return `${String(year)}${month < 10 ? "0" + month : month}${
+      date < 10 ? "0" + date : date
+    }`;
+  };
+  getWeeks = (minDate, maxDate) => {
+    var dates = [];
+    const targetDate = new Date(minDate);
+    const endDate = new Date(maxDate);
+    const daysToSubtract = (targetDate.getDay() + 7) % 7;
+    targetDate.setDate(targetDate.getDate() - daysToSubtract);
+    while (targetDate <= endDate) {
+      dates.push(this.formatAPIDate(targetDate));
+      targetDate.setDate(targetDate.getDate() + 7);
+    }
+    dates.sort((a, b) => b.localeCompare(a));
+    return dates;
+  };
+  async componentDidUpdate() {
+    const { list } = this.props;
+    if (list.length > 0 && this.state.model_list.length === 0) {
+      var model_list = [...new Set(list.map((l) => l.model))];
+      var model = model_list[0];
+      var lake_list = list.filter((l) => l.model === model).map((l) => l.name);
+      var lake = lake_list[0];
+      var data = await this.getMetadata(
+        model.toLowerCase(),
+        lake.toLowerCase()
+      );
+      var week_list = this.getWeeks(data.start_date, data.end_date);
+      var week = week_list[0];
+
+      this.setState({ model_list, model, lake_list, lake, week_list, week });
+    }
+  }
+  render() {
+    const { model_list, model, lake_list, lake, week_list, week } = this.state;
+    return (
+      <div className="downloads">
+        <select value={model} onChange={this.setModel}>
+          {model_list.map((m) => (
+            <option key={m} value={m}>
+              {m}
+            </option>
+          ))}
+        </select>
+        <select value={lake} onChange={this.setLake}>
+          {lake_list.map((m) => (
+            <option key={m} value={m}>
+              {m}
+            </option>
+          ))}
+        </select>
+        <select value={week} onChange={this.setWeek}>
+          {week_list.map((m) => (
+            <option key={m} value={m}>
+              {m.slice(0, 4) + "-" + m.slice(4, 6) + "-" + m.slice(6)}
+            </option>
+          ))}
+        </select>
+        <a
+          href={`${
+            CONFIG.alplakes_api
+          }/simulations/file/${model.toLowerCase()}/${lake.toLowerCase()}/${week}`}
+        >
+          <button className="download">Download</button>
+        </a>
+      </div>
+    );
+  }
+}
+
+class OneDimensionalResults extends Component {
+  state = {
+    model_list: [],
+    model: "",
+    lake_list: [],
+    lake: "",
+    variable_list: [],
+    variable: "",
+  };
+  setModel = async (event) => {
+    const { list } = this.props;
+    var model = event.target.value;
+    var lake_list = list.filter((l) => l.model === model).map((l) => l.name);
+    var lake = lake_list[0];
+    var data = await this.getMetadata(model.toLowerCase(), lake.toLowerCase());
+    var week_list = this.getWeeks(data.start_date, data.end_date);
+    var week = week_list[0];
+    this.setState({ model, lake_list, lake, week_list, week });
+  };
+  setLake = async (event) => {
+    const { model } = this.state;
+    var lake = event.target.value;
+    var data = await this.getMetadata(model.toLowerCase(), lake.toLowerCase());
+    var week_list = this.getWeeks(data.start_date, data.end_date);
+    var week = week_list[0];
+    this.setState({ lake, week_list, week });
+  };
+  setVariable = (event) => {
+    var variable = event.target.value;
+    this.setState({ variable });
+  };
+  async componentDidUpdate() {
+    const { list } = this.props;
+    if (list.length > 0 && this.state.model_list.length === 0) {
+      var model_list = [...new Set(list.map((l) => l.model))];
+      var model = model_list[0];
+      var lake_list = list.filter((l) => l.model === model).map((l) => l.name);
+      var lake = lake_list[0];
+      var variable_list = [
+        "T_out.dat",
+        "S_out.dat",
+        "TotalIceH_out.dat",
+        "OXY_sat_out.dat",
+        "NN_out.dat",
+        "nuh_out.dat",
+      ];
+      var variable = variable_list[0];
+      this.setState({
+        model_list,
+        model,
+        lake_list,
+        lake,
+        variable_list,
+        variable,
+      });
+    }
+  }
+  render() {
+    const { model_list, model, lake_list, lake, variable_list, variable } =
+      this.state;
+    var variable_dict = {
+      "T_out.dat": "Temperature",
+      "S_out.dat": "Salinity",
+      "TotalIceH_out.dat": "Ice cover",
+      "OXY_sat_out.dat": "Oxygen saturation",
+      "NN_out.dat": "Brunt-Väisälä (NN)",
+      "nuh_out.dat": "Turbulent diffusivity (nuh)",
+    };
+    return (
+      <div className="downloads">
+        <select value={model} onChange={this.setModel}>
+          {model_list.map((m) => (
+            <option key={m} value={m}>
+              {m}
+            </option>
+          ))}
+        </select>
+        <select value={lake} onChange={this.setLake}>
+          {lake_list.map((m) => (
+            <option key={m} value={m}>
+              {m}
+            </option>
+          ))}
+        </select>
+        <select value={variable} onChange={this.setVariable}>
+          {variable_list.map((m) => (
+            <option key={m} value={m}>
+              {variable_dict[m]}
+            </option>
+          ))}
+        </select>
+        <a
+          href={`${
+            CONFIG.alplakes_bucket
+          }/simulations/${model.toLowerCase()}/downloads/${lake.toLowerCase()}/${variable}`}
+        >
+          <button className="download">Download</button>
+        </a>
+      </div>
+    );
+  }
+}
+
 class Models extends Component {
   state = {
     one_dimensional: [],
     three_dimensional: [],
+    remote_sensing: [],
   };
   constructor(props) {
     super(props);
@@ -35,13 +325,18 @@ class Models extends Component {
         CONFIG.alplakes_bucket +
           `/static/website/metadata/${CONFIG.branch}/three_dimensional.json`
       );
-      this.setState({ one_dimensional, three_dimensional });
+      var { data: remote_sensing } = await axios.get(
+        CONFIG.alplakes_bucket +
+          `/static/website/metadata/${CONFIG.branch}/remote_sensing.json`
+      );
+      this.setState({ one_dimensional, three_dimensional, remote_sensing });
     } catch (error) {
       console.error("Failed to collect metadata from bucket");
     }
   }
   render() {
-    var { one_dimensional, three_dimensional } = this.state;
+    const { language } = this.props;
+    var { one_dimensional, three_dimensional, remote_sensing } = this.state;
     return (
       <div className="main">
         <Helmet>
@@ -61,7 +356,7 @@ class Models extends Component {
               the models performance and provides access to downloads related to
               them.
             </p>
-            <div ref={this.threed}>
+            <div ref={this.threed} className="section">
               <h2>3D Hydrodynamic</h2>
               <p>
                 3D hydrodynamic lake models simulate water movement,
@@ -77,28 +372,69 @@ class Models extends Component {
                 Below is a list of all the 3D models available on the Alplakes
                 platform.
               </p>
-              <SortableTable data={three_dimensional} />
-              <h3>Downloads</h3>
-              <p>
-                For downloading subsets of data, please use the tools available
-                when viewing the model or look at the API documentation.{" "}
-              </p>
-              <h4>Input files</h4>
+              <SortableTable data={three_dimensional} language={language} />
+              <h3>Input files</h3>
               <p>
                 A set of example input files are provided for users that want to
                 adapt the models to their own purposes. These files can also be
                 generated using the code available{" "}
-                <a href="https://github.com/eawag-surface-waters-research/alplakes-simulations">
+                <a
+                  href="https://github.com/eawag-surface-waters-research/alplakes-simulations"
+                  target="_blank"
+                  rel="noreferrer"
+                >
                   here
                 </a>
                 . Please note users outside of Eawag will need to update the
                 weather data collection functions as we are not permitted to
                 distribute weather data.
               </p>
-              <select></select>
-              <select></select>
+              <ModelInputs list={three_dimensional} />
+              <h3>Running the model</h3>
+              <h4>Delft3D-flow</h4>
+              <p>
+                Please refer to the official documentation provided by Deltares{" "}
+                <a
+                  href="https://oss.deltares.nl/web/delft3d"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  here
+                </a>
+                . For users familiar with docker you can access documentation on
+                using custom Eawag compilations of D3D{" "}
+                <a
+                  href="https://github.com/eawag-surface-waters-research/docker"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  here
+                </a>
+                .
+              </p>
+              <h3>Results</h3>
+              <p>
+                For downloading small formatted subsets of the results, please
+                use the tools available when viewing the model or look at the
+                API documentation.
+              </p>
+              <h4>Delft3D-flow</h4>
+              <p>
+                Raw model results are available per week in NetCDF format. The
+                dimensions and variables are not self explanatory, you can refer
+                to the notebook{" "}
+                <a
+                  href="https://github.com/eawag-surface-waters-research/alplakes-simulations/blob/master/notebooks/process_results.ipynb"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  here
+                </a>{" "}
+                for more information.
+              </p>
+              <ThreeDimensionalResults list={three_dimensional} />
             </div>
-            <div ref={this.oned}>
+            <div ref={this.oned} className="section">
               <h2>1D Hydrodynamic</h2>
               <p>
                 1D lake models simplify lake processes by representing the lake
@@ -113,10 +449,91 @@ class Models extends Component {
                 studies and are especially useful for deep lakes where vertical
                 changes are more significant than horizontal ones.
               </p>
-              <SortableTable data={one_dimensional} />
+              <p>
+                Below is a list of all the 1D models available on the Alplakes
+                platform.
+              </p>
+              <SortableTable data={one_dimensional} language={language} />
+              <h3>Input files</h3>
+              <p>
+                A set of example input files are provided for users that want to
+                adapt the models to their own purposes. These files can also be
+                generated using the code available{" "}
+                <a
+                  href="https://github.com/Eawag-AppliedSystemAnalysis/operational-simstrat"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  here
+                </a>
+                . Please note users outside of Eawag will need to update the
+                weather data collection functions as we are not permitted to
+                distribute weather data.
+              </p>
+              <ModelInputs list={one_dimensional} subfolder={true} />
+              <h3>Running the model</h3>
+              <h4>Simstrat</h4>
+              <p>
+                Please refer to the official documentation provided by Eawag{" "}
+                <a
+                  href="https://github.com/Eawag-AppliedSystemAnalysis/Simstrat"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  here
+                </a>
+                .
+              </p>
+              <h3>Results</h3>
+              <p>
+                For downloading small formatted subsets of the results, please
+                use the tools available when viewing the model or look at the
+                API documentation.
+              </p>
+              <h4>Simstrat</h4>
+              <p>
+                Raw model results are available in text format. The results are
+                formatted in a CSV where the column headers refer to the depth
+                and the first column is the number of days after the reference
+                date (01.01.1981). The notebook{" "}
+                <a
+                  href="https://github.com/Eawag-AppliedSystemAnalysis/operational-simstrat/blob/master/notebooks/process_results.ipynb"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  here
+                </a>{" "}
+                provides an example of processing the raw data.
+              </p>
+              <OneDimensionalResults list={one_dimensional} />
             </div>
-            <div ref={this.remotesensing}>
+            <div ref={this.remotesensing} className="section">
               <h2>Remote Sensing</h2>
+              <p>
+                Remote sensing products are processed to provide a snapshot of
+                given parameters in the upper layers of the lake. The products
+                are produced using{" "}
+                <a
+                  href="https://github.com/eawag-surface-waters-research/sencast"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Sencast
+                </a>{" "}
+                a python toolbox that utalises a variety of data providers,
+                atmospheric corrections and algorithms to reproducibaly create
+                parameter maps for lakes across the alpine region.
+              </p>
+              <p>
+                Below is a list of all the remote sensing products available on
+                the Alplakes platform.
+              </p>
+              <SortableTable data={remote_sensing} language={language} />
+              <h3>Downloads</h3>
+              <p>
+                For downloading products, please use the tools available when
+                viewing the images or look at the API documentation.
+              </p>
             </div>
           </div>
           <div className="sidebar">

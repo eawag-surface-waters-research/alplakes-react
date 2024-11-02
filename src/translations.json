@@ -101,6 +101,72 @@
     "FR": "Profondeur maximale",
     "IT": "Profondità massima"
   },
+  "name": {
+    "EN": "Name",
+    "DE": "Name",
+    "FR": "Nom",
+    "IT": "Nome"
+  },
+  "model": {
+    "EN": "Model",
+    "DE": "Modell",
+    "FR": "Modèle",
+    "IT": "Modello"
+  },
+  "models": {
+    "EN": "Models",
+    "DE": "Modelle",
+    "FR": "Modèles",
+    "IT": "Modelli"
+  },
+  "timeframe": {
+    "EN": "Time frame",
+    "DE": "Zeitrahmen",
+    "FR": "Laps de temps",
+    "IT": "Periodo di tempo"
+  },
+  "overallrmse": {
+    "EN": "Overall RMSE",
+    "DE": "Gesamt-RMSE",
+    "FR": "RMSE global",
+    "IT": "RMSE complessivo"
+  },
+  "surfacermse": {
+    "EN": "Surface RMSE",
+    "DE": "Oberflächen-RMSE",
+    "FR": "RMSE de surface",
+    "IT": "RMSE di superficie"
+  },
+  "bottomrmse": {
+    "EN": "Bottom RMSE",
+    "DE": "Unterer RMSE",
+    "FR": "RMSE inférieur",
+    "IT": "RMSE inferiore"
+  },
+  "parameter": {
+    "EN": "Parameter",
+    "DE": "Parameter",
+    "FR": "Paramètre",
+    "IT": "Parametro"
+  },
+  "atmosphere": {
+    "EN": "Atmospheric correction",
+    "DE": "Atmosphärische Korrektur",
+    "FR": "Correction atmosphérique",
+    "IT": "Correzione atmosferica"
+  },
+  "method": {
+    "EN": "Method",
+    "DE": "Verfahren",
+    "FR": "Méthode",
+    "IT": "Metodo"
+  },
+  "unit": {
+    "EN": "Unit",
+    "DE": "Einheit",
+    "FR": "Unité",
+    "IT": "Unità"
+  },
   "start": {
     "EN": "Start",
     "DE": "Start",

@@ -210,7 +210,6 @@ class ListItem extends Component {
     var { lake, language, filterTypes, filters, setFavorties, favorites } =
       this.props;
     var selected = favorites.includes(lake.key);
-    console.log(filterTypes);
     return (
       <NavLink to={`/${lake.key}`}>
         <div

@@ -1,7 +1,8 @@
 import React, { useState } from "react";
+import Translations from "../../translations.json";
 import "./table.css";
 
-const SortableTable = ({ data }) => {
+const SortableTable = ({ data, language }) => {
   const rows = Object.entries(data).map(([key, value]) => ({ key, ...value }));
 
   var columns = [
@@ -41,6 +42,22 @@ const SortableTable = ({ data }) => {
   // Toggle fullscreen mode
   const toggleFullscreen = () => setIsFullscreen((prev) => !prev);
 
+  const unitDict = {
+    elevation: " (m)",
+    depth: " (m)",
+    area: " (km²)",
+    overallrmse: " (°C)",
+    surfacermse: " (°C)",
+    bottomrmse: " (°C)",
+    MdSA: " (%)",
+  };
+
+  const titleDict = {
+    RMSE: "Root mean squared error",
+    MAD: "Median absolute deviation",
+    MdSA: "Median symmetric accuracy",
+  };
+
   return (
     <div
       className={`table-outer-container ${isFullscreen ? "fullscreen" : ""}`}
@@ -54,8 +71,27 @@ const SortableTable = ({ data }) => {
                   key={column}
                   onClick={() => handleSort(column)}
                   style={{ textAlign: column === "name" ? "left" : "center" }}
+                  title={
+                    column in titleDict
+                      ? titleDict[column]
+                      : column in Translations
+                      ? Translations[column][language]
+                      : column
+                  }
                 >
-                  {column} &#x25b4;&#x25be;
+                  {column in Translations
+                    ? Translations[column][language]
+                    : column}{" "}
+                  {column in unitDict ? unitDict[column] : ""}
+                  {sortConfig.key === column ? (
+                    sortConfig.direction === "asc" ? (
+                      <div>&#x25b4;</div>
+                    ) : (
+                      <div>&#x25be;</div>
+                    )
+                  ) : (
+                    <div>&#x25b4;&#x25be;</div>
+                  )}
                 </th>
               ))}
             </tr>

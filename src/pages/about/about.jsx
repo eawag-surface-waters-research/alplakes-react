@@ -43,14 +43,13 @@ class About extends Component {
             <h1>About</h1>
             <p>
               Alplakes is a research initiative aimed at providing accurate
-              predictions on the condition of lakes throughout the European
+              predictions of the condition of lakes throughout the European
               Alpine region.
             </p>
             <p>
-              We integrate models and remote sensing products
-              developed by the research community, operating them in
-              near-real-time to provide the most up-to-date and accurate
-              information available.
+              We integrate models and remote sensing products developed by the
+              research community to provide the most up-to-date and accurate
+              information possible.
             </p>
             <div ref={this.contact}>
               <h2>Contact us</h2>

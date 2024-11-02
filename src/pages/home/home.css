@@ -80,7 +80,7 @@
 
 .main .home .content .search .filters {
   width: 100%;
-  margin-top: calc(var(--padding) / 4);
+  margin-top: calc(var(--padding) / 2);
   display: flex;
   overflow-x: scroll;
   scroll-snap-type: x mandatory;
@@ -119,6 +119,10 @@
   margin-right: 8px;
 }
 
+.main.dark .home .content .search .filters .filter .left-filter img {
+  filter: invert(100%) hue-rotate(180deg);
+}
+
 .main .home .content .search .filters .filter .right-filter {
   display: inline-block;
   vertical-align: top;
@@ -142,9 +146,9 @@
 
 .main .home .content .search .sort img {
   width: 20px;
-  padding: calc(var(--padding) / 2) 0 calc(var(--padding) / 4) 12px;
+  padding: calc(var(--padding) / 4) 0 calc(var(--padding) / 4) 12px;
   display: inline-block;
-  margin-top: 2px;
+  margin-top: calc(var(--padding) / 4 + 2px);
   cursor: pointer;
 }
 
@@ -357,6 +361,10 @@
   max-height: 25px;
   max-width: 35px;
   margin-left: 8px;
+}
+
+.main.dark .home .content .list .product-list .list-item .properties .right .view img {
+  filter: invert(100%) hue-rotate(180deg);
 }
 
 .main .home .content .list .product-list .list-item .summary {

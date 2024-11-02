@@ -35,10 +35,10 @@ class NavBar extends Component {
 
             <div className="desktop-nav">
               <NavLink className="nav-item" to="/">
-                <div className="nav-text">Lakes</div>
+                <div className="nav-text">{Translate.lakes[language]}</div>
               </NavLink>
               <NavLink className="nav-item" to="/models">
-                <div className="nav-text">Models</div>
+                <div className="nav-text">{Translate.models[language]}</div>
               </NavLink>
               <NavLink className="nav-item" to="/api">
                 <div className="nav-text">API</div>
@@ -84,7 +84,7 @@ class NavBar extends Component {
                 </NavLink>
                 <NavLink to="/models">
                   <div className="nav-row">
-                    Models <div className="arrow">{">"}</div>
+                  {Translate.models[language]} <div className="arrow">{">"}</div>
                   </div>
                 </NavLink>
                 <NavLink to="/api">
