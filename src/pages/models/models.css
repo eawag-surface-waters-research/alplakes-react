@@ -44,7 +44,7 @@
 }
 
 .main .models .content .section {
-    margin-bottom: calc(var(--padding) * 2)
+    margin-bottom: 64px;
 }
 
 .main .models .content select {
@@ -58,7 +58,8 @@
 }
 
 .main .models .content .downloads {
-    margin-bottom: 24px;
+    margin-bottom: 32px;
+    margin-top: -16px;
 }
 
 .main .models .content button.download {

@@ -410,7 +410,7 @@ class About extends Component {
           </div>
           <div className="sidebar">
             <div className="sidebar-inner">
-              <h2>Contents</h2>
+              <h3>Contents</h3>
               <div
                 className="link"
                 onClick={() => this.scrollToSection(this.contact)}

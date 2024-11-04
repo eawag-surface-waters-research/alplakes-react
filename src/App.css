@@ -96,7 +96,7 @@
 @media screen and (max-width: 500px) {
   :root {
     --background-color: white;
-    --search-height: calc(var(--padding) * 1.5 + 125px);
+    --search-height: 120px;
   }
 
   .dark {
@@ -114,32 +114,34 @@
 }
 
 h1 {
-  font-size: 32px;
-  font-weight: 600;
+  font-size: 48px;
+  font-weight: 500;
   margin-bottom: 24px;
 }
 
 h2 {
-  font-size: 24px;
-  font-weight: 600;
+  font-size: 32px;
+  font-weight: 400;
   margin-bottom: 16px;
 }
 
 h3 {
-  font-size: 20px;
+  font-size: 24px;
+  font-weight: 400;
+  margin-bottom: 12px;
+}
+
+h4 {
+  font-size: 16px;
   font-weight: 600;
   margin-bottom: 8px;
 }
 
-h4 {
-  font-size: 18px;
-  font-weight: 400;
-  margin-bottom: 8px;
-}
-
 p {
-  margin-bottom: 24px;
+  line-height: 28px;
+  font-size: 18px;
   max-width: 700px;
+  margin-bottom: 32px;
 }
 
 .main .background {

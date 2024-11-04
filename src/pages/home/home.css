@@ -31,7 +31,7 @@
 .main .home .content .search input {
   width: 100%;
   font-size: 20px;
-  font-weight: 600;
+  font-weight: 400;
   padding: 12px 18px 32px 70px;
   background-color: var(--box-color);
   color: var(--box-font-color);
@@ -304,7 +304,7 @@
   vertical-align: top;
   width: calc(100% - 180px);
   font-size: 20px;
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .main .home .content .list .product-list .list-item .properties .left .label {
@@ -824,6 +824,13 @@
   margin: 3px 6px;
 }
 
+@media screen and (min-width: 1920px) {
+  .main .home .content .home-map {
+    right: calc(100% / 2 - var(--max-width) / 2);
+  }
+
+}
+
 @media screen and (max-width: 1000px) {
 
 
@@ -964,9 +971,19 @@
     padding-left: var(--padding);
   }
 
-  .main .home .content .search .search-bar .description {
-    font-size: 12px;
+  .main .home .content .search input {
+    padding: 8px 8px 8px 50px;
   }
+
+  .main .home .content .search .search-bar .description {
+    display: none;
+  }
+
+  .main .home .content .search .search-bar img.search-icon {
+    left: 14px;
+    height: 24px;
+    top: 9px;
+}
 
   .main .home .content .search {
     left: 0;
@@ -976,9 +993,3 @@
   }
 }
 
-@media screen and (min-width: 1920px) {
-  .main .home .content .home-map {
-    right: calc(100% / 2 - var(--max-width) / 2);
-  }
-
-}
