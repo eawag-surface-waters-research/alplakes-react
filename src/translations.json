@@ -11,6 +11,12 @@
     "FR": "Lacs",
     "IT": "Laghi"
   },
+  "tagline": {
+    "EN": "Forecasts and monitoring of alpine lakes",
+    "DE": "Prognosen und Monitoring von Alpenseen",
+    "FR": "Prévisions et surveillance des lacs alpins",
+    "IT": "Previsioni e monitoraggio dei laghi alpini"
+  },
   "about": {
     "EN": "About",
     "DE": "Über",
@@ -915,8 +921,8 @@
   },
   "talk": {
     "EN": "Talk to me about:",
-    "DE": "Parlez-moi de :",
-    "FR": "Sprechen Sie mit mir über:",
+    "DE": "Sprechen Sie mit mir über:",
+    "FR": "Parlez-moi de :",
     "IT": "Parlami di:"
   },
   "repositories": {

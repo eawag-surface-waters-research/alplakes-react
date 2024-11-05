@@ -349,7 +349,7 @@ class Models extends Component {
         <NavBar {...this.props} relative={true} />
         <div className="models">
           <div className="content">
-            <h1>Models</h1>
+            <h1>{Translations.models[language]}</h1>
             <p>
               Alplakes integrates hydrodynamic models and remote sensing
               products developed by the research community. This page details
@@ -373,6 +373,35 @@ class Models extends Component {
                 platform.
               </p>
               <SortableTable data={three_dimensional} language={language} />
+              <p>
+                The Delft3D-flow models were calibrated automatically using{" "}
+                <a
+                  href="https://github.com/louisXW/DYNO-pods"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  DYNO-PODS
+                </a>
+                . The objective function is the root mean square error (RMSE) of
+                temperature difference and the root mean square deviation of
+                simulated Schmidt stability. The calibrated parameters are:
+              </p>
+              <ul>
+                <li>Coefficient of free convection (cfrco)</li>
+                <li>Coefficient of wind drag (α)</li>
+                <li>Ozmidov length scale (Loz)</li>
+                <li>Horizontal eddy viscosity (vh)</li>
+              </ul>
+              <p>
+                The parameters cfrco and α were calibrated for the
+                destratification period whereas Loz and vh were calibrated for
+                the stratification period. For more information on the
+                calibration please contact Marina Amadori (
+                <a href="mailto:marina.amadori@unitn.it">
+                  marina.amadori@unitn.it
+                </a>
+                ).
+              </p>
               <h3>Input files</h3>
               <p>
                 A set of example input files are provided for users that want to
@@ -454,6 +483,45 @@ class Models extends Component {
                 platform.
               </p>
               <SortableTable data={one_dimensional} language={language} />
+              <p>
+                The Simstat models were calibrated automatically using{" "}
+                <a
+                  href="https://github.com/eawag-surface-waters-research/lake-calibrator"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  lake-calibrator
+                </a>{" "}
+                a python wrapper that adapts{" "}
+                <a
+                  href="https://pesthomepage.org/"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  PEST
+                </a>{" "}
+                for use with Simstrat. The objective function is the root mean
+                square error (RMSE) of temperature difference between the model
+                and insitu temperature profiles. The calibrated parameters are:
+              </p>
+              <ul>
+                <li>
+                  Fraction of seiche energy to total wind energy (a_seiche)
+                </li>
+                <li>Fit parameter for wind speed at 10m [-] (f_wind)</li>
+                <li>
+                  Fit parameter for long-wave radiation from sky [-] (p_lw)
+                </li>
+                <li>Temperature of snow [°C] (snow_temp)</li>
+              </ul>
+              <p>
+                For more information on the calibration please contact Fabian
+                Bärenbold (
+                <a href="mailto:fabian.baerenbold@eawag.ch">
+                  fabian.baerenbold@eawag.ch
+                </a>
+                ).
+              </p>
               <h3>Input files</h3>
               <p>
                 A set of example input files are provided for users that want to
@@ -529,6 +597,20 @@ class Models extends Component {
                 the Alplakes platform.
               </p>
               <SortableTable data={remote_sensing} language={language} />
+              <p>
+                A number of algorithms were evaluated in order to select the
+                best performing products above. For more information about the
+                selection for Sentinel 3 please contact Abolfazl Irani Rahaghi (
+                <a href="mailto:Abolfazl.Irani@eawag.ch">
+                  Abolfazl.Irani@eawag.ch
+                </a>
+                ) and for more information about the selection of Sentinel 2
+                please contact Mortimer Werther (
+                <a href="mailto:Mortimer.Werther@eawag.ch">
+                  Mortimer.Werther@eawag.ch
+                </a>
+                ).
+              </p>
               <h3>Downloads</h3>
               <p>
                 For downloading products, please use the tools available when

@@ -47,6 +47,12 @@
     margin-bottom: 64px;
 }
 
+.main .models .content .section ul {
+    font-size: 16px;
+    padding-left: 32px;
+    margin: -25px 0 8px 0;
+}
+
 .main .models .content select {
     background-color: var(--box-color);
     padding: 8px 16px;
@@ -76,7 +82,7 @@
     transition: 0.2s ease-in-out all;
 }
 
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 1280px) {
     .main .models .sidebar {
         display: none;
     }

@@ -40,7 +40,7 @@ class About extends Component {
         <NavBar {...this.props} relative={true} />
         <div className="about">
           <div className="content">
-            <h1>About</h1>
+            <h1>{Translations.about[language]}</h1>
             <p>
               Alplakes is a research initiative aimed at providing accurate
               predictions of the condition of lakes throughout the European

@@ -111,9 +111,7 @@ class Search extends Component {
             id="search"
           />
           <img src={searchIcon} alt="Search Icon" className="search-icon" />
-          <div className="description">
-            Forecasts and monitoring of alpine lakes
-          </div>
+          <div className="description">{Translations.tagline[language]}</div>
         </div>
         <div className="filters">
           {filterTypes.map((f) => (
