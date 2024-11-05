@@ -54,10 +54,11 @@ for lake in metadata:
     if 'alplakes' in data["metadata"]:
         response = requests.get("https://alplakes-api.eawag.ch/simulations/metadata/delft3d-flow/{}".format(lake["key"]))
         model_metadata = response.json()
-        three_dimensional_list.append(
-            {"link": lake["key"],
+        three_dimensional_list.append({
+            "link": lake["key"],
             "name": lake["key"],
             "model": "Delft3D-flow",
+            "LatLng": "{}, {}".format(lake["latitude"], lake["longitude"]),
             "area": lake["area"],
             "elevation": lake["elevation"],
             "depth": lake["max_depth"],
@@ -81,6 +82,7 @@ for lake in metadata:
                 {"link": lake["key"],
                  "name": k,
                  "model": "Simstrat",
+                 "LatLng": "{}, {}".format(simstrat_metadata["latitude"], simstrat_metadata["longitude"]),
                  "area": lake["area"],
                  "elevation": lake["elevation"],
                  "depth": lake["max_depth"],

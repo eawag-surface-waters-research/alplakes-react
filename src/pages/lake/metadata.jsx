@@ -358,10 +358,12 @@ class Properties extends Component {
 class Metadata extends Component {
   render() {
     var { metadata, language, title, subtitle } = this.props;
+    console.log(metadata)
     return (
       <React.Fragment>
         <div className="title">{title}</div>
         <div className="subtitle">{subtitle}</div>
+        <div className="location">{metadata.latitude}, {metadata.longitude}</div>
         <LatestEvents language={language} />
         {"insitu" in metadata && (
           <Insitu metadata={metadata} language={language} />
