@@ -60,7 +60,7 @@
 }
 
 :root {
-  --search-height: calc(var(--padding) * 2.5 + 118px);
+  --search-height: calc(var(--padding) * 2 + 125px);
   --header-height: calc(var(--padding) + 30px);
 }
 

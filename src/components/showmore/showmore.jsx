@@ -23,8 +23,7 @@ class ShowMoreText extends Component {
     var show = showFullText ? text : truncatedText;
 
     return (
-      <div onClick={this.toggleText}>
-        <p>
+      <div onClick={this.toggleText} className="show-more-text">
           {show.split("@").map((t) =>
             t in links ? (
               <a
@@ -39,7 +38,6 @@ class ShowMoreText extends Component {
               t
             )
           )}
-        </p>
       </div>
     );
   }
