@@ -14,6 +14,7 @@ class ModelInputs extends Component {
     model: "",
     lake_list: [],
     lake: "",
+    example: "examples",
   };
   setModel = (event) => {
     const { list } = this.props;
@@ -26,6 +27,19 @@ class ModelInputs extends Component {
     var lake = event.target.value;
     this.setState({ lake });
   };
+  setExample = (event) => {
+    var example = event.target.value;
+    if (example === "downloads") {
+      const userInput = window.prompt("Please enter the password:");
+      if (userInput === "simstrat") {
+        this.setState({ example });
+      } else if (userInput !== null) {
+        window.alert("Incorrect password!")
+      }
+    } else {
+      this.setState({ example });
+    }
+  };
   componentDidUpdate() {
     const { list } = this.props;
     if (list.length > 0 && this.state.model_list.length === 0) {
@@ -37,15 +51,15 @@ class ModelInputs extends Component {
     }
   }
   render() {
-    const { subfolder } = this.props;
-    const { model_list, model, lake_list, lake } = this.state;
+    const { subfolder, full } = this.props;
+    const { model_list, model, lake_list, lake, example } = this.state;
     const link = subfolder
       ? `${
           CONFIG.alplakes_bucket
-        }/simulations/${model.toLowerCase()}/downloads/${lake.toLowerCase()}/${lake.toLowerCase()}.zip`
+        }/simulations/${model.toLowerCase()}/${example}/${lake.toLowerCase()}/${lake.toLowerCase()}.zip`
       : `${
           CONFIG.alplakes_bucket
-        }/simulations/${model.toLowerCase()}/downloads/${lake.toLowerCase()}.zip`;
+        }/simulations/${model.toLowerCase()}/${example}/${lake.toLowerCase()}.zip`;
     return (
       <div className="downloads">
         <select value={model} onChange={this.setModel}>
@@ -61,6 +75,10 @@ class ModelInputs extends Component {
               {m}
             </option>
           ))}
+        </select>
+        <select value={example} onChange={this.setExample}>
+          <option value="examples">Example</option>
+          {full && <option value="downloads">Full</option>}
         </select>
         <a href={link}>
           <button className="download">Download</button>
@@ -536,9 +554,15 @@ class Models extends Component {
                 </a>
                 . Please note users outside of Eawag will need to update the
                 weather data collection functions as we are not permitted to
-                distribute weather data.
+                distribute weather data. Full files are currently only availble
+                to project members but will become public after April 2025 when
+                MeteoSwiss moves to an Open Data model.
               </p>
-              <ModelInputs list={one_dimensional} subfolder={true} />
+              <ModelInputs
+                list={one_dimensional}
+                subfolder={true}
+                full={true}
+              />
               <h3>Running the model</h3>
               <h4>Simstrat</h4>
               <p>

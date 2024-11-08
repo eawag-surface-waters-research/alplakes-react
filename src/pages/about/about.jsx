@@ -51,7 +51,7 @@ class About extends Component {
               research community to provide the most up-to-date and accurate
               information possible.
             </p>
-            <div ref={this.contact}>
+            <div ref={this.contact} className="section">
               <h2>Contact us</h2>
               <p>
                 We encourage the use of our products. Please do not hesitate to
@@ -99,7 +99,7 @@ class About extends Component {
                 <div className="contact">1D models</div>
               </div>
             </div>
-            <div ref={this.projects}>
+            <div ref={this.projects} className="section">
               <h2>Contributing projects</h2>
               <p>
                 The following projects have been fundamental to either
@@ -212,7 +212,7 @@ class About extends Component {
                 </div>
               </p>
             </div>
-            <div ref={this.people}>
+            <div ref={this.people} className="section">
               <h2>Contributing people</h2>
               <h3>2024</h3>
               <p>
@@ -233,7 +233,7 @@ class About extends Component {
                 Adrien, Schmid Martin, Soulignac Frédéric, Odermatt, Daniel
               </p>
             </div>
-            <div ref={this.opensource}>
+            <div ref={this.opensource} className="section">
               <h2>Open source</h2>
               <p>
                 All the code and simulations that power Alplakes are made
@@ -283,7 +283,7 @@ class About extends Component {
                 https://github.com/eawag-surface-waters-research/airflow
               </a>
             </div>
-            <div ref={this.publications}>
+            <div ref={this.publications} className="section">
               <h2>Related publications</h2>
               <h3>Model development</h3>
               <p>

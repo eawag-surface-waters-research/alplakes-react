@@ -20,6 +20,7 @@
 
 .main .models .sidebar .sidebar-inner {
     background-color: var(--box-color);
+    box-shadow: var(--box-shadow);
     padding: 16px 24px;
     border-radius: 16px;
     border: 1px solid var(--border-color);
@@ -45,6 +46,8 @@
 
 .main .models .content .section {
     margin-bottom: 64px;
+    border-bottom: 5px solid var(--box-color);
+    padding-bottom: 30px;
 }
 
 .main .models .content .section ul {
@@ -61,11 +64,12 @@
     border-radius: 16px;
     margin-right: calc(var(--padding) / 2);
     max-width: 220px;
+    margin-top: 12px;
 }
 
 .main .models .content .downloads {
     margin-bottom: 32px;
-    margin-top: -16px;
+    margin-top: -28px;
 }
 
 .main .models .content button.download {
@@ -75,6 +79,8 @@
     border: 1px solid var(--highlight-color);
     border-radius: 16px;
     cursor: pointer;
+    margin-top: 12px;
+    box-shadow: var(--box-shadow);
 }
 
 .main .models .content button.download:hover {

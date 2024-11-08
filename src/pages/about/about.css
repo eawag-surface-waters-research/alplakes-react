@@ -24,6 +24,7 @@
     border-radius: 16px;
     border: 1px solid var(--border-color);
     width: 200px;
+    box-shadow: var(--box-shadow);
 }
 
 .main .about .sidebar .link {
@@ -45,6 +46,12 @@
 
 .main .about .content h2 {
     margin-top: 40px;
+}
+
+.main .about .content .section {
+    margin-bottom: 64px;
+    border-bottom: 5px solid var(--box-color);
+    padding-bottom: 30px;
 }
 
 @media screen and (max-width: 1280px) {

@@ -121,7 +121,7 @@
 }
 
 .main.dark .home .content .search .filters .filter .left-filter img {
-  filter: invert(100%) hue-rotate(180deg);
+  filter: invert(85%) hue-rotate(180deg);
 }
 
 .main .home .content .search .filters .filter .right-filter {
@@ -365,7 +365,7 @@
 }
 
 .main.dark .home .content .list .product-list .list-item .properties .right .view img {
-  filter: invert(100%) hue-rotate(180deg);
+  filter: invert(85%) hue-rotate(180deg);
 }
 
 .main .home .content .list .product-list .list-item .summary {
@@ -961,6 +961,12 @@
 
   .main .home .content .list .product-list .list-item {
     box-shadow: none;
+    border: none;
+  }
+
+  .main .home .content .list .product-list .list-item:hover {
+    box-shadow: none;
+    border: none;
   }
 
   .main .home .content .list .product-list .list-item .properties .left {

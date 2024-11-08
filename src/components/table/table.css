@@ -26,6 +26,7 @@
     background-color: var(--highlight-color);
     border-radius: 0 0 8px 8px;
     transition: all .2s 0s ease;
+    box-shadow: var(--box-shadow);
 }
 
 .expand:hover {
@@ -33,7 +34,7 @@
 }
 
 .table-inner-container {
-    max-height: 300px;
+    max-height: 320px;
     overflow: auto;
     text-align: left;
     z-index: 9;
