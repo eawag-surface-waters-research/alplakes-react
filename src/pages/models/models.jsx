@@ -555,10 +555,7 @@ class Models extends Component {
                 to project members but will become public after April 2025 when
                 MeteoSwiss moves to an Open Data model.
               </p>
-              <ModelInputs
-                list={one_dimensional}
-                full={true}
-              />
+              <ModelInputs list={one_dimensional} full={true} />
               <h3>Running the model</h3>
               <h4>Simstrat</h4>
               <p>
@@ -607,10 +604,10 @@ class Models extends Component {
                   rel="noreferrer"
                 >
                   Sencast
-                </a>{" "}
-                a python toolbox that utalises a variety of data providers,
-                atmospheric corrections and algorithms to reproducibaly create
-                parameter maps for lakes across the alpine region.
+                </a>
+                , a python toolbox that utilizes a variety of data providers,
+                atmospheric corrections and algorithms to reproducibly create
+                parameter maps for lakes across the Alpine region.
               </p>
               <p>
                 Below is a list of all the remote sensing products available on
@@ -620,14 +617,9 @@ class Models extends Component {
               <p>
                 A number of algorithms were evaluated in order to select the
                 best performing products above. For more information about the
-                selection for Sentinel 3 please contact Abolfazl Irani Rahaghi (
-                <a href="mailto:Abolfazl.Irani@eawag.ch">
-                  Abolfazl.Irani@eawag.ch
-                </a>
-                ) and for more information about the selection of Sentinel 2
-                please contact Mortimer Werther (
-                <a href="mailto:Mortimer.Werther@eawag.ch">
-                  Mortimer.Werther@eawag.ch
+                selection for Sentinel 2 and 3 please contact Daniel Odermatt (
+                <a href="mailto:daniel.odermatt@eawag.ch">
+                  Daniel.Odermatt@eawag.ch
                 </a>
                 ).
               </p>
