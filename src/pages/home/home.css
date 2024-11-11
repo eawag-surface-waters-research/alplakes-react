@@ -380,14 +380,11 @@
 
 .main .home .content .list .product-list .list-item .summary .offline {
   position: absolute;
-  left: 50%;
-  transform: translate(-50%, 0);
-  background-color: var(--background-color);
-  top: 12px;
+  top: 5px;
   z-index: 9;
   font-size: 14px;
   text-align: center;
-  opacity: 0.9;
+  width: 100%;
 }
 
 
