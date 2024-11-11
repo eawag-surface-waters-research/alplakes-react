@@ -980,6 +980,7 @@
 
   .main .home .content .search input {
     padding: 8px 8px 8px 50px;
+    box-shadow: var(--box-shadow);
   }
 
   .main .home .content .search .search-bar .description {
@@ -988,14 +989,32 @@
 
   .main .home .content .search .search-bar img.search-icon {
     left: 14px;
-    height: 24px;
+    height: 20px;
     top: 9px;
+    opacity: 0.8;
   }
 
   .main .home .content .search {
     left: 0;
     width: 100%;
-    padding: 0 var(--padding);
+    padding: 0 calc(var(--padding)/2);
     max-width: 100%;
+    box-shadow: var(--box-shadow);
+  }
+
+  .main .home .content .search .filters .filter {
+    padding: 2px 8px;
+  }
+
+  .main .home .content .search .filters .filter .right-filter {
+    font-size: 12px;
+  }
+
+  .main .home .content .search .sort select {
+    padding: calc(var(--padding) / 2) 10px calc(var(--padding) / 2) 10px;
+  }
+
+  .main .home .content .search .results {
+    padding-right: 4px;
   }
 }

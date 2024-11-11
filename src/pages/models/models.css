@@ -93,3 +93,9 @@
         display: none;
     }
 }
+
+@media screen and (max-width: 1280px) {
+    .main .models .content .section {
+        border-color: var(--border-color);
+    }
+}

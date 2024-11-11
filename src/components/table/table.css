@@ -93,4 +93,10 @@ table.table-styling th {
     .table-outer-container.fullscreen {
         padding: 0;
     }
+    table.table-styling tr:nth-child(odd) {
+        background-color: #F3F4F6;
+    }
+    .main.dark table.table-styling tr:nth-child(odd) {
+        background-color: hsl(233, 8%, 19%);
+    }
 }

@@ -34,7 +34,7 @@ class ModelInputs extends Component {
       if (userInput === "simstrat") {
         this.setState({ example });
       } else if (userInput !== null) {
-        window.alert("Incorrect password!")
+        window.alert("Incorrect password!");
       }
     } else {
       this.setState({ example });
@@ -51,15 +51,11 @@ class ModelInputs extends Component {
     }
   }
   render() {
-    const { subfolder, full } = this.props;
+    const { full } = this.props;
     const { model_list, model, lake_list, lake, example } = this.state;
-    const link = subfolder
-      ? `${
-          CONFIG.alplakes_bucket
-        }/simulations/${model.toLowerCase()}/${example}/${lake.toLowerCase()}/${lake.toLowerCase()}.zip`
-      : `${
-          CONFIG.alplakes_bucket
-        }/simulations/${model.toLowerCase()}/${example}/${lake.toLowerCase()}.zip`;
+    const link = `${
+      CONFIG.alplakes_bucket
+    }/simulations/${model.toLowerCase()}/${example}/${lake.toLowerCase()}.zip`;
     return (
       <div className="downloads">
         <select value={model} onChange={this.setModel}>
@@ -306,7 +302,7 @@ class OneDimensionalResults extends Component {
         <a
           href={`${
             CONFIG.alplakes_bucket
-          }/simulations/${model.toLowerCase()}/downloads/${lake.toLowerCase()}/${variable}`}
+          }/simulations/${model.toLowerCase()}/results/${lake.toLowerCase()}/${variable}`}
         >
           <button className="download">Download</button>
         </a>
@@ -369,17 +365,18 @@ class Models extends Component {
           <div className="content">
             <h1>{Translations.models[language]}</h1>
             <p>
-              Alplakes integrates hydrodynamic models and remote sensing
-              products developed by the research community. This page details
-              the models performance and provides access to downloads related to
-              them.
+              Alplakes uses calibrated hydrodynamic models and remote sensing
+              products, developed by the research community, to provide lake
+              condition forecasts for the Alpine region. This page gives access
+              to these models, along with their input data, performance metrics,
+              and raw output.
             </p>
             <div ref={this.threed} className="section">
               <h2>3D Hydrodynamic</h2>
               <p>
                 3D hydrodynamic lake models simulate water movement,
                 temperature, and water quality by dividing the lake into a 3D
-                grid and solving mathematical equations that govern fluid
+                grid and solving the mathematical equations that govern fluid
                 motion, heat transfer, and chemical interactions. They use the
                 Navier-Stokes equations to calculate flow dynamics based on
                 external forces like wind, inflows, and gravity. Temperature,
@@ -560,7 +557,6 @@ class Models extends Component {
               </p>
               <ModelInputs
                 list={one_dimensional}
-                subfolder={true}
                 full={true}
               />
               <h3>Running the model</h3>
