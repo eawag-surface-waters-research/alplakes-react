@@ -563,15 +563,16 @@
 
 .main .home .content .map-button {
   position: fixed;
-  bottom: calc(var(--padding) * 2);
+  bottom: calc(var(--padding)* 2);
   left: 50%;
   transform: translate(-50%, 0);
-  padding: var(--padding) 40px;
+  padding: 12px 40px;
   background-color: var(--box-color);
   border: 1px solid var(--border-color);
   border-radius: 22px;
   z-index: 9999;
   display: none;
+  box-shadow: var(--box-shadow);
 }
 
 .main .home .content .map-button img {
@@ -967,17 +968,27 @@
   }
 
   .main .home .content .list .product-list .list-item .properties .left {
-    padding-left: var(--padding);
+    padding: 10px 0 8px var(--padding);
     font-size: 18px;
   }
 
   .main .home .content .list .product-list .list-item .properties .right {
     padding-left: var(--padding);
+    top: 5px;
+  }
+
+  .main .home .content .list .product-list .list-item {
+    margin-bottom: 6px;
   }
 
   .main .home .content .search input {
-    padding: 8px 8px 8px 50px;
-    box-shadow: var(--box-shadow);
+    padding: 12px 8px 12px 50px;
+    box-shadow: var(--search-shadow);
+    border: none;
+  }
+
+  .main .home .content .search input::placeholder {
+    color: var(--background-suble-font-color);
   }
 
   .main .home .content .search .search-bar .description {
@@ -985,22 +996,37 @@
   }
 
   .main .home .content .search .search-bar img.search-icon {
-    left: 14px;
+    left: 16px;
     height: 20px;
-    top: 9px;
-    opacity: 0.8;
+    top: 12px;
+    opacity: 1;
   }
 
   .main .home .content .search {
     left: 0;
     width: 100%;
-    padding: 0 calc(var(--padding)/2);
+    padding: 8px calc(var(--padding)/2) 0 calc(var(--padding)/2);
     max-width: 100%;
-    box-shadow: var(--box-shadow);
+    box-shadow: var(--bottom-shadow);
+    background-color: #ffffffe8;
+  }
+
+  .main.dark .home .content .search {
+    background-color: hsl(232deg 11% 15% / 90%);
   }
 
   .main .home .content .search .filters .filter {
     padding: 2px 8px;
+    background-color: #F3F4F6;
+    border: none;
+  }
+
+  .main .home .content .search .filters .filter:hover {
+    color: initial;    
+  }
+
+  .main.dark .home .content .search .filters .filter {
+    background-color: hsl(233, 8%, 19%);
   }
 
   .main .home .content .search .filters .filter .right-filter {
@@ -1013,5 +1039,26 @@
 
   .main .home .content .search .results {
     padding-right: 4px;
+  }
+
+  .main .home .content .search .filters .filter .left-filter img {
+    max-height: 16px;
+    max-width: 25px;
+    margin-right: 8px;
+    padding-top: 3px;
+  }
+
+  .main .home .content .search .filters {
+    margin-top: 12px;
+  }
+
+  .main .home .content .search .sort {
+    margin-top: 6px;
+  }
+
+  .main .home .content .list .product-list .list-item .properties .right .view img {
+    max-height: 20px;
+    max-width: 35px;
+    margin-left: 10px;
   }
 }

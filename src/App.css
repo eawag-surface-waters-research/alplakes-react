@@ -27,6 +27,8 @@
   --border-color: #ddd;
   --box-shadow: rgba(0, 0, 0, 0.14) 0px 1px 5px;
   --box-shadow-hover: rgba(0, 0, 0, 0.24) 0px 1px 6px;
+  --bottom-shadow: 0px 3px 5px 0px rgba(214, 214, 214, 0.6);
+  --search-shadow: rgba(50, 50, 93, 0.25) 0px 1px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
   --star-color: #E9C00A;
   --content-width: 1280px;
   --text-width: 700px;
@@ -79,6 +81,8 @@
   --pulse-color: rgb(136 136 136);
   --map-color: rgb(41, 41, 41);
   --box-shadow: 0 0 0 1px hsla(230, 13%, 9%, 0.075), 0 0.3px 0.4px hsla(230, 13%, 9%, 0.02), 0 0.9px 1.5px hsla(230, 13%, 9%, 0.045), 0 3.5px 6px hsla(230, 13%, 9%, 0.09);
+  --search-shadow: rgb(14 14 17 / 81%) 0px 3px 8px;
+  --bottom-shadow: 0px 3px 5px 0px rgb(0 0 0 / 26%);
   --box-shadow-hover: rgb(255 255 255 / 16%) 0px 1px 8px;
   --legend-color: rgb(41 41 41 / 65%);
 }
@@ -87,7 +91,7 @@
   :root {
     --list-width: 100%;
     --padding: 20px;
-    --header-height: calc(var(--padding) * 2 + 26px);
+    --header-height: calc(var(--padding) * 2 + 22px);
     --top-margin: 87px;
     --search-height: calc(var(--padding) * 2.5 + 125px);
   }
@@ -96,7 +100,7 @@
 @media screen and (max-width: 500px) {
   :root {
     --background-color: white;
-    --search-height: 120px;
+    --search-height: 135px;
   }
 
   .dark {
