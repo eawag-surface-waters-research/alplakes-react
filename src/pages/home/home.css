@@ -1060,4 +1060,11 @@
     max-width: 35px;
     margin-left: 10px;
   }
+
+  .main .home .content .home-map #map .day-selector .day-outer .day-inner {
+    padding: 16px 12px;
+    opacity: 0.9;
+    border: 1px solid transparent;
+  }
+
 }
