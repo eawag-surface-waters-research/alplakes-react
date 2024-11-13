@@ -136,6 +136,7 @@
     }
 
     .footer .left img {
-        height: 24px;
+        height: 25px;
+        padding-top: 8px;
     }
 }

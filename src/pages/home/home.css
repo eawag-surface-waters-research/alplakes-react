@@ -137,7 +137,7 @@
 }
 
 .main .home .content .search .filters .filter:hover {
-  color: var(--highlight-color);
+  border-color: var(--highlight-color);
 }
 
 .main .home .content .search .sort {
@@ -265,7 +265,7 @@
 
 .main .home .content .list .product-list .list-item .properties .left .favorite {
   display: inline-block;
-  margin-left: 5px;
+  padding-left: 8px;
   font-weight: bold;
   color: var(--border-color);
 }
@@ -1021,10 +1021,6 @@
     border: none;
   }
 
-  .main .home .content .search .filters .filter:hover {
-    color: initial;    
-  }
-
   .main.dark .home .content .search .filters .filter {
     background-color: hsl(233, 8%, 19%);
   }
@@ -1035,10 +1031,13 @@
 
   .main .home .content .search .sort select {
     padding: calc(var(--padding) / 2) 10px calc(var(--padding) / 2) 10px;
+    font-size: 14px;
   }
 
   .main .home .content .search .results {
     padding-right: 4px;
+    font-size: 14px;
+    padding-top: 4px;
   }
 
   .main .home .content .search .filters .filter .left-filter img {
