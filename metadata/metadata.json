@@ -218,7 +218,6 @@
     "latitude": 45.58,
     "longitude": 10.63,
     "flags": ["italian"],
-    "simstrat": false,
     "datalakes_id": 59,
     "default_depth": 1,
     "alplakes": {
@@ -330,7 +329,6 @@
     "latitude": 46.02,
     "longitude": 11.24,
     "flags": ["italian"],
-    "simstrat": false,
     "datalakes_id": 189,
     "default_depth": 1,
     "alplakes": {
@@ -2155,6 +2153,72 @@
     "residence_time": "NA",
     "mixing_regime": "Dimictic",
     "geothermal_flux": 0.1,
+    "trophic_state": "NA"
+  },
+  {
+    "key": "annecy",
+    "name": {
+      "EN": "Lake Annecy",
+      "DE": "Lac d’Annecy",
+      "FR": "Lac d'Annecy",
+      "IT": "Lago di Annecy"
+    },
+    "area": 27.59,
+    "ave_depth": 41.0,
+    "max_depth": 82.0,
+    "elevation": 446.97,
+    "latitude": 45.854,
+    "longitude": 6.176,
+    "flags": ["france"],
+    "type": "Natural",
+    "volume": 1.12,
+    "residence_time": 1460,
+    "mixing_regime": "NA",
+    "geothermal_flux": 0.12,
+    "trophic_state": "NA"
+  },
+  {
+    "key": "bourget",
+    "name": {
+      "EN": "Lake Bourget",
+      "DE": "Lac du Bourget",
+      "FR": "Lac du Bourget",
+      "IT": "Lago del Bourget"
+    },
+    "area": 44.5,
+    "ave_depth": 85,
+    "max_depth": 145.0,
+    "elevation": 231.5,
+    "latitude": 45.742,
+    "longitude": 5.862,
+    "flags": ["france"],
+    "type": "Natural",
+    "volume": 3.6,
+    "residence_time": 2920,
+    "mixing_regime": "NA",
+    "geothermal_flux": 0.12,
+    "trophic_state": "NA"
+  },
+  {
+    "key": "bled",
+    "name": {
+      "EN": "Lake Bled",
+      "DE": "Bleder See",
+      "FR": "Lac de Bled",
+      "IT": "Lago di Bled"
+    },
+    "area": 1.45,
+    "ave_depth": "NA",
+    "max_depth": 29.5,
+    "elevation": 475,
+    "latitude": 46.364,
+    "longitude": 14.095,
+    "flags": ["slovenian"],
+    "type": "Natural",
+    "volume": 0.0257,
+    "residence_time": "NA",
+    "mixing_regime": "NA",
+    "geothermal_flux": 0.12,
     "trophic_state": "NA"
   }
 ]

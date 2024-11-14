@@ -515,6 +515,7 @@
   border-top: 2px solid var(--border-color);
   left: 0;
   background: linear-gradient(179deg, #6b636133, #ffffff1f);
+  border-radius: 0 0 16px 16px;
 }
 
 .main .home .content .list .product-list .skeleton-block.right {

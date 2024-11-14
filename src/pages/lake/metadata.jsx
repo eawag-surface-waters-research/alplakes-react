@@ -341,7 +341,6 @@ class Properties extends Component {
 class Metadata extends Component {
   render() {
     var { metadata, language, title, subtitle } = this.props;
-    console.log(metadata)
     return (
       <React.Fragment>
         <div className="title">{title}</div>
