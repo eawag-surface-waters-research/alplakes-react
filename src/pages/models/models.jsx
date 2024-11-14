@@ -371,23 +371,34 @@ class Models extends Component {
               to these models, along with their input data, performance metrics,
               and raw output.
             </p>
+            <p>
+              We welcome collaboration opportunities with researchers and
+              institutions interested in advancing lake modeling and monitoring.
+              Please see the <b>About</b> page for contact information.
+            </p>
             <div ref={this.threed} className="section">
-              <h2>3D Hydrodynamic</h2>
+              <h2>3D Hydrodynamic Modelling</h2>
               <p>
-                3D hydrodynamic lake models simulate water movement,
-                temperature, and water quality by dividing the lake into a 3D
-                grid and solving the mathematical equations that govern fluid
-                motion, heat transfer, and chemical interactions. They use the
-                Navier-Stokes equations to calculate flow dynamics based on
-                external forces like wind, inflows, and gravity. Temperature,
-                salinity, and other factors create density gradients, which
-                drive stratification and mixing processes within the lake.
+                3D hydrodynamic lake models simulate lake dynamics through
+                numerical computations. The lake volume is divided into a
+                three-dimensional grid where fluid dynamics are resolved by
+                solving complex systems of differentioal equations for momentum
+                (Reynolds averaged Navier-Stokes equations), water volume
+                (continuity equation) and scalars such as temperature or
+                salinity (transport equation). The model accounts for external
+                forces including meteorological forcing and water inflows and
+                returns information regarding the water currents, temperature
+                and density dynamics. Processes occurring at scales smaller than
+                the grid size are typically parameterized with so called
+                turbulence closure models.
               </p>
               <p>
                 Below is a list of all the 3D models available on the Alplakes
                 platform.
               </p>
               <SortableTable data={three_dimensional} language={language} />
+              <h3>Calibration</h3>
+              <h4>Delft3D-flow</h4>
               <p>
                 The Delft3D-flow models were calibrated automatically using{" "}
                 <a
@@ -479,7 +490,7 @@ class Models extends Component {
               <ThreeDimensionalResults list={three_dimensional} />
             </div>
             <div ref={this.oned} className="section">
-              <h2>1D Hydrodynamic</h2>
+              <h2>1D Hydrodynamic Modelling</h2>
               <p>
                 1D lake models simplify lake processes by representing the lake
                 as a single vertical column, divided into layers from the
@@ -498,8 +509,10 @@ class Models extends Component {
                 platform.
               </p>
               <SortableTable data={one_dimensional} language={language} />
+              <h3>Calibration</h3>
+              <h4>Simstrat</h4>
               <p>
-                The Simstat models were calibrated automatically using{" "}
+                The Simstrat models were calibrated automatically using{" "}
                 <a
                   href="https://github.com/eawag-surface-waters-research/lake-calibrator"
                   target="_blank"
@@ -527,7 +540,10 @@ class Models extends Component {
                 <li>
                   Fit parameter for long-wave radiation from sky [-] (p_lw)
                 </li>
-                <li>Temperature of snow [°C] (snow_temp)</li>
+                <li>
+                  Threshold air temperature that defines accumulation and
+                  melting of snow on ice covered lakes [°C] (snow_temp)
+                </li>
               </ul>
               <p>
                 For more information on the calibration please contact Fabian
@@ -593,7 +609,7 @@ class Models extends Component {
               <OneDimensionalResults list={one_dimensional} />
             </div>
             <div ref={this.remotesensing} className="section">
-              <h2>Remote Sensing</h2>
+              <h2>Remote Sensing Products</h2>
               <p>
                 Remote sensing products are processed to provide a snapshot of
                 given parameters in the upper layers of the lake. The products

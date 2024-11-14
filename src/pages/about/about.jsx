@@ -13,6 +13,7 @@ class About extends Component {
   constructor(props) {
     super(props);
     this.contact = React.createRef();
+    this.vision = React.createRef();
     this.projects = React.createRef();
     this.people = React.createRef();
     this.opensource = React.createRef();
@@ -42,7 +43,7 @@ class About extends Component {
           <div className="content">
             <h1>{Translations.about[language]}</h1>
             <p>
-              Alplakes is a research initiative aimed at providing accurate
+              Alplakes is a research initiative that provides accurate
               predictions of the condition of lakes throughout the European
               Alpine region.
             </p>
@@ -51,6 +52,41 @@ class About extends Component {
               research community to provide the most up-to-date and accurate
               information possible.
             </p>
+            <div ref={this.vision} className="section">
+              <h2>Vision</h2>
+              <p>
+                This platform aims to transform how lakes are studied and
+                monitored by providing a unified, user-friendly data
+                visualization interface for citizens, water professionals, and
+                scientists. This broader access to hydrodynamic modeling and
+                remote sensing data not only accelerates scientific research but
+                enables evidence-based decisions in water resource management.
+                What once required specialized expertise is now accessible
+                through a seamless, user-friendly platform that combines
+                scientific rigor with practical utility.
+              </p>
+              <h3>Future development roadmap</h3>
+              <h4>Expansion plans</h4>
+              <ul>
+                <li>Include additional Alpine lakes</li>
+                <li>Expand remote sensing coverage to entire Alpine region</li>
+                <li>
+                  Integration of additional model types (MITgcm and Delft3D-FM
+                  in testing)
+                </li>
+                <li>Implementation of on-demand high-resolution modeling</li>
+              </ul>
+              <h4>Enhanced features</h4>
+              <ul>
+                <li>
+                  Development of physically-guided machine learning models
+                </li>
+                <li>Integration of specialized product solutions</li>
+                <li>Advanced particle tracking capabilities</li>
+                <li>Implementation of early warning systems</li>
+                <li>Water quality module development</li>
+              </ul>
+            </div>
             <div ref={this.contact} className="section">
               <h2>Contact us</h2>
               <p>
@@ -411,6 +447,12 @@ class About extends Component {
           <div className="sidebar">
             <div className="sidebar-inner">
               <h3>Contents</h3>
+              <div
+                className="link"
+                onClick={() => this.scrollToSection(this.vision)}
+              >
+                Vision
+              </div>
               <div
                 className="link"
                 onClick={() => this.scrollToSection(this.contact)}
