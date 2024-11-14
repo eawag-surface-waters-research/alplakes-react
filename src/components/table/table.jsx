@@ -107,6 +107,7 @@ const SortableTable = ({ data, language }) => {
                   <td
                     key={column}
                     style={{ textAlign: column === "name" ? "left" : "center" }}
+                    title={row[column] !== undefined ? row[column] : "NaN"}
                   >
                     {row[column] !== undefined ? row[column] : "NaN"}
                   </td>

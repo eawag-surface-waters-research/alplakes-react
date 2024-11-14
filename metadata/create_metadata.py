@@ -56,7 +56,7 @@ for lake in metadata:
         model_metadata = response.json()
         three_dimensional_list.append({
             "link": lake["key"],
-            "name": lake["key"],
+            "name": lake["name"]["EN"],
             "model": "Delft3D-flow",
             "LatLng": "{}, {}".format(lake["latitude"], lake["longitude"]),
             "area": lake["area"],
@@ -79,13 +79,13 @@ for lake in metadata:
                 "https://alplakes-api.eawag.ch/simulations/1d/metadata/simstrat/{}".format(k))
             model_metadata = response.json()
             one_dimensional_list.append(
-                {"link": lake["key"],
-                 "name": k,
+                {"link": simstrat_metadata["key"],
+                 "name": simstrat_metadata["name"],
                  "model": "Simstrat",
                  "LatLng": "{}, {}".format(simstrat_metadata["latitude"], simstrat_metadata["longitude"]),
-                 "area": lake["area"],
-                 "elevation": lake["elevation"],
-                 "depth": lake["max_depth"],
+                 "area": simstrat_metadata["surface_area"],
+                 "elevation": simstrat_metadata["elevation"],
+                 "depth": simstrat_metadata["max_depth"],
                  "timeframe": "{}-{}".format(model_metadata["start_date"][0:4], model_metadata["end_date"][0:4]),
                  "overallrmse": round(simstrat_metadata["performance"]["rmse"]["overall"], 2),
                  "surfacermse": round(simstrat_metadata["performance"]["rmse"]["surface"], 2),

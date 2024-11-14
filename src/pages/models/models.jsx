@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { NavLink } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import axios from "axios";
 import NavBar from "../../components/navbar/navbar";
@@ -19,8 +20,12 @@ class ModelInputs extends Component {
   setModel = (event) => {
     const { list } = this.props;
     var model = event.target.value;
-    var lake_list = list.filter((l) => l.model === model).map((l) => l.name);
-    var lake = lake_list[0];
+    var lake_list = list
+      .filter((l) => l.model === model)
+      .map((l) => {
+        return { name: l.name, link: l.link };
+      });
+    var lake = lake_list[0].link;
     this.setState({ model, lake_list, lake });
   };
   setLake = (event) => {
@@ -45,8 +50,12 @@ class ModelInputs extends Component {
     if (list.length > 0 && this.state.model_list.length === 0) {
       var model_list = [...new Set(list.map((l) => l.model))];
       var model = model_list[0];
-      var lake_list = list.filter((l) => l.model === model).map((l) => l.name);
-      var lake = lake_list[0];
+      var lake_list = list
+        .filter((l) => l.model === model)
+        .map((l) => {
+          return { name: l.name, link: l.link };
+        });
+      var lake = lake_list[0].link;
       this.setState({ model_list, model, lake_list, lake });
     }
   }
@@ -67,8 +76,8 @@ class ModelInputs extends Component {
         </select>
         <select value={lake} onChange={this.setLake}>
           {lake_list.map((m) => (
-            <option key={m} value={m}>
-              {m}
+            <option key={m.link} value={m.link}>
+              {m.name}
             </option>
           ))}
         </select>
@@ -96,8 +105,12 @@ class ThreeDimensionalResults extends Component {
   setModel = async (event) => {
     const { list } = this.props;
     var model = event.target.value;
-    var lake_list = list.filter((l) => l.model === model).map((l) => l.name);
-    var lake = lake_list[0];
+    var lake_list = list
+      .filter((l) => l.model === model)
+      .map((l) => {
+        return { name: l.name, link: l.link };
+      });
+    var lake = lake_list[0].link;
     var data = await this.getMetadata(model.toLowerCase(), lake.toLowerCase());
     var week_list = this.getWeeks(data.start_date, data.end_date);
     var week = week_list[0];
@@ -159,8 +172,12 @@ class ThreeDimensionalResults extends Component {
     if (list.length > 0 && this.state.model_list.length === 0) {
       var model_list = [...new Set(list.map((l) => l.model))];
       var model = model_list[0];
-      var lake_list = list.filter((l) => l.model === model).map((l) => l.name);
-      var lake = lake_list[0];
+      var lake_list = list
+        .filter((l) => l.model === model)
+        .map((l) => {
+          return { name: l.name, link: l.link };
+        });
+      var lake = lake_list[0].link;
       var data = await this.getMetadata(
         model.toLowerCase(),
         lake.toLowerCase()
@@ -184,8 +201,8 @@ class ThreeDimensionalResults extends Component {
         </select>
         <select value={lake} onChange={this.setLake}>
           {lake_list.map((m) => (
-            <option key={m} value={m}>
-              {m}
+            <option key={m.link} value={m.link}>
+              {m.name}
             </option>
           ))}
         </select>
@@ -220,20 +237,17 @@ class OneDimensionalResults extends Component {
   setModel = async (event) => {
     const { list } = this.props;
     var model = event.target.value;
-    var lake_list = list.filter((l) => l.model === model).map((l) => l.name);
-    var lake = lake_list[0];
-    var data = await this.getMetadata(model.toLowerCase(), lake.toLowerCase());
-    var week_list = this.getWeeks(data.start_date, data.end_date);
-    var week = week_list[0];
-    this.setState({ model, lake_list, lake, week_list, week });
+    var lake_list = list
+      .filter((l) => l.model === model)
+      .map((l) => {
+        return { name: l.name, link: l.link };
+      });
+    var lake = lake_list[0].link;
+    this.setState({ model, lake_list, lake });
   };
   setLake = async (event) => {
-    const { model } = this.state;
     var lake = event.target.value;
-    var data = await this.getMetadata(model.toLowerCase(), lake.toLowerCase());
-    var week_list = this.getWeeks(data.start_date, data.end_date);
-    var week = week_list[0];
-    this.setState({ lake, week_list, week });
+    this.setState({ lake });
   };
   setVariable = (event) => {
     var variable = event.target.value;
@@ -244,8 +258,12 @@ class OneDimensionalResults extends Component {
     if (list.length > 0 && this.state.model_list.length === 0) {
       var model_list = [...new Set(list.map((l) => l.model))];
       var model = model_list[0];
-      var lake_list = list.filter((l) => l.model === model).map((l) => l.name);
-      var lake = lake_list[0];
+      var lake_list = list
+        .filter((l) => l.model === model)
+        .map((l) => {
+          return { name: l.name, link: l.link };
+        });
+      var lake = lake_list[0].link;
       var variable_list = [
         "T_out.dat",
         "S_out.dat",
@@ -287,8 +305,8 @@ class OneDimensionalResults extends Component {
         </select>
         <select value={lake} onChange={this.setLake}>
           {lake_list.map((m) => (
-            <option key={m} value={m}>
-              {m}
+            <option key={m.link} value={m.link}>
+              {m.name}
             </option>
           ))}
         </select>
@@ -374,7 +392,8 @@ class Models extends Component {
             <p>
               We welcome collaboration opportunities with researchers and
               institutions interested in advancing lake modeling and monitoring.
-              Please see the <b>About</b> page for contact information.
+              Please see the <NavLink to="/about">About</NavLink> page for
+              contact information.
             </p>
             <div ref={this.threed} className="section">
               <h2>3D Hydrodynamic Modelling</h2>

@@ -54,6 +54,12 @@
     padding-bottom: 30px;
 }
 
+.main .about .content .project-info {
+    margin-top: -35px;
+    margin-bottom: 20px;
+
+}
+
 .main .about .content .section ul {
     font-size: 16px;
     padding-left: 32px;

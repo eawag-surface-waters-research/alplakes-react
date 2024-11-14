@@ -151,22 +151,25 @@ class About extends Component {
                 Trento and CNR. As part of this project 12 3D hydrodynamic
                 models where built and calibrated, Sentinel 2 products were
                 calibrated and the web platform was developed.
+              </p>
+              <div className="project-info">
                 <a className="link" href="https://alplakes.eawag.ch">
                   https://alplakes.eawag.ch
                 </a>
                 <div className="parameter">
-                  <div class="circle">
-                    <span class="circle-text">$</span>
+                  <div className="circle">
+                    <span className="circle-text">$</span>
                   </div>
                   <div className="text">European Space Agency</div>
                 </div>
                 <div className="parameter">
-                  <div class="circle">
-                    <span class="circle-text">PI</span>
+                  <div className="circle">
+                    <span className="circle-text">PI</span>
                   </div>
                   <div className="text">Damien Bouffard</div>
                 </div>
-              </p>
+              </div>
+
               <h3>Simstrat</h3>
               <p>
                 Simstrat is a one-dimensional physical lake model for the
@@ -175,6 +178,8 @@ class About extends Component {
                 project is developed jointly by the Aquatic Physics and Applied
                 System Analysis groups in the Department Surface Waters -
                 Research & Management (SURF).
+              </p>
+              <div className="project-info">
                 <a
                   className="link"
                   href="https://github.com/Eawag-AppliedSystemAnalysis/Simstrat"
@@ -182,18 +187,19 @@ class About extends Component {
                   https://github.com/Eawag-AppliedSystemAnalysis/Simstrat
                 </a>
                 <div className="parameter">
-                  <div class="circle">
-                    <span class="circle-text">$</span>
+                  <div className="circle">
+                    <span className="circle-text">$</span>
                   </div>
                   <div className="text">Eawag</div>
                 </div>
                 <div className="parameter">
-                  <div class="circle">
-                    <span class="circle-text">PI</span>
+                  <div className="circle">
+                    <span className="circle-text">PI</span>
                   </div>
                   <div className="text">Martin Schmid</div>
                 </div>
-              </p>
+              </div>
+
               <h3>Sencast</h3>
               <p>
                 Sencast is a toolbox to download and derive water quality
@@ -202,6 +208,8 @@ class About extends Component {
                 Acolite. It supports ESA satellites Sentinel 2 and Sentinel 3
                 and USGS satellite Landsat 8. It is developed and maintained by
                 the SURF Remote Sensing group at Eawag.
+              </p>
+              <div className="project-info">
                 <a
                   className="link"
                   href="https://github.com/eawag-surface-waters-research/sencast"
@@ -209,18 +217,19 @@ class About extends Component {
                   https://github.com/eawag-surface-waters-research/sencast
                 </a>
                 <div className="parameter">
-                  <div class="circle">
-                    <span class="circle-text">$</span>
+                  <div className="circle">
+                    <span className="circle-text">$</span>
                   </div>
                   <div className="text">Eawag</div>
                 </div>
                 <div className="parameter">
-                  <div class="circle">
-                    <span class="circle-text">PI</span>
+                  <div className="circle">
+                    <span className="circle-text">PI</span>
                   </div>
                   <div className="text">Daniel Odermatt</div>
                 </div>
-              </p>
+              </div>
+
               <h3>Meteolakes</h3>
               <p>
                 Meteolakes is a web application that shares some results of 3D
@@ -233,20 +242,22 @@ class About extends Component {
                 stakeholders in evidence-based decision-making and towards the
                 sustainable management of our lakes. This product was developed
                 by Theo Baracchini as part of his PhD thesis. It has been
-                superceeded by the Alplakes platform.
+                superceeded by the Alplakes platform.{" "}
+              </p>
+              <div className="project-info">
                 <div className="parameter">
-                  <div class="circle">
-                    <span class="circle-text">$</span>
+                  <div className="circle">
+                    <span className="circle-text">$</span>
                   </div>
                   <div className="text">European Space Agency</div>
                 </div>
                 <div className="parameter">
-                  <div class="circle">
-                    <span class="circle-text">PI</span>
+                  <div className="circle">
+                    <span className="circle-text">PI</span>
                   </div>
                   <div className="text">Damien Bouffard</div>
                 </div>
-              </p>
+              </div>
             </div>
             <div ref={this.people} className="section">
               <h2>Contributing people</h2>
