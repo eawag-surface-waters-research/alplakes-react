@@ -115,9 +115,10 @@
 }
 
 .main .home .content .search .filters .filter .left-filter img {
-  max-height: 21px;
-  max-width: 30px;
   margin-right: 8px;
+  max-height: 20px;
+  max-width: 30px;
+  padding-top: 1px;
 }
 
 .main.dark .home .content .search .filters .filter .left-filter img {
