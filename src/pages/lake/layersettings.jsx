@@ -1308,22 +1308,6 @@ class Heat extends Component {
             ))}
           </select>
         </div>
-        {"performance" in source && (
-          <div className="setting">
-            <div className="label">Performance</div>
-            <div>
-              {Object.keys(source.performance.rmse).map((k) => (
-                <div key={k} className="performance">
-                  <div className="performance-value">
-                    {source.performance.rmse[k]}
-                    <div className="performance-unit">{layer.unit}</div>
-                  </div>
-                  <div className="performance-name">{capitalize(k)} RMSE</div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
         {period && (
           <div className="setting">
             <div className="label">Period</div>
@@ -1344,6 +1328,40 @@ class Heat extends Component {
           <div className="value">{paletteName}</div>
           <ColorRamp onChange={this.setPalette} value={palette} />
         </div>
+        {"performance" in source && (
+          <div className="setting">
+            <div className="label">Performance</div>
+            <div>
+              {Object.keys(source.performance.rmse).map((k) => (
+                <div key={k} className="performance">
+                  <div className="performance-value">
+                    {Math.round(source.performance.rmse[k] * 100) / 100}
+                    <div className="performance-unit">{layer.unit}</div>
+                  </div>
+                  <div className="performance-name">{capitalize(k)} RMSE</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+        {"meteo_source" in source && (
+          <div className="setting">
+            <div className="label">Meteorological data</div>
+            <div>{source.meteo_source}</div>
+          </div>
+        )}
+        {"hydro_source" in source && (
+          <div className="setting">
+            <div className="label">Hydrological data</div>
+            <div>{source.hydro_source}</div>
+          </div>
+        )}
+        {"calibration_source" in source && (
+          <div className="setting">
+            <div className="label">Calibration data</div>
+            <div>{source.calibration_source}</div>
+          </div>
+        )}
       </div>
     );
   }
@@ -1392,6 +1410,24 @@ class Line extends Component {
             ))}
           </select>
         </div>
+        {period && (
+          <div className="setting">
+            <div className="label">Period</div>
+            <div className="period-selector">
+              <Period
+                period={period}
+                setPeriod={this.setPeriod}
+                language={language}
+                minDate={minDate}
+                maxDate={maxDate}
+                maxPeriod={365}
+              />
+            </div>
+          </div>
+        )}
+        {depth && (
+          <Depth depth={depth} depths={depths} onChange={this.setDepth} />
+        )}
         {"performance" in source && (
           <div className="setting">
             <div className="label">Performance</div>
@@ -1410,23 +1446,23 @@ class Line extends Component {
             )}
           </div>
         )}
-        {period && (
+        {"meteo_source" in source && (
           <div className="setting">
-            <div className="label">Period</div>
-            <div className="period-selector">
-              <Period
-                period={period}
-                setPeriod={this.setPeriod}
-                language={language}
-                minDate={minDate}
-                maxDate={maxDate}
-                maxPeriod={365}
-              />
-            </div>
+            <div className="label">Meteorological data</div>
+            <div>{source.meteo_source}</div>
           </div>
         )}
-        {depth && (
-          <Depth depth={depth} depths={depths} onChange={this.setDepth} />
+        {"hydro_source" in source && (
+          <div className="setting">
+            <div className="label">Hydrological data</div>
+            <div>{source.hydro_source}</div>
+          </div>
+        )}
+        {"calibration_source" in source && (
+          <div className="setting">
+            <div className="label">Calibration data</div>
+            <div>{source.calibration_source}</div>
+          </div>
         )}
       </div>
     );
@@ -1461,22 +1497,6 @@ class Doy extends Component {
             ))}
           </select>
         </div>
-        {"performance" in source && (
-          <div className="setting">
-            <div className="label">Performance</div>
-            <div>
-              {Object.keys(source.performance.rmse).map((k) => (
-                <div key={k} className="performance">
-                  <div className="performance-value">
-                    {source.performance.rmse[k]}
-                    <div className="performance-unit">{layer.unit}</div>
-                  </div>
-                  <div className="performance-name">{capitalize(k)} RMSE</div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
         <div className="setting">
           <div className="label">Legend</div>
           <div className="legend">
@@ -1519,6 +1539,40 @@ class Doy extends Component {
             </div>
           </div>
         </div>
+        {"performance" in source && (
+          <div className="setting">
+            <div className="label">Performance</div>
+            <div>
+              {Object.keys(source.performance.rmse).map((k) => (
+                <div key={k} className="performance">
+                  <div className="performance-value">
+                    {Math.round(source.performance.rmse[k] * 100) / 100}
+                    <div className="performance-unit">{layer.unit}</div>
+                  </div>
+                  <div className="performance-name">{capitalize(k)} RMSE</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+        {"meteo_source" in source && (
+          <div className="setting">
+            <div className="label">Meteorological data</div>
+            <div>{source.meteo_source}</div>
+          </div>
+        )}
+        {"hydro_source" in source && (
+          <div className="setting">
+            <div className="label">Hydrological data</div>
+            <div>{source.hydro_source}</div>
+          </div>
+        )}
+        {"calibration_source" in source && (
+          <div className="setting">
+            <div className="label">Calibration data</div>
+            <div>{source.calibration_source}</div>
+          </div>
+        )}
       </div>
     );
   }

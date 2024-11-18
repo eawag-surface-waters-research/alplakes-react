@@ -725,10 +725,28 @@ def simstrat_source(models, simstrat, obj):
     for model in models:
         s = obj.copy()
         properties = [d for d in simstrat if d["key"] == model][0]
+        meteo_type = properties["forcing"][0]["type"]
+        if "meteoswiss" in meteo_type.lower():
+            s["meteo_source"] = "SwissMetNet, MeteoSwiss"
+        elif "arso" in meteo_type.lower():
+            s["meteo_source"] = "Slovenian Environment Agency"
+        elif "mistral" in meteo_type.lower():
+            s["meteo_source"] = "Mistral Meteo-Hub"
+        elif "thredds" in meteo_type.lower():
+            s["meteo_source"] = "ESPRI IPSL Thredds"
+        forecast_type = properties["forcing_forecast"]["source"]
+        if "meteoswiss" in forecast_type.lower():
+            s["meteo_source"] = s["meteo_source"] + ". Forecast from MeteoSwiss ICON."
+        elif "visualcrossing" in forecast_type.lower():
+            s["meteo_source"] = s["meteo_source"] + ". Forecast from VisualCrossing."
+        if "inflows" in properties:
+            s["hydro_source"] = "Bundesamt für Umwelt BAFU"
         if "performance" in properties:
             s["performance"] = properties["performance"]
         if "name" in properties:
             s["name"] = properties["name"]
+        if "calibration_source" in properties:
+            s["calibration_source"] = properties["calibration_source"]
         s["lake"] = model
         s["label"] = "Simstrat {}".format(model)
         out["simstrat_{}".format(model)] = s
@@ -750,7 +768,7 @@ def make_datasets(data, simstrat):
                                            "data_access": "simstrat_heatmap",
                                            "model": "simstrat",
                                            "parameter": "T",
-                                           "description": "Depth time visualisation of water temperature. Water temperatures are hindcasted and forecasted using the 1D hydrodynamic model Simstrat. Meteorological forcing data is produced from Meteoswiss products, hincasts use meteostation data and forecasts use the Cosmo-2e 5 day ensemble forecast (VNXZ32). Where rivers inputs are used this data is sourced from Bafu. This model is calibrated using in-situ measuresuments collected by a number of 3rd parties.",
+                                           "description": "Depth time visualisation of water temperature. Water temperatures are hindcasted and forecasted using the 1D hydrodynamic model Simstrat.",
                                            "learnMore": "https://medium.com/@runnalls.james/operational-1d-lake-modeling-with-simstrat-dc34964bfe08",
                                            "tags": ["5 day forecast", "Timeseries", "Heatmap"]
                                        }),
@@ -771,7 +789,7 @@ def make_datasets(data, simstrat):
                                                "data_access": "simstrat_heatmap",
                                                "model": "simstrat",
                                                "parameter": "OxygenSat",
-                                               "description": "Depth time visualisation of oxygen saturation. Oxygen values are hindcasted and forecasted using the 1D hydrodynamic model Simstrat in combination with AED2. The oxygen model is a preliminary version which works reasonably well for some lakes but is clearly wrong for other lakes. Meteorological forcing data is produced from Meteoswiss products, hincasts use meteostation data and forecasts use the Cosmo-2e 5 day ensemble forecast (VNXZ32). Where rivers inputs are used this data is sourced from Bafu. This model is calibrated using in-situ measuresuments collected by a number of 3rd parties.",
+                                               "description": "Depth time visualisation of oxygen saturation. Oxygen values are hindcasted and forecasted using the 1D hydrodynamic model Simstrat in combination with AED2. The oxygen model is a preliminary version which works reasonably well for some lakes but is clearly wrong for other lakes.",
                                                "learnMore": "https://medium.com/@runnalls.james/operational-1d-lake-modeling-with-simstrat-dc34964bfe08",
                                                "tags": ["5 day forecast", "Timeseries", "Heatmap"]
                                            }),
@@ -792,7 +810,7 @@ def make_datasets(data, simstrat):
                                                "data_access": "simstrat_linegraph",
                                                "model": "simstrat",
                                                "parameter": "T",
-                                               "description": "Visualisation of water temperature. Water temperatures are hindcasted and forecasted using the 1D hydrodynamic model Simstrat. Meteorological forcing data is produced from Meteoswiss products, hincasts use meteostation data and forecasts use the Cosmo-2e 5 day ensemble forecast (VNXZ32). Where rivers inputs are used this data is sourced from Bafu. This model is calibrated using in-situ measuresuments collected by a number of 3rd parties.",
+                                               "description": "Visualisation of water temperature. Water temperatures are hindcasted and forecasted using the 1D hydrodynamic model Simstrat.",
                                                "learnMore": "https://medium.com/@runnalls.james/operational-1d-lake-modeling-with-simstrat-dc34964bfe08",
                                                "tags": ["5 day forecast", "Timeseries"]
                                            }),
@@ -811,7 +829,7 @@ def make_datasets(data, simstrat):
                                                "model": "simstrat",
                                                "depths": [0, data["max_depth"]],
                                                "parameter": "T",
-                                               "description": "Surface average DOY water temperature. Water temperatures are hindcasted and forecasted using the 1D hydrodynamic model Simstrat. Meteorological forcing data is produced from Meteoswiss products, hincasts use meteostation data and forecasts use the Cosmo-2e 5 day ensemble forecast (VNXZ32). Where rivers inputs are used this data is sourced from Bafu. This model is calibrated using in-situ measuresuments collected by a number of 3rd parties.",
+                                               "description": "Surface average DOY water temperature. Water temperatures are hindcasted and forecasted using the 1D hydrodynamic model Simstrat.",
                                                "learnMore": "https://medium.com/@runnalls.james/operational-1d-lake-modeling-with-simstrat-dc34964bfe08",
                                                "tags": ["Historic Trends", "DOY average"]
                                            }),
