@@ -415,7 +415,7 @@ class Models extends Component {
                 Below is a list of all the 3D models available on the Alplakes
                 platform.
               </p>
-              <SortableTable data={three_dimensional} language={language} />
+              <SortableTable data={three_dimensional} language={language} label="three_dimentional_models"/>
               <h3>Calibration</h3>
               <h4>Delft3D-flow</h4>
               <p>
@@ -527,7 +527,7 @@ class Models extends Component {
                 Below is a list of all the 1D models available on the Alplakes
                 platform.
               </p>
-              <SortableTable data={one_dimensional} language={language} />
+              <SortableTable data={one_dimensional} language={language} label="one_dimentional_models"/>
               <h3>Calibration</h3>
               <h4>Simstrat</h4>
               <p>
@@ -648,7 +648,7 @@ class Models extends Component {
                 Below is a list of all the remote sensing products available on
                 the Alplakes platform.
               </p>
-              <SortableTable data={remote_sensing} language={language} />
+              <SortableTable data={remote_sensing} language={language} label="remote_sensing_products"/>
               <p>
                 A number of algorithms were evaluated in order to select the
                 best performing products above. For more information about the

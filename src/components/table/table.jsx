@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Translations from "../../translations.json";
 import "./table.css";
 
-const SortableTable = ({ data, language }) => {
+const SortableTable = ({ data, language, label }) => {
   const rows = Object.entries(data).map(([key, value]) => ({ key, ...value }));
 
   var columns = [
@@ -56,6 +56,22 @@ const SortableTable = ({ data, language }) => {
     RMSE: "Root mean squared error",
     MAD: "Median absolute deviation",
     MdSA: "Median symmetric accuracy",
+  };
+
+  const downloadCSV = () => {
+    const header = columns.join(",");
+    const rowsData = sortedRows.map((row) =>
+      columns.map((col) => `"${row[col] ?? ""}"`).join(",")
+    );
+    const csvContent = [header, ...rowsData].join("\n");
+
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = label + ".csv";
+    link.click();
+    URL.revokeObjectURL(url);
   };
 
   return (
@@ -119,6 +135,9 @@ const SortableTable = ({ data, language }) => {
       </div>
       <button className="expand" onClick={toggleFullscreen}>
         {isFullscreen ? "Close" : "Expand"}
+      </button>
+      <button className="download-table" onClick={downloadCSV}>
+        Download
       </button>
     </div>
   );

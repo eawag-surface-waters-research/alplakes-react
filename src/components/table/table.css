@@ -33,6 +33,21 @@
     transform: scale(1.1);
 }
 
+.download-table {
+    color: var(--background-suble-font-color);
+    border: none;
+    cursor: pointer;
+    padding: 5px 10px;
+    background-color: var(--box-color);
+    border-radius: 0 0 8px 8px;
+    transition: all .2s 0s ease;
+    box-shadow: var(--box-shadow);
+}
+
+.download-table:hover {
+    transform: scale(1.1);
+}
+
 .table-inner-container {
     max-height: 320px;
     overflow: auto;
@@ -93,9 +108,11 @@ table.table-styling th {
     .table-outer-container.fullscreen {
         padding: 0;
     }
+
     table.table-styling tr:nth-child(odd) {
         background-color: #F3F4F6;
     }
+
     .main.dark table.table-styling tr:nth-child(odd) {
         background-color: hsl(233, 8%, 19%);
     }
