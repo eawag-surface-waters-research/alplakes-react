@@ -1,117 +1,106 @@
 .main .about {
     width: 100%;
-    max-width: 1000px;
+    max-width: var(--content-width);
     margin: auto;
+    margin-top: var(--top-margin);
     padding: 0 var(--padding);
-    border-radius: 22px;
-    box-sizing: border-box;
-}
-
-.main .about .section-title {
-    font-size: 28px;
-    border-bottom: 2px solid var(--highlight-color);
-    width: fit-content;
-    margin-bottom: 32px;
-}
-
-.main .about .section-content {
-    display: inline-block;
-    margin-bottom: var(--padding);
-}
-
-.main .about .section-content .intro {
-    margin-top: calc(var(--padding));
-    margin-bottom: var(--padding);
-    font-size: 21px;
-}
-
-.main .about .section-content .promos {
     text-align: center;
-}
-
-.main .about .section-content .promo {
-    background-color: var(--background-color);
-    margin-right: var(--padding);
-    display: inline-block;
-    border-radius: 22px;
     box-sizing: border-box;
+}
+
+.main .about .sidebar {
+    display: inline-block;
+    vertical-align: top;
     text-align: left;
-    position: relative;
-    margin-bottom: 10px;
+    margin-top: 66px;
+    position: sticky;
+    top: var(--padding);
+    padding-left: var(--padding);
 }
 
-.main .about .section-content .promo .number {
+.main .about .sidebar .sidebar-inner {
+    background-color: var(--box-color);
+    padding: 16px 24px;
+    border-radius: 16px;
+    border: 1px solid var(--border-color);
+    width: 200px;
+    box-shadow: var(--box-shadow);
+}
+
+.main .about .sidebar .link {
+    margin-bottom: 8px;
+    cursor: pointer;
+}
+
+.main .about .sidebar .link:hover {
+    font-weight: 600;
+}
+
+.main .about .content {
+    height: 100%;
     display: inline-block;
-    font-size: 64px;
-    width: 70px;
-    color: var(--highlight-color);
-    position: relative;
-    z-index: 1;
+    width: var(--text-width);
+    text-align: left;
+    max-width: 100%;
 }
 
-.main .about .section-content .promo .text {
-    display: inline-block;
-    font-size: 14px;
-    padding: 10px 20px 10px 10px;
-    position: relative;
-    z-index: 1;
+.main .about .content h2 {
+    margin-top: 40px;
 }
 
-.main .about .section-content .promo .text .upper {
-    font-size: 10px;
-    opacity: 0.8;
+.main .about .content .section {
+    margin-bottom: 64px;
+    border-bottom: 5px solid var(--box-color);
+    padding-bottom: 30px;
 }
 
-.main .about .section-content .promo .text .parameter {
+.main .about .content .project-info {
+    margin-top: -35px;
+    margin-bottom: 20px;
+
+}
+
+.main .about .content .section ul {
     font-size: 16px;
-    padding-top: 4px;
-    padding-bottom: 2px;
+    padding-left: 32px;
+    margin-bottom: 20px;
 }
 
-.main .about .section-content .promo img {
-    max-height: 60%;
-    filter: invert(100%);
-    position: absolute;
-    right: 8px;
-    z-index: 0;
-    top: 10%;
-    max-width: 50px;
-    opacity: 0.2;
+@media screen and (max-width: 1280px) {
+    .main .about .sidebar {
+        display: none;
+    }
 }
 
-.main.dark .about .section-content .promo img {
-    filter: invert(0%);
-}
-
-.main .about .section-content .promo .text .dates {
-    font-size: 12px;
-    font-weight: bold;
-    opacity: 0.6;
-}
-
-.main .about .section-content .person {
-    width: 190px;
+.main .about .content .person {
+    width: 163px;
     display: inline-block;
-    margin-right: var(--padding);
-    margin-top: var(--padding);
+    margin-right: 16px;
+    margin-bottom: var(--padding);
     vertical-align: top;
 }
 
-.main .about .section-content .person img {
+.main .about .content .person img {
     width: 100%;
-    border-bottom: 2px solid var(--highlight-color);
+    border-bottom: 4px solid var(--highlight-color);
 }
 
-.main .about .section-content .person .job {
-    font-size: 20px;
+.main .about .content .person .name {
+    font-size: 18px;
 }
 
-.main .about .section-content .person .email {
-    font-size: 14px;
+.main .about .content .person .job {
+    font-size: 16px;
+    font-weight: 200;
+}
+
+.main .about .content .person .email {
+    font-size: 12px;
     text-decoration: underline;
+    color: var(--link-color);
 }
 
-.main .about .section-content .person .contact-head {
+.main .about .content .person .contact-head {
     margin-top: 12px;
     font-size: 14px;
     margin-bottom: 4px;
@@ -121,10 +110,31 @@
     margin-bottom: 18px;
 }
 
+.main .about .parameter {
+    padding: 8px 0;
+}
+
+.main .about .parameter .circle {
+    width: 32px;
+    height: 32px;
+    background-color: var(--highlight-color);
+    border-radius: 50%;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 16px;
+    text-align: center;
+}
+
+.main .about .parameter .text {
+    display: inline-block;
+    padding-left: 8px;
+}
+
 
 
 .main .about .header {
-    font-size: 40px;
     margin-top: 18px;
     color: var(--background-font-color);
 }
@@ -139,17 +149,17 @@
 }
 
 .main .about a {
-    text-decoration: none;
-    color: black;
+    color: var(--link-color);
 }
 
-.main.dark .about a {
-    color: #e5e5e5;
+.main .about a.link {
+    display: block;
+    padding: 4px 0;
 }
 
-.main .about p {
-    margin-bottom: 18px;
-    font-size: 16px;
+.main .about a.repo {
+    display: block;
+    margin-bottom: 16px;
 }
 
 .main .about .title {
@@ -191,11 +201,7 @@
         padding: 12px;
     }
 
-    .main .about .section-content .promos {
-        margin-top: 12px;
-    }
-
-    .main .about .section-content .person {
+    .main .about .content .person {
         width: calc(50% - var(--padding));
     }
 }
@@ -206,11 +212,13 @@
         padding: var(--padding);
         overflow: hidden;
     }
+
     .main .about .header {
         font-size: 26px;
         margin: none;
     }
-    .main .about .section-content .intro {
-        font-size: 16px;
+
+    .main .about .content .section {
+        border-color: var(--border-color);
     }
 }

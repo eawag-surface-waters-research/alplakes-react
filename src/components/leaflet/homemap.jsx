@@ -7,134 +7,60 @@ import "./css/leaflet.css";
 
 class MapLegend extends Component {
   render() {
-    var { parameter, language } = this.props;
-    if (parameter === "temperature") {
-      return (
-        <table>
-          <tbody>
-            <tr>
-              <td>
-                <div
-                  className="legendIcon"
-                  style={{ backgroundColor: "rgb(184,30,33)" }}
-                />
-                {"> 25 °C"}
-              </td>
-              <td>
-                <div
-                  className="legendIcon"
-                  style={{ backgroundColor: "rgb(196,236,239)" }}
-                />
-                {"10-15 °C"}
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <div
-                  className="legendIcon"
-                  style={{ backgroundColor: "rgb(223,102,92)" }}
-                />
-                {"20-25 °C"}
-              </td>
-              <td>
-                <div
-                  className="legendIcon"
-                  style={{ backgroundColor: "rgb(128,194,208)" }}
-                />
-                {"5-10 °C"}
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <div
-                  className="legendIcon"
-                  style={{ backgroundColor: "rgb(239,163,127)" }}
-                />
-                {"15-20 °C"}
-              </td>
-              <td>
-                <div
-                  className="legendIcon"
-                  style={{ backgroundColor: "rgb(52,132,150)" }}
-                />
-                {"< 5 °C"}
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      );
-    } else if (parameter === "ice") {
-      return (
-        <table>
-          <tbody>
-            <tr>
-              <td>
-                <div
-                  className="legendIcon"
-                  style={{ backgroundColor: "rgb(196,236,239)" }}
-                />
-                {Translations["unfrozen"][language]}
-              </td>
-              <td>
-                <div
-                  className="legendIcon"
-                  style={{ backgroundColor: "rgb(223,102,92)" }}
-                />
-                {Translations["frozen"][language]}
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      );
-    } else if (parameter === "oxygen") {
-      return (
-        <table>
-          <tbody>
-            <tr>
-              <td>
-                <div
-                  className="legendIcon"
-                  style={{ backgroundColor: "rgb(52,132,150)" }}
-                />
-                {"80-100 %"}
-              </td>
-              <td>
-                <div
-                  className="legendIcon"
-                  style={{ backgroundColor: "rgb(223,102,92)" }}
-                />
-                {"20-40 %"}
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <div
-                  className="legendIcon"
-                  style={{ backgroundColor: "rgb(128,194,208)" }}
-                />
-                {"60-80 %"}
-              </td>
-              <td>
-                <div
-                  className="legendIcon"
-                  style={{ backgroundColor: "rgb(184,30,33)" }}
-                />
-                {"0-20 %"}
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <div
-                  className="legendIcon"
-                  style={{ backgroundColor: "rgb(239,163,127)" }}
-                />
-                {"40-60 %"}
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      );
-    }
+    return (
+      <table>
+        <tbody>
+          <tr>
+            <td>
+              <div
+                className="legendIcon"
+                style={{ backgroundColor: "rgb(184,30,33)" }}
+              />
+              {"> 25 °C"}
+            </td>
+            <td>
+              <div
+                className="legendIcon"
+                style={{ backgroundColor: "rgb(196,236,239)" }}
+              />
+              {"10-15 °C"}
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div
+                className="legendIcon"
+                style={{ backgroundColor: "rgb(223,102,92)" }}
+              />
+              {"20-25 °C"}
+            </td>
+            <td>
+              <div
+                className="legendIcon"
+                style={{ backgroundColor: "rgb(128,194,208)" }}
+              />
+              {"5-10 °C"}
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div
+                className="legendIcon"
+                style={{ backgroundColor: "rgb(239,163,127)" }}
+              />
+              {"15-20 °C"}
+            </td>
+            <td>
+              <div
+                className="legendIcon"
+                style={{ backgroundColor: "rgb(52,132,150)" }}
+              />
+              {"< 5 °C"}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    );
   }
 }
 
@@ -146,10 +72,6 @@ class HomeMap extends Component {
     maxZoom: 13,
     darkMap: "dark_all",
     lightMap: "light_all",
-    parameter: "temperature",
-  };
-  setParameter = (parameter) => {
-    this.setState({ parameter });
   };
   setDay = (event) => {
     var day = event.target.id;
@@ -158,49 +80,25 @@ class HomeMap extends Component {
     this.plotLabels(day);
     this.setState({ day });
   };
-  getColor = (value, parameter) => {
-    if (parameter === "temperature") {
-      if (value === null || isNaN(value)) {
-        return false;
-      } else if (value < 5) {
-        return "rgb(52,132,150)";
-      } else if (value < 10) {
-        return "rgb(128,194,208)";
-      } else if (value < 15) {
-        return "rgb(196,236,239)";
-      } else if (value < 20) {
-        return "rgb(239,163,127)";
-      } else if (value < 25) {
-        return "rgb(223,102,92)";
-      } else {
-        return "rgb(184,30,33)";
-      }
-    } else if (parameter === "ice") {
-      if (value === null || isNaN(value)) {
-        return false;
-      } else if (value <= 0) {
-        return "rgb(196,236,239)";
-      } else if (value > 0) {
-        return "rgb(223,102,92)";
-      }
-    } else if (parameter === "oxygen") {
-      if (value === null || isNaN(value)) {
-        return false;
-      } else if (value < 20) {
-        return "rgb(184,30,33)";
-      } else if (value < 40) {
-        return "rgb(223,102,92)";
-      } else if (value < 60) {
-        return "rgb(239,163,127)";
-      } else if (value < 80) {
-        return "rgb(128,194,208)";
-      } else {
-        return "rgb(52,132,150)";
-      }
+  getColor = (value) => {
+    if (value === null || isNaN(value)) {
+      return false;
+    } else if (value < 5) {
+      return "rgb(52,132,150)";
+    } else if (value < 10) {
+      return "rgb(128,194,208)";
+    } else if (value < 15) {
+      return "rgb(196,236,239)";
+    } else if (value < 20) {
+      return "rgb(239,163,127)";
+    } else if (value < 25) {
+      return "rgb(223,102,92)";
+    } else {
+      return "rgb(184,30,33)";
     }
   };
   plotPolygons = (day) => {
-    var { list, parameter } = this.props;
+    var { list } = this.props;
     this.polygons.clearLayers();
     for (let lake of list) {
       if (lake.geometry !== false) {
@@ -212,14 +110,13 @@ class HomeMap extends Component {
           {
             style: {
               fillColor: this.getColor(
-                lake.forecast.summary[day][parameter],
-                parameter
+                lake.forecast.summary[day]["temperature"]
               ),
               weight: 0.5,
               opacity: 1,
-              color: "black",
+              color: "grey",
               fillOpacity:
-                lake.forecast.summary[day][parameter] === false ? 0 : 1,
+                lake.forecast.summary[day]["temperature"] === false ? 0 : 1,
             },
           }
         )
@@ -231,9 +128,10 @@ class HomeMap extends Component {
     }
   };
   plotLabels = (day) => {
-    var { list, language, parameter, parameters } = this.props;
+    var { list, language } = this.props;
     var zoom = this.map.getZoom();
     for (let lake of list) {
+      let value = lake.forecast.summary[day]["temperature"] === false;
       this.labels[lake.key].marker = L.marker([lake.latitude, lake.longitude], {
         icon: L.divIcon({
           className: "leaflet-mouse-marker",
@@ -242,12 +140,14 @@ class HomeMap extends Component {
         }),
       })
         .bindTooltip(
-          `<a class="temperature-label" href="/${lake.key}" title='${
-            Translations.click[language]
-          }'><div class="name">${lake.name[language]}</div>${
-            lake.forecast.summary[day][parameter] === false
+          `<a class="temperature-label${value ? " empty" : ""}" href="/${
+            lake.key
+          }" title='${Translations.click[language]}'><div class="name">${
+            lake.name[language]
+          }</div>${
+            value
               ? ""
-              : `<div class="value">${lake.forecast.summary[day][parameter]}${parameters[parameter].unit}</div>`
+              : `<div class="value">${lake.forecast.summary[day]["temperature"]}°</div>`
           }</a>`,
           {
             id: lake.key,
@@ -371,10 +271,6 @@ class HomeMap extends Component {
       var map = this.map;
       map.on("zoomend", this.displayLabels);
       this.plot = false;
-    } else if (prevProps.parameter !== this.props.parameter) {
-      this.removeLabels();
-      this.plotPolygons(day);
-      this.plotLabels(day);
     } else if (prevProps.language !== this.props.language) {
       this.removeLabels();
       this.labels = this.labelClustering(list, language);
@@ -383,14 +279,16 @@ class HomeMap extends Component {
       var { darkMap, lightMap } = this.state;
       var mapID = this.props.dark ? darkMap : lightMap;
       this.map.removeLayer(this.tiles);
-      this.tiles = L.tileLayer.default(
-        `https://{s}.basemaps.cartocdn.com/${mapID}/{z}/{x}/{y}{r}.png`,
-        {
-          maxZoom: 19,
-          attribution:
-            '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-        }
-      ).addTo(this.map);
+      this.tiles = L.tileLayer
+        .default(
+          `https://{s}.basemaps.cartocdn.com/${mapID}/{z}/{x}/{y}{r}.png`,
+          {
+            maxZoom: 19,
+            attribution:
+              '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+          }
+        )
+        .addTo(this.map);
     }
   }
   async componentDidMount() {
@@ -410,14 +308,16 @@ class HomeMap extends Component {
     this.map = map;
 
     var mapID = dark ? darkMap : lightMap;
-    this.tiles = L.tileLayer.default(
-      `https://{s}.basemaps.cartocdn.com/${mapID}/{z}/{x}/{y}{r}.png`,
-      {
-        maxZoom: 19,
-        attribution:
-          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-      }
-    ).addTo(this.map);
+    this.tiles = L.tileLayer
+      .default(
+        `https://{s}.basemaps.cartocdn.com/${mapID}/{z}/{x}/{y}{r}.png`,
+        {
+          maxZoom: 19,
+          attribution:
+            '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+        }
+      )
+      .addTo(this.map);
     L.control
       .zoom({
         position: "topright",
@@ -444,31 +344,17 @@ class HomeMap extends Component {
 
   render() {
     var { days, day } = this.state;
-    var { parameter, parameters, setParameter, language } = this.props;
+    var { language } = this.props;
     if (day === "") {
       day = formatDateYYYYMMDD(new Date());
     }
     return (
       <React.Fragment>
-        <div className="parameter-selector">
-          {Object.keys(parameters).map((p) => (
-            <div
-              className={parameter === p ? "parameter selected" : "parameter"}
-              key={p}
-              onClick={() => setParameter(p)}
-            >
-              <div className="inner">
-                <img
-                  src={parameters[p].img}
-                  alt={Translations[parameters[p].label][language]}
-                />
-              </div>
-              <div className="label">
-                {Translations[parameters[p].label][language]}
-                <MapLegend parameter={p} language={language} />
-              </div>
-            </div>
-          ))}
+        <div className="legend">
+          <div className="label">
+            {Translations["temperature"][language]}
+            <MapLegend />
+          </div>
         </div>
         <div id="map">
           <div className="day-selector">

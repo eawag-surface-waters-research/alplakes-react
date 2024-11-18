@@ -1,0 +1,101 @@
+.main .models {
+    width: 100%;
+    max-width: var(--content-width);
+    margin: auto;
+    margin-top: var(--top-margin);
+    padding: 0 var(--padding);
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.main .models .sidebar {
+    display: inline-block;
+    vertical-align: top;
+    text-align: left;
+    margin-top: 66px;
+    position: sticky;
+    top: var(--padding);
+    padding-left: var(--padding);
+}
+
+.main .models .sidebar .sidebar-inner {
+    background-color: var(--box-color);
+    box-shadow: var(--box-shadow);
+    padding: 16px 24px;
+    border-radius: 16px;
+    border: 1px solid var(--border-color);
+    width: 200px;
+}
+
+.main .models .sidebar .link {
+    margin-bottom: 8px;
+    cursor: pointer;
+}
+
+.main .models .sidebar .link:hover {
+    font-weight: 600;
+}
+
+.main .models .content {
+    height: 100%;
+    display: inline-block;
+    width: var(--text-width);
+    text-align: left;
+    max-width: 100%;
+}
+
+.main .models .content .section {
+    margin-bottom: 64px;
+    border-bottom: 5px solid var(--box-color);
+    padding-bottom: 30px;
+}
+
+.main .models .content .section ul {
+    font-size: 16px;
+    padding-left: 32px;
+    margin: -25px 0 8px 0;
+}
+
+.main .models .content select {
+    background-color: var(--box-color);
+    padding: 8px 16px;
+    color: var(--background-font-color);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    margin-right: calc(var(--padding) / 2);
+    max-width: 220px;
+    margin-top: 12px;
+}
+
+.main .models .content .downloads {
+    margin-bottom: 32px;
+    margin-top: -28px;
+}
+
+.main .models .content button.download {
+    background-color: var(--highlight-color);
+    padding: 8px 16px;
+    color: white;
+    border: 1px solid var(--highlight-color);
+    border-radius: 16px;
+    cursor: pointer;
+    margin-top: 12px;
+    box-shadow: var(--box-shadow);
+}
+
+.main .models .content button.download:hover {
+    transform: scale(1.05);
+    transition: 0.2s ease-in-out all;
+}
+
+@media screen and (max-width: 1280px) {
+    .main .models .sidebar {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 1280px) {
+    .main .models .content .section {
+        border-color: var(--border-color);
+    }
+}

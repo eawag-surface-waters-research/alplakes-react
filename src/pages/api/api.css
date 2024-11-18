@@ -1,21 +1,16 @@
 .main .api-container {
   width: 100%;
-  max-width: 1000px;
+  max-width: var(--content-width);
   margin: auto;
-  padding: 2px var(--padding);
-  box-sizing: border-box;
+  padding: 0 var(--padding);
+  margin-top: var(--top-margin);
   min-height: calc(100vh - var(--header-height) - var(--footer-full-height));
+  box-sizing: border-box;
 }
 
 .main .api-container .header {
-  font-size: 40px;
   margin-top: 18px;
   color: var(--background-font-color);
-}
-
-.main .api-container .text {
-  font-size: 18px;
-  margin: var(--padding) 0;
 }
 
 .main .api-container .contact {
@@ -47,10 +42,6 @@
   filter: invert(100%);
 }
 
-.main.dark .api-container .swagger-ui .opblock-body {
-  filter: invert(88%) hue-rotate(180deg);
-}
-
 .main .api-container .swagger-ui .info {
   display: none;
 }
@@ -65,6 +56,8 @@
 
 .swagger-ui .opblock.opblock-get .opblock-summary {
   border-color: var(--border-color);
+  background-color: var(--box-color);
+  border-radius: 5px;
 }
 
 .swagger-ui .opblock.opblock-get {
@@ -84,6 +77,11 @@
   border: none;
 }
 
+.swagger-ui .opblock-body {
+  background-color: var(--box-color);
+}
+
+
 .swagger-ui .parameters-col_description input {
   color: var(--background-font-color);
 }
@@ -101,22 +99,54 @@
 }
 
 .swagger-ui .opblock-tag.no-desc span {
-  border-bottom: 2px solid var(--highlight-color);
-  font-size: 28px;
-  font-weight: normal;
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.swagger-ui .opblock .opblock-section-header,
+.swagger-ui input[type=email],
+.swagger-ui input[type=file],
+.swagger-ui input[type=password],
+.swagger-ui input[type=search],
+.swagger-ui input[type=text],
+.swagger-ui textarea,
+.swagger-ui select {
+  background-color: var(--background-color);
+}
+
+.swagger-ui input[disabled],
+.swagger-ui select[disabled],
+.swagger-ui textarea[disabled] {
+  background-color: var(--box-color);
+}
+
+.swagger-ui,
+.swagger-ui select,
+.swagger-ui .btn,
+.swagger-ui .response-col_status,
+.swagger-ui .response-col_links,
+.swagger-ui .opblock .opblock-section-header h4,
+.swagger-ui .opblock-description-wrapper p,
+.swagger-ui .opblock-external-docs-wrapper p,
+.swagger-ui .opblock-title_normal p,
+.swagger-ui table thead tr td,
+.swagger-ui table thead tr th,
+.swagger-ui .responses-inner h4,
+.swagger-ui .responses-inner h5,
+.swagger-ui .opblock-description-wrapper,
+.swagger-ui .opblock-external-docs-wrapper,
+.swagger-ui .opblock-title_normal,
+.swagger-ui .parameter__name {
+  color: var(--background-font-color);
 }
 
 @media screen and (max-width: 500px) {
-  .main .api-container {
-    margin-top: 45px;
-    padding: 2px 8px;
-  }
+
   .main .api-container .header {
     font-size: 26px;
   }
-  .main .api-container .text {
-    font-size: 16px;
-  }
+
   .swagger-ui .opblock-tag.no-desc span {
     font-size: 22px;
   }

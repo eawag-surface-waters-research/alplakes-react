@@ -420,7 +420,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
 /* zoom control */
 
 .leaflet-control-zoom {
-  background-color: var(--background-color);
+  background-color: var(--box-color);
 }
 
 .leaflet-control-zoom-in,

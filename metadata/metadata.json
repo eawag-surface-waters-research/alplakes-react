@@ -26,6 +26,11 @@
     "default_depth": 0.7,
     "current_temperature": true,
     "alplakes": {
+      "performance": {
+        "rmse": {
+          "overall": 0.85
+        }
+      },
       "3D_temperature": [
         { "name": "Lausanne", "latlng": [46.50995, 6.61172] },
         {
@@ -109,6 +114,11 @@
     "surface_area": 88.5,
     "default_depth": 1,
     "alplakes": {
+      "performance": {
+        "rmse": {
+          "overall": 1.03
+        }
+      },
       "3D_temperature": [
         { "name": "Zürich", "latlng": [47.36226, 8.54151] },
         { "name": "Wädenswil", "latlng": [47.23185, 8.68063] },
@@ -142,6 +152,11 @@
     "swiss_bathy": true,
     "default_depth": 0.7,
     "alplakes": {
+      "performance": {
+        "rmse": {
+          "overall": 1.12
+        }
+      },
       "3D_temperature": [
         { "name": "Biel", "latlng": [47.13198, 7.23017] },
         { "name": "Le Landeron", "latlng": [47.05558, 7.07925] },
@@ -176,6 +191,11 @@
     "default_depth": 0.7,
     "current_temperature": true,
     "alplakes": {
+      "performance": {
+        "rmse": {
+          "overall": 0.69
+        }
+      },
       "3D_temperature": [
         { "name": "Schwerzenbach", "latlng": [47.37124, 8.65935] },
         { "name": "Riedikon", "latlng": [47.3317, 8.70492] }
@@ -198,10 +218,14 @@
     "latitude": 45.58,
     "longitude": 10.63,
     "flags": ["italian"],
-    "simstrat": false,
     "datalakes_id": 59,
     "default_depth": 1,
     "alplakes": {
+      "performance": {
+        "rmse": {
+          "overall": 0.73
+        }
+      },
       "3D_temperature": [
         { "name": "Desenzano", "latlng": [45.46958, 10.55326] },
         { "name": "Salò", "latlng": [45.60311, 10.53594] },
@@ -238,6 +262,11 @@
     "sediment_oxygen_uptake_rate": -33.1,
     "default_depth": 1,
     "alplakes": {
+      "performance": {
+        "rmse": {
+          "overall": 0.90
+        }
+      },
       "3D_temperature": [
         { "name": "Lugano", "latlng": [46.00192, 8.95523] },
         { "name": "Porlezza", "latlng": [46.03212, 9.11593] },
@@ -274,6 +303,11 @@
     "sediment_oxygen_uptake_rate": -32.8,
     "default_depth": 1,
     "alplakes": {
+      "performance": {
+        "rmse": {
+          "overall": 0.80
+        }
+      },
       "3D_temperature": [
         { "name": "Murten", "latlng": [	46.92919, 7.10616] }
       ],
@@ -295,10 +329,14 @@
     "latitude": 46.02,
     "longitude": 11.24,
     "flags": ["italian"],
-    "simstrat": false,
     "datalakes_id": 189,
     "default_depth": 1,
     "alplakes": {
+      "performance": {
+        "rmse": {
+          "overall": 1.67
+        }
+      },
       "3D_temperature": [
         { "name": "San Cristoforo", "latlng": [46.0356, 11.2343] },
         { "name": "Caldonazzo", "latlng": [46.0055, 11.2569] }
@@ -335,6 +373,11 @@
     "sediment_oxygen_uptake_rate": -19.7,
     "default_depth": 1,
     "alplakes": {
+      "performance": {
+        "rmse": {
+          "overall": 0.68
+        }
+      },
       "3D_temperature": [
         { "name": "Ägeri", "latlng": [47.13537, 8.60224] },
         { "name": "Morgarten", "latlng": [47.10495, 8.63378] }
@@ -367,6 +410,11 @@
     "swiss_bathy": true,
     "default_depth": 0.7,
     "alplakes": {
+      "performance": {
+        "rmse": {
+          "overall": 1.05
+        }
+      },
       "3D_temperature": [
         { "name": "Le Pont", "latlng": [46.66445, 6.32636] },
         { "name": "Le Sentier", "latlng": [46.6146, 6.24543] },
@@ -402,6 +450,11 @@
     "sediment_oxygen_uptake_rate": -28.1,
     "default_depth": 1,
     "alplakes": {
+      "performance": {
+        "rmse": {
+          "overall": 1.22
+        }
+      },
       "3D_temperature": [
         { "name": "Boniswil", "latlng": [47.31477, 8.20381] },
         { "name": "Mosen", "latlng": [47.25079, 8.22446] }
@@ -433,6 +486,11 @@
     "datalakes_id": 41,
     "default_depth": 1,
     "alplakes": {
+      "performance": {
+        "rmse": {
+          "overall": 2.29
+        }
+      },
       "3D_temperature": [
         { "name": "St. Moritz", "latlng": [46.49652, 9.84614] }
       ],
@@ -2095,6 +2153,72 @@
     "residence_time": "NA",
     "mixing_regime": "Dimictic",
     "geothermal_flux": 0.1,
+    "trophic_state": "NA"
+  },
+  {
+    "key": "annecy",
+    "name": {
+      "EN": "Lake Annecy",
+      "DE": "Lac d’Annecy",
+      "FR": "Lac d'Annecy",
+      "IT": "Lago di Annecy"
+    },
+    "area": 27.59,
+    "ave_depth": 41.0,
+    "max_depth": 82.0,
+    "elevation": 446.97,
+    "latitude": 45.854,
+    "longitude": 6.176,
+    "flags": ["france"],
+    "type": "Natural",
+    "volume": 1.12,
+    "residence_time": 1460,
+    "mixing_regime": "NA",
+    "geothermal_flux": 0.12,
+    "trophic_state": "NA"
+  },
+  {
+    "key": "bourget",
+    "name": {
+      "EN": "Lake Bourget",
+      "DE": "Lac du Bourget",
+      "FR": "Lac du Bourget",
+      "IT": "Lago del Bourget"
+    },
+    "area": 44.5,
+    "ave_depth": 85,
+    "max_depth": 145.0,
+    "elevation": 231.5,
+    "latitude": 45.742,
+    "longitude": 5.862,
+    "flags": ["france"],
+    "type": "Natural",
+    "volume": 3.6,
+    "residence_time": 2920,
+    "mixing_regime": "NA",
+    "geothermal_flux": 0.12,
+    "trophic_state": "NA"
+  },
+  {
+    "key": "bled",
+    "name": {
+      "EN": "Lake Bled",
+      "DE": "Bleder See",
+      "FR": "Lac de Bled",
+      "IT": "Lago di Bled"
+    },
+    "area": 1.45,
+    "ave_depth": "NA",
+    "max_depth": 29.5,
+    "elevation": 475,
+    "latitude": 46.364,
+    "longitude": 14.095,
+    "flags": ["slovenian"],
+    "type": "Natural",
+    "volume": 0.0257,
+    "residence_time": "NA",
+    "mixing_regime": "NA",
+    "geothermal_flux": 0.12,
     "trophic_state": "NA"
   }
 ]

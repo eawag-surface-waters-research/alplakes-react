@@ -1,0 +1,102 @@
+.table-outer-container {
+    margin-bottom: 24px;
+    position: relative;
+    text-align: center;
+}
+
+.table-outer-container.fullscreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: var(--padding);
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 1000;
+    overflow: auto;
+    box-sizing: border-box;
+    z-index: 99999;
+}
+
+.expand {
+    border: none;
+    cursor: pointer;
+    padding: 5px 10px;
+    color: white;
+    background-color: var(--highlight-color);
+    border-radius: 0 0 8px 8px;
+    transition: all .2s 0s ease;
+    box-shadow: var(--box-shadow);
+}
+
+.expand:hover {
+    transform: scale(1.1);
+}
+
+.table-inner-container {
+    max-height: 320px;
+    overflow: auto;
+    text-align: left;
+    z-index: 9;
+    position: relative;
+}
+
+.table-outer-container.fullscreen .table-inner-container {
+    max-height: calc(100% - 80px);
+}
+
+table.table-styling {
+    border-collapse: collapse;
+    margin: auto;
+}
+
+table.table-styling thead {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+table.table-styling td,
+table.table-styling th {
+    padding: 8px 16px;
+    max-width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+table.table-styling th {
+    cursor: pointer;
+}
+
+table.table-styling tr:nth-child(even) {
+    background-color: var(--box-color);
+}
+
+table.table-styling tr:nth-child(odd) {
+    background-color: var(--background-color);
+}
+
+table.table-styling tr:hover {
+    background-color: var(--highlight-color-subtle);
+}
+
+table.table-styling th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: var(--highlight-color);
+    color: white;
+}
+
+@media screen and (max-width: 500px) {
+    .table-outer-container.fullscreen {
+        padding: 0;
+    }
+    table.table-styling tr:nth-child(odd) {
+        background-color: #F3F4F6;
+    }
+    .main.dark table.table-styling tr:nth-child(odd) {
+        background-color: hsl(233, 8%, 19%);
+    }
+}

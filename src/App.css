@@ -4,27 +4,40 @@
 /* Fonts */
 
 @font-face {
-  font-family: "exo";
-  src: url("fonts/exo/Exo-Italic-VariableFont_wght.ttf") format("truetype-variations");
+  font-family: "DM_Sans";
+  src: url("fonts/DM_Sans/DMSans-VariableFont_opsz\,wght.ttf") format("truetype-variations");
+  font-weight: 1 999;
+}
+
+@font-face {
+  font-family: "DM_Sans_Italic";
+  src: url("fonts/DM_Sans/DMSans-Italic-VariableFont_opsz\,wght.ttf") format("truetype-variations");
   font-weight: 1 999;
 }
 
 /* Variables */
 
 :root {
-  --background-color: rgba(255, 255, 255, 255);
+  --background-color: #F3F4F6;
   --background-font-color: rgb(50, 50, 50);
   --background-suble-font-color: rgb(117, 117, 117);
-  --box-color: rgb(247 247 247);
+  --box-color: rgb(255, 255, 255);
   --box-font-color: rgb(0, 0, 0);
   --box-inner-color: rgb(227, 227, 227);
   --border-color: #ddd;
   --box-shadow: rgba(0, 0, 0, 0.14) 0px 1px 5px;
   --box-shadow-hover: rgba(0, 0, 0, 0.24) 0px 1px 6px;
+  --bottom-shadow: 0px 3px 5px 0px rgba(214, 214, 214, 0.6);
+  --search-shadow: rgba(50, 50, 93, 0.25) 0px 1px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+  --star-color: #E9C00A;
+  --content-width: 1280px;
+  --text-width: 700px;
+  --max-width: 1920px;
+  --top-margin: 56px;
   --footer-height: 48px;
   --footer-full-height: 114px;
   --padding: 40px;
-  --list-width: 650px;
+  --list-width: 500px;
   --sidebar-width: 450px;
   --settings-width: 400px;
   --selector-height: 50px;
@@ -34,8 +47,9 @@
   --button-fill-color: black;
   --button-text-color: white;
   --highlight-color: rgba(68, 188, 167, 1);
+  --link-color: #5594CC;
   --highlight-color-fill: rgba(68, 188, 167, 0.2);
-  --highlight-color-subtle: rgba(68, 188, 167, 0.5);
+  --highlight-color-subtle: #EEF9F7;
   --header-text-color: rgb(59, 59, 59);
   --pulse-color: rgb(160, 160, 160);
   --map-color: rgb(236, 236, 236);
@@ -48,8 +62,8 @@
 }
 
 :root {
-  --search-height: calc(var(--padding) + 95px);
-  --header-height: calc(var(--padding) * 2 + 30px);
+  --search-height: calc(var(--padding) * 2 + 125px);
+  --header-height: calc(var(--padding) + 30px);
 }
 
 .dark {
@@ -63,26 +77,34 @@
   --button-fill-color: white;
   --button-text-color: black;
   --header-text-color: rgb(207, 202, 202);
+  --highlight-color-subtle: #000000;
   --pulse-color: rgb(136 136 136);
   --map-color: rgb(41, 41, 41);
   --box-shadow: 0 0 0 1px hsla(230, 13%, 9%, 0.075), 0 0.3px 0.4px hsla(230, 13%, 9%, 0.02), 0 0.9px 1.5px hsla(230, 13%, 9%, 0.045), 0 3.5px 6px hsla(230, 13%, 9%, 0.09);
+  --search-shadow: rgb(14 14 17 / 81%) 0px 3px 8px;
+  --bottom-shadow: 0px 3px 5px 0px rgb(0 0 0 / 26%);
   --box-shadow-hover: rgb(255 255 255 / 16%) 0px 1px 8px;
   --legend-color: rgb(41 41 41 / 65%);
 }
 
-@media screen and (max-width: 1200px) {
+@media screen and (max-width: 1000px) {
   :root {
-    --padding: 24px;
-    --list-width: 50%;
+    --list-width: 100%;
+    --padding: 20px;
+    --header-height: calc(var(--padding) * 2 + 22px);
+    --top-margin: 87px;
+    --search-height: calc(var(--padding) * 2.5 + 125px);
   }
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 500px) {
   :root {
-    --list-width: 100%;
-    --padding: 16px;
-    --search-height: calc(var(--padding) * 3 + 98px);
-    --header-height: calc(var(--padding) * 2 + 26px);
+    --background-color: white;
+    --search-height: 145px;
+  }
+
+  .dark {
+    --box-color: hsl(232, 11%, 15%);
   }
 }
 
@@ -90,8 +112,40 @@
 /* Whole site settings */
 
 .main {
-  font-family: "Frutiger Neue LT Pro", "Arial", sans-serif;
+  font-family: "DM_Sans", "Frutiger Neue LT Pro", "Arial", sans-serif;
   color: var(--background-font-color);
+  font-size: 16px;
+}
+
+h1 {
+  font-size: 48px;
+  font-weight: 500;
+  margin-bottom: 24px;
+}
+
+h2 {
+  font-size: 32px;
+  font-weight: 400;
+  margin-bottom: 16px;
+}
+
+h3 {
+  font-size: 24px;
+  font-weight: 400;
+  margin-bottom: 12px;
+}
+
+h4 {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+p {
+  line-height: 28px;
+  font-size: 18px;
+  max-width: 700px;
+  margin-bottom: 32px;
 }
 
 .main .background {
@@ -126,6 +180,9 @@
 .main.dark .tile-class.leaflet-tile {
   filter: brightness(2) contrast(0.8) !important;
 }
+
+
+
 
 /* Map icons */
 

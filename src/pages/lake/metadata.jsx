@@ -135,23 +135,6 @@ class Feedback extends Component {
   }
 }
 
-class LatestEvents extends Component {
-  render() {
-    var { language } = this.props;
-    return (
-      <Dropdown
-        title={Translations["latestEvents"][language]}
-        visible={true}
-        contents={
-          <div className="events">
-            <div className="text">{Translations["noEvents"][language]}</div>
-          </div>
-        }
-      />
-    );
-  }
-}
-
 class Bathymetry extends Component {
   render() {
     var { metadata, language } = this.props;
@@ -362,14 +345,14 @@ class Metadata extends Component {
       <React.Fragment>
         <div className="title">{title}</div>
         <div className="subtitle">{subtitle}</div>
-        <LatestEvents language={language} />
+        <div className="location">{metadata.latitude}, {metadata.longitude}</div>
+        <Properties metadata={metadata} language={language} />
         {"insitu" in metadata && (
           <Insitu metadata={metadata} language={language} />
         )}
         {"available" in metadata && false && (
           <AvailableData metadata={metadata} language={language} />
         )}
-        <Properties metadata={metadata} language={language} />
         {"bathymetry" in metadata && (
           <Bathymetry metadata={metadata} language={language} />
         )}
