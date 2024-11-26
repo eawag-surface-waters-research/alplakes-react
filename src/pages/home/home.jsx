@@ -174,6 +174,7 @@ class List extends Component {
       filters,
       setFavorties,
       favorites,
+      sort,
     } = this.props;
     return (
       <div className="list">
@@ -185,17 +186,20 @@ class List extends Component {
               ) : (
                 <ListSkeleton />
               ))}
-            {sortedList.map((lake) => (
-              <ListItem
-                lake={lake}
-                language={language}
-                key={lake.key}
-                filterTypes={filterTypes}
-                filters={filters}
-                setFavorties={setFavorties}
-                favorites={favorites}
-              />
-            ))}
+            {sortedList
+              .filter((lake) => lake.display && !lake.filter)
+              .map((lake) => (
+                <ListItem
+                  lake={lake}
+                  language={language}
+                  key={lake.key}
+                  filterTypes={filterTypes}
+                  filters={filters}
+                  setFavorties={setFavorties}
+                  favorites={favorites}
+                  sort={sort}
+                />
+              ))}
           </div>
         </div>
       </div>
@@ -205,15 +209,25 @@ class List extends Component {
 
 class ListItem extends Component {
   render() {
-    var { lake, language, filterTypes, filters, setFavorties, favorites } =
-      this.props;
+    var {
+      lake,
+      language,
+      filterTypes,
+      filters,
+      setFavorties,
+      favorites,
+      sort,
+    } = this.props;
     var selected = favorites.includes(lake.key);
+    var units = {
+      elevation: "m ü. M.",
+      max_depth: "m",
+      area: "km²",
+    };
     return (
       <NavLink to={`/${lake.key}`}>
         <div
-          className={
-            lake.display && !lake.filter ? "list-item" : "list-item hidden"
-          }
+          className="list-item"
           id={"list-" + lake.key}
           onMouseOver={onMouseOver}
           onMouseOut={onMouseOut}
@@ -232,6 +246,11 @@ class ListItem extends Component {
               >
                 &#9733;
               </div>
+              {sort in lake && (
+                <div className="filter-property">
+                  {lake[sort]} {units[sort]}
+                </div>
+              )}
             </div>
             <div className="right">
               <div className="view">
@@ -524,6 +543,7 @@ class Home extends Component {
             <List
               language={language}
               sortedList={sortedList}
+              sort={sort}
               search={search}
               results={results}
               filterTypes={filterTypes}

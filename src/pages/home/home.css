@@ -271,6 +271,13 @@
   color: var(--border-color);
 }
 
+.main .home .content .list .product-list .list-item .properties .left .filter-property {
+  display: inline-block;
+  padding-left: 8px;
+  font-size: 14px;
+  color: var(--border-color);
+}
+
 .main .home .content .list .product-list .list-item .properties .left .favorite.full {
   color: var(--star-color);
 }

@@ -2220,5 +2220,27 @@
     "mixing_regime": "NA",
     "geothermal_flux": 0.12,
     "trophic_state": "NA"
+  },
+  {
+    "key": "mondsee",
+    "name": {
+      "EN": "Mondsee",
+      "DE": "Mondsee",
+      "FR": "Lac de Mondsee",
+      "IT": "Mondsee"
+    },
+    "area": 14.2,
+    "ave_depth": "NA",
+    "max_depth": 68.0,
+    "elevation": 481,
+    "latitude": 47.827,
+    "longitude": 13.380,
+    "flags": ["austrian"],
+    "type": "Natural",
+    "volume": 0.51,
+    "residence_time": "NA",
+    "mixing_regime": "NA",
+    "geothermal_flux": 0.12,
+    "trophic_state": "NA"
   }
 ]

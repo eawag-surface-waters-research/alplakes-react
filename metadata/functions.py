@@ -734,6 +734,8 @@ def simstrat_source(models, simstrat, obj):
             s["meteo_source"] = "Mistral Meteo-Hub"
         elif "thredds" in meteo_type.lower():
             s["meteo_source"] = "ESPRI IPSL Thredds"
+        elif "geosphere" in meteo_type.lower():
+            s["meteo_source"] = "GeoSphere Austria"
         forecast_type = properties["forcing_forecast"]["source"]
         if "meteoswiss" in forecast_type.lower():
             s["meteo_source"] = s["meteo_source"] + ". Forecast from MeteoSwiss ICON."

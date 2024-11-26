@@ -80,9 +80,11 @@ class SummaryGraph extends Component {
       .enter()
       .append("stop")
       .attr("offset", function (d) {
+        console.log(d.offset)
         return d.offset;
       })
       .attr("stop-color", function (d) {
+        console.log(d.color)
         return d.color;
       });
 
