@@ -618,7 +618,7 @@
 
 .main .lake .content .module .display .module-component .sidebar .active-apps .app {
     display: inline-block;
-    font-size: 50px;
+    font-size: 45px;
     border: 1px solid var(--border-color);
     border-radius: 12px;
     margin: 25px 12px 40px 12px;
@@ -829,6 +829,9 @@
     overflow-x: hidden;
     padding-right: 12px;
     padding-bottom: 12px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
 }
 
 .main .lake .content .module .display .module-component .sidebar .add-layers .layers::-webkit-scrollbar {
@@ -855,9 +858,10 @@
     height: 180px;
     border: 1px solid var(--border-color);
     text-align: left;
-    max-width: 100%;
-    box-sizing: border-box;
     position: relative;
+    flex: 1;
+    min-width: 350px;
+    max-width: 500px;
 }
 
 .main .lake .content .module .display .module-component .sidebar .add-layers .layers .layer:hover {
@@ -1073,10 +1077,11 @@
 }
 
 .main .lake .content .module.active .display .module-component .sidebar .custom-css-datepicker .react-datepicker {
-    background-color: var(--box-color);
+    background-color: var(--background-color);
     border: none;
     width: 100%;
     font-size: 16px;
+    margin-left: -20px;
 }
 
 .main .lake .content .module.active .display .module-component .sidebar .custom-css-datepicker .react-datepicker .react-datepicker__current-month,
@@ -2439,5 +2444,9 @@
 
     .main .lake .content .metadata .properties .property {
         margin-right: 16px;
+    }
+
+    .main .lake .content .module .display .module-component .sidebar .add-layers .layers .layer {
+        min-width: calc(100% - var(--padding) * 2);
     }
 }
