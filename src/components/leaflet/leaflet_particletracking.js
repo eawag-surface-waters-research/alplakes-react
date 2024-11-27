@@ -21,7 +21,9 @@ L.Control.ParticleTracking = L.Control.extend({
     var { bounds, transformationMatrix } =
       this._generateTransformationMatrix(geometry);
     this._xMin = bounds.xMin;
+    this._xMax = bounds.xMax;
     this._yMin = bounds.yMin;
+    this._yMax = bounds.yMax;
     this._xSize = bounds.xSize;
     this._ySize = bounds.ySize;
     this._data = data;
@@ -360,20 +362,24 @@ L.Control.ParticleTracking = L.Control.extend({
     var i =
       this.options.nRows - Math.round((latlng.lat - this._yMin) / this._ySize);
     var j = Math.round((latlng.lng - this._xMin) / this._xSize);
-    let t = this._transformationMatrix[i][j];
-    if (t == null) {
-      return null;
-    }
-    let ti = Math.floor(
-      (time_index / (this._interpolated_times.length - 1)) *
-        (this._times.length - 1)
-    );
-    var x = this._data[String(this._times[ti])][t[0]][t[1]];
-    var y = this._data[String(this._times[ti])][t[0]][t[1] + this._dataWidth];
-    if (isNaN(x) || isNaN(y)) {
-      return null;
+    if (i > -1 && i < this.options.nRows && j > -1 && j < this.options.nCols) {
+      let t = this._transformationMatrix[i][j];
+      if (t == null) {
+        return null;
+      }
+      let ti = Math.floor(
+        (time_index / (this._interpolated_times.length - 1)) *
+          (this._times.length - 1)
+      );
+      var x = this._data[String(this._times[ti])][t[0]][t[1]];
+      var y = this._data[String(this._times[ti])][t[0]][t[1] + this._dataWidth];
+      if (isNaN(x) || isNaN(y)) {
+        return null;
+      } else {
+        return { x, y };
+      }
     } else {
-      return { x, y };
+      return null;
     }
   },
   _moveLocation: function (latlng, velocity, time) {
