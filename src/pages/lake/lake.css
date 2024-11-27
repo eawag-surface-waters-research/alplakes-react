@@ -2241,6 +2241,12 @@
     }
 }
 
+@media screen and (max-width: 1000px) {
+    .main .lake .content {
+        margin-top: calc(var(--padding) + var(--header-height));
+    }
+}
+
 @media screen and (max-width: 800px) {
     .main .lake .content .metadata {
         width: 100%;
@@ -2259,7 +2265,6 @@
         width: 100%;
         box-sizing: border-box;
         margin: 0;
-        margin-top: var(--header-height);
     }
 
     .main .lake .content .module {
