@@ -153,11 +153,18 @@ class Period extends Component {
         minDate={minDate}
         maxDate={maxPeriodDate ? maxPeriodDate : maxDate}
         dateFormat="dd/MM/yyyy"
+        customInput={<CustomInput />}
         locale={locale}
       />
     );
   }
 }
+
+const CustomInput = React.forwardRef(({ value, onClick }, ref) => (
+  <div ref={ref} onClick={onClick} className="dateperiod">
+    {value}
+  </div>
+));
 
 class Raster extends Component {
   state = {

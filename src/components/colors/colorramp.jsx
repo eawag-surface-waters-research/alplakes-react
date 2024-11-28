@@ -5,8 +5,15 @@ import COLORS from "./colors.json";
 class ColorRamp extends Component {
   state = {
     open: false,
-    selected: "Balance",
-    palettes: COLORS,
+    selected: "vik",
+    palettes: Object.fromEntries(
+      Object.entries(COLORS).map(([key, colors]) => [
+        key,
+        colors.map((c) => {
+          return { color: [c[0], c[1], c[2]], point: c[3] };
+        }),
+      ])
+    ),
   };
   toggle = () => {
     this.setState({ open: !this.state.open });

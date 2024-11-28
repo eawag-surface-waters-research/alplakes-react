@@ -1420,6 +1420,20 @@
     color: var(--background-suble-font-color);
 }
 
+.main .lake .content .module.active .display .module-component .sidebar .layer-settings .setting .dateperiod {
+    background-color: var(--box-color);
+    border: none;
+    border-radius: 8px;
+    box-sizing: border-box;
+    color: var(--background-font-color);
+    cursor: pointer;
+    display: inline-block;
+    font-size: 16px;
+    padding: 8px 12px;
+    text-align: left;
+    min-width: 200px;
+}
+
 .main .lake .content .module.active .display .module-component .sidebar .layer-settings .setting .legend {
     background-color: var(--background-color);
     width: 100%;
@@ -1486,6 +1500,7 @@
     box-sizing: border-box;
     background-color: var(--box-color);
     color: var(--background-font-color);
+    border-radius: 6px;
 }
 
 .main .lake .content .module.active .display .module-component .sidebar .layer-settings input[type=number].with-button {
@@ -1561,18 +1576,13 @@
     border-radius: 8px;
     transition: all .2s ease-in-out;
     border: none;
-    background-color: var(--map-color);
-    border: 1px solid var(--border-color);
+    background-color: var(--box-color);
     cursor: pointer;
     padding: 4px 8px;
     font-size: 14px;
     margin: 3px 0;
     width: 100%;
     margin-top: 12px;
-}
-
-.main .lake .content .module.active .display .module-component .sidebar .layer-settings button.set:hover {
-    background-color: var(--background-color);
 }
 
 .main .lake .content .module.active .display .module-component .sidebar .layer-settings button.tiff {
@@ -1604,10 +1614,12 @@
     text-align: left;
     color: var(--background-font-color);
     border: none;
+    border-radius: 6px;
 }
 
 .main .lake .content .module.active .display .module-component .sidebar .layer-settings select.subtle {
     background-color: var(--box-color);
+    margin-bottom: 10px;
 }
 
 .main .lake .content .module.active .display .module-component .sidebar .layer-settings .react-datepicker-wrapper input {
@@ -1623,6 +1635,17 @@
     border-radius: 8px;
 }
 
+.main .lake .content .module.active .display .module-component .sidebar .layer-settings .period-selector .react-datepicker {
+    background-color: var(--box-color);
+    border: none;
+    box-shadow: var(--box-shadow);
+    padding-top: 5px;
+}
+
+.main .lake .content .module.active .display .module-component .sidebar .layer-settings .period-selector .react-datepicker .react-datepicker__triangle {
+    display: none;
+}
+
 .main .lake .content .module.active .display .module-component .sidebar .layer-settings .react-datepicker .react-datepicker__header {
     background-color: transparent;
     border: none;
@@ -1633,15 +1656,14 @@
 }
 
 .main .lake .content .module.active .display .module-component .sidebar .layer-settings .period-selector .react-datepicker__day:hover {
-    background-color: var(--box-color);
-    border-color: var(--highlight-color);
+    background-color: var(--background-color);
 }
 
 .main .lake .content .module.active .display .module-component .sidebar .layer-settings .react-datepicker__day-name,
 .main .lake .content .module.active .display .module-component .sidebar .layer-settings .react-datepicker__day,
 .main .lake .content .module.active .display .module-component .sidebar .layer-settings .react-datepicker__time-name {
     width: var(--cell-size);
-    border-radius: 0.3rem;
+    border-radius: 100%;
     color: var(--background-font-color);
 }
 
@@ -1669,13 +1691,7 @@
 }
 
 .main .lake .content .module.active .display .module-component .sidebar .layer-settings .period-selector .react-datepicker__day--in-selecting-range {
-    background-color: var(--box-color);
-    border-color: var(--highlight-color);
-}
-
-.main .lake .content .module.active .display .module-component .sidebar .layer-settings .period-selector .react-datepicker {
     background-color: var(--background-color);
-    border-radius: 0;
 }
 
 .main .lake .content .module.active .display .module-component .plot {
@@ -2448,5 +2464,27 @@
 
     .main .lake .content .module .display .module-component .sidebar .add-layers .layers .layer {
         min-width: calc(100% - var(--padding) * 2);
+    }
+
+    .main .lake .content .module.active .display .module-component .sidebar .layer-settings .period-selector .react-datepicker__tab-loop {
+        position: fixed;
+        top: 20%;
+        left: var(--padding);
+        z-index: 9;
+    }
+
+    .main .lake .content .module.active .display .module-component .sidebar .layer-settings .period-selector .react-datepicker__tab-loop .react-datepicker-popper {
+        transform: none!important;
+    }
+
+    .main .lake .content .module.active .display .module-component .sidebar .layer-settings .period-selector .react-datepicker__tab-loop::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.8);
+        z-index: -1;
     }
 }

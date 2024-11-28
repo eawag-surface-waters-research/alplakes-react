@@ -118,8 +118,11 @@ const addSimstratHeatmap = async (layer, language, loadingId) => {
     zunits: layer.unit,
   };
   if ("paletteName" in layer.displayOptions) {
-    layer.displayOptions.palette = COLORS[layer.displayOptions.paletteName];
-    options["palette"] = COLORS[layer.displayOptions.paletteName];
+    let palette = COLORS[layer.displayOptions.paletteName].map((c) => {
+      return { color: [c[0], c[1], c[2]], point: c[3] };
+    });
+    layer.displayOptions.palette = palette
+    options["palette"] = palette
   }
   layer.displayOptions = { ...layer.displayOptions, ...options };
   var x = data.time.map((t) => new Date(t));

@@ -342,7 +342,7 @@ def make_layers(data, sd):
                 "source": "alplakes_delft3d",
                 "summaryGraph": "threed_linegraph",
                 "displayOptions": {
-                    "paletteName": "Balance",
+                    "paletteName": "vik",
                     "zIndex": 1,
                     "labels": True,
                     "interpolate": True
@@ -407,7 +407,7 @@ def make_layers(data, sd):
                 "source": "alplakes_delft3d",
                 "summaryGraph": "threed_linegraph",
                 "displayOptions": {
-                    "paletteName": "navia reverse",
+                    "paletteName": "navia",
                     "zIndex": 2,
                     "labels": True,
                     "interpolate": True
@@ -460,7 +460,7 @@ def make_layers(data, sd):
                 "source": "alplakes_delft3d",
                 "summaryGraph": "transect_plot",
                 "displayOptions": {
-                    "paletteName": "Balance",
+                    "paletteName": "vik",
                     "zIndex": 11,
                     "variable": "temperature",
                     "thresholdStep": 200
@@ -487,7 +487,7 @@ def make_layers(data, sd):
                 "source": "alplakes_delft3d",
                 "summaryGraph": "profile_plot",
                 "displayOptions": {
-                    "paletteName": "Balance",
+                    "paletteName": "vik",
                     "zIndex": 11,
                     "variable": "temperature",
                     "thresholdStep": 200
@@ -544,7 +544,7 @@ def make_layers(data, sd):
             "source": "sencast",
             "summaryGraph": "satellite_timeseries",
             "displayOptions": {
-                "paletteName": "Rainbow",
+                "paletteName": "bamako",
                 "zIndex": 2,
                 "opacity": 1,
                 "convolve": 2,
@@ -602,7 +602,7 @@ def make_layers(data, sd):
             "source": "sencast",
             "summaryGraph": "satellite_timeseries",
             "displayOptions": {
-                "paletteName": "navia reverse",
+                "paletteName": "oslo",
                 "zIndex": 2,
                 "opacity": 1,
                 "convolve": 2,
@@ -654,7 +654,7 @@ def make_layers(data, sd):
             "source": "sencast",
             "summaryGraph": "satellite_timeseries",
             "displayOptions": {
-                "paletteName": "Turbid",
+                "paletteName": "bamako",
                 "zIndex": 2,
                 "opacity": 1,
                 "convolve": 2,
@@ -775,7 +775,7 @@ def make_datasets(data, simstrat):
                                            "tags": ["5 day forecast", "Timeseries", "Heatmap"]
                                        }),
             "displayOptions": {
-                "paletteName": "Balance",
+                "paletteName": "vik",
                 "thresholdStep": 200
             }
         },
@@ -796,7 +796,7 @@ def make_datasets(data, simstrat):
                                                "tags": ["5 day forecast", "Timeseries", "Heatmap"]
                                            }),
                 "displayOptions": {
-                    "paletteName": "Balance",
+                    "paletteName": "vik",
                     "thresholdStep": 200
                 }
             },

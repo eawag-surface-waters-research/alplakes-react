@@ -550,8 +550,8 @@ const getAlplakesHydrodynamicMetadata = async (layer, depth, datetime) => {
       `${CONFIG.alplakes_api}/simulations/metadata/${source.model}/${layer.lake}`
     ));
   }
-  if (data.end_date.length === 10){
-    data.end_date = data.end_date + " 21:00"
+  if (data.end_date.length === 10) {
+    data.end_date = data.end_date + " 21:00";
   }
   source.minDate = stringToDate(data.start_date).getTime();
   source.maxDate = stringToDate(data.end_date).getTime();
@@ -624,12 +624,10 @@ const downloadAlplakesHydrodynamicParameter = async (
   }
 
   var path = [type, source.model, layer.lake, parameter, String(depth)];
+  setNested(dataStore, path, {});
 
   var start = period[0];
   var end = period[1];
-  if (checkNested(dataStore, path)) {
-    console.log("Check downloaded to avoid repeat downloads");
-  }
   var par;
   if (initialLoad) {
     try {
@@ -680,6 +678,7 @@ const downloadAlplakesHydrodynamicParameter = async (
       average.x.push(date);
     }
   }
+
   var min = d3.min(bounds.min);
   var max = d3.max(bounds.max);
   layer.displayOptions.min = min;
@@ -767,8 +766,11 @@ const plotAlplakesHydrodynamicRaster = (
   var path = [source.type, source.model, layer.lake, layer.parameter];
   var options = layer.displayOptions;
   if ("paletteName" in layer.displayOptions) {
-    layer.displayOptions.palette = COLORS[layer.displayOptions.paletteName];
-    options["palette"] = COLORS[layer.displayOptions.paletteName];
+    let palette = COLORS[layer.displayOptions.paletteName].map((c) => {
+      return { color: [c[0], c[1], c[2]], point: c[3] };
+    });
+    layer.displayOptions.palette = palette;
+    options["palette"] = palette;
   }
   if (!("opacity" in layer.displayOptions)) {
     options["opacity"] = 1;
@@ -862,8 +864,11 @@ const plotAlplakesHydrodynamicCurrent = (
   var path = [source.type, source.model, layer.lake, layer.parameter];
   var options = layer.displayOptions;
   if ("paletteName" in layer.displayOptions) {
-    layer.displayOptions.palette = COLORS[layer.displayOptions.paletteName];
-    options["palette"] = COLORS[layer.displayOptions.paletteName];
+    let palette = COLORS[layer.displayOptions.paletteName].map((c) => {
+      return { color: [c[0], c[1], c[2]], point: c[3] };
+    });
+    layer.displayOptions.palette = palette;
+    options["palette"] = palette;
   }
   if (!("opacity" in layer.displayOptions)) {
     options["opacity"] = 1;
@@ -912,8 +917,11 @@ const updateAlplakesHydrodynamic = (
 
   var options = layer.displayOptions;
   if ("paletteName" in layer.displayOptions) {
-    layer.displayOptions.palette = COLORS[layer.displayOptions.paletteName];
-    options["palette"] = COLORS[layer.displayOptions.paletteName];
+    let palette = COLORS[layer.displayOptions.paletteName].map((c) => {
+      return { color: [c[0], c[1], c[2]], point: c[3] };
+    });
+    layer.displayOptions.palette = palette;
+    options["palette"] = palette;
   }
 
   var newData;
@@ -1126,8 +1134,11 @@ const plotSencastTiff = async (url, layer, layerStore, map, loadingId) => {
   var path = [source.type, layer.lake, layer.parameter];
   var options = layer.displayOptions;
   if ("paletteName" in layer.displayOptions) {
-    layer.displayOptions.palette = COLORS[layer.displayOptions.paletteName];
-    options["palette"] = COLORS[layer.displayOptions.paletteName];
+    let palette = COLORS[layer.displayOptions.paletteName].map((c) => {
+      return { color: [c[0], c[1], c[2]], point: c[3] };
+    });
+    layer.displayOptions.palette = palette;
+    options["palette"] = palette;
   }
   if (!("opacity" in layer.displayOptions)) {
     options["opacity"] = 1;
@@ -1358,7 +1369,9 @@ const addAlplakesTransect = async (
   getTransect
 ) => {
   if ("paletteName" in layer.displayOptions) {
-    layer.displayOptions.palette = COLORS[layer.displayOptions.paletteName];
+    layer.displayOptions.palette = COLORS[layer.displayOptions.paletteName].map((c) => {
+      return { color: [c[0], c[1], c[2]], point: c[3] };
+    });
   }
   var source = layer.sources[layer.source];
   var path = [source.type, source.model, layer.lake];
@@ -1395,7 +1408,9 @@ const addAlplakesProfile = async (
   getProfile
 ) => {
   if ("paletteName" in layer.displayOptions) {
-    layer.displayOptions.palette = COLORS[layer.displayOptions.paletteName];
+    layer.displayOptions.palette = COLORS[layer.displayOptions.paletteName].map((c) => {
+      return { color: [c[0], c[1], c[2]], point: c[3] };
+    });
   }
   var source = layer.sources[layer.source];
   var path = [source.type, source.model, layer.lake];
@@ -1437,7 +1452,9 @@ const addAlplakesMeasurements = async (
   var path = [source.type];
   var leaflet_layer = L.layerGroup([]).addTo(map);
   if ("paletteName" in layer.displayOptions) {
-    layer.displayOptions.palette = COLORS[layer.displayOptions.paletteName];
+    layer.displayOptions.palette = COLORS[layer.displayOptions.paletteName].map((c) => {
+      return { color: [c[0], c[1], c[2]], point: c[3] };
+    });
   }
   let minDate = new Date();
   minDate.setHours(0, 0, 0, 0);

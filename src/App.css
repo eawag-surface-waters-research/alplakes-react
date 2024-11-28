@@ -54,7 +54,7 @@
   --pulse-color: rgb(160, 160, 160);
   --map-color: rgb(236, 236, 236);
   --map-button: rgba(0, 0, 0, 0.8);
-  --cell-size: 32px;
+  --cell-size: 31px;
   --legend-color: rgb(236 236 236 / 47%);
   --app-area-height: 127px;
   --day-selector-height: 64px;
@@ -77,7 +77,7 @@
   --button-fill-color: white;
   --button-text-color: black;
   --header-text-color: rgb(207, 202, 202);
-  --highlight-color-subtle: #000000;
+  --highlight-color-subtle: #336f69;
   --pulse-color: rgb(136 136 136);
   --map-color: rgb(41, 41, 41);
   --box-shadow: 0 0 0 1px hsla(230, 13%, 9%, 0.075), 0 0.3px 0.4px hsla(230, 13%, 9%, 0.02), 0 0.9px 1.5px hsla(230, 13%, 9%, 0.045), 0 3.5px 6px hsla(230, 13%, 9%, 0.09);
