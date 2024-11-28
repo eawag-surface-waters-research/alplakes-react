@@ -13,7 +13,7 @@ class SummaryGraph extends Component {
     try {
       d3.select(`#summarygraph_svg_${graphid}`).remove();
     } catch (e) {
-      console.log(e);
+      console.error(e);
     }
     var div = d3.select(`#summarygraph_${graphid}`);
     var margin = { top: 5, right: 0, bottom: 5, left: -5 };

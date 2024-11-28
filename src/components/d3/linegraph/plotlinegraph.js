@@ -47,7 +47,7 @@ const plotlinegraph = (div, data, options = {}) => {
     try {
       select(`#${r}_${div}`).remove();
     } catch (e) {
-      console.log(e);
+      console.error(e);
     }
   }
 

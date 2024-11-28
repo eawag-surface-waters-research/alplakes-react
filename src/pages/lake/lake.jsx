@@ -172,7 +172,7 @@ class Lake extends Component {
         id,
       });
     } catch (e) {
-      console.log(e);
+      console.error(e);
       this.setState({ error: true, id });
     }
   }

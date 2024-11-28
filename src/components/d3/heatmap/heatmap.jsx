@@ -291,7 +291,7 @@ class D3HeatMap extends Component {
         };
         heatmap("vis" + graphid, data, options);
       } catch (e) {
-        console.log("Heatmap failed to plot", e);
+        console.error("Heatmap failed to plot", e);
       }
     }
   };
@@ -408,7 +408,7 @@ class D3HeatMap extends Component {
         });
       }
     } catch (e) {
-      console.log(e);
+      console.error(e);
     }
 
     if (datax.length === 0) datax.push({ x: [], y: [] });
