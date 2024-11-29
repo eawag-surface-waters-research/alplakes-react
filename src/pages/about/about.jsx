@@ -6,6 +6,7 @@ import runnallja from "../../img/runnalja.jpg";
 import bouffada from "../../img/bouffada.jpg";
 import odermada from "../../img/odermada.jpg";
 import schmidma from "../../img/schmidma.jpg";
+import dimark_icon from "../../img/dimark.jpeg"
 import Translations from "../../translations.json";
 import "./about.css";
 
@@ -142,6 +143,29 @@ class About extends Component {
                 development of the Alplakes platform and/or the models and
                 products it offers.
               </p>
+
+              <h3>DiMark</h3>
+              <p>
+                The rise in water temperatures combined with pollution will
+                alter habitat conditions for many Alpine species. DiMark
+                provides monitoring and early warning system solutions (by
+                linking traditional and satellite observations) to mitigate
+                tourism and eutrophication pressure on Alpine lakes. By creating
+                an innovative monitoring of water quality and early warning
+                systems, the project improves water management, as well as
+                climate mitigation. This project is co-funded by the European
+                Union through the Interreg Alpine Space programme.
+              </p>
+              <div className="project-info">
+                <a
+                  className="link"
+                  href="https://www.alpine-space.eu/project/dimark/"
+                >
+                  https://www.alpine-space.eu/project/dimark/
+                </a>
+                <img src={dimark_icon} className="project-logo" alt="DiMark Icon"/>
+              </div>
+
               <h3>Alplakes</h3>
               <p>
                 Alplakes is an open-source ESA funded research project aimed at
