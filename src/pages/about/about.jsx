@@ -138,9 +138,9 @@ class About extends Component {
             <div ref={this.projects} className="section">
               <h2>Contributing projects</h2>
               <p>
-                The following projects have been fundamental to either
-                developing the Alplakes platform or the models and products that
-                it make available.
+                The following projects have played a pivotal role in the
+                development of the Alplakes platform and/or the models and
+                products it offers.
               </p>
               <h3>Alplakes</h3>
               <p>
