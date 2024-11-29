@@ -6,7 +6,7 @@ import runnallja from "../../img/runnalja.jpg";
 import bouffada from "../../img/bouffada.jpg";
 import odermada from "../../img/odermada.jpg";
 import schmidma from "../../img/schmidma.jpg";
-import dimark_icon from "../../img/dimark.jpeg"
+import dimark_icon from "../../img/dimark.png"
 import Translations from "../../translations.json";
 import "./about.css";
 
