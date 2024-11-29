@@ -60,6 +60,12 @@
 
 }
 
+.main .about .content .project-info img.project-logo{
+    width: 300px;
+    margin-top: 8px;
+
+}
+
 .main .about .content .section ul {
     font-size: 16px;
     padding-left: 32px;
