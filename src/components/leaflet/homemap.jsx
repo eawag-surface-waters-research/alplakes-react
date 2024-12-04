@@ -327,7 +327,7 @@ class HomeMap extends Component {
     L.geoJSON(alpinespace, {
       style: function (feature) {
         return {
-          color: "#44bca84f",
+          color: "#44bca82c",
           weight: 2,
           fillColor: "#44bca7",
           fillOpacity: 0,
