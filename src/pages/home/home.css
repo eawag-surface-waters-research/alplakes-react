@@ -619,7 +619,7 @@
   top: calc(var(--header-height) + var(--padding));
   right: var(--padding);
   width: calc(100% - var(--list-width) - var(--padding) * 3);
-  max-width: calc(var(--max-width) - var(--list-width));
+  max-width: calc(var(--max-width) - var(--list-width) - var(--padding));
   height: calc(100% - var(--header-height) - var(--footer-height) - var(--padding) * 2);
   box-sizing: border-box;
   background-color: var(--background-color);
@@ -832,9 +832,12 @@
   margin: 3px 6px;
 }
 
-@media screen and (min-width: 1920px) {
+@media screen and (min-width: 2000px) {
   .main .home .content .home-map {
     right: calc(100% / 2 - var(--max-width) / 2);
+  }
+  .main .home .content .search {
+    left: calc(100% / 2 - var(--max-width) / 2);
   }
 
 }
