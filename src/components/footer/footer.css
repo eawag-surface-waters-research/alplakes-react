@@ -23,7 +23,6 @@
 @media screen and (min-width: 1920px) {
     .footer.small {
         right: calc(100% / 2 - var(--max-width) / 2);
-        max-width: calc(var(--max-width) - var(--list-width) - var(--padding));
     }
 
 }
