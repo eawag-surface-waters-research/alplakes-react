@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import L from "leaflet";
 import { dayName, formatDateYYYYMMDD } from "./functions";
 import Translations from "../../translations.json";
+import alpinespace from "./alpinespace.json";
 import "./leaflet_tileclass";
 import "./css/leaflet.css";
 
@@ -323,6 +324,16 @@ class HomeMap extends Component {
         position: "topright",
       })
       .addTo(this.map);
+    L.geoJSON(alpinespace, {
+      style: function (feature) {
+        return {
+          color: "#44bca84f",
+          weight: 2,
+          fillColor: "#44bca7",
+          fillOpacity: 0,
+        };
+      },
+    }).addTo(this.map);
     this.polygons = L.featureGroup().addTo(this.map);
     this.labels = {};
     this.plot = true;
