@@ -1,5 +1,5 @@
 import L from "leaflet";
-import { min, max, mean } from "d3";
+import { min, max } from "d3";
 import * as GeoTIFF from "geotiff";
 
 L.FloatGeotiff = L.ImageOverlay.extend({
@@ -112,44 +112,51 @@ L.FloatGeotiff = L.ImageOverlay.extend({
       if (this.options.convolve === 0) {
         this.plotData = this.raster.data[0].slice(0);
       } else {
-        var matrix = this._createConvolutionMatrix(
-          2 * this.options.convolve + 1
-        );
-        for (
-          var h = this.options.convolve;
-          h < this.raster.height - this.options.convolve;
-          h++
-        ) {
-          for (
-            var w = this.options.convolve;
-            w < this.raster.width - this.options.convolve;
-            w++
-          ) {
-            let index = h * this.raster.width + w;
-            if (
-              !isNaN(this.raster.data[0][index]) &&
-              this.raster.data[1][index] !== this.options.invalidpixel
-            ) {
-              var values = [];
-              for (var i = 0; i < matrix.length; i++) {
-                for (var j = 0; j < matrix.length; j++) {
-                  let wi = w + matrix[i][j][0];
-                  let hi = h + matrix[i][j][1];
-                  let ii = hi * this.raster.width + wi;
-                  if (
-                    !isNaN(this.raster.data[0][ii]) &&
-                    this.raster.data[1][ii] !== this.options.invalidpixel
-                  ) {
-                    values.push(this.raster.data[0][ii]);
-                  }
+        const multiband = this.raster.data.length > 1;
+        const width = this.raster.width;
+        const height = this.raster.height;
+        const convolveSize = this.options.convolve;
+        const offsets = [];
+        for (let i = -convolveSize; i <= convolveSize; i++) {
+          for (let j = -convolveSize; j <= convolveSize; j++) {
+            offsets.push([i, j]);
+          }
+        }
+
+        const rasterData = this.raster.data[0];
+        const validPixelCheck = (index) =>
+          !isNaN(rasterData[index]) &&
+          (!multiband ||
+            this.raster.data[1][index] !== this.options.invalidpixel);
+
+        const newPlotData = new Float32Array(width * height).fill(NaN);
+
+        for (let h = convolveSize; h < height - convolveSize; h++) {
+          for (let w = convolveSize; w < width - convolveSize; w++) {
+            const centerIndex = h * width + w;
+            if (validPixelCheck(centerIndex)) {
+              let sum = 0;
+              let count = 0;
+
+              for (const [dx, dy] of offsets) {
+                const neighborW = w + dx;
+                const neighborH = h + dy;
+                const neighborIndex = neighborH * width + neighborW;
+
+                if (validPixelCheck(neighborIndex)) {
+                  sum += rasterData[neighborIndex];
+                  count++;
                 }
               }
-              if (values.length > 0) {
-                this.plotData[index] = mean(values);
+
+              if (count > 0) {
+                newPlotData[centerIndex] = sum / count;
               }
             }
           }
         }
+
+        this.plotData = newPlotData;
       }
       this.convolve = this.options.convolve;
     }
@@ -342,40 +349,48 @@ L.FloatGeotiff = L.ImageOverlay.extend({
   _render: function (ctx, args) {
     ctx.globalAlpha = this.options.opacity;
     var imgData = ctx.createImageData(args.plotWidth, args.plotHeight);
-    var n = Math.abs(Math.min(args.rasterPixelBounds.min.y, 0));
-    var e = Math.abs(Math.min(args.xFinish - args.rasterPixelBounds.max.x, 0));
-    var s = Math.abs(Math.min(args.yFinish - args.rasterPixelBounds.max.y, 0));
-    var w = Math.abs(Math.min(args.rasterPixelBounds.min.x, 0));
+    var e = Math.abs(Math.max(args.rasterPixelBounds.min.x, 0));
+    var n = Math.abs(Math.max(args.rasterPixelBounds.min.y, 0));
     var validpixelexpression =
       this.raster.data.length > 1 && this.options.validpixelexpression;
+    var rasterWidth = this.raster.width;
+    var rasterHeight = this.raster.height;
+    var boundsSW = this._rasterBounds._southWest;
+    var boundsNE = this._rasterBounds._northEast;
+    var latDiff = boundsNE.lat - boundsSW.lat;
+    var lngDiff = boundsNE.lng - boundsSW.lng;
+    var data = imgData.data;
+    var pixelIndex = 0;
     for (let y = 0; y < args.plotHeight; y++) {
-      let yy =
-        Math.round(((y + n) / (args.plotHeight + n + s)) * this.raster.height) -
-        5; // Needs fixing
       for (let x = 0; x < args.plotWidth; x++) {
-        let xx = Math.round(
-          ((x + w) / (args.plotWidth + e + w)) * this.raster.width
+        let latLng = this._map.containerPointToLatLng([x + e, y + n]);
+        let xx = Math.floor(
+          (rasterWidth * (latLng.lng - boundsSW.lng)) / lngDiff
         );
-        let ii = yy * this.raster.width + xx;
-        let i = y * args.plotWidth + x;
+        let yy =
+          rasterHeight -
+          Math.ceil((rasterHeight * (latLng.lat - boundsSW.lat)) / latDiff);
+        var ii = yy * rasterWidth + xx;
         let color = this._getColor(this.plotData[ii]);
         if (color) {
-          imgData.data[i * 4 + 0] = color[0];
-          imgData.data[i * 4 + 1] = color[1];
-          imgData.data[i * 4 + 2] = color[2];
-          imgData.data[i * 4 + 3] = validpixelexpression
+          data[pixelIndex] = color[0];
+          data[pixelIndex + 1] = color[1];
+          data[pixelIndex + 2] = color[2];
+          data[pixelIndex + 3] = validpixelexpression
             ? this.raster.data[1][ii] === this.options.invalidpixel
               ? 0
               : 255
             : 255;
         } else {
-          imgData.data[i * 4 + 0] = 0;
-          imgData.data[i * 4 + 1] = 0;
-          imgData.data[i * 4 + 2] = 0;
-          imgData.data[i * 4 + 3] = 0;
+          data[pixelIndex] = 0;
+          data[pixelIndex + 1] = 0;
+          data[pixelIndex + 2] = 0;
+          data[pixelIndex + 3] = 0;
         }
+        pixelIndex += 4;
       }
     }
+
     ctx.putImageData(imgData, args.xStart, args.yStart);
   },
   transform: function (rasterImageData, args) {
