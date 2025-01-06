@@ -845,18 +845,6 @@ class Tiff extends Component {
     return resultDate;
   };
 
-  netcdfUrl = (url) => {
-    var ncUrl = false;
-    if (url.includes("S3")) {
-      let p = url.split("/");
-      let f = p[p.length - 1].split("_");
-      let n = `${f[0]}_${f[f.length - 3]}_${f[f.length - 2]}.nc`;
-      p[p.length - 1] = n;
-      ncUrl = p.join("/");
-    }
-    return ncUrl;
-  };
-
   addCssRules = (date, available) => {
     var { id } = this.state;
     var start = new Date(date.getFullYear(), date.getMonth(), 1);
@@ -983,7 +971,6 @@ class Tiff extends Component {
           </div>
           <div className="images">
             {images.map((i) => {
-              var ncUrl = this.netcdfUrl(i.url);
               return (
                 <div
                   className={i.url === image.url ? "image selected" : "image"}
@@ -1012,11 +999,6 @@ class Tiff extends Component {
                     <a href={i.url} title="Download image as GeoTIFF">
                       <button className="tiff">GeoTIFF</button>
                     </a>
-                    {ncUrl && (
-                      <a href={ncUrl} title="Download image as NetCDF">
-                        <button className="tiff">netCDF4</button>
-                      </a>
-                    )}
                   </div>
                 </div>
               );
