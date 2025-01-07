@@ -20,63 +20,6 @@ const satelliteStringToDate = (date) => {
   );
 };
 
-export const processSatelliteFiles = (
-  files,
-  available,
-  max_pixels,
-  layer_id,
-  unit,
-  satellite
-) => {
-  for (let file of files) {
-    let time = satelliteStringToDate(file.dt);
-    let date = formatDate(time);
-    let url = CONFIG.sencast_bucket + "/" + file.k;
-    let split = file.k.split("_");
-    let tile = split[split.length - 1].split(".")[0];
-    let satellite = split[0].split("/")[2];
-    let percent = Math.ceil((parseFloat(file.vp) / max_pixels) * 100);
-    let { min, max, mean: ave } = file;
-    let image = {
-      url,
-      time,
-      tile,
-      satellite,
-      percent,
-      ave,
-      min,
-      max,
-      layer_id,
-      unit,
-    };
-    if (date in available) {
-      available[date].images.push(image);
-      available[date].max_percent = Math.max(
-        available[date].max_percent,
-        percent
-      );
-      available[date].max = Math.max(available[date].max, max);
-      let total_percent = available[date].images
-        .map((i) => i.percent)
-        .reduce((acc, currentValue) => acc + currentValue, 0);
-      available[date].ave = weightedAverage(
-        available[date].images.map((i) => i.ave),
-        available[date].images.map((i) => i.percent / total_percent)
-      );
-    } else {
-      available[date] = {
-        images: [image],
-        max_percent: percent,
-        ave,
-        min,
-        max,
-        time,
-      };
-    }
-  }
-  return available;
-};
-
 export const filterImages = (
   all_images,
   filterPixelCoverage,

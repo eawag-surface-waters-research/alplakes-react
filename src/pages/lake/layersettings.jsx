@@ -952,7 +952,6 @@ class Tiff extends Component {
       let day = formatSencastDay(image.time);
       if (day in availableImages) images = availableImages[day].images;
     }
-
     return (
       <div className="layer-settings">
         <div className={"setting " + id}>

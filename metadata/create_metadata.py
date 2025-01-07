@@ -4,7 +4,7 @@ import requests
 import functions as func
 
 upload = True
-bucket_folder = "static/website/metadata/master"
+bucket_folder = "static/website/metadata/new_meta"
 
 # Load Metadata
 with open("metadata.json") as f:
@@ -13,7 +13,7 @@ with open("lakes.geojson") as f:
     shape = json.load(f)
 
 # Load Satellite Data
-response = requests.get("https://eawagrs.s3.eu-central-1.amazonaws.com/metadata/metadata.json")
+response = requests.get("https://eawagrs.s3.eu-central-1.amazonaws.com/alplakes/metadata/summary.json")
 satellite = response.json()
 
 # Load Datalakes Data
@@ -94,7 +94,7 @@ for lake in metadata:
         oned = True
         home["filters"].append("1D")
     satellite_data = False
-    if key in satellite and "sentinel3" in satellite[key]:
+    if key in satellite and ("sentinel3" in satellite[key] or "collection" in satellite[key] or "sentinel2" in satellite[key]):
         home["filters"].append("satellite")
         satellite_data = satellite[key]
         sat = True

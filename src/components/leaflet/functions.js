@@ -1058,8 +1058,9 @@ const addSencastTiff = async (layer, layerStore, map, active, loadingId) => {
     var { data } = await axios.get(CONFIG.sencast_bucket + source.bucket);
     let datetime = satelliteStringToDate(data.dt);
     let date = formatSencastDay(datetime);
+    let { lake, satellite } = componentsFromFilename(data.k)
     layer.displayOptions.image = {
-      url: CONFIG.sencast_bucket + "/" + data.k,
+      url: `${CONFIG.sencast_bucket}/alplakes/cropped/${satellite}/${lake}/${data.k}`,
       ave: data.mean,
       date: date,
       time: datetime,
@@ -1068,6 +1069,15 @@ const addSencastTiff = async (layer, layerStore, map, active, loadingId) => {
   await plotSencastTiff(layer.displayOptions.image.url, layer, layerStore, map);
   return layer;
 };
+
+const componentsFromFilename = (filename) => {
+    let parts = filename.replace(".tif", "").replace("_lowres", "").split("_")
+    let lake = parts[parts.length - 1]
+    let satellite = "collection"
+    if (filename.includes("sentinel2")) satellite = "sentinel2"
+    if (filename.includes("sentinel3")) satellite = "sentinel3"
+    return { lake, satellite }
+}
 
 const collectSencastMetadata = async (source, loadingId, lake) => {
   var available = {};
@@ -1081,10 +1091,10 @@ const collectSencastMetadata = async (source, loadingId, lake) => {
     for (let file of files) {
       let time = satelliteStringToDate(file.dt);
       let date = formatSencastDay(time);
-      let url = CONFIG.sencast_bucket + "/" + file.k;
+      let { lake, satellite } = componentsFromFilename(file.k)
+      let url = `${CONFIG.sencast_bucket}/alplakes/cropped/${satellite}/${lake}/${file.k}`;
       let split = file.k.split("_");
       let tile = split[split.length - 1].split(".")[0];
-      let satellite = split[0].split("/")[2];
       let percent = Math.ceil((parseFloat(file.vp) / max_pixels) * 100);
       let { min, max, mean: ave } = file;
       let image = {

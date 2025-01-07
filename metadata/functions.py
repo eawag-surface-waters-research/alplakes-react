@@ -250,6 +250,28 @@ def make_modules(data, sd):
             },
             "defaults": ["satellite_turbidity"]
         })
+    if sd and ("collection" in sd and "ST" in sd["collection"]):
+        modules.append({
+            "id": "satellite_temperature",
+            "title": {
+                "EN": "Surface Temperature",
+                "DE": "Oberflächentemperatur",
+                "FR": "Température de surface",
+                "IT": "Temperatura superficiale"
+            },
+            "subtitle": {
+                "EN": "Remote Sensing Product",
+                "DE": "Fernerkundungsprodukt",
+                "FR": "Produit de télédétection",
+                "IT": "Prodotto di telerilevamento"
+            },
+            "component": "map",
+            "labels": {
+                "topRight": "satelliteDatetime",
+                "topLeft": "satelliteAverage"
+            },
+            "defaults": ["satellite_temperature"]
+        })
     if "alplakes" in data:
         modules.append({
             "id": "threed_thermocline",
@@ -714,6 +736,46 @@ def make_layers(data, sd):
                     "learnMore": "https://medium.com/@runnalls.james/water-quality-products-from-remote-sensing-data-using-sencast-e48449bd6aa8",
                     "onActivate": True,
                     "tags": ["Sentinel 3", "2024 - Now"]
+                }
+            }
+        })
+    if sd and "collection" in sd and "ST" in sd["collection"]:
+        layers.append({
+            "id": "satellite_temperature",
+            "type": "satellite",
+            "playControls": False,
+            "depth": False,
+            "parameter": "ST",
+            "unit": "°C",
+            "display": "tiff",
+            "source": "sencast",
+            "summaryGraph": "satellite_timeseries",
+            "displayOptions": {
+                "paletteName": "vik",
+                "zIndex": 2,
+                "opacity": 1,
+                "convolve": 2,
+                "wms": False,
+                "min": 0,
+                "max": 30,
+                "dataMin": 0,
+                "dataMax": 40,
+                "coverage": 10
+            },
+            "sources": {
+                "sencast": {
+                    "type": "sencast_tiff",
+                    "models": [
+                        {
+                            "model": "Collection",
+                            "metadata": "/alplakes/metadata/collection/{lake}/ST.json"
+                        }
+                    ],
+                    "bucket": "/alplakes/metadata/collection/{lake}/ST_latest.json",
+                    "description": "Surface water temperature processed from satellite data using the Sencast python package.",
+                    "learnMore": "https://medium.com/@runnalls.james/water-quality-products-from-remote-sensing-data-using-sencast-e48449bd6aa8",
+                    "onActivate": True,
+                    "tags": ["Landsat 8/9", "2013 - Now"]
                 }
             }
         })

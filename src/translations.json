@@ -269,6 +269,12 @@
     "FR": "Forel Ule",
     "IT": "Forel Ule"
   },
+  "ST": {
+    "EN": "Surface Temperature",
+    "DE": "Oberflächentemperatur",
+    "FR": "Température de surface",
+    "IT": "Temperatura superficiale"
+  },
   "tsm": {
     "EN": "Turbidity",
     "DE": "Trübung",
