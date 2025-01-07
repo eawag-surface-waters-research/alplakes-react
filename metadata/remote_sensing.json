@@ -1,0 +1,68 @@
+[
+  {
+    "parameter": "Secchi depth",
+    "satellite": "Sentinel 2",
+    "atmosphere": "Polymer",
+    "method": "Z490",
+    "unit": "m",
+    "matchups": 134,
+    "MdSA": 23.28,
+    "RMSE": 1.82,
+    "MAD": 1.39
+  },
+  {
+    "parameter": "Turbidity",
+    "satellite": "Sentinel 2",
+    "atmosphere": "Polymer",
+    "method": "Dogliotti 665",
+    "unit": "FNU",
+    "matchups": 48,
+    "MdSA": 23.0,
+    "RMSE": null,
+    "MAD": null
+  },
+  {
+    "parameter": "Secchi depth",
+    "satellite": "Sentinel 3",
+    "atmosphere": "Polymer",
+    "method": "Zsd Lee",
+    "unit": "m",
+    "matchups": 176,
+    "MdSA": 13.12,
+    "RMSE": 1.26,
+    "MAD": 0.83
+  },
+  {
+    "parameter": "Turbidity",
+    "satellite": "Sentinel 3",
+    "atmosphere": "Polymer",
+    "method": "Binding 754",
+    "unit": "FNU",
+    "matchups": null,
+    "MdSA": null,
+    "RMSE": null,
+    "MAD": null
+  },
+  {
+    "parameter": "Chlorophyll A",
+    "satellite": "Sentinel 3",
+    "atmosphere": "Polymer",
+    "method": "OC3",
+    "unit": "mg m-3",
+    "matchups": 112,
+    "MdSA": 19.09,
+    "RMSE": 1.40,
+    "MAD": null
+  },
+  {
+    "parameter": "Forel Ule",
+    "satellite": "Sentinel 3",
+    "atmosphere": "Polymer",
+    "method": "Woerd HJvd, Wernand MR",
+    "unit": "-",
+    "matchups": null,
+    "MdSA": null,
+    "RMSE": null,
+    "MAD": null
+  }
+]

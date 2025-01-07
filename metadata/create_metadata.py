@@ -161,6 +161,14 @@ if upload:
         },
     )
     s3.upload_file(
+        'remote_sensing.json',
+        'alplakes-eawag',
+        '{}/remote_sensing.json'.format(bucket_folder),
+        ExtraArgs={
+            'ContentType': 'application/json',
+        },
+    )
+    s3.upload_file(
         'lakes.geojson',
         'alplakes-eawag',
         '{}/lakes.geojson'.format(bucket_folder),
