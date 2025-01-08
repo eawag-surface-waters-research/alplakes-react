@@ -1,6 +1,5 @@
 .toggle {
-    padding: 4px;
-    border: 1px solid var(--border-color);
+    padding: 5px;
     border-radius: 22px;
     background-color: var(--box-color);
     width: fit-content;

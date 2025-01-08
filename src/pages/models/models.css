@@ -20,10 +20,8 @@
 
 .main .models .sidebar .sidebar-inner {
     background-color: var(--box-color);
-    box-shadow: var(--box-shadow);
     padding: 16px 24px;
     border-radius: 16px;
-    border: 1px solid var(--border-color);
     width: 200px;
 }
 
@@ -45,9 +43,9 @@
 }
 
 .main .models .content .section {
-    margin-bottom: 64px;
-    border-bottom: 5px solid var(--box-color);
-    padding-bottom: 30px;
+    margin-bottom: 50px;
+    border-top: 3px solid var(--box-color);
+    padding-top: 40px;
 }
 
 .main .models .content .section ul {

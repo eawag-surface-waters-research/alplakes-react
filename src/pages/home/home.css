@@ -2,19 +2,19 @@
   max-width: var(--max-width);
   margin: auto;
   margin-top: var(--header-height);
-  padding: 0 var(--padding);
+  padding: 0 calc(var(--padding) * 1.5);
 }
 
 .main .home .content .search {
   position: fixed;
   width: calc(var(--list-width) + 10px);
-  max-width: calc(100% - var(--padding) - 10px);
+  max-width: calc(100% - var(--padding) * 2 - 10px);
   top: var(--header-height);
   background-color: var(--background-color);
   padding: var(--padding) 5px 0 5px;
   box-sizing: border-box;
   z-index: 9999;
-  left: calc(var(--padding) - 5px);
+  left: calc(var(--padding) * 1.5 - 5px);
 }
 
 .main .home .content .search .explore {
@@ -43,6 +43,10 @@
 
 .main .home .content .search .search-bar {
   position: relative;
+}
+
+.main .home .content .search input:hover {
+  border-color: var(--highlight-color);
 }
 
 .main .home .content .search input:focus {
@@ -81,7 +85,7 @@
 
 .main .home .content .search .filters {
   width: 100%;
-  margin-top: 12px;
+  margin-top: 20px;
   display: flex;
   overflow-x: scroll;
   scroll-snap-type: x mandatory;
@@ -617,8 +621,8 @@
 .main .home .content .home-map {
   position: fixed;
   top: calc(var(--header-height) + var(--padding));
-  right: var(--padding);
-  width: calc(100% - var(--list-width) - var(--padding) * 3);
+  right: calc(var(--padding) * 1.5);
+  width: calc(100% - var(--list-width) - var(--padding) * 4);
   max-width: calc(var(--max-width) - var(--list-width) - var(--padding));
   height: calc(100% - var(--header-height) - var(--footer-height) - var(--padding) * 2);
   box-sizing: border-box;

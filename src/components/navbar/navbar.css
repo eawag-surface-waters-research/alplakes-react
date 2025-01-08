@@ -4,14 +4,14 @@
   left: 0;
   top: 0;
   z-index: 999999;
-  background-color: var(--box-color);
+  background-color: var(--background-color);
   height: var(--header-height);
 }
 
 .navbar .navbar-inner {
   max-width: var(--max-width);
   margin: auto;
-  padding: calc(var(--padding) / 2) var(--padding);
+  padding: 30px var(--padding);
 }
 
 .navbar.relative {
@@ -74,7 +74,7 @@
 }
 
 .navbar select {
-  background-color: transparent;
+  background-color: var(--box-color);
   border: none;
   color: var(--header-text-color);
   cursor: pointer;
@@ -82,7 +82,7 @@
   padding: 4px 9px;
   text-align: center;
   display: inline-block;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: bold;
   height: 30px;
   -webkit-transition: all 0.3s ease-out;
@@ -260,7 +260,6 @@
 @media screen and (max-width: 1000px) {
   .navbar.relative {
     position: fixed;
-    background-color: var(--box-color);
     z-index: 99999;
   }
 

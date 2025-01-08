@@ -33,8 +33,8 @@
   --content-width: 1280px;
   --text-width: 700px;
   --max-width: 1920px;
-  --top-margin: 56px;
-  --footer-height: 48px;
+  --top-margin: 32px;
+  --footer-height: 35px;
   --footer-full-height: 114px;
   --padding: 40px;
   --list-width: 500px;
@@ -62,8 +62,8 @@
 }
 
 :root {
-  --search-height: calc(var(--padding) * 2 + 125px);
-  --header-height: calc(var(--padding) + 30px);
+  --search-height: calc(var(--padding) * 2 + 140px);
+  --header-height: calc(var(--padding) + 20px);
 }
 
 .dark {

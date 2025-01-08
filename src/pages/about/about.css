@@ -22,9 +22,7 @@
     background-color: var(--box-color);
     padding: 16px 24px;
     border-radius: 16px;
-    border: 1px solid var(--border-color);
     width: 200px;
-    box-shadow: var(--box-shadow);
 }
 
 .main .about .sidebar .link {
