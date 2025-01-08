@@ -583,10 +583,10 @@ def make_layers(data, sd):
                     "models": [
                         {
                             "model": "Sentinel3",
-                            "metadata": "/metadata/sentinel3/{lake}_chla.json"
+                            "metadata": "/alplakes/metadata/sentinel3/{lake}/chla.json"
                         }
                     ],
-                    "bucket": "/metadata/sentinel3/{lake}_chla_latest.json",
+                    "bucket": "/alplakes/metadata/sentinel3/{lake}/chla_latest.json",
                     "description": "Surface chlorophyll concentration processed from satellite data using the Sencast python package.",
                     "learnMore": "https://medium.com/@runnalls.james/water-quality-products-from-remote-sensing-data-using-sencast-e48449bd6aa8",
                     "onActivate": True,
@@ -601,17 +601,17 @@ def make_layers(data, sd):
         if ("sentinel3" in sd and "Zsd_lee" in sd["sentinel3"]):
             models.append({
                 "model": "Sentinel3",
-                "metadata": "/metadata/sentinel3/{lake}_Zsd_lee.json"
+                "metadata": "/alplakes/metadata/sentinel3/{lake}/Zsd_lee.json"
             }
             )
-            bucket = "/metadata/sentinel3/{lake}_Zsd_lee_latest.json"
+            bucket = "/alplakes/metadata/sentinel3/{lake}/Zsd_lee_latest.json"
         if ("sentinel2" in sd and "Z490" in sd["sentinel2"]):
             models.append({
                 "model": "Sentinel2",
-                "metadata": "/metadata/sentinel2/{lake}_Z490.json"
+                "metadata": "/alplakes/metadata/sentinel2/{lake}/Z490.json"
             })
             if bucket == False:
-                bucket = "/metadata/sentinel2/{lake}_Z490_latest.json"
+                bucket = "/alplakes/metadata/sentinel2/{lake}/Z490_latest.json"
 
         layers.append({
             "id": "satellite_secchi",
@@ -654,16 +654,16 @@ def make_layers(data, sd):
         if "sentinel3" in sd and "tsm_binding754" in sd["sentinel3"]:
             models.append({
                 "model": "Sentinel3",
-                "metadata": "/metadata/sentinel3/{lake}_tsm_binding754.json"
+                "metadata": "/alplakes/metadata/sentinel3/{lake}/tsm_binding754.json"
             })
-            bucket = "/metadata/sentinel3/{lake}_tsm_binding754_latest.json"
+            bucket = "/alplakes/metadata/sentinel3/{lake}/tsm_binding754_latest.json"
         if "sentinel2" in sd and "tsm_dogliotti665" in sd["sentinel2"]:
             models.append({
                 "model": "Sentinel2",
-                "metadata": "/metadata/sentinel2/{lake}_tsm_dogliotti665.json"
+                "metadata": "/alplakes/metadata/sentinel2/{lake}/tsm_dogliotti665.json"
             })
             if bucket == False:
-                bucket = "/metadata/sentinel2/{lake}_tsm_dogliotti665_latest.json"
+                bucket = "/alplakes/metadata/sentinel2/{lake}/tsm_dogliotti665_latest.json"
 
         layers.append({
             "id": "satellite_turbidity",
@@ -728,10 +728,10 @@ def make_layers(data, sd):
                     "models": [
                         {
                             "model": "Sentinel3",
-                            "metadata": "/metadata/sentinel3/{lake}_forel_ule.json"
+                            "metadata": "/alplakes/metadata/sentinel3/{lake}/forel_ule.json"
                         }
                     ],
-                    "bucket": "/metadata/sentinel3/{lake}_forel_ule_latest.json",
+                    "bucket": "/alplakes/metadata/sentinel3/{lake}/forel_ule_latest.json",
                     "description": "Water color on the Forel Ule scale processed from satellite data using the Sencast python package.",
                     "learnMore": "https://medium.com/@runnalls.james/water-quality-products-from-remote-sensing-data-using-sencast-e48449bd6aa8",
                     "onActivate": True,
@@ -745,7 +745,7 @@ def make_layers(data, sd):
             "type": "satellite",
             "playControls": False,
             "depth": False,
-            "parameter": "ST",
+            "parameter": "temperature",
             "unit": "°C",
             "display": "tiff",
             "source": "sencast",

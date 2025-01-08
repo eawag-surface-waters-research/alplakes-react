@@ -1058,9 +1058,9 @@ const addSencastTiff = async (layer, layerStore, map, active, loadingId) => {
     var { data } = await axios.get(CONFIG.sencast_bucket + source.bucket);
     let datetime = satelliteStringToDate(data.dt);
     let date = formatSencastDay(datetime);
-    let { lake, satellite } = componentsFromFilename(data.k)
+    let { lake, group } = componentsFromFilename(data.k);
     layer.displayOptions.image = {
-      url: `${CONFIG.sencast_bucket}/alplakes/cropped/${satellite}/${lake}/${data.k}`,
+      url: `${CONFIG.sencast_bucket}/alplakes/cropped/${group}/${lake}/${data.k}`,
       ave: data.mean,
       date: date,
       time: datetime,
@@ -1071,13 +1071,22 @@ const addSencastTiff = async (layer, layerStore, map, active, loadingId) => {
 };
 
 const componentsFromFilename = (filename) => {
-    let parts = filename.replace(".tif", "").replace("_lowres", "").split("_")
-    let lake = parts[parts.length - 1]
-    let satellite = "collection"
-    if (filename.includes("sentinel2")) satellite = "sentinel2"
-    if (filename.includes("sentinel3")) satellite = "sentinel3"
-    return { lake, satellite }
-}
+  let parts = filename.replace(".tif", "").replace("_lowres", "").split("_");
+  let lake = parts[parts.length - 1];
+  let group;
+  let satellite;
+  if (filename.includes("COLLECTION_")) {
+    group = "collection";
+    satellite = filename.includes("_L9") ? "L9" : "L8";
+  } else if (filename.includes("_S2")) {
+    group = "sentinel2";
+    satellite = filename.includes("_S2A") ? "S2A" : "S2B";
+  } else if (filename.includes("_S3")) {
+    group = "sentinel3";
+    satellite = filename.includes("_S3A") ? "S3A" : "S3B";
+  }
+  return { lake, group, satellite };
+};
 
 const collectSencastMetadata = async (source, loadingId, lake) => {
   var available = {};
@@ -1091,8 +1100,8 @@ const collectSencastMetadata = async (source, loadingId, lake) => {
     for (let file of files) {
       let time = satelliteStringToDate(file.dt);
       let date = formatSencastDay(time);
-      let { lake, satellite } = componentsFromFilename(file.k)
-      let url = `${CONFIG.sencast_bucket}/alplakes/cropped/${satellite}/${lake}/${file.k}`;
+      let { lake, satellite, group } = componentsFromFilename(file.k);
+      let url = `${CONFIG.sencast_bucket}/alplakes/cropped/${group}/${lake}/${file.k}`;
       let split = file.k.split("_");
       let tile = split[split.length - 1].split(".")[0];
       let percent = Math.ceil((parseFloat(file.vp) / max_pixels) * 100);
@@ -1379,9 +1388,11 @@ const addAlplakesTransect = async (
   getTransect
 ) => {
   if ("paletteName" in layer.displayOptions) {
-    layer.displayOptions.palette = COLORS[layer.displayOptions.paletteName].map((c) => {
-      return { color: [c[0], c[1], c[2]], point: c[3] };
-    });
+    layer.displayOptions.palette = COLORS[layer.displayOptions.paletteName].map(
+      (c) => {
+        return { color: [c[0], c[1], c[2]], point: c[3] };
+      }
+    );
   }
   var source = layer.sources[layer.source];
   var path = [source.type, source.model, layer.lake];
@@ -1418,9 +1429,11 @@ const addAlplakesProfile = async (
   getProfile
 ) => {
   if ("paletteName" in layer.displayOptions) {
-    layer.displayOptions.palette = COLORS[layer.displayOptions.paletteName].map((c) => {
-      return { color: [c[0], c[1], c[2]], point: c[3] };
-    });
+    layer.displayOptions.palette = COLORS[layer.displayOptions.paletteName].map(
+      (c) => {
+        return { color: [c[0], c[1], c[2]], point: c[3] };
+      }
+    );
   }
   var source = layer.sources[layer.source];
   var path = [source.type, source.model, layer.lake];
@@ -1462,9 +1475,11 @@ const addAlplakesMeasurements = async (
   var path = [source.type];
   var leaflet_layer = L.layerGroup([]).addTo(map);
   if ("paletteName" in layer.displayOptions) {
-    layer.displayOptions.palette = COLORS[layer.displayOptions.paletteName].map((c) => {
-      return { color: [c[0], c[1], c[2]], point: c[3] };
-    });
+    layer.displayOptions.palette = COLORS[layer.displayOptions.paletteName].map(
+      (c) => {
+        return { color: [c[0], c[1], c[2]], point: c[3] };
+      }
+    );
   }
   let minDate = new Date();
   minDate.setHours(0, 0, 0, 0);
