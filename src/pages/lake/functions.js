@@ -1,5 +1,4 @@
 import axios from "axios";
-import CONFIG from "../../config.json";
 
 export const copy = (data) => {
   return JSON.parse(JSON.stringify(data));
@@ -9,15 +8,6 @@ export const parseSubtitle = (title, names) => {
   names = Object.values(names);
   names = [...new Set(names)].filter((n) => n !== title);
   return names.join(" • ");
-};
-
-const satelliteStringToDate = (date) => {
-  return new Date(
-    `${date.slice(0, 4)}-${date.slice(4, 6)}-${date.slice(6, 8)}T${date.slice(
-      9,
-      11
-    )}:${date.slice(11, 13)}:00.000+00:00`
-  );
 };
 
 export const filterImages = (
@@ -49,24 +39,6 @@ export const filterImages = (
 
 export const compareDates = (date1, date2) => {
   return date1 - date2;
-};
-
-const weightedAverage = (values, weights) => {
-  if (
-    values.length !== weights.length ||
-    values.length === 0 ||
-    weights.length === 0
-  ) {
-    throw new Error(
-      "Values and weights arrays must have the same length and cannot be empty."
-    );
-  }
-  const sumOfProducts = values.reduce(
-    (acc, value, index) => acc + value * weights[index],
-    0
-  );
-  const sumOfWeights = weights.reduce((acc, weight) => acc + weight, 0);
-  return sumOfProducts / sumOfWeights;
 };
 
 export const parseAPITime = (date) => {

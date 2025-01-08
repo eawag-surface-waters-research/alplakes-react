@@ -82,7 +82,7 @@
   --map-color: rgb(41, 41, 41);
   --box-shadow: 0 0 0 1px hsla(230, 13%, 9%, 0.075), 0 0.3px 0.4px hsla(230, 13%, 9%, 0.02), 0 0.9px 1.5px hsla(230, 13%, 9%, 0.045), 0 3.5px 6px hsla(230, 13%, 9%, 0.09);
   --search-shadow: rgb(14 14 17 / 81%) 0px 3px 8px;
-  --bottom-shadow: 0px 3px 5px 0px rgb(0 0 0 / 26%);
+  --bottom-shadow: 0px 3px 5px 0px rgb(16 16 16 / 26%);
   --box-shadow-hover: rgb(255 255 255 / 16%) 0px 1px 8px;
   --legend-color: rgb(41 41 41 / 65%);
 }
@@ -100,7 +100,7 @@
 @media screen and (max-width: 500px) {
   :root {
     --background-color: white;
-    --search-height: 145px;
+    --search-height: 138px;
   }
 
   .dark {

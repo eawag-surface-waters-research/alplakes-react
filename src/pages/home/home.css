@@ -507,7 +507,7 @@
 .main .home .content .list .product-list .skeleton-block {
   display: inline-block;
   width: 20%;
-  height: 60px;
+  height: 54px;
   border-right: 1px solid;
   box-sizing: border-box;
   opacity: 0.8;
@@ -836,6 +836,7 @@
   .main .home .content .home-map {
     right: calc(100% / 2 - var(--max-width) / 2);
   }
+
   .main .home .content .search {
     left: calc(100% / 2 - var(--max-width) / 2);
   }
@@ -970,8 +971,10 @@
   }
 
   .main .home .content .list .product-list .list-item {
-    box-shadow: none;
+    box-shadow: var(--bottom-shadow);
+    border-radius: 0;
     border: none;
+    margin-bottom: 6px;
   }
 
   .main .home .content .list .product-list .list-item:hover {
@@ -982,6 +985,7 @@
   .main .home .content .list .product-list .list-item .properties .left {
     padding: 10px 0 8px var(--padding);
     font-size: 18px;
+    width: calc(100% - 160px);
   }
 
   .main .home .content .list .product-list .list-item .properties .right {
@@ -989,14 +993,18 @@
     top: 5px;
   }
 
-  .main .home .content .list .product-list .list-item {
-    margin-bottom: 6px;
+  .main .home .content .list .product-list .skeleton-data {
+    border-radius: 0;
   }
 
   .main .home .content .search input {
     padding: 12px 8px 12px 50px;
-    box-shadow: var(--search-shadow);
     border: none;
+    background-color: #F3F4F6;
+  }
+
+  .main.dark .home .content .search input {
+    background-color: hsl(233, 8%, 19%);
   }
 
   .main .home .content .search input::placeholder {
@@ -1021,6 +1029,7 @@
     max-width: 100%;
     box-shadow: var(--bottom-shadow);
     background-color: #ffffffe8;
+    border-radius: 0 0 calc(var(--padding)) calc(var(--padding));
   }
 
   .main.dark .home .content .search {

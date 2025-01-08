@@ -170,14 +170,17 @@
 .navbar .mobile-nav .nav-content {
   position: fixed;
   width: var(--list-width);
-  background-color: var(--background-color);
+  background-color: #ffffffde;
   left: 0;
   top: var(--header-height);
   box-sizing: border-box;
-  border-bottom: 1px solid var(--border-color);
   border-radius: 0 0 calc(var(--padding)) calc(var(--padding));
   border-top: 1px solid var(--border-color);
   z-index: 2;
+}
+
+.dark .navbar .mobile-nav .nav-content {
+  background-color: hsl(232deg 11% 15% / 90%);
 }
 
 .navbar .mobile-nav .nav-content a {
