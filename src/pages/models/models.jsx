@@ -370,7 +370,7 @@ class Models extends Component {
     if (sectionRef.current) {
       window.scrollTo({
         top: sectionRef.current.offsetTop,
-        behavior: "smooth"
+        behavior: "smooth",
       });
     }
   };
@@ -429,11 +429,7 @@ class Models extends Component {
               Please see the <NavLink to="/about">About</NavLink> page for
               contact information.
             </p>
-            <div
-              ref={this.divRefs["threed"]}
-              id="threed"
-              className="section"
-            >
+            <div ref={this.divRefs["threed"]} id="threed" className="section">
               <h2>3D Hydrodynamic Modelling</h2>
               <p>
                 3D hydrodynamic lake models simulate lake dynamics through
@@ -550,11 +546,7 @@ class Models extends Component {
               </p>
               <ThreeDimensionalResults list={three_dimensional} />
             </div>
-            <div
-              ref={this.divRefs["oned"]}
-              id="oned"
-              className="section"
-            >
+            <div ref={this.divRefs["oned"]} id="oned" className="section">
               <h2>1D Hydrodynamic Modelling</h2>
               <p>
                 1D lake models simplify lake processes by representing the lake
@@ -716,6 +708,17 @@ class Models extends Component {
                 </a>
                 ).
               </p>
+              <p>
+                The surface temperature product is sourced from Landsat
+                Collection 2. Further details are available{" "}
+                <a href="https://d9-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/s3fs-public/media/files/LSDS-1619_Landsat8-9-Collection2-Level2-Science-Product-Guide-v6.pdf">
+                  here
+                </a>
+                . Earth Resources Observation and Science (EROS) Center. (2020).
+                Landsat 8-9 Operational Land Imager / Thermal Infrared Sensor
+                Level-2, Collection 2 [dataset]. U.S. Geological Survey.
+                https://doi.org/10.5066/P9OGBGM6.{" "}
+              </p>
               <h3>Downloads</h3>
               <p>
                 For downloading products, please use the tools available when
@@ -742,7 +745,9 @@ class Models extends Component {
                 className={
                   visibleKey === "remotesensing" ? "link active" : "link"
                 }
-                onClick={() => this.scrollToSection(this.divRefs["remotesensing"])}
+                onClick={() =>
+                  this.scrollToSection(this.divRefs["remotesensing"])
+                }
               >
                 Remote Sensing
               </div>

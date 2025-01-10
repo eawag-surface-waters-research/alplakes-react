@@ -772,7 +772,7 @@ def make_layers(data, sd):
                         }
                     ],
                     "bucket": "/alplakes/metadata/collection/{lake}/ST_latest.json",
-                    "description": "Surface water temperature processed from satellite data using the Sencast python package.",
+                    "description": "Landsat Collection 2 Surface Temperature product produced by USGS from Landsat 8 & 9. See the models page for more information.",
                     "learnMore": "https://medium.com/@runnalls.james/water-quality-products-from-remote-sensing-data-using-sencast-e48449bd6aa8",
                     "onActivate": True,
                     "tags": ["Landsat 8/9", "2013 - Now"]

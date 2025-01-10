@@ -64,5 +64,16 @@
     "MdSA": null,
     "RMSE": null,
     "MAD": null
+  },
+  {
+    "parameter": "Surface Temperature",
+    "satellite": "Landsat 8/9",
+    "atmosphere": "-",
+    "method": "Single Channel Landsat Surface Temperature Algorithm ",
+    "unit": "-",
+    "matchups": null,
+    "MdSA": null,
+    "RMSE": null,
+    "MAD": null
   }
 ]
