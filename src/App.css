@@ -33,7 +33,7 @@
   --content-width: 1280px;
   --text-width: 700px;
   --max-width: 1920px;
-  --top-margin: 32px;
+  --top-margin: 75px;
   --footer-height: 35px;
   --footer-full-height: 114px;
   --padding: 40px;
@@ -139,6 +139,7 @@ h4 {
   font-size: 16px;
   font-weight: 600;
   margin-bottom: 8px;
+  text-decoration: underline;
 }
 
 p {
@@ -181,9 +182,6 @@ p {
   filter: brightness(2) contrast(0.8) !important;
 }
 
-
-
-
 /* Map icons */
 
 .custom-square-marker div {
@@ -200,4 +198,10 @@ p {
   border: 1px solid var(--border-color);
   border-radius: 50%;
   box-sizing: border-box;
+}
+
+@media screen and (max-width: 1000px) {
+  h1 {
+    font-size: 40px;
+  }
 }

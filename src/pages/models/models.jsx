@@ -334,16 +334,44 @@ class Models extends Component {
     one_dimensional: [],
     three_dimensional: [],
     remote_sensing: [],
+    visibleKey: "threed",
   };
   constructor(props) {
     super(props);
-    this.threed = React.createRef();
-    this.oned = React.createRef();
-    this.remotesensing = React.createRef();
+    this.divRefs = {
+      threed: React.createRef(),
+      oned: React.createRef(),
+      remotesensing: React.createRef(),
+    };
   }
+  handleScroll = () => {
+    let closestDiv = null;
+    let closestDistance = Infinity;
+    Object.keys(this.divRefs).forEach((key) => {
+      const div = this.divRefs[key].current;
+      if (div) {
+        const rect = div.getBoundingClientRect();
+        const top = rect.top;
+        const bottom = rect.bottom;
+        if (top < window.innerHeight && bottom > 0) {
+          const distanceFromTop = Math.abs(top);
+          if (distanceFromTop < closestDistance) {
+            closestDistance = distanceFromTop;
+            closestDiv = key;
+          }
+        }
+      }
+    });
+    if (closestDiv) {
+      this.setState({ visibleKey: closestDiv });
+    }
+  };
   scrollToSection = (sectionRef) => {
     if (sectionRef.current) {
-      sectionRef.current.scrollIntoView({ behavior: "smooth" });
+      window.scrollTo({
+        top: sectionRef.current.offsetTop,
+        behavior: "smooth"
+      });
     }
   };
   async componentDidMount() {
@@ -365,10 +393,16 @@ class Models extends Component {
     } catch (error) {
       console.error("Failed to collect metadata from bucket");
     }
+    window.addEventListener("scroll", this.handleScroll);
+    this.handleScroll();
+  }
+  componentWillUnmount() {
+    window.removeEventListener("scroll", this.handleScroll);
   }
   render() {
     const { language } = this.props;
-    var { one_dimensional, three_dimensional, remote_sensing } = this.state;
+    var { one_dimensional, three_dimensional, remote_sensing, visibleKey } =
+      this.state;
     return (
       <div className="main">
         <Helmet>
@@ -395,7 +429,11 @@ class Models extends Component {
               Please see the <NavLink to="/about">About</NavLink> page for
               contact information.
             </p>
-            <div ref={this.threed} className="section">
+            <div
+              ref={this.divRefs["threed"]}
+              id="threed"
+              className="section"
+            >
               <h2>3D Hydrodynamic Modelling</h2>
               <p>
                 3D hydrodynamic lake models simulate lake dynamics through
@@ -415,7 +453,11 @@ class Models extends Component {
                 Below is a list of all the 3D models available on the Alplakes
                 platform.
               </p>
-              <SortableTable data={three_dimensional} language={language} label="three_dimentional_models"/>
+              <SortableTable
+                data={three_dimensional}
+                language={language}
+                label="three_dimentional_models"
+              />
               <h3>Calibration</h3>
               <h4>Delft3D-flow</h4>
               <p>
@@ -508,7 +550,11 @@ class Models extends Component {
               </p>
               <ThreeDimensionalResults list={three_dimensional} />
             </div>
-            <div ref={this.oned} className="section">
+            <div
+              ref={this.divRefs["oned"]}
+              id="oned"
+              className="section"
+            >
               <h2>1D Hydrodynamic Modelling</h2>
               <p>
                 1D lake models simplify lake processes by representing the lake
@@ -527,7 +573,11 @@ class Models extends Component {
                 Below is a list of all the 1D models available on the Alplakes
                 platform.
               </p>
-              <SortableTable data={one_dimensional} language={language} label="one_dimentional_models"/>
+              <SortableTable
+                data={one_dimensional}
+                language={language}
+                label="one_dimentional_models"
+              />
               <h3>Calibration</h3>
               <h4>Simstrat</h4>
               <p>
@@ -627,7 +677,11 @@ class Models extends Component {
               </p>
               <OneDimensionalResults list={one_dimensional} />
             </div>
-            <div ref={this.remotesensing} className="section">
+            <div
+              ref={this.divRefs["remotesensing"]}
+              id="remotesensing"
+              className="section"
+            >
               <h2>Remote Sensing Products</h2>
               <p>
                 Remote sensing products are processed to provide a snapshot of
@@ -648,7 +702,11 @@ class Models extends Component {
                 Below is a list of all the remote sensing products available on
                 the Alplakes platform.
               </p>
-              <SortableTable data={remote_sensing} language={language} label="remote_sensing_products"/>
+              <SortableTable
+                data={remote_sensing}
+                language={language}
+                label="remote_sensing_products"
+              />
               <p>
                 A number of algorithms were evaluated in order to select the
                 best performing products above. For more information about the
@@ -669,20 +727,22 @@ class Models extends Component {
             <div className="sidebar-inner">
               <h3>Contents</h3>
               <div
-                className="link"
-                onClick={() => this.scrollToSection(this.threed)}
+                className={visibleKey === "threed" ? "link active" : "link"}
+                onClick={() => this.scrollToSection(this.divRefs["threed"])}
               >
                 3D Hydrodynamic
               </div>
               <div
-                className="link"
-                onClick={() => this.scrollToSection(this.oned)}
+                className={visibleKey === "oned" ? "link active" : "link"}
+                onClick={() => this.scrollToSection(this.divRefs["oned"])}
               >
                 1D Hydrodynamic
               </div>
               <div
-                className="link"
-                onClick={() => this.scrollToSection(this.remotesensing)}
+                className={
+                  visibleKey === "remotesensing" ? "link active" : "link"
+                }
+                onClick={() => this.scrollToSection(this.divRefs["remotesensing"])}
               >
                 Remote Sensing
               </div>

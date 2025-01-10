@@ -6,30 +6,66 @@ import runnallja from "../../img/runnalja.jpg";
 import bouffada from "../../img/bouffada.jpg";
 import odermada from "../../img/odermada.jpg";
 import schmidma from "../../img/schmidma.jpg";
-import dimark_icon from "../../img/dimark.png"
+import dimark_icon from "../../img/dimark.png";
 import Translations from "../../translations.json";
 import "./about.css";
 
 class About extends Component {
+  state = {
+    visibleKey: "vision",
+  };
   constructor(props) {
     super(props);
-    this.contact = React.createRef();
-    this.vision = React.createRef();
-    this.projects = React.createRef();
-    this.people = React.createRef();
-    this.opensource = React.createRef();
-    this.publications = React.createRef();
+    this.divRefs = {
+      vision: React.createRef(),
+      contact: React.createRef(),
+      projects: React.createRef(),
+      people: React.createRef(),
+      opensource: React.createRef(),
+      publications: React.createRef(),
+    };
   }
+  handleScroll = () => {
+    let closestDiv = null;
+    let closestDistance = Infinity;
+    Object.keys(this.divRefs).forEach((key) => {
+      const div = this.divRefs[key].current;
+      if (div) {
+        const rect = div.getBoundingClientRect();
+        const top = rect.top;
+        const bottom = rect.bottom;
+        if (top < window.innerHeight && bottom > 0) {
+          const distanceFromTop = Math.abs(top);
+          if (distanceFromTop < closestDistance) {
+            closestDistance = distanceFromTop;
+            closestDiv = key;
+          }
+        }
+      }
+    });
+    if (closestDiv) {
+      this.setState({ visibleKey: closestDiv });
+    }
+  };
   scrollToSection = (sectionRef) => {
     if (sectionRef.current) {
-      sectionRef.current.scrollIntoView({ behavior: "smooth" });
+      window.scrollTo({
+        top: sectionRef.current.offsetTop,
+        behavior: "smooth"
+      });
     }
   };
   componentDidMount() {
     window.scrollTo(0, 0);
+    window.addEventListener("scroll", this.handleScroll);
+    this.handleScroll();
+  }
+  componentWillUnmount() {
+    window.removeEventListener("scroll", this.handleScroll);
   }
   render() {
     var { language } = this.props;
+    var { visibleKey } = this.state;
     return (
       <React.Fragment>
         <Helmet>
@@ -53,7 +89,11 @@ class About extends Component {
               research community to provide the most up-to-date and accurate
               information possible.
             </p>
-            <div ref={this.vision} className="section">
+            <div
+              id="vision"
+              ref={this.divRefs["vision"]}
+              className="section"
+            >
               <h2>Vision</h2>
               <p>
                 This platform aims to transform how lakes are studied and
@@ -88,7 +128,11 @@ class About extends Component {
                 <li>Water quality module development</li>
               </ul>
             </div>
-            <div ref={this.contact} className="section">
+            <div
+              id="contact"
+              ref={this.divRefs["contact"]}
+              className="section"
+            >
               <h2>Contact us</h2>
               <p>
                 We encourage the use of our products. Please do not hesitate to
@@ -136,7 +180,11 @@ class About extends Component {
                 <div className="contact">1D models</div>
               </div>
             </div>
-            <div ref={this.projects} className="section">
+            <div
+              id="projects"
+              ref={this.divRefs["projects"]}
+              className="section"
+            >
               <h2>Contributing projects</h2>
               <p>
                 The following projects have played a pivotal role in the
@@ -163,7 +211,11 @@ class About extends Component {
                 >
                   https://www.alpine-space.eu/project/dimark/
                 </a>
-                <img src={dimark_icon} className="project-logo" alt="DiMark Icon"/>
+                <img
+                  src={dimark_icon}
+                  className="project-logo"
+                  alt="DiMark Icon"
+                />
               </div>
 
               <h3>Alplakes</h3>
@@ -283,7 +335,11 @@ class About extends Component {
                 </div>
               </div>
             </div>
-            <div ref={this.people} className="section">
+            <div
+              id="people"
+              ref={this.divRefs["people"]}
+              className="section"
+            >
               <h2>Contributing people</h2>
               <h3>2024</h3>
               <p>
@@ -304,7 +360,11 @@ class About extends Component {
                 Adrien, Schmid Martin, Soulignac Frédéric, Odermatt, Daniel
               </p>
             </div>
-            <div ref={this.opensource} className="section">
+            <div
+              id="opensource"
+              ref={this.divRefs["opensource"]}
+              className="section"
+            >
               <h2>Open source</h2>
               <p>
                 All the code and simulations that power Alplakes are made
@@ -354,7 +414,11 @@ class About extends Component {
                 https://github.com/eawag-surface-waters-research/airflow
               </a>
             </div>
-            <div ref={this.publications} className="section">
+            <div
+              id="publications"
+              ref={this.divRefs["publications"]}
+              className="section"
+            >
               <h2>Related publications</h2>
               <h3>Model development</h3>
               <p>
@@ -483,38 +547,42 @@ class About extends Component {
             <div className="sidebar-inner">
               <h3>Contents</h3>
               <div
-                className="link"
-                onClick={() => this.scrollToSection(this.vision)}
+                className={visibleKey === "vision" ? "link active" : "link"}
+                onClick={() => this.scrollToSection(this.divRefs["vision"])}
               >
                 Vision
               </div>
               <div
-                className="link"
-                onClick={() => this.scrollToSection(this.contact)}
+                className={visibleKey === "contact" ? "link active" : "link"}
+                onClick={() => this.scrollToSection(this.divRefs["contact"])}
               >
                 Contact us
               </div>
               <div
-                className="link"
-                onClick={() => this.scrollToSection(this.projects)}
+                className={visibleKey === "projects" ? "link active" : "link"}
+                onClick={() => this.scrollToSection(this.divRefs["projects"])}
               >
                 Contributing projects
               </div>
               <div
-                className="link"
-                onClick={() => this.scrollToSection(this.people)}
+                className={visibleKey === "people" ? "link active" : "link"}
+                onClick={() => this.scrollToSection(this.divRefs["people"])}
               >
                 Contributing people
               </div>
               <div
-                className="link"
-                onClick={() => this.scrollToSection(this.opensource)}
+                className={visibleKey === "opensource" ? "link active" : "link"}
+                onClick={() => this.scrollToSection(this.divRefs["opensource"])}
               >
                 Open source
               </div>
               <div
-                className="link"
-                onClick={() => this.scrollToSection(this.publications)}
+                className={
+                  visibleKey === "publications" ? "link active" : "link"
+                }
+                onClick={() =>
+                  this.scrollToSection(this.divRefs["publications"])
+                }
               >
                 Related publications
               </div>

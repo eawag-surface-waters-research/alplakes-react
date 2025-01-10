@@ -123,10 +123,11 @@
 }
 
 .navbar .mobile-nav .nav-header .nav-toggle .bar {
-  height: 3px;
+  height: 2px;
   width: 100%;
   background-color: var(--background-font-color);
   transition: all 200ms ease-in-out;
+  border-radius: 1px;
 }
 
 .navbar .mobile-nav .nav-header .nav-toggle:hover {
@@ -175,7 +176,6 @@
   top: var(--header-height);
   box-sizing: border-box;
   border-radius: 0 0 calc(var(--padding)) calc(var(--padding));
-  border-top: 1px solid var(--border-color);
   z-index: 2;
 }
 
