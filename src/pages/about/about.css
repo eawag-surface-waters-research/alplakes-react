@@ -47,14 +47,10 @@
     max-width: 100%;
 }
 
-.main .about .content h2 {
-    margin-top: 40px;
-}
-
 .main .about .content .section {
-    margin-bottom: 64px;
-    border-bottom: 5px solid var(--box-color);
-    padding-bottom: 30px;
+    margin-bottom: 50px;
+    border-top: 3px solid var(--border-color);
+    padding-top: 40px;
 }
 
 .main .about .content .project-info {

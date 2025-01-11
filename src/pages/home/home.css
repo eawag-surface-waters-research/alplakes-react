@@ -39,6 +39,7 @@
   box-sizing: border-box;
   border: 1px solid var(--border-color);
   outline: none;
+  transition: all .2s 0s ease;
 }
 
 .main .home .content .search .search-bar {
@@ -68,6 +69,7 @@
   height: 24px;
   top: 20px;
   opacity: 0.5;
+  pointer-events: none;
 }
 
 .main.dark .home .content .search img.search-icon {
@@ -81,6 +83,7 @@
   bottom: 12px;
   font-size: 15px;
   color: var(--background-suble-font-color);
+  pointer-events: none;
 }
 
 .main .home .content .search .filters {

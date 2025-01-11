@@ -49,7 +49,7 @@
 
 .main .models .content .section {
     margin-bottom: 50px;
-    border-top: 3px solid var(--box-color);
+    border-top: 3px solid var(--border-color);
     padding-top: 40px;
 }
 
