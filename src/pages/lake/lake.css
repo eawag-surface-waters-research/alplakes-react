@@ -5,10 +5,15 @@
     margin-top: var(--top-margin);
     padding: 0 calc(var(--padding)*1.5);
     box-sizing: border-box;
+    min-height: calc(100vh - var(--header-height) - var(--footer-height) - var(--top-margin));
 }
 
 .main .lake h1 {
     margin-bottom: 2px;
+}
+
+.main .lake h3 {
+    font-size: 20px;
 }
 
 .main .lake .header .properties-link {
@@ -19,4 +24,75 @@
     box-sizing: border-box;
     display: inline-block;
     margin-bottom: 20px;
+    cursor: pointer;
+}
+
+.main .lake .header .properties-link img {
+    width: 16px;
+    display: inline-block;
+    filter: brightness(0) invert(1);
+    margin-left: 12px;
+    padding-bottom: 1px;
+}
+
+/** 3D Model **/
+
+.main .lake .forecast {
+    margin-bottom: calc(var(--padding) * 2);
+}
+
+.main .lake .forecast .threedmodel {
+    width: 100%;
+    margin-bottom: var(--padding);
+}
+
+.main .lake .forecast .threedmodel .threedmodel-inner {
+    width: 100%;
+}
+
+.main .lake .forecast .threedmodel .threedmodel-inner .threedmodel-map {
+    display: inline-block;
+    width: calc(100% - var(--padding) - 400px);
+    height: 600px;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    overflow: hidden;
+    margin-right: var(--padding);
+    box-sizing: border-box;
+}
+
+.main .lake .forecast .threedmodel .threedmodel-inner .threedmodel-graphs {
+    display: inline-block;
+    width: 400px;
+    min-height: 100px;
+    max-height: 600px;
+    background-color: var(--box-color);
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    box-sizing: border-box;
+    vertical-align: top;
+}
+
+
+
+/** Satellite **/
+
+.main .lake .satellite .satellite-maps {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--padding);
+    justify-content: space-between;
+}
+
+.main .lake .satellite .satellite-maps .satellite-inner {
+    width: calc(50% - var(--padding)/2);
+    display: inline-block;
+}
+
+.main .lake .satellite .satellite-maps .satellite-inner .map {
+    width: 100%;
+    height: 350px;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    overflow: hidden;
 }

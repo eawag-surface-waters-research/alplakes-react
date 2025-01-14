@@ -1,5 +1,5 @@
 {
-  "branch": "master",
+  "branch": "new",
   "alplakes_api": "https://alplakes-api.eawag.ch",
   "alplakes_bucket": "https://alplakes-eawag.s3.eu-central-1.amazonaws.com",
   "sencast_bucket": "https://eawagrs.s3.eu-central-1.amazonaws.com",

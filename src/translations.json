@@ -198,10 +198,10 @@
     "IT": "Scongelato"
   },
   "forecast": {
-    "EN": "Temperature forecast",
-    "DE": "Temperaturvorhersage",
-    "FR": "Prévisions de température",
-    "IT": "Previsioni della temperatura"
+    "EN": "Forecast",
+    "DE": "Vorhersage",
+    "FR": "Prévisions",
+    "IT": "Previsioni"
   },
   "for": {
     "EN": "for",

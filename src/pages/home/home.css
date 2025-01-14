@@ -88,7 +88,7 @@
 
 .main .home .content .search .filters {
   width: 100%;
-  margin-top: 20px;
+  margin-top: 16px;
   display: flex;
   overflow-x: scroll;
   scroll-snap-type: x mandatory;
@@ -313,7 +313,7 @@
 }
 
 .main .home .content .list .product-list .list-item .properties .left {
-  font-size: 20px;
+  font-size: 18px;
   display: inline-block;
   padding: 10px 0 12px 15px;
   transition: all .1s 0s ease;
@@ -425,6 +425,7 @@
 
 .main .home .content .list .product-list .list-item .summary .summary-table .inner .ave {
   font-size: 22px;
+  font-family: DM_Sans, Frutiger Neue LT Pro, Arial, sans-serif;
 }
 
 .main .home .content .list .product-list .list-item .summary .summary-table .inner .ave .unit {
@@ -603,31 +604,13 @@
   filter: invert(100%);
 }
 
-.main .home .content .logos {
-  position: fixed;
-  right: var(--padding);
-  bottom: var(--footer-height);
-  width: calc(100% - var(--list-width) - var(--padding));
-  text-align: center;
-}
-
-.main .home .content .logos img {
-  height: 30px;
-  margin: calc(var(--padding) / 2);
-}
-
-.main.dark .home .content .logos img {
-  -webkit-filter: invert(100%);
-  filter: invert(100%);
-}
-
 .main .home .content .home-map {
   position: fixed;
   top: calc(var(--header-height) + var(--padding));
   right: calc(var(--padding) * 1.5);
   width: calc(100% - var(--list-width) - var(--padding) * 4);
   max-width: calc(var(--max-width) - var(--list-width) - var(--padding));
-  height: calc(100% - var(--header-height) - var(--footer-height) - var(--padding) * 2);
+  height: calc(100% - var(--header-height) - var(--footer-height-small) - var(--padding) * 2);
   box-sizing: border-box;
   background-color: var(--background-color);
   border-radius: 22px;
@@ -715,6 +698,7 @@
   padding: 4px;
   border-radius: 0 8px 8px 0;
   font-weight: 600;
+  font-family: DM_Sans, Frutiger Neue LT Pro, Arial, sans-serif;
 }
 
 .main .home .content .home-map #map .day-selector {
@@ -828,6 +812,7 @@
   font-size: 14px;
   color: var(--background-suble-font-color);
   margin-top: 6px;
+  font-family: DM_Sans, Frutiger Neue LT Pro, Arial, sans-serif;
 }
 
 .main .home .content .home-map .legend .label .legendIcon {
@@ -1084,9 +1069,14 @@
   }
 
   .main .home .content .list .product-list .list-item .properties .right .view img {
-    max-height: 20px;
-    max-width: 35px;
+    max-height: 18px;
+    max-width: 25px;
     margin-left: 10px;
+  }
+
+  .main .home .content .list .product-list .list-item .properties .left .filter-property {
+    padding-left: 0;
+    display: block;
   }
 
   .main .home .content .home-map #map .day-selector .day-outer .day-inner {

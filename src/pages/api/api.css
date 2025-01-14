@@ -8,6 +8,13 @@
   box-sizing: border-box;
 }
 
+.main .api-container .text {
+  line-height: 28px;
+  font-size: 16px;
+  max-width: 700px;
+  margin-bottom: 32px;
+}
+
 .main .api-container .header {
   margin-top: 18px;
   color: var(--background-font-color);

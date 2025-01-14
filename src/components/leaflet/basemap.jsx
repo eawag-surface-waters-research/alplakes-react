@@ -16,10 +16,6 @@ import "./leaflet_tileclass";
 import "./css/leaflet.css";
 
 class Basemap extends Component {
-  state = {
-    darkMap: "dark_all",
-    lightMap: "light_all",
-  };
   find = (list, parameter, value) => {
     return list.find((l) => l[parameter] === value);
   };
@@ -40,7 +36,6 @@ class Basemap extends Component {
           if (element) {
             element.style.opacity = 0;
           }
-          this.layerStore["basemap"].addTo(this.map);
         } else if (update.event === "addLayer") {
           try {
             layer = await addLayer(
@@ -87,14 +82,12 @@ class Basemap extends Component {
         );
       }, 50);
     }
-    var { darkMap, lightMap } = this.state;
     var { dark } = this.props;
-    var mapID = dark ? darkMap : lightMap;
     if (prevProps.basemap !== this.props.basemap) {
       var basemap;
       if (this.props.basemap === "default") {
         basemap = L.tileLayer.default(
-          `https://{s}.basemaps.cartocdn.com/${mapID}/{z}/{x}/{y}{r}.png`,
+          `https://{s}.basemaps.cartocdn.com/${dark ? "dark_all" : "light_all"}/{z}/{x}/{y}{r}.png`,
           {
             maxZoom: 19,
             attribution:
@@ -116,7 +109,7 @@ class Basemap extends Component {
       this.props.basemap === "default"
     ) {
       basemap = L.tileLayer.default(
-        `https://{s}.basemaps.cartocdn.com/${mapID}/{z}/{x}/{y}{r}.png`,
+        `https://{s}.basemaps.cartocdn.com/${dark ? "dark_all" : "light_all"}/{z}/{x}/{y}{r}.png`,
         {
           maxZoom: 19,
           attribution:
@@ -130,16 +123,11 @@ class Basemap extends Component {
     }
   }
   async componentDidMount() {
-    var { darkMap, lightMap } = this.state;
-    var { dark, mapId } = this.props;
-    this.dataStore = {};
-    this.layerStore = {};
-    var center = [46.9, 8.2];
-    var zoom = 8;
+    var { dark, mapId, bounds } = this.props;
     this.map = L.map(mapId, {
       preferCanvas: true,
-      center: center,
-      zoom: zoom,
+      center: [46.9, 8.2],
+      zoom: 8,
       minZoom: 5,
       maxZoom: 17,
       maxBoundsViscosity: 0.5,
@@ -148,16 +136,22 @@ class Basemap extends Component {
       showCursorLocation: true,
       zoomAnimation: true,
     });
+    if (bounds) {
+      this.map.fitBounds(bounds, { padding: [20, 20], animate: false })
+    }
     this.map.doubleClickZoom.disable();
-    var mapID = dark ? darkMap : lightMap;
     var basemap = L.tileLayer.default(
-      `https://{s}.basemaps.cartocdn.com/${mapID}/{z}/{x}/{y}{r}.png`,
+      `https://{s}.basemaps.cartocdn.com/${dark ? "dark_all" : "light_all"}/{z}/{x}/{y}{r}.png`,
       {
         maxZoom: 19,
         attribution:
           '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
       }
-    );
+    ).addTo(this.map);
+
+
+    this.dataStore = {};
+    this.layerStore = {};
     this.layerStore["basemap"] = basemap;
     this.layerStore["labels"] = L.layerGroup([]).addTo(this.map);
     this.layer = L.layerGroup([]).addTo(this.map);

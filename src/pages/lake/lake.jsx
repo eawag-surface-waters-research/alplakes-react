@@ -4,7 +4,12 @@ import axios from "axios";
 import NavBar from "../../components/navbar/navbar";
 import Footer from "../../components/footer/footer";
 import CONFIG from "../../config.json";
+import Translations from "../../translations.json";
 import "./lake.css";
+import ThreeDModel from "./components/threedmodel";
+import OneDModel from "./components/onedmodel";
+import Satellite from "./components/satellite";
+import sortIcon from "../../img/sort.png";
 
 class NotFound extends Component {
   render() {
@@ -25,26 +30,13 @@ class Lake extends Component {
   state = {
     id: "",
     metadata: {},
-    modules: [],
-    layers: [],
-    datasets: [],
     error: false,
-    active_module: false,
-    module: "all",
   };
 
   async componentDidMount() {
     window.scrollTo(0, 0);
-    var { active_module } = this.state;
     const url = new URL(window.location.href);
     const id = url.pathname.replace(/[^a-zA-Z ]/g, "");
-    const searchParams = {};
-    url.searchParams.forEach((value, key) => {
-      searchParams[key] = value;
-    });
-    if ("module" in searchParams) {
-      active_module = searchParams["module"];
-    }
     try {
       var { data } = await axios.get(
         CONFIG.alplakes_bucket +
@@ -52,24 +44,9 @@ class Lake extends Component {
             Math.round((new Date().getTime() + 1800000) / 3600000) * 3600 - 3600
           }`
       );
-      const { metadata, modules, layers, datasets } = data;
-      layers.map((l) => {
-        l.active = false;
-        l.lake = metadata.key;
-        return l;
-      });
-      datasets.map((d) => {
-        d.active = false;
-        d.lake = metadata.key;
-        return d;
-      });
       this.setState({
-        active_module,
-        metadata,
-        modules,
-        layers,
-        datasets,
         id,
+        metadata: data,
       });
     } catch (e) {
       console.error(e);
@@ -78,9 +55,8 @@ class Lake extends Component {
   }
 
   render() {
-    var { metadata, modules, error, id, active_module, layers, datasets } =
-      this.state;
-    var { language } = this.props;
+    var { metadata, error, id } = this.state;
+    var { language, dark } = this.props;
     var title = "";
     var documentTitle = "Alplakes";
     if ("name" in metadata) {
@@ -103,12 +79,62 @@ class Lake extends Component {
           <div className="lake">
             <div className="header">
               <h1>{title}</h1>
-              <div className="properties-link">Lake properties</div>
+              <div className="properties-link">
+                {Translations.lakeProperties[language]}
+                <img src={sortIcon} alt="Down" />
+              </div>
             </div>
-            <div className="forecast">
-              <h2>Forecast</h2>
-              <h3>Water Temperature - 3D</h3>
-            </div>
+            {"forecast" in metadata && (
+              <div className="forecast">
+                <h2>{Translations.forecast[language]}</h2>
+                {"3d_model" in metadata["forecast"] && (
+                  <ThreeDModel
+                    parameters={metadata.forecast["3d_model"]}
+                    language={language}
+                    dark={dark}
+                    bounds={metadata.properties.bounds}
+                  />
+                )}
+                {"1d_model" in metadata["forecast"] && (
+                  <OneDModel
+                    parameters={metadata.forecast["3d_model"]}
+                    language={language}
+                  />
+                )}
+              </div>
+            )}
+            {"measurements" in metadata && (
+              <div className="measurements">
+                <h2>{Translations.satellite[language]}</h2>
+                <div className="satellite-maps">
+                  {metadata.satellite.map((p) => (
+                    <Satellite
+                      key={p.parameter}
+                      parameters={p}
+                      language={language}
+                      dark={dark}
+                      bounds={metadata.properties.bounds}
+                    />
+                  ))}
+                </div>
+              </div>
+            )}
+            {"satellite" in metadata && (
+              <div className="satellite">
+                <h2>{Translations.satellite[language]}</h2>
+                <div className="satellite-maps">
+                  {metadata.satellite.map((p) => (
+                    <Satellite
+                      key={p.parameter}
+                      parameters={p}
+                      language={language}
+                      dark={dark}
+                      bounds={metadata.properties.bounds}
+                    />
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         )}
         <Footer {...this.props} />
