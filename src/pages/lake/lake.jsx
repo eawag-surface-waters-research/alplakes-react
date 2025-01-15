@@ -10,6 +10,7 @@ import ThreeDModel from "./components/threedmodel";
 import OneDModel from "./components/onedmodel";
 import Satellite from "./components/satellite";
 import sortIcon from "../../img/sort.png";
+import WaterTemperature from "./components/watertemperature";
 
 class NotFound extends Component {
   render() {
@@ -106,17 +107,12 @@ class Lake extends Component {
             {"measurements" in metadata && (
               <div className="measurements">
                 <h2>{Translations.satellite[language]}</h2>
-                <div className="satellite-maps">
-                  {metadata.satellite.map((p) => (
-                    <Satellite
-                      key={p.parameter}
-                      parameters={p}
-                      language={language}
-                      dark={dark}
-                      bounds={metadata.properties.bounds}
-                    />
-                  ))}
-                </div>
+                <WaterTemperature
+                  parameters={metadata.forecast["3d_model"]}
+                  language={language}
+                  dark={dark}
+                  bounds={metadata.properties.bounds}
+                />
               </div>
             )}
             {"satellite" in metadata && (
