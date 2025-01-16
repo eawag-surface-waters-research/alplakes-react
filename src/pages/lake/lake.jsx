@@ -11,6 +11,9 @@ import OneDModel from "./components/onedmodel";
 import Satellite from "./components/satellite";
 import sortIcon from "../../img/sort.png";
 import WaterTemperature from "./components/watertemperature";
+import Scientific from "./components/scientific";
+import Parameters from "./components/parameters";
+import Bathymetry from "./components/bathymetry";
 
 class NotFound extends Component {
   render() {
@@ -32,6 +35,20 @@ class Lake extends Component {
     id: "",
     metadata: {},
     error: false,
+  };
+
+  constructor(props) {
+    super(props);
+    this.divRef = React.createRef();
+  }
+
+  scrollToSection = (sectionRef) => {
+    if (sectionRef.current) {
+      window.scrollTo({
+        top: sectionRef.current.offsetTop,
+        behavior: "smooth",
+      });
+    }
   };
 
   async componentDidMount() {
@@ -80,13 +97,16 @@ class Lake extends Component {
           <div className="lake">
             <div className="header">
               <h1>{title}</h1>
-              <div className="properties-link">
+              <div
+                className="properties-link"
+                onClick={() => this.scrollToSection(this.divRef)}
+              >
                 {Translations.lakeProperties[language]}
                 <img src={sortIcon} alt="Down" />
               </div>
             </div>
             {"forecast" in metadata && (
-              <div className="forecast">
+              <div className="section forecast">
                 <h2>{Translations.forecast[language]}</h2>
                 {"3d_model" in metadata["forecast"] && (
                   <ThreeDModel
@@ -105,18 +125,28 @@ class Lake extends Component {
               </div>
             )}
             {"measurements" in metadata && (
-              <div className="measurements">
-                <h2>{Translations.satellite[language]}</h2>
-                <WaterTemperature
-                  parameters={metadata.forecast["3d_model"]}
-                  language={language}
-                  dark={dark}
-                  bounds={metadata.properties.bounds}
-                />
+              <div className="section measurements">
+                <h2>{Translations.measurements[language]}</h2>
+                {"water_temperature" in metadata["measurements"] && (
+                  <WaterTemperature
+                    parameters={metadata.measurements["water_temperature"]}
+                    language={language}
+                    dark={dark}
+                    bounds={metadata.properties.bounds}
+                  />
+                )}
+                {"scientific" in metadata["measurements"] && (
+                  <Scientific
+                    parameters={metadata.measurements["scientific"]}
+                    language={language}
+                    dark={dark}
+                    bounds={metadata.properties.bounds}
+                  />
+                )}
               </div>
             )}
             {"satellite" in metadata && (
-              <div className="satellite">
+              <div className="section satellite">
                 <h2>{Translations.satellite[language]}</h2>
                 <div className="satellite-maps">
                   {metadata.satellite.map((p) => (
@@ -129,6 +159,32 @@ class Lake extends Component {
                     />
                   ))}
                 </div>
+              </div>
+            )}
+            {"trends" in metadata && (
+              <div className="section trends">
+                <h2>{Translations.trends[language]}</h2>
+              </div>
+            )}
+            {"properties" in metadata && (
+              <div className="section properties" ref={this.divRef}>
+                <h2>{Translations.lakeProperties[language]}</h2>
+                {"parameters" in metadata["properties"] && (
+                  <Parameters
+                    parameters={metadata.properties["parameters"]}
+                    language={language}
+                    dark={dark}
+                    bounds={metadata.properties.bounds}
+                  />
+                )}
+                {"bathymetry" in metadata["properties"] && (
+                  <Bathymetry
+                    parameters={metadata.properties["bathymetry"]}
+                    language={language}
+                    dark={dark}
+                    bounds={metadata.properties.bounds}
+                  />
+                )}
               </div>
             )}
           </div>

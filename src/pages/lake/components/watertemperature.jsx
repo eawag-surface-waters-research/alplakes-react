@@ -39,12 +39,12 @@ class WaterTemperature extends Component {
 
   render() {
     var { updates, mapId } = this.state;
-    var { dark, bounds } = this.props;
+    var { dark, bounds, language } = this.props;
     return (
-      <div className="threedmodel">
-        <h3>Water Temperature</h3>
-        <div className="threedmodel-inner">
-          <div className="threedmodel-map">
+      <div className="water-temperature">
+        <h3>{Translations.watertemperature[language]}</h3>
+        <div className="map-sidebar">
+          <div className="left">
             <Basemap
               updates={updates}
               dark={dark}
@@ -53,7 +53,7 @@ class WaterTemperature extends Component {
               basemap="default"
             />
           </div>
-          <div className="threedmodel-graphs"></div>
+          <div className="right"></div>
         </div>
       </div>
     );

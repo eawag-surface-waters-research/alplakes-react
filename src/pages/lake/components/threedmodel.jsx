@@ -9,12 +9,12 @@ class ThreeDModel extends Component {
   };
   render() {
     var { updates, mapId } = this.state;
-    var { dark, bounds } = this.props;
+    var { dark, bounds, language } = this.props;
     return (
       <div className="threedmodel">
-        <h3>Water Temperature & Velocity - 3D</h3>
-        <div className="threedmodel-inner">
-          <div className="threedmodel-map">
+        <h3>{Translations.temperaturecurrent[language]} - 3D</h3>
+        <div className="map-sidebar">
+          <div className="left">
             <Basemap
               updates={updates}
               dark={dark}
@@ -23,7 +23,7 @@ class ThreeDModel extends Component {
               basemap="default"
             />
           </div>
-          <div className="threedmodel-graphs"></div>
+          <div className="right"></div>
         </div>
       </div>
     );

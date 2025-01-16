@@ -3,9 +3,10 @@ import Translations from "../../../translations.json";
 
 class OneDModel extends Component {
   render() {
+    var { language } = this.props;
     return (
       <div className="onedmodel">
-        <h3>Water Temperature - 1D</h3>
+        <h3>{Translations.watertemperature[language]} - 1D</h3>
       </div>
     );
   }

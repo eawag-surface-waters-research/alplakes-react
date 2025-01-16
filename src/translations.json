@@ -35,6 +35,18 @@
     "FR": "Température de l'eau",
     "IT": "Temperatura dell'acqua"
   },
+  "temperaturecurrent": {
+    "EN": "Water Temperature & Currents",
+    "DE": "Wassertemperatur und Strömungen",
+    "FR": "Température de l'eau et courants",
+    "IT": "Temperatura dell'acqua e correnti"
+  },
+  "scientific": {
+    "EN": "Scientific",
+    "DE": "Wissenschaftlich",
+    "FR": "Scientifique",
+    "IT": "Scientifico"
+  },
   "icecover": {
     "EN": "Ice cover",
     "DE": "Eisdecke",
@@ -739,6 +751,12 @@
     "FR": "Propriétés du lac",
     "IT": "Proprietà del lago"
   },
+  "parameters": {
+    "EN": "Parameters",
+    "DE": "Parameter",
+    "FR": "Paramètres",
+    "IT": "Parametri"
+  },
   "lakePropertiesDesc": {
     "EN": "Key physical properties",
     "DE": "Wichtige physikalische Eigenschaften",
@@ -780,6 +798,12 @@
     "DE": "Sicht",
     "FR": "Voir",
     "IT": "View"
+  },
+  "trends": {
+    "EN": "Trends",
+    "DE": "Trends",
+    "FR": "Tendances",
+    "IT": "Tendenze"
   },
   "insituData": {
     "EN": "Insitu Data",
