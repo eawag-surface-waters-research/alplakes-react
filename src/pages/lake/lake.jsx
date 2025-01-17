@@ -118,8 +118,9 @@ class Lake extends Component {
                 )}
                 {"1d_model" in metadata["forecast"] && (
                   <OneDModel
-                    parameters={metadata.forecast["3d_model"]}
+                    parameters={metadata.forecast["1d_model"]}
                     language={language}
+                    name={title}
                   />
                 )}
               </div>

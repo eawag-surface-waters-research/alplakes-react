@@ -8,8 +8,13 @@ class Scientific extends Component {
       <div className="scientific">
         <h3>{Translations.scientific[language]}</h3>
         {parameters.map((p) => (
-          <a href={p.url} key={p.name}>
-            <div className="external-box">
+          <a
+            href={p.url}
+            key={p.name}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <div className="clickable-box">
               {p.live ? (
                 <div className="right live">
                   <div className="live-button" />

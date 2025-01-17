@@ -4,7 +4,7 @@ import { Helmet } from "react-helmet";
 import axios from "axios";
 import { NavLink } from "react-router-dom";
 import NavBar from "../../components/navbar/navbar";
-import HomeGraph from "../../components/d3/homegraph/homegraph";
+import SummaryGraph from "../../components/d3/summarygraph/summarygraph";
 import HomeMap from "../../components/leaflet/homemap";
 import Footer from "../../components/footer/footer";
 import Translations from "../../translations.json";
@@ -285,6 +285,7 @@ class ListItem extends Component {
 class SummaryTable extends Component {
   render() {
     var { forecast, language } = this.props;
+    console.log(forecast)
     return (
       <React.Fragment>
         {Object.keys(forecast.summary).map((day, i, arr) =>
@@ -298,7 +299,7 @@ class SummaryTable extends Component {
             </div>
           )
         )}
-        <HomeGraph
+        <SummaryGraph
           dt={forecast.dt}
           value={forecast.value["temperature"]}
           dtMin={forecast.dtMin}

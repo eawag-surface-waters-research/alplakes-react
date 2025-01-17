@@ -12,6 +12,10 @@
     margin-bottom: 2px;
 }
 
+.main .lake h2 {
+    margin-bottom: 16px;
+}
+
 .main .lake h3 {
     font-size: 20px;
     margin-bottom: 18px;
@@ -26,6 +30,11 @@
     display: inline-block;
     margin-bottom: 20px;
     cursor: pointer;
+    transition: all .33s 0s ease;
+}
+
+.main .lake .header .properties-link:hover {
+    transform: scale(1.05);
 }
 
 .main .lake .header .properties-link img {
@@ -68,11 +77,10 @@
     vertical-align: top;
 }
 
-.main .lake .external-box {
+.main .lake .clickable-box {
     background-color: var(--box-color);
     border-radius: 20px;
     box-shadow: var(--box-shadow);
-    padding: 20px 25px;
     display: inline-block;
     position: relative;
     margin-bottom: calc(var(--padding)/2);
@@ -80,49 +88,61 @@
     text-decoration: none;
     border: 1px solid var(--box-color);
     transition: all .33s 0s ease;
+    cursor: pointer;
 }
 
-.main .lake .external-box:hover {
+.main .lake .clickable-box:hover {
     border-color: var(--border-color);
     box-shadow: none;
 }
 
-.main .lake .external-box .title {
+.main .lake .clickable-box .title {
     font-size: 18px;
     font-weight: 500;
     color: var(--background-font-color);
-    margin-bottom: 5px;
+    padding: 20px 0 5px 25px;
 }
 
-.main .lake .external-box .subtitle {
+.main .lake .clickable-box .subtitle {
     font-size: 16px;
-    font-weight: 500;
+    font-weight: 400;
     color: var(--background-suble-font-color);
     margin-bottom: 5px;
+    padding-left: 25px;
 }
 
-.main .lake .external-box .link {
+.main .lake .clickable-box .link {
     font-size: 16px;
     font-weight: 500;
     color: var(--link-color);
     text-decoration: underline;
+    padding: 0 0 20px 25px;
 }
 
-.main .lake .external-box .right {
+.main .lake .clickable-box .right {
     float: right;
     font-size: 18px;
     font-weight: 500;
     color: var(--background-suble-font-color);
+    padding: 20px 25px 5px 0;
 }
 
 /** 3D Model **/
 
 
+/** 1D Model **/
 
+.main .lake .forecast .onedmodel .clickable-box {
+    width: 500px;
+}
+
+.main .lake .forecast .onedmodel .clickable-box .title {
+    margin-bottom: 20px;
+}
 
 /** Scientific **/
 
-.main .lake .measurements .scientific .external-box {
+.main .lake .measurements .scientific .clickable-box {
     min-width: 400px
 }
 
@@ -148,14 +168,16 @@
     background-color: var(--box-color);
     border: 1px solid var(--border-color);
     border-radius: 12px;
-    padding: var(--padding) var(--padding) 0 var(--padding);
+    padding: var(--padding) 0 0 var(--padding);
     margin-bottom: var(--padding);
+    max-width: 700px;
 }
 
 .main .lake .properties .parameters .parameters-box .parameter {
     display: inline-block;
     margin: 0 var(--padding) var(--padding) 0;
     text-align: center;
+    min-width: 135px;
 }
 
 .main .lake .properties .parameters .parameters-box .parameter img {
@@ -176,8 +198,8 @@
     margin-bottom: 5px;
 }
 
-.main .lake .properties .bathymetry .external-box {
-    min-width: 250px
+.main .lake .properties .bathymetry .clickable-box {
+    min-width: 300px
 }
 
 

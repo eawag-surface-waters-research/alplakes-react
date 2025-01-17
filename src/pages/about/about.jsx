@@ -51,7 +51,7 @@ class About extends Component {
     if (sectionRef.current) {
       window.scrollTo({
         top: sectionRef.current.offsetTop,
-        behavior: "smooth"
+        behavior: "smooth",
       });
     }
   };
@@ -79,21 +79,19 @@ class About extends Component {
         <div className="about">
           <div className="content">
             <h1>{Translations.about[language]}</h1>
-            <p>
-              Alplakes is a research initiative that provides accurate
-              predictions of the condition of lakes throughout the European
-              Alpine region.
-            </p>
-            <p>
-              We integrate models and remote sensing products developed by the
-              research community to provide the most up-to-date and accurate
-              information possible.
-            </p>
-            <div
-              id="vision"
-              ref={this.divRefs["vision"]}
-              className="section"
-            >
+            <div className="intro">
+              <p>
+                Alplakes is a research initiative that provides accurate
+                predictions of the condition of lakes throughout the European
+                Alpine region.
+              </p>
+              <p>
+                We integrate models and remote sensing products developed by the
+                research community to provide the most up-to-date and accurate
+                information possible.
+              </p>
+            </div>
+            <div id="vision" ref={this.divRefs["vision"]} className="section">
               <h2>Vision</h2>
               <p>
                 This platform aims to transform how lakes are studied and
@@ -128,11 +126,7 @@ class About extends Component {
                 <li>Water quality module development</li>
               </ul>
             </div>
-            <div
-              id="contact"
-              ref={this.divRefs["contact"]}
-              className="section"
-            >
+            <div id="contact" ref={this.divRefs["contact"]} className="section">
               <h2>Contact us</h2>
               <p>
                 We encourage the use of our products. Please do not hesitate to
@@ -335,11 +329,7 @@ class About extends Component {
                 </div>
               </div>
             </div>
-            <div
-              id="people"
-              ref={this.divRefs["people"]}
-              className="section"
-            >
+            <div id="people" ref={this.divRefs["people"]} className="section">
               <h2>Contributing people</h2>
               <h3>2024</h3>
               <p>

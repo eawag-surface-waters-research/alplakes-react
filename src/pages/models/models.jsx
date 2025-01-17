@@ -416,19 +416,21 @@ class Models extends Component {
         <div className="models">
           <div className="content">
             <h1>{Translations.models[language]}</h1>
-            <p>
-              Alplakes uses calibrated hydrodynamic models and remote sensing
-              products, developed by the research community, to provide lake
-              condition forecasts for the Alpine region. This page gives access
-              to these models, along with their input data, performance metrics,
-              and raw output.
-            </p>
-            <p>
-              We welcome collaboration opportunities with researchers and
-              institutions interested in advancing lake modeling and monitoring.
-              Please see the <NavLink to="/about">About</NavLink> page for
-              contact information.
-            </p>
+            <div className="intro">
+              <p>
+                Alplakes uses calibrated hydrodynamic models and remote sensing
+                products, developed by the research community, to provide lake
+                condition forecasts for the Alpine region. This page gives
+                access to these models, along with their input data, performance
+                metrics, and raw output.
+              </p>
+              <p>
+                We welcome collaboration opportunities with researchers and
+                institutions interested in advancing lake modeling and
+                monitoring. Please see the <NavLink to="/about">About</NavLink>{" "}
+                page for contact information.
+              </p>
+            </div>
             <div ref={this.divRefs["threed"]} id="threed" className="section">
               <h2>3D Hydrodynamic Modelling</h2>
               <p>

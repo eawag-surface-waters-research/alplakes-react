@@ -54,10 +54,18 @@
     max-width: 100%;
 }
 
+.main .about .content a {
+    color: var(--link-color);
+}
+
+.main .about .content .intro {
+    margin-bottom: 60px;
+}
+
 .main .about .content .section {
-    margin-bottom: 50px;
+    margin-bottom: 80px;
     border-top: 3px solid var(--border-color);
-    padding-top: 40px;
+    padding-top: 60px;
 }
 
 .main .about .content .project-info {

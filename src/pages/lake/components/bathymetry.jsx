@@ -8,8 +8,13 @@ class Bathymetry extends Component {
       <div className="bathymetry">
         <h3>{Translations.bathymetry[language]}</h3>
         {parameters.map((p) => (
-          <a href={p.url} key={p.name}>
-            <div className="external-box">
+          <a
+            href={p.url}
+            key={p.name}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <div className="clickable-box">
               <div className="title">{p.name}</div>
               <div className="subtitle">{p.format}</div>
               <div className="link">{p.source}</div>

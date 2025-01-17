@@ -140,7 +140,7 @@ h1 {
 h2 {
   font-size: 32px;
   font-weight: 400;
-  margin-bottom: 16px;
+  margin-bottom: 36px;
 }
 
 h3 {
@@ -206,6 +206,109 @@ h4 {
   border: 1px solid var(--border-color);
   border-radius: 50%;
   box-sizing: border-box;
+}
+
+/* Skeletons */
+
+.list-item-skeleton {
+  border: 1px solid transparent;
+  border-radius: 16px;
+  box-sizing: border-box;
+  margin-bottom: calc(var(--padding) / 2);
+  padding: 0 calc(var(--padding) / 4);
+  position: relative;
+  transition: all .33s ease 0s;
+  width: 100%;
+  height: 110px;
+  background-color: var(--box-color);
+}
+
+.text-skeleton {
+  display: inline-block;
+  margin-left: 6px;
+  vertical-align: top;
+  margin-bottom: 11px;
+  margin-top: 5px;
+}
+
+.logos-skeleton {
+  position: absolute;
+  right: 12px;
+  top: 12px;
+}
+
+.logos-skeleton .logo-skeleton {
+  height: 25px;
+  width: 25px;
+  background-color: var(--border-color);
+  border-radius: 8px;
+  margin-left: 8px;
+  display: inline-block;
+}
+
+.text-skeleton .name-skeleton {
+  height: 22.5px;
+  width: 150px;
+  background-color: var(--border-color);
+  opacity: 0.4;
+  margin-top: 10px;
+  border-radius: 8px;
+}
+
+.skeleton-block {
+  display: inline-block;
+  width: 20%;
+  height: 54px;
+  border-right: 1px solid;
+  box-sizing: border-box;
+  opacity: 0.8;
+  border-color: var(--border-color);
+  opacity: 0.5;
+}
+
+.skeleton-data {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 30px;
+  border-top: 2px solid var(--border-color);
+  left: 0;
+  background: linear-gradient(179deg, #6b636133, #ffffff1f);
+  border-radius: 0 0 16px 16px;
+}
+
+.skeleton-block.right {
+  border-right: none;
+}
+
+@keyframes pulseColor {
+  0% {
+    background-color: var(--border-color);
+  }
+
+  100% {
+    background-color: var(--pulse-color);
+  }
+}
+
+.pulse {
+  background-color: var(--border-color);
+  animation: pulseColor 1s infinite alternate;
+}
+
+@keyframes pulseBorderColor {
+  0% {
+    border-color: var(--border-color);
+  }
+
+  100% {
+    border-color: var(--pulse-color);
+  }
+}
+
+.pulse-border {
+  border-color: var(--border-color);
+  animation: pulseBorderColor 1s infinite alternate;
 }
 
 @media screen and (max-width: 1000px) {
