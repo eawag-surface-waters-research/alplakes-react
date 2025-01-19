@@ -13,6 +13,36 @@ import "./leaflet_polylinedraw";
 import "./leaflet_vectorfield";
 import "./leaflet_markerdraw";
 
-export const update = (map, updates) => {
-    console.log(updates)
+export const update = async (map, layers, updates) => {
+  const functions = {
+    addLayer: {
+      addTiff: addTiff,
+    },
+    updateLayer: {},
+    removeLayer: {},
   };
+  for (let i = 0; i < updates.length; i++) {
+    await functions[updates[i].event][updates[i].type](
+      map,
+      layers,
+      updates[i].id,
+      updates[i].options
+    );
+  }
+};
+
+const addTiff = async (map, layers, id, options) => {
+  var defaultOptions = {
+    paletteName: "vik",
+    opacity: 1,
+  };
+  var displayOptions = { ...defaultOptions, ...options.displayOptions };
+  let palette = COLORS[displayOptions["paletteName"]].map((c) => {
+    return { color: [c[0], c[1], c[2]], point: c[3] };
+  });
+  displayOptions.palette = palette;
+  let { data } = await axios.get(options.url, {
+    responseType: "arraybuffer",
+  });
+  layers[id] = await L.floatgeotiff(data, displayOptions).addTo(map);
+};

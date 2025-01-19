@@ -11,7 +11,7 @@ class Basemap extends Component {
     var { basemap } = this.props;
     if (updates.length > 0) {
       updated();
-      update(this.map, updates);
+      update(this.map, this.layers, updates);
     }
     if (prevProps.basemap !== basemap || prevProps.dark !== dark) {
       if (!(basemap in CONFIG.basemaps)) basemap = "default";
@@ -60,7 +60,7 @@ class Basemap extends Component {
         tileClass: tileClass,
       })
       .addTo(this.map);
-    this.layer = L.layerGroup([]).addTo(this.map);
+    this.layers = {};
   }
 
   render() {
