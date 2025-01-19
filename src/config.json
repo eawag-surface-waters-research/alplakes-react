@@ -8,9 +8,12 @@
   "sentinel3_wms": "https://creodias.sentinel-hub.com/ogc/wms/fea4245d-9a3b-4337-8cc2-9bbdbd22ff1a",
   "basemaps": {
     "default": {
-      "url": "https://{s}.basemaps.cartocdn.com/${mapID}/{z}/{x}/{y}{r}.png",
+      "url": "https://{s}.basemaps.cartocdn.com/_bright_/{z}/{x}/{y}{r}.png",
       "attribution": "&copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors &copy; <a href='https://carto.com/attributions'>CARTO</a>",
-      "title": "Default"
+      "title": "Default",
+      "lightMap": "light_all",
+      "darkMap": "dark_all",
+      "tileClass": "tile-class"
     },
     "satellite": {
       "url": "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",

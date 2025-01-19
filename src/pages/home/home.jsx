@@ -285,7 +285,6 @@ class ListItem extends Component {
 class SummaryTable extends Component {
   render() {
     var { forecast, language } = this.props;
-    console.log(forecast)
     return (
       <React.Fragment>
         {Object.keys(forecast.summary).map((day, i, arr) =>

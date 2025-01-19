@@ -20,7 +20,6 @@ class ThreeDModel extends Component {
               dark={dark}
               mapId={mapId}
               bounds={bounds}
-              basemap="default"
             />
           </div>
           <div className="right"></div>
