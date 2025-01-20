@@ -567,13 +567,17 @@ svg.leaflet-image-layer.leaflet-interactive path {
 /* attribution and scale controls */
 
 .leaflet-container .leaflet-control-attribution {
-  background-color: var(--background-color);
-  color: var(--box-font-color);
+  background-color: var(--box-color);
+  color: var(--background-subtle-font-color);
   margin: 0;
 }
 
+.leaflet-attribution-flag {
+  display: none;
+}
+
 .leaflet-control-attribution a {
-  color: var(--box-font-color) !important;
+  color: var(--background-subtle-font-color) !important;
 }
 
 .leaflet-control-attribution,
@@ -822,6 +826,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
   background-color: var(--background-color);
   color: var(--box-font-color);
   padding: 2px 8px;
+  border-radius: 8px 0 0 8px;
 }
 
 .leaflet-tooltip.current_temperature_tooltip .value {
@@ -829,6 +834,12 @@ svg.leaflet-image-layer.leaflet-interactive path {
   background-color: var(--highlight-color);
   color: white;
   padding: 2px 4px;
+  border-radius: 0 8px 8px 0;
+}
+
+.leaflet-tooltip.current_temperature_tooltip .value.now {
+  border-radius: 8px;
+  padding: 2px 6px;
 }
 
 .leaflet-tooltip a {

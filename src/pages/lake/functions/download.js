@@ -17,7 +17,7 @@ export const download1DLinegraph = async (
       ({ data } = await axios.get(
         `${
           CONFIG.alplakes_bucket
-        }/simulations/${model}/cache/${lake}/linegraph_${parameter}.json?timestamp=${general.hour()}`
+        }/simulations/${model}/cache/${lake}/linegraph_${parameter}.json${general.hour()}`
       ));
       return data;
     } catch (e) {
@@ -41,7 +41,7 @@ export const downloadModelMetadata = async (model, lake) => {
       ({ data: metadata } = await axios.get(
         `${
           CONFIG.alplakes_bucket
-        }/simulations/${model}/cache/${lake}/metadata.json?timestamp=${general.hour()}`
+        }/simulations/${model}/cache/${lake}/metadata.json${general.hour()}`
       ));
     } catch (e) {
       console.error("Failed to collect Simstrat metadata from S3.");
@@ -54,7 +54,7 @@ export const downloadModelMetadata = async (model, lake) => {
       ({ data: metadata } = await axios.get(
         `${
           CONFIG.alplakes_bucket
-        }/simulations/${model}/cache/${lake}/metadata.json?timestamp=${general.hour()}`
+        }/simulations/${model}/cache/${lake}/metadata.json${general.hour()}`
       ));
     } catch (e) {
       ({ data: metadata } = await axios.get(

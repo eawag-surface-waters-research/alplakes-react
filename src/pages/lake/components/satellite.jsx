@@ -1,8 +1,10 @@
 import React, { Component, createRef } from "react";
+import { NavLink } from "react-router-dom";
 import axios from "axios";
 import CONFIG from "../../../config.json";
-import Translations from "../../../translations.json";
+import { timeAgo } from "../functions/general";
 import Basemap from "../../../components/leaflet/basemap";
+import Information from "../../../components/information/information";
 
 class Satellite extends Component {
   state = {
@@ -41,6 +43,7 @@ class Satellite extends Component {
       );
       if ("dt" in data) {
         data.dt = this.satelliteStringToDate(data.dt);
+        data.unit = parameters.unit;
         if ("dt" in image) {
           if (data.dt > image.dt) image = data;
         } else {
@@ -91,19 +94,40 @@ class Satellite extends Component {
   }
 
   render() {
-    var { updates, mapId } = this.state;
-    var { parameters, language, dark, bounds } = this.props;
+    var { updates, mapId, image } = this.state;
+    var { parameters, language, dark, bounds, id } = this.props;
     return (
       <div ref={this.ref} className="satellite-inner">
-        <h3>{parameters.parameter_name[language]}</h3>
+        <h3>
+          {parameters.parameter_name[language]}
+          <Information
+            information={parameters.parameter_description[language]}
+          />
+        </h3>
         <div className="map">
+          <NavLink to={`/map/${id}?layers=satellite_${parameters.parameter}`}>
+            <div className="click">
+              <div className="click-inner">Click for more.</div>
+            </div>
+          </NavLink>
           <Basemap
             updates={updates}
             updated={this.updated}
+            language={language}
             dark={dark}
             mapId={mapId + "_" + parameters.parameter}
             bounds={bounds}
+            load={true}
           />
+          {"dt" in image && (
+            <div className="label">
+              <div className="value">
+                {Math.round(image.p10 * 10) / 10} -{" "}
+                {Math.round(image.p90 * 10) / 10} {image.unit}
+              </div>
+              <div className="time">{timeAgo(image.dt, language)} </div>
+            </div>
+          )}
         </div>
       </div>
     );

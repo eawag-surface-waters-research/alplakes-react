@@ -1,12 +1,16 @@
 import React, { Component } from "react";
 import Translations from "../../../translations.json";
+import Information from "../../../components/information/information";
 
 class Scientific extends Component {
   render() {
     var { language, parameters } = this.props;
     return (
       <div className="scientific">
-        <h3>{Translations.scientific[language]}</h3>
+        <h3>
+          {Translations.scientific[language]}
+          <Information information={Translations.scientificText[language]} />
+        </h3>
         {parameters.map((p) => (
           <a
             href={p.url}

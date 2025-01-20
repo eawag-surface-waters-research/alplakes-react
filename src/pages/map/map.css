@@ -1,0 +1,10 @@
+.main .map .layer-map {
+    width: calc(100% - var(--padding));
+    height: calc(100% - var(--header-height) - var(--padding));
+    position: fixed;
+    top: calc(var(--header-height) + var(--padding) / 2);
+    left: calc(var(--padding) / 2);
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+}

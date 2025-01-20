@@ -1,3 +1,5 @@
+import Translations from "../../../translations.json";
+
 export const stringToDate = (date) => {
   let time = "00";
   if (date.length > 10) {
@@ -12,7 +14,7 @@ export const stringToDate = (date) => {
 };
 
 export const hour = () => {
-  return Math.round((new Date().getTime() + 1800000) / 3600000) * 3600 - 3600;
+  return `?timestamp={Math.round((new Date().getTime() + 1800000) / 3600000) * 3600 - 3600}`;
 };
 
 export const formatAPIDatetime = (datetime) => {
@@ -68,4 +70,34 @@ export const summariseData = (timestamps, values) => {
   end.setDate(end.getDate() + 1);
 
   return { summary, start: new Date(start), end };
+};
+
+export const timeAgo = (time, language) => {
+  const currentDate = new Date();
+  currentDate.setHours(0, 0, 0, 0);
+
+  const givenDate = new Date(time);
+  givenDate.setHours(0, 0, 0, 0);
+
+  const difference = (currentDate - givenDate) / 86400000;
+
+  if (difference % 30 === 0 || difference > 84) {
+    let count = Math.ceil(difference / 30);
+    return count === 1
+      ? Translations["monthAgo"][language]
+      : Translations["monthsAgo"][language].replace("#", count);
+  } else if (difference % 7 === 0 || difference > 21) {
+    let count = Math.ceil(difference / 7);
+    return count === 1
+      ? Translations["weekAgo"][language]
+      : Translations["weeksAgo"][language].replace("#", count);
+  } else {
+    return difference === 1
+      ? Translations["dayAgo"][language]
+      : Translations["daysAgo"][language].replace("#", difference);
+  }
+};
+
+export const round = (value, decimals) => {
+  return Math.round(value * 10 ** decimals) / 10 ** decimals;
 };

@@ -4,14 +4,18 @@ import CONFIG from "../../config.json";
 import { update } from "./update";
 import "./leaflet_tileclass";
 import "./css/leaflet.css";
+import Loading from "../loading/loading";
 
 class Basemap extends Component {
   async componentDidUpdate(prevProps) {
-    const { dark, updates, updated } = this.props;
+    const { dark, updates, updated, mapId, language } = this.props;
     var { basemap } = this.props;
     if (updates.length > 0) {
+      const loading_div = document.getElementById(`loading_${mapId}`);
+      loading_div.style.opacity = 0.6;
       updated();
-      update(this.map, this.layers, updates);
+      await update(this.map, this.layers, updates, language);
+      loading_div.style.opacity = 0;
     }
     if (prevProps.basemap !== basemap || prevProps.dark !== dark) {
       if (!(basemap in CONFIG.basemaps)) basemap = "default";
@@ -44,8 +48,12 @@ class Basemap extends Component {
       showCursorLocation: true,
       zoomAnimation: true,
     });
+    var map = this.map
     if (bounds) {
       this.map.fitBounds(bounds, { padding: [20, 20], animate: false });
+      this.map.on("dblclick", function () {
+        map.fitBounds(bounds, { padding: [20, 20] });
+      });
     }
     this.map.doubleClickZoom.disable();
     if (!(basemap in CONFIG.basemaps)) basemap = "default";
@@ -60,13 +68,21 @@ class Basemap extends Component {
         tileClass: tileClass,
       })
       .addTo(this.map);
+    this.map.attributionControl.setPosition("bottomleft");
     this.layers = {};
   }
 
   render() {
-    const { mapId } = this.props;
+    const { mapId, load } = this.props;
     return (
       <React.Fragment>
+        <div
+          className="loading"
+          id={`loading_${mapId}`}
+          style={{ opacity: 0, display: load ? "flex" : "none" }}
+        >
+          <Loading />
+        </div>
         <div id={mapId} className="leaflet-map"></div>
       </React.Fragment>
     );

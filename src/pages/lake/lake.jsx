@@ -14,6 +14,7 @@ import WaterTemperature from "./components/watertemperature";
 import Scientific from "./components/scientific";
 import Parameters from "./components/parameters";
 import Bathymetry from "./components/bathymetry";
+import Information from "../../components/information/information";
 
 class NotFound extends Component {
   render() {
@@ -130,6 +131,7 @@ class Lake extends Component {
                 <h2>{Translations.measurements[language]}</h2>
                 {"water_temperature" in metadata["measurements"] && (
                   <WaterTemperature
+                    id={id}
                     parameters={metadata.measurements["water_temperature"]}
                     language={language}
                     dark={dark}
@@ -148,10 +150,11 @@ class Lake extends Component {
             )}
             {"satellite" in metadata && (
               <div className="section satellite">
-                <h2>{Translations.satellite[language]}</h2>
+                <h2>{Translations.satellite[language]} </h2>
                 <div className="satellite-maps">
                   {metadata.satellite.map((p) => (
                     <Satellite
+                      id={id}
                       key={p.parameter}
                       parameters={p}
                       language={language}

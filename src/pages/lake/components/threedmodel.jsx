@@ -14,7 +14,7 @@ class ThreeDModel extends Component {
       <div className="threedmodel">
         <h3>{Translations.temperaturecurrent[language]} - 3D</h3>
         <div className="map-sidebar">
-          <div className="left">
+          <div className="map-sidebar-left">
             <Basemap
               updates={updates}
               dark={dark}
@@ -22,7 +22,7 @@ class ThreeDModel extends Component {
               bounds={bounds}
             />
           </div>
-          <div className="right"></div>
+          <div className="map-sidebar-right"></div>
         </div>
       </div>
     );

@@ -371,6 +371,18 @@
     "FR": "Satellite",
     "IT": "Satellitare"
   },
+  "watertemperatureText": {
+    "EN": "Recent surface water temperature values collected from various sources.",
+    "DE": "Satelliten",
+    "FR": "Satellite",
+    "IT": "Satellitare"
+  },
+  "scientificText": {
+    "EN": "Open source scientific datasets available for the lake.",
+    "DE": "Satelliten",
+    "FR": "Satellite",
+    "IT": "Satellitare"
+  },
   "all": {
     "EN": "All",
     "DE": "Alle",
@@ -996,6 +1008,42 @@
     "DE": "Graph schließen",
     "FR": "Fermer le graphique",
     "IT": "Chiudi il grafico"
+  },
+  "monthAgo": {
+    "EN": "1 month ago",
+    "DE": "vor 1 Monat",
+    "FR": "Il y a 1 mois",
+    "IT": "1 mese fa"
+  },
+  "monthsAgo": {
+    "EN": "# months ago",
+    "DE": "vor # Monaten",
+    "FR": "Il y a # mois",
+    "IT": "# mesi fa"
+  },
+  "weekAgo": {
+    "EN": "1 week ago",
+    "DE": "vor 1 Woche",
+    "FR": "Il y a 1 semaine",
+    "IT": "1 settimana fa"
+  },
+  "weeksAgo": {
+    "EN": "# weeks ago",
+    "DE": "vor # Wochen",
+    "FR": "Il y a # semaines",
+    "IT": "# settimane fa"
+  },
+  "dayAgo": {
+    "EN": "1 day ago",
+    "DE": "vor 1 Tag",
+    "FR": "Il y a 1 jour",
+    "IT": "1 giorno fa"
+  },
+  "daysAgo": {
+    "EN": "# days ago",
+    "DE": "vor # Tagen",
+    "FR": "Il y a # jours",
+    "IT": "# giorni fa"
   },
   "c": {
     "EN": "",

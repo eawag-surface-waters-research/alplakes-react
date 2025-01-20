@@ -5,6 +5,13 @@ import COLORS from "../colors/colors.json";
 import CONFIG from "../../config.json";
 import leaflet_marker from "../../img/leaflet_marker.png";
 import Translate from "../../translations.json";
+import {
+  getColor,
+  round,
+  formatTime,
+  formatDatetime,
+  capitalize,
+} from "./general";
 import "./leaflet_raster";
 import "./leaflet_streamlines";
 import "./leaflet_floatgeotiff";
@@ -13,25 +20,36 @@ import "./leaflet_polylinedraw";
 import "./leaflet_vectorfield";
 import "./leaflet_markerdraw";
 
-export const update = async (map, layers, updates) => {
+export const update = async (map, layers, updates, language) => {
   const functions = {
     addLayer: {
       addTiff: addTiff,
+      addGeoJson: addGeoJson,
     },
     updateLayer: {},
     removeLayer: {},
   };
   for (let i = 0; i < updates.length; i++) {
-    await functions[updates[i].event][updates[i].type](
-      map,
-      layers,
-      updates[i].id,
-      updates[i].options
-    );
+    if (
+      updates[i].event in functions &&
+      updates[i].type in functions[updates[i].event]
+    ) {
+      await functions[updates[i].event][updates[i].type](
+        map,
+        layers,
+        updates[i].id,
+        updates[i].options,
+        language
+      );
+    } else {
+      console.error(
+        `Event ${updates[i].event} has no function ${updates[i].type}`
+      );
+    }
   }
 };
 
-const addTiff = async (map, layers, id, options) => {
+const addTiff = async (map, layers, id, options, language) => {
   var defaultOptions = {
     paletteName: "vik",
     opacity: 1,
@@ -45,4 +63,86 @@ const addTiff = async (map, layers, id, options) => {
     responseType: "arraybuffer",
   });
   layers[id] = await L.floatgeotiff(data, displayOptions).addTo(map);
+};
+
+const addGeoJson = async (map, layers, id, options, language) => {
+  let palette = COLORS["vik"].map((c) => {
+    return { color: [c[0], c[1], c[2]], point: c[3] };
+  });
+  const minDate = new Date();
+  minDate.setHours(0, 0, 0, 0);
+  layers["water_temperaure"] = L.layerGroup([]).addTo(map);
+  for (let i = 0; i < options.data.features.length; i++) {
+    let station = options.data.features[i];
+    let time = new Date(station.properties.last_time * 1000);
+    var marker;
+    var color = getColor(
+      station.properties.last_value,
+      options.displayOptions.min,
+      options.displayOptions.max,
+      palette
+    );
+    if (station.properties.icon === "river") {
+      marker = L.marker(
+        [station.geometry.coordinates[1], station.geometry.coordinates[0]],
+        {
+          icon: L.divIcon({
+            className: "custom-square-marker",
+            html: `<div style="background-color: rgb(${color[0]},${color[1]},${
+              color[2]
+            });opacity: ${station.properties.recent ? 1 : 0.3}"></div>`,
+            iconSize: [10, 10],
+            iconAnchor: [5, 5],
+          }),
+          value: station.properties.last_value,
+        }
+      ).addTo(layers["water_temperaure"]);
+    } else {
+      marker = L.marker(
+        [station.geometry.coordinates[1], station.geometry.coordinates[0]],
+        {
+          icon: L.divIcon({
+            className: "custom-circle-marker",
+            html: `<div style="background-color: rgb(${color[0]},${color[1]},${
+              color[2]
+            });opacity: ${station.properties.recent ? 1 : 0.3}"></div>`,
+            iconSize: [14, 14],
+            iconAnchor: [7, 7],
+          }),
+          value: station.properties.latest_value,
+        }
+      ).addTo(layers["water_temperaure"]);
+    }
+    marker.bindTooltip(
+      station.properties.permenant
+        ? `<div class="value now">${
+            round(station.properties.last_value, 1) + options.unit
+          }</div>`
+        : `<div class="time">${
+            station.properties.recent ? formatTime(time) : formatDatetime(time)
+          }</div><div class="value">${
+            round(station.properties.last_value, 1) + options.unit
+          }</div>`,
+      {
+        direction: "top",
+        permanent: station.properties.permenant,
+        className: "current_temperature_tooltip",
+        offset: [0, -2],
+      }
+    );
+    var { label, source: dataSource, url, icon } = station.properties;
+    marker.bindPopup(
+      `<div class=title>${label}</div><table><tr><td>${
+        Translate.lastreading[language]
+      }</td><td>${
+        round(station.properties.last_value, 2) + options.unit
+      }</td></tr><tr><td></td><td>${formatDatetime(time)}</td></tr><tr><td>${
+        Translate.type[language]
+      }</td><td>${capitalize(icon)} station</td></tr><tr><td>${
+        Translate.source[language]
+      }</td><td>${dataSource}</td></tr></table><a class="external-link" href="${url}" target="_blank">${
+        Translate.viewdataset[language]
+      }</a>`
+    );
+  }
 };
