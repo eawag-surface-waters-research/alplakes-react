@@ -14,7 +14,9 @@ export const stringToDate = (date) => {
 };
 
 export const hour = () => {
-  return `?timestamp={Math.round((new Date().getTime() + 1800000) / 3600000) * 3600 - 3600}`;
+  return `?timestamp=${
+    Math.round((new Date().getTime() + 1800000) / 3600000) * 3600 - 3600
+  }`;
 };
 
 export const formatAPIDatetime = (datetime) => {
@@ -29,12 +31,36 @@ export const formatAPIDatetime = (datetime) => {
   }${hour < 10 ? "0" + hour : hour}${minute < 10 ? "0" + minute : minute}`;
 };
 
+export const parseAlplakesDate = (str) => {
+  const d = new Date(
+    `${str.slice(0, 4)}-${str.slice(4, 6)}-${str.slice(6, 8)}T${str.slice(
+      8,
+      10
+    )}:${str.slice(10, 12)}:00.000+00:00`
+  );
+  return d;
+};
+
 export const formatDateYYYYMMDD = (d) => {
   const date = new Date(d);
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, "0");
   const day = String(date.getDate()).padStart(2, "0");
   return `${year}${month}${day}`;
+};
+
+export const formatDateDDMMYYYY = (d) => {
+  const date = new Date(d);
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${day}.${month}.${year}`;
+};
+
+export const formatTime = (d) => {
+  const hours = String(d.getHours()).padStart(2, "0");
+  const minutes = String(d.getMinutes()).padStart(2, "0");
+  return `${hours}:${minutes}`;
 };
 
 export const mean = (numbers) => {
@@ -72,7 +98,7 @@ export const summariseData = (timestamps, values) => {
   return { summary, start: new Date(start), end };
 };
 
-export const timeAgo = (time, language) => {
+export const daysAgo = (time, language) => {
   const currentDate = new Date();
   currentDate.setHours(0, 0, 0, 0);
 
@@ -95,6 +121,23 @@ export const timeAgo = (time, language) => {
     return difference === 1
       ? Translations["dayAgo"][language]
       : Translations["daysAgo"][language].replace("#", difference);
+  }
+};
+
+export const timeAgo = (time, language) => {
+  const currentDate = new Date();
+  const givenDate = new Date(time);
+  const difference = Math.round((currentDate - givenDate) / 600000) * 10;
+
+  if (difference % 60 === 0 || difference > 120) {
+    let count = Math.ceil(difference / 60);
+    return count === 1
+      ? Translations["hourAgo"][language]
+      : Translations["hoursAgo"][language].replace("#", count);
+  } else {
+    return difference === 1
+      ? Translations["minuteAgo"][language]
+      : Translations["minutesAgo"][language].replace("#", difference);
   }
 };
 

@@ -371,17 +371,47 @@
     "FR": "Satellite",
     "IT": "Satellitare"
   },
+  "waterlevel": {
+    "EN": "Water Level",
+    "DE": "Wasserstand",
+    "FR": "Niveau d'eau",
+    "IT": "Livello dell'acqua"
+  },
+  "waterlevelText": {
+    "EN": "Recent lake level values collected from various sources.",
+    "DE": "Aktuelle Seepegelwerte aus verschiedenen Quellen.",
+    "FR": "Valeurs récentes du niveau du lac recueillies à partir de diverses sources.",
+    "IT": "Valori recenti del livello del lago raccolti da varie fonti."
+  },
   "watertemperatureText": {
     "EN": "Recent surface water temperature values collected from various sources.",
-    "DE": "Satelliten",
-    "FR": "Satellite",
-    "IT": "Satellitare"
+    "DE": "Aktuelle Werte der Oberflächenwassertemperatur, gesammelt aus verschiedenen Quellen.",
+    "FR": "Valeurs récentes de la température de l’eau de surface recueillies à partir de diverses sources.",
+    "IT": "Valori recenti della temperatura delle acque superficiali raccolti da varie fonti."
   },
   "scientificText": {
     "EN": "Open source scientific datasets available for the lake.",
-    "DE": "Satelliten",
-    "FR": "Satellite",
-    "IT": "Satellitare"
+    "DE": "Für den See sind wissenschaftliche Open-Source-Datensätze verfügbar.",
+    "FR": "Ensembles de données scientifiques open source disponibles pour le lac.",
+    "IT": "Sono disponibili set di dati scientifici open source per il lago."
+  },
+  "onedmodelText": {
+    "EN": "Water temperature forecasted using a 1D numerical model, 1D models assume horizontal uniformity.",
+    "DE": "Die Wassertemperatur wird mithilfe eines 1D-numerischen Modells vorhergesagt. 1D-Modelle gehen von horizontaler Gleichmäßigkeit aus.",
+    "FR": "Température de l'eau prévue à l'aide d'un modèle numérique 1D, les modèles 1D supposent une uniformité horizontale.",
+    "IT": "Temperatura dell'acqua prevista mediante un modello numerico 1D; i modelli 1D presuppongono uniformità orizzontale."
+  },
+  "threedmodelText": {
+    "EN": "Water temperature and currents forecasted using a 3D numerical model.",
+    "DE": "Mithilfe eines 3D-numerischen Modells werden Wassertemperatur und Strömungen vorhergesagt.",
+    "FR": "Température de l'eau et courants prévus à l'aide d'un modèle numérique 3D.",
+    "IT": "Temperatura dell'acqua e correnti previste tramite un modello numerico 3D."
+  },
+  "maplink": {
+    "EN": "See more",
+    "DE": "Mehr anzeigen",
+    "FR": "Voir plus",
+    "IT": "Vedi altro"
   },
   "all": {
     "EN": "All",
@@ -1044,6 +1074,30 @@
     "DE": "vor # Tagen",
     "FR": "Il y a # jours",
     "IT": "# giorni fa"
+  },
+  "hourAgo": {
+    "EN": "1 hour ago",
+    "DE": "vor 1 Stunde",
+    "FR": "Il y a 1 heure",
+    "IT": "1 ora fa"
+  },
+  "hoursAgo": {
+    "EN": "# hours ago",
+    "DE": "vor # Stunden",
+    "FR": "Il y a # heures",
+    "IT": "# ore fa"
+  },
+  "minuteAgo": {
+    "EN": "1 minute ago",
+    "DE": "vor 1 Minute",
+    "FR": "Il y a 1 minute",
+    "IT": "1 minuto fa"
+  },
+  "minutesAgo": {
+    "EN": "# minutes ago",
+    "DE": "vor # Minuten",
+    "FR": "Il y a # minutes",
+    "IT": "# minuti fa"
   },
   "c": {
     "EN": "",

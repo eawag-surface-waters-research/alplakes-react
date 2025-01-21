@@ -14,7 +14,7 @@ import WaterTemperature from "./components/watertemperature";
 import Scientific from "./components/scientific";
 import Parameters from "./components/parameters";
 import Bathymetry from "./components/bathymetry";
-import Information from "../../components/information/information";
+import WaterLevel from "./components/waterlevel";
 
 class NotFound extends Component {
   render() {
@@ -111,6 +111,7 @@ class Lake extends Component {
                 <h2>{Translations.forecast[language]}</h2>
                 {"3d_model" in metadata["forecast"] && (
                   <ThreeDModel
+                    id={id}
                     parameters={metadata.forecast["3d_model"]}
                     language={language}
                     dark={dark}
@@ -136,6 +137,14 @@ class Lake extends Component {
                     language={language}
                     dark={dark}
                     bounds={metadata.properties.bounds}
+                  />
+                )}
+                {"water_levels" in metadata["measurements"] && (
+                  <WaterLevel
+                    id={id}
+                    parameters={metadata.measurements["water_level"]}
+                    language={language}
+                    dark={dark}
                   />
                 )}
                 {"scientific" in metadata["measurements"] && (

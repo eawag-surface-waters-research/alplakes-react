@@ -1,10 +1,11 @@
 import React, { Component, createRef } from "react";
 import axios from "axios";
 import CONFIG from "../../../config.json";
-import { hour, round } from "../functions/general";
+import { hour, round, timeAgo } from "../functions/general";
 import Translations from "../../../translations.json";
 import Basemap from "../../../components/leaflet/basemap";
 import Information from "../../../components/information/information";
+import MapButton from "../../../components/mapbutton/mapbutton";
 
 class WaterTemperature extends Component {
   state = {
@@ -82,15 +83,21 @@ class WaterTemperature extends Component {
 
   render() {
     var { updates, mapId, hightlights } = this.state;
-    var { dark, bounds, language } = this.props;
+    var { dark, bounds, language, id } = this.props;
     return (
       <div className="water-temperature" ref={this.ref}>
         <h3>
           {Translations.watertemperature[language]}
-          <Information information={Translations.watertemperatureText[language]} />
+          <Information
+            information={Translations.watertemperatureText[language]}
+          />
         </h3>
         <div className="map-sidebar">
           <div className="map-sidebar-left">
+            <MapButton
+              link={`/map/${id}?layers=water_temperature`}
+              language={language}
+            />
             <Basemap
               updates={updates}
               language={language}
@@ -103,7 +110,7 @@ class WaterTemperature extends Component {
           </div>
           {hightlights.length > 0 && (
             <div className="map-sidebar-right">
-              {hightlights.map((h) => (
+              {hightlights.map((h, index) => (
                 <a
                   href={h.url}
                   key={h.label}
@@ -112,12 +119,17 @@ class WaterTemperature extends Component {
                 >
                   <div className="clickable-box highlight">
                     <div className="right">
-                      {round(h.last_value, 1)} °C{" "}
-                      <div className="time">1 hour ago</div>
+                      {round(h.last_value, 1)} °C
+                      <div className="time">
+                        {timeAgo(h.last_time * 1000, language)}
+                      </div>
                     </div>
                     <div className="title">{h.label}</div>
                     <div className="link">{h.source}</div>
                   </div>
+                  {index !== hightlights.length - 1 && (
+                    <div className="box-border" />
+                  )}
                 </a>
               ))}
             </div>

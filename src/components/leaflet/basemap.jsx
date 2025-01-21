@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import L from "leaflet";
 import CONFIG from "../../config.json";
 import { update } from "./update";
+import "./leaflet_customtooltip";
 import "./leaflet_tileclass";
 import "./css/leaflet.css";
 import Loading from "../loading/loading";

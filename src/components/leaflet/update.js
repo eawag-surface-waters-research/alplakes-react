@@ -1,9 +1,9 @@
 import L from "leaflet";
-import * as d3 from "d3";
+//import * as d3 from "d3";
 import axios from "axios";
 import COLORS from "../colors/colors.json";
-import CONFIG from "../../config.json";
-import leaflet_marker from "../../img/leaflet_marker.png";
+//import CONFIG from "../../config.json";
+//import leaflet_marker from "../../img/leaflet_marker.png";
 import Translate from "../../translations.json";
 import {
   getColor,
@@ -25,6 +25,8 @@ export const update = async (map, layers, updates, language) => {
     addLayer: {
       addTiff: addTiff,
       addGeoJson: addGeoJson,
+      addRaster: addRaster,
+      addVectorField: addVectorField,
     },
     updateLayer: {},
     removeLayer: {},
@@ -47,6 +49,37 @@ export const update = async (map, layers, updates, language) => {
       );
     }
   }
+};
+
+const addRaster = async (map, layers, id, options, language) => {
+  var defaultOptions = {
+    paletteName: "vik",
+    opacity: 1,
+    interpolate: false,
+  };
+  var displayOptions = { ...defaultOptions, ...options.displayOptions };
+  let palette = COLORS[displayOptions["paletteName"]].map((c) => {
+    return { color: [c[0], c[1], c[2]], point: c[3] };
+  });
+  displayOptions.palette = palette;
+  layers[id] = new L.Raster(
+    options.geometry,
+    options.data,
+    displayOptions
+  ).addTo(map);
+};
+
+const addVectorField = async (map, layers, id, options, language) => {
+  var defaultOptions = {
+    opacity: 1,
+    interpolate: false,
+  };
+  var displayOptions = { ...defaultOptions, ...options.displayOptions };
+  layers[id] = new L.vectorfield(
+    options.geometry,
+    options.data,
+    displayOptions
+  ).addTo(map);
 };
 
 const addTiff = async (map, layers, id, options, language) => {
@@ -136,9 +169,11 @@ const addGeoJson = async (map, layers, id, options, language) => {
         Translate.lastreading[language]
       }</td><td>${
         round(station.properties.last_value, 2) + options.unit
-      }</td></tr><tr><td></td><td>${formatDatetime(time)}</td></tr><tr><td>${
-        Translate.type[language]
-      }</td><td>${capitalize(icon)} station</td></tr><tr><td>${
+      }</td></tr><tr><td>Time</td><td>${formatDatetime(
+        time
+      )}</td></tr><tr><td>${Translate.type[language]}</td><td>${capitalize(
+        icon
+      )} station</td></tr><tr><td>${
         Translate.source[language]
       }</td><td>${dataSource}</td></tr></table><a class="external-link" href="${url}" target="_blank">${
         Translate.viewdataset[language]

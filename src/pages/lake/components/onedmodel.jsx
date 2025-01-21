@@ -6,6 +6,7 @@ import {
 import Translations from "../../../translations.json";
 import SummaryTable from "../../../components/summarytable/summarytable";
 import { summariseData } from "../functions/general";
+import Information from "../../../components/information/information";
 
 class PlaceholderGraph extends Component {
   render() {
@@ -66,7 +67,10 @@ class OneDModel extends Component {
     var { data } = this.state;
     return (
       <div className="onedmodel">
-        <h3>{Translations.watertemperature[language]} - 1D</h3>
+        <h3>
+          {Translations.watertemperature[language]} - 1D{" "}
+          <Information information={Translations.onedmodelText[language]} />
+        </h3>
         {parameters.map((p) => (
           <div className="clickable-box" key={p.key}>
             <div className="right">{p.model}</div>

@@ -1,10 +1,10 @@
 import React, { Component, createRef } from "react";
-import { NavLink } from "react-router-dom";
 import axios from "axios";
 import CONFIG from "../../../config.json";
-import { timeAgo } from "../functions/general";
+import { daysAgo } from "../functions/general";
 import Basemap from "../../../components/leaflet/basemap";
 import Information from "../../../components/information/information";
+import MapButton from "../../../components/mapbutton/mapbutton";
 
 class Satellite extends Component {
   state = {
@@ -57,6 +57,7 @@ class Satellite extends Component {
     }
     const { satellite, lake } = this.imageProperties(image.k);
     const url = `${CONFIG.sencast_bucket}/alplakes/cropped/${satellite}/${lake}/${image.k}`;
+    parameters.displayOptions["unit"] = parameters.unit;
     updates.push({
       event: "addLayer",
       type: "addTiff",
@@ -105,11 +106,10 @@ class Satellite extends Component {
           />
         </h3>
         <div className="map">
-          <NavLink to={`/map/${id}?layers=satellite_${parameters.parameter}`}>
-            <div className="click">
-              <div className="click-inner">Click for more.</div>
-            </div>
-          </NavLink>
+          <MapButton
+            link={`/map/${id}?layers=satellite_${parameters.parameter}`}
+            language={language}
+          />
           <Basemap
             updates={updates}
             updated={this.updated}
@@ -125,7 +125,7 @@ class Satellite extends Component {
                 {Math.round(image.p10 * 10) / 10} -{" "}
                 {Math.round(image.p90 * 10) / 10} {image.unit}
               </div>
-              <div className="time">{timeAgo(image.dt, language)} </div>
+              <div className="time">{daysAgo(image.dt, language)} </div>
             </div>
           )}
         </div>

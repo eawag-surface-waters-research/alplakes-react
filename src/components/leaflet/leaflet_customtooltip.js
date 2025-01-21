@@ -48,7 +48,7 @@ L.Map.include({
         let value = layer.getFeatureValue(e);
         if (value !== null) {
           value = Math.round(value * 10) / 10;
-          content = content + `<div>${value}${layer.options.unit}</div>`;
+          content = content + `<div>${value} ${layer.options.unit}</div>`;
         }
       }
     });

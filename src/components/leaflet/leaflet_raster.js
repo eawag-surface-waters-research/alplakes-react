@@ -1,4 +1,4 @@
-import L, { latLng } from "leaflet";
+import L from "leaflet";
 import { min, max } from "d3";
 
 L.Raster = L.Layer.extend({
