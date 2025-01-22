@@ -117,8 +117,8 @@ class WaterTemperature extends Component {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <div className="clickable-box highlight">
-                    <div className="right color">
+                  <div className="clickable-box">
+                    <div className="right">
                       {round(h.last_value, 1)} °C
                       <div className="time">
                         {timeAgo(h.last_time * 1000, language)}
@@ -127,9 +127,6 @@ class WaterTemperature extends Component {
                     <div className="title">{h.label}</div>
                     <div className="link">{h.source}</div>
                   </div>
-                  {index !== hightlights.length - 1 && (
-                    <div className="box-border" />
-                  )}
                 </a>
               ))}
             </div>

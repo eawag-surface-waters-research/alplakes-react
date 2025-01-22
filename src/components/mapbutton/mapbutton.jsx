@@ -8,7 +8,7 @@ class MapButton extends Component {
   render() {
     const { link, language } = this.props;
     return (
-      <NavLink to={link} className="map-button">
+      <NavLink to={link} className="lake-map-button">
         <div className="icon">
           <img src={layersettings} alt="Layer settings" />
         </div>

@@ -80,7 +80,7 @@ class Basemap extends Component {
         <div
           className="loading"
           id={`loading_${mapId}`}
-          style={{ opacity: 0, display: load ? "flex" : "none" }}
+          style={{ opacity: 0.6, display: load ? "flex" : "none" }}
         >
           <Loading />
         </div>

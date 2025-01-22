@@ -6,6 +6,7 @@
     display: table;
     table-layout: fixed;
     height: 60px;
+    color: var(--background-font-color);
 }
 
 .summary-table .inner {

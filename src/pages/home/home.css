@@ -568,38 +568,6 @@
   opacity: 0.7;
 }
 
-.main .home .content #map .temperature-label {
-  font-size: 14px;
-  transition: transform .33s 0s ease;
-}
-
-.main .home .content #map .temperature-label:hover {
-  transform: scale(1.1);
-}
-
-.main .home .content #map .temperature-label .name {
-  display: inline-block;
-  background-color: var(--box-color);
-  color: var(--box-font-color);
-  padding: 4px 8px;
-  box-shadow: var(--box-shadow);
-  border-radius: 8px 0 0 8px;
-}
-
-.main .home .content #map .temperature-label.empty .name {
-  border-radius: 8px;
-}
-
-.main .home .content #map .temperature-label .value {
-  display: inline-block;
-  background-color: var(--highlight-color);
-  color: white;
-  padding: 4px;
-  border-radius: 0 8px 8px 0;
-  font-weight: 600;
-  font-family: DM_Sans, Frutiger Neue LT Pro, Arial, sans-serif;
-}
-
 .main .home .content .home-map #map .day-selector {
   z-index: 999;
   position: absolute;

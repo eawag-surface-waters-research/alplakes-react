@@ -321,6 +321,40 @@ h4 {
   animation: pulseBorderColor 1s infinite alternate;
 }
 
+/** Map Tooltips **/
+
+.main .temperature-label {
+  font-size: 14px;
+  transition: transform .33s 0s ease;
+}
+
+.main .temperature-label:hover {
+  transform: scale(1.1);
+}
+
+.main .temperature-label .name {
+  display: inline-block;
+  background-color: var(--box-color);
+  color: var(--box-font-color);
+  padding: 4px 8px;
+  box-shadow: var(--box-shadow);
+  border-radius: 8px 0 0 8px;
+}
+
+.main .temperature-label.empty .name {
+  border-radius: 8px;
+}
+
+.main .temperature-label .value {
+  display: inline-block;
+  background-color: var(--highlight-color);
+  color: white;
+  padding: 4px;
+  border-radius: 0 8px 8px 0;
+  font-weight: 600;
+  font-family: DM_Sans, Frutiger Neue LT Pro, Arial, sans-serif;
+}
+
 @media screen and (max-width: 1000px) {
   h1 {
     font-size: 40px;

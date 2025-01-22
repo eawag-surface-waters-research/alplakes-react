@@ -67,6 +67,38 @@ const addRaster = async (map, layers, id, options, language) => {
     options.data,
     displayOptions
   ).addTo(map);
+  if ("labels" in options) {
+    const labelLayer = L.layerGroup([]).addTo(map);
+    for (let i = 0; i < options.labels.length; i++) {
+      let value = options.data[options.labels[i].i][options.labels[i].j];
+      let marker = L.marker(options.labels[i].latlng, {
+        icon: L.divIcon({
+          className: "leaflet-mouse-marker",
+          iconAnchor: [20, 20],
+          iconSize: [40, 40],
+        }),
+      }).addTo(labelLayer);
+      marker.bindTooltip(
+        `<div class="temperature-label"><div class="name">${
+          options.labels[i].name
+        }</div><div class="value">${
+          typeof value === "number"
+            ? String(Math.round(value * 10) / 10) + displayOptions["unit"]
+            : ""
+        }</div></div>`,
+        {
+          id: options.labels[i].name,
+          permanent: true,
+          direction: options.labels[i].direction
+            ? options.labels[i].direction
+            : "top",
+          offset: L.point(0, 0),
+          interactive: true,
+        }
+      );
+    }
+    layers[id + "_labels"] = labelLayer;
+  }
 };
 
 const addVectorField = async (map, layers, id, options, language) => {

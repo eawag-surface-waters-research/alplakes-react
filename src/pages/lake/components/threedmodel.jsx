@@ -1,16 +1,22 @@
 import React, { Component } from "react";
+import { NavLink } from "react-router-dom";
 import Translations from "../../../translations.json";
 import Basemap from "../../../components/leaflet/basemap";
 import Information from "../../../components/information/information";
 import MapButton from "../../../components/mapbutton/mapbutton";
 import { downloadModelMetadata, download3DMap } from "../functions/download";
-import { formatDateDDMMYYYY, formatTime } from "../functions/general";
+import {
+  formatDateDDMMYYYY,
+  formatTime,
+  processLabels,
+} from "../functions/general";
+import SummaryTable from "../../../components/summarytable/summarytable";
 
 class PlaceholderGraph extends Component {
   render() {
     var { title, model } = this.props;
     return (
-      <div className="clickable-box highlight">
+      <div className="clickable-box">
         <div className="title">{title}</div>
         <div className="right">{model}</div>
         <div>
@@ -33,6 +39,7 @@ class ThreeDModel extends Component {
     data: {},
     date: "",
     time: "",
+    labels: false,
     current: false,
     mapId: "map_" + Math.round(Math.random() * 100000),
   };
@@ -72,6 +79,11 @@ class ThreeDModel extends Component {
         new Date(data.temperature.start.getTime() + index * timestep)
       );
     }
+    const labels = processLabels(
+      parameters.labels,
+      data.geometry,
+      data.temperature
+    );
     updates.push({
       event: "addLayer",
       type: "addRaster",
@@ -79,6 +91,7 @@ class ThreeDModel extends Component {
       options: {
         data: data.temperature.data[index],
         geometry: data.geometry,
+        labels,
         displayOptions: {
           min: data.temperature.min,
           max: data.temperature.max,
@@ -100,10 +113,18 @@ class ThreeDModel extends Component {
         },
       },
     });
-    this.setState({ metadata, data, updates, date, time, current: true });
+    this.setState({
+      metadata,
+      data,
+      updates,
+      date,
+      time,
+      labels,
+      current: true,
+    });
   }
   render() {
-    var { updates, mapId, current, date, time } = this.state;
+    var { updates, mapId, current, date, time, labels } = this.state;
     var { dark, bounds, language, id, parameters } = this.props;
     return (
       <div className="threedmodel">
@@ -129,16 +150,35 @@ class ThreeDModel extends Component {
               dark={dark}
               mapId={mapId}
               bounds={bounds}
+              load={true}
             />
           </div>
           <div className="map-sidebar-right">
-            {parameters.labels.map((l) => (
-              <PlaceholderGraph
-                key={l.name}
-                title={l.name}
-                model={parameters.model}
-              />
-            ))}
+            {labels
+              ? labels.map((l) => (
+                  <NavLink to={`/map/${id}?layers=water_temperature&label=${l.name}`}>
+                    <div className="clickable-box" key={l.name}>
+                      <div className="right">{parameters.model}</div>
+                      <div className="title">{l.name}</div>
+                      <SummaryTable
+                        start={l.start}
+                        end={l.end}
+                        dt={l.time}
+                        value={l.values}
+                        summary={l.summary}
+                        unit={"°C"}
+                        language={language}
+                      />
+                    </div>
+                  </NavLink>
+                ))
+              : parameters.labels.map((l) => (
+                  <PlaceholderGraph
+                    key={l.name}
+                    title={l.name}
+                    model={parameters.model}
+                  />
+                ))}
           </div>
         </div>
       </div>

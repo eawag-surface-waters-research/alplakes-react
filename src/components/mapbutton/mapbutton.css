@@ -1,11 +1,11 @@
-.map-button {
+.lake-map-button {
     position: absolute;
     z-index: 999;
     top: calc(var(--padding) / 4);
     right: calc(var(--padding) / 4);
 }
 
-.map-button .text {
+.lake-map-button .text {
     background-color: var(--box-color);
     border-radius: 12px 0 0 12px;
     position: absolute;
@@ -17,7 +17,7 @@
     pointer-events: none;
 }
 
-.map-button .text-hover {
+.lake-map-button .text-hover {
     opacity: 0;
     background-color: var(--box-color);
     border-radius: 12px 0 0 12px;
@@ -31,22 +31,22 @@
     pointer-events: none;
 }
 
-.map-button .icon {
+.lake-map-button .icon {
     background-color: var(--box-color);
     border-radius: 12px;
     padding: 8px 6px 1px 8px;
 }
 
-.map-button .icon img {
+.lake-map-button .icon img {
     height: 34px;
     transition: all 0.3s ease;
 }
 
-.map-button .icon:hover img {
+.lake-map-button .icon:hover img {
     transform: scale(1.1);
 }
 
-.map-button .icon:hover~.text-hover {
+.lake-map-button .icon:hover~.text-hover {
     opacity: 1;
 }
 

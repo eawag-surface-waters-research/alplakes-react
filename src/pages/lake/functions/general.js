@@ -144,3 +144,49 @@ export const timeAgo = (time, language) => {
 export const round = (value, decimals) => {
   return Math.round(value * 10 ** decimals) / 10 ** decimals;
 };
+
+export const processLabels = (labels, geometry, data) => {
+  var points = [];
+  var width = geometry[0].length / 2;
+  for (let i = 0; i < geometry.length; i++) {
+    for (let j = 0; j < width; j++) {
+      if (!isNaN(geometry[i][j])) {
+        points.push({
+          lat: geometry[i][j],
+          lng: geometry[i][j + width],
+          i,
+          j,
+        });
+      }
+    }
+  }
+  labels.forEach((l) => {
+    let index = getIndexAtPoint(l.latlng[0], l.latlng[1], points);
+    let values = [];
+    for (let x = 0; x < data.time.length; x++) {
+      values.push(data.data[x][index[0]][index[1]]);
+    }
+    let { summary, start, end } = summariseData(data.time, values);
+    l.values = values;
+    l.time = data.time;
+    l.summary = summary;
+    l.start = start;
+    l.end = end;
+    l.i = index[0];
+    l.j = index[1];
+  });
+  return labels;
+};
+
+const getIndexAtPoint = (lat, lng, points) => {
+  let closestPoint = null;
+  let minDistance = Infinity;
+  for (const point of points) {
+    let distance = (lat - point.lat) ** 2 + (lng - point.lng) ** 2;
+    if (distance < minDistance) {
+      minDistance = distance;
+      closestPoint = point;
+    }
+  }
+  return [closestPoint.i, closestPoint.j];
+};

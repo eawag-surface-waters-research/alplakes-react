@@ -71,12 +71,20 @@
     width: 400px;
     min-height: 100px;
     max-height: 500px;
-    background-color: var(--box-color);
-    border-radius: 12px;
-    border: 1px solid var(--border-color);
+    overflow-y: auto;
     box-sizing: border-box;
     vertical-align: top;
+    -ms-overflow-style: none; /* For Internet Explorer and Edge */
+    scrollbar-width: none; /* For Firefox */
 }
+
+.main .lake .map-sidebar .map-sidebar-right::-webkit-scrollbar {
+    display: none; /* For Chrome, Safari, and Opera */
+  }
+
+  .main .lake .map-sidebar .map-sidebar-right .clickable-box {
+    width: 100%;
+  }
 
 .main .lake .clickable-box {
     background-color: var(--box-color);
@@ -90,6 +98,7 @@
     border: 1px solid var(--box-color);
     transition: all .33s 0s ease;
     cursor: pointer;
+    box-sizing: border-box;
 }
 
 .main .lake .clickable-box:hover {
@@ -102,7 +111,7 @@
     font-weight: 500;
     color: var(--background-font-color);
     padding: 20px 0 5px 25px;
-    max-width: 60%;
+    max-width: 50%;
 }
 
 .main .lake .clickable-box .subtitle {
@@ -135,25 +144,7 @@
 .main .lake .clickable-box .right .time {
     color: var(--background-suble-font-color);
     font-size: 16px;
-}
-
-.main .lake .clickable-box.highlight {
-    border: 1px solid transparent;
-    border-radius: 0;
-    width: 100%;
-    background-color: transparent;
-    box-shadow: none;
-    margin-bottom: -1px;
-}
-
-.main .lake .clickable-box.highlight:hover {
-    border: 1px solid transparent;
-}
-
-.main .lake .clickable-box.highlight .right.color {
-    color: var(--highlight-color);
-    font-size: 25px;
-    font-family: DM_Sans, Frutiger Neue LT Pro, Arial, sans-serif;
+    margin-top: 6px;
 }
 
 .main .lake .loading {
@@ -172,12 +163,12 @@
     display: none;
 }
 
-.main .lake .map-sidebar .map-sidebar-left .map-button {
+.main .lake .map-sidebar .map-sidebar-left .lake-map-button {
     opacity: 0;
     transition: all 0.8s ease;
 }
 
-.main .lake .map-sidebar .map-sidebar-left:hover .map-button {
+.main .lake .map-sidebar .map-sidebar-left:hover .lake-map-button {
     opacity: 1;
 }
 
@@ -195,8 +186,16 @@
     border-radius: 8px;
 }
 
-.main .lake .forecast .threedmodel .map-sidebar .map-sidebar-right .skeleton-data {
-    border-radius: 0;
+.main .lake .forecast .threedmodel .map-sidebar .map-sidebar-right .clickable-box .title {
+    margin-bottom: 8px;
+}
+
+.main .lake .forecast .threedmodel .map-sidebar .map-sidebar-right .clickable-box .summary-table .inner .ave {
+    font-size: 18px;
+}
+
+.main .lake .forecast .threedmodel .map-sidebar .map-sidebar-right .clickable-box .summary-table .inner .ave .unit.full {
+    font-size: 18px;
 }
 
 
@@ -304,12 +303,12 @@
     position: relative;
 }
 
-.main .lake .satellite .satellite-maps .satellite-inner .map .map-button {
+.main .lake .satellite .satellite-maps .satellite-inner .map .lake-map-button {
     opacity: 0;
     transition: all 0.8s ease;
 }
 
-.main .lake .satellite .satellite-maps .satellite-inner .map:hover .map-button {
+.main .lake .satellite .satellite-maps .satellite-inner .map:hover .lake-map-button {
     opacity: 1;
 }
 
@@ -336,10 +335,10 @@
 
 /** Water Temperature **/
 
-.main .lake .measurements .water-temperature .map-sidebar .map-sidebar-right .box-border {
-    width: calc(100% - 50px);
-    border-bottom: 1px solid var(--border-color);
-    margin-left: 25px;
+.main .lake .water-temperature .clickable-box .right {
+    color: var(--highlight-color);
+    font-size: 20px;
+    font-family: DM_Sans, Frutiger Neue LT Pro, Arial, sans-serif;
 }
 
 /** Water Level **/

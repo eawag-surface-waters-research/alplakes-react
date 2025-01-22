@@ -141,6 +141,7 @@ const process3dData = (data, parameter, height) => {
       max: d3.max(bounds.max),
       start: d3.min(timeArr),
       end: d3.max(timeArr),
+      time: timeArr,
       data: dataArr,
     };
   }
