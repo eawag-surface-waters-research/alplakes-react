@@ -838,7 +838,7 @@ th:not(:last-child) {
 
 .leaflet-tooltip.current_temperature_tooltip .time {
   display: inline-block;
-  background-color: var(--background-color);
+  background-color: var(--box-color);
   color: var(--box-font-color);
   padding: 2px 8px;
   border-radius: 8px 0 0 8px;

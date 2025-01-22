@@ -118,7 +118,7 @@ class WaterTemperature extends Component {
                   rel="noopener noreferrer"
                 >
                   <div className="clickable-box highlight">
-                    <div className="right">
+                    <div className="right color">
                       {round(h.last_value, 1)} °C
                       <div className="time">
                         {timeAgo(h.last_time * 1000, language)}

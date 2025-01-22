@@ -8,10 +8,11 @@ import { formatDateDDMMYYYY, formatTime } from "../functions/general";
 
 class PlaceholderGraph extends Component {
   render() {
-    var { title } = this.props;
+    var { title, model } = this.props;
     return (
       <div className="clickable-box highlight">
         <div className="title">{title}</div>
+        <div className="right">{model}</div>
         <div>
           <div className="skeleton-block pulse-border" />
           <div className="skeleton-block pulse-border" />
@@ -132,7 +133,11 @@ class ThreeDModel extends Component {
           </div>
           <div className="map-sidebar-right">
             {parameters.labels.map((l) => (
-              <PlaceholderGraph key={l.name} title={l.name} />
+              <PlaceholderGraph
+                key={l.name}
+                title={l.name}
+                model={parameters.model}
+              />
             ))}
           </div>
         </div>

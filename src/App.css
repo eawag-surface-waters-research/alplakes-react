@@ -173,13 +173,23 @@ h4 {
 }
 
 .tooltip-hover {
-  background-color: var(--background-color);
-  border-bottom: 2px solid var(--highlight-color);
-  border-radius: 12px;
+  background-color: var(--box-color);
+  border-radius: 8px;
   padding: 5px 8px;
   box-shadow: var(--box-shadow);
   text-align: center;
   font-size: 12px;
+}
+
+.tooltip-hover::after {
+  content: '';
+  position: absolute;
+  bottom: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 10px;
+  border-style: solid;
+  border-color: var(--box-color) transparent transparent transparent;
 }
 
 .main .tile-class.leaflet-tile {

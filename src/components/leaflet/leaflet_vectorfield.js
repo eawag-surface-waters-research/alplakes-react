@@ -4,10 +4,13 @@ import { min, max } from "d3";
 L.VectorField = (L.Layer ? L.Layer : L.Class).extend({
   options: {
     vectorArrowColor: false,
+    tooltipSensitivity: 0.00001,
+    decimal: 3,
     arrowsColor: "black",
     size: 15,
     min: "null",
     max: "null",
+    unit: "m/s",
     palette: [
       { color: [68, 1, 84], point: 0 },
       { color: [59, 82, 139], point: 0.25 },
@@ -22,6 +25,7 @@ L.VectorField = (L.Layer ? L.Layer : L.Class).extend({
     this._dataHeight = geometry.length;
     this._geometry = geometry;
     this._data = data;
+    this._points = this._pointsList();
     if (isNaN(this.options.min))
       this.options.min = min(data.flat().map((d) => Math.abs(d)));
     if (isNaN(this.options.max))
@@ -113,6 +117,22 @@ L.VectorField = (L.Layer ? L.Layer : L.Class).extend({
     this._canvas.style.zIndex = this.options.zIndex + 100;
     this._data = data;
     this._reset();
+  },
+  _pointsList: function () {
+    var points = [];
+    for (let i = 0; i < this._dataHeight; i++) {
+      for (let j = 0; j < this._dataWidth; j++) {
+        if (!isNaN(this._geometry[i][j])) {
+          points.push({
+            lat: this._geometry[i][j],
+            lng: this._geometry[i][j + this._dataWidth],
+            i,
+            j,
+          });
+        }
+      }
+    }
+    return points;
   },
   _firstPixel: function () {
     for (var i = 0; i < this._dataWidth - 1; i++) {
@@ -352,11 +372,29 @@ L.VectorField = (L.Layer ? L.Layer : L.Class).extend({
         L.DomUtil.getTranslateString(offset) + " scale(" + scale + ")";
     }
   },
-
+  _round: function (value, decimals) {
+    return Math.round(value * 10 ** decimals) / 10 ** decimals;
+  },
+  _getIndexAtPoint(lng, lat) {
+    let closestPoint = null;
+    let minDistance = Infinity;
+    for (const point of this._points) {
+      let distance = (lat - point.lat) ** 2 + (lng - point.lng) ** 2;
+      if (distance < minDistance) {
+        minDistance = distance;
+        closestPoint = point;
+      }
+    }
+    if (closestPoint !== null && minDistance < this.options.tooltipSensitivity) {
+      return [closestPoint.i, closestPoint.j]
+    } else {
+      return null
+    }
+  },
   _onMousemove: function (t) {
     try {
       var e = this._queryValue(t);
-      this.fire("click", e);
+      this.fire("mousemove", e);
     } catch (e) {
       console.error("Leaflet vectorfield mousemove event failed.", e);
     }
@@ -372,7 +410,34 @@ L.VectorField = (L.Layer ? L.Layer : L.Class).extend({
   },
 
   _queryValue: function (click) {
+    let index = this._getIndexAtPoint(click.latlng.lng, click.latlng.lat);
+    if (index === null) {
+      click["value"] = { u: null, v: null };
+    } else {
+      click["value"] = {
+        u: this._data[index[0]][index[1]],
+        v: this._data[index[0]][index[1] + this._dataWidth],
+      };
+    }
     return click;
+  },
+  getFeatureValue: function (e) {
+    let index = this._getIndexAtPoint(e.latlng.lng, e.latlng.lat);
+    if (index === null) {
+      return null;
+    } else {
+      var u = this._data[index[0]][index[1]];
+      var v = this._data[index[0]][index[1] + this._dataWidth];
+      if (isNaN(u) || isNaN(v)) {
+        return `0${this.options.unit}`;
+      }
+      var magnitude = Math.abs(Math.sqrt(Math.pow(u, 2) + Math.pow(v, 2)));
+      let deg = Math.round(
+        (Math.atan2(u / magnitude, v / magnitude) * 180) / Math.PI
+      );
+      if (deg < 0) deg = 360 + deg;
+      return `${this._round(magnitude, this.options.decimal)}${this.options.unit} ${deg}°`;
+    }
   },
 });
 
