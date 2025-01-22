@@ -4,7 +4,53 @@
     position: fixed;
     top: calc(var(--header-height) + var(--padding) / 2);
     left: calc(var(--padding) / 2);
-    border-radius: 12px;
+    border-radius: 20px;
     overflow: hidden;
-    border: 1px solid var(--border-color);
+}
+
+.main .map .layer-map .back-button {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    height: 60px;
+    width: 60px;
+    background-color: var(--box-color);
+    z-index: 999;
+    text-align: center;
+    border-radius: 50%;
+}
+
+.main .map .layer-map .back-button img {
+    height: 22px;
+    margin-top: 19px;
+    padding-right: 2px;
+    transition: all .1s 0s ease;
+}
+
+.main .map .layer-map .back-button:hover img {
+    transform: scale(1.1);
+}
+
+.main .map .layer-map .settings-button {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    height: 60px;
+    width: 60px;
+    background-color: var(--box-color);
+    z-index: 999;
+    text-align: center;
+    border-radius: 50%;
+    border: 1px solid transparent;
+    cursor: pointer;
+}
+
+.main .map .layer-map .settings-button img {
+    height: 30px;
+    margin-top: 15px;
+    transition: all .1s 0s ease;
+}
+
+.main .map .layer-map .settings-button:hover img {
+    transform: scale(1.1);
 }

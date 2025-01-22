@@ -82,7 +82,8 @@ class ThreeDModel extends Component {
     const labels = processLabels(
       parameters.labels,
       data.geometry,
-      data.temperature
+      data.temperature,
+      parameters.key
     );
     updates.push({
       event: "addLayer",
@@ -156,8 +157,8 @@ class ThreeDModel extends Component {
           <div className="map-sidebar-right">
             {labels
               ? labels.map((l) => (
-                  <NavLink to={`/map/${id}?layers=water_temperature&label=${l.name}`}>
-                    <div className="clickable-box" key={l.name}>
+                  <NavLink to={l.url} key={l.name}>
+                    <div className="clickable-box">
                       <div className="right">{parameters.model}</div>
                       <div className="title">{l.name}</div>
                       <SummaryTable

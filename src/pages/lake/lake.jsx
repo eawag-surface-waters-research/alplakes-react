@@ -96,16 +96,18 @@ class Lake extends Component {
           <NotFound id={id} text={true} />
         ) : (
           <div className="lake">
-            <div className="header">
-              <h1>{title}</h1>
-              <div
-                className="properties-link"
-                onClick={() => this.scrollToSection(this.divRef)}
-              >
-                {Translations.lakeProperties[language]}
-                <img src={sortIcon} alt="Down" />
+            {"key" in metadata && (
+              <div className="header">
+                <h1>{title}</h1>
+                <div
+                  className="properties-link"
+                  onClick={() => this.scrollToSection(this.divRef)}
+                >
+                  {Translations.lakeProperties[language]}
+                  <img src={sortIcon} alt="Down" />
+                </div>
               </div>
-            </div>
+            )}
             {"forecast" in metadata && (
               <div className="section forecast">
                 <h2>{Translations.forecast[language]}</h2>

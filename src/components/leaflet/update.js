@@ -79,13 +79,15 @@ const addRaster = async (map, layers, id, options, language) => {
         }),
       }).addTo(labelLayer);
       marker.bindTooltip(
-        `<div class="temperature-label"><div class="name">${
+        `<a href=${
+          options.labels[i].url
+        }><div class="temperature-label"><div class="name">${
           options.labels[i].name
         }</div><div class="value">${
           typeof value === "number"
             ? String(Math.round(value * 10) / 10) + displayOptions["unit"]
             : ""
-        }</div></div>`,
+        }</div></div></a>`,
         {
           id: options.labels[i].name,
           permanent: true,

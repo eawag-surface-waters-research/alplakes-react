@@ -145,7 +145,7 @@ export const round = (value, decimals) => {
   return Math.round(value * 10 ** decimals) / 10 ** decimals;
 };
 
-export const processLabels = (labels, geometry, data) => {
+export const processLabels = (labels, geometry, data, lake) => {
   var points = [];
   var width = geometry[0].length / 2;
   for (let i = 0; i < geometry.length; i++) {
@@ -174,6 +174,9 @@ export const processLabels = (labels, geometry, data) => {
     l.end = end;
     l.i = index[0];
     l.j = index[1];
+    l.url = `/map/${lake}?layers=water_temperature&label=${l.name
+      .toLowerCase()
+      .replace(" ", "_")}`;
   });
   return labels;
 };

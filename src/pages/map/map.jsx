@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { NavLink } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import axios from "axios";
 import NavBar from "../../components/navbar/navbar";
@@ -7,6 +8,8 @@ import CONFIG from "../../config.json";
 import Translations from "../../translations.json";
 import "./map.css";
 import Basemap from "../../components/leaflet/basemap";
+import back from "../../img/back.png";
+import settings from "../../img/settings.png";
 
 class Map extends Component {
   state = {
@@ -44,7 +47,7 @@ class Map extends Component {
     var title = "";
     var documentTitle = "Alplakes";
     if ("name" in metadata) {
-      documentTitle = metadata.name[language] + " Map | Alplakes";
+      documentTitle = metadata.name[language] + " | Alplakes";
       title = metadata.name[language];
     }
     return (
@@ -55,6 +58,14 @@ class Map extends Component {
         </Helmet>
         <NavBar {...this.props} relative={true} />
         <div className="layer-map">
+          <NavLink to={`/${id}`}>
+            <div className="back-button">
+              <img src={back} alt="Back" />
+            </div>
+          </NavLink>
+          <div className="settings-button">
+              <img src={settings} alt="Settings" />
+            </div>
           <Basemap
             updates={updates}
             updated={this.updated}
