@@ -76,6 +76,7 @@
     vertical-align: top;
     -ms-overflow-style: none; /* For Internet Explorer and Edge */
     scrollbar-width: none; /* For Firefox */
+    padding: 5px;
 }
 
 .main .lake .map-sidebar .map-sidebar-right::-webkit-scrollbar {

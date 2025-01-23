@@ -152,6 +152,7 @@ class ThreeDModel extends Component {
               mapId={mapId}
               bounds={bounds}
               load={true}
+              language={language}
             />
           </div>
           <div className="map-sidebar-right">

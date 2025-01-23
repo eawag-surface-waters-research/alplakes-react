@@ -1,3 +1,7 @@
+.slider-container {
+    position: relative;
+}
+
 .slider-container .slider-component {
     width: 100%;
     cursor: pointer;

@@ -1,0 +1,54 @@
+.control-bar {
+    position: absolute;
+    bottom: 8px;
+    left: 12px;
+    z-index: 999;
+    width: calc(100% - 24px);
+}
+
+.control-bar .play-button {
+    display: inline-block;
+    position: relative;
+    padding: 17.5px 15px 17.5px 20px;
+    background-color: var(--box-color);
+    border-radius: 50%;
+}
+
+.playpause {
+    label {
+        display: block;
+        box-sizing: border-box;
+        width: 0;
+        height: 30px;
+        border-color: transparent transparent transparent var(--highlight-color);
+        transition: 100ms all ease;
+        cursor: pointer;
+        border-style: double;
+        border-width: 0px 0 0px 25px;
+        padding-right: 5px;
+    }
+
+    input[type="checkbox"] {
+        display: none;
+
+        &:checked+label {
+            border-style: solid;
+            border-width: 15px 0 15px 30px;
+            padding-right: 0;
+        }
+    }
+}
+
+.control-bar .progress-bar {
+    display: inline-block;
+    position: relative;
+    height: 35px;
+    background-color: var(--box-color);
+    margin: 15px 0;
+    vertical-align: top;
+    margin-left: -10px;
+    padding: 1px 20px;
+    width: calc(100% - 65px);
+    border-radius: 0 12px 12px 0;
+    box-sizing: border-box;
+}
