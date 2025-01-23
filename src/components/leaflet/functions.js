@@ -1080,7 +1080,11 @@ const componentsFromFilename = (filename) => {
     satellite = filename.includes("_L9") ? "L9" : "L8";
   } else if (filename.includes("_S2")) {
     group = "sentinel2";
-    satellite = filename.includes("_S2A") ? "S2A" : "S2B";
+    satellite = filename.includes("_S2A")
+      ? "S2A"
+      : filename.includes("_S2B")
+      ? "S2B"
+      : "S2C";
   } else if (filename.includes("_S3")) {
     group = "sentinel3";
     satellite = filename.includes("_S3A") ? "S3A" : "S3B";
