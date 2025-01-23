@@ -23,6 +23,8 @@
     border-radius: 6px;
     padding: 5px 12px;
     color: white;
+    white-space: nowrap;
+    min-width: 150px;
 }
 
 .slider-container .slider-label-arrow {

@@ -23,7 +23,7 @@ class Slider extends Component {
     arrow.style.left =
       Math.min(
         Math.max(4, offset * e.target.clientWidth - 8),
-        e.target.clientWidth - 24
+        e.target.clientWidth - 26
       ) + "px";
     document.getElementById("input-range-hover").style.width =
       Math.min(
