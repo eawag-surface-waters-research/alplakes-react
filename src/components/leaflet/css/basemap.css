@@ -12,6 +12,8 @@
     padding: 17.5px 15px 17.5px 20px;
     background-color: var(--box-color);
     border-radius: 50%;
+    width: 65px;
+    box-sizing: border-box;
 }
 
 .playpause {

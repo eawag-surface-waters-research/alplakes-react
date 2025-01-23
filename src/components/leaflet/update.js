@@ -20,7 +20,14 @@ import "./leaflet_polylinedraw";
 import "./leaflet_vectorfield";
 import "./leaflet_markerdraw";
 
-export const update = async (map, layers, updates, language) => {
+export const update = async (
+  map,
+  layers,
+  updates,
+  language,
+  addControls,
+  removeControls
+) => {
   const functions = {
     addLayer: {
       addTiff: addTiff,
@@ -43,6 +50,10 @@ export const update = async (map, layers, updates, language) => {
         updates[i].options,
         language
       );
+    } else if (updates[i].event === "addPlay") {
+      addPlay(updates[i].options, addControls);
+    } else if (updates[i].event === "removePlay") {
+      removeControls();
     } else {
       console.error(
         `Event ${updates[i].event} has no function ${updates[i].type}`
@@ -213,5 +224,34 @@ const addGeoJson = async (map, layers, id, options, language) => {
         Translate.viewdataset[language]
       }</a>`
     );
+  }
+};
+
+const addPlay = (options, addControls) => {
+  addControls(options.period, options.datetime, options.timestep, options.data);
+};
+
+export const setPlayDatetime = (layers, datetime, period, data) => {
+  for (let key in data) {
+    const timestep = (period[1] - period[0]) / data[key].length;
+    var i0 = Math.max(
+      Math.min(
+        Math.floor((datetime - period[0]) / timestep),
+        data[key].length - 1
+      ),
+      0
+    );
+    if (key.includes("raster_")) {
+      if (i0 === data[key].length - 1) {
+        i0 = i0 - 1;
+      }
+      const i1 = i0 + 1;
+      const beforeValue = period[0] + i0 * timestep;
+      const afterValue = beforeValue + timestep;
+      const interpolate = (datetime - beforeValue) / (afterValue - beforeValue);
+      layers[key].update([data[key][i0], data[key][i1]], { interpolate });
+    } else {
+      layers[key].update(data[key][i0], {});
+    }
   }
 };

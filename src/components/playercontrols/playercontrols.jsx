@@ -139,6 +139,7 @@ class PlayerControls extends Component {
     } = this.props;
     var { settings, settingsId } = this.state;
     var months = Translate.axis[language].months;
+    console.log(period, timestep, datetime)
     return (
       <React.Fragment>
         <div className="gradient" />

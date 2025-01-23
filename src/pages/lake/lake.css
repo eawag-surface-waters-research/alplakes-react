@@ -185,6 +185,8 @@
     color: var(--background-font-color);
     text-align: center;
     border-radius: 8px;
+    width: 80px;
+    box-sizing: border-box;
 }
 
 .main .lake .forecast .threedmodel .map-sidebar .map-sidebar-right .clickable-box .title {

@@ -92,7 +92,9 @@ L.Raster = L.Layer.extend({
     }
   },
   update: function (data, options) {
-    this._data = data;
+    if (data) {
+      this._data = data;
+    }
     L.Util.setOptions(this, options);
     this._canvas.style.opacity = this.options.opacity;
     this._canvas.style.zIndex = this.options.zIndex + 100;
@@ -356,7 +358,9 @@ L.Raster = L.Layer.extend({
     try {
       var { value } = this._getValue(t.latlng);
       if (value !== null) {
-        return `${this._round(value, this.options.decimal)} ${this.options.unit}`;
+        return `${this._round(value, this.options.decimal)} ${
+          this.options.unit
+        }`;
       } else {
         return null;
       }

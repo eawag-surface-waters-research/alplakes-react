@@ -57,9 +57,26 @@ export const formatDateDDMMYYYY = (d) => {
   return `${day}.${month}.${year}`;
 };
 
+export const formatReadableDate = (d, language) => {
+  const inputDate = new Date(d);
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const inputDateStripped = new Date(inputDate.setHours(0, 0, 0, 0));
+  if (inputDateStripped.getTime() === today.getTime()) {
+    return Translations.today[language];
+  } else if (inputDateStripped.getTime() > today.getTime()) {
+    return Translations.axis[language].shortDays[inputDate.getDay()];
+  } else {
+    return `${String(inputDate.getDate()).padStart(2, "0")}.${String(
+      inputDate.getMonth() + 1
+    ).padStart(2, "0")}.${String(inputDate.getFullYear()).slice(-2)}`;
+  }
+};
+
 export const formatTime = (d) => {
-  const hours = String(d.getHours()).padStart(2, "0");
-  const minutes = String(d.getMinutes()).padStart(2, "0");
+  const date = new Date(d);
+  const hours = String(date.getHours()).padStart(2, "0");
+  const minutes = String(date.getMinutes()).padStart(2, "0");
   return `${hours}:${minutes}`;
 };
 

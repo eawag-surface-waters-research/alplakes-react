@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import L from "leaflet";
 import CONFIG from "../../config.json";
-import { update } from "./update";
+import { update, setPlayDatetime } from "./update";
 import "./leaflet_customtooltip";
 import "./leaflet_tileclass";
 import "./css/leaflet.css";
@@ -11,19 +11,84 @@ import Slider from "../sliders/slider";
 
 class Basemap extends Component {
   state = {
-    controls: true,
+    controls: false,
     play: false,
-    period: [new Date(2025, 1, 12), new Date(2025, 1, 20)],
-    datetime: new Date(2025, 1, 15),
-    timestep: 3600000,
+    period: false,
+    datetime: false,
+    timestep: false,
+    data: false,
+    duration: 8000,
   };
   togglePlay = () => {
-    this.setState({ play: !this.state.play });
+    const play = !this.state.play;
+    if (play) {
+      var { datetime, timestep, period, data, duration } = this.state;
+      const animate = (timestep) => {
+        if (datetime >= period[1]) {
+          datetime = period[0];
+        } else {
+          datetime = datetime + timestep;
+        }
+        setPlayDatetime(this.layers, datetime, period, data);
+        if (this.props.setDatetime) {
+          this.props.setDatetime(datetime);
+        }
+        this.setState({ datetime });
+      };
+      const scheduleNextIteration = (timestep) => {
+        let targetFrame = duration / ((period[1] - period[0]) / timestep);
+        let start = performance.now();
+        animate(timestep);
+        let frame = performance.now() - start;
+        let timeout = 0;
+        if (frame >= targetFrame) {
+          timestep = timestep * 2;
+        } else {
+          timeout = targetFrame - frame;
+        }
+        if (play) {
+          this.intervalId = setTimeout(
+            () => scheduleNextIteration(timestep),
+            timeout
+          );
+        }
+      };
+      scheduleNextIteration(timestep);
+    } else {
+      clearTimeout(this.intervalId);
+    }
+
+    this.setState({ play });
   };
   setDatetime = (event) => {
-    console.log("HEre")
-    console.log(event.target)
-    this.setState({ datetime: event.target.value });
+    try {
+      clearInterval(this.intervalId);
+    } catch (e) {}
+    const datetime = parseInt(event.target.getAttribute("alt"));
+    const { period, data } = this.state;
+    setPlayDatetime(this.layers, datetime, period, data);
+    if (this.props.setDatetime) this.props.setDatetime(datetime, false);
+    this.setState({ datetime, play: false });
+  };
+  addControls = (period, datetime, timestep, data) => {
+    this.setState({
+      controls: true,
+      play: false,
+      period,
+      datetime,
+      timestep,
+      data,
+    });
+  };
+  removeControls = () => {
+    this.setState({
+      controls: false,
+      play: false,
+      period: false,
+      datetime: false,
+      timestep: false,
+      data: false,
+    });
   };
   async componentDidUpdate(prevProps) {
     const { dark, updates, updated, mapId, language } = this.props;
@@ -32,7 +97,14 @@ class Basemap extends Component {
       const loading_div = document.getElementById(`loading_${mapId}`);
       loading_div.style.opacity = 0.6;
       updated();
-      await update(this.map, this.layers, updates, language);
+      await update(
+        this.map,
+        this.layers,
+        updates,
+        language,
+        this.addControls,
+        this.removeControls
+      );
       loading_div.style.opacity = 0;
     }
     if (prevProps.basemap !== basemap || prevProps.dark !== dark) {
@@ -105,7 +177,7 @@ class Basemap extends Component {
         {controls && (
           <div className="control-bar">
             <div className="play-button">
-              <div className="playpause">
+              <div className="playpause" id="playing">
                 <input
                   type="checkbox"
                   value="None"

@@ -6,7 +6,7 @@ import Information from "../../../components/information/information";
 import MapButton from "../../../components/mapbutton/mapbutton";
 import { downloadModelMetadata, download3DMap } from "../functions/download";
 import {
-  formatDateDDMMYYYY,
+  formatReadableDate,
   formatTime,
   processLabels,
 } from "../functions/general";
@@ -37,15 +37,17 @@ class ThreeDModel extends Component {
     updates: [],
     metadata: {},
     data: {},
-    date: "",
-    time: "",
+    datetime: false,
     labels: false,
-    current: false,
     mapId: "map_" + Math.round(Math.random() * 100000),
   };
 
   updated = () => {
     this.setState({ updates: [] });
+  };
+
+  setDatetime = (datetime) => {
+    this.setState({ datetime });
   };
 
   async componentDidMount() {
@@ -67,17 +69,13 @@ class ThreeDModel extends Component {
     );
     const now = new Date();
     var index = data.temperature.data.length - 1;
-    var date = formatDateDDMMYYYY(data.temperature.end);
-    var time = formatTime(data.temperature.end);
+    var datetime = data.temperature.end;
+    const timestep =
+      (data.temperature.end - data.temperature.start) /
+      (data.temperature.data.length - 1);
     if (data.temperature.end > now) {
-      const timestep =
-        (data.temperature.end - data.temperature.start) /
-        (data.temperature.data.length - 1);
       index = Math.ceil((now - data.temperature.start) / timestep);
-      date = false;
-      time = formatTime(
-        new Date(data.temperature.start.getTime() + index * timestep)
-      );
+      datetime = new Date(data.temperature.start.getTime() + index * timestep);
     }
     const labels = processLabels(
       parameters.labels,
@@ -114,18 +112,31 @@ class ThreeDModel extends Component {
         },
       },
     });
+    updates.push({
+      event: "addPlay",
+      options: {
+        data: {
+          raster_temperature: data.temperature.data,
+          vector_currents: data.velocity.data,
+        },
+        period: [
+          data.temperature.start.getTime(),
+          data.temperature.end.getTime(),
+        ],
+        datetime: datetime.getTime(),
+        timestep: 1800000,
+      },
+    });
     this.setState({
       metadata,
       data,
       updates,
-      date,
-      time,
+      datetime,
       labels,
-      current: true,
     });
   }
   render() {
-    var { updates, mapId, current, date, time, labels } = this.state;
+    var { updates, mapId, datetime, labels } = this.state;
     var { dark, bounds, language, id, parameters } = this.props;
     return (
       <div className="threedmodel">
@@ -135,10 +146,10 @@ class ThreeDModel extends Component {
         </h3>
         <div className="map-sidebar">
           <div className="map-sidebar-left">
-            {current && (
+            {datetime && (
               <div className="current">
-                <div>{date ? date : Translations.today[language]}</div>
-                <div>{time}</div>
+                <div>{formatReadableDate(datetime, language)}</div>
+                <div>{formatTime(datetime)}</div>
               </div>
             )}
             <MapButton
@@ -153,6 +164,7 @@ class ThreeDModel extends Component {
               bounds={bounds}
               load={true}
               language={language}
+              setDatetime={this.setDatetime}
             />
           </div>
           <div className="map-sidebar-right">
