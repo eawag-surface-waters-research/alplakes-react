@@ -74,18 +74,21 @@
     overflow-y: auto;
     box-sizing: border-box;
     vertical-align: top;
-    -ms-overflow-style: none; /* For Internet Explorer and Edge */
-    scrollbar-width: none; /* For Firefox */
+    -ms-overflow-style: none;
+    /* For Internet Explorer and Edge */
+    scrollbar-width: none;
+    /* For Firefox */
     padding: 5px;
 }
 
 .main .lake .map-sidebar .map-sidebar-right::-webkit-scrollbar {
-    display: none; /* For Chrome, Safari, and Opera */
-  }
+    display: none;
+    /* For Chrome, Safari, and Opera */
+}
 
-  .main .lake .map-sidebar .map-sidebar-right .clickable-box {
+.main .lake .map-sidebar .map-sidebar-right .clickable-box {
     width: 100%;
-  }
+}
 
 .main .lake .clickable-box {
     background-color: var(--box-color);
@@ -185,7 +188,7 @@
     color: var(--background-font-color);
     text-align: center;
     border-radius: 8px;
-    width: 80px;
+    min-width: 80px;
     box-sizing: border-box;
 }
 
@@ -358,4 +361,51 @@
     color: var(--highlight-color);
     font-size: 20px;
     font-family: DM_Sans, Frutiger Neue LT Pro, Arial, sans-serif;
+}
+
+/** Mobile **/
+
+@media screen and (max-width: 850px) {
+    .main .lake .map-sidebar .map-sidebar-left {
+        width: 100%;
+        height: 350px;
+    }
+
+    .main .lake .map-sidebar .map-sidebar-right {
+        width: 100%;
+        max-height: unset;
+    }
+
+    .main .lake .clickable-box {
+        margin: 0;
+        width: 100%;
+    }
+
+    .main .lake .satellite .satellite-maps .satellite-inner {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .main .lake {
+        padding: 0 var(--padding)
+    }
+
+    .main .lake h3 {
+        font-size: 18px;
+    }
+
+    .main .lake .clickable-box {
+        margin: 0 calc(var(--padding)* -1)!important;
+        width: calc(100% + var(--padding)*2)!important;
+    }
+
+    .main .lake .map-sidebar .map-sidebar-left {}
+
+    .main .lake .map-sidebar .map-sidebar-right {
+        padding: 0;
+        overflow: visible;
+    }
+
+    .main .lake .satellite .satellite-maps .satellite-inner .map {}
 }

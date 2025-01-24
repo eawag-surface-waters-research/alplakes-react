@@ -67,9 +67,14 @@ export const formatReadableDate = (d, language) => {
   } else if (inputDateStripped.getTime() > today.getTime()) {
     return Translations.axis[language].shortDays[inputDate.getDay()];
   } else {
-    return `${String(inputDate.getDate()).padStart(2, "0")}.${String(
-      inputDate.getMonth() + 1
-    ).padStart(2, "0")}.${String(inputDate.getFullYear()).slice(-2)}`;
+    const daysAgo = Math.floor(
+      (today - inputDateStripped) / (1000 * 60 * 60 * 24)
+    );
+    if (daysAgo > 1) {
+      return `-${daysAgo} ${Translations.days[language]}`;
+    } else {
+      return `-1 ${Translations.day[language]}`;
+    }
   }
 };
 

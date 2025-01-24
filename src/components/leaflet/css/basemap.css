@@ -16,7 +16,8 @@
     box-sizing: border-box;
 }
 
-.playpause {
+.control-bar .play-button .playpause {
+    transition: all 0.2s ease;
     label {
         display: block;
         box-sizing: border-box;
@@ -39,6 +40,10 @@
             padding-right: 0;
         }
     }
+}
+
+.control-bar .play-button .playpause:hover {
+    transform: scale(1.1);
 }
 
 .control-bar .progress-bar {

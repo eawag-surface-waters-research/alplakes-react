@@ -1063,6 +1063,18 @@
     "FR": "Il y a # semaines",
     "IT": "# settimane fa"
   },
+  "day": {
+    "EN": "day",
+    "DE": "Tag",
+    "FR": "jour",
+    "IT": "giorno"
+  },
+  "days": {
+    "EN": "days",
+    "DE": "Tagen",
+    "FR": "jours",
+    "IT": "giorni"
+  },
   "dayAgo": {
     "EN": "1 day ago",
     "DE": "vor 1 Tag",
