@@ -8,6 +8,13 @@
     box-sizing: border-box;
 }
 
+.main .models p {
+    line-height: 28px;
+    font-size: 18px;
+    max-width: 700px;
+    margin-bottom: 32px;
+}
+
 .main .models .sidebar {
     display: inline-block;
     vertical-align: top;
@@ -47,10 +54,18 @@
     max-width: 100%;
 }
 
+.main .models .content a {
+    color: var(--link-color);
+}
+
+.main .models .content .intro {
+    margin-bottom: 60px;
+}
+
 .main .models .content .section {
-    margin-bottom: 50px;
+    margin-bottom: 80px;
     border-top: 3px solid var(--border-color);
-    padding-top: 40px;
+    padding-top: 60px;
 }
 
 .main .models .content .section ul {

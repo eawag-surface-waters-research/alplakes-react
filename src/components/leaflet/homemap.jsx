@@ -3,6 +3,7 @@ import L from "leaflet";
 import { dayName, formatDateYYYYMMDD } from "./functions";
 import Translations from "../../translations.json";
 import alpinespace from "./alpinespace.json";
+import CONFIG from "../../config.json";
 import "./leaflet_tileclass";
 import "./css/leaflet.css";
 
@@ -71,8 +72,6 @@ class HomeMap extends Component {
     day: "",
     minZoom: 6,
     maxZoom: 13,
-    darkMap: "dark_all",
-    lightMap: "light_all",
   };
   setDay = (event) => {
     var day = event.target.id;
@@ -277,26 +276,25 @@ class HomeMap extends Component {
       this.labels = this.labelClustering(list, language);
       this.plotLabels(day);
     } else if (prevProps.dark !== this.props.dark) {
-      var { darkMap, lightMap } = this.state;
-      var mapID = this.props.dark ? darkMap : lightMap;
       this.map.removeLayer(this.tiles);
+      var { url, attribution, lightMap, darkMap, tileClass } =
+        CONFIG.basemaps["default"];
+      if (url.includes("_bright_"))
+        url = url.replace("_bright_", this.props.dark ? darkMap : lightMap);
       this.tiles = L.tileLayer
-        .default(
-          `https://{s}.basemaps.cartocdn.com/${mapID}/{z}/{x}/{y}{r}.png`,
-          {
-            maxZoom: 19,
-            attribution:
-              '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-          }
-        )
+        .default(url, {
+          maxZoom: 19,
+          attribution: attribution,
+          tileClass: tileClass,
+        })
         .addTo(this.map);
     }
   }
   async componentDidMount() {
     var { dark } = this.props;
-    var { minZoom, maxZoom, darkMap, lightMap } = this.state;
+    var { minZoom, maxZoom } = this.state;
     var center = [46.62855, 8.70415];
-    var zoom = 8;
+    var zoom = 6;
     var map = L.map("map", {
       preferCanvas: true,
       center: center,
@@ -308,16 +306,16 @@ class HomeMap extends Component {
     });
     this.map = map;
 
-    var mapID = dark ? darkMap : lightMap;
+    var { url, attribution, lightMap, darkMap, tileClass } =
+      CONFIG.basemaps["default"];
+    if (url.includes("_bright_"))
+      url = url.replace("_bright_", dark ? darkMap : lightMap);
     this.tiles = L.tileLayer
-      .default(
-        `https://{s}.basemaps.cartocdn.com/${mapID}/{z}/{x}/{y}{r}.png`,
-        {
-          maxZoom: 19,
-          attribution:
-            '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-        }
-      )
+      .default(url, {
+        maxZoom: 19,
+        attribution: attribution,
+        tileClass: tileClass,
+      })
       .addTo(this.map);
     L.control
       .zoom({

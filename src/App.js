@@ -7,6 +7,7 @@ import API from "./pages/api/api";
 import About from "./pages/about/about";
 import Models from "./pages/models/models";
 import "./App.css";
+import Map from "./pages/map/map";
 
 class App extends Component {
   state = {
@@ -105,6 +106,19 @@ class App extends Component {
                   </ErrorBoundary>
                 }
                 exact
+              />
+              <Route
+                path="/map/*"
+                element={
+                  <ErrorBoundary {...this.props} {...this.state}>
+                    <Map
+                      {...this.state}
+                      setLanguage={this.setLanguage}
+                      toggleDark={this.toggleDark}
+                      history={this.props.history}
+                    />
+                  </ErrorBoundary>
+                }
               />
               <Route
                 path="/*"

@@ -22,8 +22,8 @@ class Slider extends Component {
     var arrow = document.getElementById("input-range-label-arrow");
     arrow.style.left =
       Math.min(
-        Math.max(4, offset * e.target.clientWidth - 5),
-        e.target.clientWidth - 24
+        Math.max(4, offset * e.target.clientWidth - 8),
+        e.target.clientWidth - 26
       ) + "px";
     document.getElementById("input-range-hover").style.width =
       Math.min(
@@ -73,9 +73,6 @@ class Slider extends Component {
   componentDidUpdate() {
     var { period } = this.props;
     var d = new Date();
-    d.setHours(0);
-    d.setMinutes(0);
-    d.setSeconds(0);
     var dt = d.getTime();
     var width = document.getElementById("input-range").offsetWidth;
     var divWidth = Math.min(

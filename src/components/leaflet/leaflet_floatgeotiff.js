@@ -8,6 +8,7 @@ L.FloatGeotiff = L.ImageOverlay.extend({
     min: false,
     max: false,
     unit: "",
+    decimal: 1,
     colorRampSteps: 2,
     palette: [
       { color: [255, 255, 255], point: 0 },
@@ -451,7 +452,9 @@ L.FloatGeotiff = L.ImageOverlay.extend({
     var e = this._queryValue(t);
     this.fire("mousemove", e);
   },
-
+  _round: function (value, decimals) {
+    return Math.round(value * 10 ** decimals) / 10 ** decimals;
+  },
   _onClick: function (t) {
     var e = this._queryValue(t);
     this.fire("click", e);
@@ -463,7 +466,7 @@ L.FloatGeotiff = L.ImageOverlay.extend({
   getFeatureValue: function (e) {
     const value = this.getValueAtLatLng(e.latlng.lat, e.latlng.lng);
     if (isFinite(value)) {
-      return value;
+      return `${this._round(value, this.options.decimal)} ${this.options.unit}`;
     } else {
       return null;
     }

@@ -37,13 +37,18 @@ class API extends Component {
         <NavBar {...this.props} relative={true} />
         <div className="api-container">
           <h1 className="header"> {Translations["apiHeader"][language]}</h1>
-          <p>
+          <div className="text">
             Alplakes API connects you to lake products produced by the SURF
             department at EAWAG. This includes terabytes of simulation data and
             remote sensing products. The API supports geospatial and temporal
             queries, allowing access to subsets of the data for easier handling.
-          </p>
-          <p>Please email <a href="mailto:james.runnalls@eawag.ch">james.runnalls@eawag.ch</a> for any questions regarding the API or to be kept informed of any future updates.</p>
+          </div>
+          <div className="text">
+            Please email{" "}
+            <a href="mailto:james.runnalls@eawag.ch">james.runnalls@eawag.ch</a>{" "}
+            for any questions regarding the API or to be kept informed of any
+            future updates.
+          </div>
           {error ? (
             <div className="error">
               <img src={unpluggedIcon} alt="unplugged" />

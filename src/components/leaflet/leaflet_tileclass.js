@@ -3,7 +3,9 @@ import L from "leaflet";
 L.TileLayer.Default = L.TileLayer.extend({
   createTile: function(coords, done) {
       var tile = L.TileLayer.prototype.createTile.call(this, coords, done);
-      tile.classList.add('tile-class');
+      if (this.options.tileClass) {
+        tile.classList.add(this.options.tileClass);
+      }
       return tile;
   }
 });
