@@ -103,6 +103,8 @@
     transition: all .33s 0s ease;
     cursor: pointer;
     box-sizing: border-box;
+    max-width: 100%;
+    padding: 20px 25px;
 }
 
 .main .lake .clickable-box:hover {
@@ -112,9 +114,8 @@
 
 .main .lake .clickable-box .title {
     font-size: 18px;
-    font-weight: 500;
     color: var(--background-font-color);
-    padding: 20px 0 5px 25px;
+    padding: 0 0 5px 0;
     max-width: 50%;
 }
 
@@ -123,32 +124,40 @@
     font-weight: 400;
     color: var(--background-suble-font-color);
     margin-bottom: 5px;
-    padding-left: 25px;
 }
 
 .main .lake .clickable-box .link {
     font-size: 16px;
-    font-weight: 500;
     color: var(--link-color);
     text-decoration: underline;
-    padding: 0 0 25px 25px;
 }
 
 .main .lake .clickable-box .right {
     position: absolute;
-    font-size: 18px;
-    font-weight: 500;
+    font-size: 16px;
     text-align: right;
     color: var(--background-suble-font-color);
-    padding: 20px 25px 5px 0;
+    padding: 24px 25px 5px 0;
     right: 0;
     top: 0;
+}
+
+.main .lake .clickable-box .summary-table {
+    width: calc(100% + 45px);
+    margin-left: -25px;
+    margin-bottom: -20px;
 }
 
 .main .lake .clickable-box .right .time {
     color: var(--background-suble-font-color);
     font-size: 16px;
     margin-top: 6px;
+}
+
+.main .lake .clickable-box .skeleton-box {
+    width: calc(100% + 50px);
+    margin-left: -25px;
+    margin-bottom: -20px;
 }
 
 .main .lake .loading {
@@ -218,7 +227,7 @@
 /** Scientific **/
 
 .main .lake .measurements .scientific .clickable-box {
-    min-width: 400px
+    width: 500px
 }
 
 .main .lake .measurements .scientific .right.live {
@@ -261,6 +270,7 @@
 .main .lake .properties .parameters .parameters-box .parameter img {
     height: 30px;
     opacity: 0.7;
+    margin-bottom: 3px;
 }
 
 .main.dark .lake .properties .parameters .parameters-box .parameter img {
@@ -270,16 +280,13 @@
 
 .main .lake .properties .parameters .parameters-box .parameter .value {
     font-size: 18px;
-    font-weight: 500;
     color: var(--background-font-color);
     margin-bottom: 5px;
 }
 
 .main .lake .properties .parameters .parameters-box .parameter .label {
     font-size: 16px;
-    font-weight: 500;
     color: var(--background-suble-font-color);
-    margin-bottom: 5px;
 }
 
 .main .lake .properties .bathymetry .clickable-box {
@@ -354,7 +361,7 @@
 }
 
 .main .lake .measurements .water-levels .clickable-box {
-    min-width: 400px;
+    width: 500px;
 }
 
 .main .lake .water-levels .clickable-box .right {
@@ -369,6 +376,7 @@
     .main .lake .map-sidebar .map-sidebar-left {
         width: 100%;
         height: 350px;
+        margin-bottom: 12px;
     }
 
     .main .lake .map-sidebar .map-sidebar-right {
@@ -377,7 +385,11 @@
     }
 
     .main .lake .clickable-box {
-        margin: 0;
+        margin: 0 0 20px 0;
+        width: 100%;
+    }
+
+    .main .lake .forecast .onedmodel .clickable-box {
         width: 100%;
     }
 
@@ -388,24 +400,87 @@
 
 @media screen and (max-width: 500px) {
     .main .lake {
-        padding: 0 var(--padding)
+        padding: 0 var(--padding);
+        margin-top: var(--header-height);
+    }
+
+    .main .lake .header {
+        text-align: center;
+    }
+
+    .main .lake h1 {
+        font-size: 32px;
+    }
+
+    .main .lake h2 {
+        margin-bottom: 4px;
+        font-size: 26px;
     }
 
     .main .lake h3 {
-        font-size: 18px;
+        margin-bottom: 10px;
+        max-width: 80%;
+    }
+
+    .main .lake .map-sidebar {
+        margin-bottom: calc(var(--padding)* 2);
+    }
+
+    .main .lake .map-sidebar .map-sidebar-left {
+        height: 300px;
+        margin: 0;
     }
 
     .main .lake .clickable-box {
-        margin: 0 calc(var(--padding)* -1)!important;
-        width: calc(100% + var(--padding)*2)!important;
+        border-bottom: 1px solid var(--border-color);
+        border-radius: 0;
+        padding: 20px 0 20px 0;
+        margin: 0;
+        box-shadow: none;
     }
 
-    .main .lake .map-sidebar .map-sidebar-left {}
+    .main .lake .threedmodel .clickable-box {
+        border: none;
+    }
+
+    .main .lake .onedmodel .clickable-box {
+        border: none;
+    }
+
+    .main .lake .measurements .water-levels {
+        margin-bottom: calc(var(--padding)*2);
+    }
+
+    .main .lake .measurements .water-levels h3 {
+        margin-bottom: 0;
+    }
+
+    .main .lake .measurements .scientific h3 {
+        margin-bottom: 0;
+    }
+
+    .main .lake .clickable-box .right {
+        padding-right: 0;
+    }
+
+    .main .lake .information .information-symbol {
+        background-color: var(--highlight-color-subtle);
+    }
 
     .main .lake .map-sidebar .map-sidebar-right {
         padding: 0;
         overflow: visible;
     }
 
-    .main .lake .satellite .satellite-maps .satellite-inner .map {}
+    .main .lake .satellite .satellite-maps .satellite-inner .map {
+        height: 300px;
+    }
+
+    .main .lake .properties .parameters .parameters-box {
+        border: none;
+    }
+
+    .main .lake .click-block {
+        display: block;
+    }
 }

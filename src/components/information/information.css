@@ -37,3 +37,15 @@
 .information:hover .information-box {
     display: block;
 }
+
+@media screen and (max-width: 500px) {
+    .information .information-box {
+        position: fixed;
+        top: 80px;
+    }
+
+    .information .information-symbol {
+        padding: 0px 9px;
+        line-height: 26px;
+    }
+}

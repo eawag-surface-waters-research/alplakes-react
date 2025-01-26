@@ -402,62 +402,6 @@
   width: 100%;
 }
 
-
-.main .home .content .list .product-list .list-item .summary .summary-table {
-  position: relative;
-  width: 100%;
-  box-sizing: border-box;
-  text-align: left;
-  display: table;
-  table-layout: fixed;
-  height: 60px;
-}
-
-.main .home .content .list .product-list .list-item .summary .summary-table .inner {
-  display: table-cell;
-  width: 100%;
-  text-align: center;
-  border-left: 1px solid var(--border-color);
-  position: relative;
-  z-index: 1;
-  height: 60px;
-}
-
-.main .home .content .list .product-list .list-item .summary .summary-table .inner .ave {
-  font-size: 22px;
-  font-family: DM_Sans, Frutiger Neue LT Pro, Arial, sans-serif;
-}
-
-.main .home .content .list .product-list .list-item .summary .summary-table .inner .ave .unit {
-  font-size: 12px;
-  display: inline-block;
-}
-
-.main .home .content .list .product-list .list-item .summary .summary-table .inner .ave .unit.full {
-  font-size: 22px;
-}
-
-.main .home .content .list .product-list .list-item .summary .summary-table .inner.start {
-  border: none;
-}
-
-.main .home .content .list .product-list .list-item .summary .summary-table .inner .day {
-  font-size: 10px;
-  bottom: 3px;
-  position: absolute;
-  width: 100%;
-
-}
-
-.main .home .content .list .product-list .list-item .summary .summary-table .summarygraph {
-  position: absolute;
-  bottom: 0px;
-  left: 0;
-  width: 100%;
-  height: 42px;
-  z-index: 1;
-}
-
 .main .home .content .list .product-list .list-item .right-arrow {
   position: absolute;
   right: 16px;

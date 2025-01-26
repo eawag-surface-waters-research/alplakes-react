@@ -1,6 +1,6 @@
 .lake-map-button {
     position: absolute;
-    z-index: 999;
+    z-index: 1000;
     top: calc(var(--padding) / 4);
     right: calc(var(--padding) / 4);
 }

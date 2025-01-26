@@ -174,9 +174,10 @@ class Basemap extends Component {
         >
           <Loading />
         </div>
+        <div className="click-block" />
         {controls && (
           <div className="control-bar">
-            <div className="play-button">
+            <div className="play-button" onClick={this.togglePlay}>
               <div className="playpause" id="playing">
                 <input
                   type="checkbox"
@@ -184,7 +185,7 @@ class Basemap extends Component {
                   id="playpause"
                   name="check"
                   checked={!play}
-                  onChange={this.togglePlay}
+                  readOnly={true}
                 />
                 <label htmlFor="playpause"></label>
               </div>
