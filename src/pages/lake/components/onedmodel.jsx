@@ -82,7 +82,7 @@ class OneDModel extends Component {
                 dt={data[p.key].dt}
                 value={data[p.key].value}
                 summary={data[p.key].summary}
-                unit={p.unit}
+                unit={"°"}
                 language={language}
               />
             ) : (

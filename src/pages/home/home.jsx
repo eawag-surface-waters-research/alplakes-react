@@ -1,11 +1,10 @@
 import React, { Component } from "react";
 import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
-import axios from "axios";
 import { NavLink } from "react-router-dom";
 import NavBar from "../../components/navbar/navbar";
-import SummaryGraph from "../../components/d3/summarygraph/summarygraph";
 import HomeMap from "../../components/leaflet/homemap";
+import SummaryTable from "../../components/summarytable/summarytable";
 import Footer from "../../components/footer/footer";
 import Translations from "../../translations.json";
 import searchIcon from "../../img/search.png";
@@ -19,7 +18,6 @@ import {
   onMouseOver,
   onMouseOut,
   summariseData,
-  dayName,
   searchList,
   inBounds,
   hour,
@@ -27,7 +25,6 @@ import {
 } from "./functions";
 import CONFIG from "../../config.json";
 import "./home.css";
-import SummaryTable from "../../components/summarytable/summarytable";
 
 class ListSkeleton extends Component {
   render() {
@@ -227,7 +224,6 @@ class ListItem extends Component {
       max_depth: "m",
       area: "km²",
     };
-    console.log(lake);
     return (
       <NavLink to={`/${lake.key}`}>
         <div
@@ -272,7 +268,7 @@ class ListItem extends Component {
             </div>
           </div>
           <div className="summary">
-            {Object.keys(lake.summary).length > 0 && (
+            {lake.summary && (
               <div className="summary-table">
                 <SummaryTable
                   start={lake.start}
@@ -376,10 +372,10 @@ class Home extends Component {
           }
         }
         // 3. Sort if forecast available
-        if (a.summary.length > 0 && b.summary.length === 0) {
+        if (a.summary && !b.summary) {
           return -1;
         }
-        if (a.summary.length === 0 && b.summary.length > 0) {
+        if (!a.summary && b.summary) {
           return 1;
         }
         // 4. Sort by surface area
@@ -426,7 +422,6 @@ class Home extends Component {
       forecast: `${CONFIG.alplakes_bucket}/simulations/forecast.json${hour()}`,
       geometry: `${CONFIG.alplakes_bucket}/static/website/metadata/${CONFIG.branch}/lakes.geojson`,
     };
-
     var { list, forecast, geometry } = await fetchDataParallel(urls);
     geometry = geometry.features.reduce((obj, item) => {
       obj[item.properties.key] = item.geometry.coordinates;
@@ -434,12 +429,17 @@ class Home extends Component {
     }, {});
     list.map((l) => {
       l.display = true;
-      l.time = forecast[l.key]["time"];
-      l.values = forecast[l.key]["temperature"];
-      let { summary, start, end } = summariseData(l.time, l.values);
-      l.summary = summary;
-      l.start = start;
-      l.end = end;
+      if (l.key in forecast) {
+        l.time = forecast[l.key]["time"];
+        l.values = forecast[l.key]["temperature"];
+        let { summary, start, end } = summariseData(l.time, l.values);
+        l.summary = summary;
+        l.start = start;
+        l.end = end;
+      } else {
+        l.summary = false;
+      }
+
       if (l.key in geometry) {
         l.geometry = geometry[l.key];
       } else {

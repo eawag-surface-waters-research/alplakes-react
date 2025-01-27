@@ -1,5 +1,6 @@
 import axios from "axios";
 import CONFIG from "../../../config.json";
+import pako from "pako";
 import * as d3 from "d3";
 import * as general from "./general";
 
@@ -84,33 +85,30 @@ export const download3DMap = async (
   bucket = false
 ) => {
   var response = false;
-  if (bucket) {
-    try {
-      let urls = parameters.map(
-        (p) =>
-          `${
-            CONFIG.alplakes_bucket
-          }/simulations/${model}/cache/${lake}/${p}.txt${general.hour()}`
-      );
-      response = await fetchDataParallel(urls);
-    } catch (e) {
-      console.error("Failed to collect linegraph from S3.");
+  var urls = parameters.map((p) => {
+    let api_url = `${
+      CONFIG.alplakes_api
+    }/simulations/layer_alplakes/${model}/${lake}/${p}/${general.formatAPIDatetime(
+      start
+    )}/${general.formatAPIDatetime(end)}/${depth}`;
+    let bucket_url = `${
+      CONFIG.alplakes_bucket
+    }/simulations/${model}/cache/${lake}/${p}.txt.gz${general.hour()}`;
+    if (bucket) {
+      return [bucket_url, api_url];
     }
-  }
-  if (response === false) {
-    let urls = parameters.map(
-      (p) =>
-        `${
-          CONFIG.alplakes_api
-        }/simulations/layer_alplakes/${model}/${lake}/geometry/${general.formatAPIDatetime(
-          start
-        )}/${general.formatAPIDatetime(end)}/${depth}`
-    );
-    response = fetchDataParallel(urls);
-  }
+    return [api_url];
+  });
+  response = await fetchDataParallel(urls);
   const data = {};
   for (let i = 0; i < parameters.length; i++) {
-    data[parameters[i]] = process3dData(response[i], parameters[i], height);
+    try {
+      data[parameters[i]] = process3dData(response[i], parameters[i], height);
+    } catch (e) {
+      console.error(`Failed to process ${parameters[i]}`);
+      console.error(e);
+      data[parameters[i]] = false;
+    }
   }
   return data;
 };
@@ -147,8 +145,47 @@ const process3dData = (data, parameter, height) => {
   }
 };
 
+const arrayBufferToString = (arrayBuffer) => {
+  const decoder = new TextDecoder("utf-8");
+  return decoder.decode(arrayBuffer);
+};
+
 const fetchDataParallel = async (urls) => {
-  const requests = urls.map((url) => axios.get(url));
+  const fetchData = async (url) => {
+    for (let i = 0; i < url.length; i++) {
+      try {
+        const response = await axios.get(url[i], {
+          responseType: "arraybuffer",
+        });
+        return response;
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    return false;
+  };
+  const requests = urls.map((url) => {
+    return fetchData(url);
+  });
   const responses = await Promise.all(requests);
-  return responses.map((response) => response.data);
+  return responses.map((response) => {
+    if (response) {
+      if (response.headers["content-type"].includes("gzip")) {
+        try {
+          const decompressedData = pako.ungzip(response.data, { to: "string" });
+          return decompressedData;
+        } catch (error) {
+          try {
+            return arrayBufferToString(response.data);
+          } catch (error) {
+            return false;
+          }
+        }
+      } else {
+        return arrayBufferToString(response.data);
+      }
+    } else {
+      return false;
+    }
+  });
 };

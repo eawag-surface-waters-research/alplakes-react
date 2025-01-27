@@ -180,7 +180,7 @@ class ThreeDModel extends Component {
                         dt={l.time}
                         value={l.values}
                         summary={l.summary}
-                        unit={"°C"}
+                        unit={"°"}
                         language={language}
                       />
                     </div>
