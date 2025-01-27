@@ -781,7 +781,7 @@
   }
 
   .main .home .content .list .product-list .list-item:hover {
-    box-shadow: none;
+    box-shadow: var(--bottom-shadow);
     border: none;
   }
 

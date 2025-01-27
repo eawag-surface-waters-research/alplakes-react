@@ -172,16 +172,12 @@
 .navbar .mobile-nav .nav-content {
   position: fixed;
   width: var(--list-width);
-  background-color: #ffffffde;
+  background-color: var(--background-color);
   left: 0;
   top: var(--header-height);
   box-sizing: border-box;
   border-radius: 0 0 calc(var(--padding)) calc(var(--padding));
   z-index: 2;
-}
-
-.dark .navbar .mobile-nav .nav-content {
-  background-color: hsl(232deg 11% 15% / 90%);
 }
 
 .navbar .mobile-nav .nav-content a {
@@ -283,5 +279,11 @@
 
   .navbar .navbar-inner {
     padding: var(--padding);
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .navbar .mobile-nav .nav-content .nav-row select {
+    background-color: var(--mobile-box-color);
   }
 }

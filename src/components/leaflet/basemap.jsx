@@ -64,7 +64,7 @@ class Basemap extends Component {
     try {
       clearInterval(this.intervalId);
     } catch (e) {}
-    const datetime = parseInt(event.target.getAttribute("alt"));
+    const datetime = parseInt(event[0]);
     const { period, data } = this.state;
     setPlayDatetime(this.layers, datetime, period, data);
     if (this.props.setDatetime) this.props.setDatetime(datetime, false);

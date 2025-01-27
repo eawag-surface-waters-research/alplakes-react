@@ -69,3 +69,14 @@
     color: var(--box-font-color);
     transition: color 0.3s;
 }
+
+
+@media screen and (max-width: 500px) {
+    .toggle {
+        background-color: var(--mobile-box-color);
+    }
+
+    .toggleContainer {
+        background-color: var(--mobile-box-color);
+    }
+}

@@ -75,15 +75,13 @@
     box-sizing: border-box;
     vertical-align: top;
     -ms-overflow-style: none;
-    /* For Internet Explorer and Edge */
     scrollbar-width: none;
-    /* For Firefox */
     padding: 5px;
+    border-bottom: 1px solid var(--border-color);
 }
 
 .main .lake .map-sidebar .map-sidebar-right::-webkit-scrollbar {
     display: none;
-    /* For Chrome, Safari, and Opera */
 }
 
 .main .lake .map-sidebar .map-sidebar-right .clickable-box {
@@ -137,7 +135,7 @@
     font-size: 16px;
     text-align: right;
     color: var(--background-suble-font-color);
-    padding: 24px 25px 5px 0;
+    padding: 22px 25px 5px 0;
     right: 0;
     top: 0;
 }
@@ -146,6 +144,7 @@
     width: calc(100% + 45px);
     margin-left: -25px;
     margin-bottom: -20px;
+    margin-top: 8px;
 }
 
 .main .lake .clickable-box .right .time {
@@ -201,15 +200,11 @@
     box-sizing: border-box;
 }
 
-.main .lake .forecast .threedmodel .map-sidebar .map-sidebar-right .clickable-box .title {
-    margin-bottom: 8px;
-}
-
-.main .lake .forecast .threedmodel .map-sidebar .map-sidebar-right .clickable-box .summary-table .inner .ave {
+.main .lake .clickable-box .summary-table .inner .ave {
     font-size: 18px;
 }
 
-.main .lake .forecast .threedmodel .map-sidebar .map-sidebar-right .clickable-box .summary-table .inner .ave .unit.full {
+.main .lake .clickable-box .summary-table .inner .ave .unit.full {
     font-size: 18px;
 }
 
@@ -218,10 +213,6 @@
 
 .main .lake .forecast .onedmodel .clickable-box {
     width: 500px;
-}
-
-.main .lake .forecast .onedmodel .clickable-box .title {
-    margin-bottom: 20px;
 }
 
 /** Scientific **/
@@ -382,6 +373,7 @@
     .main .lake .map-sidebar .map-sidebar-right {
         width: 100%;
         max-height: unset;
+        border: none;
     }
 
     .main .lake .clickable-box {
@@ -404,39 +396,47 @@
         margin-top: var(--header-height);
     }
 
-    .main .lake .header {
-        text-align: center;
-    }
-
     .main .lake h1 {
-        font-size: 32px;
+        font-size: 30px;
+        color: var(--background-suble-font-color);
+        display: inline-block;
+        vertical-align: super;
+        margin: 10px 0;
     }
 
     .main .lake h2 {
         margin-bottom: 4px;
-        font-size: 26px;
+        font-size: 22px;
+        font-weight: 500;
     }
 
     .main .lake h3 {
         margin-bottom: 10px;
-        max-width: 80%;
+        font-size: 16px;
     }
 
     .main .lake .map-sidebar {
-        margin-bottom: calc(var(--padding)* 2);
+        margin-bottom: calc(var(--padding)*2);
     }
 
     .main .lake .map-sidebar .map-sidebar-left {
         height: 300px;
         margin: 0;
+        margin-bottom: -10px;
     }
 
     .main .lake .clickable-box {
+        border: none;
         border-bottom: 1px solid var(--border-color);
+        background-color: transparent;
         border-radius: 0;
-        padding: 20px 0 20px 0;
+        padding: 18px 0 20px 0;
         margin: 0;
         box-shadow: none;
+    }
+
+    .main .lake .header .properties-link {
+        display: none;
     }
 
     .main .lake .threedmodel .clickable-box {
@@ -445,6 +445,15 @@
 
     .main .lake .onedmodel .clickable-box {
         border: none;
+    }
+
+    .main .lake .forecast .onedmodel h3 {
+        margin-bottom: -10px;
+    }
+
+    .main .lake .clickable-box:hover {
+        border-color: transparent;
+        box-shadow: none;
     }
 
     .main .lake .measurements .water-levels {
@@ -464,7 +473,7 @@
     }
 
     .main .lake .information .information-symbol {
-        background-color: var(--highlight-color-subtle);
+        background-color: var(--mobile-box-color);
     }
 
     .main .lake .map-sidebar .map-sidebar-right {

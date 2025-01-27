@@ -1,45 +1,12 @@
 import React, { Component } from "react";
+import { Range, getTrackBackground } from "react-range";
 import Translate from "../../translations.json";
 import "./slider.css";
 
 class Slider extends Component {
-  inputHover = (e) => {
-    var { language } = this.props;
-    var months = Translate.axis[language].months;
-    var min = parseInt(e.target.getAttribute("min"));
-    var max = parseInt(e.target.getAttribute("max"));
-    var step = parseInt(e.target.getAttribute("step"));
-    var offset = e.offsetX / e.target.clientWidth;
-    var valueHover = parseInt(offset * (max - min) + min);
-    valueHover = Math.round(valueHover / step) * step;
-    offset = (valueHover - min) / (max - min);
-    var div = document.getElementById("input-range-label");
-    var right = e.target.clientWidth - div.offsetWidth;
-    var left = offset * e.target.clientWidth - div.offsetWidth / 2;
-    div.style.left = Math.min(Math.max(0, left), right) + "px";
-    div.innerHTML = this.formatDateTime(valueHover, months);
-    e.target.setAttribute("alt", valueHover);
-    var arrow = document.getElementById("input-range-label-arrow");
-    arrow.style.left =
-      Math.min(
-        Math.max(4, offset * e.target.clientWidth - 8),
-        e.target.clientWidth - 26
-      ) + "px";
-    document.getElementById("input-range-hover").style.width =
-      Math.min(
-        Math.max(0, offset * e.target.clientWidth),
-        e.target.clientWidth
-      ) + "px";
-    div.style.visibility = "visible";
-    arrow.style.visibility = "visible";
+  state = {
+    hoverValue: null,
   };
-
-  hideHover = () => {
-    document.getElementById("input-range-label").style.visibility = "hidden";
-    document.getElementById("input-range-label-arrow").style.visibility =
-      "hidden";
-  };
-
   formatDateTime = (datetime, months) => {
     var a = new Date(datetime);
     var hour = a.getHours();
@@ -51,58 +18,89 @@ class Slider extends Component {
       minute < 10 ? "0" + minute : minute
     } ${date} ${month} ${String(year).slice(-2)}`;
   };
-
-  componentDidMount() {
-    document
-      .getElementById("input-range")
-      .addEventListener("mousemove", this.inputHover);
-    document
-      .getElementById("input-range")
-      .addEventListener("mouseout", this.hideHover);
-  }
-
-  componentWillUnmount() {
-    document
-      .getElementById("input-range")
-      .removeEventListener("mousemove", this.inputHover);
-    document
-      .getElementById("input-range")
-      .removeEventListener("mouseout", this.hideHover);
-  }
-
-  componentDidUpdate() {
-    var { period } = this.props;
-    var d = new Date();
-    var dt = d.getTime();
-    var width = document.getElementById("input-range").offsetWidth;
-    var divWidth = Math.min(
-      Math.max(((dt - period[0]) / (period[1] - period[0])) * width, 0),
-      width
+  calculateValueFromPosition = (event) => {
+    var trackRef = document.getElementById("slider-track");
+    const trackRect = trackRef.getBoundingClientRect();
+    const relativePosition = event.clientX - trackRect.left;
+    const percent = Math.min(
+      Math.max(relativePosition / trackRect.width, 0),
+      1
     );
-    document.getElementById("input-range-hindcast").style.width =
-      divWidth + "px";
-  }
+    var min = parseFloat(trackRef.getAttribute("min"));
+    var max = parseFloat(trackRef.getAttribute("max"));
+    var step = parseFloat(trackRef.getAttribute("step"));
+    return Math.round((min + percent * (max - min)) / step) * step;
+  };
+
+  handleMouseMove = (event) => {
+    const value = this.calculateValueFromPosition(event);
+    this.setState({ hoverValue: value });
+  };
+
+  handleMouseLeave = () => {
+    this.setState({ hoverValue: null });
+  };
+
+  componentDidUpdate() {}
 
   render() {
-    var { period, timestep, datetime, setDatetime } = this.props;
+    var { period, timestep, datetime, setDatetime, language } = this.props;
+    var { hoverValue } = this.state;
+    const values = [datetime];
     return (
       <div className="slider-container">
-        <input
-          id="input-range"
-          type="range"
+        <Range
+          label="Select your value"
+          step={timestep}
           min={period[0]}
           max={period[1]}
-          step={timestep}
-          value={datetime}
-          className="slider-component"
-          onChange={setDatetime}
-          alt={datetime}
+          values={values}
+          onChange={(event) => setDatetime(event)}
+          renderTrack={({ props, children }) => (
+            <div
+              {...props}
+              className="slider-track"
+              id="slider-track"
+              step={timestep}
+              min={period[0]}
+              max={period[1]}
+              onMouseMove={this.handleMouseMove}
+              onMouseLeave={this.handleMouseLeave}
+              style={{
+                ...props.style,
+                background: getTrackBackground({
+                  values,
+                  colors: ["#44bca77a", "#d3d3d3"],
+                  min: period[0],
+                  max: period[1],
+                  rtl: false,
+                }),
+              }}
+            >
+              {hoverValue !== null && (
+                <div className="slider-label">
+                  {this.formatDateTime(
+                    hoverValue,
+                    Translate.axis[language].months
+                  )}
+                </div>
+              )}
+              {children}
+            </div>
+          )}
+          renderThumb={({ props }) => (
+            <div
+              {...props}
+              key={props.key}
+              className="slider-thumb"
+              style={{
+                ...props.style,
+              }}
+            >
+              <div className="slider-thumb-inner" />
+            </div>
+          )}
         />
-        <div className="slider-bar" id="input-range-bar" />
-        <div className="slider-hover" id="input-range-hover" />
-        <div className="slider-hindcast" id="input-range-hindcast" />
-        <div className="slider-label" id="input-range-label" />
-        <div className="slider-label-arrow" id="input-range-label-arrow" />
       </div>
     );
   }
