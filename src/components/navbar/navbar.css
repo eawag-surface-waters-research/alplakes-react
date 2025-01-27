@@ -198,6 +198,10 @@
 }
 
 .navbar .mobile-nav .nav-content .nav-row img {
+  height: 18px;
+}
+
+.navbar .mobile-nav .nav-content .nav-row.settings img {
   height: 20px;
   margin-bottom: -4px;
 }

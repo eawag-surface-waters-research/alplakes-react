@@ -70,7 +70,7 @@ class Slider extends Component {
                 ...props.style,
                 background: getTrackBackground({
                   values,
-                  colors: ["#44bca77a", "#d3d3d3"],
+                  colors: ["#44bca77a", "#d3d3d36e"],
                   min: period[0],
                   max: period[1],
                   rtl: false,

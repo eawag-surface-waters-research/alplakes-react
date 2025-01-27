@@ -22,9 +22,12 @@ import {
   dayName,
   searchList,
   inBounds,
+  hour,
+  fetchDataParallel,
 } from "./functions";
 import CONFIG from "../../config.json";
 import "./home.css";
+import SummaryTable from "../../components/summarytable/summarytable";
 
 class ListSkeleton extends Component {
   render() {
@@ -224,6 +227,7 @@ class ListItem extends Component {
       max_depth: "m",
       area: "km²",
     };
+    console.log(lake);
     return (
       <NavLink to={`/${lake.key}`}>
         <div
@@ -268,43 +272,22 @@ class ListItem extends Component {
             </div>
           </div>
           <div className="summary">
-            {(!lake.forecast.available ||
-              lake.forecast.value["temperature"].length === 0) && (
-              <div className="offline">{Translations.offline[language]}</div>
+            {Object.keys(lake.summary).length > 0 && (
+              <div className="summary-table">
+                <SummaryTable
+                  start={lake.start}
+                  end={lake.end}
+                  dt={lake.time}
+                  value={lake.values}
+                  summary={lake.summary}
+                  unit={"°"}
+                  language={language}
+                />
+              </div>
             )}
-            <div className="summary-table">
-              <SummaryTable forecast={lake.forecast} language={language} />
-            </div>
           </div>
         </div>
       </NavLink>
-    );
-  }
-}
-
-class SummaryTable extends Component {
-  render() {
-    var { forecast, language } = this.props;
-    return (
-      <React.Fragment>
-        {Object.keys(forecast.summary).map((day, i, arr) =>
-          forecast.summary[day]["temperature"] === false ? null : (
-            <div key={day} className={i === 0 ? "inner start" : "inner"}>
-              <div className="ave">
-                {forecast.summary[day]["temperature"]}
-                <div className="unit full">{"°"}</div>
-              </div>
-              <div className="day">{dayName(day, language, Translations)}</div>
-            </div>
-          )
-        )}
-        <SummaryGraph
-          dt={forecast.dt}
-          value={forecast.value["temperature"]}
-          dtMin={forecast.dtMin}
-          dtMax={forecast.dtMax}
-        />
-      </React.Fragment>
     );
   }
 }
@@ -393,10 +376,10 @@ class Home extends Component {
           }
         }
         // 3. Sort if forecast available
-        if (a.forecast.available && !b.forecast.available) {
+        if (a.summary.length > 0 && b.summary.length === 0) {
           return -1;
         }
-        if (!a.forecast.available && b.forecast.available) {
+        if (a.summary.length === 0 && b.summary.length > 0) {
           return 1;
         }
         // 4. Sort by surface area
@@ -438,41 +421,29 @@ class Home extends Component {
   };
   async componentDidMount() {
     window.addEventListener("keydown", this.focusSearchBar);
-    var geometry, forecast;
-    const { data: list } = await axios.get(
-      CONFIG.alplakes_bucket +
-        `/static/website/metadata/${CONFIG.branch}/list.json`
-    );
-    try {
-      ({ data: forecast } = await axios.get(
-        CONFIG.alplakes_bucket +
-          `/simulations/forecast.json?timestamp=${
-            Math.round((new Date().getTime() + 1800000) / 3600000) * 3600 - 3600
-          }`
-      ));
-    } catch (e) {
-      forecast = {};
-    }
-    try {
-      ({ data: geometry } = await axios.get(
-        CONFIG.alplakes_bucket +
-          `/static/website/metadata/${CONFIG.branch}/lakes.geojson`
-      ));
-      geometry = geometry.features.reduce((obj, item) => {
-        obj[item.properties.key] = item.geometry.coordinates;
-        return obj;
-      }, {});
-    } catch (e) {
-      geometry = {};
-    }
+    var urls = {
+      list: `${CONFIG.alplakes_bucket}/static/website/metadata/${CONFIG.branch}/list.json`,
+      forecast: `${CONFIG.alplakes_bucket}/simulations/forecast.json${hour()}`,
+      geometry: `${CONFIG.alplakes_bucket}/static/website/metadata/${CONFIG.branch}/lakes.geojson`,
+    };
+
+    var { list, forecast, geometry } = await fetchDataParallel(urls);
+    geometry = geometry.features.reduce((obj, item) => {
+      obj[item.properties.key] = item.geometry.coordinates;
+      return obj;
+    }, {});
     list.map((l) => {
       l.display = true;
-      l.geometry = false;
-      l.forecast = summariseData(forecast[l.key], "temperature", [
-        "temperature",
-      ]);
+      l.time = forecast[l.key]["time"];
+      l.values = forecast[l.key]["temperature"];
+      let { summary, start, end } = summariseData(l.time, l.values);
+      l.summary = summary;
+      l.start = start;
+      l.end = end;
       if (l.key in geometry) {
         l.geometry = geometry[l.key];
+      } else {
+        l.geometry = false;
       }
       return l;
     });

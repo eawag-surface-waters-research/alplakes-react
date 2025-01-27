@@ -110,13 +110,13 @@ class HomeMap extends Component {
           {
             style: {
               fillColor: this.getColor(
-                lake.forecast.summary[day]["temperature"]
+                lake.summary[day]
               ),
               weight: 0.5,
               opacity: 1,
               color: "grey",
               fillOpacity:
-                lake.forecast.summary[day]["temperature"] === false ? 0 : 1,
+                lake.summary[day] === false ? 0 : 1,
             },
           }
         )
@@ -131,7 +131,7 @@ class HomeMap extends Component {
     var { list, language } = this.props;
     var zoom = this.map.getZoom();
     for (let lake of list) {
-      let value = lake.forecast.summary[day]["temperature"] === false;
+      let value = lake.summary[day] === false;
       this.labels[lake.key].marker = L.marker([lake.latitude, lake.longitude], {
         icon: L.divIcon({
           className: "leaflet-mouse-marker",
@@ -147,7 +147,7 @@ class HomeMap extends Component {
           }</div>${
             value
               ? ""
-              : `<div class="value">${lake.forecast.summary[day]["temperature"]}°</div>`
+              : `<div class="value">${lake.summary[day]}°</div>`
           }</a>`,
           {
             id: lake.key,
@@ -261,7 +261,7 @@ class HomeMap extends Component {
     var { day } = this.state;
     var { list, language } = this.props;
     if (this.plot && list.length > 0) {
-      const days = Object.keys(list[0].forecast.summary);
+      const days = Object.keys(list[0].summary);
       day = days[0];
       this.plotPolygons(day);
       this.map.fitBounds(this.polygons.getBounds());
