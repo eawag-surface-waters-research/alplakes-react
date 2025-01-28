@@ -19,14 +19,16 @@ class PlaceholderGraph extends Component {
       <div className="clickable-box">
         <div className="title">{title}</div>
         <div className="right">{model}</div>
-        <div className="skeleton-box">
-          <div className="skeleton-block pulse-border" />
-          <div className="skeleton-block pulse-border" />
-          <div className="skeleton-block pulse-border" />
-          <div className="skeleton-block pulse-border" />
-          <div className="skeleton-block pulse-border right" />
+        <div className="skeleton-outer">
+          <div className="skeleton-box">
+            <div className="skeleton-block pulse-border" />
+            <div className="skeleton-block pulse-border" />
+            <div className="skeleton-block pulse-border" />
+            <div className="skeleton-block pulse-border" />
+            <div className="skeleton-block pulse-border right" />
+          </div>
+          <div className="skeleton-data" />
         </div>
-        <div className="skeleton-data" />
       </div>
     );
   }

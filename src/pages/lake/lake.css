@@ -153,10 +153,16 @@
     margin-top: 6px;
 }
 
-.main .lake .clickable-box .skeleton-box {
-    width: calc(100% + 50px);
+.main .lake .clickable-box .skeleton-outer {
+    width: calc(100% + 45px);
     margin-left: -25px;
     margin-bottom: -20px;
+    margin-top: 8px;
+    position: relative;
+}
+
+.main .lake .clickable-box .skeleton-data {
+    border-radius: 0;
 }
 
 .main .lake .loading {
@@ -398,7 +404,7 @@
 
     .main .lake h1 {
         font-size: 30px;
-        color: var(--background-suble-font-color);
+        color: var(--background-font-color);
         display: inline-block;
         vertical-align: super;
         margin: 10px 0;
