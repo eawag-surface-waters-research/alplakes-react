@@ -157,6 +157,7 @@ const fetchDataParallel = async (urls) => {
         const response = await axios.get(url[i], {
           responseType: "arraybuffer",
         });
+        response["url"] = url[i];
         return response;
       } catch (error) {
         console.error(error);
@@ -170,7 +171,7 @@ const fetchDataParallel = async (urls) => {
   const responses = await Promise.all(requests);
   return responses.map((response) => {
     if (response) {
-      if (response.headers["content-type"].includes("gzip")) {
+      if (response.url.includes(".gz")) {
         try {
           const decompressedData = pako.ungzip(response.data, { to: "string" });
           return decompressedData;
