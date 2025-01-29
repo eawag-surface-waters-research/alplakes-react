@@ -109,14 +109,11 @@ class HomeMap extends Component {
           },
           {
             style: {
-              fillColor: this.getColor(
-                lake.summary[day]
-              ),
+              fillColor: this.getColor(lake.summary[day]),
               weight: 0.5,
               opacity: 1,
               color: "grey",
-              fillOpacity:
-                lake.summary[day] === false ? 0 : 1,
+              fillOpacity: lake.summary[day] === false ? 0 : 1,
             },
           }
         )
@@ -131,7 +128,7 @@ class HomeMap extends Component {
     var { list, language } = this.props;
     var zoom = this.map.getZoom();
     for (let lake of list) {
-      let value = lake.summary[day] === false;
+      let value = lake.summary && lake.summary[day] !== false;
       this.labels[lake.key].marker = L.marker([lake.latitude, lake.longitude], {
         icon: L.divIcon({
           className: "leaflet-mouse-marker",
@@ -140,14 +137,12 @@ class HomeMap extends Component {
         }),
       })
         .bindTooltip(
-          `<a class="temperature-label${value ? " empty" : ""}" href="/${
+          `<a class="temperature-label${value ? "" : " empty"}" href="/${
             lake.key
           }" title='${Translations.click[language]}'><div class="name">${
             lake.name[language]
           }</div>${
-            value
-              ? ""
-              : `<div class="value">${lake.summary[day]}°</div>`
+            value ? `<div class="value">${lake.summary[day]}°</div>` : ""
           }</a>`,
           {
             id: lake.key,
@@ -265,6 +260,7 @@ class HomeMap extends Component {
       day = days[0];
       this.plotPolygons(day);
       this.map.fitBounds(this.polygons.getBounds());
+      
       this.setState({ day, days });
       this.labels = this.labelClustering(list, language);
       this.plotLabels(day);
@@ -293,8 +289,8 @@ class HomeMap extends Component {
   async componentDidMount() {
     var { dark } = this.props;
     var { minZoom, maxZoom } = this.state;
-    var center = [46.62855, 8.70415];
-    var zoom = 6;
+    var center = [46.670, 9.962];
+    var zoom = 7;
     var map = L.map("map", {
       preferCanvas: true,
       center: center,

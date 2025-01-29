@@ -487,6 +487,10 @@
         overflow: visible;
     }
 
+    .main .lake .map-sidebar .map-sidebar-left .lake-map-button {
+        opacity: 1;
+    }
+
     .main .lake .satellite .satellite-maps .satellite-inner .map {
         height: 300px;
     }
