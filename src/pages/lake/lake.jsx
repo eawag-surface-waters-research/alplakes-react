@@ -21,9 +21,12 @@ class NotFound extends Component {
     var { id, text } = this.props;
     return (
       <div className="not-found">
+        <div className="fourzerofour">
+          404
+        </div>
         {text && (
           <div className="inner">
-            Sorry the lake <div className="title">"{id}"</div> cannot be found.
+            Sorry the lake <div className="title">{id}</div> cannot be found.
           </div>
         )}
       </div>

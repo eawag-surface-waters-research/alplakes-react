@@ -1,3 +1,28 @@
+.main .not-found {
+    min-height: calc(100vh - var(--header-height) - var(--footer-height) - var(--top-margin));
+    width: 100%;
+    max-width: var(--text-width);
+    margin: auto;
+    margin-top: var(--top-margin);
+    padding: 0 calc(var(--padding)*1.5);
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.main .not-found .fourzerofour {
+    font-size: clamp(16px, 32vw, 350px);
+}
+
+.main .not-found .inner {
+    font-size: 30px;
+}
+
+.main .not-found .inner .title {
+    display: inline-block;
+    font-weight: 600;
+}
+
+
 .main .lake {
     width: 100%;
     max-width: var(--content-width);
