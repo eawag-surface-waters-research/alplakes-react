@@ -291,6 +291,7 @@ class ListItem extends Component {
 class Home extends Component {
   state = {
     list: [],
+    days: [],
     search: "",
     sort: "",
     ascending: false,
@@ -427,12 +428,15 @@ class Home extends Component {
       obj[item.properties.key] = item.geometry.coordinates;
       return obj;
     }, {});
+    var days = [];
     list.map((l) => {
       l.display = true;
       if (l.key in forecast) {
         l.time = forecast[l.key]["time"];
         l.values = forecast[l.key]["temperature"];
         let { summary, start, end } = summariseData(l.time, l.values);
+        if (Object.keys(summary).length > days.length)
+          days = Object.keys(summary);
         l.summary = summary;
         l.start = start;
         l.end = end;
@@ -447,15 +451,23 @@ class Home extends Component {
       }
       return l;
     });
-    this.setState({ list });
+    this.setState({ list, days });
   }
   componentWillUnmount() {
     window.removeEventListener("keydown", this.focusSearchBar);
   }
   render() {
     var { language, dark } = this.props;
-    var { list, search, filters, fullscreen, favorites, sort, ascending } =
-      this.state;
+    var {
+      list,
+      search,
+      filters,
+      fullscreen,
+      favorites,
+      sort,
+      ascending,
+      days,
+    } = this.state;
     var sortedList = this.sortList(list, filters, favorites, sort, ascending);
     var results = sortedList.filter((l) => l.display && !l.filter).length;
     var filterTypes = [
@@ -525,6 +537,7 @@ class Home extends Component {
             <div className={fullscreen ? "home-map" : "home-map hide"}>
               <HomeMap
                 list={list}
+                days={days}
                 dark={dark}
                 language={language}
                 setBounds={this.setBounds}

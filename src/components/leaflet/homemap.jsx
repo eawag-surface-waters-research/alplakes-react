@@ -128,7 +128,10 @@ class HomeMap extends Component {
     var { list, language } = this.props;
     var zoom = this.map.getZoom();
     for (let lake of list) {
-      let value = lake.summary && lake.summary[day] !== false;
+      let value =
+        lake.summary &&
+        typeof lake.summary[day] === "number" &&
+        !isNaN(lake.summary[day]);
       this.labels[lake.key].marker = L.marker([lake.latitude, lake.longitude], {
         icon: L.divIcon({
           className: "leaflet-mouse-marker",
@@ -254,13 +257,11 @@ class HomeMap extends Component {
   };
   componentDidUpdate(prevProps) {
     var { day } = this.state;
-    var { list, language } = this.props;
+    var { list, language, days } = this.props;
     if (this.plot && list.length > 0) {
-      const days = Object.keys(list[0].summary);
       day = days[0];
       this.plotPolygons(day);
       this.map.fitBounds(this.polygons.getBounds());
-      
       this.setState({ day, days });
       this.labels = this.labelClustering(list, language);
       this.plotLabels(day);
@@ -289,7 +290,7 @@ class HomeMap extends Component {
   async componentDidMount() {
     var { dark } = this.props;
     var { minZoom, maxZoom } = this.state;
-    var center = [46.670, 9.962];
+    var center = [46.67, 9.962];
     var zoom = 7;
     var map = L.map("map", {
       preferCanvas: true,
