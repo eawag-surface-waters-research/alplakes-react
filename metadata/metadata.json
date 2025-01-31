@@ -2242,5 +2242,49 @@
     "mixing_regime": "NA",
     "geothermal_flux": 0.12,
     "trophic_state": "NA"
+  },
+  {
+    "key": "como",
+    "name": {
+      "EN": "Lake Como",
+      "DE": "Comer See",
+      "FR": "Lac de Côme",
+      "IT": "Lago di Como"
+    },
+    "area": 146,
+    "ave_depth": 154.0,
+    "max_depth": 425.0,
+    "elevation": 198,
+    "latitude": 46.022,
+    "longitude": 9.266,
+    "flags": ["italian"],
+    "type": "Natural",
+    "volume": 22.5,
+    "residence_time": 2009,
+    "mixing_regime": "NA",
+    "geothermal_flux": "NA",
+    "trophic_state": "NA"
+  },
+  {
+    "key": "iseo",
+    "name": {
+      "EN": "Lake Iseo",
+      "DE": "Iseosee",
+      "FR": "Lac d'Iseo",
+      "IT": "Lago d'Iseo"
+    },
+    "area": 65.3,
+    "ave_depth": 124.0,
+    "max_depth": 251.0,
+    "elevation": 185,
+    "latitude": 45.73,
+    "longitude": 10.07,
+    "flags": ["italian"],
+    "type": "Natural",
+    "volume": 8.1,
+    "residence_time": 3214,
+    "mixing_regime": "NA",
+    "geothermal_flux": "NA",
+    "trophic_state": "NA"
   }
 ]
