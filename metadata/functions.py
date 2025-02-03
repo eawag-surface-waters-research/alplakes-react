@@ -182,7 +182,7 @@ def make_modules(data, sd):
             },
             "defaults": ["temperature_linegraph"]
         })
-    if sd and "sentinel3" in sd and "chla" in sd["sentinel3"]:
+    if sd and "sentinel3" in sd and "chla" in sd["sentinel3"] and data["key"] != "mondsee":
         modules.append({
             "id": "satellite_chla",
             "title": {
@@ -204,7 +204,7 @@ def make_modules(data, sd):
             },
             "defaults": ["satellite_chlorophyll"]
         })
-    if sd and ("sentinel3" in sd and "Zsd_lee" in sd["sentinel3"]):
+    if sd and ("sentinel3" in sd and "Zsd_lee" in sd["sentinel3"]) and data["key"] != "mondsee":
         # or ("sentinel2" in sd and "Z490" in sd["sentinel2"])
         modules.append({
             "id": "satellite_secchi",
@@ -227,7 +227,7 @@ def make_modules(data, sd):
             },
             "defaults": ["satellite_secchi"]
         })
-    if sd and ("sentinel3" in sd and "tsm_binding754" in sd["sentinel3"]):
+    if sd and ("sentinel3" in sd and "tsm_binding754" in sd["sentinel3"]) and data["key"] != "mondsee":
         # or ("sentinel2" in sd and "tsm_dogliotti665" in sd["sentinel2"])
         modules.append({
             "id": "satellite_turbidity",
@@ -554,7 +554,7 @@ def make_layers(data, sd):
                 }
             }
         })
-    if sd and "sentinel3" in sd and "chla" in sd["sentinel3"]:
+    if sd and "sentinel3" in sd and "chla" in sd["sentinel3"] and data["key"] != "mondsee":
         layers.append({
             "id": "satellite_chlorophyll",
             "type": "satellite",
@@ -595,7 +595,7 @@ def make_layers(data, sd):
             }
         })
     if sd and (
-            ("sentinel3" in sd and "Zsd_lee" in sd["sentinel3"]) or ("sentinel2" in sd and "Z490" in sd["sentinel2"])):
+            ("sentinel3" in sd and "Zsd_lee" in sd["sentinel3"]) or ("sentinel2" in sd and "Z490" in sd["sentinel2"])) and data["key"] != "mondsee":
         models = []
         bucket = False
         if ("sentinel3" in sd and "Zsd_lee" in sd["sentinel3"]):
@@ -648,7 +648,7 @@ def make_layers(data, sd):
             }
         })
     if sd and (("sentinel3" in sd and "tsm_binding754" in sd["sentinel3"]) or (
-            "sentinel2" in sd and "tsm_dogliotti665" in sd["sentinel2"])):
+            "sentinel2" in sd and "tsm_dogliotti665" in sd["sentinel2"])) and data["key"] != "mondsee":
         models = []
         bucket = False
         if "sentinel3" in sd and "tsm_binding754" in sd["sentinel3"]:
@@ -699,7 +699,7 @@ def make_layers(data, sd):
                 }
             }
         })
-    if sd and "sentinel3" in sd and "forel_ule" in sd["sentinel3"]:
+    if sd and "sentinel3" in sd and "forel_ule" in sd["sentinel3"] and data["key"] != "mondsee":
         layers.append({
             "id": "satellite_forelule",
             "type": "satellite",
