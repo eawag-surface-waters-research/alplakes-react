@@ -13,64 +13,176 @@ export const download1DLinegraph = async (
   parameter,
   bucket = false
 ) => {
-  var data;
-  if (bucket) {
-    try {
-      ({ data } = await axios.get(
-        `${
-          CONFIG.alplakes_bucket
-        }/simulations/${model}/cache/${lake}/linegraph_${parameter}.json${general.hour()}`
-      ));
-      return data;
-    } catch (e) {
-      console.error("Failed to collect linegraph from S3.");
-    }
+  const apiUrl = `${
+    CONFIG.alplakes_api
+  }/simulations/1d/point/${model}/${lake}/${general.formatAPIDatetime(
+    start
+  )}/${general.formatAPIDatetime(end)}/${depth}?variables=${parameter}`;
+  const bucketUrl = `${
+    CONFIG.alplakes_bucket
+  }/simulations/${model}/cache/${lake}/linegraph_${parameter}.json${general.hour()}`;
+  const urls = bucket ? [[bucketUrl, apiUrl]] : [[apiUrl]];
+  const response = await fetchDataParallel(urls);
+  return response[0];
+};
+
+export const downloadPastYear = async (
+  model,
+  lake,
+  parameter,
+  bucket = false
+) => {
+  var { start_date, end_date } = await downloadModelMetadata(model, lake);
+  var start = new Date(end_date.getTime() - 365 * 24 * 60 * 60 * 1000);
+  const apiUrl = `${
+    CONFIG.alplakes_api
+  }/simulations/1d/depthtime/${model}/${lake}/${general.formatAPIDatetime(
+    start
+  )}/${general.formatAPIDatetime(end_date)}?variables=${parameter}`;
+  const bucketUrl = `${
+    CONFIG.alplakes_bucket
+  }/simulations/${model}/cache/${lake}/heatmap_${parameter}.json?timestamp=${general.hour()}`;
+  const urls = bucket ? [[bucketUrl, apiUrl]] : [[apiUrl]];
+  const response = await fetchDataParallel(urls);
+  const data = response[0];
+  var x = data.time.map((t) => new Date(t));
+  var y = data.depth["data"];
+  var z = data["variables"][parameter]["data"];
+  return { data: { x, y, z }, start_date, end_date, start, end: end_date };
+};
+
+export const downloadDoy = async (
+  model,
+  lake,
+  depth,
+  parameter,
+  bucket = false
+) => {
+  const start = new Date(new Date().getFullYear(), 0, 1, 0, 0);
+  const end = new Date();
+  end.setDate(end.getDate() + 5);
+  const apiUrl = `${CONFIG.alplakes_api}/simulations/1d/doy/${model}/${lake}/${parameter}/${depth}`;
+  const bucketUrl = `${CONFIG.alplakes_bucket}/simulations/${model}/cache/${lake}/doy_${parameter}.json`;
+  const apiCurrent = `${
+    CONFIG.alplakes_api
+  }/simulations/1d/point/${model}/${lake}/${general.formatAPIDatetime(
+    start
+  )}/${general.formatAPIDatetime(
+    end
+  )}/${depth}?variables=${parameter}&resample=daily`;
+  const bucketCurrent = `${
+    CONFIG.alplakes_bucket
+  }/simulations/${model}/cache/${lake}/doy_currentyear.json?timestamp=${general.hour()}`;
+  const urls = bucket
+    ? [
+        [bucketUrl, apiUrl],
+        [bucketCurrent, apiCurrent],
+      ]
+    : [[apiUrl], [apiCurrent]];
+  const response = await fetchDataParallel(urls);
+  const data = response[0];
+  const current = response[1];
+
+  const x = general.getDoyArray();
+  var display = [];
+  var min_year = false;
+  var max_year = false;
+  if ("start_time" in data) {
+    min_year = new Date(data["start_time"]).getFullYear();
   }
-  ({ data } = await axios.get(
-    `${
-      CONFIG.alplakes_api
-    }/simulations/1d/point/${model}/${lake}/${general.formatAPIDatetime(
-      start
-    )}/${general.formatAPIDatetime(end)}/${depth}?variables=${parameter}`
-  ));
-  return data;
+  if ("end_time" in data) {
+    max_year = new Date(data["end_time"]).getFullYear();
+  }
+  if (data && "min" in data["variables"])
+    display.push({
+      x,
+      y: general.removeLeap(data["variables"].min["data"]),
+      name: false,
+      lineColor: "lightgrey",
+    });
+  if (data && "max" in data["variables"])
+    display.push({
+      x,
+      y: general.removeLeap(data["variables"].max["data"]),
+      name: false,
+      lineColor: "lightgrey",
+    });
+  if (data && "perc5" in data["variables"] && "perc95" in data["variables"]) {
+    display.push({
+      confidenceAxis: "y",
+      upper: general.removeLeap(data["variables"].perc95["data"]),
+      lower: general.removeLeap(data["variables"].perc5["data"]),
+      x,
+      y: general.removeLeap(data["variables"].mean["data"]),
+      lineColor: "grey",
+      name: false,
+    });
+  }
+  if (data && "perc25" in data["variables"] && "perc75" in data["variables"]) {
+    display.push({
+      confidenceAxis: "y",
+      upper: general.removeLeap(data["variables"].perc75["data"]),
+      lower: general.removeLeap(data["variables"].perc25["data"]),
+      x,
+      y: general.removeLeap(data["variables"].mean["data"]),
+      lineColor: "grey",
+      name: false,
+    });
+  }
+  if (data && "lastyear" in data["variables"]) {
+    display.push({
+      x,
+      y: general.removeLeap(data["variables"].lastyear["data"]),
+      name: false,
+      lineColor: "#ffc045",
+    });
+  }
+  if (current) {
+    var xx = current.time.map((t) => new Date(t));
+    var yy = current["variables"][parameter]["data"];
+    display.push({
+      x: xx,
+      y: yy,
+      name: false,
+      lineColor: "#ff7d45",
+      lineWeight: 2,
+    });
+  }
+  return {
+    min_year,
+    max_year,
+    data: display,
+  };
 };
 
 export const downloadModelMetadata = async (model, lake) => {
-  var metadata;
+  var urls;
   if (model === "simstrat") {
-    try {
-      ({ data: metadata } = await axios.get(
+    urls = [
+      [
         `${
           CONFIG.alplakes_bucket
-        }/simulations/${model}/cache/${lake}/metadata.json${general.hour()}`
-      ));
-    } catch (e) {
-      console.error("Failed to collect Simstrat metadata from S3.");
-      ({ data: metadata } = await axios.get(
-        `${CONFIG.alplakes_api}/simulations/1d/metadata/${model}/${lake}`
-      ));
-    }
+        }/simulations/${model}/cache/${lake}/metadata.json${general.hour()}`,
+        `${CONFIG.alplakes_api}/simulations/1d/metadata/${model}/${lake}`,
+      ],
+    ];
   } else if (model === "delft3d-flow") {
-    try {
-      ({ data: metadata } = await axios.get(
+    urls = [
+      [
         `${
           CONFIG.alplakes_bucket
-        }/simulations/${model}/cache/${lake}/metadata.json${general.hour()}`
-      ));
-    } catch (e) {
-      ({ data: metadata } = await axios.get(
-        `${CONFIG.alplakes_api}/simulations/metadata/${model}/${lake}`
-      ));
-    }
+        }/simulations/${model}/cache/${lake}/metadata.json${general.hour()}`,
+        `${CONFIG.alplakes_api}/simulations/metadata/${model}/${lake}`,
+      ],
+    ];
   } else {
     console.error("Model not recognised.");
     return false;
   }
-
+  const response = await fetchDataParallel(urls);
+  const metadata = response[0];
   metadata.start_date = general.stringToDate(metadata.start_date + " 00:00");
   metadata.end_date = general.stringToDate(metadata.end_date + " 22:00");
-
   return metadata;
 };
 
@@ -99,7 +211,7 @@ export const download3DMap = async (
     }
     return [api_url];
   });
-  response = await fetchDataParallel(urls);
+  response = await fetchDataParallel(urls, true);
   const data = {};
   for (let i = 0; i < parameters.length; i++) {
     try {
@@ -150,13 +262,16 @@ const arrayBufferToString = (arrayBuffer) => {
   return decoder.decode(arrayBuffer);
 };
 
-const fetchDataParallel = async (urls) => {
+const fetchDataParallel = async (urls, text) => {
   const fetchData = async (url) => {
+    const properties = text
+      ? {
+          responseType: "arraybuffer",
+        }
+      : {};
     for (let i = 0; i < url.length; i++) {
       try {
-        const response = await axios.get(url[i], {
-          responseType: "arraybuffer",
-        });
+        const response = await axios.get(url[i], properties);
         response["url"] = url[i];
         return response;
       } catch (error) {
@@ -171,7 +286,7 @@ const fetchDataParallel = async (urls) => {
   const responses = await Promise.all(requests);
   return responses.map((response) => {
     if (response) {
-      if (response.url.includes(".gz")) {
+      if (response.url.includes(".gz") && text) {
         try {
           const decompressedData = pako.ungzip(response.data, { to: "string" });
           return decompressedData;
@@ -182,8 +297,10 @@ const fetchDataParallel = async (urls) => {
             return false;
           }
         }
-      } else {
+      } else if (text) {
         return arrayBufferToString(response.data);
+      } else {
+        return response.data;
       }
     } else {
       return false;

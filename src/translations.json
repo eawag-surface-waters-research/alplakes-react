@@ -407,6 +407,30 @@
     "FR": "Température de l'eau et courants prévus à l'aide d'un modèle numérique 3D.",
     "IT": "Temperatura dell'acqua e correnti previste tramite un modello numerico 3D."
   },
+  "doyStats": {
+    "EN": "Day of year statistics",
+    "DE": "Tagesstatistiken",
+    "FR": "Statistiques par jour de l'année",
+    "IT": "Statistiche del giorno dell'anno"
+  },
+  "doyStatsText": {
+    "EN": "Daily statistics for a given parameter over the total period of the simulation.",
+    "DE": "Tägliche Statistiken für einen bestimmten Parameter über den gesamten Simulationszeitraum.",
+    "FR": "Statistiques quotidiennes pour un paramètre donné sur la période totale de la simulation.",
+    "IT": "Statistiche giornaliere per un dato parametro per l'intero periodo della simulazione."
+  },
+  "pastYear": {
+    "EN": "Past year",
+    "DE": "Letztes Jahr",
+    "FR": "L'année dernière",
+    "IT": "Anno scorso"
+  },
+  "pastYearText": {
+    "EN": "Depth time heatmap for the last year of data for a given parameter.",
+    "DE": "Tiefen-Zeit-Heatmap für das letzte Jahr der Daten für einen bestimmten Parameter.",
+    "FR": "Carte thermique temporelle de profondeur pour la dernière année de données pour un paramètre donné.",
+    "IT": "Mappa termica temporale della profondità per l'ultimo anno di dati per un dato parametro."
+  },
   "maplink": {
     "EN": "See more",
     "DE": "Mehr anzeigen",

@@ -15,15 +15,15 @@ import Scientific from "./components/scientific";
 import Parameters from "./components/parameters";
 import Bathymetry from "./components/bathymetry";
 import WaterLevel from "./components/waterlevel";
+import Doy from "./components/doy";
+import PastYear from "./components/pastyear";
 
 class NotFound extends Component {
   render() {
     var { id, text } = this.props;
     return (
       <div className="not-found">
-        <div className="fourzerofour">
-          404
-        </div>
+        <div className="fourzerofour">404</div>
         {text && (
           <div className="inner">
             Sorry the lake <div className="title">{id}</div> cannot be found.
@@ -182,6 +182,20 @@ class Lake extends Component {
             {"trends" in metadata && (
               <div className="section trends">
                 <h2>{Translations.trends[language]}</h2>
+                {"doy" in metadata["trends"] && (
+                  <Doy
+                    dark={dark}
+                    parameters={metadata.trends["doy"]}
+                    language={language}
+                  />
+                )}
+                {"year" in metadata["trends"] && (
+                  <PastYear
+                    dark={dark}
+                    parameters={metadata.trends["year"]}
+                    language={language}
+                  />
+                )}
               </div>
             )}
             {"properties" in metadata && (

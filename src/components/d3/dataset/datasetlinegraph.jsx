@@ -38,6 +38,7 @@ class DatasetLinegraph extends Component {
             lweight={[]}
             curve={curve}
             language={language}
+            grid={false}
           />
         )}
       </div>

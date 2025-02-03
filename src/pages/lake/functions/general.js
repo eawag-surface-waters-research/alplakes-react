@@ -215,3 +215,26 @@ const getIndexAtPoint = (lat, lng, points) => {
   }
   return [closestPoint.i, closestPoint.j];
 };
+
+export const getDoyArray = () => {
+  const array = [];
+  const startDate = new Date(new Date().getFullYear(), 0, 1);
+  for (let i = 0; i < 366; i++) {
+    const currentDate = new Date(startDate);
+    currentDate.setDate(startDate.getDate() + i);
+    array.push(currentDate);
+  }
+  if (array.length === 366) {
+    return [...array.slice(0, 58), ...array.slice(59)];
+  } else {
+    return array;
+  }
+};
+
+export const removeLeap = (array) => {
+  if (array.length === 366) {
+    return [...array.slice(0, 58), ...array.slice(59)];
+  } else {
+    return array;
+  }
+};

@@ -229,17 +229,16 @@
   left: var(--padding);
 }
 
-.dark .navbar .mobile-nav .nav-content .nav-row img {
+.navbar .mobile-nav .nav-content .nav-row .arrow img {
   -webkit-filter: invert(100%);
-  height: 10px;
   filter: invert(100%);
+  height: 10px;
   padding-right: 7px;
   padding-bottom: 4px;
 }
 
 .navbar .mobile-nav .nav-content a .nav-row {
   font-size: 24px;
-  font-weight: 300;
   color: var(--background-font-color);
   border-bottom: 1px solid var(--border-color);
 }

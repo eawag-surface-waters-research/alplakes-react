@@ -54,13 +54,13 @@
 
 .linegraph-graph .tooltip.tooltip-right:after {
   right: -11px;
-  border-left: 10px solid var(--border-color);
+  border-left: 10px solid var(--background-color);
   border-right: none;
 }
 
 .linegraph-graph .tooltip.tooltip-left:after {
   left: -11px;
-  border-right: 10px solid var(--border-color);
+  border-right: 10px solid var(--background-color);
   border-left: none;
 }
 
