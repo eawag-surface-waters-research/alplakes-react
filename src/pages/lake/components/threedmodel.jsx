@@ -11,6 +11,7 @@ import {
   processLabels,
 } from "../functions/general";
 import SummaryTable from "../../../components/summarytable/summarytable";
+import Expand from "../../../components/expand/expand";
 
 class PlaceholderGraph extends Component {
   render() {
@@ -170,31 +171,64 @@ class ThreeDModel extends Component {
             />
           </div>
           <div className="map-sidebar-right">
-            {labels
-              ? labels.map((l) => (
-                  <NavLink to={l.url} key={l.name}>
-                    <div className="clickable-box">
-                      <div className="right">{parameters.model}</div>
-                      <div className="title">{l.name}</div>
-                      <SummaryTable
-                        start={l.start}
-                        end={l.end}
-                        dt={l.time}
-                        value={l.values}
-                        summary={l.summary}
-                        unit={"°"}
-                        language={language}
-                      />
-                    </div>
-                  </NavLink>
-                ))
-              : parameters.labels.map((l) => (
-                  <PlaceholderGraph
-                    key={l.name}
-                    title={l.name}
-                    model={parameters.model}
+            {labels && labels.length > 0 ? (
+              <NavLink to={labels[0].url} key={labels[0].name}>
+                <div className="clickable-box">
+                  <div className="right">{parameters.model}</div>
+                  <div className="title">{labels[0].name}</div>
+                  <SummaryTable
+                    start={labels[0].start}
+                    end={labels[0].end}
+                    dt={labels[0].time}
+                    value={labels[0].values}
+                    summary={labels[0].summary}
+                    unit={"°"}
+                    language={language}
                   />
-                ))}
+                </div>
+              </NavLink>
+            ) : (
+              <PlaceholderGraph
+                key={parameters.labels[0].name}
+                title={parameters.labels[0].name}
+                model={parameters.model}
+              />
+            )}
+            <Expand
+              openLabel="Show all locations"
+              closeLabel="Hide locations"
+              content={
+                <React.Fragment>
+                  {labels && labels.length > 1
+                    ? labels.slice(1).map((l) => (
+                        <NavLink to={l.url} key={l.name}>
+                          <div className="clickable-box">
+                            <div className="right">{parameters.model}</div>
+                            <div className="title">{l.name}</div>
+                            <SummaryTable
+                              start={l.start}
+                              end={l.end}
+                              dt={l.time}
+                              value={l.values}
+                              summary={l.summary}
+                              unit={"°"}
+                              language={language}
+                            />
+                          </div>
+                        </NavLink>
+                      ))
+                    : parameters.labels
+                        .slice(1)
+                        .map((l) => (
+                          <PlaceholderGraph
+                            key={l.name}
+                            title={l.name}
+                            model={parameters.model}
+                          />
+                        ))}
+                </React.Fragment>
+              }
+            />
           </div>
         </div>
       </div>

@@ -92,7 +92,7 @@
     background-color: var(--box-color);
 }
 
-.main .lake .map-sidebar .map-sidebar-left .graph-container:hover .vis-header {
+.main .lake .map-sidebar .map-sidebar-left:hover .vis-header {
     opacity: 1;
 }
 
@@ -111,24 +111,87 @@
 .main .lake .map-sidebar .map-sidebar-right {
     display: inline-block;
     width: 400px;
-    min-height: 100px;
     max-height: 500px;
     overflow-y: auto;
     box-sizing: border-box;
     vertical-align: top;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-    padding: 5px;
-    border-bottom: 1px solid var(--border-color);
+    padding: 0px 10px 0px 0px;
 }
 
 .main .lake .map-sidebar .map-sidebar-right::-webkit-scrollbar {
-    display: none;
+    width: 5px;
+}
+
+.main .lake .map-sidebar .map-sidebar-right::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 10px;
+}
+
+.main .lake .map-sidebar .map-sidebar-right::-webkit-scrollbar-track {
+    background: var(--box-color);
+    margin-left: 5px;
+    border-radius: 8px;
 }
 
 .main .lake .map-sidebar .map-sidebar-right .clickable-box {
     width: 100%;
+    margin-right: 0;
 }
+
+.main .lake .map-sidebar .map-sidebar-right .description {
+    margin-bottom: 12px;
+}
+
+.main .lake .map-sidebar .map-sidebar-right .setting {
+    padding: 0px 0px 18px 0px;
+    display: inline-block;
+    width: 100%;
+    font-size: 14px;
+}
+
+.main .lake .map-sidebar .map-sidebar-right .setting .label {
+    padding: 0px 0px 4px 0px;
+    display: inline-block;
+    color: var(--background-suble-font-color);
+}
+
+.main .lake .map-sidebar .map-sidebar-right .setting .performance {
+    padding: 5px 20px 0px 0px;
+    display: inline-block;
+    text-align: center;
+}
+
+.main .lake .map-sidebar .map-sidebar-right .setting .performance .performance-value {
+    font-size: 22px;
+}
+
+.main .lake .map-sidebar .map-sidebar-right .setting .performance .performance-value .performance-unit {
+    display: inline-block;
+    font-size: 16px;
+}
+
+.main .lake .map-sidebar .map-sidebar-right .setting .performance .performance-name {
+    color: var(--background-suble-font-color);
+    font-size: 12px;
+}
+
+.main .lake .map-sidebar .map-sidebar-right .setting select {
+    display: block;
+    font-size: 14px;
+    background-color: var(--box-color);
+    cursor: pointer;
+    padding: 4px 8px;
+    text-align: left;
+    color: var(--background-font-color);
+    border: none;
+    border-radius: 6px;
+}
+
+.main .lake .map-sidebar .map-sidebar-right .setting select.subtle {
+    background-color: var(--box-color);
+    margin-bottom: 10px;
+}
+
 
 .main .lake .clickable-box {
     background-color: var(--box-color);
@@ -407,33 +470,33 @@
 
 /** Trends **/
 
-.main .lake .doy .map-sidebar .map-sidebar-left .graph-container {
+.main .lake .map-sidebar .map-sidebar-left .line-graph-container {
     height: 100%;
     display: flex;
     flex-direction: column;
     width: 100%;
 }
 
-.main .lake .doy .map-sidebar .map-sidebar-left .graph-container .dataset-linegraph {
+.main .lake .map-sidebar .map-sidebar-left .line-graph-container .dataset-linegraph {
     width: 100%;
     flex-grow: 1;
     padding: 30px 30px 10px 20px;
     box-sizing: border-box;
 }
 
-.main .lake .doy .map-sidebar .map-sidebar-left .graph-container .graph-legend {
+.main .lake .map-sidebar .map-sidebar-left .line-graph-container .graph-legend {
     height: auto;
     text-align: center;
     font-size: 12px;
     padding-bottom: 16px;
 }
 
-.main .lake .doy .map-sidebar .map-sidebar-left .graph-container .graph-legend .item {
+.main .lake .map-sidebar .map-sidebar-left .line-graph-container .graph-legend .item {
     display: inline-block;
     margin: 0 12px;
 }
 
-.main .lake .doy .map-sidebar .map-sidebar-left .graph-container .graph-legend .item .box {
+.main .lake .map-sidebar .map-sidebar-left .line-graph-container .graph-legend .item .box {
     display: inline-block;
     width: 30px;
     height: 10px;
@@ -442,7 +505,7 @@
     margin-right: 8px;
 }
 
-.main .lake .doy .map-sidebar .map-sidebar-left .graph-container .graph-legend .item .line {
+.main .lake .map-sidebar .map-sidebar-left .line-graph-container .graph-legend .item .line {
     display: inline-block;
     width: 30px;
     height: 5px;
@@ -451,14 +514,14 @@
     border-bottom: 1px solid grey;
 }
 
-.main .lake .doy .map-sidebar .map-sidebar-left .graph-container .graph-legend .item .text {
+.main .lake .map-sidebar .map-sidebar-left .line-graph-container .graph-legend .item .text {
     display: inline-block;
 }
 
 .main .lake .past-year .map-sidebar .map-sidebar-left .graph-container {
     width: 100%;
     height: 100%;
-    padding: 20px;
+    padding: 15px 15px 0 20px;
     box-sizing: border-box;
 }
 
@@ -469,6 +532,7 @@
         width: 100%;
         height: 350px;
         margin-bottom: 12px;
+        border: none;
     }
 
     .main .lake .map-sidebar .map-sidebar-right {
@@ -488,6 +552,14 @@
 
     .main .lake .satellite .satellite-maps .satellite-inner {
         width: 100%;
+    }
+
+    .main .lake .satellite .satellite-maps .satellite-inner .map {
+        border: none;
+    }
+
+    .main .lake .map-sidebar .map-sidebar-left .vis-header {
+        opacity: 1;
     }
 }
 
@@ -557,6 +629,14 @@
 
     .main .lake .clickable-box .skeleton-data {
         border-radius: 0;
+    }
+
+    .main .lake .map-sidebar .map-sidebar-left .line-graph-container .dataset-linegraph {
+        padding: 0;
+    }
+
+    .main .lake .past-year .map-sidebar .map-sidebar-left .graph-container {
+        padding: 0;
     }
 
     .main .lake .forecast .onedmodel h3 {

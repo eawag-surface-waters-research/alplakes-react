@@ -17,6 +17,7 @@ import Bathymetry from "./components/bathymetry";
 import WaterLevel from "./components/waterlevel";
 import Doy from "./components/doy";
 import PastYear from "./components/pastyear";
+import Climate from "./components/climate";
 
 class NotFound extends Component {
   render() {
@@ -193,6 +194,13 @@ class Lake extends Component {
                   <PastYear
                     dark={dark}
                     parameters={metadata.trends["year"]}
+                    language={language}
+                  />
+                )}
+                {"climate" in metadata["trends"] && (
+                  <Climate
+                    dark={dark}
+                    parameters={metadata.trends["climate"]}
                     language={language}
                   />
                 )}

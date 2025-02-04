@@ -41,7 +41,7 @@ export const downloadPastYear = async (
   )}/${general.formatAPIDatetime(end_date)}?variables=${parameter}`;
   const bucketUrl = `${
     CONFIG.alplakes_bucket
-  }/simulations/${model}/cache/${lake}/heatmap_${parameter}.json?timestamp=${general.hour()}`;
+  }/simulations/${model}/cache/${lake}/heatmap_${parameter}.json.gz?timestamp=${general.hour()}`;
   const urls = bucket ? [[bucketUrl, apiUrl]] : [[apiUrl]];
   const response = await fetchDataParallel(urls);
   const data = response[0];
@@ -155,6 +155,53 @@ export const downloadDoy = async (
   };
 };
 
+export const downloadClimate = async (lake) => {
+  const url = `${CONFIG.alplakes_bucket}/simulations/simstrat/ch2018/${lake}.json`;
+  const response = await fetchDataParallel([[url]]);
+  const data = response[0];
+  const surface = [
+    {
+      x: data["yearly"]["surface"]["RCP26"]["x"],
+      y: data["yearly"]["surface"]["RCP26"]["y_ave"],
+      confidenceAxis: "y",
+      upper: data["yearly"]["surface"]["RCP26"]["y_max"],
+      lower: data["yearly"]["surface"]["RCP26"]["y_min"],
+      name: false,
+      lineColor: "green",
+    },
+    {
+      x: data["yearly"]["surface"]["RCP45"]["x"],
+      y: data["yearly"]["surface"]["RCP45"]["y_ave"],
+      confidenceAxis: "y",
+      upper: data["yearly"]["surface"]["RCP45"]["y_max"],
+      lower: data["yearly"]["surface"]["RCP45"]["y_min"],
+      name: false,
+      lineColor: "orange",
+    },
+    {
+      x: data["yearly"]["surface"]["RCP85"]["x"],
+      y: data["yearly"]["surface"]["RCP85"]["y_ave"],
+      confidenceAxis: "y",
+      upper: data["yearly"]["surface"]["RCP85"]["y_max"],
+      lower: data["yearly"]["surface"]["RCP85"]["y_min"],
+      name: false,
+      lineColor: "red",
+    }
+  ]
+  const bottom = [
+    {
+      x: data["yearly"]["bottom"]["RCP26"]["x"],
+      y: data["yearly"]["bottom"]["RCP26"]["y_ave"],
+      confidenceAxis: "y",
+      upper: data["yearly"]["bottom"]["RCP26"]["y_max"],
+      lower: data["yearly"]["bottom"]["RCP26"]["y_min"],
+      name: false,
+      lineColor: "green",
+    }
+  ]
+  return { surface, bottom }
+};
+
 export const downloadModelMetadata = async (model, lake) => {
   var urls;
   if (model === "simstrat") {
@@ -211,7 +258,7 @@ export const download3DMap = async (
     }
     return [api_url];
   });
-  response = await fetchDataParallel(urls, true);
+  response = await fetchDataParallel(urls);
   const data = {};
   for (let i = 0; i < parameters.length; i++) {
     try {
@@ -262,16 +309,18 @@ const arrayBufferToString = (arrayBuffer) => {
   return decoder.decode(arrayBuffer);
 };
 
-const fetchDataParallel = async (urls, text) => {
+const fetchDataParallel = async (urls) => {
   const fetchData = async (url) => {
-    const properties = text
-      ? {
-          responseType: "arraybuffer",
-        }
-      : {};
     for (let i = 0; i < url.length; i++) {
       try {
-        const response = await axios.get(url[i], properties);
+        const response = await axios.get(
+          url[i],
+          url[i].includes(".gz")
+            ? {
+                responseType: "arraybuffer",
+              }
+            : {}
+        );
         response["url"] = url[i];
         return response;
       } catch (error) {
@@ -286,10 +335,14 @@ const fetchDataParallel = async (urls, text) => {
   const responses = await Promise.all(requests);
   return responses.map((response) => {
     if (response) {
-      if (response.url.includes(".gz") && text) {
+      if (response.url.includes(".gz")) {
         try {
           const decompressedData = pako.ungzip(response.data, { to: "string" });
-          return decompressedData;
+          if (response.url.includes(".json")) {
+            return JSON.parse(decompressedData);
+          } else {
+            return decompressedData;
+          }
         } catch (error) {
           try {
             return arrayBufferToString(response.data);
@@ -297,7 +350,7 @@ const fetchDataParallel = async (urls, text) => {
             return false;
           }
         }
-      } else if (text) {
+      } else if (response.url.includes(".txt")) {
         return arrayBufferToString(response.data);
       } else {
         return response.data;

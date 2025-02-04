@@ -1,8 +1,11 @@
 import React, { Component, createRef } from "react";
 import { downloadDoy } from "../functions/download";
+import { capitalize } from "../functions/general";
 import Translations from "../../../translations.json";
 import Information from "../../../components/information/information";
 import DatasetLinegraph from "../../../components/d3/dataset/datasetlinegraph";
+import Loading from "../../../components/loading/loading";
+import Expand from "../../../components/expand/expand";
 
 class DoyLegend extends Component {
   render() {
@@ -11,7 +14,8 @@ class DoyLegend extends Component {
       <div className="graph-legend">
         {max_year && (
           <div className="date">
-            Reference period {`${min_year} - ${max_year}`}
+            {Translations["referencePeriod"][language]}{" "}
+            {`${min_year} - ${max_year}`}
           </div>
         )}
         <div className="item">
@@ -46,12 +50,9 @@ class DoyLegend extends Component {
 class Doy extends Component {
   state = {
     hasBeenVisible: false,
-    model: "",
-    models: [],
+    model: false,
     variable: "",
-    variables: [],
     depth: "",
-    depths: [],
     min_year: false,
     max_year: false,
     display: false,
@@ -81,20 +82,35 @@ class Doy extends Component {
     }
   }
 
-  onVisible = async () => {
+  setModel = (event) => {
+    const { parameters } = this.props;
+    const model = event.target.value;
+    const variable = parameters[model].parameters[0];
+    const depth = parameters[model].depths[0];
+    this.process(model, variable, depth);
+    this.setState({ model, variable, depth });
+  };
+
+  setVariable = (event) => {
+    const { parameters } = this.props;
+    const { model, depth } = this.state;
+    const variable = parameters[model].parameters.find(
+      (p) => p.key === event.target.value
+    );
+    this.process(model, variable, depth);
+  };
+
+  setDepth = (event) => {
+    const { model, variable } = this.state;
+    const depth = event.target.value;
+    this.process(model, variable, depth);
+  };
+
+  process = async (model, variable, depth) => {
     const { parameters, language } = this.props;
-    const models = parameters.models.map((m) => {
-      return { key: `${m.key}_${m.model}`, label: m.name };
-    });
-    const model = models[0];
-    const initial = parameters.models[0];
-    const variables = initial.parameters;
-    const variable = variables[0];
-    const depths = initial.depths;
-    const depth = depths[0];
     const { min_year, max_year, data } = await downloadDoy(
-      initial.model,
-      initial.key,
+      parameters[model].model,
+      parameters[model].key,
       depth,
       variable.key,
       true
@@ -108,20 +124,25 @@ class Doy extends Component {
     };
     this.setState({
       model,
-      models,
       variable,
-      variables,
       depth,
-      depths,
       min_year,
       max_year,
       display,
     });
   };
 
+  onVisible = () => {
+    const { parameters } = this.props;
+    const model = Object.keys(parameters)[0];
+    const variable = parameters[model].parameters[0];
+    const depth = parameters[model].depths[0];
+    this.process(model, variable, depth);
+  };
+
   render() {
-    var { language, dark } = this.props;
-    var { display, min_year, max_year } = this.state;
+    var { language, dark, parameters } = this.props;
+    var { display, min_year, max_year, model, variable, depth } = this.state;
     return (
       <div className="doy" ref={this.ref}>
         <h3>
@@ -130,8 +151,8 @@ class Doy extends Component {
         </h3>
         <div className="map-sidebar">
           <div className="map-sidebar-left">
-            {display && (
-              <div className="graph-container">
+            {display ? (
+              <div className="line-graph-container">
                 <DatasetLinegraph
                   {...display}
                   dark={dark}
@@ -143,9 +164,106 @@ class Doy extends Component {
                   language={language}
                 />
               </div>
+            ) : (
+              <div className="loading-graph">
+                <Loading />
+              </div>
             )}
           </div>
-          <div className="map-sidebar-right"></div>
+          <div className="map-sidebar-right">
+            {model && (
+              <div className="graph-properties">
+                <div className="description">
+                  Lorem Ipsum is simply dummy text of the printing and
+                  typesetting industry. Lorem Ipsum has been the industry's
+                  standard dummy text ever since the 1500s, when an unknown
+                  printer took a galley of type and scrambled it to make a type
+                  specimen book.
+                </div>
+                <Expand
+                  openLabel="Settings"
+                  closeLabel="Hide settings"
+                  content={
+                    <React.Fragment>
+                      <div className="setting">
+                        <div className="label">Simulation</div>
+                        <select value={model} onChange={this.setModel}>
+                          {Object.keys(parameters).map((p) => (
+                            <option value={p} key={p}>
+                              {parameters[p].name} (
+                              {capitalize(parameters[p].model)})
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                      <div className="setting">
+                        <div className="label">Variable</div>
+                        <select value={variable} onChange={this.setVariable}>
+                          {parameters[model].parameters.map((p) => (
+                            <option value={p.key} key={p.key}>
+                              {Translations[p.name][language]}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                      <div className="setting">
+                        <div className="label">Depth</div>
+                        <select value={depth} onChange={this.setDepth}>
+                          {parameters[model].depths.map((d) => (
+                            <option value={d} key={d}>
+                              {d} m
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                      {"performance" in parameters[model] && (
+                        <div className="setting">
+                          <div className="label">Performance</div>
+                          <div>
+                            {Object.keys(
+                              parameters[model].performance.rmse
+                            ).map((k) => (
+                              <div key={k} className="performance">
+                                <div className="performance-value">
+                                  {Math.round(
+                                    parameters[model].performance.rmse[k] * 100
+                                  ) / 100}
+                                  <div className="performance-unit">
+                                    {parameters[model].unit}
+                                  </div>
+                                </div>
+                                <div className="performance-name">
+                                  {capitalize(k)} RMSE
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                      {"meteo_source" in parameters[model] && (
+                        <div className="setting">
+                          <div className="label">Meteorological data</div>
+                          <div>{parameters[model].meteo_source}</div>
+                        </div>
+                      )}
+                      {"hydro_source" in parameters[model] && (
+                        <div className="setting">
+                          <div className="label">Hydrological data</div>
+                          <div>{parameters[model].hydro_source}</div>
+                        </div>
+                      )}
+                      {"calibration_source" in parameters[model] && (
+                        <div className="setting">
+                          <div className="label">Calibration data</div>
+                          <div>{parameters[model].calibration_source}</div>
+                        </div>
+                      )}
+                    </React.Fragment>
+                  }
+                />
+              </div>
+            )}
+          </div>
         </div>
       </div>
     );

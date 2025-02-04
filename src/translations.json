@@ -419,6 +419,12 @@
     "FR": "Statistiques quotidiennes pour un paramètre donné sur la période totale de la simulation.",
     "IT": "Statistiche giornaliere per un dato parametro per l'intero periodo della simulazione."
   },
+  "year": {
+    "EN": "Year",
+    "DE": "Jahr",
+    "FR": "Année",
+    "IT": "Anno"
+  },
   "pastYear": {
     "EN": "Past year",
     "DE": "Letztes Jahr",
@@ -430,6 +436,24 @@
     "DE": "Tiefen-Zeit-Heatmap für das letzte Jahr der Daten für einen bestimmten Parameter.",
     "FR": "Carte thermique temporelle de profondeur pour la dernière année de données pour un paramètre donné.",
     "IT": "Mappa termica temporale della profondità per l'ultimo anno di dati per un dato parametro."
+  },
+  "climate": {
+    "EN": "Climate scenarios",
+    "DE": "Klimaszenarien",
+    "FR": "Scénarios climatiques",
+    "IT": "Scenari climatici"
+  },
+  "climateText": {
+    "EN": "Average yearly temperature under a range of climate change scenarios.",
+    "DE": "Durchschnittliche Jahrestemperatur unter verschiedenen Klimaszenarien.",
+    "FR": "Température annuelle moyenne dans différents scénarios de changement climatique.",
+    "IT": "Temperatura media annuale in una serie di scenari di cambiamento climatico."
+  },
+  "referencePeriod": {
+    "EN": "Reference period",
+    "DE": "Bezugszeitraum",
+    "FR": "Période de référence",
+    "IT": "Periodo di riferimento"
   },
   "maplink": {
     "EN": "See more",
