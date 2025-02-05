@@ -411,7 +411,7 @@ const addBottomAxis = (svg, xDomain, options) => {
         "translate(" +
           options.canvasWidth / 2 +
           " ," +
-          (options.canvasHeight + options.marginBottom / 1.5) +
+          (options.canvasHeight + 35) +
           ")"
       )
       .attr("x", 6)

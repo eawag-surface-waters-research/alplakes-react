@@ -70,6 +70,34 @@
     padding-bottom: 1px;
 }
 
+.main .lake .scroll-up {
+    background-color: var(--highlight-color);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 12px;
+    box-sizing: border-box;
+    display: inline-block;
+    margin-bottom: 20px;
+    cursor: pointer;
+    transition: all .33s 0s ease;
+}
+
+.main .lake .scroll-up:hover {
+    transform: scale(1.02);
+}
+
+.main .lake .scroll-up img {
+    width: 16px;
+    display: inline-block;
+    filter: brightness(0) invert(1);
+    margin-left: 12px;
+    padding-bottom: 1px;
+    -moz-transform: scale(-1, -1);
+    -o-transform: scale(-1, -1);
+    -webkit-transform: scale(-1, -1);
+    transform: scale(-1, -1);
+}
+
 .main .lake .section {
     margin-bottom: calc(var(--padding) * 2);
 }
@@ -101,7 +129,7 @@
     transition: all .33s 0s ease;
 }
 
-.main .lake .map-sidebar .map-sidebar-left  .loading-graph {
+.main .lake .map-sidebar .map-sidebar-left .loading-graph {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -142,6 +170,10 @@
     margin-bottom: 12px;
 }
 
+.main .lake .map-sidebar .map-sidebar-right .description a {
+    color: var(--link-color);
+}
+
 .main .lake .map-sidebar .map-sidebar-right .setting {
     padding: 0px 0px 18px 0px;
     display: inline-block;
@@ -175,6 +207,10 @@
     font-size: 12px;
 }
 
+.main .lake .map-sidebar .map-sidebar-right .setting .value {
+    float: right;
+}
+
 .main .lake .map-sidebar .map-sidebar-right .setting select {
     display: block;
     font-size: 14px;
@@ -185,6 +221,87 @@
     color: var(--background-font-color);
     border: none;
     border-radius: 6px;
+}
+
+.main .lake .map-sidebar .map-sidebar-right .setting .dateperiod {
+    background-color: var(--box-color);
+    border: none;
+    border-radius: 8px;
+    box-sizing: border-box;
+    color: var(--background-font-color);
+    cursor: pointer;
+    display: inline-block;
+    font-size: 16px;
+    padding: 8px 12px;
+    text-align: left;
+    min-width: 200px;
+}
+
+.main .lake .map-sidebar .map-sidebar-right .setting .react-datepicker {
+    background-color: var(--box-color);
+    border: none;
+    box-shadow: var(--box-shadow);
+    padding-top: 5px;
+    font-size: 16px;
+}
+
+.main .lake .map-sidebar .map-sidebar-right .setting .react-datepicker .react-datepicker__triangle {
+    display: none;
+}
+
+.main .lake .map-sidebar .map-sidebar-right .setting .react-datepicker .react-datepicker__header {
+    background-color: transparent;
+    border: none;
+}
+
+.main .lake .map-sidebar .map-sidebar-right .setting .react-datepicker__day {
+    padding: 1px;
+}
+
+.main .lake .map-sidebar .map-sidebar-right .setting .react-datepicker__day:hover {
+    background-color: var(--background-color);
+}
+
+.main .lake .map-sidebar .map-sidebar-right .setting .react-datepicker__day-name,
+.main .lake .map-sidebar .map-sidebar-right .setting .react-datepicker__day,
+.main .lake .map-sidebar .map-sidebar-right .setting .react-datepicker__time-name {
+    color: var(--background-font-color);
+    width: var(--cell-size);
+    height: var(--cell-size);
+    line-height: var(--cell-size);
+    border-radius: var(--cell-size);
+    position: relative;
+    vertical-align: middle;
+    margin: 6px;
+    font-size: 14px;
+    border: 1px solid transparent;
+}
+
+.main .lake .map-sidebar .map-sidebar-right .setting .react-datepicker__day--selected {
+    padding: 0;
+    font-weight: bold;
+}
+
+.main .lake .map-sidebar .map-sidebar-right .setting .react-datepicker__current-month {
+    color: var(--background-font-color);
+}
+
+.main .lake .map-sidebar .map-sidebar-right .setting .react-datepicker__day--disabled {
+    opacity: 0.2;
+    box-shadow: none;
+}
+
+.main .lake .map-sidebar .map-sidebar-right .setting .react-datepicker__day--keyboard-selected {
+    background-color: var(--box-color);
+}
+
+.main .lake .map-sidebar .map-sidebar-right .setting .react-datepicker__day--in-range {
+    background-color: var(--highlight-color);
+    color: white;
+}
+
+.main .lake .map-sidebar .map-sidebar-right .setting .react-datepicker__day--in-selecting-range {
+    background-color: var(--background-color);
 }
 
 .main .lake .map-sidebar .map-sidebar-right .setting select.subtle {
@@ -351,17 +468,20 @@
     border: 1px solid var(--border-color);
     border-radius: 12px;
     max-width: 700px;
-    padding: calc(var(--padding) / 2) 0;
+    padding: var(--padding) 0;
     margin-bottom: var(--padding);
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-around;
 }
 
 .main .lake .properties .parameters .parameters-box .parameter {
     display: inline-block;
     margin: 0;
     text-align: center;
-    min-width: 135px;
+    width: 215px;
+    max-width: 50%;
+    box-sizing: border-box;
     padding: calc(var(--padding) / 2);
 }
 

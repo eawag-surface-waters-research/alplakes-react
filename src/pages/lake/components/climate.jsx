@@ -68,7 +68,7 @@ class Climate extends Component {
     const model = Object.keys(parameters)[0];
     const data = await downloadClimate(parameters[model].key);
     const display = {
-      xlabel: "",
+      xlabel: Translations.year[language],
       xunits: "",
       ylabel: Translations["temperature"][language],
       yunits: "°C",
@@ -81,9 +81,97 @@ class Climate extends Component {
     });
   };
 
+  setModel = async (event) => {
+    const { parameters } = this.props;
+    const { depth, display } = this.state;
+    const model = event.target.value;
+    const data = await downloadClimate(parameters[model].key);
+    display.data = data[depth];
+    this.setState({
+      model,
+      data,
+      display,
+    });
+  };
+
+  setDepth = (event) => {
+    const { data, display } = this.state;
+    const depth = event.target.value;
+    display.data = data[depth];
+    this.setState({
+      display,
+      depth,
+    });
+  };
+
   render() {
     var { language, dark, parameters } = this.props;
-    var { display, model } = this.state;
+    var { display, model, depth, depths } = this.state;
+    const url1 =
+      "https://www.nccs.admin.ch/nccs/en/home/climate-change-and-impacts/swiss-climate-change-scenarios/understanding-climate-change-scenarios.html";
+    const url2 =
+      "https://opendata.eawag.ch/dataset/the-vulnerability-of-lakes-along-an-altitudinal-gradient-to-climate-change";
+    const description = {
+      EN: (
+        <div className="description">
+          Predicted lake temperature from 1980 to 2100 under three climate
+          scenarios (RCP 2.6, 4.5, 8.5). For more about the scenarios see{" "}
+          <a href={url1} target="_blank" rel="noopener noreferrer">
+            here
+          </a>{" "}
+          and for more details about the project see{" "}
+          <a href={url2} target="_blank" rel="noopener noreferrer">
+            here
+          </a>
+          .
+        </div>
+      ),
+      DE: (
+        <div className="description">
+          Vorhersage der Seetemperatur von 1980 bis 2100 unter drei
+          Klimaszenarien (RCP 2.6, 4.5, 8.5). Weitere Informationen über die
+          Szenarien finden Sie{" "}
+          <a href={url1} target="_blank" rel="noopener noreferrer">
+            hier
+          </a>{" "}
+          und weitere Einzelheiten über das Projekt
+          <a href={url2} target="_blank" rel="noopener noreferrer">
+            hier
+          </a>
+          .
+        </div>
+      ),
+      FR: (
+        <div className="description">
+          Prévision de la température des lacs de 1980 à 2100 selon trois
+          scénarios climatiques (RCP 2.6, 4.5, 8.5). Pour plus d'informations
+          sur les scénarios, voir{" "}
+          <a href={url1} target="_blank" rel="noopener noreferrer">
+            ici
+          </a>{" "}
+          et pour plus de détails sur le projet, voir{" "}
+          <a href={url2} target="_blank" rel="noopener noreferrer">
+            ici
+          </a>
+          .
+        </div>
+      ),
+      IT: (
+        <div className="description">
+          Previsione della temperatura del lago dal 1980 al 2100 in base a tre
+          scenari climatici (RCP 2.6, 4.5, 8.5). Per maggiori informazioni sugli
+          scenari si veda{" "}
+          <a href={url1} target="_blank" rel="noopener noreferrer">
+            qui
+          </a>{" "}
+          e per maggiori dettagli sul progetto si veda{" "}
+          <a href={url2} target="_blank" rel="noopener noreferrer">
+            qui
+          </a>
+          .
+        </div>
+      ),
+    };
     return (
       <div className="climate" ref={this.ref}>
         <h3>
@@ -110,25 +198,33 @@ class Climate extends Component {
           <div className="map-sidebar-right">
             {model && (
               <div className="graph-properties">
-                <div className="description">
-                  Lorem Ipsum is simply dummy text of the printing and
-                  typesetting industry. Lorem Ipsum has been the industry's
-                  standard dummy text ever since the 1500s, when an unknown
-                  printer took a galley of type and scrambled it to make a type
-                  specimen book.
-                </div>
+                {description[language]}
                 <Expand
                   openLabel="Settings"
                   closeLabel="Hide settings"
                   content={
                     <React.Fragment>
                       <div className="setting">
-                        <div className="label">Simulation</div>
+                        <div className="label">
+                          {Translations.simulation[language]}
+                        </div>
                         <select value={model} onChange={this.setModel}>
                           {Object.keys(parameters).map((p) => (
                             <option value={p} key={p}>
                               {parameters[p].name} (
                               {capitalize(parameters[p].model)})
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                      <div className="setting">
+                        <div className="label">
+                          {Translations.depth[language]}
+                        </div>
+                        <select value={depth} onChange={this.setDepth}>
+                          {depths.map((p) => (
+                            <option value={p} key={p}>
+                              {capitalize(p)}
                             </option>
                           ))}
                         </select>

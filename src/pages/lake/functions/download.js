@@ -51,6 +51,20 @@ export const downloadPastYear = async (
   return { data: { x, y, z }, start_date, end_date, start, end: end_date };
 };
 
+export const download1DHeatmap = async (model, lake, parameter, start, end) => {
+  const apiUrl = `${
+    CONFIG.alplakes_api
+  }/simulations/1d/depthtime/${model}/${lake}/${general.formatAPIDatetime(
+    start
+  )}/${general.formatAPIDatetime(end)}?variables=${parameter}`;
+  const response = await fetchDataParallel([[apiUrl]]);
+  const data = response[0];
+  var x = data.time.map((t) => new Date(t));
+  var y = data.depth["data"];
+  var z = data["variables"][parameter]["data"];
+  return { x, y, z };
+};
+
 export const downloadDoy = async (
   model,
   lake,
@@ -186,8 +200,8 @@ export const downloadClimate = async (lake) => {
       lower: data["yearly"]["surface"]["RCP85"]["y_min"],
       name: false,
       lineColor: "red",
-    }
-  ]
+    },
+  ];
   const bottom = [
     {
       x: data["yearly"]["bottom"]["RCP26"]["x"],
@@ -197,9 +211,27 @@ export const downloadClimate = async (lake) => {
       lower: data["yearly"]["bottom"]["RCP26"]["y_min"],
       name: false,
       lineColor: "green",
-    }
-  ]
-  return { surface, bottom }
+    },
+    {
+      x: data["yearly"]["bottom"]["RCP45"]["x"],
+      y: data["yearly"]["bottom"]["RCP45"]["y_ave"],
+      confidenceAxis: "y",
+      upper: data["yearly"]["bottom"]["RCP45"]["y_max"],
+      lower: data["yearly"]["bottom"]["RCP45"]["y_min"],
+      name: false,
+      lineColor: "orange",
+    },
+    {
+      x: data["yearly"]["bottom"]["RCP85"]["x"],
+      y: data["yearly"]["bottom"]["RCP85"]["y_ave"],
+      confidenceAxis: "y",
+      upper: data["yearly"]["bottom"]["RCP85"]["y_max"],
+      lower: data["yearly"]["bottom"]["RCP85"]["y_min"],
+      name: false,
+      lineColor: "red",
+    },
+  ];
+  return { surface, bottom };
 };
 
 export const downloadModelMetadata = async (model, lake) => {

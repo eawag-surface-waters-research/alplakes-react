@@ -21,7 +21,9 @@ class DatasetLinegraph extends Component {
     }
     return (
       <div
-        className={padding === true ? "dataset-linegraph padding" : "dataset-linegraph"}
+        className={
+          padding === true ? "dataset-linegraph padding" : "dataset-linegraph"
+        }
       >
         {data && (
           <D3LineGraph
@@ -33,7 +35,7 @@ class DatasetLinegraph extends Component {
             dark={dark}
             marginTop={1}
             marginRight={1}
-            marginBottom={20}
+            marginBottom={xlabel === "time" ? 20 : 35}
             lcolor={[]}
             lweight={[]}
             curve={curve}

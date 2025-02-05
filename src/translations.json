@@ -419,6 +419,48 @@
     "FR": "Statistiques quotidiennes pour un paramètre donné sur la période totale de la simulation.",
     "IT": "Statistiche giornaliere per un dato parametro per l'intero periodo della simulazione."
   },
+  "simulation": {
+    "EN": "Simulation",
+    "DE": "Simulation",
+    "FR": "Simulation",
+    "IT": "Simulazione"
+  },
+  "variable": {
+    "EN": "Variable",
+    "DE": "Variable",
+    "FR": "Variable",
+    "IT": "Variabile"
+  },
+  "performance": {
+    "EN": "Performance",
+    "DE": "Leistung",
+    "FR": "Performance",
+    "IT": "Simulazione"
+  },
+  "meteodata": {
+    "EN": "Meteorological data",
+    "DE": "Meteorologische Daten",
+    "FR": "Données météorologiques",
+    "IT": "Dati meteorologici"
+  },
+  "hydrodata": {
+    "EN": "Hydrological data",
+    "DE": "Hydrologische Daten",
+    "FR": "Données hydrologiques",
+    "IT": "Dati idrologici"
+  },
+  "calibdata": {
+    "EN": "Calibration data",
+    "DE": "Kalibrierdaten",
+    "FR": "Données d'étalonnage",
+    "IT": "Dati di calibrazione"
+  },
+  "backToTop": {
+    "EN": "Back to top",
+    "DE": "Zurück zum Anfang",
+    "FR": "Retour au début de la page",
+    "IT": "Torna all'inizio"
+  },
   "year": {
     "EN": "Year",
     "DE": "Jahr",
@@ -837,7 +879,7 @@
   },
   "lakeProperties": {
     "EN": "Lake Properties",
-    "DE": "Seegrundstücke",
+    "DE": "See-Eigenschaften",
     "FR": "Propriétés du lac",
     "IT": "Proprietà del lago"
   },

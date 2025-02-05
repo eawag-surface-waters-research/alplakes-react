@@ -142,7 +142,13 @@ class Doy extends Component {
 
   render() {
     var { language, dark, parameters } = this.props;
-    var { display, min_year, max_year, model, variable, depth } = this.state;
+    var { display, min_year, max_year, model, depth } = this.state;
+    const description = {
+      EN: "The day of year statistics show the progresion of the parameter across the year. The last year and year to date are included to allow comparison of the state of the lake with the historical record. All data is from calibrated model simulations not from in-situ data.",
+      DE: "Die Tagesstatistiken zeigen die Entwicklung der Parameter im Jahresverlauf. Das letzte Jahr und das Jahr bis heute sind enthalten, um den Zustand des Sees mit den historischen Aufzeichnungen zu vergleichen. Alle Daten stammen aus kalibrierten Modellsimulationen und nicht aus In-situ-Daten.",
+      IT: "Le statistiche del giorno dell'anno mostrano la progressione del parametro nel corso dell'anno. L'ultimo anno e l'anno fino ad oggi sono inclusi per consentire il confronto dello stato del lago con il record storico. Tutti i dati provengono da simulazioni calibrate del modello e non da dati in situ.",
+      FR: "Les statistiques du jour de l'année montrent la progression du paramètre tout au long de l'année. La dernière année et l'année à ce jour sont incluses pour permettre la comparaison de l'état du lac avec les données historiques. Toutes les données proviennent de simulations de modèles calibrés et non de données in situ.",
+    };
     return (
       <div className="doy" ref={this.ref}>
         <h3>
@@ -173,20 +179,16 @@ class Doy extends Component {
           <div className="map-sidebar-right">
             {model && (
               <div className="graph-properties">
-                <div className="description">
-                  Lorem Ipsum is simply dummy text of the printing and
-                  typesetting industry. Lorem Ipsum has been the industry's
-                  standard dummy text ever since the 1500s, when an unknown
-                  printer took a galley of type and scrambled it to make a type
-                  specimen book.
-                </div>
+                <div className="description">{description[language]}</div>
                 <Expand
                   openLabel="Settings"
                   closeLabel="Hide settings"
                   content={
                     <React.Fragment>
                       <div className="setting">
-                        <div className="label">Simulation</div>
+                        <div className="label">
+                          {Translations.simulation[language]}
+                        </div>
                         <select value={model} onChange={this.setModel}>
                           {Object.keys(parameters).map((p) => (
                             <option value={p} key={p}>
@@ -197,17 +199,9 @@ class Doy extends Component {
                         </select>
                       </div>
                       <div className="setting">
-                        <div className="label">Variable</div>
-                        <select value={variable} onChange={this.setVariable}>
-                          {parameters[model].parameters.map((p) => (
-                            <option value={p.key} key={p.key}>
-                              {Translations[p.name][language]}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-                      <div className="setting">
-                        <div className="label">Depth</div>
+                        <div className="label">
+                          {Translations.depth[language]}
+                        </div>
                         <select value={depth} onChange={this.setDepth}>
                           {parameters[model].depths.map((d) => (
                             <option value={d} key={d}>
@@ -218,7 +212,7 @@ class Doy extends Component {
                       </div>
                       {"performance" in parameters[model] && (
                         <div className="setting">
-                          <div className="label">Performance</div>
+                          <div className="label">{Translations.performance[language]}</div>
                           <div>
                             {Object.keys(
                               parameters[model].performance.rmse
@@ -228,9 +222,7 @@ class Doy extends Component {
                                   {Math.round(
                                     parameters[model].performance.rmse[k] * 100
                                   ) / 100}
-                                  <div className="performance-unit">
-                                    {parameters[model].unit}
-                                  </div>
+                                  <div className="performance-unit">°C</div>
                                 </div>
                                 <div className="performance-name">
                                   {capitalize(k)} RMSE
@@ -242,19 +234,19 @@ class Doy extends Component {
                       )}
                       {"meteo_source" in parameters[model] && (
                         <div className="setting">
-                          <div className="label">Meteorological data</div>
+                          <div className="label">{Translations.meteodata[language]}</div>
                           <div>{parameters[model].meteo_source}</div>
                         </div>
                       )}
                       {"hydro_source" in parameters[model] && (
                         <div className="setting">
-                          <div className="label">Hydrological data</div>
+                          <div className="label">{Translations.hydrodata[language]}</div>
                           <div>{parameters[model].hydro_source}</div>
                         </div>
                       )}
                       {"calibration_source" in parameters[model] && (
                         <div className="setting">
-                          <div className="label">Calibration data</div>
+                          <div className="label">{Translations.calibdata[language]}</div>
                           <div>{parameters[model].calibration_source}</div>
                         </div>
                       )}

@@ -56,6 +56,10 @@ class Lake extends Component {
     }
   };
 
+  scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   async componentDidMount() {
     window.scrollTo(0, 0);
     const url = new URL(window.location.href);
@@ -227,6 +231,10 @@ class Lake extends Component {
                 )}
               </div>
             )}
+            <div className="scroll-up" onClick={this.scrollToTop}>
+              {Translations.backToTop[language]}
+              <img src={sortIcon} alt="Down" />
+            </div>
           </div>
         )}
         <Footer {...this.props} />
