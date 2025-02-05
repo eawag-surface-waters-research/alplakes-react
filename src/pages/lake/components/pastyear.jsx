@@ -195,7 +195,7 @@ class PastYear extends Component {
                         </select>
                       </div>
                       <div className="setting">
-                        <div className="label">Period</div>
+                        <div className="label">{Translations.period[language]}</div>
                         <div className="period-selector">
                           <Period
                             period={[start, end]}

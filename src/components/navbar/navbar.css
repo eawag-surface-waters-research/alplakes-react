@@ -214,7 +214,7 @@
   right: var(--padding);
   border: 1px solid var(--border-color);
   height: 36px;
-  background-color: var(--box-color);
+  background-color: var(--select-color);
 }
 
 .navbar .mobile-nav .nav-content .nav-row .toggleContainer div {
@@ -286,11 +286,5 @@
 
   .navbar .navbar-inner {
     padding: var(--padding);
-  }
-}
-
-@media screen and (max-width: 500px) {
-  .navbar .mobile-nav .nav-content .nav-row select {
-    background-color: var(--mobile-box-color);
   }
 }

@@ -187,6 +187,12 @@
     color: var(--background-suble-font-color);
 }
 
+.main .lake .map-sidebar .map-sidebar-right .setting input[type=range] {
+    box-sizing: border-box;
+    padding: 2px 0;
+    width: 100%;
+}
+
 .main .lake .map-sidebar .map-sidebar-right .setting .performance {
     padding: 5px 20px 0px 0px;
     display: inline-block;
@@ -211,10 +217,21 @@
     float: right;
 }
 
+.main .lake .map-sidebar .map-sidebar-right .setting .value button {
+    display: inline-block;
+    background-color: var(--select-color);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-left: 12px;
+    padding: 4px 8px;
+}
+
 .main .lake .map-sidebar .map-sidebar-right .setting select {
     display: block;
     font-size: 14px;
-    background-color: var(--box-color);
+    background-color: var(--select-color);
     cursor: pointer;
     padding: 4px 8px;
     text-align: left;
@@ -224,7 +241,7 @@
 }
 
 .main .lake .map-sidebar .map-sidebar-right .setting .dateperiod {
-    background-color: var(--box-color);
+    background-color: var(--select-color);
     border: none;
     border-radius: 8px;
     box-sizing: border-box;
@@ -238,7 +255,7 @@
 }
 
 .main .lake .map-sidebar .map-sidebar-right .setting .react-datepicker {
-    background-color: var(--box-color);
+    background-color: var(--select-color);
     border: none;
     box-shadow: var(--box-shadow);
     padding-top: 5px;
@@ -292,7 +309,7 @@
 }
 
 .main .lake .map-sidebar .map-sidebar-right .setting .react-datepicker__day--keyboard-selected {
-    background-color: var(--box-color);
+    background-color: var(--select-color);
 }
 
 .main .lake .map-sidebar .map-sidebar-right .setting .react-datepicker__day--in-range {
@@ -305,8 +322,32 @@
 }
 
 .main .lake .map-sidebar .map-sidebar-right .setting select.subtle {
-    background-color: var(--box-color);
+    background-color: var(--select-color);
     margin-bottom: 10px;
+    display: inline-block;
+}
+
+.main .lake .map-sidebar .title {
+    display: inline-block;
+    font-size: 22px;
+    margin-right: 20px;
+}
+
+.main .lake .map-sidebar .minimise {
+    cursor: pointer;
+    background-color: var(--select-color);
+    margin-bottom: 12px;
+    padding: 6px 12px;
+    border-radius: 20px;
+    box-shadow: var(--box-shadow);
+    width: max-content;
+    border: 1px solid transparent;
+    display: inline-block;
+}
+
+.main .lake .map-sidebar .minimise:hover {
+    border: 1px solid var(--border-color);
+    box-shadow: none;
 }
 
 
@@ -320,7 +361,7 @@
     margin-right: calc(var(--padding)/2);
     text-decoration: none;
     border: 1px solid var(--box-color);
-    transition: all .33s 0s ease;
+    transition: border 0.33s 0s ease, box-shadow 0.33s 0s ease;
     cursor: pointer;
     box-sizing: border-box;
     max-width: 100%;
@@ -745,6 +786,7 @@
 
     .main .lake .onedmodel .clickable-box {
         border: none;
+        margin-top: -14px;
     }
 
     .main .lake .clickable-box .skeleton-data {
@@ -757,10 +799,6 @@
 
     .main .lake .past-year .map-sidebar .map-sidebar-left .graph-container {
         padding: 0;
-    }
-
-    .main .lake .forecast .onedmodel h3 {
-        margin-bottom: -10px;
     }
 
     .main .lake .clickable-box:hover {
@@ -784,10 +822,6 @@
         padding-right: 0;
     }
 
-    .main .lake .information .information-symbol {
-        background-color: var(--mobile-box-color);
-    }
-
     .main .lake .map-sidebar .map-sidebar-right {
         padding: 0;
         overflow: visible;
@@ -808,4 +842,22 @@
     .main .lake .click-block {
         display: block;
     }
+
+    .main .lake .map-sidebar .map-sidebar-left .line-graph-container {
+        padding: 10px;
+        box-sizing: border-box;
+    }
+
+    .main .lake .map-sidebar .minimise {
+        box-shadow: none;
+        font-size: 14px;
+        margin-bottom: 8px;
+        float: right;
+    }
+
+    .main .lake .map-sidebar .title {
+        font-size: 18px;
+        padding-top: 4px;
+    }
+
 }

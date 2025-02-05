@@ -497,6 +497,18 @@
     "FR": "Période de référence",
     "IT": "Periodo di riferimento"
   },
+  "period": {
+    "EN": "Period",
+    "DE": "Zeitraum",
+    "FR": "Période",
+    "IT": "Periodo"
+  },
+  "setDepth": {
+    "EN": "Set depth",
+    "DE": "Tiefe einstellen",
+    "FR": "Régler la profondeur",
+    "IT": "Profondità impostata"
+  },
   "maplink": {
     "EN": "See more",
     "DE": "Mehr anzeigen",
@@ -544,6 +556,12 @@
     "DE": "Downloads",
     "FR": "Téléchargements",
     "IT": "Downloads"
+  },
+  "hideDetails": {
+    "EN": "Hide details",
+    "DE": "Details ausblenden",
+    "FR": "Cacher les détails",
+    "IT": "Nascondi dettagli"
   },
   "fullscreen": {
     "EN": "Full screen",

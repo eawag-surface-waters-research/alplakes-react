@@ -133,6 +133,7 @@ class Lake extends Component {
                     parameters={metadata.forecast["1d_model"]}
                     language={language}
                     name={title}
+                    dark={dark}
                   />
                 )}
               </div>

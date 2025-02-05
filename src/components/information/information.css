@@ -6,7 +6,7 @@
 .information .information-symbol {
     padding: 0px 11px;
     border-radius: 100%;
-    background-color: var(--box-color);
+    background-color: var(--select-color);
     line-height: 30px;
     color: var(--background-subtle-font-color);
     font-size: 16px;
@@ -18,7 +18,7 @@
 .information .information-box {
     display: none;
     position: absolute;
-    background-color: var(--box-color);
+    background-color: var(--select-color);
     top: 0;
     z-index: 99999;
     padding: 16px;
@@ -41,7 +41,13 @@
 @media screen and (max-width: 500px) {
     .information .information-box {
         position: fixed;
-        top: 80px;
+        top: unset;
+        width: 100%;
+        left: 0;
+        box-sizing: border-box;
+        bottom: 0;
+        border: none;
+        border-radius: 0;
     }
 
     .information .information-symbol {
