@@ -2,6 +2,10 @@ import React, { Component } from "react";
 import Translations from "../../../translations.json";
 import Information from "../../../components/information/information";
 
+const truncateString = (str, maxLength) => {
+  return str.length > maxLength ? str.slice(0, maxLength) + "..." : str;
+};
+
 class Scientific extends Component {
   render() {
     var { language, parameters } = this.props;
@@ -30,7 +34,7 @@ class Scientific extends Component {
                 </div>
               )}
               <div className="title">{p.name}</div>
-              <div className="subtitle">{p.parameters.join(", ")}</div>
+              <div className="subtitle">{truncateString(p.parameters.join(", "), 90)}</div>
               <div className="link">{p.source}</div>
             </div>
           </a>
