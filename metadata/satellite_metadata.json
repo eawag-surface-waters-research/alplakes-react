@@ -1,0 +1,125 @@
+[
+    {
+      "parameter": "chla",
+      "parameter_name": {
+        "EN": "Chlorophyll A",
+        "DE": "Chlorophyll A",
+        "FR": "Chlorophylle A",
+        "IT": "Clorofilla A"
+      },
+      "parameter_description": {
+        "EN": "Chlorophyll A is a measure of the amount of algae and cyanobacteria growing in a waterbody.",
+        "DE": "Chlorophyll A ist ein Maß für die Menge an Algen und Cyanobakterien, die in einem Gewässer wachsen.",
+        "FR": "La chlorophylle A est une mesure de la quantité d’algues et de cyanobactéries se développant dans un plan d’eau.",
+        "IT": "La clorofilla è una misura della quantità di alghe e cianobatteri che crescono in un corso d'acqua."
+      },
+      "unit": "mg m-3",
+      "sources": [
+        {"parameter": "chla", "satellite": "sentinel3" , "link": "/alplakes/metadata/sentinel3/#key#/chla_latest.json"}
+      ],
+      "displayOptions": {
+        "paletteName": "bamako",
+        "min": 0,
+        "max": 12
+      }
+    },
+    {
+      "parameter": "turb",
+      "parameter_name": {
+        "EN": "Turbidity",
+        "DE": "Trübung",
+        "FR": "Turbidité",
+        "IT": "Torbidità"
+      },
+      "parameter_description": {
+        "EN": "Turbidity is a measurement of the cloudiness of a waterbody.",
+        "DE": "Trübung ist ein Maß für die Trübung eines Gewässers.",
+        "FR": "La turbidité est une mesure de la turbidité d’un plan d’eau.",
+        "IT": "La torbidità è una misura della torbidità di un corso d'acqua."
+      },
+      "unit": "FNU",
+      "sources": [
+        {"parameter": "tsm_binding754", "satellite": "sentinel3" , "link": "/alplakes/metadata/sentinel3/#key#/tsm_binding754_latest.json"},
+        {"parameter": "tsm_dogliotti665", "satellite": "sentinel2" , "link": "/alplakes/metadata/sentinel2/#key#/tsm_dogliotti665_latest.json"}
+      ],
+      "displayOptions": {
+        "paletteName": "bamako",
+        "min": 0,
+        "max": 3
+      }
+    },
+    {
+      "parameter": "secchi",
+      "parameter_name": {
+        "EN": "Secchi",
+        "DE": "Secchi",
+        "FR": "Secchi",
+        "IT": "Secchi"
+      },
+      "parameter_description": {
+        "EN": "Secchi depth refers to the depth at which a disk lowered into the water can no longer be seen from the surface, this is a proxy for water clarity.",
+        "DE": "Unter Secchi-Tiefe versteht man die Tiefe, bei der eine ins Wasser getauchte Scheibe von der Oberfläche aus nicht mehr zu sehen ist. Dies ist ein Indikator für die Klarheit des Wassers.",
+        "FR": "La profondeur de Secchi fait référence à la profondeur à laquelle un disque abaissé dans l'eau ne peut plus être vu depuis la surface, c'est un indicateur de la clarté de l'eau.",
+        "IT": "La profondità di Secchi si riferisce alla profondità alla quale un disco immerso nell'acqua non è più visibile dalla superficie; questo è un indicatore della limpidezza dell'acqua."
+      },
+      "unit": "m",
+      "sources": [
+        {"parameter": "Zsd_lee", "satellite": "sentinel3" , "link": "/alplakes/metadata/sentinel3/#key#/Zsd_lee_latest.json"},
+        {"parameter": "Z490", "satellite": "sentinel2" , "link": "/alplakes/metadata/sentinel2/#key#/Z490_latest.json"}
+      ],
+      "displayOptions": {
+        "paletteName": "oslo",
+        "min": 0,
+        "max": 12
+      }
+    },
+  {
+      "parameter": "forelule",
+      "parameter_name": {
+        "EN": "Forel-Ule",
+        "DE": "Forel-Ule",
+        "FR": "Forel-Ule",
+        "IT": "Forel-Ule"
+      },
+      "parameter_description": {
+        "EN": "The Forel-Ule Scale is a system used to classify the color of natural water bodies, such as lakes, rivers, and oceans, based on a simple visual comparison.",
+        "DE": "Die Forel-Ule-Skala ist ein System zur Klassifizierung der Farbe natürlicher Gewässer, wie Seen, Flüsse und Ozeane, auf der Grundlage eines einfachen visuellen Vergleichs.",
+        "FR": "L'échelle de Forel-Ule est un système utilisé pour classer la couleur des masses d'eau naturelles, telles que les lacs, les rivières et les océans, sur la base d'une simple comparaison visuelle.",
+        "IT": "La Scala Forel-Ule è un sistema utilizzato per classificare il colore dei corpi idrici naturali, come laghi, fiumi e oceani, sulla base di un semplice confronto visivo."
+      },
+      "unit": "",
+      "sources": [
+        {"parameter": "forel_ule", "satellite": "sentinel3" , "link": "/alplakes/metadata/sentinel3/#key#/forel_ule_latest.json"},
+        {"parameter": "forel_ule", "satellite": "sentinel2" , "link": "/alplakes/metadata/sentinel2/#key#/forel_ule_latest.json"}
+      ],
+      "displayOptions": {
+        "paletteName": "Forel Ule",
+        "min": 1,
+        "max": 21
+      }
+    },
+    {
+      "parameter": "temperature",
+      "parameter_name": {
+        "EN": "Temperature",
+        "DE": "Temperatur",
+        "FR": "Température",
+        "IT": "Temperatura"
+      },
+      "parameter_description": {
+        "EN": "Skin temperature is the temperature of the upper few cm of the waterbody, this may differ from the bulk temperature.",
+        "DE": "Die Oberflächentemperatur ist die Temperatur der oberen paar Zentimeter eines Wasserkörpers. Sie kann von der Gesamttemperatur abweichen.",
+        "FR": "La température de la peau est la température des quelques centimètres supérieurs de la masse d'eau, elle peut différer de la température globale.",
+        "IT": "La temperatura cutanea è la temperatura dei primi centimetri superiori del corpo idrico e può differire dalla temperatura della massa d'acqua."
+      },
+      "unit": "°C",
+      "sources": [
+        {"parameter": "ST", "satellite": "collection" , "link": "/alplakes/metadata/collection/#key#/ST_latest.json"}
+      ],
+      "displayOptions": {
+        "paletteName": "vik",
+        "min": 0,
+        "max": 40
+      }
+    }
+  ]

@@ -10,10 +10,7 @@ def make_bounds(shape, key):
     max_lon = max(coord[0] for coord in coordinates)
     min_lat = min(coord[1] for coord in coordinates)
     max_lat = max(coord[1] for coord in coordinates)
-    return {
-        "southWest": [min_lat, min_lon],
-        "northEast": [max_lat, max_lon]
-    }
+    return [[min_lat, min_lon],[max_lat, max_lon]]
 
 
 def url_safe(string):
@@ -68,7 +65,8 @@ def make_insitu(datalakes_ids, datasets, datalakes_parameters):
                     "live": isinstance(d["monitor"], (int, float)),
                     "parameters": parameters,
                     "start": d["mindatetime"][:4],
-                    "end": end
+                    "end": end,
+                    "source": "Datalakes"
                 })
     return insitu
 
@@ -85,19 +83,19 @@ def make_bathymetry(data, datalakes_lakes):
                 (d for d in datalakes_lakes if "id" in d and d["id"] == i), None)
             if p["morphology"]:
                 bathymetry.append({
-                    "type": "1D",
                     "url": "https://www.datalakes-eawag.ch/lakemorphology?{}_{}".format(url_safe(p["name"]), p["id"]),
-                    "source": "Swisstopo Vector25",
-                    "format": "JSON",
-                    "name": p["name"]
+                    "source": "Datalakes",
+                    "format": "Hypsometric curve - JSON",
+                    "name": "Vector25",
+                    "id": p["name"]
                 })
 
     if "swiss_bathy" in data:
         bathymetry.append({
-            "type": "3D",
+            "name": "swissBATHY3D",
             "url": "https://www.swisstopo.admin.ch/en/height-model-swissbathy3d#swissBATHY3D---Download",
-            "source": "Swisstopo swissBATHY3D",
-            "format": "XYZ"
+            "source": "Swisstopo",
+            "format": "Bathymetry - XYZ"
         })
     return bathymetry
 
@@ -814,6 +812,27 @@ def simstrat_source(models, simstrat, obj):
         s["lake"] = model
         s["label"] = "Simstrat {}".format(model)
         out["simstrat_{}".format(model)] = s
+    return out
+
+
+def simstrat_forcing_source(forcing, forecast):
+    meteo_type = forcing[0]["type"]
+    out = ""
+    if "meteoswiss" in meteo_type.lower():
+        out = "SwissMetNet, MeteoSwiss"
+    elif "arso" in meteo_type.lower():
+        out = "Slovenian Environment Agency"
+    elif "mistral" in meteo_type.lower():
+        out = "Mistral Meteo-Hub"
+    elif "thredds" in meteo_type.lower():
+        out = "ESPRI IPSL Thredds"
+    elif "geosphere" in meteo_type.lower():
+        out = "GeoSphere Austria"
+    forecast_type = forecast["source"]
+    if "meteoswiss" in forecast_type.lower():
+        out = out + ". Forecast from MeteoSwiss ICON."
+    elif "visualcrossing" in forecast_type.lower():
+        out = out + ". Forecast from VisualCrossing."
     return out
 
 

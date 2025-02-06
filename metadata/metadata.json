@@ -25,7 +25,7 @@
     "sediment_oxygen_uptake_rate": -37.5,
     "default_depth": 0.7,
     "current_temperature": true,
-    "alplakes": {
+    "3D": {
       "performance": {
         "rmse": {
           "overall": 0.85
@@ -113,7 +113,7 @@
     "type": "Natural",
     "surface_area": 88.5,
     "default_depth": 1,
-    "alplakes": {
+    "3D": {
       "performance": {
         "rmse": {
           "overall": 1.03
@@ -151,7 +151,7 @@
     "datalakes_id": 2,
     "swiss_bathy": true,
     "default_depth": 0.7,
-    "alplakes": {
+    "3D": {
       "performance": {
         "rmse": {
           "overall": 1.12
@@ -190,7 +190,7 @@
     "sediment_oxygen_uptake_rate": -32.5,
     "default_depth": 0.7,
     "current_temperature": true,
-    "alplakes": {
+    "3D": {
       "performance": {
         "rmse": {
           "overall": 0.69
@@ -220,7 +220,7 @@
     "flags": ["italian"],
     "datalakes_id": 59,
     "default_depth": 1,
-    "alplakes": {
+    "3D": {
       "performance": {
         "rmse": {
           "overall": 0.73
@@ -261,7 +261,7 @@
     "trophic_state": "Mesotrophic",
     "sediment_oxygen_uptake_rate": -33.1,
     "default_depth": 1,
-    "alplakes": {
+    "3D": {
       "performance": {
         "rmse": {
           "overall": 0.90
@@ -302,7 +302,7 @@
     "current_temperature": true,
     "sediment_oxygen_uptake_rate": -32.8,
     "default_depth": 1,
-    "alplakes": {
+    "3D": {
       "performance": {
         "rmse": {
           "overall": 0.80
@@ -331,7 +331,7 @@
     "flags": ["italian"],
     "datalakes_id": 189,
     "default_depth": 1,
-    "alplakes": {
+    "3D": {
       "performance": {
         "rmse": {
           "overall": 1.67
@@ -372,7 +372,7 @@
     "current_temperature": true,
     "sediment_oxygen_uptake_rate": -19.7,
     "default_depth": 1,
-    "alplakes": {
+    "3D": {
       "performance": {
         "rmse": {
           "overall": 0.68
@@ -409,7 +409,7 @@
     "datalakes_id": 17,
     "swiss_bathy": true,
     "default_depth": 0.7,
-    "alplakes": {
+    "3D": {
       "performance": {
         "rmse": {
           "overall": 1.05
@@ -449,7 +449,7 @@
     "current_temperature": true,
     "sediment_oxygen_uptake_rate": -28.1,
     "default_depth": 1,
-    "alplakes": {
+    "3D": {
       "performance": {
         "rmse": {
           "overall": 1.22
@@ -485,7 +485,7 @@
     "trophic_state": "",
     "datalakes_id": 41,
     "default_depth": 1,
-    "alplakes": {
+    "3D": {
       "performance": {
         "rmse": {
           "overall": 2.29

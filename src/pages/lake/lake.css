@@ -46,6 +46,10 @@
     margin-bottom: 18px;
 }
 
+.main .lake .header {
+    margin-bottom: var(--padding);
+}
+
 .main .lake .header .properties-link {
     background-color: var(--highlight-color);
     color: white;
@@ -99,7 +103,7 @@
 }
 
 .main .lake .section {
-    margin-bottom: calc(var(--padding) * 2);
+    margin-bottom: var(--padding);
 }
 
 .main .lake .map-sidebar {
@@ -380,7 +384,7 @@
     font-size: 18px;
     color: var(--background-font-color);
     padding: 0 0 5px 0;
-    max-width: 50%;
+    max-width: 70%;
 }
 
 .main .lake .clickable-box .subtitle {
@@ -388,6 +392,10 @@
     font-weight: 400;
     color: var(--background-suble-font-color);
     margin-bottom: 5px;
+}
+
+.main .lake .clickable-box .suptitle {
+    color: var(--background-font-color);
 }
 
 .main .lake .clickable-box .link {

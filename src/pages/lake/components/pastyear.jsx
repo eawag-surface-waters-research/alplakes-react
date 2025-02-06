@@ -49,7 +49,7 @@ class PastYear extends Component {
   process = async (model, variable) => {
     const { parameters, language } = this.props;
     const { data, start_date, end_date, start, end } = await downloadPastYear(
-      parameters[model].model,
+      parameters[model].model.toLowerCase(),
       parameters[model].key,
       variable.key,
       true
@@ -113,7 +113,7 @@ class PastYear extends Component {
     const start = new Date(event[0]);
     const end = new Date(event[1]);
     display.data = await download1DHeatmap(
-      parameters[model].model,
+      parameters[model].model.toLowerCase(),
       parameters[model].key,
       variable.key,
       start,

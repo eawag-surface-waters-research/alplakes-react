@@ -109,7 +109,7 @@ class Doy extends Component {
   process = async (model, variable, depth) => {
     const { parameters, language } = this.props;
     const { min_year, max_year, data } = await downloadDoy(
-      parameters[model].model,
+      parameters[model].model.toLowerCase(),
       parameters[model].key,
       depth,
       variable.key,

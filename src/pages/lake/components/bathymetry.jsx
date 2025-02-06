@@ -16,6 +16,7 @@ class Bathymetry extends Component {
           >
             <div className="clickable-box">
               <div className="title">{p.name}</div>
+              {"id" in p && <div className="suptitle">{p.id}</div>}
               <div className="subtitle">{p.format}</div>
               <div className="link">{p.source}</div>
             </div>
