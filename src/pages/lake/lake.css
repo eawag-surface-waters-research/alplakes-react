@@ -118,6 +118,7 @@
     box-sizing: border-box;
     position: relative;
     background-color: var(--box-color);
+    z-index: 1;
 }
 
 .main .lake .map-sidebar .map-sidebar-left:hover .vis-header {
@@ -144,6 +145,7 @@
     box-sizing: border-box;
     vertical-align: top;
     padding: 0px 10px 0px 0px;
+    z-index: 2;
 }
 
 .main .lake .map-sidebar .map-sidebar-right::-webkit-scrollbar {
@@ -238,6 +240,7 @@
     color: var(--background-font-color);
     border: none;
     border-radius: 6px;
+    max-width: 100%;
 }
 
 .main .lake .map-sidebar .map-sidebar-right .setting .dateperiod {

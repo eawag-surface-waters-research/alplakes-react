@@ -29,6 +29,10 @@ datalakes_parameters = response.json()
 response = requests.get("https://raw.githubusercontent.com/Eawag-AppliedSystemAnalysis/operational-simstrat/master/static/lake_parameters.json")
 simstrat = response.json()
 
+# Load Climate Data
+response = requests.get("https://alplakes-eawag.s3.eu-central-1.amazonaws.com/simulations/simstrat/ch2018/summary.json")
+climate = response.json()
+
 s3 = boto3.client('s3')
 
 # Create files
