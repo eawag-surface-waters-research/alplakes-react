@@ -85,7 +85,7 @@ class WaterTemperature extends Component {
     var { updates, mapId, hightlights } = this.state;
     var { dark, bounds, language, id } = this.props;
     return (
-      <div className="water-temperature" ref={this.ref}>
+      <div className="water-temperature subsection" ref={this.ref}>
         <h3>
           {Translations.watertemperature[language]}
           <Information
@@ -110,25 +110,27 @@ class WaterTemperature extends Component {
           </div>
           {hightlights.length > 0 && (
             <div className="map-sidebar-right">
-              {hightlights.map((h, index) => (
-                <a
-                  href={h.url}
-                  key={h.label}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <div className="clickable-box">
-                    <div className="right">
-                      {round(h.last_value, 1)} °C
-                      <div className="time">
-                        {timeAgo(h.last_time * 1000, language)}
+              <div className="clickable-box-parent">
+                {hightlights.map((h, index) => (
+                  <a
+                    href={h.url}
+                    key={h.label}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <div className="clickable-box">
+                      <div className="right">
+                        {round(h.last_value, 1)} °C
+                        <div className="time">
+                          {timeAgo(h.last_time * 1000, language)}
+                        </div>
                       </div>
+                      <div className="title">{h.label}</div>
+                      <div className="link">{h.source}</div>
                     </div>
-                    <div className="title">{h.label}</div>
-                    <div className="link">{h.source}</div>
-                  </div>
-                </a>
-              ))}
+                  </a>
+                ))}
+              </div>
             </div>
           )}
         </div>

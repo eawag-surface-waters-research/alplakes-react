@@ -173,7 +173,7 @@ class Climate extends Component {
       ),
     };
     return (
-      <div className="climate" ref={this.ref}>
+      <div className="climate subsection" ref={this.ref}>
         <h3>
           {Translations.climate[language]}
           <Information information={Translations.climateText[language]} />

@@ -80,7 +80,7 @@ class Parameters extends Component {
       (p) => p.key in parameters && parameters[p.key] !== "NA"
     );
     return (
-      <div className="parameters">
+      <div className="parameters subsection">
         <h3>{Translations.parameters[language]}</h3>
         <div className="parameters-box">
           {plot.map((p) => (

@@ -103,12 +103,15 @@
 }
 
 .main .lake .section {
+    margin-bottom: calc(var(--padding)*2);
+}
+
+.main .lake .section .subsection {
     margin-bottom: var(--padding);
 }
 
 .main .lake .map-sidebar {
     width: 100%;
-    margin-bottom: var(--padding);
 }
 
 .main .lake .map-sidebar .map-sidebar-left {
@@ -120,9 +123,8 @@
     overflow: hidden;
     margin-right: var(--padding);
     box-sizing: border-box;
-    position: relative;
     background-color: var(--box-color);
-    z-index: 1;
+    position: relative;
 }
 
 .main .lake .map-sidebar .map-sidebar-left:hover .vis-header {
@@ -169,7 +171,10 @@
 
 .main .lake .map-sidebar .map-sidebar-right .clickable-box {
     width: 100%;
-    margin-right: 0;
+}
+
+.main .lake .map-sidebar .map-sidebar-right .clickable-box-parent a {
+    flex: 1 1 100%;
 }
 
 .main .lake .map-sidebar .map-sidebar-right .description {
@@ -178,6 +183,10 @@
 
 .main .lake .map-sidebar .map-sidebar-right .description a {
     color: var(--link-color);
+}
+
+.main .lake .map-sidebar .map-sidebar-right .sidebar-expand {
+    width: 100%;
 }
 
 .main .lake .map-sidebar .map-sidebar-right .setting {
@@ -357,6 +366,11 @@
     box-shadow: none;
 }
 
+.main .lake .clickable-box-parent {
+    display: flex;
+    flex-wrap: wrap;
+    gap: calc(var(--padding)/2);
+}
 
 .main .lake .clickable-box {
     background-color: var(--box-color);
@@ -364,8 +378,6 @@
     box-shadow: var(--box-shadow);
     display: inline-block;
     position: relative;
-    margin-bottom: calc(var(--padding)/2);
-    margin-right: calc(var(--padding)/2);
     text-decoration: none;
     border: 1px solid var(--box-color);
     transition: border 0.33s 0s ease, box-shadow 0.33s 0s ease;
@@ -521,7 +533,6 @@
     border-radius: 12px;
     max-width: 700px;
     padding: var(--padding) 0;
-    margin-bottom: var(--padding);
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
@@ -626,10 +637,6 @@
 
 /** Water Level **/
 
-.main .lake .measurements .water-levels {
-    margin-bottom: var(--padding);
-}
-
 .main .lake .measurements .water-levels .clickable-box {
     width: 500px;
 }
@@ -699,11 +706,18 @@
 
 /** Mobile **/
 
+@media screen and (max-width: 1000px) {
+    .main .lake .vis-main.full {
+        top: var(--header-height);
+        height: calc(100% - var(--header-height));
+    }
+}
+
 @media screen and (max-width: 850px) {
     .main .lake .map-sidebar .map-sidebar-left {
         width: 100%;
         height: 350px;
-        margin-bottom: 12px;
+        margin-bottom: var(--padding);
         border: none;
     }
 
@@ -711,15 +725,19 @@
         width: 100%;
         max-height: unset;
         border: none;
+        padding: 0;
+    }
+
+    .main .lake .clickable-box-parent {
+        gap: var(--padding);
+    }
+
+    .main .lake .clickable-box-parent a {
+        flex: 1 1 100%;
     }
 
     .main .lake .clickable-box {
-        margin: 0 0 20px 0;
-        width: 100%;
-    }
-
-    .main .lake .forecast .onedmodel .clickable-box {
-        width: 100%;
+        width: 100% !important;
     }
 
     .main .lake .satellite .satellite-maps .satellite-inner {
@@ -747,6 +765,7 @@
         display: inline-block;
         vertical-align: super;
         margin: 10px 0;
+        width: 100%;
     }
 
     .main .lake h2 {
@@ -775,9 +794,13 @@
         border-bottom: 1px solid var(--border-color);
         background-color: transparent;
         border-radius: 0;
-        padding: 18px 0 20px 0;
+        padding: 15px 0 25px 0;
         margin: 0;
         box-shadow: none;
+    }
+
+    .main .lake .clickable-box-parent {
+        gap: 0;
     }
 
     .main .lake .header {
@@ -810,11 +833,6 @@
 
     .main .lake .past-year .map-sidebar .map-sidebar-left .graph-container {
         padding: 0;
-    }
-
-    .main .lake .clickable-box:hover {
-        border-color: transparent;
-        box-shadow: none;
     }
 
     .main .lake .measurements .water-levels {

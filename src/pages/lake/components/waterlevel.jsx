@@ -62,34 +62,36 @@ class WaterLevel extends Component {
     var { levels } = this.state;
     var { language } = this.props;
     return (
-      <div className="water-levels" ref={this.ref}>
+      <div className="water-levels subsection" ref={this.ref}>
         <h3>
           {Translations.waterlevel[language]}
           <Information information={Translations.waterlevelText[language]} />
         </h3>
-        {levels.map((l) => (
-          <a
-            href={l.url}
-            key={l.label}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <div className="clickable-box">
-              <div className="right">
-                {round(l.last_value, 2)} {l.unit}
-                <div className="time">
-                  {timeAgo(l.last_time * 1000, language)}
+        <div className="clickable-box-parent">
+          {levels.map((l) => (
+            <a
+              href={l.url}
+              key={l.label}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <div className="clickable-box">
+                <div className="right">
+                  {round(l.last_value, 2)} {l.unit}
+                  <div className="time">
+                    {timeAgo(l.last_time * 1000, language)}
+                  </div>
                 </div>
+                <div className="title">{l.label}</div>
+                <div className="subtitle">{`${round(l.lat, 2)}, ${round(
+                  l.lng,
+                  2
+                )}`}</div>
+                <div className="link">{l.source}</div>
               </div>
-              <div className="title">{l.label}</div>
-              <div className="subtitle">{`${round(l.lat, 2)}, ${round(
-                l.lng,
-                2
-              )}`}</div>
-              <div className="link">{l.source}</div>
-            </div>
-          </a>
-        ))}
+            </a>
+          ))}
+        </div>
       </div>
     );
   }

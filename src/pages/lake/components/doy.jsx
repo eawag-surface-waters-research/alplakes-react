@@ -150,7 +150,7 @@ class Doy extends Component {
       FR: "Les statistiques du jour de l'année montrent la progression du paramètre tout au long de l'année. La dernière année et l'année à ce jour sont incluses pour permettre la comparaison de l'état du lac avec les données historiques. Toutes les données proviennent de simulations de modèles calibrés et non de données in situ.",
     };
     return (
-      <div className="doy" ref={this.ref}>
+      <div className="doy subsection" ref={this.ref}>
         <h3>
           {Translations.doyStats[language]}
           <Information information={Translations.doyStatsText[language]} />

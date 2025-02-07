@@ -265,7 +265,11 @@ class Graph extends Component {
         </div>
       </div>
     ) : (
-      <div className="clickable-box" onClick={this.toggle} title="Click for details">
+      <div
+        className="clickable-box"
+        onClick={this.toggle}
+        title="Click for details"
+      >
         <div className="right">{parameter.model}</div>
         <div className="title">{parameter.name}</div>
         {data ? (
@@ -328,20 +332,22 @@ class OneDModel extends Component {
     var { language, parameters, dark } = this.props;
     var { data } = this.state;
     return (
-      <div className="onedmodel">
+      <div className="onedmodel subsection">
         <h3>
           {Translations.watertemperature[language]} - 1D{" "}
           <Information information={Translations.onedmodelText[language]} />
         </h3>
-        {parameters.map((p) => (
-          <Graph
-            data={data[p.key]}
-            key={p.key}
-            language={language}
-            dark={dark}
-            parameter={p}
-          />
-        ))}
+        <div className="clickable-box-parent">
+          {parameters.map((p) => (
+            <Graph
+              data={data[p.key]}
+              key={p.key}
+              language={language}
+              dark={dark}
+              parameter={p}
+            />
+          ))}
+        </div>
       </div>
     );
   }

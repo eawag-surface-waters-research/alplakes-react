@@ -140,7 +140,7 @@ class PastYear extends Component {
       FR: "Les données de l'année écoulée illustrent l'évolution du paramètre dans l'ensemble de la colonne d'eau. Elles mettent en évidence les phénomènes de stratification et de mélange des lacs. Toutes les données sont dérivées de simulations de modèles calibrés plutôt que de mesures in situ.",
     };
     return (
-      <div className="past-year" ref={this.ref}>
+      <div className="past-year subsection" ref={this.ref}>
         <h3>
           {Translations.pastYear[language]}
           <Information information={Translations.pastYearText[language]} />
