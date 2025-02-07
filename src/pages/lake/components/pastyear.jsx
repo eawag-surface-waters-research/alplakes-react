@@ -195,7 +195,9 @@ class PastYear extends Component {
                         </select>
                       </div>
                       <div className="setting">
-                        <div className="label">{Translations.period[language]}</div>
+                        <div className="label">
+                          {Translations.period[language]}
+                        </div>
                         <div className="period-selector">
                           <Period
                             period={[start, end]}
@@ -229,9 +231,7 @@ class PastYear extends Component {
                                   {Math.round(
                                     parameters[model].performance.rmse[k] * 100
                                   ) / 100}
-                                  <div className="performance-unit">
-                                    {parameters[model].unit}
-                                  </div>
+                                  <div className="performance-unit">°C</div>
                                 </div>
                                 <div className="performance-name">
                                   {capitalize(k)} RMSE

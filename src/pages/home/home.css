@@ -82,7 +82,7 @@
   left: 70px;
   bottom: 12px;
   font-size: 15px;
-  color: var(--background-suble-font-color);
+  color: var(--background-subtle-font-color);
   pointer-events: none;
 }
 
@@ -110,7 +110,7 @@
   padding: 4px 15px;
   cursor: pointer;
   margin-right: calc(var(--padding) / 4);
-  color: var(--background-suble-font-color);
+  color: var(--background-subtle-font-color);
   transition: all .2s 0s ease;
   vertical-align: top;
   box-sizing: border-box;
@@ -170,7 +170,7 @@
   vertical-align: top;
   background-color: var(--background-color);
   border: none;
-  color: var(--background-suble-font-color);
+  color: var(--background-subtle-font-color);
   appearance: none;
   text-align: left;
   padding: calc(var(--padding) / 2) 10px calc(var(--padding) / 4) 10px;
@@ -211,7 +211,7 @@
 .main .home .content .search .results {
   float: right;
   margin-top: calc(var(--padding)/2);
-  color: var(--background-suble-font-color);
+  color: var(--background-subtle-font-color);
   display: inline-block;
   padding-right: 12px;
 }
@@ -621,7 +621,7 @@
 
 .main .home .content .home-map .legend .label table {
   font-size: 14px;
-  color: var(--background-suble-font-color);
+  color: var(--background-subtle-font-color);
   margin-top: 6px;
   font-family: DM_Sans, Frutiger Neue LT Pro, Arial, sans-serif;
 }
@@ -811,7 +811,7 @@
   }
 
   .main .home .content .search input::placeholder {
-    color: var(--background-suble-font-color);
+    color: var(--background-subtle-font-color);
   }
 
   .main .home .content .search .search-bar .description {

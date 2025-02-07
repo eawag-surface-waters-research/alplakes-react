@@ -34,7 +34,7 @@
 }
 
 .download-table {
-    color: var(--background-suble-font-color);
+    color: var(--background-subtle-font-color);
     border: none;
     cursor: pointer;
     padding: 5px 10px;

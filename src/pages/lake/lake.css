@@ -199,7 +199,7 @@
 .main .lake .map-sidebar .map-sidebar-right .setting .label {
     padding: 0px 0px 4px 0px;
     display: inline-block;
-    color: var(--background-suble-font-color);
+    color: var(--background-subtle-font-color);
 }
 
 .main .lake .map-sidebar .map-sidebar-right .setting input[type=range] {
@@ -224,7 +224,7 @@
 }
 
 .main .lake .map-sidebar .map-sidebar-right .setting .performance .performance-name {
-    color: var(--background-suble-font-color);
+    color: var(--background-subtle-font-color);
     font-size: 12px;
 }
 
@@ -402,7 +402,7 @@
 .main .lake .clickable-box .subtitle {
     font-size: 16px;
     font-weight: 400;
-    color: var(--background-suble-font-color);
+    color: var(--background-subtle-font-color);
     margin-bottom: 5px;
 }
 
@@ -420,7 +420,7 @@
     position: absolute;
     font-size: 16px;
     text-align: right;
-    color: var(--background-suble-font-color);
+    color: var(--background-subtle-font-color);
     padding: 22px 25px 5px 0;
     right: 0;
     top: 0;
@@ -434,7 +434,7 @@
 }
 
 .main .lake .clickable-box .right .time {
-    color: var(--background-suble-font-color);
+    color: var(--background-subtle-font-color);
     font-size: 16px;
     margin-top: 6px;
 }
@@ -567,7 +567,7 @@
 
 .main .lake .properties .parameters .parameters-box .parameter .label {
     font-size: 16px;
-    color: var(--background-suble-font-color);
+    color: var(--background-subtle-font-color);
 }
 
 .main .lake .properties .bathymetry .clickable-box {
@@ -624,7 +624,7 @@
 }
 
 .main .lake .satellite .satellite-maps .satellite-inner .map .label .time {
-    color: var(--background-suble-font-color);
+    color: var(--background-subtle-font-color);
 }
 
 /** Water Temperature **/

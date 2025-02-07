@@ -17,7 +17,13 @@ class Footer extends Component {
           }
         >
           <div className="left">
-            <img src={eawag_logo} alt="Eawag" />
+            <a
+              href="https://www.eawag.ch"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img src={eawag_logo} alt="Eawag" />
+            </a>
           </div>
           <NavLink to="/about">
             <div className="middle">

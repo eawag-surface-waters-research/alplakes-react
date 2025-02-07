@@ -49,10 +49,12 @@ class Graph extends Component {
   componentDidUpdate() {
     const { data } = this.props;
     if (this.state.display === false && data) {
-      const variables = Object.keys(data.metadata.variables).map((v) => {
-        data.metadata.variables[v].key = v;
-        return data.metadata.variables[v];
-      });
+      const variables = Object.keys(data.metadata.variables)
+        .filter((v) => v !== "S")
+        .map((v) => {
+          data.metadata.variables[v].key = v;
+          return data.metadata.variables[v];
+        });
       const variable = variables.find((v) => v.key === "T");
       const depths = data.metadata.depth;
       const depth = depths[0];
