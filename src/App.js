@@ -6,8 +6,9 @@ import Lake from "./pages/lake/lake";
 import API from "./pages/api/api";
 import About from "./pages/about/about";
 import Models from "./pages/models/models";
+import Map from "./pages/lake/map/map";
 import "./App.css";
-import Map from "./pages/map/map";
+
 
 class App extends Component {
   state = {

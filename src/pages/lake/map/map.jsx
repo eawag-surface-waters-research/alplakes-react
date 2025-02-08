@@ -2,19 +2,20 @@ import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import axios from "axios";
-import NavBar from "../../components/navbar/navbar";
-import Footer from "../../components/footer/footer";
-import CONFIG from "../../config.json";
-import Translations from "../../translations.json";
+import NavBar from "../../../components/navbar/navbar";
+import Footer from "../../../components/footer/footer";
+import CONFIG from "../../../config.json";
+import Translations from "../../../translations.json";
 import "./map.css";
-import Basemap from "../../components/leaflet/basemap";
-import back from "../../img/back.png";
-import settings from "../../img/settings.png";
+import Basemap from "../../../components/leaflet/basemap";
+import back from "../../../img/back.png";
+import Sidebar from "./sidebar";
 
 class Map extends Component {
   state = {
     id: "",
-    metadata: {},
+    layers: [],
+    name: false,
     error: false,
     updates: {},
     mapId: "map_" + Math.round(Math.random() * 100000),
@@ -27,13 +28,16 @@ class Map extends Component {
     try {
       var { data } = await axios.get(
         CONFIG.alplakes_bucket +
-          `/static/website/metadata/${CONFIG.branch}/${id}.json?timestamp=${
+          `/static/website/metadata/${
+            CONFIG.branch
+          }/${id}_layers.json?timestamp=${
             Math.round((new Date().getTime() + 1800000) / 3600000) * 3600 - 3600
           }`
       );
       this.setState({
         id,
-        metadata: data,
+        name: data.name,
+        layers: data.layers,
       });
     } catch (e) {
       console.error(e);
@@ -42,13 +46,13 @@ class Map extends Component {
   }
 
   render() {
-    var { metadata, error, id, updates, mapId } = this.state;
+    var { name, error, id, updates, mapId, layers } = this.state;
     var { language, dark } = this.props;
     var title = "";
     var documentTitle = "Alplakes";
-    if ("name" in metadata) {
-      documentTitle = metadata.name[language] + " | Alplakes";
-      title = metadata.name[language];
+    if (name) {
+      documentTitle = name[language] + " | Alplakes";
+      title = name[language];
     }
     return (
       <div className="map">
@@ -63,9 +67,7 @@ class Map extends Component {
               <img src={back} alt="Back" />
             </div>
           </NavLink>
-          <div className="settings-button">
-              <img src={settings} alt="Settings" />
-            </div>
+          <Sidebar layers={layers} title={title}/>
           <Basemap
             updates={updates}
             updated={this.updated}

@@ -156,7 +156,7 @@ class ThreeDModel extends Component {
               </div>
             )}
             <MapButton
-              link={`/map/${id}?layers=water_temperature`}
+              link={`/map/${id}?layers=3D_temperature,3D_currents`}
               language={language}
             />
             <Basemap

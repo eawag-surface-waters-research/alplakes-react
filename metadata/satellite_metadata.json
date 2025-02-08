@@ -1,6 +1,6 @@
 [
     {
-      "parameter": "chla",
+      "parameter": "chlorophyll",
       "parameter_name": {
         "EN": "Chlorophyll A",
         "DE": "Chlorophyll A",
@@ -24,7 +24,7 @@
       }
     },
     {
-      "parameter": "turb",
+      "parameter": "turbidity",
       "parameter_name": {
         "EN": "Turbidity",
         "DE": "Trübung",
