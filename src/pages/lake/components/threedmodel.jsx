@@ -88,8 +88,8 @@ class ThreeDModel extends Component {
     );
     updates.push({
       event: "addLayer",
-      type: "addRaster",
-      id: "raster_temperature",
+      type: "raster",
+      id: "3D_temperature",
       options: {
         data: data.temperature.data[index],
         geometry: data.geometry,
@@ -103,8 +103,8 @@ class ThreeDModel extends Component {
     });
     updates.push({
       event: "addLayer",
-      type: "addVectorField",
-      id: "vector_currents",
+      type: "vector",
+      id: "3D_currents",
       options: {
         data: data.velocity.data[index],
         geometry: data.geometry,

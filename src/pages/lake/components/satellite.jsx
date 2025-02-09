@@ -60,7 +60,7 @@ class Satellite extends Component {
     parameters.displayOptions["unit"] = parameters.unit;
     updates.push({
       event: "addLayer",
-      type: "addTiff",
+      type: "tiff",
       id: "satellite_" + parameters.parameter,
       options: { url: url, displayOptions: parameters.displayOptions },
     });

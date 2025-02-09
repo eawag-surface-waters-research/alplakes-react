@@ -4,6 +4,30 @@ import pako from "pako";
 import * as d3 from "d3";
 import * as general from "./general";
 
+export const createUpdates = async (updates, layers, add, update, remove) => {
+  const functions = {
+    addLayer: {
+      threed: addThreed,
+    },
+    updateLayer: {},
+    removeLayer: {},
+  };
+  for (let layer_id of add) {
+    let layer = layers.find((l) => l.id === layer_id)
+    layer.active = true;
+    if (layer.type in functions.addLayer) {
+      updates.push(await functions.addLayer.threed(layer))
+    } else {
+      console.error("No update function defined for {}".format(layer.type))
+    }
+  }
+  return { updates, layers };
+};
+
+const addThreed = async (layer) => {
+  
+};
+
 export const download1DLinegraph = async (
   model,
   lake,

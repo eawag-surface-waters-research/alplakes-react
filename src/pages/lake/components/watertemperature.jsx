@@ -69,7 +69,7 @@ class WaterTemperature extends Component {
     }
     updates.push({
       event: "addLayer",
-      type: "addGeoJson",
+      type: "geojson",
       id: "water_temperature",
       options: {
         data: data,

@@ -8,6 +8,37 @@
     overflow: hidden;
 }
 
+.main .map .layer-map .map-loading {
+    position: absolute;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    transition: all 0.3s ease-out;
+    pointer-events: none;
+    top: 0;
+}
+
+.main .map .layer-map .map-loading.closed {
+    display: none;
+}
+
+.main .map .layer-map .map-loading .map-loading-inner {
+    background-color: var(--background-color);
+    padding: 20px;
+    box-shadow: var(--box-shadow);
+    border-radius: 50px;
+}
+
+.main .map .layer-map .map-loading .map-loading-inner .loading-text {
+    display: inline-block;
+    margin-left: 20px;
+    vertical-align: super;
+    width: 200px;
+}
+
 .main .map .layer-map .back-button {
     position: absolute;
     top: 12px;
@@ -46,7 +77,7 @@
     width: 100%;
     border-radius: 0 16px 16px 16px;
     background-color: var(--box-color);
-    padding: 0 calc(var(--padding)/2) calc(var(--padding)/2) calc(var(--padding)/2);
+    padding: 12px;
 }
 
 .main .map .layer-map .map-sidebar.closed .sidebar-body {
@@ -65,7 +96,7 @@
     height: 74px;
     position: relative;
     vertical-align: top;
-    padding: 18px 30px;
+    padding: 22px 12px;
     box-sizing: border-box;
     font-size: 20px;
     text-align: center;
@@ -121,4 +152,134 @@
 
 .main .map .layer-map .map-sidebar .sidebar-head .sidebar-toggle .settings-button:hover img {
     transform: scale(1.1);
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-layers {
+    background-color: var(--background-color);
+    border-radius: 12px;
+    text-align: center;
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-layers .active-apps .app {
+    display: inline-block;
+    font-size: 45px;
+    border-radius: 12px;
+    margin: 25px 12px 40px 12px;
+    width: 60px;
+    height: 60px;
+    text-align: center;
+    color: var(--border-color);
+    box-shadow: var(--box-shadow);
+    position: relative;
+    cursor: pointer;
+    background-color: var(--box-color);
+    line-height: 57px;
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-layers .active-apps .app.filled {
+    border: none;
+    box-shadow: var(--box-shadow);
+    height: 62px;
+    text-align: center;
+    vertical-align: top;
+    width: 62px;
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-layers .active-apps .app img {
+    bottom: 0;
+    height: auto;
+    left: 0;
+    margin: auto;
+    max-height: 44px;
+    max-width: 38px;
+    pointer-events: none;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transition: all .15s ease-in-out;
+    -webkit-user-select: none;
+    user-select: none;
+    width: auto;
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-layers .active-apps .app .remove {
+    background-color: var(--background-color);
+    border: 1px solid var(--border-color);
+    border-radius: 22px;
+    box-sizing: border-box;
+    color: var(--background-suble-font-color);
+    font-size: 44px;
+    font-size: 24px;
+    height: 20px;
+    left: -10px;
+    line-height: 13px;
+    padding: 1px;
+    position: absolute;
+    text-align: center;
+    top: -10px;
+    transition: color .5s;
+    -webkit-user-select: none;
+    user-select: none;
+    width: 20px;
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-layers .active-apps .app .label {
+    bottom: -32px;
+    color: var(--background-font-color);
+    font-size: 12px;
+    left: -10px;
+    position: absolute;
+    text-align: center;
+    width: 84px;
+    line-height: normal;
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-layers .active-apps .app .label .under {
+    color: var(--background-suble-font-color);
+    font-size: 10px;
+    margin-top: -2px;
+}
+
+
+.main .map .layer-map .map-sidebar .threed {
+    background-color: #26423d;
+    opacity: 0.8;
+    background-image: linear-gradient(30deg, #4aa091 12%, transparent 12.5%, transparent 87%, #4aa091 87.5%, #4aa091), linear-gradient(150deg, #4aa091 12%, transparent 12.5%, transparent 87%, #4aa091 87.5%, #4aa091), linear-gradient(30deg, #4aa091 12%, transparent 12.5%, transparent 87%, #4aa091 87.5%, #4aa091), linear-gradient(150deg, #4aa091 12%, transparent 12.5%, transparent 87%, #4aa091 87.5%, #4aa091), linear-gradient(60deg, #4aa09177 25%, transparent 25.5%, transparent 75%, #4aa09177 75%, #4aa09177), linear-gradient(60deg, #4aa09177 25%, transparent 25.5%, transparent 75%, #4aa09177 75%, #4aa09177);
+    background-size: 28px 49px;
+    background-position: 0 0, 0 0, 14px 25px, 14px 25px, 0 0, 14px 25px;
+}
+
+.main .map .layer-map .map-sidebar .satellite {
+    background-color: #26423d;
+    opacity: 0.8;
+    background-image: repeating-radial-gradient(circle at 0 0, transparent 0, #26423d 24px), repeating-linear-gradient(#4aa09155, #4aa091);
+}
+
+.main .map .layer-map .map-sidebar .heatmap {
+    background-color: #26423d;
+    opacity: 0.8;
+    background-image: repeating-linear-gradient(45deg, #4aa091 25%, transparent 25%, transparent 75%, #5ddec8 75%, #4aa091), repeating-linear-gradient(45deg, #4aa091 25%, #51857b 25%, #26423d 75%, #4aa091 75%, #4aa091);
+    background-position: 0 0, 9px 9px;
+    background-size: 18px 18px;
+}
+
+.main .map .layer-map .map-sidebar .linegraph {
+    background-color: #26423d;
+    opacity: 0.8;
+    background-image: linear-gradient(135deg, #4aa091 25%, transparent 25%), linear-gradient(225deg, #4aa091 25%, transparent 25%), linear-gradient(45deg, #4aa091 25%, transparent 25%), linear-gradient(315deg, #4aa091 25%, #26423d 25%);
+    background-position: 9px 0, 9px 0, 0 0, 0 0;
+    background-size: 18px 18px;
+    background-repeat: repeat;
+}
+
+.main .map .layer-map .map-sidebar .doy {
+    background-color: #26423d;
+    opacity: 0.8;
+    background: linear-gradient(135deg, #4aa09155 25%, transparent 25%) -9px 0/ 18px 18px, linear-gradient(225deg, #4aa091 25%, transparent 25%) -9px 0/ 18px 18px, linear-gradient(315deg, #4aa09155 25%, transparent 25%) 0px 0/ 18px 18px, linear-gradient(45deg, #4aa091 25%, #26423d 25%) 0px 0/ 18px 18px;
+}
+
+.main .map .layer-map .map-sidebar .measurements {
+    background-color: #26423d;
+    opacity: 0.8;
+    background: linear-gradient(135deg, #4aa09155 25%, transparent 25%) -9px 0/ 18px 18px, linear-gradient(225deg, #4aa091 25%, transparent 25%) -9px 0/ 18px 18px, linear-gradient(315deg, #4aa09155 25%, transparent 25%) 0px 0/ 18px 18px, linear-gradient(45deg, #4aa091 25%, #26423d 25%) 0px 0/ 18px 18px;
 }

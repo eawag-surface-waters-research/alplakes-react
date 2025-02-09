@@ -30,10 +30,10 @@ export const update = async (
 ) => {
   const functions = {
     addLayer: {
-      addTiff: addTiff,
-      addGeoJson: addGeoJson,
-      addRaster: addRaster,
-      addVectorField: addVectorField,
+      tiff: addTiff,
+      geojson: addGeoJson,
+      raster: addRaster,
+      vector: addVectorField,
     },
     updateLayer: {},
     removeLayer: {},
@@ -43,6 +43,7 @@ export const update = async (
       updates[i].event in functions &&
       updates[i].type in functions[updates[i].event]
     ) {
+      if (!(updates[i].id in layers)) layers[updates[i].id] = {};
       await functions[updates[i].event][updates[i].type](
         map,
         layers,
@@ -54,6 +55,8 @@ export const update = async (
       addPlay(updates[i].options, addControls);
     } else if (updates[i].event === "removePlay") {
       removeControls();
+    } else if (updates[i].event === "bounds") {
+      setBounds(map, updates[i].options);
     } else {
       console.error(
         `Event ${updates[i].event} has no function ${updates[i].type}`
@@ -73,11 +76,12 @@ const addRaster = async (map, layers, id, options, language) => {
     return { color: [c[0], c[1], c[2]], point: c[3] };
   });
   displayOptions.palette = palette;
-  layers[id] = new L.Raster(
+  layers[id]["raster"] = new L.Raster(
     options.geometry,
     options.data,
     displayOptions
   ).addTo(map);
+
   if ("labels" in options) {
     const labelLayer = L.layerGroup([]).addTo(map);
     for (let i = 0; i < options.labels.length; i++) {
@@ -110,7 +114,7 @@ const addRaster = async (map, layers, id, options, language) => {
         }
       );
     }
-    layers[id + "_labels"] = labelLayer;
+    layers[id]["labels"] = labelLayer;
   }
 };
 
@@ -120,7 +124,7 @@ const addVectorField = async (map, layers, id, options, language) => {
     interpolate: false,
   };
   var displayOptions = { ...defaultOptions, ...options.displayOptions };
-  layers[id] = new L.vectorfield(
+  layers[id]["vector"] = new L.vectorfield(
     options.geometry,
     options.data,
     displayOptions
@@ -140,7 +144,7 @@ const addTiff = async (map, layers, id, options, language) => {
   let { data } = await axios.get(options.url, {
     responseType: "arraybuffer",
   });
-  layers[id] = await L.floatgeotiff(data, displayOptions).addTo(map);
+  layers[id]["tiff"] = await L.floatgeotiff(data, displayOptions).addTo(map);
 };
 
 const addGeoJson = async (map, layers, id, options, language) => {
@@ -149,7 +153,7 @@ const addGeoJson = async (map, layers, id, options, language) => {
   });
   const minDate = new Date();
   minDate.setHours(0, 0, 0, 0);
-  layers["water_temperaure"] = L.layerGroup([]).addTo(map);
+  const layer = L.layerGroup([]).addTo(map);
   for (let i = 0; i < options.data.features.length; i++) {
     let station = options.data.features[i];
     let time = new Date(station.properties.last_time * 1000);
@@ -174,7 +178,7 @@ const addGeoJson = async (map, layers, id, options, language) => {
           }),
           value: station.properties.last_value,
         }
-      ).addTo(layers["water_temperaure"]);
+      ).addTo(layer);
     } else {
       marker = L.marker(
         [station.geometry.coordinates[1], station.geometry.coordinates[0]],
@@ -189,7 +193,7 @@ const addGeoJson = async (map, layers, id, options, language) => {
           }),
           value: station.properties.latest_value,
         }
-      ).addTo(layers["water_temperaure"]);
+      ).addTo(layer);
     }
     marker.bindTooltip(
       station.properties.permenant
@@ -225,10 +229,17 @@ const addGeoJson = async (map, layers, id, options, language) => {
       }</a>`
     );
   }
+  layers[id]["geojson"] = layer;
 };
 
 const addPlay = (options, addControls) => {
   addControls(options.period, options.datetime, options.timestep, options.data);
+};
+
+const setBounds = (map, bounds) => {
+  map.fitBounds(L.latLngBounds(L.latLng(bounds[0]), L.latLng(bounds[1])), {
+    padding: [20, 20],
+  });
 };
 
 export const setPlayDatetime = (layers, datetime, period, data) => {
