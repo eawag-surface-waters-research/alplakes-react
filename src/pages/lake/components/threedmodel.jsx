@@ -119,8 +119,8 @@ class ThreeDModel extends Component {
       event: "addPlay",
       options: {
         data: {
-          raster_temperature: data.temperature.data,
-          vector_currents: data.velocity.data,
+          "3D_temperature": data.temperature.data,
+          "3D_currents": data.velocity.data,
         },
         period: [
           data.temperature.start.getTime(),

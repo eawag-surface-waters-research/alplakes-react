@@ -11,7 +11,7 @@ class Bathymetry extends Component {
           {parameters.map((p) => (
             <a
               href={p.url}
-              key={p.name}
+              key={p.name + ("id" in p ? p.id : "")}
               target="_blank"
               rel="noopener noreferrer"
             >

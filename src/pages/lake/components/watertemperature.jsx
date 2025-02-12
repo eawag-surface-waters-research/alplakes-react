@@ -95,7 +95,7 @@ class WaterTemperature extends Component {
         <div className="map-sidebar">
           <div className="map-sidebar-left">
             <MapButton
-              link={`/map/${id}?layers=water_temperature`}
+              link={`/map/${id}?layers=current_temperature`}
               language={language}
             />
             <Basemap

@@ -105,6 +105,7 @@ const addRaster = async (map, layers, id, options, language) => {
         }</div></div></a>`,
         {
           id: options.labels[i].name,
+          unit: displayOptions["unit"],
           permanent: true,
           direction: options.labels[i].direction
             ? options.labels[i].direction
@@ -116,6 +117,22 @@ const addRaster = async (map, layers, id, options, language) => {
     }
     layers[id]["labels"] = labelLayer;
   }
+};
+
+const updateLabels = (labels_layer, raster_layer) => {
+  labels_layer.getLayers().forEach((m) => {
+    let tooltip = m.getTooltip();
+    let { value } = raster_layer._getValue(L.latLng(tooltip._latlng));
+    m.getTooltip().setContent(
+      `<div class="temperature-label"><div class="name">${
+        tooltip.options.id
+      }</div><div class="value">${
+        typeof value === "number"
+          ? Math.round(value * 10) / 10 + tooltip.options.unit
+          : ""
+      }</div></div>`
+    );
+  });
 };
 
 const addVectorField = async (map, layers, id, options, language) => {
@@ -243,7 +260,7 @@ const setBounds = (map, bounds) => {
 };
 
 export const setPlayDatetime = (layers, datetime, period, data) => {
-  for (let key in data) {
+  for (let key of Object.keys(data)) {
     const timestep = (period[1] - period[0]) / data[key].length;
     var i0 = Math.max(
       Math.min(
@@ -252,17 +269,24 @@ export const setPlayDatetime = (layers, datetime, period, data) => {
       ),
       0
     );
-    if (key.includes("raster_")) {
-      if (i0 === data[key].length - 1) {
-        i0 = i0 - 1;
+    for (let plot_type of Object.keys(layers[key])) {
+      if (plot_type === "raster") {
+        if (i0 === data[key].length - 1) {
+          i0 = i0 - 1;
+        }
+        const i1 = i0 + 1;
+        const beforeValue = period[0] + i0 * timestep;
+        const afterValue = beforeValue + timestep;
+        const interpolate =
+          (datetime - beforeValue) / (afterValue - beforeValue);
+        layers[key][plot_type].update([data[key][i0], data[key][i1]], {
+          interpolate,
+        });
+      } else if (plot_type === "labels") {
+        updateLabels(layers[key][plot_type], layers[key]["raster"]);
+      } else {
+        layers[key][plot_type].update(data[key][i0], {});
       }
-      const i1 = i0 + 1;
-      const beforeValue = period[0] + i0 * timestep;
-      const afterValue = beforeValue + timestep;
-      const interpolate = (datetime - beforeValue) / (afterValue - beforeValue);
-      layers[key].update([data[key][i0], data[key][i1]], { interpolate });
-    } else {
-      layers[key].update(data[key][i0], {});
     }
   }
 };
