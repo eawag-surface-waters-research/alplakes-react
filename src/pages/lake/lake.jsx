@@ -232,10 +232,12 @@ class Lake extends Component {
                 )}
               </div>
             )}
-            <div className="scroll-up" onClick={this.scrollToTop}>
-              {Translations.backToTop[language]}
-              <img src={sortIcon} alt="Down" />
-            </div>
+            {"key" in metadata && (
+              <div className="scroll-up" onClick={this.scrollToTop}>
+                {Translations.backToTop[language]}
+                <img src={sortIcon} alt="Down" />
+              </div>
+            )}
           </div>
         )}
         <Footer {...this.props} />

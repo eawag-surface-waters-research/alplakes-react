@@ -711,6 +711,14 @@
         top: var(--header-height);
         height: calc(100% - var(--header-height));
     }
+
+    .main .lake {
+        min-height: 100vh;
+    }
+
+    .main .not-found {
+        min-height: calc(100vh - var(--footer-height) - var(--top-margin));
+    }
 }
 
 @media screen and (max-width: 850px) {
@@ -786,7 +794,7 @@
     .main .lake .map-sidebar .map-sidebar-left {
         height: 300px;
         margin: 0;
-        margin-bottom: -10px;
+        margin-bottom: -5px;
     }
 
     .main .lake .clickable-box {
