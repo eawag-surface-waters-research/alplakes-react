@@ -27,7 +27,7 @@
 
 .main .map .layer-map .map-loading .map-loading-inner {
     background-color: var(--box-color);
-    padding: 20px;
+    padding: 12px;
     box-shadow: var(--box-shadow);
     border-radius: 50px;
 }
@@ -273,8 +273,10 @@
     .main .map .layer-map .map-sidebar {
         height: unset;
         width: 100%;
-        position: relative;
-
+        position: fixed;
+    }
+    .leaflet-control-attribution {
+        display: none;
     }
     .main .map .layer-map .map-sidebar .sidebar-head {
         display: none;
