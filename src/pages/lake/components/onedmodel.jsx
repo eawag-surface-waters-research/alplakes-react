@@ -158,10 +158,12 @@ class Graph extends Component {
       IT: "I modelli 1D semplificano i processi lacustri rappresentando il lago come un'unica colonna verticale, suddivisa in strati dalla superficie al fondo. Invece di simulare le variazioni orizzontali, si concentrano sulle variazioni verticali di temperatura, densità e altre proprietà.",
       FR: "Les modèles de lacs 1D simplifient les processus lacustres en représentant le lac comme une colonne verticale unique, divisée en couches de la surface au fond. Au lieu de simuler les variations horizontales, ils se concentrent sur les changements verticaux de température, de densité et d'autres propriétés.",
     };
+    var name = parameter.name;
+    if (name.includes(":")) name = name.split(":")[1];
     return open ? (
       <div className="map-sidebar">
         <div>
-          <div className="title">{parameter.name}</div>
+          <div className="title">{name}</div>
           <div className="minimise" onClick={this.toggle}>
             {Translations.hideDetails[language]}
           </div>
@@ -273,7 +275,7 @@ class Graph extends Component {
         title="Click for details"
       >
         <div className="right">{parameter.model}</div>
-        <div className="title">{parameter.name}</div>
+        <div className="title">{name}</div>
         {data ? (
           <SummaryTable
             start={data.start}

@@ -13,17 +13,38 @@ import thermocline_icon from "../../../img/thermocline.png";
 import oxygen_icon from "../../../img/oxygen.png";
 import forel_icon from "../../../img/forel.png";
 import LayerSelection from "./layerselect";
+import LayerSettings from "./layersettings";
 
 class Sidebar extends Component {
   state = {
     open: true,
+    selection: false,
   };
   toggleOpen = () => {
     this.setState({ open: !this.state.open });
   };
+  setSelection = (selection) => {
+    if (this.state.selection === selection && window.innerWidth <= 500) {
+      this.setState({ selection: false });
+    } else {
+      this.setState({ selection });
+    }
+  };
+  componentDidUpdate(prevProps) {
+    if (
+      prevProps.layers.length === 0 &&
+      this.props.layers.length > 0 &&
+      window.innerWidth > 500
+    ) {
+      let layers = this.props.layers.filter((l) => l.active);
+      if (layers.length > 0) {
+        this.setState({ selection: layers[0].id });
+      }
+    }
+  }
   render() {
     const { title, layers, language } = this.props;
-    const { open } = this.state;
+    const { open, selection } = this.state;
     const images = {
       temperature: temperature_icon,
       velocity: velocity_icon,
@@ -39,6 +60,7 @@ class Sidebar extends Component {
       oxygensat: oxygen_icon,
       forelule: forel_icon,
     };
+    const layer = selection ? layers.find((l) => l.id === selection) : false;
     return (
       <div className={open ? "map-sidebar" : "map-sidebar closed"}>
         <div className="sidebar-head">
@@ -51,9 +73,18 @@ class Sidebar extends Component {
         </div>
         <div className="sidebar-body">
           <div className="sidebar-layers">
-            <LayerSelection layers={layers} language={language} images={images}/>
+            <LayerSelection
+              layers={layers}
+              language={language}
+              images={images}
+              setSelection={this.setSelection}
+            />
           </div>
-          <div className="sidebar-content"></div>
+          <div
+            className={selection ? "sidebar-content" : "sidebar-content closed"}
+          >
+            {selection && <LayerSettings layer={layer} language={language} />}
+          </div>
         </div>
       </div>
     );

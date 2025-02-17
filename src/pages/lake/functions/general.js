@@ -31,6 +31,16 @@ export const formatAPIDatetime = (datetime) => {
   }${hour < 10 ? "0" + hour : hour}${minute < 10 ? "0" + minute : minute}`;
 };
 
+export const formatAPIDate = (datetime) => {
+  var a = new Date(datetime);
+  var year = a.getFullYear();
+  var month = a.getMonth() + 1;
+  var date = a.getDate();
+  return `${String(year)}${month < 10 ? "0" + month : month}${
+    date < 10 ? "0" + date : date
+  }`;
+};
+
 export const parseAlplakesDate = (str) => {
   const d = new Date(
     `${str.slice(0, 4)}-${str.slice(4, 6)}-${str.slice(6, 8)}T${str.slice(
@@ -39,6 +49,36 @@ export const parseAlplakesDate = (str) => {
     )}:${str.slice(10, 12)}:00.000+00:00`
   );
   return d;
+};
+
+export const formatDateLong = (datetime, months) => {
+  var a = new Date(datetime);
+  var year = a.getFullYear();
+  var month = months[a.getMonth()];
+  var date = a.getDate();
+  return `${date} ${month} ${String(year)}`;
+};
+
+export const formatSencastDay = (datetime) => {
+  var a = new Date(datetime);
+  var year = a.getFullYear();
+  var month = a.getMonth() + 1;
+  var date = a.getDate();
+  return `${String(year)}${month < 10 ? "0" + month : month}${
+    date < 10 ? "0" + date : date
+  }`;
+};
+
+export const formatDateTime = (datetime, months) => {
+  var a = new Date(datetime);
+  var hour = a.getHours();
+  var minute = a.getMinutes();
+  var year = a.getFullYear();
+  var month = months[a.getMonth()];
+  var date = a.getDate();
+  return `${hour < 10 ? "0" + hour : hour}:${
+    minute < 10 ? "0" + minute : minute
+  } ${date} ${month} ${String(year).slice(-2)}`;
 };
 
 export const formatDateYYYYMMDD = (d) => {
@@ -243,3 +283,18 @@ export const capitalize = (string) => {
   if (string.length === 0) return string;
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
+
+export const closestValue = (target, arr) => {
+  const sortedArr = arr
+    .slice()
+    .sort((a, b) => Math.abs(a - target) - Math.abs(b - target));
+  return sortedArr[0];
+};
+
+export const parseDay = (yyyymmdd) => {
+  const year = parseInt(yyyymmdd.substring(0, 4), 10);
+  const month = parseInt(yyyymmdd.substring(4, 6), 10) - 1;
+  const day = parseInt(yyyymmdd.substring(6, 8), 10);
+  const date = new Date(year, month, day);
+  return date;
+};

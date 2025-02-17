@@ -828,7 +828,7 @@
 
     .main .lake .onedmodel .clickable-box {
         border: none;
-        margin-top: -14px;
+        margin-top: -10px;
     }
 
     .main .lake .clickable-box .skeleton-data {
@@ -856,7 +856,7 @@
     }
 
     .main .lake .clickable-box .right {
-        padding-right: 0;
+        padding: 18px 0 5px 0;
     }
 
     .main .lake .map-sidebar .map-sidebar-right {
