@@ -84,7 +84,7 @@
     display: none;
 }
 
-.main .map .layer-map .map-sidebar .sidebar-body .sidebar-content { 
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-content {
     display: none;
 }
 
@@ -265,41 +265,60 @@
 @media screen and (max-width: 500px) {
     .main .map .layer-map {
         width: 100%;
-        height: calc(100% - var(--header-height) - var(--padding)/2 - 110px);
-        top: calc(var(--header-height) + var(--padding)/2);
+        height: calc(100% - var(--header-height));
+        top: var(--header-height);
         left: 0;
         border-radius: 0;
     }
+
     .main .map .layer-map .map-sidebar {
         height: unset;
         width: 100%;
         position: fixed;
     }
+
     .leaflet-control-attribution {
         display: none;
     }
+
     .main .map .layer-map .map-sidebar .sidebar-head {
         display: none;
     }
+
     .main .map .layer-map .map-sidebar .sidebar-body {
         position: fixed;
         bottom: 0;
         left: 0;
         height: unset;
         border-radius: 0;
+        background-color: transparent;
     }
+
     .main .map .layer-map .map-sidebar.closed .sidebar-body {
         display: block;
     }
+
+    .main .map .layer-map .map-sidebar .sidebar-body .sidebar-layers {
+        backdrop-filter: blur(4px);
+        background-color: rgb(255 255 255 / 50%);
+    }
+
+    .main.dark .map .layer-map .map-sidebar .sidebar-body .sidebar-layers {
+        background-color: rgb(34 35 42 / 71%);
+    }
+
     .main .map .layer-map .map-sidebar .sidebar-body .sidebar-layers .active-apps .app {
         margin: 12px;
     }
+
     .main .map .layer-map .map-sidebar .sidebar-body .sidebar-layers .active-apps .app .label {
         display: none;
     }
+
     .main .map .layer-map .map-sidebar .sidebar-body .sidebar-layers .active-apps .app .remove {
         display: none;
     }
+
     .main .map .layer-map .map-sidebar .sidebar-body .sidebar-content {
         position: absolute;
         top: -70vh;

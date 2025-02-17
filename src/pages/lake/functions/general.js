@@ -196,7 +196,7 @@ export const processLabels = (labels, geometry, data, lake) => {
     l.end = end;
     l.i = index[0];
     l.j = index[1];
-    l.url = `/map/${lake}?layers=water_temperature&label=${l.name
+    l.url = `/map/${lake}?layers=3D_temperature,3D_currents&label=${l.name
       .toLowerCase()
       .replace(" ", "_")}`;
   });
