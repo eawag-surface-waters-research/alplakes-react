@@ -19,6 +19,10 @@ export const hour = () => {
   }`;
 };
 
+export const compareDates = (date1, date2) => {
+  return date1 - date2;
+};
+
 export const formatAPIDatetime = (datetime) => {
   var a = new Date(datetime);
   var year = a.getFullYear();
@@ -67,6 +71,15 @@ export const formatSencastDay = (datetime) => {
   return `${String(year)}${month < 10 ? "0" + month : month}${
     date < 10 ? "0" + date : date
   }`;
+};
+
+export const satelliteStringToDate = (date) => {
+  return new Date(
+    `${date.slice(0, 4)}-${date.slice(4, 6)}-${date.slice(6, 8)}T${date.slice(
+      9,
+      11
+    )}:${date.slice(11, 13)}:00.000+00:00`
+  );
 };
 
 export const formatDateTime = (datetime, months) => {
@@ -297,4 +310,65 @@ export const parseDay = (yyyymmdd) => {
   const day = parseInt(yyyymmdd.substring(6, 8), 10);
   const date = new Date(year, month, day);
   return date;
+};
+
+export const componentsFromFilename = (filename) => {
+  let parts = filename.replace(".tif", "").replace("_lowres", "").split("_");
+  let lake = parts[parts.length - 1];
+  let group;
+  let satellite;
+  if (filename.includes("COLLECTION_")) {
+    group = "collection";
+    satellite = filename.includes("_L9") ? "L9" : "L8";
+  } else if (filename.includes("_S2")) {
+    group = "sentinel2";
+    satellite = filename.includes("_S2A")
+      ? "S2A"
+      : filename.includes("_S2B")
+      ? "S2B"
+      : "S2C";
+  } else if (filename.includes("_S3")) {
+    group = "sentinel3";
+    satellite = filename.includes("_S3A") ? "S3A" : "S3B";
+  }
+  return { lake, group, satellite };
+};
+
+export const weightedAverage = (values, weights) => {
+  if (
+    values.length !== weights.length ||
+    values.length === 0 ||
+    weights.length === 0
+  ) {
+    throw new Error(
+      "Values and weights arrays must have the same length and cannot be empty."
+    );
+  }
+  const sumOfProducts = values.reduce(
+    (acc, value, index) => acc + value * weights[index],
+    0
+  );
+  const sumOfWeights = weights.reduce((acc, weight) => acc + weight, 0);
+  return sumOfProducts / sumOfWeights;
+};
+
+export const filterImages = (images, coverage, satellite) => {
+  var available = {};
+  for (let date of Object.keys(images)) {
+    let day = JSON.parse(JSON.stringify(images[date]));
+    day.time = new Date(day.time);
+    day.images = day.images
+      .filter((i) => i.percent > coverage)
+      .map((i) => {
+        i.time = new Date(i.time);
+        return i;
+      });
+    if (satellite.length > 0) {
+      day.images = day.images.filter((i) => satellite.includes(i.model));
+    }
+    if (day.images.length > 0) {
+      available[date] = day;
+    }
+  }
+  return available;
 };

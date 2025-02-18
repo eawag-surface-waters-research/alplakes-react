@@ -71,6 +71,11 @@
     z-index: 9999;
 }
 
+.main .map .layer-map .map-sidebar.closed {
+    width: unset;
+    height: unset;
+}
+
 .main .map .layer-map .map-sidebar .sidebar-body {
     box-sizing: border-box;
     height: calc(100% - 74px);
@@ -87,9 +92,15 @@
 .main .map .layer-map .map-sidebar .sidebar-body .sidebar-content {
     max-height: calc(100% - 139px);
     width: 100%;
-    background-color: var(--background-color);
     margin-top: 12px;
-    border-radius: 12px;
+    box-sizing: border-box;
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .layer-settings {
+   background-color: var(--background-color);
+   padding: 12px;
+   border-radius: 12px;
+   margin-top: 12px;
 }
 
 .main .map .layer-map .map-sidebar .sidebar-head {
@@ -273,6 +284,10 @@
         top: var(--header-height);
         left: 0;
         border-radius: 0;
+    }
+
+    .main .map .layer-map .control-bar {
+        bottom: 105px;
     }
 
     .main .map .layer-map .map-sidebar {

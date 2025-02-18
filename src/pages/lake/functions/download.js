@@ -4,28 +4,274 @@ import pako from "pako";
 import * as d3 from "d3";
 import * as general from "./general";
 
-export const createUpdates = async (updates, layers, add, update, remove) => {
+export const collectMetadata = async (layers) => {
   const functions = {
-    addLayer: {
-      threed: addThreed,
-    },
-    updateLayer: {},
-    removeLayer: {},
+    threed: threedMetadata,
+    satellite: satelliteMetadata,
+    measurements: measurementsMetadata,
   };
-  for (let layer_id of add) {
-    let layer = layers.find((l) => l.id === layer_id)
-    layer.active = true;
-    if (layer.type in functions.addLayer) {
-      updates.push(await functions.addLayer.threed(layer))
-    } else {
-      console.error("No update function defined for {}".format(layer.type))
+  for (let layer of layers) {
+    if (layer.active && !("metadata" in layer["sources"][layer["source"]])) {
+      layer["sources"][layer["source"]]["metadata"] = await functions[
+        layer.type
+      ](layer["sources"][layer["source"]]);
     }
   }
-  return { updates, layers };
+  return layers;
 };
 
-const addThreed = async (layer) => {
-  
+const threedMetadata = async (parameters) => {
+  const metadata = await downloadModelMetadata(
+    parameters.model.toLowerCase(),
+    parameters.key
+  );
+  return metadata;
+};
+
+const satelliteMetadata = async (parameters) => {
+  var available = {};
+  for (let model of parameters.models) {
+    let { data: files } = await axios.get(
+      CONFIG.sencast_bucket + model.metadata
+    );
+    let max_pixels = d3.max(files.map((m) => parseFloat(m.p)));
+    for (let file of files) {
+      let time = general.satelliteStringToDate(file.dt);
+      let date = general.formatSencastDay(time);
+      let { lake, satellite, group } = general.componentsFromFilename(file.k);
+      let url = `${CONFIG.sencast_bucket}/alplakes/cropped/${group}/${lake}/${file.k}`;
+      let split = file.k.split("_");
+      let tile = split[split.length - 1].split(".")[0];
+      let percent = Math.ceil((parseFloat(file.vp) / max_pixels) * 100);
+      let { min, max, mean: ave } = file;
+      let image = {
+        url,
+        time,
+        tile,
+        satellite,
+        model: model.model,
+        percent,
+        ave,
+        min,
+        max,
+      };
+      if (date in available) {
+        available[date].images.push(image);
+        available[date].max_percent = Math.max(
+          available[date].max_percent,
+          percent
+        );
+        available[date].max = Math.max(available[date].max, max);
+        let total_percent = available[date].images
+          .map((i) => i.percent)
+          .reduce((acc, currentValue) => acc + currentValue, 0);
+        available[date].ave = general.weightedAverage(
+          available[date].images.map((i) => i.ave),
+          available[date].images.map((i) => i.percent / total_percent)
+        );
+      } else {
+        available[date] = {
+          images: [image],
+          max_percent: percent,
+          ave,
+          min,
+          max,
+          time,
+        };
+      }
+    }
+  }
+  var images = general.filterImages(available, 10, []);
+  var includeDates = Object.values(images).map((m) => m.time);
+  includeDates.sort(general.compareDates);
+  var currentDate = includeDates[includeDates.length - 1];
+  var date = available[general.formatSencastDay(currentDate)];
+  var image = date.images.filter((i) => i.percent === date.max_percent)[0];
+  return { available, image };
+};
+
+const measurementsMetadata = (parameters) => {
+  return true;
+};
+
+export const downloadData = async (
+  add,
+  layers,
+  updates,
+  period,
+  datetime,
+  depth,
+  initial
+) => {
+  const functions = {
+    threed: threedDownload,
+    satellite: satelliteDownload,
+    measurements: measurementsDownload,
+  };
+  var data;
+  for (let layer of layers) {
+    if (add.includes(layer.id)) {
+      ({ data, updates, period, datetime, depth } = await functions[layer.type](
+        layer,
+        updates,
+        period,
+        datetime,
+        depth,
+        initial
+      ));
+      if (data) {
+        layer["sources"][layer["source"]]["data"] = data;
+      }
+    }
+  }
+  if (layers.filter((l) => l.active && l.playControls).length > 0) {
+    var dataStore = {};
+    for (let layer of layers.filter((l) => l.active && l.playControls)) {
+      dataStore[layer.id] =
+        layer.sources[layer.source].data[layer.parameter].data;
+    }
+    updates.push({
+      event: "addPlay",
+      options: {
+        data: dataStore,
+        period: [period[0].getTime(), period[1].getTime()],
+        datetime: datetime.getTime(),
+        timestep: 1800000,
+      },
+    });
+  }
+  return { layers, updates };
+};
+
+const threedDownload = async (
+  layer,
+  updates,
+  period,
+  datetime,
+  depth,
+  initial
+) => {
+  const source = layer.sources[layer.source];
+  if (period === false) {
+    period = [
+      new Date(source.metadata.end_date.getTime() - 5 * 24 * 60 * 60 * 1000),
+      source.metadata.end_date,
+    ];
+  }
+  if (depth === false) {
+    depth = 0;
+  }
+  const data = await download3DMap(
+    source.model.toLowerCase(),
+    source.key,
+    period[0],
+    period[1],
+    depth,
+    ["geometry", layer.parameter],
+    source.metadata.height,
+    initial
+  );
+  var index;
+  const timestep =
+    (data[layer.parameter].end - data[layer.parameter].start) /
+    (data[layer.parameter].data.length - 1);
+  if (datetime === false) {
+    index = data[layer.parameter].data.length - 1;
+    datetime = data[layer.parameter].end;
+    const now = new Date();
+    if (data[layer.parameter].end > now) {
+      index = Math.ceil((now - data[layer.parameter].start) / timestep);
+      datetime = new Date(
+        data[layer.parameter].start.getTime() + index * timestep
+      );
+    }
+  } else {
+    index = Math.ceil((datetime - data[layer.parameter].start) / timestep);
+  }
+  const plotTypes = ["raster", "streamlines", "vector"].filter(
+    (p) => p in layer.displayOptions && layer.displayOptions[p]
+  );
+  for (let plotType of plotTypes) {
+    updates.push({
+      event: "addLayer",
+      type: plotType,
+      id: layer.id,
+      options: {
+        data: data[layer.parameter].data[index],
+        geometry: data.geometry,
+        displayOptions: {
+          min: data[layer.parameter].min,
+          max: data[layer.parameter].max,
+          unit: "°C",
+        },
+      },
+    });
+  }
+  return { data, updates, period, datetime, depth };
+};
+
+const satelliteDownload = async (
+  layer,
+  updates,
+  period,
+  datetime,
+  depth,
+  initial
+) => {
+  layer.displayOptions["unit"] = layer.unit;
+  updates.push({
+    event: "addLayer",
+    type: "tiff",
+    id: "satellite_" + layer.parameter,
+    options: {
+      url: layer.sources[layer.source].metadata.image.url,
+      displayOptions: layer.displayOptions,
+    },
+  });
+  return { data: false, updates, period, datetime, depth };
+};
+
+const measurementsDownload = async (
+  layer,
+  updates,
+  period,
+  datetime,
+  depth,
+  initial
+) => {
+  var { data } = await axios.get(
+    layer.sources[layer.source].url + general.hour()
+  );
+  const now = new Date();
+  const minDate = new Date(now.getTime() - 48 * 60 * 60 * 1000);
+  for (let i = 0; i < data.features.length; i++) {
+    let time = new Date(data.features[i].properties.last_time * 1000);
+    if (
+      data.features[i].properties.lake === layer.sources[layer.source].key &&
+      time > minDate
+    ) {
+      data.features[i].properties.permenant = true;
+      data.features[i].properties.recent = true;
+    } else if (time > minDate) {
+      data.features[i].properties.permenant = false;
+      data.features[i].properties.recent = true;
+    } else {
+      data.features[i].properties.permenant = false;
+      data.features[i].properties.recent = false;
+    }
+  }
+  updates.push({
+    event: "addLayer",
+    type: "geojson",
+    id: "water_temperature",
+    options: {
+      data: data,
+      displayOptions: layer.displayOptions,
+      unit: "°C",
+      lake: layer.sources[layer.source].key,
+    },
+  });
+  return { data: false, updates, period, datetime, depth };
 };
 
 export const download1DLinegraph = async (

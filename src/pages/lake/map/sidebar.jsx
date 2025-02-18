@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Translations from "../../../translations.json";
 import settings_icon from "../../../img/settings.png";
 import temperature_icon from "../../../img/temperature.png";
 import velocity_icon from "../../../img/velocity.png";
@@ -12,8 +13,9 @@ import particles_icon from "../../../img/particles.png";
 import thermocline_icon from "../../../img/thermocline.png";
 import oxygen_icon from "../../../img/oxygen.png";
 import forel_icon from "../../../img/forel.png";
-import LayerSelection from "./layerselect";
+import LayerSelection from "./layerselection";
 import LayerSettings from "./layersettings";
+import ShowMoreText from "../../../components/showmore/showmore";
 
 class Sidebar extends Component {
   state = {
@@ -83,7 +85,28 @@ class Sidebar extends Component {
           <div
             className={selection ? "sidebar-content" : "sidebar-content closed"}
           >
-            {selection && <LayerSettings layer={layer} language={language} />}
+            {selection && (
+              <React.Fragment>
+                <div className="sidebar-content-title">
+                  {Translations[layer.parameter][language]}
+                </div>
+                <div className="sidebar-content-subtitle">
+                  {Translations[layer.type][language]}
+                </div>
+                <div className="sidebar-content-description">
+                  <ShowMoreText
+                    text={layer.sources[layer.source].description[language]}
+                    links={{}}
+                    maxLength={120}
+                    toggle={true}
+                  />
+                </div>
+                <div className="siderbar-content-settings">
+                  {Translations.settings[language]}
+                </div>
+                <LayerSettings layer={layer} language={language} />
+              </React.Fragment>
+            )}
           </div>
         </div>
       </div>

@@ -3,10 +3,8 @@ import { NavLink } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import axios from "axios";
 import NavBar from "../../../components/navbar/navbar";
-import Footer from "../../../components/footer/footer";
 import CONFIG from "../../../config.json";
-import { createUpdates } from "../functions/download";
-import Translations from "../../../translations.json";
+import { downloadData, collectMetadata } from "../functions/download";
 import "./map.css";
 import Basemap from "../../../components/leaflet/basemap";
 import back from "../../../img/back.png";
@@ -21,6 +19,9 @@ class Map extends Component {
     error: false,
     updates: [],
     loading: true,
+    period: false,
+    datetime: false,
+    depth: false,
     mapId: "map_" + Math.round(Math.random() * 100000),
   };
 
@@ -28,16 +29,23 @@ class Map extends Component {
     this.setState({ updates: [] });
   };
 
-  processUpdates = async (add, update, remove) => {
-    var { updates, mapId } = this.state;
-    await new Promise((r) => setTimeout(r, 1000));
+  initialLoad = async (add) => {
+    var { updates, mapId, layers, period, datetime, depth } = this.state;
     document.getElementById(`map_loading_${mapId}`).innerHTML =
       "Collecting metadata";
-    await new Promise((r) => setTimeout(r, 1000));
+    layers = await collectMetadata(layers);
     document.getElementById(`map_loading_${mapId}`).innerHTML =
       "Downloading data";
-    await new Promise((r) => setTimeout(r, 1000));
-    this.setState({ loading: false });
+    ({ updates, layers, period, datetime, depth } = await downloadData(
+      add,
+      layers,
+      updates,
+      period,
+      datetime,
+      depth,
+      true
+    ));
+    this.setState({ loading: false, layers, updates, period, datetime, depth });
   };
 
   async componentDidMount() {
@@ -68,7 +76,7 @@ class Map extends Component {
           updates,
           layers,
         },
-        () => this.processUpdates()
+        () => this.initialLoad(active_layers)
       );
     } catch (e) {
       console.error(e);
@@ -102,6 +110,7 @@ class Map extends Component {
           <Basemap
             updates={updates}
             updated={this.updated}
+            language={language}
             dark={dark}
             mapId={mapId}
           />
