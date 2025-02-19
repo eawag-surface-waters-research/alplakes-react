@@ -42,9 +42,9 @@ class LayerSelection extends Component {
                     >
                       -
                     </div>
-                    <img src={images[layer.parameter]} alt={layer.parameter} />
+                    <img src={images[layer.name]} alt={layer.name} />
                     <div className="label">
-                      {Translations[layer.parameter][language]}
+                      {Translations[layer.name][language]}
                       <div className="under">
                         {Translations[layer.type][language]}
                       </div>

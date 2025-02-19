@@ -40,8 +40,13 @@ class Map extends Component {
         updates.push({ event: "removePlay" });
       }
       var selection = false;
-      let stillActive = layers.filter((l) => l.active);
-      if (stillActive.length > 0) selection = stillActive[0].id;
+      let active_layers = layers.filter((l) => l.active);
+      if (active_layers.length > 0) selection = active_layers[0].id;
+      window.history.replaceState(
+        {},
+        "",
+        `?layers=${active_layers.map((l) => l.id).join(",")}`
+      );
       this.setState({ layers, updates, selection });
     }
   };
@@ -58,35 +63,45 @@ class Map extends Component {
     this.setState({ selection: false });
   };
 
-  initialLoad = async (add) => {
-    var { updates, mapId, layers, period, datetime, depth, selection } =
-      this.state;
-    document.getElementById(`map_loading_${mapId}`).innerHTML =
-      "Collecting metadata";
-    layers = await collectMetadata(layers);
-    document.getElementById(`map_loading_${mapId}`).innerHTML =
-      "Downloading data";
-    ({ updates, layers, period, datetime, depth } = await downloadData(
-      add,
-      layers,
-      updates,
-      period,
-      datetime,
-      depth,
-      true
-    ));
-    let active_layers = layers.filter((l) => l.active);
-    if (active_layers.length > 0 && window.innerWidth > 500) {
-      selection = layers[0].id;
-    }
-    this.setState({
-      loading: false,
-      layers,
-      updates,
-      period,
-      datetime,
-      depth,
-      selection,
+  addLayers = async (add, initial) => {
+    this.setState({ loading: true }, async () => {
+      var { updates, mapId, layers, period, datetime, depth, selection } =
+        this.state;
+      for (let layer_id of add) {
+        layers.find((l) => l.id === layer_id).active = true;
+      }
+      document.getElementById(`map_loading_${mapId}`).innerHTML =
+        "Collecting metadata";
+      layers = await collectMetadata(layers);
+      document.getElementById(`map_loading_${mapId}`).innerHTML =
+        "Downloading data";
+      ({ updates, layers, period, datetime, depth } = await downloadData(
+        add,
+        layers,
+        updates,
+        period,
+        datetime,
+        depth,
+        initial
+      ));
+      let active_layers = layers.filter((l) => l.active);
+      if (active_layers.length > 0 && window.innerWidth > 500) {
+        selection = add[add.length - 1];
+      }
+      window.history.replaceState(
+        {},
+        "",
+        `?layers=${active_layers.map((l) => l.id).join(",")}`
+      );
+      this.setState({
+        loading: false,
+        layers,
+        updates,
+        period,
+        datetime,
+        depth,
+        selection,
+      });
     });
   };
 
@@ -107,9 +122,6 @@ class Map extends Component {
           }`
       );
       var layers = data.layers;
-      for (let layer_id of active_layers) {
-        layers.find((l) => l.id === layer_id).active = true;
-      }
       updates.push({ event: "bounds", options: data.bounds });
       this.setState(
         {
@@ -118,7 +130,7 @@ class Map extends Component {
           updates,
           layers,
         },
-        () => this.initialLoad(active_layers)
+        () => this.addLayers(active_layers, true)
       );
     } catch (e) {
       console.error(e);
@@ -157,6 +169,7 @@ class Map extends Component {
             setSelection={this.setSelection}
             removeLayer={this.removeLayer}
             closeSelection={this.closeSelection}
+            addLayers={this.addLayers}
           />
           <Basemap
             updates={updates}

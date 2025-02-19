@@ -5,7 +5,7 @@ import ShowMoreText from "../../../components/showmore/showmore";
 class AddLayers extends Component {
   addLayer = (id) => {
     this.props.toggleAddLayersModal();
-    this.props.addLayer(id);
+    this.props.addLayers([id], false);
   };
   render() {
     var { language, layers, images, addLayersModal, toggleAddLayersModal } =
@@ -28,12 +28,12 @@ class AddLayers extends Component {
               >
                 <div className="status">{l.active ? "Added" : "Add"}</div>
                 <div className={"icon " + l.type}>
-                  <img src={images[l.parameter]} alt={l.parameter} />
+                  <img src={images[l.name]} alt={l.name} />
                 </div>
                 <div className="text">
                   <div className="parameter">
-                    {l.parameter in Translations
-                      ? Translations[l.parameter][language]
+                    {l.name in Translations
+                      ? Translations[l.name][language]
                       : ""}
                   </div>
                   <div className="type">

@@ -38,15 +38,15 @@ class Sidebar extends Component {
       setSelection,
       closeSelection,
       removeLayer,
+      addLayers,
     } = this.props;
     const { open, addLayersModal } = this.state;
     const images = {
       temperature: temperature_icon,
       velocity: velocity_icon,
-      chla: chla_icon,
+      chlorophyll: chla_icon,
       secchi: secchi_icon,
       turbidity: turbidity_icon,
-      tsm: turbidity_icon,
       realcolor: rgb_icon,
       transect: transect_icon,
       profile: profile_icon,
@@ -92,7 +92,7 @@ class Sidebar extends Component {
                     &#10005;
                   </div>
                   <div className="sidebar-content-title">
-                    {Translations[layer.parameter][language]}
+                    {Translations[layer.name][language]}
                   </div>
                   <div className="sidebar-content-subtitle">
                     {Translations[layer.type][language]}
@@ -118,6 +118,7 @@ class Sidebar extends Component {
           layers={layers}
           language={language}
           images={images}
+          addLayers={addLayers}
           addLayersModal={addLayersModal}
           toggleAddLayersModal={this.toggleAddLayersModal}
         />

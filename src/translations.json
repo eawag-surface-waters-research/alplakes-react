@@ -257,6 +257,12 @@
     "FR": "Chl-A",
     "IT": "Clo-A"
   },
+  "chlorophyll": {
+    "EN": "Chlorophyll A",
+    "DE": "Chlorophyll A",
+    "FR": "Chlorophylle A",
+    "IT": "Clorofilla A"
+  },
   "secchi": {
     "EN": "Secchi Depth",
     "DE": "Secchi-Tiefe",

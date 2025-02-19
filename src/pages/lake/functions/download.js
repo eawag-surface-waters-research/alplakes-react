@@ -140,7 +140,7 @@ export const downloadData = async (
       },
     });
   }
-  return { layers, updates };
+  return { layers, updates, period, datetime, depth };
 };
 
 const threedDownload = async (
