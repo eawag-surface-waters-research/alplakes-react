@@ -94,10 +94,30 @@
     width: 100%;
     margin-top: 12px;
     box-sizing: border-box;
+    overflow: auto;
+    padding-right: 10px;
+    position: relative;
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-content::-webkit-scrollbar {
+    width: 4px;
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-content::-webkit-scrollbar-track {
+    background-color: var(--background-color);
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-content::-webkit-scrollbar-thumb {
+    background: var(--border-color);
 }
 
 .main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .sidebar-content-close {
-    float: right;
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: 12px;
+    background-color: var(--box-color);
+    font-size: 24px;
     display: none;
 }
 
@@ -126,9 +146,241 @@
 
 .main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .layer-settings {
     background-color: var(--background-color);
-    padding: 12px;
+    padding: 18px;
     border-radius: 12px;
     margin-top: 6px;
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .layer-settings .images {
+    margin: 16px 0 16px 0;
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .layer-settings .images .image {
+    border-left: 2px solid var(--highlight-color-subtle);
+    padding-left: 8px;
+    margin: 12px 0;
+    color: var(--background-subtle-font-color);
+    position: relative;
+    cursor: pointer;
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .layer-settings .images .image.selected {
+    border-color: var(--highlight-color);
+    color: var(--background-font-color);
+    cursor: default;
+}
+
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .layer-settings .images .image:hover {
+    border-color: var(--highlight-color);
+    color: var(--background-font-color);
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .layer-settings .images .image .left {
+    display: inline-block;
+    padding-right: 8px;
+    vertical-align: bottom;
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .layer-settings .images .image .left .sat {
+    font-size: 26px;
+    line-height: 26px;
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .layer-settings .images .image .right {
+    display: inline-block;
+    font-size: 14px;
+    line-height: 20px;
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .layer-settings .images .image .right-buttons {
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .layer-settings .images .image .button {
+    background-color: var(--background-color);
+    border: 1px solid var(--border-color);
+    color: var(--background-subtle-font-color);
+    border-radius: 8px;
+    padding: 2px 6px;
+    font-size: 12px;
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .layer-settings .images .image.selected .button {
+    background-color: var(--highlight-color);
+    border-color: var(--highlight-color);
+    color: white;
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .layer-settings .images .image:hover .button {
+    background-color: var(--highlight-color);
+    border-color: var(--highlight-color);
+    color: white;
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .layer-settings .images .image button.tiff {
+    display: inline-block;
+    border-radius: 8px;
+    margin-right: 12px;
+    border: 1px solid var(--border-color);
+    background-color: var(--background-color);
+    color: var(--background-font-color);
+    cursor: pointer;
+    padding: 2px 6px;
+    font-size: 12px;
+    margin-top: 4px;
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .layer-settings .images .image button.tiff:hover {
+    background-color: var(--highlight-color);
+    color: white;
+    border-color: var(--highlight-color);
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .layer-settings .custom-css-datepicker {
+    width: 100%;
+    text-align: center;
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .layer-settings .custom-css-datepicker .react-datepicker {
+    background-color: var(--background-color);
+    border: none;
+    width: 100%;
+    font-size: 16px;
+    margin-left: -20px;
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .layer-settings .custom-css-datepicker .react-datepicker .react-datepicker__current-month,
+.react-datepicker-time__header,
+.react-datepicker-year-header {
+    font-size: 18px;
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .layer-settings .custom-css-datepicker .react-datepicker .react-datepicker__day-name,
+.react-datepicker__day,
+.react-datepicker__time-name {
+    color: var(--background-font-color);
+    width: var(--cell-size);
+    height: var(--cell-size);
+    line-height: var(--cell-size);
+    border-radius: var(--cell-size);
+    position: relative;
+    vertical-align: middle;
+    margin: 6px;
+    font-size: 14px;
+    border: 1px solid transparent;
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .layer-settings .custom-css-datepicker .react-datepicker .date {
+    z-index: 1;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding: 2px;
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .layer-settings .custom-css-datepicker .react-datepicker .percentage {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    border-radius: 50%;
+    overflow: hidden;
+    z-index: 0;
+    border: 2px solid var(--highlight-color);
+    opacity: 0.5;
+    left: 0;
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .layer-settings .custom-css-datepicker .react-datepicker .percentage::after {
+    content: '';
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    width: 80%;
+    height: 80%;
+    background-color: var(--box-color);
+    border-radius: 50%;
+    z-index: -1
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .layer-settings .custom-css-datepicker .react-datepicker .observations {
+    position: absolute;
+    font-size: 9px;
+    top: -6px;
+    right: -6px;
+    background-color: var(--box-color);
+    border: 2px solid var(--highlight-color-subtle);
+    border-radius: 22px;
+    line-height: 15px;
+    width: 15px;
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .layer-settings .custom-css-datepicker .react-datepicker .react-datepicker__day--disabled,
+.react-datepicker__month-text--disabled,
+.react-datepicker__quarter-text--disabled,
+.react-datepicker__year-text--disabled {
+    color: var(--background-subtle-font-color);
+    border: none;
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .layer-settings .custom-css-datepicker .react-datepicker .react-datepicker__day--keyboard-selected,
+.react-datepicker__month-text--keyboard-selected,
+.react-datepicker__quarter-text--keyboard-selected,
+.react-datepicker__year-text--keyboard-selected {
+    background-color: transparent;
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .layer-settings .custom-css-datepicker .react-datepicker .react-datepicker__day--selected,
+.react-datepicker__day--in-selecting-range,
+.react-datepicker__day--in-range,
+.react-datepicker__month-text--selected,
+.react-datepicker__month-text--in-selecting-range,
+.react-datepicker__month-text--in-range,
+.react-datepicker__quarter-text--selected,
+.react-datepicker__quarter-text--in-selecting-range,
+.react-datepicker__quarter-text--in-range,
+.react-datepicker__year-text--selected,
+.react-datepicker__year-text--in-selecting-range,
+.react-datepicker__year-text--in-range {
+    background-color: transparent;
+    font-weight: bold;
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .layer-settings .custom-css-datepicker .react-datepicker .react-datepicker__day--selected .percentage {
+    opacity: 1;
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .layer-settings .custom-css-datepicker .react-datepicker .react-datepicker__day--selected .observations {
+    border-color: var(--highlight-color);
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .layer-settings .custom-css-datepicker .react-datepicker .react-datepicker__day:hover,
+.react-datepicker__month-text:hover,
+.react-datepicker__quarter-text:hover,
+.react-datepicker__year-text:hover {
+    background-color: transparent;
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .layer-settings .custom-css-datepicker .react-datepicker .react-datepicker__day:hover .percentage {
+    opacity: 1;
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .layer-settings .custom-css-datepicker .react-datepicker .react-datepicker__day:hover .observations {
+    border-color: var(--highlight-color);
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .layer-settings .custom-css-datepicker .react-datepicker .react-datepicker__header {
+    background-color: var(--background-color);
+    border: none;
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .layer-settings .custom-css-datepicker .react-datepicker .react-datepicker__current-month,
+.react-datepicker-time__header,
+.react-datepicker-year-header {
+    color: var(--background-font-color);
+    font-size: 14px;
 }
 
 .main .map .layer-map .map-sidebar .sidebar-head {
@@ -560,7 +812,7 @@
         border-radius: 22px 22px 0 0;
         max-height: unset;
         z-index: -1;
-        padding: var(--padding) var(--padding) 100px var(--padding);
+        padding: var(--padding) 12px 100px 12px;
         box-sizing: border-box;
         transition: bottom 0.33s ease-out;
     }

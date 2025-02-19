@@ -139,8 +139,18 @@ class Map extends Component {
   }
 
   render() {
-    var { name, error, loading, id, updates, mapId, layers, selection } =
-      this.state;
+    var {
+      name,
+      error,
+      loading,
+      id,
+      updates,
+      mapId,
+      layers,
+      selection,
+      period,
+      depth,
+    } = this.state;
     var { language, dark } = this.props;
     var title = "";
     var documentTitle = "Alplakes";
@@ -164,6 +174,8 @@ class Map extends Component {
           <Sidebar
             layers={layers}
             title={title}
+            period={period}
+            depth={depth}
             language={language}
             selection={selection}
             setSelection={this.setSelection}

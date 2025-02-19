@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import DatePicker from "react-datepicker";
-import enGB from "date-fns/locale/en-GB";
 import ColorRamp from "../../../components/colors/colorramp";
 import refreshIcon from "../../../img/refresh.png";
 import Translate from "../../../translations.json";
@@ -9,162 +8,12 @@ import {
   formatAPIDate,
   formatDateLong,
   formatDateTime,
-  parseDay,
-  closestValue,
   formatSencastDay,
-  capitalize,
 } from "../functions/general";
 import "react-datepicker/dist/react-datepicker.css";
 import "./map.css";
-
-class Depth extends Component {
-  state = {
-    depth: 0,
-    depths: [],
-    step: 0.1,
-    min: 0,
-    max: 1,
-  };
-  updateDepth = (event) => {
-    var { depths } = this.props;
-    var depth = closestValue(parseFloat(event.target.value), depths);
-    this.setState({ depth });
-  };
-  setDepth = () => {
-    var { onChange } = this.props;
-    var { depth } = this.state;
-    onChange(depth);
-  };
-  componentDidMount() {
-    var { depth, depths } = this.props;
-    if (depths && depths.length > 0) {
-      var min = Math.min(...depths);
-      var max = Math.max(...depths);
-      this.setState({ depth, min, max, depths });
-    } else {
-      this.setState({ depth });
-    }
-  }
-  componentDidUpdate() {
-    var { depths } = this.props;
-    if (depths && this.state.depths.length !== depths.length) {
-      var min = Math.min(...depths);
-      var max = Math.max(...depths);
-      this.setState({ min, max, depths });
-    }
-  }
-  render() {
-    var { depth, step, min, max, depths } = this.state;
-    return (
-      <React.Fragment>
-        <div className="setting twothird">
-          <div className="label">Depth (m)</div>
-          <div className="value">
-            <select
-              value={depth}
-              onChange={this.updateDepth}
-              className="subtle"
-            >
-              {depths.map((d) => (
-                <option value={d} key={d}>
-                  {d}
-                </option>
-              ))}
-            </select>
-          </div>
-          <input
-            type="range"
-            min={min}
-            max={max}
-            step={step}
-            value={depth}
-            onChange={this.updateDepth}
-          ></input>
-        </div>
-        <div className="setting third">
-          <button className="set" onClick={this.setDepth}>
-            Set depth
-          </button>
-        </div>
-      </React.Fragment>
-    );
-  }
-}
-
-class Period extends Component {
-  state = {
-    period: this.props.period,
-    maxPeriod: this.props.maxPeriod ? this.props.maxPeriod : 21,
-    maxPeriodDate: false,
-  };
-  addDays = (date, days) => {
-    var result = new Date(date);
-    result.setDate(result.getDate() + days);
-    return result;
-  };
-  setDateRange = (period) => {
-    var { maxPeriod } = this.state;
-    var { setPeriod, maxDate } = this.props;
-    if (period[0] !== null && period[1] !== null) {
-      setPeriod([
-        Math.floor(period[0].getTime()),
-        Math.floor(period[1].getTime() + 86400000),
-      ]);
-      this.setState({ period, maxPeriodDate: false });
-    } else if (period[0] !== null && period[1] === null) {
-      var maxPeriodDate = this.addDays(period[0], maxPeriod);
-      this.setState({
-        period,
-        maxPeriodDate: maxPeriodDate < maxDate ? maxPeriodDate : maxDate,
-      });
-    }
-  };
-  render() {
-    var { language, minDate, maxDate, missingDates } = this.props;
-    missingDates = missingDates ? missingDates : [];
-    var { period, maxPeriodDate } = this.state;
-    const locale = {
-      ...enGB,
-      localize: {
-        ...enGB.localize,
-        day: (n) => Translate.axis[language].shortDays[n],
-        month: (n) => Translate.axis[language].months[n],
-      },
-      formatLong: {
-        ...enGB.formatLong,
-        date: () => "dd/mm/yyyy",
-      },
-    };
-    var excludeDateIntervals = missingDates.map((m) => {
-      return {
-        start: parseDay(m[0].replaceAll("-", "")),
-        end: parseDay(m[1].replaceAll("-", "")),
-      };
-    });
-    return (
-      <DatePicker
-        selectsRange={true}
-        startDate={period[0]}
-        endDate={period[1]}
-        onChange={(update) => {
-          this.setDateRange(update);
-        }}
-        excludeDateIntervals={excludeDateIntervals}
-        minDate={minDate}
-        maxDate={maxPeriodDate ? maxPeriodDate : maxDate}
-        dateFormat="dd/MM/yyyy"
-        customInput={<CustomInput />}
-        locale={locale}
-      />
-    );
-  }
-}
-
-const CustomInput = React.forwardRef(({ value, onClick }, ref) => (
-  <div ref={ref} onClick={onClick} className="dateperiod">
-    {value}
-  </div>
-));
+import Period from "../../../components/customselect/period";
+import Depth from "../../../components/customselect/depth";
 
 class Raster extends Component {
   state = {
@@ -291,15 +140,20 @@ class Raster extends Component {
   render() {
     var { _min, _max, id } = this.state;
     var { language, layer, period, setPeriod, depth, setDepth } = this.props;
-    var { palette, paletteName, opacity, labels } = this.props.options;
-    var { depths, missingDates, minDate, maxDate, model } =
-      layer.sources[layer.source];
+    var { paletteName, opacity } = this.props.options;
+    var { model, key } = layer.sources[layer.source];
+    var {
+      depth: depths,
+      missingDates,
+      start_date,
+      end_date,
+    } = layer.sources[layer.source].metadata;
     if (opacity === undefined) opacity = 1;
     var downloadDates = this.downloadDates(
       model,
-      layer.lake,
-      minDate,
-      maxDate,
+      key,
+      start_date,
+      end_date,
       Translate.axis[language].months
     );
     return (
@@ -311,13 +165,18 @@ class Raster extends Component {
               period={period}
               setPeriod={setPeriod}
               language={language}
-              minDate={minDate}
-              maxDate={maxDate}
+              minDate={start_date}
+              maxDate={end_date}
               missingDates={missingDates}
             />
           </div>
         </div>
-        <Depth depth={depth} depths={depths} onChange={setDepth} />
+        <Depth
+          depth={depth}
+          depths={depths}
+          onChange={setDepth}
+          language={language}
+        />
         <div className="setting half">
           <div className="label">Min</div>
           <div className="minmax">
@@ -362,7 +221,7 @@ class Raster extends Component {
             />
           </div>
         </div>
-        <div className="setting half">
+        <div className="setting">
           <div className="label">Opacity</div>
           <div className="value">{opacity}</div>
           <input
@@ -374,23 +233,10 @@ class Raster extends Component {
             onChange={this.setOpacity}
           ></input>
         </div>
-        {layer.labels && (
-          <div className="setting half">
-            <div className="label">Labels</div>
-            <label className="switch">
-              <input
-                type="checkbox"
-                checked={labels}
-                onChange={this.setLabels}
-              ></input>
-              <span className="slider round"></span>
-            </label>
-          </div>
-        )}
         <div className="setting">
           <div className="label">Palette</div>
           <div className="value">{paletteName}</div>
-          <ColorRamp onChange={this.setPalette} value={palette} />
+          <ColorRamp onChange={this.setPalette} value={paletteName} />
         </div>
         <div className="setting">
           <div className="label">Download</div>
@@ -557,7 +403,6 @@ class Current extends Component {
     var {
       opacity,
       velocityScale,
-      palette,
       paletteName,
       arrows,
       streamlines,
@@ -565,15 +410,20 @@ class Current extends Component {
       arrowsColor,
       streamlinesColor,
     } = this.props.options;
-    var { depths, missingDates, minDate, maxDate, model } =
-      layer.sources[layer.source];
+    var { model, key } = layer.sources[layer.source];
+    var {
+      depth: depths,
+      missingDates,
+      start_date,
+      end_date,
+    } = layer.sources[layer.source].metadata;
     depths = depths ? depths : [];
     missingDates = missingDates ? missingDates : [];
     var downloadDates = this.downloadDates(
       model,
-      layer.lake,
-      minDate,
-      maxDate,
+      key,
+      start_date,
+      end_date,
       Translate.axis[language].months
     );
     return (
@@ -585,15 +435,19 @@ class Current extends Component {
               period={period}
               setPeriod={setPeriod}
               language={language}
-              minDate={minDate}
-              maxDate={maxDate}
+              minDate={start_date}
+              maxDate={end_date}
               missingDates={missingDates}
             />
           </div>
         </div>
-        <Depth depth={depth} depths={depths} onChange={setDepth} />
-        <div className="layer-sub-section">
-          Arrows
+        <Depth
+          depth={depth}
+          depths={depths}
+          onChange={setDepth}
+          language={language}
+        />
+        <div className="setting">
           <label className="switch">
             <input
               type="checkbox"
@@ -602,6 +456,7 @@ class Current extends Component {
             />
             <span className="slider round"></span>
           </label>
+          <div className="title">Arrows</div>
         </div>
         <div className="setting half">
           <div className="label">Color</div>
@@ -611,8 +466,7 @@ class Current extends Component {
             onChange={this.setArrowsColor}
           ></input>
         </div>
-        <div className="layer-sub-section">
-          Streamlines
+        <div className="setting">
           <label className="switch">
             <input
               type="checkbox"
@@ -621,6 +475,7 @@ class Current extends Component {
             />
             <span className="slider round"></span>
           </label>
+          <div className="title">Streamlines</div>
         </div>
         <div className="setting half">
           <div className="label">Paths</div>
@@ -654,8 +509,7 @@ class Current extends Component {
             onChange={this.setSpeed}
           />
         </div>
-        <div className="layer-sub-section">
-          Raster
+        <div className="setting">
           <label className="switch">
             <input
               type="checkbox"
@@ -664,11 +518,12 @@ class Current extends Component {
             />
             <span className="slider round"></span>
           </label>
+          <div className="title">Raster</div>
         </div>
         <div className="setting">
           <div className="label">Palette</div>
           <div className="value">{paletteName}</div>
-          <ColorRamp onChange={this.setPalette} value={palette} />
+          <ColorRamp onChange={this.setPalette} value={paletteName} />
         </div>
         <div className="setting">
           <div className="label">Opacity</div>
@@ -907,34 +762,21 @@ class Tiff extends Component {
         dataMax: this.props.options.dataMax,
       });
     }
-    if (
-      this.props.active &&
-      this.state.firstLoad &&
-      this.props.options.availableImages
-    ) {
-      this.addCssRules(
-        this.props.options.image.time,
-        this.props.options.availableImages
-      );
-      this.setState({ firstLoad: false });
-    }
   }
 
   render() {
     var { _min, _max, id } = this.state;
-    var { language } = this.props;
+    var { language, layer } = this.props;
     var {
-      palette,
       paletteName,
       opacity,
       convolve,
-      includeDates,
       validpixelexpression,
-      image,
       coverage,
-      availableImages,
       wms,
     } = this.props.options;
+    var { available, image, includeDates } =
+      layer.sources[layer.source].metadata;
     var { unit } = this.props.layer;
     const locale = {
       localize: {
@@ -948,9 +790,10 @@ class Tiff extends Component {
     var months = Translate.axis[language].months;
     includeDates = includeDates ? includeDates : [];
     var images = [];
-    if (availableImages && image) {
+    if (available && image) {
+      this.addCssRules(image.time, available);
       let day = formatSencastDay(image.time);
-      if (day in availableImages) images = availableImages[day].images;
+      if (day in available) images = available[day].images;
     }
     return (
       <div className="layer-settings">
@@ -1094,7 +937,7 @@ class Tiff extends Component {
         <div className="setting">
           <div className="label">Palette</div>
           <div className="value">{paletteName}</div>
-          <ColorRamp onChange={this.setPalette} value={palette} />
+          <ColorRamp onChange={this.setPalette} value={paletteName} />
         </div>
         <div className="setting">
           Valid Pixel Expression
@@ -1105,50 +948,6 @@ class Tiff extends Component {
             }
             onChange={this.setValidpixelexpression}
           />
-        </div>
-      </div>
-    );
-  }
-}
-
-class Transect extends Component {
-  setPalette = (event) => {
-    var { id, updateOptions, options } = this.props;
-    options["paletteName"] = event.name;
-    options["palette"] = event.palette;
-    updateOptions(id, options);
-  };
-
-  render() {
-    var { palette, paletteName } = this.props.options;
-    return (
-      <div className="layer-settings">
-        <div className="setting">
-          <div className="label">Palette</div>
-          <div className="value">{paletteName}</div>
-          <ColorRamp onChange={this.setPalette} value={palette} />
-        </div>
-      </div>
-    );
-  }
-}
-
-class Profile extends Component {
-  setPalette = (event) => {
-    var { id, updateOptions, options } = this.props;
-    options["paletteName"] = event.name;
-    options["palette"] = event.palette;
-    updateOptions(id, options);
-  };
-
-  render() {
-    var { palette, paletteName } = this.props.options;
-    return (
-      <div className="layer-settings">
-        <div className="setting">
-          <div className="label">Palette</div>
-          <div className="value">{paletteName}</div>
-          <ColorRamp onChange={this.setPalette} value={palette} />
         </div>
       </div>
     );
@@ -1186,8 +985,12 @@ class Particles extends Component {
   render() {
     var { language, depth, setDepth, layer, period, setPeriod } = this.props;
     var { paths, spread, opacity } = this.props.options;
-    var { depths, missingDates, minDate, maxDate } =
-      layer.sources[layer.source];
+    var {
+      depth: depths,
+      missingDates,
+      minDate,
+      maxDate,
+    } = layer.sources[layer.source].metadata;
     depths = depths ? depths : [];
     opacity = opacity ? opacity : 1;
     missingDates = missingDates ? missingDates : [];
@@ -1206,7 +1009,12 @@ class Particles extends Component {
             />
           </div>
         </div>
-        <Depth depth={depth} depths={depths} onChange={setDepth} />
+        <Depth
+          depth={depth}
+          depths={depths}
+          onChange={setDepth}
+          language={language}
+        />
         <div className="setting half">
           <div className="label">Particles</div>
           <div className="value">{paths}</div>
@@ -1253,326 +1061,11 @@ class Particles extends Component {
   }
 }
 
-class Heat extends Component {
-  state = {
-    id: Math.round(Math.random() * 100000),
-  };
-
-  setPalette = (event) => {
-    var { id, updateOptions, options } = this.props;
-    options["paletteName"] = event.name;
-    options["palette"] = event.palette;
-    updateOptions(id, options);
-  };
-
-  setPeriod = (period) => {
-    var { id, updateOptions, options } = this.props;
-    options["period"] = period;
-    options["updatePeriod"] = true;
-    updateOptions(id, options);
-  };
-
-  setSource = (event) => {
-    var { layer, updateSource } = this.props;
-    var source = event.target.value;
-    if (layer.source !== source) {
-      updateSource(layer.id, source);
-    }
-  };
-
-  render() {
-    var { language, layer } = this.props;
-    var { palette, paletteName, period, minDate, maxDate } = this.props.options;
-    var source = layer.sources[layer.source];
-    return (
-      <div className="layer-settings">
-        <div className="setting">
-          <div className="label">Simulation</div>
-          <select value={layer.source} onChange={this.setSource}>
-            {Object.keys(layer.sources).map((s) => (
-              <option value={s} key={s}>
-                {layer.sources[s].name} ({capitalize(layer.sources[s].model)})
-              </option>
-            ))}
-          </select>
-        </div>
-        {period && (
-          <div className="setting">
-            <div className="label">Period</div>
-            <div className="period-selector">
-              <Period
-                period={period}
-                setPeriod={this.setPeriod}
-                language={language}
-                minDate={minDate}
-                maxDate={maxDate}
-                maxPeriod={365}
-              />
-            </div>
-          </div>
-        )}
-        <div className="setting">
-          <div className="label">Palette</div>
-          <div className="value">{paletteName}</div>
-          <ColorRamp onChange={this.setPalette} value={palette} />
-        </div>
-        {"performance" in source && (
-          <div className="setting">
-            <div className="label">Performance</div>
-            <div>
-              {Object.keys(source.performance.rmse).map((k) => (
-                <div key={k} className="performance">
-                  <div className="performance-value">
-                    {Math.round(source.performance.rmse[k] * 100) / 100}
-                    <div className="performance-unit">{layer.unit}</div>
-                  </div>
-                  <div className="performance-name">{capitalize(k)} RMSE</div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-        {"meteo_source" in source && (
-          <div className="setting">
-            <div className="label">Meteorological data</div>
-            <div>{source.meteo_source}</div>
-          </div>
-        )}
-        {"hydro_source" in source && (
-          <div className="setting">
-            <div className="label">Hydrological data</div>
-            <div>{source.hydro_source}</div>
-          </div>
-        )}
-        {"calibration_source" in source && (
-          <div className="setting">
-            <div className="label">Calibration data</div>
-            <div>{source.calibration_source}</div>
-          </div>
-        )}
-      </div>
-    );
-  }
-}
-
-class Line extends Component {
-  state = {
-    id: Math.round(Math.random() * 100000),
-  };
-
-  setPeriod = (period) => {
-    var { id, updateOptions, options } = this.props;
-    options["period"] = period;
-    options["update"] = true;
-    updateOptions(id, options);
-  };
-
-  setDepth = (depth) => {
-    var { id, updateOptions, options } = this.props;
-    options["depth"] = depth;
-    options["update"] = true;
-    updateOptions(id, options);
-  };
-
-  setSource = (event) => {
-    var { layer, updateSource } = this.props;
-    var source = event.target.value;
-    if (layer.source !== source) {
-      updateSource(layer.id, source);
-    }
-  };
-
-  render() {
-    var { language, layer } = this.props;
-    var { period, minDate, maxDate, depth, depths } = this.props.options;
-    var source = layer.sources[layer.source];
-    return (
-      <div className="layer-settings">
-        <div className="setting">
-          <div className="label">Simulation</div>
-          <select value={layer.source} onChange={this.setSource}>
-            {Object.keys(layer.sources).map((s) => (
-              <option value={s} key={s}>
-                {layer.sources[s].name} ({capitalize(layer.sources[s].model)})
-              </option>
-            ))}
-          </select>
-        </div>
-        {period && (
-          <div className="setting">
-            <div className="label">Period</div>
-            <div className="period-selector">
-              <Period
-                period={period}
-                setPeriod={this.setPeriod}
-                language={language}
-                minDate={minDate}
-                maxDate={maxDate}
-                maxPeriod={365}
-              />
-            </div>
-          </div>
-        )}
-        {depth && (
-          <Depth depth={depth} depths={depths} onChange={this.setDepth} />
-        )}
-        {"performance" in source && (
-          <div className="setting">
-            <div className="label">Performance</div>
-            {"rmse" in source["performance"] && (
-              <div>
-                {Object.keys(source.performance.rmse).map((k) => (
-                  <div key={k} className="performance">
-                    <div className="performance-value">
-                      {Math.round(source.performance.rmse[k] * 100) / 100}
-                      <div className="performance-unit">{layer.unit}</div>
-                    </div>
-                    <div className="performance-name">{capitalize(k)} RMSE</div>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-        )}
-        {"meteo_source" in source && (
-          <div className="setting">
-            <div className="label">Meteorological data</div>
-            <div>{source.meteo_source}</div>
-          </div>
-        )}
-        {"hydro_source" in source && (
-          <div className="setting">
-            <div className="label">Hydrological data</div>
-            <div>{source.hydro_source}</div>
-          </div>
-        )}
-        {"calibration_source" in source && (
-          <div className="setting">
-            <div className="label">Calibration data</div>
-            <div>{source.calibration_source}</div>
-          </div>
-        )}
-      </div>
-    );
-  }
-}
-
-class Doy extends Component {
-  state = {
-    id: Math.round(Math.random() * 100000),
-  };
-
-  setSource = (event) => {
-    var { layer, updateSource } = this.props;
-    var source = event.target.value;
-    if (layer.source !== source) {
-      updateSource(layer.id, source);
-    }
-  };
-
-  render() {
-    var { layer } = this.props;
-    var source = layer.sources[layer.source];
-    return (
-      <div className="layer-settings">
-        <div className="setting">
-          <div className="label">Simulation</div>
-          <select value={layer.source} onChange={this.setSource}>
-            {Object.keys(layer.sources).map((s) => (
-              <option value={s} key={s}>
-                {layer.sources[s].name} ({capitalize(layer.sources[s].model)})
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="setting">
-          <div className="label">Legend</div>
-          <div className="legend">
-            {"min_date" in source && (
-              <div className="date">
-                Reference period {source["min_date"].getFullYear()} -{" "}
-                {source["max_date"].getFullYear()}
-              </div>
-            )}
-            <div className="item">
-              <div className="box" style={{ opacity: 0.3 }}></div>
-              <div className="text">25.-75 Percentile</div>
-            </div>
-            <div className="item">
-              <div className="box"></div>
-              <div className="text">05.-95 Percentile</div>
-            </div>
-            <div className="item">
-              <div className="line" style={{ borderColor: "#ff7d45" }}></div>
-              <div className="text">{new Date().getFullYear()}</div>
-            </div>
-            <div className="item">
-              <div className="line" style={{ borderColor: "#ffc045" }}></div>
-              <div className="text">{new Date().getFullYear() - 1}</div>
-            </div>
-            <div className="item">
-              <div className="line" style={{ borderColor: "lightGrey" }}></div>
-              <div className="text">Max</div>
-            </div>
-            <div className="item">
-              <div
-                className="line"
-                style={{ borderColor: "var(--background-font-color)" }}
-              ></div>
-              <div className="text">Mean</div>
-            </div>
-            <div className="item">
-              <div className="line" style={{ borderColor: "lightGrey" }}></div>
-              <div className="text">Min</div>
-            </div>
-          </div>
-        </div>
-        {"performance" in source && (
-          <div className="setting">
-            <div className="label">Performance</div>
-            <div>
-              {Object.keys(source.performance.rmse).map((k) => (
-                <div key={k} className="performance">
-                  <div className="performance-value">
-                    {Math.round(source.performance.rmse[k] * 100) / 100}
-                    <div className="performance-unit">{layer.unit}</div>
-                  </div>
-                  <div className="performance-name">{capitalize(k)} RMSE</div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-        {"meteo_source" in source && (
-          <div className="setting">
-            <div className="label">Meteorological data</div>
-            <div>{source.meteo_source}</div>
-          </div>
-        )}
-        {"hydro_source" in source && (
-          <div className="setting">
-            <div className="label">Hydrological data</div>
-            <div>{source.hydro_source}</div>
-          </div>
-        )}
-        {"calibration_source" in source && (
-          <div className="setting">
-            <div className="label">Calibration data</div>
-            <div>{source.calibration_source}</div>
-          </div>
-        )}
-      </div>
-    );
-  }
-}
-
 class LayerSettings extends Component {
   render() {
     var { layer } = this.props;
     var type = layer.display;
-    if (true) {
-      return <div className="layer-settings">{type}</div>;
-    } else if (type === "raster") {
+    if (type === "raster") {
       return (
         <Raster id={layer.id} options={layer.displayOptions} {...this.props} />
       );
@@ -1584,18 +1077,6 @@ class LayerSettings extends Component {
       return (
         <Tiff id={layer.id} options={layer.displayOptions} {...this.props} />
       );
-    } else if (type === "transect") {
-      return (
-        <Transect
-          id={layer.id}
-          options={layer.displayOptions}
-          {...this.props}
-        />
-      );
-    } else if (type === "profile") {
-      return (
-        <Profile id={layer.id} options={layer.displayOptions} {...this.props} />
-      );
     } else if (type === "particles") {
       return (
         <Particles
@@ -1603,18 +1084,6 @@ class LayerSettings extends Component {
           options={layer.displayOptions}
           {...this.props}
         />
-      );
-    } else if (type === "heat") {
-      return (
-        <Heat id={layer.id} options={layer.displayOptions} {...this.props} />
-      );
-    } else if (type === "line") {
-      return (
-        <Line id={layer.id} options={layer.displayOptions} {...this.props} />
-      );
-    } else if (type === "doy") {
-      return (
-        <Doy id={layer.id} options={layer.displayOptions} {...this.props} />
       );
     } else {
       return <div className="layer-settings"></div>;

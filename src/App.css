@@ -361,6 +361,286 @@ h4 {
   font-family: DM_Sans, Frutiger Neue LT Pro, Arial, sans-serif;
 }
 
+/* Setting */
+
+.main .setting {
+  padding: 0px 0px 18px 0px;
+  display: inline-block;
+  width: 100%;
+  font-size: 14px;
+}
+
+.main .setting.half {
+  margin-right: 4%;
+  vertical-align: top;
+  width: 46%;
+}
+
+.main .setting .label {
+  padding: 0px 0px 4px 0px;
+  display: inline-block;
+  color: var(--background-subtle-font-color);
+}
+
+.main .setting input[type=range] {
+  box-sizing: border-box;
+  padding: 2px 0;
+  width: 100%;
+}
+
+.main .setting input[type=number] {
+  background-color: var(--box-color);
+  border: none;
+  border-radius: 6px;
+  box-sizing: border-box;
+  color: var(--background-font-color);
+  font-size: 16px;
+  padding: 4px 10px;
+  width: 100%;
+}
+
+.main .setting input[type=number].with-button {
+  padding-right: 25px;
+}
+
+.main .setting input[type=color] {
+  background-color: #e3e3e3;
+  border: none;
+  box-sizing: border-box;
+  height: 26px;
+  padding: 0;
+  width: 100%;
+}
+
+.main .setting .switch {
+  display: inline-block;
+  float: right;
+  height: 20px;
+  position: relative;
+  width: 38px;
+  margin-top: 10px;
+}
+
+.main .setting .switch input {
+  height: 0;
+  opacity: 0;
+  width: 0;
+}
+
+.main .setting input[type=checkbox] {
+  margin-left: 12px;
+}
+
+.main .setting .title {
+  font-size: 15px;
+  font-weight: 700;
+  margin: 10px 0 0px;
+}
+
+.main .setting .slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.main .setting .slider:before {
+  position: absolute;
+  content: "";
+  height: 14px;
+  width: 14px;
+  left: 4px;
+  bottom: 3px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.main .setting input:checked+.slider {
+  background-color: var(--highlight-color);
+}
+
+.main .setting input:focus+.slider {
+  box-shadow: 0 0 1px var(--highlight-color);
+}
+
+.main .setting input:checked+.slider:before {
+  -webkit-transform: translateX(16px);
+  -ms-transform: translateX(16px);
+  transform: translateX(16px);
+}
+
+.main .setting .slider.round {
+  border-radius: 34px;
+}
+
+.main .setting .slider.round:before {
+  border-radius: 50%;
+}
+
+.main .setting .performance {
+  padding: 5px 20px 0px 0px;
+  display: inline-block;
+  text-align: center;
+}
+
+.main .setting .performance .performance-value {
+  font-size: 22px;
+}
+
+.main .setting .performance .performance-value .performance-unit {
+  display: inline-block;
+  font-size: 16px;
+}
+
+.main .setting .performance .performance-name {
+  color: var(--background-subtle-font-color);
+  font-size: 12px;
+}
+
+.main .setting .value {
+  float: right;
+}
+
+.main .setting .minmax {
+  position: relative;
+}
+
+.main .setting .minmax img.reset {
+  border-radius: 8px;
+  cursor: pointer;
+  display: inline-block;
+  height: 16px;
+  margin-left: 8px;
+  opacity: .5;
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  transition: all .33s ease-in-out;
+  vertical-align: middle;
+}
+
+.main.dark .setting .minmax img.reset {
+  -webkit-filter: invert(100%);
+  filter: invert(100%);
+}
+
+.main .setting .value button {
+  display: inline-block;
+  background-color: var(--select-color);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-left: 12px;
+  padding: 4px 8px;
+}
+
+.main .setting select {
+  display: block;
+  font-size: 14px;
+  background-color: var(--select-color);
+  cursor: pointer;
+  padding: 4px 8px;
+  text-align: left;
+  color: var(--background-font-color);
+  border: none;
+  border-radius: 6px;
+  max-width: 100%;
+}
+
+.main .setting .dateperiod {
+  background-color: var(--select-color);
+  border: none;
+  border-radius: 8px;
+  box-sizing: border-box;
+  color: var(--background-font-color);
+  cursor: pointer;
+  display: inline-block;
+  font-size: 16px;
+  padding: 8px 12px;
+  text-align: left;
+  min-width: 200px;
+}
+
+.main .setting .react-datepicker {
+  background-color: var(--select-color);
+  border: none;
+  box-shadow: var(--box-shadow);
+  padding-top: 5px;
+  font-size: 16px;
+}
+
+.main .setting .react-datepicker .react-datepicker__triangle {
+  display: none;
+}
+
+.main .setting .react-datepicker .react-datepicker__header {
+  background-color: transparent;
+  border: none;
+}
+
+.main .setting .react-datepicker__day {
+  padding: 1px;
+}
+
+.main .setting .react-datepicker__day:hover {
+  background-color: var(--background-color);
+}
+
+.main .setting .react-datepicker__day-name,
+.main .setting .react-datepicker__day,
+.main .setting .react-datepicker__time-name {
+  color: var(--background-font-color);
+  width: var(--cell-size);
+  height: var(--cell-size);
+  line-height: var(--cell-size);
+  border-radius: var(--cell-size);
+  position: relative;
+  vertical-align: middle;
+  margin: 6px;
+  font-size: 14px;
+  border: 1px solid transparent;
+}
+
+.main .setting .react-datepicker__day--selected {
+  padding: 0;
+  font-weight: bold;
+}
+
+.main .setting .react-datepicker__current-month {
+  color: var(--background-font-color);
+}
+
+.main .setting .react-datepicker__day--disabled {
+  opacity: 0.2;
+  box-shadow: none;
+}
+
+.main .setting .react-datepicker__day--keyboard-selected {
+  background-color: var(--select-color);
+}
+
+.main .setting .react-datepicker__day--in-range {
+  background-color: var(--highlight-color);
+  color: white;
+}
+
+.main .setting .react-datepicker__day--in-selecting-range {
+  background-color: var(--background-color);
+}
+
+.main .setting select.subtle {
+  background-color: var(--select-color);
+  margin-bottom: 10px;
+  display: inline-block;
+}
+
 @media screen and (max-width: 1000px) {
   h1 {
     font-size: 40px;

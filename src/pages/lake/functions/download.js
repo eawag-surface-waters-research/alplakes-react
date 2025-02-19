@@ -87,7 +87,7 @@ const satelliteMetadata = async (parameters) => {
   var currentDate = includeDates[includeDates.length - 1];
   var date = available[general.formatSencastDay(currentDate)];
   var image = date.images.filter((i) => i.percent === date.max_percent)[0];
-  return { available, image };
+  return { available, image, includeDates };
 };
 
 const measurementsMetadata = (parameters) => {
@@ -171,6 +171,10 @@ const threedDownload = async (
     source.metadata.height,
     initial
   );
+  layer.displayOptions.min = data[layer.parameter].min;
+  layer.displayOptions.max = data[layer.parameter].max;
+  layer.displayOptions.dataMin = data[layer.parameter].min;
+  layer.displayOptions.dataMax = data[layer.parameter].max;
   var index;
   const timestep =
     (data[layer.parameter].end - data[layer.parameter].start) /
@@ -202,7 +206,7 @@ const threedDownload = async (
         displayOptions: {
           min: data[layer.parameter].min,
           max: data[layer.parameter].max,
-          unit: "°C",
+          unit: layer.unit,
         },
       },
     });

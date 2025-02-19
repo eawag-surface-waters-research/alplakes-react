@@ -71,9 +71,15 @@ class ColorRamp extends Component {
       background: this.linearGradient(palettes[selected]),
     };
     if ("value" in this.props) {
-      selectStyle = {
-        background: this.linearGradient(this.props.value),
-      };
+      if (typeof this.props.value === "string") {
+        selectStyle = {
+          background: this.linearGradient(palettes[this.props.value]),
+        };
+      } else {
+        selectStyle = {
+          background: this.linearGradient(this.props.value),
+        };
+      }
     }
 
     return (
