@@ -22,6 +22,7 @@ class Map extends Component {
     period: false,
     datetime: false,
     depth: false,
+    selection: false,
     mapId: "map_" + Math.round(Math.random() * 100000),
   };
 
@@ -29,8 +30,37 @@ class Map extends Component {
     this.setState({ updates: [] });
   };
 
+  removeLayer = (id) => {
+    var { layers, updates } = this.state;
+    var layer = layers.find((l) => l.id === id);
+    if (layer.active) {
+      layer.active = false;
+      updates.push({ event: "removeLayer", id: id });
+      if (layers.filter((l) => l.active && l.playControls).length < 1) {
+        updates.push({ event: "removePlay" });
+      }
+      var selection = false;
+      let stillActive = layers.filter((l) => l.active);
+      if (stillActive.length > 0) selection = stillActive[0].id;
+      this.setState({ layers, updates, selection });
+    }
+  };
+
+  setSelection = (selection) => {
+    if (this.state.selection === selection && window.innerWidth <= 500) {
+      this.setState({ selection: false });
+    } else {
+      this.setState({ selection });
+    }
+  };
+
+  closeSelection = () => {
+    this.setState({ selection: false });
+  };
+
   initialLoad = async (add) => {
-    var { updates, mapId, layers, period, datetime, depth } = this.state;
+    var { updates, mapId, layers, period, datetime, depth, selection } =
+      this.state;
     document.getElementById(`map_loading_${mapId}`).innerHTML =
       "Collecting metadata";
     layers = await collectMetadata(layers);
@@ -45,7 +75,19 @@ class Map extends Component {
       depth,
       true
     ));
-    this.setState({ loading: false, layers, updates, period, datetime, depth });
+    let active_layers = layers.filter((l) => l.active);
+    if (active_layers.length > 0 && window.innerWidth > 500) {
+      selection = layers[0].id;
+    }
+    this.setState({
+      loading: false,
+      layers,
+      updates,
+      period,
+      datetime,
+      depth,
+      selection,
+    });
   };
 
   async componentDidMount() {
@@ -85,7 +127,8 @@ class Map extends Component {
   }
 
   render() {
-    var { name, error, loading, id, updates, mapId, layers } = this.state;
+    var { name, error, loading, id, updates, mapId, layers, selection } =
+      this.state;
     var { language, dark } = this.props;
     var title = "";
     var documentTitle = "Alplakes";
@@ -106,13 +149,22 @@ class Map extends Component {
               <img src={back} alt="Back" />
             </div>
           </NavLink>
-          <Sidebar layers={layers} title={title} language={language} />
+          <Sidebar
+            layers={layers}
+            title={title}
+            language={language}
+            selection={selection}
+            setSelection={this.setSelection}
+            removeLayer={this.removeLayer}
+            closeSelection={this.closeSelection}
+          />
           <Basemap
             updates={updates}
             updated={this.updated}
             language={language}
             dark={dark}
             mapId={mapId}
+            permanentLabel={true}
           />
           <div className={loading ? "map-loading" : "map-loading closed"}>
             <div className="map-loading-inner">

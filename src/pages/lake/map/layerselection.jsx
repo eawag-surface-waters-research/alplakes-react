@@ -7,7 +7,7 @@ class LayerSelection extends Component {
       this.props.removeLayer(event.target.getAttribute("id"));
     };
     render() {
-      var { layers, setSelection, selection, images, toggleActiveAdd, language } =
+      var { layers, setSelection, selection, images, toggleAddLayersModal, language } =
         this.props;
       var extra = Math.max(0, 4 - layers.filter((l) => l.active).length);
       return (
@@ -56,7 +56,7 @@ class LayerSelection extends Component {
                   className="app"
                   title="Add layer"
                   key={p}
-                  onClick={toggleActiveAdd}
+                  onClick={toggleAddLayersModal}
                 >
                   +
                 </div>

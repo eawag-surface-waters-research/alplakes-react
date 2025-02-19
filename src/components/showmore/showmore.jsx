@@ -26,7 +26,7 @@ class ShowMoreText extends Component {
 
     return (
       <div onClick={this.toggleText} className="show-more-text" title="Show more">
-        {show.split("@").map((t) =>
+        {typeof show === "string" && show.split("@").map((t) =>
           t in links ? (
             <a
               href={links[t][1]}

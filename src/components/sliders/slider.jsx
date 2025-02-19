@@ -44,7 +44,8 @@ class Slider extends Component {
   componentDidUpdate() {}
 
   render() {
-    var { period, timestep, datetime, setDatetime, language } = this.props;
+    var { period, timestep, datetime, setDatetime, language, permanentLabel } =
+      this.props;
     var { hoverValue } = this.state;
     const values = [datetime];
     return (
@@ -77,10 +78,10 @@ class Slider extends Component {
                 }),
               }}
             >
-              {hoverValue !== null && (
+              {(hoverValue !== null || permanentLabel) && (
                 <div className="slider-label">
                   {this.formatDateTime(
-                    hoverValue,
+                    hoverValue !== null ? hoverValue : datetime,
                     Translate.axis[language].months
                   )}
                 </div>

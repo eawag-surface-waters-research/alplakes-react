@@ -178,6 +178,7 @@
   box-sizing: border-box;
   border-radius: 0 0 calc(var(--padding)) calc(var(--padding));
   z-index: 2;
+  transition: top .3s ease-in;
 }
 
 .navbar .mobile-nav .nav-content a {
@@ -185,7 +186,7 @@
 }
 
 .navbar .mobile-nav .nav-content.hide {
-  display: none;
+  top: -100vh;
 }
 
 .navbar .mobile-nav .nav-content .nav-row {

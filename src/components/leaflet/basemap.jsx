@@ -163,7 +163,7 @@ class Basemap extends Component {
   }
 
   render() {
-    const { mapId, load, language } = this.props;
+    const { mapId, load, language, permanentLabel } = this.props;
     const { controls, play, period, datetime, timestep } = this.state;
     return (
       <React.Fragment>
@@ -197,6 +197,7 @@ class Basemap extends Component {
                 timestep={timestep}
                 setDatetime={this.setDatetime}
                 language={language}
+                permanentLabel={permanentLabel}
               />
             </div>
           </div>

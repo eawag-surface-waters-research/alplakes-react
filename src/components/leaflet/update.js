@@ -36,7 +36,6 @@ export const update = async (
       vector: addVectorField,
     },
     updateLayer: {},
-    removeLayer: {},
   };
   for (let i = 0; i < updates.length; i++) {
     if (
@@ -51,6 +50,8 @@ export const update = async (
         updates[i].options,
         language
       );
+    } else if (updates[i].event === "removeLayer") {
+      genericRemoveLayer(map, layers, updates[i].id);
     } else if (updates[i].event === "addPlay") {
       addPlay(updates[i].options, addControls);
     } else if (updates[i].event === "removePlay") {
@@ -251,6 +252,17 @@ const addGeoJson = async (map, layers, id, options, language) => {
 
 const addPlay = (options, addControls) => {
   addControls(options.period, options.datetime, options.timestep, options.data);
+};
+
+const genericRemoveLayer = (map, layers, id) => {
+  for (let key of Object.keys(layers[id])) {
+    try {
+      map.removeLayer(layers[id][key]);
+    } catch (e) {
+      console.error(`Failed to remove layer ${key}`);
+    }
+  }
+  layers[id] = {};
 };
 
 const setBounds = (map, bounds) => {

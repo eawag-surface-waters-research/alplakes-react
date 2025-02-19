@@ -34,7 +34,7 @@
 
 .slider-container .slider-label {
     position: absolute;
-    top: -40px;
+    top: -42px;
     background: var(--box-color);
     color: var(--background-font-color);
     padding: 4px 8px;
@@ -42,10 +42,4 @@
     font-size: 14px;
     text-wrap: nowrap;
     right: -12px;
-}
-
-@media screen and (max-width: 500px) {
-    .slider-container .slider-label {
-        display: none;
-    }
 }
