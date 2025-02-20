@@ -115,13 +115,17 @@ L.Streamlines = (L.Layer ? L.Layer : L.Class).extend({
   },
   update: function (data, options) {
     var reset = false;
-    if (options.paths !== this.options.paths) {
-      reset = true;
+    if (data) {
+      this._data = data;
     }
-    L.Util.setOptions(this, options);
-    this._canvas.style.opacity = this.options.opacity;
-    this._canvas.style.zIndex = this.options.zIndex + 100;
-    this._data = data;
+    if (options) {
+      if (options.paths !== this.options.paths) {
+        reset = true;
+      }
+      L.Util.setOptions(this, options);
+      this._canvas.style.opacity = this.options.opacity;
+      this._canvas.style.zIndex = this.options.zIndex + 100;
+    }
     if (reset) this._reset();
   },
   _reset: function (event) {
@@ -420,7 +424,9 @@ L.Streamlines = (L.Layer ? L.Layer : L.Class).extend({
         (Math.atan2(u / magnitude, v / magnitude) * 180) / Math.PI
       );
       if (deg < 0) deg = 360 + deg;
-      return `${this._round(magnitude, this.options.decimal)}${this.options.unit} ${deg}°`;
+      return `${this._round(magnitude, this.options.decimal)}${
+        this.options.unit
+      } ${deg}°`;
     }
   },
 });

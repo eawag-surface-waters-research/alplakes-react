@@ -31,27 +31,6 @@ class Map extends Component {
     this.setState({ updates: [] });
   };
 
-  removeLayer = (id) => {
-    var { layers, updates } = this.state;
-    var layer = layers.find((l) => l.id === id);
-    if (layer.active) {
-      layer.active = false;
-      updates.push({ event: "removeLayer", id: id });
-      if (layers.filter((l) => l.active && l.playControls).length < 1) {
-        updates.push({ event: "removePlay" });
-      }
-      var selection = false;
-      let active_layers = layers.filter((l) => l.active);
-      if (active_layers.length > 0) selection = active_layers[0].id;
-      window.history.replaceState(
-        {},
-        "",
-        `?layers=${active_layers.map((l) => l.id).join(",")}`
-      );
-      this.setState({ layers, updates, selection });
-    }
-  };
-
   setSelection = (selection) => {
     if (this.state.selection === selection && window.innerWidth <= 500) {
       this.setState({ selection: false });
@@ -105,6 +84,32 @@ class Map extends Component {
         selection,
       });
     });
+  };
+  updateOptions = (id, type, options) => {
+    var { layers, updates } = this.state;
+    updates.push({ event: "updateLayer", id, type, options });
+    layers.find((l) => l.id === id).displayOptions = options;
+    this.setState({ layers, updates });
+  };
+  removeLayer = (id) => {
+    var { layers, updates } = this.state;
+    var layer = layers.find((l) => l.id === id);
+    if (layer.active) {
+      layer.active = false;
+      updates.push({ event: "removeLayer", id: id });
+      if (layers.filter((l) => l.active && l.playControls).length < 1) {
+        updates.push({ event: "removePlay" });
+      }
+      var selection = false;
+      let active_layers = layers.filter((l) => l.active);
+      if (active_layers.length > 0) selection = active_layers[0].id;
+      window.history.replaceState(
+        {},
+        "",
+        `?layers=${active_layers.map((l) => l.id).join(",")}`
+      );
+      this.setState({ layers, updates, selection });
+    }
   };
 
   async componentDidMount() {
@@ -190,9 +195,10 @@ class Map extends Component {
               language={language}
               selection={selection}
               setSelection={this.setSelection}
-              removeLayer={this.removeLayer}
               closeSelection={this.closeSelection}
               addLayers={this.addLayers}
+              updateOptions={this.updateOptions}
+              removeLayer={this.removeLayer}
             />
             <Basemap
               updates={updates}

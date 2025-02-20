@@ -21,6 +21,7 @@ L.VectorField = (L.Layer ? L.Layer : L.Class).extend({
   },
   initialize: function (geometry, data, options) {
     L.Util.setOptions(this, options);
+    console.log(this.options)
     this._dataWidth = geometry[0].length / 2;
     this._dataHeight = geometry.length;
     this._geometry = geometry;
@@ -112,10 +113,14 @@ L.VectorField = (L.Layer ? L.Layer : L.Class).extend({
     this._redraw();
   },
   update: function (data, options) {
-    L.Util.setOptions(this, options);
-    this._canvas.style.opacity = this.options.opacity;
-    this._canvas.style.zIndex = this.options.zIndex + 100;
-    this._data = data;
+    if (data) {
+      this._data = data;
+    }
+    if (options) {
+      L.Util.setOptions(this, options);
+      this._canvas.style.opacity = this.options.opacity;
+      this._canvas.style.zIndex = this.options.zIndex + 100;
+    }
     this._reset();
   },
   _pointsList: function () {
@@ -385,10 +390,13 @@ L.VectorField = (L.Layer ? L.Layer : L.Class).extend({
         closestPoint = point;
       }
     }
-    if (closestPoint !== null && minDistance < this.options.tooltipSensitivity) {
-      return [closestPoint.i, closestPoint.j]
+    if (
+      closestPoint !== null &&
+      minDistance < this.options.tooltipSensitivity
+    ) {
+      return [closestPoint.i, closestPoint.j];
     } else {
-      return null
+      return null;
     }
   },
   _onMousemove: function (t) {
@@ -436,7 +444,9 @@ L.VectorField = (L.Layer ? L.Layer : L.Class).extend({
         (Math.atan2(u / magnitude, v / magnitude) * 180) / Math.PI
       );
       if (deg < 0) deg = 360 + deg;
-      return `${this._round(magnitude, this.options.decimal)}${this.options.unit} ${deg}°`;
+      return `${this._round(magnitude, this.options.decimal)}${
+        this.options.unit
+      } ${deg}°`;
     }
   },
 });

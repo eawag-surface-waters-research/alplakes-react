@@ -51,7 +51,7 @@ class Raster extends Component {
     if (options.min !== _min || options.max !== _max) {
       options["min"] = parseFloat(_min);
       options["max"] = parseFloat(_max);
-      updateOptions(id, options);
+      updateOptions(id, "raster", options);
     }
   };
 
@@ -65,20 +65,14 @@ class Raster extends Component {
     var { id, updateOptions, options } = this.props;
     var value = event.target.value;
     options["opacity"] = value;
-    updateOptions(id, options);
-  };
-
-  setLabels = () => {
-    var { id, updateOptions, options } = this.props;
-    options["labels"] = !options["labels"];
-    updateOptions(id, options);
+    updateOptions(id, "raster", options);
   };
 
   setPalette = (event) => {
     var { id, updateOptions, options } = this.props;
     options["paletteName"] = event.name;
     options["palette"] = event.palette;
-    updateOptions(id, options);
+    updateOptions(id, "raster", options);
   };
 
   downloadFile = (event) => {
@@ -269,27 +263,27 @@ class Current extends Component {
     var { id, updateOptions, options } = this.props;
     options["paletteName"] = event.name;
     options["palette"] = event.palette;
-    updateOptions(id, options);
+    updateOptions(id, "raster", options);
   };
 
   setStreamlinesColor = (event) => {
     var { id, updateOptions, options } = this.props;
     var value = event.target.value;
     options["streamlinesColor"] = value;
-    updateOptions(id, options);
+    updateOptions(id, "streamlines", options);
   };
 
   setArrowsColor = (event) => {
     var { id, updateOptions, options } = this.props;
     var value = event.target.value;
     options["arrowsColor"] = value;
-    updateOptions(id, options);
+    updateOptions(id, "vector", options);
   };
 
   toggleDisplay = (type) => {
     var { id, updateOptions, options } = this.props;
     options[type] = !options[type];
-    updateOptions(id, options);
+    updateOptions(id, type, options);
   };
 
   setPaths = (event) => {
@@ -301,7 +295,7 @@ class Current extends Component {
     var { _paths } = this.state;
     if (parseInt(_paths) !== options.paths) {
       options["paths"] = parseInt(_paths);
-      updateOptions(id, options);
+      updateOptions(id, "streamlines", options);
     }
   };
 
@@ -344,14 +338,7 @@ class Current extends Component {
     var { id, updateOptions, options } = this.props;
     var value = event.target.value;
     options["opacity"] = value;
-    updateOptions(id, options);
-  };
-
-  setParameter = (event, parameter) => {
-    var { id, updateOptions, options } = this.props;
-    var value = event.target.value;
-    options[parameter] = value;
-    updateOptions(id, options);
+    updateOptions(id, "raster", options);
   };
 
   convertSpeed = (value) => {
@@ -370,16 +357,7 @@ class Current extends Component {
     var maxlog = Math.log10(maxVelocityScale);
     var range = maxlog - minlog;
     options["velocityScale"] = 10 ** (range * value + minlog);
-    updateOptions(id, options);
-  };
-
-  setBubble = (range, bubble) => {
-    const val = range.value;
-    const min = range.min ? range.min : 0;
-    const max = range.max ? range.max : 100;
-    const newVal = Number(((val - min) * 100) / (max - min));
-    bubble.innerHTML = val;
-    bubble.style.left = `calc(${newVal}% + (${8 - newVal * 0.15}px))`;
+    updateOptions(id, "streamlines", options);
   };
 
   componentDidMount() {
@@ -405,7 +383,7 @@ class Current extends Component {
       opacity,
       velocityScale,
       paletteName,
-      arrows,
+      vector,
       streamlines,
       raster,
       arrowsColor,
@@ -452,8 +430,8 @@ class Current extends Component {
           <label className="switch">
             <input
               type="checkbox"
-              checked={arrows}
-              onChange={() => this.toggleDisplay("arrows")}
+              checked={vector}
+              onChange={() => this.toggleDisplay("vector")}
             />
             <span className="slider round"></span>
           </label>
@@ -575,20 +553,24 @@ class Tiff extends Component {
   };
 
   setDate = (event) => {
-    var { id, updateOptions, options } = this.props;
-    var date = options.availableImages[formatSencastDay(event)];
+    var { id, updateOptions, options, layer } = this.props;
+    var { available } = layer.sources[layer.source].metadata;
+    var date = available[formatSencastDay(event)];
     var image = date.images.filter((i) => i.percent === date.max_percent)[0];
-    options.image = image;
-    updateOptions(id, options);
+    layer.sources[layer.source].metadata.image = image;
+    options.url = image.url;
+    updateOptions(id, "tiff", options);
     setTimeout(() => this.onMonthChange(image.time), 100);
   };
 
   setImage = (event) => {
-    var { id, updateOptions, options } = this.props;
-    var date = options.availableImages[formatSencastDay(event)];
+    var { id, updateOptions, options, layer } = this.props;
+    var { available } = layer.sources[layer.source].metadata;
+    var date = available[formatSencastDay(event)];
     var image = date.images.filter((i) => i.time === event)[0];
-    options.image = image;
-    updateOptions(id, options);
+    layer.sources[layer.source].metadata.image = image;
+    options.url = image.url;
+    updateOptions(id, "tiff", options);
   };
 
   updateMinMax = () => {
@@ -597,7 +579,7 @@ class Tiff extends Component {
     if (options["min"] !== _min || options["max"] !== _max) {
       options["min"] = parseFloat(_min);
       options["max"] = parseFloat(_max);
-      updateOptions(id, options);
+      updateOptions(id, "tiff", options);
     }
   };
 
@@ -610,41 +592,41 @@ class Tiff extends Component {
   setWms = () => {
     var { id, updateOptions, options } = this.props;
     options["wms"] = !options["wms"];
-    updateOptions(id, options);
+    updateOptions(id, "wms", options);
   };
 
   setOpacity = (event) => {
     var { id, updateOptions, options } = this.props;
     var value = event.target.value;
     options["opacity"] = value;
-    updateOptions(id, options);
+    updateOptions(id, "tiff", options);
   };
 
   setCoverage = (event) => {
     var { id, updateOptions, options } = this.props;
     var value = event.target.value;
     options["coverage"] = value;
-    updateOptions(id, options);
+    updateOptions(id, "tiff", options);
   };
 
   setConvolve = (event) => {
     var { id, updateOptions, options } = this.props;
     var value = event.target.value;
     options["convolve"] = value;
-    updateOptions(id, options);
+    updateOptions(id, "tiff", options);
   };
 
   setValidpixelexpression = (event) => {
     var { id, updateOptions, options } = this.props;
     options["validpixelexpression"] = !options.validpixelexpression;
-    updateOptions(id, options);
+    updateOptions(id, "tiff", options);
   };
 
   setPalette = (event) => {
     var { id, updateOptions, options } = this.props;
     options["paletteName"] = event.name;
     options["palette"] = event.palette;
-    updateOptions(id, options);
+    updateOptions(id, "tiff", options);
   };
 
   resetMin = () => {
@@ -660,8 +642,10 @@ class Tiff extends Component {
   };
 
   onMonthChange = (event) => {
-    var { availableImages } = this.props.options;
-    this.addCssRules(event, availableImages);
+    var { layer, options } = this.props;
+    var { available } = layer.sources[layer.source].metadata;
+    let show = filterImages(available, options.coverage, []);
+    this.addCssRules(event, show);
   };
 
   isSameDay = (date1, date2) => {
@@ -672,15 +656,6 @@ class Tiff extends Component {
     );
   };
 
-  formatDateToCustomString = (date) => {
-    const hours = String(date.getHours()).padStart(2, "0");
-    const minutes = String(date.getMinutes()).padStart(2, "0");
-    const day = String(date.getDate()).padStart(2, "0");
-    const month = String(date.getMonth() + 1).padStart(2, "0"); // Month is 0-based
-    const year = date.getFullYear();
-    return `${hours}:${minutes} ${day}-${month}-${year}`;
-  };
-
   addDays = (inputDate, daysToAdd) => {
     if (!(inputDate instanceof Date)) {
       throw new Error("Input must be a Date object");
@@ -689,6 +664,7 @@ class Tiff extends Component {
     const resultDate = new Date(timestamp);
     return resultDate;
   };
+
   addOneMonth = (inputDate) => {
     if (!(inputDate instanceof Date)) {
       throw new Error("Input must be a Date object");

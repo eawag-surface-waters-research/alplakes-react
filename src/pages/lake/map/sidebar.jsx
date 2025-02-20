@@ -39,8 +39,9 @@ class Sidebar extends Component {
       closeSelection,
       removeLayer,
       addLayers,
+      updateOptions,
       period,
-      depth
+      depth,
     } = this.props;
     const { open, addLayersModal } = this.state;
     const images = {
@@ -110,7 +111,13 @@ class Sidebar extends Component {
                   <div className="sidebar-content-settings">
                     {Translations.settings[language]}
                   </div>
-                  <LayerSettings layer={layer} language={language} period={period} depth={depth} />
+                  <LayerSettings
+                    layer={layer}
+                    language={language}
+                    period={period}
+                    depth={depth}
+                    updateOptions={updateOptions}
+                  />
                 </React.Fragment>
               )}
             </div>

@@ -14,7 +14,6 @@ L.Control.ParticleTracking = L.Control.extend({
     dt: 3, // number of compuation timesteps between each data timestep
   },
   initialize: function (geometry, data, datetime, times, options) {
-    console.log(options)
     L.Util.setOptions(this, options);
     this._points = [];
     this._dataWidth = geometry[0].length / 2;
@@ -42,12 +41,10 @@ L.Control.ParticleTracking = L.Control.extend({
       }
     }
     this._interpolated_times = interpolated_times;
-
     this._time_index = this._findClosestIndex(
       this._interpolated_times,
       this._datetime
     );
-    console.log(this._time_index, this._datetime, this._times, this._interpolated_times)
   },
   onAdd: function (map) {
     this._map = map;
@@ -145,7 +142,6 @@ L.Control.ParticleTracking = L.Control.extend({
     }
   },
   update: function (datetime, options) {
-    console.log(datetime);
     if (options) {
       L.Util.setOptions(this, options);
       this._canvas.style.opacity = this.options.opacity;
@@ -261,7 +257,6 @@ L.Control.ParticleTracking = L.Control.extend({
   _enableDrawing: function () {
     this._isAdding = true;
     L.DomUtil.addClass(this._container, "leaflet-draw-enabled");
-    console.log(this.options);
     document.getElementById(this.options.id).style.cursor = "crosshair";
     this._map.on("click", this._addPoints, this);
     document.getElementById("leaflet-draw-label-particles").style.display =
@@ -376,8 +371,8 @@ L.Control.ParticleTracking = L.Control.extend({
         (time_index / (this._interpolated_times.length - 1)) *
           (this._times.length - 1)
       );
-      var x = this._data[String(this._times[ti])][t[0]][t[1]];
-      var y = this._data[String(this._times[ti])][t[0]][t[1] + this._dataWidth];
+      var x = this._data[ti][t[0]][t[1]];
+      var y = this._data[ti][t[0]][t[1] + this._dataWidth];
       if (isNaN(x) || isNaN(y)) {
         return null;
       } else {

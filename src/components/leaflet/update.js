@@ -36,7 +36,12 @@ export const update = async (
       vector: addVectorField,
       particles: addParticles,
     },
-    updateLayer: {},
+    updateLayer: {
+      tiff: updateTiff,
+      raster: updateRaster,
+      vector: updateVectorField,
+      streamlines: updateStreamlines,
+    },
   };
   for (let i = 0; i < updates.length; i++) {
     if (
@@ -78,6 +83,7 @@ const addRaster = async (map, layers, id, options, language) => {
     return { color: [c[0], c[1], c[2]], point: c[3] };
   });
   displayOptions.palette = palette;
+  layers[id]["data"] = { geometry: options.geometry, data: options.data };
   layers[id]["raster"] = new L.Raster(
     options.geometry,
     options.data,
@@ -121,6 +127,35 @@ const addRaster = async (map, layers, id, options, language) => {
   }
 };
 
+const updateRaster = (map, layers, id, options, language) => {
+  if ("raster" in layers[id]) {
+    if (options.raster) {
+      layers[id]["raster"].update(false, options);
+    } else {
+      map.removeLayer(layers[id]["raster"]);
+      delete layers[id]["raster"];
+    }
+  } else if ("data" in layers[id]) {
+    if (options.raster) {
+      var defaultOptions = {
+        paletteName: "vik",
+        opacity: 1,
+        interpolate: false,
+      };
+      var displayOptions = { ...defaultOptions, ...options };
+      let palette = COLORS[displayOptions["paletteName"]].map((c) => {
+        return { color: [c[0], c[1], c[2]], point: c[3] };
+      });
+      displayOptions.palette = palette;
+      layers[id]["raster"] = new L.Raster(
+        layers[id].data.geometry,
+        layers[id].data.data,
+        displayOptions
+      ).addTo(map);
+    }
+  }
+};
+
 const updateLabels = (labels_layer, raster_layer) => {
   labels_layer.getLayers().forEach((m) => {
     let tooltip = m.getTooltip();
@@ -143,11 +178,53 @@ const addVectorField = async (map, layers, id, options, language) => {
     interpolate: false,
   };
   var displayOptions = { ...defaultOptions, ...options.displayOptions };
+  layers[id]["data"] = { geometry: options.geometry, data: options.data };
   layers[id]["vector"] = new L.vectorfield(
     options.geometry,
     options.data,
     displayOptions
   ).addTo(map);
+};
+
+const updateVectorField = (map, layers, id, options, language) => {
+  if ("vector" in layers[id]) {
+    if (options.vector) {
+      layers[id]["vector"].update(false, options);
+    } else {
+      map.removeLayer(layers[id]["vector"]);
+      delete layers[id]["vector"];
+    }
+  } else if ("data" in layers[id]) {
+    if (options.vector) {
+      var defaultOptions = {
+        opacity: 1,
+        interpolate: false,
+      };
+      var displayOptions = { ...defaultOptions, ...options };
+      layers[id]["vector"] = new L.vectorfield(
+        layers[id].data.geometry,
+        layers[id].data.data,
+        displayOptions
+      ).addTo(map);
+    }
+  }
+};
+
+const updateStreamlines = (map, layers, id, options, language) => {
+  if ("streamlines" in layers[id]) {
+    if (options.streamlines) {
+      layers[id]["streamlines"].update(false, options);
+    } else {
+      map.removeLayer(layers[id]["streamlines"]);
+      delete layers[id]["streamlines"];
+    }
+  } else if ("data" in layers[id]) {
+    if (options.streamlines) {
+      layers[id]["streamlines"] = L.streamlines(layers[id].data.geometry, layers[id].data.data, options).addTo(
+            map
+          );
+    }
+  }
 };
 
 const addParticles = async (map, layers, id, options, language) => {
@@ -181,6 +258,17 @@ const addTiff = async (map, layers, id, options, language) => {
     responseType: "arraybuffer",
   });
   layers[id]["tiff"] = await L.floatgeotiff(data, displayOptions).addTo(map);
+};
+
+const updateTiff = async (map, layers, id, options, language) => {
+  if (layers[id]["tiff"].options.source_url === options.url) {
+    await layers[id]["tiff"].update(false, options);
+  } else {
+    let { data } = await axios.get(options.url, {
+      responseType: "arraybuffer",
+    });
+    await layers[id]["tiff"].update(data, options);
+  }
 };
 
 const addGeoJson = async (map, layers, id, options, language) => {
@@ -300,7 +388,8 @@ export const setPlayDatetime = (layers, datetime, period, data) => {
       0
     );
     for (let plot_type of Object.keys(layers[key])) {
-      if (plot_type === "raster") {
+      if (plot_type === "data") {
+      } else if (plot_type === "raster") {
         if (i0 === data[key].length - 1) {
           i0 = i0 - 1;
         }
@@ -309,6 +398,9 @@ export const setPlayDatetime = (layers, datetime, period, data) => {
         const afterValue = beforeValue + timestep;
         const interpolate =
           (datetime - beforeValue) / (afterValue - beforeValue);
+        if ("data" in layers[key]) {
+          layers[key]["data"]["data"] = data[key][i0];
+        }
         layers[key][plot_type].update([data[key][i0], data[key][i1]], {
           interpolate,
         });
@@ -317,6 +409,9 @@ export const setPlayDatetime = (layers, datetime, period, data) => {
       } else if (plot_type === "particles") {
         layers[key][plot_type].update(datetime, {});
       } else {
+        if ("data" in layers[key]) {
+          layers[key]["data"]["data"] = data[key][i0];
+        }
         layers[key][plot_type].update(data[key][i0], {});
       }
     }
