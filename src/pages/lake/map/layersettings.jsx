@@ -559,6 +559,7 @@ class Tiff extends Component {
     var image = date.images.filter((i) => i.percent === date.max_percent)[0];
     layer.sources[layer.source].metadata.image = image;
     options.url = image.url;
+    options.time = image.time;
     updateOptions(id, "tiff", options);
     setTimeout(() => this.onMonthChange(image.time), 100);
   };
@@ -570,6 +571,7 @@ class Tiff extends Component {
     var image = date.images.filter((i) => i.time === event)[0];
     layer.sources[layer.source].metadata.image = image;
     options.url = image.url;
+    options.time = image.time;
     updateOptions(id, "tiff", options);
   };
 
@@ -590,8 +592,11 @@ class Tiff extends Component {
   };
 
   setWms = () => {
-    var { id, updateOptions, options } = this.props;
+    var { id, updateOptions, options, layer } = this.props;
+    var image = layer.sources[layer.source].metadata.image;
     options["wms"] = !options["wms"];
+    options["time"] = image.time;
+    options["url"] = image.url;
     updateOptions(id, "wms", options);
   };
 
@@ -937,27 +942,27 @@ class Particles extends Component {
     var { id, updateOptions, options } = this.props;
     var value = event.target.value;
     options["paths"] = value;
-    updateOptions(id, options);
+    updateOptions(id, "particles", options);
   };
 
   setSpread = (event) => {
     var { id, updateOptions, options } = this.props;
     var value = event.target.value;
     options["spread"] = 10 ** value;
-    updateOptions(id, options);
+    updateOptions(id, "particles", options);
   };
 
   setOpacity = (event) => {
     var { id, updateOptions, options } = this.props;
     var value = event.target.value;
     options["opacity"] = value;
-    updateOptions(id, options);
+    updateOptions(id, "particles", options);
   };
 
   removeParticles = () => {
     var { id, updateOptions, options } = this.props;
     options["remove"] = true;
-    updateOptions(id, options);
+    updateOptions(id, "particles", options);
   };
 
   render() {

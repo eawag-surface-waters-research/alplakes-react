@@ -21,7 +21,6 @@ L.VectorField = (L.Layer ? L.Layer : L.Class).extend({
   },
   initialize: function (geometry, data, options) {
     L.Util.setOptions(this, options);
-    console.log(this.options)
     this._dataWidth = geometry[0].length / 2;
     this._dataHeight = geometry.length;
     this._geometry = geometry;

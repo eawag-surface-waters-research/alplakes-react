@@ -507,6 +507,22 @@ h4 {
   float: right;
 }
 
+.main .setting button.remove {
+  background-color: var(--highlight-color);
+  border: none;
+  border-radius: 8px;
+  color: #e3e3e3;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 14px;
+  padding: 5px 12px;
+  transition: all .33s ease;
+}
+
+.main .setting button.remove:hover {
+  transform: scale(1.05);
+}
+
 .main .setting .minmax {
   position: relative;
 }

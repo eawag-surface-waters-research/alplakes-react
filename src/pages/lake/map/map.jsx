@@ -85,12 +85,14 @@ class Map extends Component {
       });
     });
   };
+
   updateOptions = (id, type, options) => {
     var { layers, updates } = this.state;
     updates.push({ event: "updateLayer", id, type, options });
     layers.find((l) => l.id === id).displayOptions = options;
     this.setState({ layers, updates });
   };
+
   removeLayer = (id) => {
     var { layers, updates } = this.state;
     var layer = layers.find((l) => l.id === id);
@@ -109,6 +111,42 @@ class Map extends Component {
         `?layers=${active_layers.map((l) => l.id).join(",")}`
       );
       this.setState({ layers, updates, selection });
+    }
+  };
+
+  setDepth = (value) => {
+    var { layers, depth, updates } = this.state;
+    if (
+      depth !== value &&
+      layers.filter((l) => l.depth && l.active).length > 0
+    ) {
+      var ids = [];
+      depth = value;
+      for (let layer of layers) {
+        if (layer.depth && layer.active) {
+          updates.push({ event: "removeLayer", id: layer.id });
+          ids.push(layer.id);
+        }
+      }
+      this.setState({ updates, depth }, () => this.addLayers(ids, false));
+    }
+  };
+
+  setPeriod = (value) => {
+    var { layers, updates, period } = this.state;
+    if (period !== value) {
+      var datetime = period[0];
+      period = value;
+      var ids = [];
+      for (let layer of layers) {
+        if (layer.active && layer.playControls) {
+          updates.push({ event: "removeLayer", id: layer.id });
+          ids.push(layer.id);
+        }
+      }
+      this.setState({ updates, datetime, period }, () =>
+        this.addLayers(ids, false)
+      );
     }
   };
 
@@ -199,6 +237,8 @@ class Map extends Component {
               addLayers={this.addLayers}
               updateOptions={this.updateOptions}
               removeLayer={this.removeLayer}
+              setDepth={this.setDepth}
+              setPeriod={this.setPeriod}
             />
             <Basemap
               updates={updates}

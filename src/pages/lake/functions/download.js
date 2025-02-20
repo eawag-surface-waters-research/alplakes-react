@@ -245,6 +245,7 @@ const satelliteDownload = async (
     id: "satellite_" + layer.parameter,
     options: {
       url: layer.sources[layer.source].metadata.image.url,
+      time: layer.sources[layer.source].metadata.image.time,
       displayOptions: layer.displayOptions,
     },
   });

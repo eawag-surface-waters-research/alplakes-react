@@ -42,6 +42,8 @@ class Sidebar extends Component {
       updateOptions,
       period,
       depth,
+      setPeriod,
+      setDepth,
     } = this.props;
     const { open, addLayersModal } = this.state;
     const images = {
@@ -117,6 +119,8 @@ class Sidebar extends Component {
                     period={period}
                     depth={depth}
                     updateOptions={updateOptions}
+                    setDepth={setDepth}
+                    setPeriod={setPeriod}
                   />
                 </React.Fragment>
               )}

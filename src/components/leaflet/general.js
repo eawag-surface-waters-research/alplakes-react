@@ -59,6 +59,29 @@ export const formatDatetime = (datetime, offset = 0) => {
   }`;
 };
 
+const addMinutes = (date, minutes) => {
+  return new Date(date.getTime() + minutes * 60000);
+};
+
+const formatDateIso = (datetime) => {
+  var year = datetime.getFullYear();
+  var month = datetime.getMonth() + 1;
+  var date = datetime.getDate();
+  var hour = datetime.getHours();
+  var minute = datetime.getMinutes();
+  return `${String(year)}-${month < 10 ? "0" + month : month}-${
+    date < 10 ? "0" + date : date
+  }T${hour < 10 ? "0" + hour : hour}:${
+    minute < 10 ? "0" + minute : minute
+  }:00Z`;
+};
+
+export const formatWmsDate = (datetime, minutes = 120) => {
+  var start = addMinutes(datetime, -minutes);
+  var end = addMinutes(datetime, minutes);
+  return `${formatDateIso(start)}/${formatDateIso(end)}`;
+};
+
 export const capitalize = (string) => {
   if (string.length === 0) {
     return string;

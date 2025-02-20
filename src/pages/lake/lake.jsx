@@ -18,22 +18,9 @@ import WaterLevel from "./components/waterlevel";
 import Doy from "./components/doy";
 import PastYear from "./components/pastyear";
 import Climate from "./components/climate";
+import NotFound from "./components/notfound";
 
-class NotFound extends Component {
-  render() {
-    var { id, text } = this.props;
-    return (
-      <div className="not-found">
-        <div className="fourzerofour">404</div>
-        {text && (
-          <div className="inner">
-            Sorry the lake <div className="title">{id}</div> cannot be found.
-          </div>
-        )}
-      </div>
-    );
-  }
-}
+
 
 class Lake extends Component {
   state = {

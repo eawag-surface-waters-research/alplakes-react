@@ -34,8 +34,8 @@ class Period extends Component {
     var { setPeriod, maxDate } = this.props;
     if (period[0] !== null && period[1] !== null) {
       setPeriod([
-        Math.floor(period[0].getTime()),
-        Math.floor(period[1].getTime() + 86400000),
+        new Date(Math.floor(period[0].getTime())),
+        new Date(Math.floor(period[1].getTime() + 86400000)),
       ]);
       this.setState({ period, maxPeriodDate: false });
     } else if (period[0] !== null && period[1] === null) {

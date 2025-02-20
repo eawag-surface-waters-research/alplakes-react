@@ -2,7 +2,7 @@ import L from "leaflet";
 //import * as d3 from "d3";
 import axios from "axios";
 import COLORS from "../colors/colors.json";
-//import CONFIG from "../../config.json";
+import CONFIG from "../../config.json";
 //import leaflet_marker from "../../img/leaflet_marker.png";
 import Translate from "../../translations.json";
 import {
@@ -11,6 +11,7 @@ import {
   formatTime,
   formatDatetime,
   capitalize,
+  formatWmsDate,
 } from "./general";
 import "./leaflet_raster";
 import "./leaflet_streamlines";
@@ -41,6 +42,8 @@ export const update = async (
       raster: updateRaster,
       vector: updateVectorField,
       streamlines: updateStreamlines,
+      particles: updateParticles,
+      wms: updateWms,
     },
   };
   for (let i = 0; i < updates.length; i++) {
@@ -220,9 +223,11 @@ const updateStreamlines = (map, layers, id, options, language) => {
     }
   } else if ("data" in layers[id]) {
     if (options.streamlines) {
-      layers[id]["streamlines"] = L.streamlines(layers[id].data.geometry, layers[id].data.data, options).addTo(
-            map
-          );
+      layers[id]["streamlines"] = L.streamlines(
+        layers[id].data.geometry,
+        layers[id].data.data,
+        options
+      ).addTo(map);
     }
   }
 };
@@ -242,6 +247,14 @@ const addParticles = async (map, layers, id, options, language) => {
       displayOptions
     )
     .addTo(map);
+};
+
+const updateParticles = (map, layers, id, options, language) => {
+  if ("remove" in options && options.remove) {
+    layers[id]["particles"].clear();
+    options.remove = false;
+  }
+  layers[id]["particles"].update(false, options);
 };
 
 const addTiff = async (map, layers, id, options, language) => {
@@ -268,6 +281,37 @@ const updateTiff = async (map, layers, id, options, language) => {
       responseType: "arraybuffer",
     });
     await layers[id]["tiff"].update(data, options);
+    updateWms(map, layers, id, options, language);
+  }
+};
+
+const updateWms = async (map, layers, id, options, language) => {
+  try {
+    map.removeLayer(layers[id]["wms"]);
+    delete layers[id]["wms"];
+  } catch (e) {}
+  if (options.wms) {
+    var url = "";
+    var type = "TRUE-COLOR";
+    if (options.url.includes("sentinel2")) {
+      url = CONFIG.sentinel2_wms;
+      type = "TRUE_COLOR";
+    }
+    if (options.url.includes("sentinel3")) url = CONFIG.sentinel3_wms;
+    layers[id]["wms"] = L.tileLayer
+      .wms(url, {
+        tileSize: 512,
+        attribution:
+          '&copy; <a href="http://www.sentinel-hub.com/" target="_blank">Sentinel Hub</a>',
+        minZoom: 6,
+        maxZoom: 16,
+        preset: type,
+        layers: type,
+        time: formatWmsDate(options.time),
+        gain: 1,
+        gamma: 1,
+      })
+      .addTo(map);
   }
 };
 
