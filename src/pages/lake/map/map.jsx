@@ -10,6 +10,7 @@ import Basemap from "../../../components/leaflet/basemap";
 import back from "../../../img/back.png";
 import Sidebar from "./sidebar";
 import Loading from "../../../components/loading/loading";
+import NotFound from "../components/notfound";
 
 class Map extends Component {
   state = {
@@ -82,6 +83,7 @@ class Map extends Component {
         period,
         datetime,
         depth,
+        mapId,
         initial
       ));
       let active_layers = layers.filter((l) => l.active);
@@ -111,7 +113,13 @@ class Map extends Component {
     const url = new URL(window.location.href);
     const id = url.pathname.replace("map", "").replace(/[^a-zA-Z ]/g, "");
     const queryParams = new URLSearchParams(window.location.search);
-    const active_layers = queryParams.get("layers").split(",");
+    var active_layers = [];
+    if (queryParams.get("layers")) {
+      active_layers = queryParams
+        .get("layers")
+        .split(",")
+        .filter((l) => l !== "");
+    }
     try {
       var { data } = await axios.get(
         CONFIG.alplakes_bucket +
@@ -134,7 +142,7 @@ class Map extends Component {
       );
     } catch (e) {
       console.error(e);
-      this.setState({ error: true, id });
+      this.setState({ error: true, id, loading: false });
     }
   }
 
@@ -165,41 +173,45 @@ class Map extends Component {
           <meta name="description" content="Alplakes map viewer." />
         </Helmet>
         <NavBar {...this.props} relative={true} />
-        <div className="layer-map">
-          <NavLink to={`/${id}`}>
-            <div className="back-button">
-              <img src={back} alt="Back" />
-            </div>
-          </NavLink>
-          <Sidebar
-            layers={layers}
-            title={title}
-            period={period}
-            depth={depth}
-            language={language}
-            selection={selection}
-            setSelection={this.setSelection}
-            removeLayer={this.removeLayer}
-            closeSelection={this.closeSelection}
-            addLayers={this.addLayers}
-          />
-          <Basemap
-            updates={updates}
-            updated={this.updated}
-            language={language}
-            dark={dark}
-            mapId={mapId}
-            permanentLabel={true}
-          />
-          <div className={loading ? "map-loading" : "map-loading closed"}>
-            <div className="map-loading-inner">
-              <Loading />
-              <div className="loading-text" id={`map_loading_${mapId}`}>
-                Accessing layers
+        {error ? (
+          <NotFound id={id} text={true} />
+        ) : (
+          <div className="layer-map">
+            <NavLink to={`/${id}`}>
+              <div className="back-button">
+                <img src={back} alt="Back" />
+              </div>
+            </NavLink>
+            <Sidebar
+              layers={layers}
+              title={title}
+              period={period}
+              depth={depth}
+              language={language}
+              selection={selection}
+              setSelection={this.setSelection}
+              removeLayer={this.removeLayer}
+              closeSelection={this.closeSelection}
+              addLayers={this.addLayers}
+            />
+            <Basemap
+              updates={updates}
+              updated={this.updated}
+              language={language}
+              dark={dark}
+              mapId={mapId}
+              permanentLabel={true}
+            />
+            <div className={loading ? "map-loading" : "map-loading closed"}>
+              <div className="map-loading-inner">
+                <Loading />
+                <div className="loading-text" id={`map_loading_${mapId}`}>
+                  Accessing layers
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        )}
       </div>
     );
   }

@@ -13,7 +13,8 @@ L.Control.ParticleTracking = L.Control.extend({
     radiusFactor: 2, // search radius for quadtree search
     dt: 3, // number of compuation timesteps between each data timestep
   },
-  initialize: function (geometry, data, datetime, options) {
+  initialize: function (geometry, data, datetime, times, options) {
+    console.log(options)
     L.Util.setOptions(this, options);
     this._points = [];
     this._dataWidth = geometry[0].length / 2;
@@ -28,27 +29,25 @@ L.Control.ParticleTracking = L.Control.extend({
     this._ySize = bounds.ySize;
     this._data = data;
     this._datetime = parseFloat(datetime);
+    this._times = times;
     this._transformationMatrix = transformationMatrix;
     this._interpolateTimeseries();
   },
   _interpolateTimeseries: function () {
-    var times = Object.keys(this._data).map((d) => parseFloat(d));
-    times.sort(function (a, b) {
-      return a - b;
-    });
     var interpolated_times = [];
-    for (let i = 1; i < times.length; i++) {
-      var timestep = (times[i] - times[i - 1]) / this.options.dt;
+    for (let i = 1; i < this._times.length; i++) {
+      var timestep = (this._times[i] - this._times[i - 1]) / this.options.dt;
       for (let j = 0; j < this.options.dt; j++) {
-        interpolated_times.push(times[i - 1] + timestep * j);
+        interpolated_times.push(this._times[i - 1] + timestep * j);
       }
     }
-    this._times = times;
     this._interpolated_times = interpolated_times;
+
     this._time_index = this._findClosestIndex(
       this._interpolated_times,
       this._datetime
     );
+    console.log(this._time_index, this._datetime, this._times, this._interpolated_times)
   },
   onAdd: function (map) {
     this._map = map;
@@ -146,14 +145,19 @@ L.Control.ParticleTracking = L.Control.extend({
     }
   },
   update: function (datetime, options) {
-    L.Util.setOptions(this, options);
-    this._canvas.style.opacity = this.options.opacity;
-    this._canvas.style.zIndex = this.options.zIndex + 100;
-    this._datetime = parseFloat(datetime);
-    this._time_index = this._findClosestIndex(
-      this._interpolated_times,
-      this._datetime
-    );
+    console.log(datetime);
+    if (options) {
+      L.Util.setOptions(this, options);
+      this._canvas.style.opacity = this.options.opacity;
+      this._canvas.style.zIndex = this.options.zIndex + 100;
+    }
+    if (datetime) {
+      this._datetime = parseFloat(datetime);
+      this._time_index = this._findClosestIndex(
+        this._interpolated_times,
+        this._datetime
+      );
+    }
     this._reset();
   },
   clear: function () {
@@ -257,6 +261,7 @@ L.Control.ParticleTracking = L.Control.extend({
   _enableDrawing: function () {
     this._isAdding = true;
     L.DomUtil.addClass(this._container, "leaflet-draw-enabled");
+    console.log(this.options);
     document.getElementById(this.options.id).style.cursor = "crosshair";
     this._map.on("click", this._addPoints, this);
     document.getElementById("leaflet-draw-label-particles").style.display =
@@ -427,6 +432,6 @@ L.Control.ParticleTracking = L.Control.extend({
   },
 });
 
-L.control.particleTracking = function (geometry, data, datetime, options) {
-  return new L.Control.ParticleTracking(geometry, data, datetime, options);
+L.control.particleTracking = function (geometry, data, datetime, times, options) {
+  return new L.Control.ParticleTracking(geometry, data, datetime, times, options);
 };

@@ -8,6 +8,14 @@
     overflow: hidden;
 }
 
+.main .map .layer-map .leaflet-top {
+    top: 70px;
+}
+
+.main .map .layer-map .leaflet-left {
+    left: 8px;
+}
+
 .main .map .layer-map .map-loading {
     position: absolute;
     z-index: 9999;
@@ -818,7 +826,7 @@
     }
 
     .main .map .layer-map .map-sidebar .sidebar-body .sidebar-content.closed {
-        bottom: -70%;
+        bottom: -75%;
     }
 
     .main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .sidebar-content-close {

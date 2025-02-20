@@ -5,6 +5,7 @@ import refreshIcon from "../../../img/refresh.png";
 import Translate from "../../../translations.json";
 import CONFIG from "../../../config.json";
 import {
+  filterImages,
   formatAPIDate,
   formatDateLong,
   formatDateTime,
@@ -775,8 +776,7 @@ class Tiff extends Component {
       coverage,
       wms,
     } = this.props.options;
-    var { available, image, includeDates } =
-      layer.sources[layer.source].metadata;
+    var { available, image } = layer.sources[layer.source].metadata;
     var { unit } = this.props.layer;
     const locale = {
       localize: {
@@ -788,10 +788,12 @@ class Tiff extends Component {
       },
     };
     var months = Translate.axis[language].months;
-    includeDates = includeDates ? includeDates : [];
+    var includeDates = [];
     var images = [];
     if (available && image) {
-      this.addCssRules(image.time, available);
+      let show = filterImages(available, coverage, []);
+      setTimeout(() => this.addCssRules(image.time, show), 100);
+      includeDates = Object.values(show).map((m) => m.time);
       let day = formatSencastDay(image.time);
       if (day in available) images = available[day].images;
     }

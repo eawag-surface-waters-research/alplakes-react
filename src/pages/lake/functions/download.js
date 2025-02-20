@@ -101,6 +101,7 @@ export const downloadData = async (
   period,
   datetime,
   depth,
+  mapId,
   initial
 ) => {
   const functions = {
@@ -117,6 +118,7 @@ export const downloadData = async (
         period,
         datetime,
         depth,
+        mapId,
         initial
       ));
       if (data) {
@@ -149,6 +151,7 @@ const threedDownload = async (
   period,
   datetime,
   depth,
+  mapId,
   initial
 ) => {
   const source = layer.sources[layer.source];
@@ -171,6 +174,7 @@ const threedDownload = async (
     source.metadata.height,
     initial
   );
+  layer.displayOptions.unit = layer.unit;
   layer.displayOptions.min = data[layer.parameter].min;
   layer.displayOptions.max = data[layer.parameter].max;
   layer.displayOptions.dataMin = data[layer.parameter].min;
@@ -203,11 +207,22 @@ const threedDownload = async (
       options: {
         data: data[layer.parameter].data[index],
         geometry: data.geometry,
-        displayOptions: {
-          min: data[layer.parameter].min,
-          max: data[layer.parameter].max,
-          unit: layer.unit,
-        },
+        displayOptions: layer.displayOptions,
+      },
+    });
+  }
+  if (layer.display === "particles") {
+    updates.push({
+      event: "addLayer",
+      type: "particles",
+      id: layer.id,
+      options: {
+        id: mapId,
+        data: data[layer.parameter].data,
+        datetime: datetime.getTime(),
+        times: data[layer.parameter].time.map((t) => t.getTime()),
+        geometry: data.geometry,
+        displayOptions: layer.displayOptions,
       },
     });
   }
@@ -220,6 +235,7 @@ const satelliteDownload = async (
   period,
   datetime,
   depth,
+  mapId,
   initial
 ) => {
   layer.displayOptions["unit"] = layer.unit;
@@ -241,6 +257,7 @@ const measurementsDownload = async (
   period,
   datetime,
   depth,
+  mapId,
   initial
 ) => {
   var { data } = await axios.get(

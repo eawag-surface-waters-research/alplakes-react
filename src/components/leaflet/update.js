@@ -34,6 +34,7 @@ export const update = async (
       geojson: addGeoJson,
       raster: addRaster,
       vector: addVectorField,
+      particles: addParticles,
     },
     updateLayer: {},
   };
@@ -147,6 +148,23 @@ const addVectorField = async (map, layers, id, options, language) => {
     options.data,
     displayOptions
   ).addTo(map);
+};
+
+const addParticles = async (map, layers, id, options, language) => {
+  var defaultOptions = {
+    opacity: 1,
+  };
+  var displayOptions = { ...defaultOptions, ...options.displayOptions };
+  displayOptions.id = options.id;
+  layers[id]["particles"] = L.control
+    .particleTracking(
+      options.geometry,
+      options.data,
+      options.datetime,
+      options.times,
+      displayOptions
+    )
+    .addTo(map);
 };
 
 const addTiff = async (map, layers, id, options, language) => {
@@ -296,6 +314,8 @@ export const setPlayDatetime = (layers, datetime, period, data) => {
         });
       } else if (plot_type === "labels") {
         updateLabels(layers[key][plot_type], layers[key]["raster"]);
+      } else if (plot_type === "particles") {
+        layers[key][plot_type].update(datetime, {});
       } else {
         layers[key][plot_type].update(data[key][i0], {});
       }
