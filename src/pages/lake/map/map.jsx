@@ -68,6 +68,8 @@ class Map extends Component {
       let active_layers = layers.filter((l) => l.active);
       if (active_layers.length > 0 && window.innerWidth > 500) {
         selection = add[add.length - 1];
+      } else {
+        selection = false;
       }
       window.history.replaceState(
         {},
@@ -104,7 +106,8 @@ class Map extends Component {
       }
       var selection = false;
       let active_layers = layers.filter((l) => l.active);
-      if (active_layers.length > 0) selection = active_layers[0].id;
+      if (active_layers.length > 0 && window.innerWidth > 500)
+        selection = active_layers[0].id;
       window.history.replaceState(
         {},
         "",
