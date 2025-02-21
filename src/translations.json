@@ -335,6 +335,18 @@
     "FR": "Cliquez pour en savoir plus",
     "IT": "Fare clic per ulteriori informazioni"
   },
+  "availableLayers": {
+    "EN": "Available Layers",
+    "DE": "Verfügbare Ebenen",
+    "FR": "Couches disponibles",
+    "IT": "Livelli disponibili"
+  },
+  "noSettings": {
+    "EN": "No settings available",
+    "DE": "Keine Einstellungen verfügbar",
+    "FR": "Aucun paramètre disponible",
+    "IT": "Nessuna impostazione disponibile"
+  },
   "satelliteDescription": {
     "EN": "Filter for lakes with satellite derived products",
     "DE": "Filtern für Seen mit satellitengestützten Produkten",

@@ -32,7 +32,7 @@ export const update = async (
   const functions = {
     addLayer: {
       tiff: addTiff,
-      geojson: addGeoJson,
+      points: addPoints,
       raster: addRaster,
       vector: addVectorField,
       particles: addParticles,
@@ -315,8 +315,9 @@ const updateWms = async (map, layers, id, options, language) => {
   }
 };
 
-const addGeoJson = async (map, layers, id, options, language) => {
-  let palette = COLORS["vik"].map((c) => {
+const addPoints = async (map, layers, id, options, language) => {
+  console.log(options);
+  let palette = COLORS[options.displayOptions.paletteName].map((c) => {
     return { color: [c[0], c[1], c[2]], point: c[3] };
   });
   const minDate = new Date();
@@ -397,7 +398,7 @@ const addGeoJson = async (map, layers, id, options, language) => {
       }</a>`
     );
   }
-  layers[id]["geojson"] = layer;
+  layers[id]["points"] = layer;
 };
 
 const addPlay = (options, addControls) => {

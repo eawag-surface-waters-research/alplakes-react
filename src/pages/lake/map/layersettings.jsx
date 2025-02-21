@@ -1046,7 +1046,7 @@ class Particles extends Component {
 
 class LayerSettings extends Component {
   render() {
-    var { layer } = this.props;
+    var { layer, language } = this.props;
     var type = layer.display;
     if (type === "raster") {
       return (
@@ -1069,7 +1069,9 @@ class LayerSettings extends Component {
         />
       );
     } else {
-      return <div className="layer-settings"></div>;
+      return (
+        <div className="layer-settings subtle">{Translate.noSettings[language]}</div>
+      );
     }
   }
 }

@@ -181,6 +181,10 @@
     text-align: left;
 }
 
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .layer-settings.subtle {
+    color: var(--background-subtle-font-color);
+}
+
 .main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .layer-settings .images {
     margin: 16px 0 16px 0;
 }
@@ -272,6 +276,7 @@
 .main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .layer-settings .custom-css-datepicker {
     width: 100%;
     text-align: center;
+    padding-left: 12px;
 }
 
 .main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .layer-settings .custom-css-datepicker .react-datepicker {
@@ -881,12 +886,21 @@
     }
 
     .main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .layer-settings {
-        padding: 8px;
+        padding: 13px;
         margin-top: 16px;
-        height: calc(100% - 56px);
+        height: calc(100% - 69px);
         overflow: auto;
         border-bottom: 1px solid var(--border-color);
-        border-radius: 0;
+        border-radius: 12px 12px 0 0;
+        background-color: var(--select-color);
+    }
+
+    .main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .layer-settings .custom-css-datepicker .react-datepicker {
+        background-color: var(--select-color);
+    }
+
+    .main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .layer-settings .custom-css-datepicker .react-datepicker .react-datepicker__header {
+        background-color: var(--select-color);
     }
 
     .main .map .layer-map .add-layers {

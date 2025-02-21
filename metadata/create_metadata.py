@@ -48,6 +48,7 @@ one_dimensional_list = []
 three_dimensional_list = []
 
 for lake in metadata:
+
     home = {"key": lake["key"],
             "name": lake["name"],
             "area": lake["area"],
@@ -59,6 +60,7 @@ for lake in metadata:
             }
     key = lake["key"]
     data = {"key": key, "name": lake["name"], "properties": {"parameters": {}}}
+    layers = {"key": key, "name": lake["name"], "layers": []}
 
 
     # Lake Properties
@@ -66,6 +68,7 @@ for lake in metadata:
         if p in ["area", "ave_depth", "max_depth", "elevation", "type", "volume", "residence_time", "mixing_regime", "geothermal_flux", "trophic_state", "sediment_oxygen_uptake_rate"]:
             data["properties"]["parameters"][p] = lake[p]
     data["properties"]["bounds"] = func.make_bounds(shape, key)
+    layers["bounds"] = data["properties"]["bounds"]
     bathymetry = func.make_bathymetry(lake, datalakes_lakes)
     if len(bathymetry) > 0:
         data["properties"]["bathymetry"] = bathymetry
@@ -107,6 +110,7 @@ for lake in metadata:
             "parameters": ["temperature", "velocity"],
             "labels": lake["3D"]["3D_temperature"]
         }}
+        layers["layers"].extend(func.model_layers(lake["key"]))
 
 
     # One Dimensional Model
@@ -175,7 +179,8 @@ for lake in metadata:
 
     # Measurement Data
     if "current_temperature" in lake and lake["current_temperature"] == True:
-        data["measurements"] = {"water_temperature": {"displayOptions": {"min": 5,"max": 25}}}
+        data["measurements"] = {"water_temperature": {"displayOptions": {"min": 5,"max": 25,"paletteName": "Bafu Continuous"}}}
+        layers["layers"].extend(func.temperature_layers(lake["key"]))
     if key in water_levels:
         if "measurements" not in data:
             data["measurements"] = {}
@@ -199,6 +204,7 @@ for lake in metadata:
     # Satellite data
     if key in satellite:
         satellite_data = []
+        layers["layers"].extend(func.satellite_layers(lake["key"], satellite[key]))
         for sat in satellite_metadata:
             sm = []
             for source in sat["sources"]:
@@ -215,11 +221,21 @@ for lake in metadata:
 
     with open('files/{}.json'.format(key), 'w') as json_file:
         json_file.write(json.dumps(data, separators=(',', ':'), ensure_ascii=False))
+    with open('files/{}_layers.json'.format(key), 'w') as json_file:
+        json_file.write(json.dumps(layers, separators=(',', ':'), ensure_ascii=False))
     if upload:
         s3.upload_file(
             'files/{}.json'.format(key),
             'alplakes-eawag',
             '{}/{}.json'.format(bucket_folder, key),
+            ExtraArgs={
+                'ContentType': 'application/json',
+            },
+        )
+        s3.upload_file(
+            'files/{}_layers.json'.format(key),
+            'alplakes-eawag',
+            '{}/{}_layers.json'.format(bucket_folder, key),
             ExtraArgs={
                 'ContentType': 'application/json',
             },

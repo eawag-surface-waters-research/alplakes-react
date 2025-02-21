@@ -1,7 +1,6 @@
 import re
 import requests
 
-
 def make_bounds(shape, key):
     s = next((d for d in shape["features"] if "key" in d["properties"]
               and d["properties"]["key"] == key), None)
@@ -11,7 +10,6 @@ def make_bounds(shape, key):
     min_lat = min(coord[1] for coord in coordinates)
     max_lat = max(coord[1] for coord in coordinates)
     return [[min_lat, min_lon],[max_lat, max_lon]]
-
 
 def url_safe(string):
     clean = [
@@ -39,7 +37,6 @@ def url_safe(string):
         string = string.replace(edit['b'], edit['a'])
 
     return re.sub(r'[^a-zA-Z]', '', string).lower()
-
 
 def make_insitu(datalakes_ids, datasets, datalakes_parameters):
     insitu = []
@@ -70,7 +67,6 @@ def make_insitu(datalakes_ids, datasets, datalakes_parameters):
                 })
     return insitu
 
-
 def make_bathymetry(data, datalakes_lakes):
     bathymetry = []
     if "datalakes_id" in data:
@@ -99,437 +95,144 @@ def make_bathymetry(data, datalakes_lakes):
         })
     return bathymetry
 
+def model_layers(key):
+    return [
+    {
+      "id": "3D_temperature",
+      "type": "threed",
+      "playControls": True,
+      "depth": True,
+      "name": "temperature",
+      "parameter": "temperature",
+      "unit": "°C",
+      "display": "raster",
+      "source": "alplakes_delft3d",
+      "summaryGraph": "threed_linegraph",
+      "displayOptions": {
+        "raster": True,
+        "paletteName": "vik",
+        "zIndex": 1,
+        "interpolate": True
+      },
+      "sources": {
+        "alplakes_delft3d": {
+          "model": "delft3d-flow",
+          "key": key,
+          "description": {
+            "EN": "Water temperatures are hindcasted and forecasted using the 3D hydrodynamic model Delft3D-flow. On sunny afternoons, shoreline temperatures can typically be 1-2°C warmer than model predictions due to lake models' large horizontal grid size. Meteorological forcing data is produced from Meteoswiss products, hindcasts use the ICON 1-day deterministic product and forecasts use the ICON 5-day ensemble forecast. Where river inputs are used this data is sourced from Bafu. This model is calibrated using in-situ measurements collected by several 3rd parties.",
+            "DE": "Die Wassertemperaturen werden mit dem 3D-hydrodynamischen Modell Delft3D-flow rückwärts berechnet und prognostiziert. An sonnigen Nachmittagen können die Temperaturen an der Küste aufgrund der großen horizontalen Rastergröße der Seemodelle typischerweise 1-2 °C wärmer sein als in den Modellvorhersagen. Meteorologische Antriebsdaten werden aus Meteoswiss-Produkten erzeugt, Rückprognosen verwenden das deterministische 1-Tages-Produkt ICON und Prognosen verwenden die 5-Tages-Ensembleprognose ICON. Wo Flusseingänge verwendet werden, stammen diese Daten von Bafu. Dieses Modell wird mithilfe von vor Ort durchgeführten Messungen kalibriert, die von mehreren Drittanbietern durchgeführt werden.",
+            "FR": "Les températures de l'eau sont calculées et prévues à l'aide du modèle hydrodynamique 3D Delft3D-flow. Lors des après-midi ensoleillés, les températures du littoral peuvent généralement être de 1 à 2 °C plus élevées que les prévisions du modèle en raison de la grande taille de la grille horizontale des modèles de lacs. Les données de forçage météorologique sont produites à partir des produits Meteoswiss, les prévisions rétrospectives utilisent le produit déterministe ICON sur 1 jour et les prévisions utilisent la prévision d'ensemble ICON sur 5 jours. Lorsque des données fluviales sont utilisées, ces données proviennent de Bafu. Ce modèle est calibré à l'aide de mesures in situ collectées par plusieurs tiers.",
+            "IT": "Le temperature dell'acqua sono retrospettive e previste utilizzando il modello idrodinamico 3D Delft3D-flow. Nei pomeriggi soleggiati, le temperature della costa possono essere in genere più calde di 1-2 °C rispetto alle previsioni del modello a causa delle grandi dimensioni della griglia orizzontale dei modelli lacustri. I dati di forzatura meteorologica sono prodotti da prodotti Meteoswiss, le retrospettive utilizzano il prodotto deterministico ICON a 1 giorno e le previsioni utilizzano la previsione d'insieme ICON a 5 giorni. Laddove vengono utilizzati input fluviali, questi dati provengono da Bafu. Questo modello è calibrato utilizzando misurazioni in situ raccolte da diverse terze parti."
+          }
+        }
+      }
+    },
+    {
+      "id": "3D_currents",
+      "type": "threed",
+      "playControls": True,
+      "depth": True,
+      "name": "velocity",
+      "parameter": "velocity",
+      "unit": "m/s",
+      "display": "current",
+      "source": "alplakes_delft3d",
+      "displayOptions": {
+        "raster": False,
+        "streamlines": False,
+        "vector": True,
+        "paths": 5000,
+        "streamlinesColor": "#ffffff",
+        "arrowsColor": "#000000",
+        "width": 0.5,
+        "fade": 0.97,
+        "duration": 10,
+        "maxAge": 80,
+        "velocityScale": 0.01,
+        "opacity": 0.8,
+        "zIndex": 3,
+        "paletteName": "Thermal"
+      },
+      "sources": {
+        "alplakes_delft3d": {
+          "model": "delft3d-flow",
+          "key": key,
+          "description": {
+            "EN": "Lake currents are hindcasted and forecasted using the 3D hydrodynamic model Delft3D-flow. Meteorological forcing data is produced from Meteoswiss products, hindcasts use the ICON 1-day deterministic product and forecasts use the ICON 5-day ensemble forecast. Where river inputs are used this data is sourced from Bafu. This model is calibrated using in-situ measurements collected by several 3rd parties.",
+            "DE": "Seeströmungen werden mit dem 3D-hydrodynamischen Modell Delft3D-flow rückwärts und vorhergesagt. Meteorologische Antriebsdaten werden aus Meteoswiss-Produkten erzeugt, Rückwärtsprognosen verwenden das deterministische 1-Tages-Produkt ICON und Prognosen verwenden die 5-Tages-Ensembleprognose ICON. Wo Flusseingänge verwendet werden, stammen diese Daten vom Bafu. Dieses Modell wird mithilfe von In-situ-Messungen kalibriert, die von mehreren Drittparteien durchgeführt werden.",
+            "FR": "Les courants lacustres sont anticipés et prévus à l'aide du modèle hydrodynamique 3D Delft3D-flow. Les données de forçage météorologique sont produites à partir des produits Meteoswiss, les prévisions rétrospectives utilisent le produit déterministe ICON sur 1 jour et les prévisions utilisent la prévision d'ensemble ICON sur 5 jours. Lorsque des données fluviales sont utilisées, ces données proviennent de Bafu. Ce modèle est calibré à l'aide de mesures in situ collectées par plusieurs tiers.",
+            "IT": "Le correnti del lago sono hindcast e previste utilizzando il modello idrodinamico 3D Delft3D-flow. I dati di forzatura meteorologica sono prodotti da prodotti Meteoswiss, gli hindcast utilizzano il prodotto deterministico ICON a 1 giorno e le previsioni utilizzano la previsione d'insieme ICON a 5 giorni. Laddove vengono utilizzati input fluviali, questi dati provengono da Bafu. Questo modello è calibrato utilizzando misurazioni in situ raccolte da diverse terze parti."
+          }
+        }
+      }
+    },
+    {
+      "id": "3D_thermocline",
+      "type": "threed",
+      "playControls": True,
+      "depth": False,
+      "name": "thermocline",
+      "parameter": "thermocline",
+      "unit": "m",
+      "display": "raster",
+      "source": "alplakes_delft3d",
+      "displayOptions": {
+        "raster": True,
+        "paletteName": "navia",
+        "zIndex": 2,
+        "interpolate": True
+      },
+      "sources": {
+        "alplakes_delft3d": {
+          "model": "delft3d-flow",
+          "key": key,
+          "description": {
+            "EN": "Thermocline depth is calculated using Pylake and the 3D hydrodynamic model Delft3D-flow. Meteorological forcing data is produced from Meteoswiss products, hindcasts use the ICON  1-day deterministic product and forecasts use the ICON 5-day ensemble forecast. Where river inputs are used this data is sourced from Bafu. This model is calibrated using in-situ measurements collected by several 3rd parties.",
+            "DE": "Die Thermoklinentiefe wird mit Pylake und dem 3D-hydrodynamischen Modell Delft3D-flow berechnet. Meteorologische Antriebsdaten werden aus Meteoswiss-Produkten erzeugt, Rückprognosen verwenden das deterministische 1-Tages-Produkt von ICON und Prognosen verwenden die 5-Tages-Ensembleprognose von ICON. Wo Flusseingänge verwendet werden, stammen diese Daten von Bafu. Dieses Modell wird mithilfe von In-situ-Messungen kalibriert, die von mehreren Drittanbietern durchgeführt werden.",
+            "FR": "La profondeur de la thermocline est calculée à l'aide de Pylake et du modèle hydrodynamique 3D Delft3D-flow. Les données de forçage météorologique sont produites à partir des produits Meteoswiss, les prévisions rétrospectives utilisent le produit déterministe ICON à 1 jour et les prévisions utilisent les prévisions d'ensemble ICON à 5 jours. Lorsque des données fluviales sont utilisées, ces données proviennent de Bafu. Ce modèle est calibré à l'aide de mesures in situ collectées par plusieurs tiers.",
+            "IT": "La profondità della termoclina è calcolata utilizzando Pylake e il modello idrodinamico 3D Delft3D-flow. I dati di forzatura meteorologica sono prodotti da prodotti Meteoswiss, gli hindcast utilizzano il prodotto deterministico ICON a 1 giorno e le previsioni utilizzano la previsione ensemble ICON a 5 giorni. Laddove vengono utilizzati input fluviali, questi dati provengono da Bafu. Questo modello è calibrato utilizzando misurazioni in situ raccolte da diverse terze parti."
+          }
+        }
+      }
+    },
+    {
+      "id": "3D_particles",
+      "type": "threed",
+      "playControls": True,
+      "depth": True,
+      "name": "particles",
+      "parameter": "velocity",
+      "unit": "m/s",
+      "display": "particles",
+      "source": "alplakes_delft3d",
+      "displayOptions": {
+        "paths": 10,
+        "spread": 1500,
+        "zIndex": 4,
+        "particles": True
+      },
+      "sources": {
+        "alplakes_delft3d": {
+          "model": "delft3d-flow",
+          "key": key,
+          "description": {
+            "EN": "Track particles using the Alplakes 3D hydrodynamic model. Click the particles button (top left) to add some particles. Press play to see where the particles go.",
+            "DE": "Verfolgen Sie Partikel mithilfe des hydrodynamischen 3D-Modells von Alplakes. Klicken Sie auf die Schaltfläche „Partikel“ (oben links), um einige Partikel hinzuzufügen. Drücken Sie die Wiedergabetaste, um zu sehen, wohin die Partikel gehen.",
+            "FR": "Suivez les particules à l'aide du modèle hydrodynamique 3D Alplakes. Cliquez sur le bouton Particules (en haut à gauche) pour ajouter des particules. Appuyez sur Lecture pour voir où vont les particules.",
+            "IT": "Traccia le particelle usando il modello idrodinamico 3D di Alplakes. Fai clic sul pulsante delle particelle (in alto a sinistra) per aggiungere alcune particelle. Premi play per vedere dove vanno le particelle."
+          }
+        }
+      }
+    }]
 
-def make_available(satellite, threed, oned):
-    available = []
-    if threed:
-        available.append({
-            "url": "https://medium.com/@runnalls.james/operational-3d-lake-modeling-with-delft3d-2f164859e753",
-            "name": "Delft3D Model",
-            "live": True,
-            "parameters": ["Water Temperature", "Current", "Thermocline"],
-            "start": 2019,
-            "end": "5 day forecast",
-            "type": "alplakes_hydrodynamic"
-        })
-    if oned:
-        available.append({
-            "url": "https://medium.com/@runnalls.james/operational-1d-lake-modeling-with-simstrat-dc34964bfe08",
-            "name": "Simstrat 1D Model",
-            "live": True,
-            "parameters": ["Water Temperature", "Oyxgen", "Ice Cover"],
-            "start": 1981,
-            "end": "5 day forecast",
-            "type": "simstrat"
-        })
-    if satellite:
-        available.append({
-            "url": "https://medium.com/@runnalls.james/water-quality-products-from-remote-sensing-data-using-sencast-e48449bd6aa8",
-            "name": "Sentinel Satellite Products",
-            "live": True,
-            "parameters": ["Chlorophyll A", "Secchi Depth", "Turbidity"],
-            "start": 2016,
-            "end": "Now",
-            "type": "sencast_tiff"
-        })
-    return available
-
-
-def make_modules(data, sd):
-    modules = []
-    if "alplakes" in data:
-        modules.append({
-            "id": "threed_map",
-            "title": {
-                "EN": "Temperature and Currents",
-                "DE": "Temperatur und Strömungen",
-                "FR": "Température et courants",
-                "IT": "Temperature e Correnti"
-            },
-            "subtitle": {
-                "EN": "3D Model",
-                "DE": "3D-Modell",
-                "FR": "modèle 3D",
-                "IT": "Modello 3D"
-            },
-            "component": "map",
-            "labels": {
-                "topRight": "forecast5"
-            },
-            "defaults": ["3D_currents", "3D_temperature"]
-        })
-    if "simstrat" not in data or data["simstrat"] != False:
-        modules.append({
-            "id": "graph_conditions",
-            "title": {
-                "EN": "Average surface temperature",
-                "DE": "Durchschnittliche Oberflächentemperatur",
-                "FR": "Température moyenne de surface",
-                "IT": "Temperatura superficiale media"
-            },
-            "subtitle": {
-                "EN": "1D Model",
-                "DE": "1D-Modell",
-                "FR": "modèle 1D",
-                "IT": "Modello 1D"
-            },
-            "component": "graph",
-            "labels": {
-                "topLeft": "simstratAverage",
-                "topRight": "forecast5"
-            },
-            "defaults": ["temperature_linegraph"]
-        })
-    if sd and "sentinel3" in sd and "chla" in sd["sentinel3"]:
-        modules.append({
-            "id": "satellite_chla",
-            "title": {
-                "EN": "Chlorophyll A",
-                "DE": "Chlorophyll A",
-                "FR": "Chlorophylle A",
-                "IT": "Clorofilla A"
-            },
-            "subtitle": {
-                "EN": "Remote Sensing Product",
-                "DE": "Fernerkundungsprodukt",
-                "FR": "Produit de télédétection",
-                "IT": "Prodotto di telerilevamento"
-            },
-            "component": "map",
-            "labels": {
-                "topRight": "satelliteDatetime",
-                "topLeft": "satelliteAverage"
-            },
-            "defaults": ["satellite_chlorophyll"]
-        })
-    if sd and ("sentinel3" in sd and "Zsd_lee" in sd["sentinel3"]):
-        # or ("sentinel2" in sd and "Z490" in sd["sentinel2"])
-        modules.append({
-            "id": "satellite_secchi",
-            "title": {
-                "EN": "Secchi Depth",
-                "DE": "Secchi Tiefe",
-                "FR": "Profondeur de Secchi",
-                "IT": "Profondità Secchi"
-            },
-            "subtitle": {
-                "EN": "Remote Sensing Product",
-                "DE": "Fernerkundungsprodukt",
-                "FR": "Produit de télédétection",
-                "IT": "Prodotto di telerilevamento"
-            },
-            "component": "map",
-            "labels": {
-                "topRight": "satelliteDatetime",
-                "topLeft": "satelliteAverage"
-            },
-            "defaults": ["satellite_secchi"]
-        })
-    if sd and ("sentinel3" in sd and "tsm_binding754" in sd["sentinel3"]):
-        # or ("sentinel2" in sd and "tsm_dogliotti665" in sd["sentinel2"])
-        modules.append({
-            "id": "satellite_turbidity",
-            "title": {
-                "EN": "Turbidity",
-                "DE": "Trübung",
-                "FR": "Turbidité",
-                "IT": "Torbidità"
-            },
-            "subtitle": {
-                "EN": "Remote Sensing Product",
-                "DE": "Fernerkundungsprodukt",
-                "FR": "Produit de télédétection",
-                "IT": "Prodotto di telerilevamento"
-            },
-            "component": "map",
-            "labels": {
-                "topRight": "satelliteDatetime",
-                "topLeft": "satelliteAverage"
-            },
-            "defaults": ["satellite_turbidity"]
-        })
-    if sd and ("collection" in sd and "ST" in sd["collection"]):
-        modules.append({
-            "id": "satellite_temperature",
-            "title": {
-                "EN": "Surface Temperature",
-                "DE": "Oberflächentemperatur",
-                "FR": "Température de surface",
-                "IT": "Temperatura superficiale"
-            },
-            "subtitle": {
-                "EN": "Remote Sensing Product",
-                "DE": "Fernerkundungsprodukt",
-                "FR": "Produit de télédétection",
-                "IT": "Prodotto di telerilevamento"
-            },
-            "component": "map",
-            "labels": {
-                "topRight": "satelliteDatetime",
-                "topLeft": "satelliteAverage"
-            },
-            "defaults": ["satellite_temperature"]
-        })
-    if "alplakes" in data:
-        modules.append({
-            "id": "threed_thermocline",
-            "title": {
-                "EN": "Thermocline",
-                "DE": "Thermokline",
-                "FR": "Thermocline",
-                "IT": "Termoclino"
-            },
-            "subtitle": {
-                "EN": "3D Model",
-                "DE": "3D-Modell",
-                "FR": "modèle 3D",
-                "IT": "Modello 3D"
-            },
-            "component": "map",
-            "labels": {
-                "topRight": "forecast5"
-            },
-            "defaults": ["3D_thermocline"]
-        })
-    if "simstrat" not in data or data["simstrat"] != False:
-        modules.append({
-            "id": "graph_depthtime",
-            "title": {
-                "EN": "Average Temperature",
-                "DE": "Durchschnittstemperatur",
-                "FR": "Température moyenne",
-                "IT": "Temperatura media"
-            },
-            "subtitle": {
-                "EN": "1D Model",
-                "DE": "1D-Modell",
-                "FR": "modèle 1D",
-                "IT": "Modello 1D"
-            },
-            "component": "graph",
-            "defaults": ["temperature_heatmap"]
-        })
-        modules.append({
-            "id": "graph_historic",
-            "title": {
-                "EN": "Surface annual course",
-                "DE": "Oberflächenjahresverlauf",
-                "FR": "Cours annuel de surface",
-                "IT": "Corso annuale di superficie"
-            },
-            "subtitle": {
-                "EN": "1D Model",
-                "DE": "1D-Modell",
-                "FR": "modèle 1D",
-                "IT": "Modello 1D"
-            },
-            "component": "graph",
-            "defaults": ["temperature_doy"]
-        })
-    if "current_temperature" in data:
-        modules.insert(1, {
-            "id": "current_temperature_points",
-            "title": {
-                "EN": "Current Temperature",
-                "DE": "Aktuelle Temperatur",
-                "FR": "Température actuelle",
-                "IT": "Temperatura attuale"
-            },
-            "subtitle": {
-                "EN": "Measurements",
-                "DE": "Messungen",
-                "FR": "Des mesures",
-                "IT": "Misure"
-            },
-            "component": "map",
-            "defaults": ["current_temperature"]
-        })
-    return modules
-
-
-def make_layers(data, sd):
-    layers = []
-    if "alplakes" in data:
-        layers = layers + [
-            {
-                "id": "3D_temperature",
-                "type": "threed",
-                "playControls": True,
-                "depth": True,
-                "parameter": "temperature",
-                "unit": "°C",
-                "display": "raster",
-                "source": "alplakes_delft3d",
-                "summaryGraph": "threed_linegraph",
-                "displayOptions": {
-                    "paletteName": "vik",
-                    "zIndex": 1,
-                    "labels": True,
-                    "interpolate": True
-                },
-                "sources": {
-                    "alplakes_delft3d": {
-                        "type": "alplakes_hydrodynamic",
-                        "model": "delft3d-flow",
-                        "start": -7,
-                        "description": "Water temperatures are hindcasted and forecasted using the 3D hydrodynamic model Delft3D-flow. On sunny afternoons, shoreline temperatures can typically be 1-2°C warmer than model predictions due to the large horizontal grid size used in lake models. Meteorological forcing data is produced from Meteoswiss products, hincasts use the Cosmo-1e 1 day deterministic product (VNXQ34) and forecasts use the Cosmo-2e 5 day ensemble forecast (VNXZ32). Where rivers inputs are used this data is sourced from Bafu. This model is calibrated using in-situ measuresuments collected by a number of 3rd parties.",
-                        "learnMore": "https://medium.com/@runnalls.james/operational-3d-lake-modeling-with-delft3d-2f164859e753",
-                        "tags": ["5 day forecast", "2019 - Now"]
-                    }
-                },
-                "labels": data["alplakes"]["3D_temperature"]
-            },
-            {
-                "id": "3D_currents",
-                "type": "threed",
-                "playControls": True,
-                "depth": True,
-                "parameter": "velocity",
-                "unit": "m/s",
-                "display": "current",
-                "source": "alplakes_delft3d",
-                "displayOptions": {
-                    "raster": False,
-                    "streamlines": False,
-                    "arrows": True,
-                    "vector": True,
-                    "paths": 5000,
-                    "streamlinesColor": "#ffffff",
-                    "arrowsColor": "#000000",
-                    "width": 0.5,
-                    "fade": 0.97,
-                    "duration": 10,
-                    "maxAge": 80,
-                    "velocityScale": 0.01,
-                    "opacity": 0.8,
-                    "zIndex": 3,
-                    "paletteName": "Thermal"
-                },
-                "sources": {
-                    "alplakes_delft3d": {
-                        "type": "alplakes_hydrodynamic",
-                        "model": "delft3d-flow",
-                        "start": -7,
-                        "description": "Lake currents are hindcasted and forecasted using the 3D hydrodynamic model Delft3D-flow. Meteorological forcing data is produced from Meteoswiss products, hincasts use the Cosmo-1e 1 day deterministic product (VNXQ34) and forecasts use the Cosmo-2e 5 day ensemble forecast (VNXZ32). Where rivers inputs are used this data is sourced from Bafu. This model is calibrated using in-situ measuresuments collected by a number of 3rd parties.",
-                        "learnMore": "https://medium.com/@runnalls.james/operational-3d-lake-modeling-with-delft3d-2f164859e753",
-                        "tags": ["5 day forecast", "2019 - Now"]
-                    }
-                }
-            },
-            {
-                "id": "3D_thermocline",
-                "type": "threed",
-                "playControls": True,
-                "depth": False,
-                "parameter": "thermocline",
-                "unit": "m",
-                "display": "raster",
-                "source": "alplakes_delft3d",
-                "summaryGraph": "threed_linegraph",
-                "displayOptions": {
-                    "paletteName": "navia",
-                    "zIndex": 2,
-                    "labels": True,
-                    "interpolate": True
-                },
-                "sources": {
-                    "alplakes_delft3d": {
-                        "type": "alplakes_hydrodynamic",
-                        "model": "delft3d-flow",
-                        "start": -7,
-                        "description": "Thermocline depth calculated using Pylake and the 3D hydrodynamic model Delft3D-flow. Meteorological forcing data is produced from Meteoswiss products, hincasts use the Cosmo-1e 1 day deterministic product (VNXQ34) and forecasts use the Cosmo-2e 5 day ensemble forecast (VNXZ32). Where rivers inputs are used this data is sourced from Bafu. This model is calibrated using in-situ measuresuments collected by a number of 3rd parties.",
-                        "learnMore": "https://medium.com/@runnalls.james/operational-3d-lake-modeling-with-delft3d-2f164859e753",
-                        "tags": ["5 day forecast", "2019 - Now"]
-                    }
-                },
-                "labels": data["alplakes"]["3D_thermocline"]
-            },
-            {
-                "id": "3D_particles",
-                "type": "threed",
-                "playControls": True,
-                "depth": True,
-                "parameter": "particles",
-                "unit": "m/s",
-                "display": "particles",
-                "source": "alplakes_delft3d",
-                "displayOptions": {
-                    "paths": 10,
-                    "spread": 1500,
-                    "zIndex": 4
-                },
-                "sources": {
-                    "alplakes_delft3d": {
-                        "type": "alplakes_particles",
-                        "model": "delft3d-flow",
-                        "start": -7,
-                        "description": "Track particles using the alplakes 3D hydrodynamic model. Click the particles button (top left) to add some particles. Press play to see where the particles go.",
-                        "learnMore": "https://medium.com/@runnalls.james/operational-3d-lake-modeling-with-delft3d-2f164859e753",
-                        "tags": ["Interactive", "2019 - Now"]
-                    }
-                }
-            },
-            {
-                "id": "3D_transect",
-                "type": "threed",
-                "playControls": False,
-                "depth": False,
-                "parameter": "transect",
-                "unit": "°C",
-                "display": "transect",
-                "source": "alplakes_delft3d",
-                "summaryGraph": "transect_plot",
-                "displayOptions": {
-                    "paletteName": "vik",
-                    "zIndex": 11,
-                    "variable": "temperature",
-                    "thresholdStep": 200
-                },
-                "sources": {
-                    "alplakes_delft3d": {
-                        "type": "alplakes_transect",
-                        "model": "delft3d-flow",
-                        "variables": ["temperature", "u", "v"],
-                        "description": "Explore the inner workings of the lake. The transect tool allows you to cut a slice through the lake and visualise the spatial variations.",
-                        "learnMore": "https://medium.com/@runnalls.james/operational-3d-lake-modeling-with-delft3d-2f164859e753",
-                        "tags": ["Interactive", "2019 - Now"]
-                    }
-                }
-            },
-            {
-                "id": "3D_profile",
-                "type": "threed",
-                "playControls": False,
-                "depth": False,
-                "parameter": "profile",
-                "unit": "°C",
-                "display": "profile",
-                "source": "alplakes_delft3d",
-                "summaryGraph": "profile_plot",
-                "displayOptions": {
-                    "paletteName": "vik",
-                    "zIndex": 11,
-                    "variable": "temperature",
-                    "thresholdStep": 200
-                },
-                "sources": {
-                    "alplakes_delft3d": {
-                        "type": "alplakes_profile",
-                        "model": "delft3d-flow",
-                        "variables": ["temperature", "u", "v"],
-                        "description": "Explore the inner workings of the lake. The profile tool allows you to visualise the temporal variations at a user selected point.",
-                        "learnMore": "https://medium.com/@runnalls.james/operational-3d-lake-modeling-with-delft3d-2f164859e753",
-                        "tags": ["Interactive", "2019 - Now"]
-                    }
-                }
-            }
-        ]
-    if "current_temperature" in data:
-        layers.append({
+def temperature_layers(key):
+    return [
+        {
             "id": "current_temperature",
             "type": "measurements",
             "playControls": False,
             "depth": False,
+            "name": "temperature",
             "parameter": "temperature",
             "unit": "°C",
             "display": "points",
@@ -539,281 +242,260 @@ def make_layers(data, sd):
                 "zIndex": 5,
                 "opacity": 1,
                 "min": 5,
-                "max": 25,
+                "max": 25
             },
             "sources": {
                 "various": {
-                    "type": "current_temperature_points",
+                    "key": key,
                     "url": "https://alplakes-eawag.s3.eu-central-1.amazonaws.com/insitu/summary/water_temperature.geojson",
-                    "description": "Assorted near real-time temperature measurements from around Switzerland, sourced from Bafu, Kanton Zurich, Kanton Thurgau and Datalakes.",
-                    "learnMore": "",
-                    "onActivate": True,
-                    "tags": ["Measurement", "Now"]
+                    "description": {
+                        "EN": "Assorted near real-time surface temperature measurements from several sources.",
+                        "DE": "Verschiedene nahezu in Echtzeit durchgeführte Oberflächentemperaturmessungen aus mehreren Quellen.",
+                        "FR": "Diverses mesures de température de surface en temps quasi réel provenant de plusieurs sources.",
+                        "IT": "Varie misurazioni della temperatura superficiale quasi in tempo reale da diverse fonti."
+                    }
                 }
             }
-        })
-    if sd and "sentinel3" in sd and "chla" in sd["sentinel3"]:
-        layers.append({
-            "id": "satellite_chlorophyll",
-            "type": "satellite",
-            "playControls": False,
-            "depth": False,
-            "parameter": "chla",
-            "unit": "mg m-3",
-            "display": "tiff",
-            "source": "sencast",
-            "summaryGraph": "satellite_timeseries",
-            "displayOptions": {
-                "paletteName": "bamako",
-                "zIndex": 2,
-                "opacity": 1,
-                "convolve": 2,
-                "wms": False,
-                "min": 0,
-                "max": 12,
-                "dataMin": 0,
-                "dataMax": 12,
-                "coverage": 10
-            },
-            "sources": {
-                "sencast": {
-                    "type": "sencast_tiff",
-                    "models": [
-                        {
-                            "model": "Sentinel3",
-                            "metadata": "/alplakes/metadata/sentinel3/{lake}/chla.json"
+        }
+    ]
+
+def satellite_layers(key, sd):
+    layers = []
+    if "sentinel3" in sd and "chla" in sd["sentinel3"]:
+        layer = {
+                "id": "satellite_chlorophyll",
+                "type": "satellite",
+                "playControls": False,
+                "depth": False,
+                "name": "chlorophyll",
+                "parameter": "chlorophyll",
+                "unit": "mg m-3",
+                "display": "tiff",
+                "source": "sencast",
+                "displayOptions": {
+                    "paletteName": "bamako",
+                    "zIndex": 2,
+                    "opacity": 1,
+                    "convolve": 2,
+                    "wms": False,
+                    "min": 0,
+                    "max": 12,
+                    "dataMin": 0,
+                    "dataMax": 12,
+                    "coverage": 10
+                },
+                "sources": {
+                    "sencast": {
+                        "type": "sencast_tiff",
+                        "models": [],
+                        "description": {
+                            "EN": "Surface chlorophyll concentration is processed from satellite data using the Sencast Python package.",
+                            "DE": "Die Chlorophyllkonzentration an der Erdoberfläche wird mithilfe des Python-Pakets Sencast aus Satellitendaten verarbeitet.",
+                            "FR": "La concentration de chlorophylle de surface est traitée à partir de données satellites à l'aide du package Python Sencast.",
+                            "IT": "La concentrazione di clorofilla in superficie viene elaborata a partire dai dati satellitari utilizzando il pacchetto Python Sencast."
                         }
-                    ],
-                    "bucket": "/alplakes/metadata/sentinel3/{lake}/chla_latest.json",
-                    "description": "Surface chlorophyll concentration processed from satellite data using the Sencast python package.",
-                    "learnMore": "https://medium.com/@runnalls.james/water-quality-products-from-remote-sensing-data-using-sencast-e48449bd6aa8",
-                    "onActivate": True,
-                    "tags": ["Sentinel 3", "2016 - Now"]
+                    }
                 }
             }
-        })
-    if sd and (
-            ("sentinel3" in sd and "Zsd_lee" in sd["sentinel3"]) or ("sentinel2" in sd and "Z490" in sd["sentinel2"])):
-        models = []
-        bucket = False
-        if ("sentinel3" in sd and "Zsd_lee" in sd["sentinel3"]):
-            models.append({
+        layer["sources"][layer["source"]]["models"].append(
+            {
                 "model": "Sentinel3",
-                "metadata": "/alplakes/metadata/sentinel3/{lake}/Zsd_lee.json"
+                "metadata": "/alplakes/metadata/sentinel3/{}/chla.json".format(key)
             }
+        )
+        layers.append(layer)
+    if ("sentinel3" in sd and "Zsd_lee" in sd["sentinel3"]) or ("sentinel2" in sd and "Z490" in sd["sentinel2"]):
+        layer = {
+          "id": "satellite_secchi",
+          "type": "satellite",
+          "playControls": False,
+          "depth": False,
+          "name": "secchi",
+          "parameter": "secchi",
+          "unit": "m",
+          "display": "tiff",
+          "source": "sencast",
+          "displayOptions": {
+            "paletteName": "oslo",
+            "zIndex": 2,
+            "opacity": 1,
+            "convolve": 2,
+            "wms": False,
+            "min": 0,
+            "max": 12,
+            "dataMin": 0,
+            "dataMax": 12,
+            "coverage": 10
+          },
+          "sources": {
+            "sencast": {
+              "type": "sencast_tiff",
+              "models": [],
+              "description": {
+                "EN": "Secchi depth is processed from satellite data using the Sencast Python package.",
+                "DE": "Die Secchi-Tiefe wird mithilfe des Sencast-Python-Pakets aus Satellitendaten verarbeitet.",
+                "FR": "La profondeur de Secchi est traitée à partir de données satellites à l'aide du package Python Sencast.",
+                "IT": "La profondità di Secchi viene elaborata dai dati satellitari utilizzando il pacchetto Python Sencast."
+              }
+            }
+          }
+        }
+        if "sentinel3" in sd and "Zsd_lee" in sd["sentinel3"]:
+            layer["sources"][layer["source"]]["models"].append(
+                {
+                    "model": "Sentinel3",
+                    "metadata": "/alplakes/metadata/sentinel3/{}/Zsd_lee.json".format(key)
+                }
             )
-            bucket = "/alplakes/metadata/sentinel3/{lake}/Zsd_lee_latest.json"
-        if ("sentinel2" in sd and "Z490" in sd["sentinel2"]):
-            models.append({
-                "model": "Sentinel2",
-                "metadata": "/alplakes/metadata/sentinel2/{lake}/Z490.json"
-            })
-            if bucket == False:
-                bucket = "/alplakes/metadata/sentinel2/{lake}/Z490_latest.json"
-
-        layers.append({
-            "id": "satellite_secchi",
-            "type": "satellite",
-            "playControls": False,
-            "depth": False,
-            "parameter": "secchi",
-            "unit": "m",
-            "display": "tiff",
-            "source": "sencast",
-            "summaryGraph": "satellite_timeseries",
-            "displayOptions": {
-                "paletteName": "oslo",
-                "zIndex": 2,
-                "opacity": 1,
-                "convolve": 2,
-                "wms": False,
-                "min": 0,
-                "max": 12,
-                "dataMin": 0,
-                "dataMax": 12,
-                "coverage": 10
-            },
-            "sources": {
-                "sencast": {
-                    "type": "sencast_tiff",
-                    "models": models,
-                    "bucket": bucket,
-                    "description": "Secchi depth processed from satellite data using the Sencast python package.",
-                    "learnMore": "https://medium.com/@runnalls.james/water-quality-products-from-remote-sensing-data-using-sencast-e48449bd6aa8",
-                    "onActivate": True,
-                    "tags": ["Sentinel 3", "Sentinel 2", "2016 - Now"]
+        if "sentinel2" in sd and "Z490" in sd["sentinel2"]:
+            layer["sources"][layer["source"]]["models"].append(
+                {
+                    "model": "Sentinel2",
+                    "metadata": "/alplakes/metadata/sentinel2/{}/Z490.json".format(key)
                 }
+            )
+        layers.append(layer)
+
+    if ("sentinel3" in sd and "tsm_binding754" in sd["sentinel3"]) or ("sentinel2" in sd and "tsm_dogliotti665" in sd["sentinel2"]):
+        layer = {
+          "id": "satellite_turbidity",
+          "type": "satellite",
+          "playControls": False,
+          "depth": False,
+          "name": "turbidity",
+          "parameter": "turbidity",
+          "unit": "FNU",
+          "display": "tiff",
+          "source": "sencast",
+          "displayOptions": {
+            "paletteName": "bamako",
+            "zIndex": 2,
+            "opacity": 1,
+            "convolve": 2,
+            "wms": False,
+            "min": 0,
+            "max": 3,
+            "dataMin": 0,
+            "dataMax": 3,
+            "coverage": 10
+          },
+          "sources": {
+            "sencast": {
+              "type": "sencast_tiff",
+              "models": [],
+              "description": {
+                "EN": "Surface total suspended matter is processed from satellite data using the Sencast Python package.",
+                "DE": "Die gesamten Schwebstoffe an der Oberfläche werden mithilfe des Sencast-Python-Pakets aus Satellitendaten verarbeitet.",
+                "FR": "La matière totale en suspension de surface est traitée à partir de données satellite à l'aide du package Python Sencast.",
+                "IT": "La materia sospesa totale in superficie viene elaborata dai dati satellitari utilizzando il pacchetto Python Sencast."
+              }
             }
-        })
-    if sd and (("sentinel3" in sd and "tsm_binding754" in sd["sentinel3"]) or (
-            "sentinel2" in sd and "tsm_dogliotti665" in sd["sentinel2"])):
-        models = []
-        bucket = False
+          }
+        }
         if "sentinel3" in sd and "tsm_binding754" in sd["sentinel3"]:
-            models.append({
-                "model": "Sentinel3",
-                "metadata": "/alplakes/metadata/sentinel3/{lake}/tsm_binding754.json"
-            })
-            bucket = "/alplakes/metadata/sentinel3/{lake}/tsm_binding754_latest.json"
+            layer["sources"][layer["source"]]["models"].append(
+                {
+                    "model": "Sentinel3",
+                    "metadata": "/alplakes/metadata/sentinel3/{}/tsm_binding754.json".format(key)
+                }
+            )
         if "sentinel2" in sd and "tsm_dogliotti665" in sd["sentinel2"]:
-            models.append({
-                "model": "Sentinel2",
-                "metadata": "/alplakes/metadata/sentinel2/{lake}/tsm_dogliotti665.json"
-            })
-            if bucket == False:
-                bucket = "/alplakes/metadata/sentinel2/{lake}/tsm_dogliotti665_latest.json"
+            layer["sources"][layer["source"]]["models"].append(
+                {
+                    "model": "Sentinel2",
+                    "metadata": "/alplakes/metadata/sentinel2/{}/tsm_dogliotti665.json".format(key)
+                }
+            )
+        layers.append(layer)
 
-        layers.append({
-            "id": "satellite_turbidity",
-            "type": "satellite",
-            "playControls": False,
-            "depth": False,
-            "parameter": "tsm",
-            "unit": "FNU",
-            "display": "tiff",
-            "source": "sencast",
-            "summaryGraph": "satellite_timeseries",
-            "displayOptions": {
-                "paletteName": "bamako",
-                "zIndex": 2,
-                "opacity": 1,
-                "convolve": 2,
-                "wms": False,
-                "min": 0,
-                "max": 3,
-                "dataMin": 0,
-                "dataMax": 3,
-                "coverage": 10
-            },
-            "sources": {
-                "sencast": {
-                    "type": "sencast_tiff",
-                    "models": models,
-                    "bucket": bucket,
-                    "description": "Surface total suspended matter processed from satellite data using the Sencast python package.",
-                    "learnMore": "https://medium.com/@runnalls.james/water-quality-products-from-remote-sensing-data-using-sencast-e48449bd6aa8",
-                    "onActivate": True,
-                    "tags": ["Sentinel 3", "Sentinel 2", "2016 - Now"]
-                }
+    if "sentinel3" in sd and "forel_ule" in sd["sentinel3"]:
+        layer = {
+          "id": "satellite_forelule",
+          "type": "satellite",
+          "playControls": False,
+          "depth": False,
+          "name": "forelule",
+          "parameter": "forelule",
+          "unit": "",
+          "display": "tiff",
+          "source": "sencast",
+          "displayOptions": {
+            "paletteName": "Forel Ule",
+            "zIndex": 2,
+            "opacity": 1,
+            "convolve": 2,
+            "wms": False,
+            "min": 1,
+            "max": 21,
+            "dataMin": 1,
+            "dataMax": 21,
+            "coverage": 10
+          },
+          "sources": {
+            "sencast": {
+              "type": "sencast_tiff",
+              "models": [],
+              "description": {
+                "EN": "Water color on the Forel Ule scale is processed from satellite data using the Sencast Python package.",
+                "DE": "Die Wasserfarbe auf der Forel-Ule-Skala wird mithilfe des Sencast-Python-Pakets aus Satellitendaten verarbeitet.",
+                "FR": "La couleur de l'eau sur l'échelle Forel Ule est traitée à partir de données satellites à l'aide du package Python Sencast.",
+                "IT": "Il colore dell'acqua sulla scala Forel Ule viene elaborato dai dati satellitari utilizzando il pacchetto Python Sencast."
+              }
             }
-        })
-    if sd and "sentinel3" in sd and "forel_ule" in sd["sentinel3"]:
-        layers.append({
-            "id": "satellite_forelule",
-            "type": "satellite",
-            "playControls": False,
-            "depth": False,
-            "parameter": "forelule",
-            "unit": "",
-            "display": "tiff",
-            "source": "sencast",
-            "summaryGraph": "satellite_timeseries",
-            "displayOptions": {
-                "paletteName": "Forel Ule",
-                "zIndex": 2,
-                "opacity": 1,
-                "convolve": 2,
-                "wms": False,
-                "min": 1,
-                "max": 21,
-                "dataMin": 1,
-                "dataMax": 21,
-                "coverage": 10
-            },
-            "sources": {
-                "sencast": {
-                    "type": "sencast_tiff",
-                    "models": [
-                        {
-                            "model": "Sentinel3",
-                            "metadata": "/alplakes/metadata/sentinel3/{lake}/forel_ule.json"
-                        }
-                    ],
-                    "bucket": "/alplakes/metadata/sentinel3/{lake}/forel_ule_latest.json",
-                    "description": "Water color on the Forel Ule scale processed from satellite data using the Sencast python package.",
-                    "learnMore": "https://medium.com/@runnalls.james/water-quality-products-from-remote-sensing-data-using-sencast-e48449bd6aa8",
-                    "onActivate": True,
-                    "tags": ["Sentinel 3", "2024 - Now"]
-                }
+          }
+        }
+        layer["sources"][layer["source"]]["models"].append(
+            {
+                "model": "Sentinel3",
+                "metadata": "/alplakes/metadata/sentinel3/{}/forel_ule.json".format(key)
             }
-        })
-    if sd and "collection" in sd and "ST" in sd["collection"]:
-        layers.append({
-            "id": "satellite_temperature",
-            "type": "satellite",
-            "playControls": False,
-            "depth": False,
-            "parameter": "temperature",
-            "unit": "°C",
-            "display": "tiff",
-            "source": "sencast",
-            "summaryGraph": "satellite_timeseries",
-            "displayOptions": {
-                "paletteName": "vik",
-                "zIndex": 2,
-                "opacity": 1,
-                "convolve": 2,
-                "wms": False,
-                "min": 0,
-                "max": 30,
-                "dataMin": 0,
-                "dataMax": 40,
-                "coverage": 10
-            },
-            "sources": {
-                "sencast": {
-                    "type": "sencast_tiff",
-                    "models": [
-                        {
-                            "model": "Collection",
-                            "metadata": "/alplakes/metadata/collection/{lake}/ST.json"
-                        }
-                    ],
-                    "bucket": "/alplakes/metadata/collection/{lake}/ST_latest.json",
-                    "description": "Landsat Collection 2 Surface Temperature product produced by USGS from Landsat 8 & 9. See the models page for more information.",
-                    "learnMore": "https://medium.com/@runnalls.james/water-quality-products-from-remote-sensing-data-using-sencast-e48449bd6aa8",
-                    "onActivate": True,
-                    "tags": ["Landsat 8/9", "2013 - Now"]
-                }
+        )
+        layers.append(layer)
+    
+    if "collection" in sd and "ST" in sd["collection"]:
+        layer = {
+          "id": "satellite_temperature",
+          "type": "satellite",
+          "playControls": False,
+          "depth": False,
+          "name": "temperature",
+          "parameter": "temperature",
+          "unit": "°C",
+          "display": "tiff",
+          "source": "sencast",
+          "displayOptions": {
+            "paletteName": "vik",
+            "zIndex": 2,
+            "opacity": 1,
+            "convolve": 2,
+            "wms": False,
+            "min": 0,
+            "max": 30,
+            "dataMin": 0,
+            "dataMax": 40,
+            "coverage": 10
+          },
+          "sources": {
+            "sencast": {
+              "type": "sencast_tiff",
+              "models": [],
+              "description": {
+                "EN": "Landsat Collection 2 Surface Temperature product produced by USGS from Landsat 8 & 9. See the models page for more information.",
+                "DE": "Oberflächentemperaturprodukt der Landsat Collection 2, erstellt vom USGS aus Landsat 8 und 9. Weitere Informationen finden Sie auf der Modellseite.",
+                "FR": "Produit de température de surface de la collection Landsat 2 réalisé par l'USGS à partir de Landsat 8 et 9. Consultez la page des modèles pour plus d'informations.",
+                "IT": "Prodotto della temperatura superficiale Landsat Collection 2 prodotto dall'USGS da Landsat 8 e 9. Per maggiori informazioni, consultare la pagina dei modelli."
+              }
             }
-        })
+          }
+        }
+        layer["sources"][layer["source"]]["models"].append(
+            {
+                "model": "Collection",
+                "metadata": "/alplakes/metadata/collection/{}/ST.json".format(key)
+            }
+        )
+        layers.append(layer)
     return layers
-
-
-def simstrat_source(models, simstrat, obj):
-    out = {}
-    for model in models:
-        s = obj.copy()
-        properties = [d for d in simstrat if d["key"] == model][0]
-        meteo_type = properties["forcing"][0]["type"]
-        if "meteoswiss" in meteo_type.lower():
-            s["meteo_source"] = "SwissMetNet, MeteoSwiss"
-        elif "arso" in meteo_type.lower():
-            s["meteo_source"] = "Slovenian Environment Agency"
-        elif "mistral" in meteo_type.lower():
-            s["meteo_source"] = "Mistral Meteo-Hub"
-        elif "thredds" in meteo_type.lower():
-            s["meteo_source"] = "ESPRI IPSL Thredds"
-        elif "geosphere" in meteo_type.lower():
-            s["meteo_source"] = "GeoSphere Austria"
-        forecast_type = properties["forcing_forecast"]["source"]
-        if "meteoswiss" in forecast_type.lower():
-            s["meteo_source"] = s["meteo_source"] + ". Forecast from MeteoSwiss ICON."
-        elif "visualcrossing" in forecast_type.lower():
-            s["meteo_source"] = s["meteo_source"] + ". Forecast from VisualCrossing."
-        if "inflows" in properties:
-            s["hydro_source"] = "Bundesamt für Umwelt BAFU"
-        if "performance" in properties:
-            s["performance"] = properties["performance"]
-        if "name" in properties:
-            s["name"] = properties["name"]
-        if "calibration_source" in properties:
-            s["calibration_source"] = properties["calibration_source"]
-        s["lake"] = model
-        s["label"] = "Simstrat {}".format(model)
-        out["simstrat_{}".format(model)] = s
-    return out
-
 
 def simstrat_forcing_source(forcing, forecast):
     meteo_type = forcing[0]["type"]
@@ -834,91 +516,3 @@ def simstrat_forcing_source(forcing, forecast):
     elif "visualcrossing" in forecast_type.lower():
         out = out + ". Forecast from VisualCrossing."
     return out
-
-
-def make_datasets(data, simstrat):
-    datasets = []
-    if data["simstrat"] != False:
-        datasets = [{
-            "id": "temperature_heatmap",
-            "type": "heatmap",
-            "parameter": "temperature",
-            "unit": "°C",
-            "display": "heat",
-            "source": "simstrat_{}".format(data["simstrat"][0]),
-            "sources": simstrat_source(data["simstrat"], simstrat,
-                                       {
-                                           "data_access": "simstrat_heatmap",
-                                           "model": "simstrat",
-                                           "parameter": "T",
-                                           "description": "Depth time visualisation of water temperature. Water temperatures are hindcasted and forecasted using the 1D hydrodynamic model Simstrat.",
-                                           "learnMore": "https://medium.com/@runnalls.james/operational-1d-lake-modeling-with-simstrat-dc34964bfe08",
-                                           "tags": ["5 day forecast", "Timeseries", "Heatmap"]
-                                       }),
-            "displayOptions": {
-                "paletteName": "vik",
-                "thresholdStep": 200
-            }
-        },
-            {
-                "id": "oxygen_heatmap",
-                "type": "heatmap",
-                "parameter": "oxygensat",
-                "unit": "%",
-                "display": "heat",
-                "source": "simstrat_{}".format(data["simstrat"][0]),
-                "sources": simstrat_source(data["simstrat"], simstrat,
-                                           {
-                                               "data_access": "simstrat_heatmap",
-                                               "model": "simstrat",
-                                               "parameter": "OxygenSat",
-                                               "description": "Depth time visualisation of oxygen saturation. Oxygen values are hindcasted and forecasted using the 1D hydrodynamic model Simstrat in combination with AED2. The oxygen model is a preliminary version which works reasonably well for some lakes but is clearly wrong for other lakes.",
-                                               "learnMore": "https://medium.com/@runnalls.james/operational-1d-lake-modeling-with-simstrat-dc34964bfe08",
-                                               "tags": ["5 day forecast", "Timeseries", "Heatmap"]
-                                           }),
-                "displayOptions": {
-                    "paletteName": "vik",
-                    "thresholdStep": 200
-                }
-            },
-            {
-                "id": "temperature_linegraph",
-                "type": "linegraph",
-                "parameter": "temperature",
-                "unit": "°C",
-                "display": "line",
-                "source": "simstrat_{}".format(data["simstrat"][0]),
-                "sources": simstrat_source(data["simstrat"], simstrat,
-                                           {
-                                               "data_access": "simstrat_linegraph",
-                                               "model": "simstrat",
-                                               "parameter": "T",
-                                               "description": "Visualisation of water temperature. Water temperatures are hindcasted and forecasted using the 1D hydrodynamic model Simstrat.",
-                                               "learnMore": "https://medium.com/@runnalls.james/operational-1d-lake-modeling-with-simstrat-dc34964bfe08",
-                                               "tags": ["5 day forecast", "Timeseries"]
-                                           }),
-                "displayOptions": {}
-            },
-            {
-                "id": "temperature_doy",
-                "type": "doy",
-                "parameter": "temperature",
-                "unit": "°C",
-                "display": "doy",
-                "source": "simstrat_{}".format(data["simstrat"][0]),
-                "sources": simstrat_source(data["simstrat"], simstrat,
-                                           {
-                                               "data_access": "simstrat_doy",
-                                               "model": "simstrat",
-                                               "depths": [0, data["max_depth"]],
-                                               "parameter": "T",
-                                               "description": "Surface average DOY water temperature. Water temperatures are hindcasted and forecasted using the 1D hydrodynamic model Simstrat.",
-                                               "learnMore": "https://medium.com/@runnalls.james/operational-1d-lake-modeling-with-simstrat-dc34964bfe08",
-                                               "tags": ["Historic Trends", "DOY average"]
-                                           }),
-                "displayOptions": {
-                    "depth": 0
-                }
-            }
-        ]
-    return datasets

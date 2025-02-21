@@ -15,7 +15,9 @@ class AddLayers extends Component {
         <div className="layers-close" onClick={toggleAddLayersModal}>
           &#10005;
         </div>
-        <div className="layers-title">Available Layers</div>
+        <div className="layers-title">
+          {Translations.availableLayers[language]}
+        </div>
         <div className="layers">
           {layers.map((l) => {
             let source = l.sources[l.source];

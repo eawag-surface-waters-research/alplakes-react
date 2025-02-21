@@ -284,8 +284,8 @@ const measurementsDownload = async (
   }
   updates.push({
     event: "addLayer",
-    type: "geojson",
-    id: "water_temperature",
+    type: "points",
+    id: "current_temperature",
     options: {
       data: data,
       displayOptions: layer.displayOptions,
