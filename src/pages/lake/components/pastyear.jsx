@@ -162,8 +162,8 @@ class PastYear extends Component {
               <div className="graph-properties">
                 <div className="description">{description[language]}</div>
                 <Expand
-                  openLabel="Settings"
-                  closeLabel="Hide settings"
+                  openLabel={Translations.settings[language]}
+                  closeLabel={Translations.hideSettings[language]}
                   content={
                     <React.Fragment>
                       <div className="setting">

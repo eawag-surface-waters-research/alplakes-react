@@ -42,6 +42,7 @@ class ThreeDModel extends Component {
     data: {},
     datetime: false,
     labels: false,
+    warning: false,
     mapId: "map_" + Math.round(Math.random() * 100000),
   };
 
@@ -53,9 +54,13 @@ class ThreeDModel extends Component {
     this.setState({ datetime });
   };
 
+  closeWarning = () => {
+    this.setState({ warning: false });
+  };
+
   async componentDidMount() {
     var { parameters } = this.props;
-    var { updates } = this.state;
+    var { updates, labels, warning } = this.state;
     let metadata = await downloadModelMetadata(
       parameters.model.toLowerCase(),
       parameters.key
@@ -79,13 +84,15 @@ class ThreeDModel extends Component {
     if (data.temperature.end > now) {
       index = Math.ceil((now - data.temperature.start) / timestep);
       datetime = new Date(data.temperature.start.getTime() + index * timestep);
+      labels = processLabels(
+        parameters.labels,
+        data.geometry,
+        data.temperature,
+        parameters.key
+      );
+    } else {
+      warning = "offlineWarning";
     }
-    const labels = processLabels(
-      parameters.labels,
-      data.geometry,
-      data.temperature,
-      parameters.key
-    );
     updates.push({
       event: "addLayer",
       type: "raster",
@@ -136,10 +143,11 @@ class ThreeDModel extends Component {
       updates,
       datetime,
       labels,
+      warning,
     });
   }
   render() {
-    var { updates, mapId, datetime, labels } = this.state;
+    var { updates, mapId, datetime, labels, warning } = this.state;
     var { dark, bounds, language, id, parameters } = this.props;
     return (
       <div className="threedmodel subsection">
@@ -159,6 +167,13 @@ class ThreeDModel extends Component {
               link={`/map/${id}?layers=3D_temperature,3D_currents`}
               language={language}
             />
+            {warning && (
+              <div className="warning-popup" onClick={this.closeWarning}>
+                <div className="warning-popup-inner">
+                  {Translations[warning][language]}
+                </div>
+              </div>
+            )}
             <Basemap
               updates={updates}
               updated={this.updated}
@@ -197,8 +212,8 @@ class ThreeDModel extends Component {
               )}
 
               <Expand
-                openLabel="Show all locations"
-                closeLabel="Hide locations"
+                openLabel={Translations.showLocations[language]}
+                closeLabel={Translations.hideLocations[language]}
                 content={
                   <div className="clickable-box-parent">
                     {labels && labels.length > 1

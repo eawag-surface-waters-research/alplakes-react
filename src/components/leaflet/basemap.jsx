@@ -6,6 +6,7 @@ import "./leaflet_customtooltip";
 import "./leaflet_tileclass";
 import "./css/leaflet.css";
 import "./css/basemap.css";
+import Legend from "../legend/legend";
 import Loading from "../loading/loading";
 import Slider from "../sliders/slider";
 
@@ -163,7 +164,8 @@ class Basemap extends Component {
   }
 
   render() {
-    const { mapId, load, language, permanentLabel } = this.props;
+    const { mapId, load, language, permanentLabel, layers, legend } =
+      this.props;
     const { controls, play, period, datetime, timestep } = this.state;
     return (
       <React.Fragment>
@@ -175,33 +177,36 @@ class Basemap extends Component {
           <Loading />
         </div>
         <div className="click-block" />
-        {controls && (
-          <div className="control-bar">
-            <div className="play-button" onClick={this.togglePlay}>
-              <div className="playpause" id="playing">
-                <input
-                  type="checkbox"
-                  value="None"
-                  id="playpause"
-                  name="check"
-                  checked={!play}
-                  readOnly={true}
+        <div className="overlay-stack">
+          <Legend layers={layers} show={legend} language={language} />
+          {controls && (
+            <div className="control-bar">
+              <div className="play-button" onClick={this.togglePlay}>
+                <div className="playpause" id="playing">
+                  <input
+                    type="checkbox"
+                    value="None"
+                    id="playpause"
+                    name="check"
+                    checked={!play}
+                    readOnly={true}
+                  />
+                  <label htmlFor="playpause"></label>
+                </div>
+              </div>
+              <div className="progress-bar">
+                <Slider
+                  period={period}
+                  datetime={datetime}
+                  timestep={timestep}
+                  setDatetime={this.setDatetime}
+                  language={language}
+                  permanentLabel={permanentLabel}
                 />
-                <label htmlFor="playpause"></label>
               </div>
             </div>
-            <div className="progress-bar">
-              <Slider
-                period={period}
-                datetime={datetime}
-                timestep={timestep}
-                setDatetime={this.setDatetime}
-                language={language}
-                permanentLabel={permanentLabel}
-              />
-            </div>
-          </div>
-        )}
+          )}
+        </div>
         <div id={mapId} className="leaflet-map"></div>
       </React.Fragment>
     );

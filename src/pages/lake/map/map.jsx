@@ -11,6 +11,7 @@ import back from "../../../img/back.png";
 import Sidebar from "./sidebar";
 import Loading from "../../../components/loading/loading";
 import NotFound from "../components/notfound";
+import Translations from "../../../translations.json";
 
 class Map extends Component {
   state = {
@@ -44,6 +45,7 @@ class Map extends Component {
   };
 
   addLayers = async (add, initial) => {
+    var { language } = this.props;
     this.setState({ loading: true }, async () => {
       var { updates, mapId, layers, period, datetime, depth, selection } =
         this.state;
@@ -51,10 +53,10 @@ class Map extends Component {
         layers.find((l) => l.id === layer_id).active = true;
       }
       document.getElementById(`map_loading_${mapId}`).innerHTML =
-        "Collecting metadata";
+        Translations.collectingMetadata[language];
       layers = await collectMetadata(layers);
       document.getElementById(`map_loading_${mapId}`).innerHTML =
-        "Downloading data";
+        Translations.downloadingData[language];
       ({ updates, layers, period, datetime, depth } = await downloadData(
         add,
         layers,
@@ -250,12 +252,14 @@ class Map extends Component {
               dark={dark}
               mapId={mapId}
               permanentLabel={true}
+              layers={layers}
+              legend={true}
             />
             <div className={loading ? "map-loading" : "map-loading closed"}>
               <div className="map-loading-inner">
                 <Loading />
                 <div className="loading-text" id={`map_loading_${mapId}`}>
-                  Accessing layers
+                  {Translations.accessingLayers[language]}
                 </div>
               </div>
             </div>

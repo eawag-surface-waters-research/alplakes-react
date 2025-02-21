@@ -17,7 +17,7 @@ class Color extends Component {
       <div className="color" onClick={this.onClick}>
         <div
           id="colorBox"
-          class="color-box"
+          className="color-box"
           style={{ backgroundColor: value }}
         ></div>
         <input

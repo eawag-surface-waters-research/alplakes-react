@@ -46,40 +46,6 @@ class Graph extends Component {
   toggle = () => {
     this.setState({ open: !this.state.open });
   };
-  componentDidUpdate() {
-    const { data } = this.props;
-    if (this.state.display === false && data) {
-      const variables = Object.keys(data.metadata.variables)
-        .filter((v) => v !== "S")
-        .map((v) => {
-          data.metadata.variables[v].key = v;
-          return data.metadata.variables[v];
-        });
-      const variable = variables.find((v) => v.key === "T");
-      const depths = data.metadata.depth;
-      const depth = depths[0];
-      const display = {
-        xlabel: "time",
-        xunits: "",
-        ylabel: variable.description,
-        yunits: variable.unit.replace("deg", "°"),
-        data: { x: data.dt, y: data.value },
-        curve: true,
-        grid: true,
-      };
-      this.setState({
-        display,
-        start: data.start,
-        end: data.end,
-        start_date: data.metadata.start_date,
-        end_date: data.metadata.end_date,
-        variable,
-        variables,
-        depth,
-        depths,
-      });
-    }
-  }
   setPeriod = async (event) => {
     const { variable, display, depth } = this.state;
     const { parameter } = this.props;
@@ -138,6 +104,40 @@ class Graph extends Component {
     display.yunits = variable.unit.replace("deg", "°");
     this.setState({ variable, display });
   };
+  componentDidUpdate() {
+    const { data } = this.props;
+    if (this.state.display === false && data) {
+      const variables = Object.keys(data.metadata.variables)
+        .filter((v) => v !== "S")
+        .map((v) => {
+          data.metadata.variables[v].key = v;
+          return data.metadata.variables[v];
+        });
+      const variable = variables.find((v) => v.key === "T");
+      const depths = data.metadata.depth;
+      const depth = depths[0];
+      const display = {
+        xlabel: "time",
+        xunits: "",
+        ylabel: variable.description,
+        yunits: variable.unit.replace("deg", "°"),
+        data: { x: data.dt, y: data.value },
+        curve: true,
+        grid: true,
+      };
+      this.setState({
+        display,
+        start: data.start,
+        end: data.end,
+        start_date: data.metadata.start_date,
+        end_date: data.metadata.end_date,
+        variable,
+        variables,
+        depth,
+        depths,
+      });
+    }
+  }
   render() {
     const {
       open,
@@ -178,8 +178,8 @@ class Graph extends Component {
             <div className="graph-properties">
               <div className="description">{description[language]}</div>
               <Expand
-                openLabel="Settings"
-                closeLabel="Hide settings"
+                openLabel={Translations.settings[language]}
+                closeLabel={Translations.hideSettings[language]}
                 content={
                   <React.Fragment>
                     <div className="setting">
@@ -276,7 +276,7 @@ class Graph extends Component {
       >
         <div className="right">{parameter.model}</div>
         <div className="title">{name}</div>
-        {data ? (
+        {data && data.summary ? (
           <SummaryTable
             start={data.start}
             end={data.end}
@@ -317,10 +317,15 @@ class OneDModel extends Component {
         parameters[i].parameter,
         true
       );
-      let { summary, start, end } = summariseData(
-        download["time"],
-        download["variables"][parameters[i].parameter]["data"]
-      );
+      let start = new Date(download.time[0]);
+      let end = new Date(download.time[download.time.length - 1]);
+      let summary = false;
+      if (end > new Date()) {
+        ({ summary, start, end } = summariseData(
+          download["time"],
+          download["variables"][parameters[i].parameter]["data"]
+        ));
+      }
       data[parameters[i].key] = {
         summary,
         start,

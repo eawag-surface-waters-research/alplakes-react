@@ -143,6 +143,25 @@
     height: 100%;
 }
 
+.main .lake .map-sidebar .map-sidebar-left .warning-popup {
+    position: absolute;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    transition: all 0.3s ease-out;
+}
+
+.main .lake .map-sidebar .map-sidebar-left .warning-popup .warning-popup-inner {
+    background-color: var(--box-color);
+    padding: 12px;
+    border-radius: 12px;
+    max-width: 60%;
+    color: #BC4459;
+}
+
 .main .lake .map-sidebar .map-sidebar-right {
     display: inline-block;
     width: 400px;
@@ -273,7 +292,7 @@
 }
 
 .main .lake .clickable-box .summary-table {
-    width: calc(100% + 45px);
+    width: calc(100% + 50px);
     margin-left: -25px;
     margin-bottom: -20px;
     margin-top: 8px;
@@ -286,7 +305,7 @@
 }
 
 .main .lake .clickable-box .skeleton-outer {
-    width: calc(100% + 45px);
+    width: calc(100% + 50px);
     margin-left: -25px;
     margin-bottom: -20px;
     margin-top: 8px;

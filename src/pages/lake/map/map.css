@@ -785,8 +785,16 @@
         border-radius: 0;
     }
 
-    .main .map .layer-map .control-bar {
+    .main .map .layer-map .overlay-stack {
         bottom: 105px;
+    }
+
+    .main .map .layer-map .overlay-stack .legend {
+        position: fixed;
+        right: 12px;
+        top: calc(var(--header-height) + 12px);
+        width: calc(100% - 96px);
+        font-size: 12px;
     }
 
     .main .map .layer-map .map-sidebar {

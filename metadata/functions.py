@@ -110,6 +110,8 @@ def model_layers(key):
       "summaryGraph": "threed_linegraph",
       "displayOptions": {
         "raster": True,
+        "profile": True,
+        "transect": True,
         "paletteName": "vik",
         "zIndex": 1,
         "interpolate": True

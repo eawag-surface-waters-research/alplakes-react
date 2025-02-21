@@ -1,9 +1,8 @@
 import L from "leaflet";
-//import * as d3 from "d3";
 import axios from "axios";
 import COLORS from "../colors/colors.json";
 import CONFIG from "../../config.json";
-//import leaflet_marker from "../../img/leaflet_marker.png";
+import leaflet_marker from "../../img/leaflet_marker.png";
 import Translate from "../../translations.json";
 import {
   getColor,
@@ -93,6 +92,31 @@ const addRaster = async (map, layers, id, options, language) => {
     displayOptions
   ).addTo(map);
 
+  if ("profile" in options.displayOptions && options.displayOptions.profile) {
+    layers[id]["profile_layer"] = L.layerGroup([]).addTo(map);
+    layers[id]["profile_layer"].setZIndex(999);
+    layers[id]["profile_control"] = L.control
+      .markerDraw({
+        fire: (event) => getProfile(event, id),
+        layer: layers[id]["profile_layer"],
+        markerIconUrl: leaflet_marker,
+        id: map.getContainer().id,
+      })
+      .addTo(map);
+  }
+
+  if ("transect" in options.displayOptions && options.displayOptions.transect) {
+    layers[id]["transect_layer"] = L.layerGroup([]).addTo(map);
+    layers[id]["transect_layer"].setZIndex(999);
+    layers[id]["transect_control"] = L.control
+      .polylineDraw({
+        fire: (event) => getTransect(event, id),
+        layer: layers[id]["transect_layer"],
+        id: map.getContainer().id,
+      })
+      .addTo(map);
+  }
+
   if ("labels" in options) {
     const labelLayer = L.layerGroup([]).addTo(map);
     for (let i = 0; i < options.labels.length; i++) {
@@ -128,6 +152,14 @@ const addRaster = async (map, layers, id, options, language) => {
     }
     layers[id]["labels"] = labelLayer;
   }
+};
+
+const getTransect = (event, id) => {
+  console.log(event, id);
+};
+
+const getProfile = (event, id) => {
+  console.log(event, id);
 };
 
 const updateRaster = (map, layers, id, options, language) => {
@@ -238,7 +270,7 @@ const addParticles = async (map, layers, id, options, language) => {
   };
   var displayOptions = { ...defaultOptions, ...options.displayOptions };
   displayOptions.id = options.id;
-  layers[id]["particles"] = L.control
+  layers[id]["particles_control"] = L.control
     .particleTracking(
       options.geometry,
       options.data,
@@ -251,10 +283,10 @@ const addParticles = async (map, layers, id, options, language) => {
 
 const updateParticles = (map, layers, id, options, language) => {
   if ("remove" in options && options.remove) {
-    layers[id]["particles"].clear();
+    layers[id]["particles_control"].clear();
     options.remove = false;
   }
-  layers[id]["particles"].update(false, options);
+  layers[id]["particles_control"].update(false, options);
 };
 
 const addTiff = async (map, layers, id, options, language) => {
@@ -407,10 +439,18 @@ const addPlay = (options, addControls) => {
 
 const genericRemoveLayer = (map, layers, id) => {
   for (let key of Object.keys(layers[id])) {
-    try {
-      map.removeLayer(layers[id][key]);
-    } catch (e) {
-      console.error(`Failed to remove layer ${key}`);
+    if (key.includes("control")){
+      try {
+        map.removeControl(layers[id][key]);
+      } catch (e) {
+        console.error(`Failed to remove layer ${key}`);
+      }
+    } else {
+      try {
+        map.removeLayer(layers[id][key]);
+      } catch (e) {
+        console.error(`Failed to remove layer ${key}`);
+      }
     }
   }
   layers[id] = {};
