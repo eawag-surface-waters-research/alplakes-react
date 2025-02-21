@@ -587,7 +587,6 @@ h4 {
 .main .setting .react-datepicker {
   background-color: var(--select-color);
   border: none;
-  box-shadow: var(--box-shadow);
   padding-top: 5px;
   font-size: 16px;
 }

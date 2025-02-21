@@ -13,6 +13,7 @@ import particles_icon from "../../../img/particles.png";
 import thermocline_icon from "../../../img/thermocline.png";
 import oxygen_icon from "../../../img/oxygen.png";
 import forel_icon from "../../../img/forel.png";
+import trash_icon from "../../../img/trash.png";
 import LayerSelection from "./layerselection";
 import LayerSettings from "./layersettings";
 import ShowMoreText from "../../../components/showmore/showmore";
@@ -95,6 +96,12 @@ class Sidebar extends Component {
                     onClick={closeSelection}
                   >
                     &#10005;
+                  </div>
+                  <div
+                    className="sidebar-content-remove"
+                    onClick={() => removeLayer(layer.id)}
+                  >
+                    <img src={trash_icon} alt="Trash" />
                   </div>
                   <div className="sidebar-content-title">
                     {Translations[layer.name][language]}

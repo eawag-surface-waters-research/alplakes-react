@@ -21,7 +21,7 @@ const CustomInput = React.forwardRef(({ value, onClick }, ref) => (
 class Period extends Component {
   state = {
     period: this.props.period,
-    maxPeriod: this.props.maxPeriod ? this.props.maxPeriod : 21,
+    maxPeriod: this.props.maxPeriod ? this.props.maxPeriod : 14,
     maxPeriodDate: false,
   };
   addDays = (date, days) => {
@@ -35,7 +35,7 @@ class Period extends Component {
     if (period[0] !== null && period[1] !== null) {
       setPeriod([
         new Date(Math.floor(period[0].getTime())),
-        new Date(Math.floor(period[1].getTime() + 86400000)),
+        new Date(Math.floor(period[1].getTime() + 75600000)),
       ]);
       this.setState({ period, maxPeriodDate: false });
     } else if (period[0] !== null && period[1] === null) {

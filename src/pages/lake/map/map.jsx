@@ -133,10 +133,10 @@ class Map extends Component {
   };
 
   setPeriod = (value) => {
-    var { layers, updates, period } = this.state;
+    var { layers, updates, period, datetime } = this.state;
     if (period !== value) {
-      var datetime = period[0];
       period = value;
+      datetime = value[0];
       var ids = [];
       for (let layer of layers) {
         if (layer.active && layer.playControls) {
