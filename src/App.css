@@ -412,6 +412,16 @@ h4 {
   width: 100%;
 }
 
+.main .setting .color-box {
+  border: none;
+  box-sizing: border-box;
+  height: 26px;
+  padding: 0;
+  width: 100%;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
 .main .setting .switch {
   display: inline-block;
   float: right;

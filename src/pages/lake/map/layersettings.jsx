@@ -15,6 +15,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import "./map.css";
 import Period from "../../../components/customselect/period";
 import Depth from "../../../components/customselect/depth";
+import Color from "../../../components/customselect/color";
 
 class Raster extends Component {
   state = {
@@ -439,11 +440,7 @@ class Current extends Component {
         </div>
         <div className="setting half">
           <div className="label">Color</div>
-          <input
-            type="color"
-            value={arrowsColor}
-            onChange={this.setArrowsColor}
-          ></input>
+          <Color value={arrowsColor} onChange={this.setArrowsColor} />
         </div>
         <div className="setting">
           <label className="switch">
@@ -468,11 +465,7 @@ class Current extends Component {
         </div>
         <div className="setting half">
           <div className="label">Color</div>
-          <input
-            type="color"
-            value={streamlinesColor}
-            onChange={this.setStreamlinesColor}
-          ></input>
+          <Color value={streamlinesColor} onChange={this.setStreamlinesColor} />
         </div>
         <div className="setting half">
           <div className="label">Speed</div>
