@@ -200,6 +200,7 @@ class Climate extends Component {
               <div className="graph-properties">
                 {description[language]}
                 <Expand
+                  settings={true}
                   openLabel={Translations.settings[language]}
                   closeLabel={Translations.hideSettings[language]}
                   content={

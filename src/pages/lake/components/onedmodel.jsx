@@ -178,6 +178,7 @@ class Graph extends Component {
             <div className="graph-properties">
               <div className="description">{description[language]}</div>
               <Expand
+                settings={true}
                 openLabel={Translations.settings[language]}
                 closeLabel={Translations.hideSettings[language]}
                 content={

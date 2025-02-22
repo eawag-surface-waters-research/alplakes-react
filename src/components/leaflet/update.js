@@ -439,7 +439,7 @@ const addPlay = (options, addControls) => {
 
 const genericRemoveLayer = (map, layers, id) => {
   for (let key of Object.keys(layers[id])) {
-    if (key.includes("control")){
+    if (key.includes("control")) {
       try {
         map.removeControl(layers[id][key]);
       } catch (e) {
@@ -493,6 +493,10 @@ export const setPlayDatetime = (layers, datetime, period, data) => {
         updateLabels(layers[key][plot_type], layers[key]["raster"]);
       } else if (plot_type === "particles") {
         layers[key][plot_type].update(datetime, {});
+      } else if (
+        plot_type.includes("transect") ||
+        plot_type.includes("profile")
+      ) {
       } else {
         if ("data" in layers[key]) {
           layers[key]["data"]["data"] = data[key][i0];

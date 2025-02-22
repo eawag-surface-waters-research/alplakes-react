@@ -181,6 +181,7 @@ class Doy extends Component {
               <div className="graph-properties">
                 <div className="description">{description[language]}</div>
                 <Expand
+                  settings={true}
                   openLabel={Translations.settings[language]}
                   closeLabel={Translations.hideSettings[language]}
                   content={
@@ -212,7 +213,9 @@ class Doy extends Component {
                       </div>
                       {"performance" in parameters[model] && (
                         <div className="setting">
-                          <div className="label">{Translations.performance[language]}</div>
+                          <div className="label">
+                            {Translations.performance[language]}
+                          </div>
                           <div>
                             {Object.keys(
                               parameters[model].performance.rmse
@@ -234,19 +237,25 @@ class Doy extends Component {
                       )}
                       {"meteo_source" in parameters[model] && (
                         <div className="setting">
-                          <div className="label">{Translations.meteodata[language]}</div>
+                          <div className="label">
+                            {Translations.meteodata[language]}
+                          </div>
                           <div>{parameters[model].meteo_source}</div>
                         </div>
                       )}
                       {"hydro_source" in parameters[model] && (
                         <div className="setting">
-                          <div className="label">{Translations.hydrodata[language]}</div>
+                          <div className="label">
+                            {Translations.hydrodata[language]}
+                          </div>
                           <div>{parameters[model].hydro_source}</div>
                         </div>
                       )}
                       {"calibration_source" in parameters[model] && (
                         <div className="setting">
-                          <div className="label">{Translations.calibdata[language]}</div>
+                          <div className="label">
+                            {Translations.calibdata[language]}
+                          </div>
                           <div>{parameters[model].calibration_source}</div>
                         </div>
                       )}

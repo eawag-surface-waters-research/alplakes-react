@@ -29,7 +29,14 @@
     .sidebar-expand .expand-button {
         display: block;
     }
+
     .sidebar-expand .expand-content.closed {
         display: none;
+    }
+
+    .sidebar-expand.settings .expand-content {
+        background-color: var(--select-color);
+        border-radius: 12px;
+        padding: 12px;
     }
 }
