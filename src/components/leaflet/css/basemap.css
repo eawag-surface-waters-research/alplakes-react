@@ -21,9 +21,9 @@
 
 .overlay-stack .legend .legend-inner {
     background-color: var(--box-color);
-    border-radius: 22px;
+    border-radius: 12px;
     width: fit-content;
-    padding: 12px;
+    padding: 4px 12px;
 }
 
 .overlay-stack .control-bar {

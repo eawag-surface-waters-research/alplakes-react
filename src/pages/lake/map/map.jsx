@@ -25,6 +25,8 @@ class Map extends Component {
     datetime: false,
     depth: false,
     selection: false,
+    sidebar: true,
+    graph: {},
     mapId: "map_" + Math.round(Math.random() * 100000),
   };
 
@@ -42,6 +44,10 @@ class Map extends Component {
 
   closeSelection = () => {
     this.setState({ selection: false });
+  };
+
+  toggleSidebar = () => {
+    this.setState({ sidebar: !this.state.sidebar });
   };
 
   addLayers = async (add, initial) => {
@@ -206,6 +212,7 @@ class Map extends Component {
       selection,
       period,
       depth,
+      sidebar,
     } = this.state;
     var { language, dark } = this.props;
     var title = "";
@@ -215,7 +222,7 @@ class Map extends Component {
       title = name[language];
     }
     return (
-      <div className="map">
+      <div className={sidebar ? "map sidebar-open" : "map"}>
         <Helmet>
           <title>{documentTitle}</title>
           <meta name="description" content="Alplakes map viewer." />
@@ -231,6 +238,8 @@ class Map extends Component {
               </div>
             </NavLink>
             <Sidebar
+              sidebar={sidebar}
+              toggleSidebar={this.toggleSidebar}
               layers={layers}
               title={title}
               period={period}

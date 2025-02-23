@@ -202,22 +202,24 @@ for lake in metadata:
 
 
     # Satellite data
-    if key in satellite:
-        satellite_data = []
-        layers["layers"].extend(func.satellite_layers(lake["key"], satellite[key]))
-        for sat in satellite_metadata:
-            sm = []
-            for source in sat["sources"]:
-                if source["satellite"] in satellite[key] and source["parameter"] in satellite[key][source["satellite"]]:
-                    sm.append(source["link"].replace("#key#", key))
-            if len(sm) > 0:
-                temp = sat.copy()
-                temp["key"] = key
-                temp["metadata"] = sm
-                satellite_data.append(temp)
-        if len(satellite_data) > 0:
-            home["filters"].append("satellite")
-            data["satellite"] = satellite_data
+    if key != "mondsee":
+        if key in satellite:
+            satellite_data = []
+            layers["layers"].extend(func.satellite_layers(lake["key"], satellite[key]))
+            for sat in satellite_metadata:
+                sm = []
+                for source in sat["sources"]:
+                    if source["satellite"] in satellite[key] and source["parameter"] in satellite[key][source["satellite"]]:
+                        sm.append(source["link"].replace("#key#", key))
+                if len(sm) > 0:
+                    temp = sat.copy()
+                    temp["key"] = key
+                    temp["metadata"] = sm
+                    satellite_data.append(temp)
+            if len(satellite_data) > 0:
+                home["filters"].append("satellite")
+                data["satellite"] = satellite_data
+
 
     with open('files/{}.json'.format(key), 'w') as json_file:
         json_file.write(json.dumps(data, separators=(',', ':'), ensure_ascii=False))

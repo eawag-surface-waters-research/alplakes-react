@@ -249,7 +249,7 @@
     cursor: pointer;
     box-sizing: border-box;
     max-width: 100%;
-    padding: 20px 25px;
+    padding: 20px;
 }
 
 .main .lake .clickable-box:hover {
@@ -292,8 +292,8 @@
 }
 
 .main .lake .clickable-box .summary-table {
-    width: calc(100% + 50px);
-    margin-left: -25px;
+    width: calc(100% + 40px);
+    margin-left: -20px;
     margin-bottom: -20px;
     margin-top: 8px;
 }
@@ -305,8 +305,8 @@
 }
 
 .main .lake .clickable-box .skeleton-outer {
-    width: calc(100% + 50px);
-    margin-left: -25px;
+    width: calc(100% + 40px);
+    margin-left: -20px;
     margin-bottom: -20px;
     margin-top: 8px;
     position: relative;

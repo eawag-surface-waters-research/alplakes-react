@@ -21,12 +21,9 @@ import AddLayers from "./addlayers";
 
 class Sidebar extends Component {
   state = {
-    open: true,
     addLayersModal: false,
   };
-  toggleOpen = () => {
-    this.setState({ open: !this.state.open });
-  };
+
   toggleAddLayersModal = () => {
     this.setState({ addLayersModal: !this.state.addLayersModal });
   };
@@ -45,8 +42,10 @@ class Sidebar extends Component {
       depth,
       setPeriod,
       setDepth,
+      sidebar,
+      toggleSidebar,
     } = this.props;
-    const { open, addLayersModal } = this.state;
+    const { addLayersModal } = this.state;
     const images = {
       temperature: temperature_icon,
       velocity: velocity_icon,
@@ -64,11 +63,11 @@ class Sidebar extends Component {
     const layer = selection ? layers.find((l) => l.id === selection) : false;
     return (
       <React.Fragment>
-        <div className={open ? "map-sidebar" : "map-sidebar closed"}>
+        <div className={sidebar ? "map-sidebar" : "map-sidebar closed"}>
           <div className="sidebar-head">
             <div className="sidebar-title">{title}</div>
             <div className="sidebar-toggle">
-              <div className="settings-button" onClick={this.toggleOpen}>
+              <div className="settings-button" onClick={toggleSidebar}>
                 <img src={settings_icon} alt="Settings" />
               </div>
             </div>
