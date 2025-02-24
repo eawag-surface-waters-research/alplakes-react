@@ -23,7 +23,7 @@
 .main .map .layer-map .map-loading {
     position: absolute;
     z-index: 9999;
-    display: flex;
+    display: none;
     justify-content: center;
     align-items: center;
     width: 100%;
@@ -805,7 +805,7 @@
         position: fixed;
         right: 0;
         top: var(--header-height);
-        width: calc(100% - 96px);
+        width: calc(100% - 85px);
         font-size: 14px;
         border-radius: 12px 0 0 0;
     }

@@ -567,8 +567,8 @@ svg.leaflet-image-layer.leaflet-interactive path {
 /* attribution and scale controls */
 
 .leaflet-container .leaflet-control-attribution {
-  background-color: var(--box-color);
   color: var(--background-subtle-font-color);
+  opacity: 0.4;
   margin: 0;
 }
 

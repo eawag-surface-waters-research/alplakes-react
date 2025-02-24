@@ -389,6 +389,12 @@
     "FR": "Masquer les paramètres",
     "IT": "Nascondi impostazioni"
   },
+  "transectDistance": {
+    "EN": "Distance along transect",
+    "DE": "Entfernung entlang des Transekts",
+    "FR": "Distance le long du transect",
+    "IT": "Distanza lungo il transetto"
+  },
   "satelliteDescription": {
     "EN": "Filter for lakes with satellite derived products",
     "DE": "Filtern für Seen mit satellitengestützten Produkten",

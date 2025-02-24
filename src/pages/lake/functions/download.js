@@ -4,7 +4,7 @@ import pako from "pako";
 import * as d3 from "d3";
 import * as general from "./general";
 
-export const collectMetadata = async (layers) => {
+export const collectMetadata = async (layers, graphSelection) => {
   const functions = {
     threed: threedMetadata,
     satellite: satelliteMetadata,
@@ -15,9 +15,13 @@ export const collectMetadata = async (layers) => {
       layer["sources"][layer["source"]]["metadata"] = await functions[
         layer.type
       ](layer["sources"][layer["source"]]);
+      if ("graph" in layer["sources"][layer["source"]]["metadata"]) {
+        layer.graph = layer["sources"][layer["source"]]["metadata"]["graph"];
+        graphSelection = { id: layer.id, type: Object.keys(layer.graph)[0] };
+      }
     }
   }
-  return layers;
+  return { layers, graphSelection };
 };
 
 const threedMetadata = async (parameters) => {
@@ -87,11 +91,14 @@ const satelliteMetadata = async (parameters) => {
   var currentDate = includeDates[includeDates.length - 1];
   var date = available[general.formatSencastDay(currentDate)];
   var image = date.images.filter((i) => i.percent === date.max_percent)[0];
-  return { available, image, includeDates };
+  var graph = {
+    satellite_timeseries: available,
+  };
+  return { available, image, includeDates, graph };
 };
 
 const measurementsMetadata = (parameters) => {
-  return true;
+  return {};
 };
 
 export const downloadData = async (
@@ -294,6 +301,52 @@ const measurementsDownload = async (
     },
   });
   return { data: false, updates, period, datetime, depth };
+};
+
+export const getProfileAlplakesHydrodynamic = async (
+  api,
+  model,
+  lake,
+  period,
+  latlng
+) => {
+  const url = `${api}/simulations/depthtime/${model}/${lake}/${general.formatAPIDate(
+    period[0]
+  )}0000/${general.formatAPIDate(period[1])}2359/${latlng.lat}/${
+    latlng.lng
+  }`;
+  try {
+    const { data } = await axios.get(url);
+    if (data.distance > 500) {
+      return false;
+    }
+    return data;
+  } catch (e) {
+    console.error(e);
+    return false;
+  }
+};
+
+export const getTransectAlplakesHydrodynamic = async (
+  api,
+  model,
+  lake,
+  period,
+  latlng
+) => {
+  latlng.pop();
+  const url = `${api}/simulations/transect/${model}/${lake}/${general.formatAPIDatetime(
+    period[0]
+  )}/${general.formatAPIDatetime(period[1])}/${latlng
+    .map((l) => l.lat)
+    .join(",")}/${latlng.map((l) => l.lng).join(",")}?variables=temperature`;
+  try {
+    const { data } = await axios.get(url);
+    return data;
+  } catch (e) {
+    console.error(e);
+    return false;
+  }
 };
 
 export const download1DLinegraph = async (

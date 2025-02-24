@@ -1,6 +1,6 @@
 .overlay-stack {
     position: absolute;
-    bottom: 6px;
+    bottom: 12px;
     left: 12px;
     z-index: 1000;
     width: calc(100% - 24px);
@@ -29,6 +29,7 @@
 .overlay-stack .control-bar {
     width: 100%;
     pointer-events: all;
+    padding-top: 6px;
 }
 
 .overlay-stack .control-bar .play-button {

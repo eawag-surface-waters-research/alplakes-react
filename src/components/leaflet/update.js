@@ -26,7 +26,8 @@ export const update = async (
   updates,
   language,
   addControls,
-  removeControls
+  removeControls,
+  server
 ) => {
   const functions = {
     addLayer: {
@@ -56,7 +57,8 @@ export const update = async (
         layers,
         updates[i].id,
         updates[i].options,
-        language
+        language,
+        server
       );
     } else if (updates[i].event === "removeLayer") {
       genericRemoveLayer(map, layers, updates[i].id);
@@ -74,7 +76,7 @@ export const update = async (
   }
 };
 
-const addRaster = async (map, layers, id, options, language) => {
+const addRaster = async (map, layers, id, options, language, server) => {
   var defaultOptions = {
     paletteName: "vik",
     opacity: 1,
@@ -97,7 +99,7 @@ const addRaster = async (map, layers, id, options, language) => {
     layers[id]["profile_layer"].setZIndex(999);
     layers[id]["profile_control"] = L.control
       .markerDraw({
-        fire: (event) => getProfile(event, id),
+        fire: (event) => server.getProfile(event, id),
         layer: layers[id]["profile_layer"],
         markerIconUrl: leaflet_marker,
         id: map.getContainer().id,
@@ -110,7 +112,7 @@ const addRaster = async (map, layers, id, options, language) => {
     layers[id]["transect_layer"].setZIndex(999);
     layers[id]["transect_control"] = L.control
       .polylineDraw({
-        fire: (event) => getTransect(event, id),
+        fire: (event) => server.getTransect(event, id),
         layer: layers[id]["transect_layer"],
         id: map.getContainer().id,
       })
@@ -152,14 +154,6 @@ const addRaster = async (map, layers, id, options, language) => {
     }
     layers[id]["labels"] = labelLayer;
   }
-};
-
-const getTransect = (event, id) => {
-  console.log(event, id);
-};
-
-const getProfile = (event, id) => {
-  console.log(event, id);
 };
 
 const updateRaster = (map, layers, id, options, language) => {
@@ -207,7 +201,7 @@ const updateLabels = (labels_layer, raster_layer) => {
   });
 };
 
-const addVectorField = async (map, layers, id, options, language) => {
+const addVectorField = async (map, layers, id, options, language, server) => {
   var defaultOptions = {
     opacity: 1,
     interpolate: false,
@@ -264,7 +258,7 @@ const updateStreamlines = (map, layers, id, options, language) => {
   }
 };
 
-const addParticles = async (map, layers, id, options, language) => {
+const addParticles = async (map, layers, id, options, language, server) => {
   var defaultOptions = {
     opacity: 1,
   };
@@ -289,7 +283,7 @@ const updateParticles = (map, layers, id, options, language) => {
   layers[id]["particles_control"].update(false, options);
 };
 
-const addTiff = async (map, layers, id, options, language) => {
+const addTiff = async (map, layers, id, options, language, server) => {
   var defaultOptions = {
     paletteName: "vik",
     opacity: 1,
@@ -347,8 +341,7 @@ const updateWms = async (map, layers, id, options, language) => {
   }
 };
 
-const addPoints = async (map, layers, id, options, language) => {
-  console.log(options);
+const addPoints = async (map, layers, id, options, language, server) => {
   let palette = COLORS[options.displayOptions.paletteName].map((c) => {
     return { color: [c[0], c[1], c[2]], point: c[3] };
   });

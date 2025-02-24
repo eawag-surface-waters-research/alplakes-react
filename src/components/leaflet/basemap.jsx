@@ -9,6 +9,7 @@ import "./css/basemap.css";
 import Legend from "../legend/legend";
 import Loading from "../loading/loading";
 import Slider from "../sliders/slider";
+import MapGraph from "../mapgraph/mapgraph";
 
 class Basemap extends Component {
   state = {
@@ -92,8 +93,13 @@ class Basemap extends Component {
     });
   };
   async componentDidUpdate(prevProps) {
-    const { dark, updates, updated, mapId, language } = this.props;
+    const { dark, updates, updated, mapId, language, getTransect, getProfile } =
+      this.props;
     var { basemap } = this.props;
+    const server = {
+      getTransect,
+      getProfile,
+    };
     if (updates.length > 0) {
       const loading_div = document.getElementById(`loading_${mapId}`);
       loading_div.style.opacity = 0.6;
@@ -104,7 +110,8 @@ class Basemap extends Component {
         updates,
         language,
         this.addControls,
-        this.removeControls
+        this.removeControls,
+        server
       );
       loading_div.style.opacity = 0;
     }
@@ -164,8 +171,18 @@ class Basemap extends Component {
   }
 
   render() {
-    const { mapId, load, language, permanentLabel, layers, legend } =
-      this.props;
+    const {
+      mapId,
+      load,
+      language,
+      permanentLabel,
+      layers,
+      legend,
+      graph,
+      graphSelection,
+      dark,
+      selectMapGraph
+    } = this.props;
     const { controls, play, period, datetime, timestep } = this.state;
     return (
       <React.Fragment>
@@ -205,6 +222,16 @@ class Basemap extends Component {
                 />
               </div>
             </div>
+          )}
+          {graph && (
+            <MapGraph
+              layers={layers}
+              language={language}
+              graphSelection={graphSelection}
+              datetime={datetime}
+              selectMapGraph={selectMapGraph}
+              dark={dark}
+            />
           )}
         </div>
         <div id={mapId} className="leaflet-map"></div>

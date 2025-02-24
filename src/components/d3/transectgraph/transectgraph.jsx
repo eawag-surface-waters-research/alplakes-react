@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import D3HeatMap from "../heatmap/heatmap";
+import Translations from "../../../translations.json";
+import COLORS from "../../colors/colors.json";
 import { extent } from "d3";
 
 class TransectGraph extends Component {
@@ -16,20 +18,24 @@ class TransectGraph extends Component {
     return closestIndex;
   };
   render() {
-    var { data: input, options, datetime, dark } = this.props;
-    var { thresholdStep, palette, variable } = options;
-    let time = input.time.map(t => (new Date(t)).getTime())
-    let z = input["variables"][variable].data[this.closestDate(time, datetime)];
-    let zlabel = variable.charAt(0).toUpperCase() + variable.slice(1);
-    let zunits = input["variables"][variable].unit;
+    var { data: input, options, datetime, dark, language } = this.props;
+    var { paletteName } = options;
+    const palette = COLORS[paletteName].map((c) => {
+      return { color: [c[0], c[1], c[2]], point: c[3] };
+    });
+    let time = input.time.map((t) => new Date(t).getTime());
+    let z =
+      input["variables"]["temperature"].data[this.closestDate(time, datetime)];
+    let zlabel = Translations.temperature[language];
+    let zunits = input["variables"]["temperature"].unit;
     let y = input.depth.data;
-    let ylabel = "Depth";
+    let ylabel = Translations.depth[language];
     let yunits = input.depth.unit;
     let x = input.distance.data.map((t) => t / 1000);
-    let xlabel = "Distance along transect";
+    let xlabel = Translations.transectDistance[language];
     let xunits = "km";
     var data = { x, y, z };
-    let bounds = extent(input["variables"][variable].data.flat(2));
+    let bounds = extent(input["variables"]["temperature"].data.flat(2));
     return (
       <React.Fragment>
         {data && (
@@ -42,10 +48,10 @@ class TransectGraph extends Component {
             zunits={zunits}
             xunits={xunits}
             colors={palette}
-            thresholdStep={thresholdStep}
+            thresholdStep={200}
             yReverse={true}
             xReverse={false}
-            display={"contour"}
+            display={"raster"}
             maxvalue={bounds[1]}
             minvalue={bounds[0]}
             dark={dark}
