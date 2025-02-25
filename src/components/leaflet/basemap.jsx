@@ -184,7 +184,7 @@ class Basemap extends Component {
       selectMapGraph,
       graphHide,
       toggleGraphHide,
-      updateOptions
+      updateOptions,
     } = this.props;
     const { controls, play, period, datetime, timestep } = this.state;
     return (
@@ -202,17 +202,10 @@ class Basemap extends Component {
           {controls && (
             <div className="control-bar">
               <div className="play-button" onClick={this.togglePlay}>
-                <div className="playpause" id="playing">
-                  <input
-                    type="checkbox"
-                    value="None"
-                    id="playpause"
-                    name="check"
-                    checked={!play}
-                    readOnly={true}
-                  />
-                  <label htmlFor="playpause"></label>
-                </div>
+                <div
+                  className={play ? "playpause" : "playpause pause"}
+                  id="playing"
+                />
               </div>
               <div className="progress-bar">
                 <Slider
