@@ -181,7 +181,10 @@ class Basemap extends Component {
       graph,
       graphSelection,
       dark,
-      selectMapGraph
+      selectMapGraph,
+      graphHide,
+      toggleGraphHide,
+      updateOptions
     } = this.props;
     const { controls, play, period, datetime, timestep } = this.state;
     return (
@@ -231,6 +234,9 @@ class Basemap extends Component {
               datetime={datetime}
               selectMapGraph={selectMapGraph}
               dark={dark}
+              graphHide={graphHide}
+              toggleGraphHide={toggleGraphHide}
+              updateOptions={updateOptions}
             />
           )}
         </div>

@@ -112,6 +112,7 @@
 
 .main .lake .map-sidebar {
     width: 100%;
+    position: relative;
 }
 
 .main .lake .map-sidebar .map-sidebar-left {
@@ -159,7 +160,6 @@
     padding: 12px;
     border-radius: 12px;
     max-width: 60%;
-    color: #BC4459;
 }
 
 .main .lake .map-sidebar .map-sidebar-right {
@@ -208,6 +208,10 @@
     width: 100%;
 }
 
+.main .lake .map-sidebar .map-sidebar-header {
+    margin-bottom: 12px;
+}
+
 .main .lake .map-sidebar .title {
     display: inline-block;
     font-size: 22px;
@@ -224,6 +228,8 @@
     width: max-content;
     border: 1px solid transparent;
     display: inline-block;
+    position: absolute;
+    right: 0;
 }
 
 .main .lake .map-sidebar .minimise:hover {

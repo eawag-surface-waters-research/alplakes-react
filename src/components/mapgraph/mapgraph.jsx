@@ -9,7 +9,40 @@ import satelliteIcon from "../../img/satelliteicon.png";
 import profileIcon from "../../img/profile.png";
 import transectIcon from "../../img/transect.png";
 
+const formatSencastDay = (datetime) => {
+  var a = new Date(datetime);
+  var year = a.getFullYear();
+  var month = a.getMonth() + 1;
+  var date = a.getDate();
+  return `${String(year)}${month < 10 ? "0" + month : month}${
+    date < 10 ? "0" + date : date
+  }`;
+};
+
+const findClosest = (array, key, value) => {
+  let closest = null;
+  let minDiff = Infinity;
+  for (let i = 0; i < array.length; i++) {
+    let diff = Math.abs(array[i][key] - value);
+    if (diff < minDiff) {
+      minDiff = diff;
+      closest = array[i];
+    }
+  }
+  return closest;
+};
+
 class Graph extends Component {
+  setImage = (event) => {
+    var { layer, updateOptions } = this.props;
+    var { available } = layer.sources[layer.source].metadata;
+    var date = available[formatSencastDay(event)];
+    var image = findClosest(date.images, "time", event);
+    layer.sources[layer.source].metadata.image = image;
+    layer.displayOptions.url = image.url;
+    layer.displayOptions.time = image.time;
+    updateOptions(layer.id, "tiff", layer.displayOptions);
+  };
   render() {
     var { layer, plotType, language, data, dark, datetime } = this.props;
     switch (plotType) {
@@ -21,6 +54,7 @@ class Graph extends Component {
             available={data}
             language={language}
             label={Translations[layer.parameter][language]}
+            options={layer.displayOptions}
             unit={layer.unit}
             dark={dark}
             setImage={this.setImage}
@@ -50,16 +84,18 @@ class Graph extends Component {
 }
 
 class MapGraph extends Component {
-  state = {
-    hide: window.innerWidth > 500 ? false : true,
-    selected: false,
-  };
-  toggleHide = () => {
-    this.setState({ hide: !this.state.hide });
-  };
   render() {
-    var { layers, language, graphSelection, dark, datetime, selectMapGraph } =
-      this.props;
+    var {
+      layers,
+      language,
+      graphSelection,
+      dark,
+      datetime,
+      selectMapGraph,
+      graphHide,
+      toggleGraphHide,
+      updateOptions,
+    } = this.props;
     var icons = {
       satellite_timeseries: satelliteIcon,
       profile_plot: profileIcon,
@@ -77,19 +113,17 @@ class MapGraph extends Component {
         });
       }
     }
-    console.log(labels);
-    const { hide } = this.state;
     if (graphSelection) {
       var layer = layers.find((l) => l.id === graphSelection.id);
       var data = layer.graph[graphSelection.type];
-      return hide ? (
-        <div className="map-graph-icon" onClick={this.toggleHide}>
+      return graphHide ? (
+        <div className="map-graph-icon" onClick={toggleGraphHide}>
           <img src={icon} alt="Graph icon" />
         </div>
       ) : (
         <div className="map-graph">
           <div className="map-graph-header">
-            <div className="map-graph-close" onClick={this.toggleHide}>
+            <div className="map-graph-close" onClick={toggleGraphHide}>
               &#10005;
             </div>
             <div className="map-graph-title">
@@ -98,10 +132,11 @@ class MapGraph extends Component {
                   className={
                     label.active ? "map-graph-label active" : "map-graph-label"
                   }
+                  key={`${label.id}_${label.type}`}
                   onClick={() => selectMapGraph(label)}
                 >
                   <img src={icons[label.type]} alt={label.type} />
-                  {label.name}
+                  <div className="map-graph-label-text">{label.name}</div>
                 </div>
               ))}
             </div>
@@ -114,6 +149,7 @@ class MapGraph extends Component {
               language={language}
               dark={dark}
               datetime={datetime}
+              updateOptions={updateOptions}
             />
           </div>
         </div>

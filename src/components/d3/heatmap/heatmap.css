@@ -19,6 +19,14 @@
   height: 100%;
 }
 
+.heatmap-main .heatmap-graphs .heatmap-right .heatmap-inner {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+}
+
 .heatmap-main .heatmap-graphs .heatmap-right .tooltip {
   position: absolute;
   left: 0;

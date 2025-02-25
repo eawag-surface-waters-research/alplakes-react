@@ -162,7 +162,7 @@ class Graph extends Component {
     if (name.includes(":")) name = name.split(":")[1];
     return open ? (
       <div className="map-sidebar">
-        <div>
+        <div className="map-sidebar-header">
           <div className="title">{name}</div>
           <div className="minimise" onClick={this.toggle}>
             {Translations.hideDetails[language]}

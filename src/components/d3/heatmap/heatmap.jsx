@@ -238,7 +238,7 @@ class D3HeatMap extends Component {
     }.${String(year).slice(-2)}`;
   };
 
-  plotHeatMap = () => {
+  plotHeatMap = (resize) => {
     var { display, graphid, fontSize, ads } = this.state;
     if (this.props.data !== undefined) {
       try {
@@ -289,7 +289,22 @@ class D3HeatMap extends Component {
           setDownloadGraphDiv: "png" + graphid,
           levels,
         };
-        heatmap("vis" + graphid, data, options);
+        let existing = document.getElementById("vis_1_" + graphid).innerHTML;
+        if (existing === "") {
+          heatmap("vis_1_" + graphid, data, options);
+          document.getElementById("vis_1_" + graphid).style.zIndex = 2;
+          document.getElementById("vis_2_" + graphid).style.zIndex = 1;
+          if (resize) {
+            document.getElementById("vis_2_" + graphid).innerHTML = "";
+          }
+        } else {
+          heatmap("vis_2_" + graphid, data, options);
+          document.getElementById("vis_2_" + graphid).style.zIndex = 2;
+          document.getElementById("vis_1_" + graphid).style.zIndex = 1;
+          if (resize) {
+            document.getElementById("vis_1_" + graphid).innerHTML = "";
+          }
+        }
       } catch (e) {
         console.error("Heatmap failed to plot", e);
       }
@@ -303,7 +318,7 @@ class D3HeatMap extends Component {
     this.plotHeatMap();
     const myObserver = new ResizeObserver((entries) => {
       entries.forEach((entry) => {
-        this.plotHeatMap();
+        this.plotHeatMap(true);
       });
     });
     myObserver.observe(document.getElementById("vis" + this.state.graphid));
@@ -488,7 +503,10 @@ class D3HeatMap extends Component {
                   />
                 )}
               </div>
-              <div className={"heatmap-right" + xy} id={"vis" + graphid} />
+              <div className={"heatmap-right" + xy} id={"vis" + graphid}>
+                <div className="heatmap-inner" id={"vis_1_" + graphid} />
+                <div className="heatmap-inner" id={"vis_2_" + graphid} />
+              </div>
             </div>
             <div className={"heatmap-bottom" + xy}>
               {xgraph && (

@@ -84,7 +84,7 @@ L.Control.MarkerDraw = L.Control.extend({
     }
   },
 
-  _addMarker: function (e) {
+  _addMarker: async function (e) {
     var markerIcon = L.icon({
       iconUrl: this.options.markerIconUrl,
       iconSize: [25, 36],
@@ -99,7 +99,8 @@ L.Control.MarkerDraw = L.Control.extend({
     }
 
     if (typeof this.options.fire === "function") {
-      this.options.fire(e.latlng);
+      let latlng = await this.options.fire(e.latlng);
+      this._marker.setLatLng(latlng);
     }
     this._disableDrawing();
   },

@@ -37,27 +37,23 @@ class TransectGraph extends Component {
     var data = { x, y, z };
     let bounds = extent(input["variables"]["temperature"].data.flat(2));
     return (
-      <React.Fragment>
-        {data && (
-          <D3HeatMap
-            data={data}
-            ylabel={ylabel}
-            xlabel={xlabel}
-            zlabel={zlabel}
-            yunits={yunits}
-            zunits={zunits}
-            xunits={xunits}
-            colors={palette}
-            thresholdStep={200}
-            yReverse={true}
-            xReverse={false}
-            display={"raster"}
-            maxvalue={bounds[1]}
-            minvalue={bounds[0]}
-            dark={dark}
-          />
-        )}
-      </React.Fragment>
+      <D3HeatMap
+        data={data}
+        ylabel={ylabel}
+        xlabel={xlabel}
+        zlabel={zlabel}
+        yunits={yunits}
+        zunits={zunits}
+        xunits={xunits}
+        colors={palette}
+        thresholdStep={200}
+        yReverse={true}
+        xReverse={false}
+        display={"raster"}
+        maxvalue={bounds[1]}
+        minvalue={bounds[0]}
+        dark={dark}
+      />
     );
   }
 }

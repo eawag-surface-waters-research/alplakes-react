@@ -31,6 +31,7 @@ class Map extends Component {
     selection: false,
     sidebar: true,
     graphSelection: false,
+    graphHide: window.innerWidth > 500 ? false : true,
     mapId: "map_" + Math.round(Math.random() * 100000),
   };
 
@@ -61,6 +62,10 @@ class Map extends Component {
     this.setState({ selection: false });
   };
 
+  toggleGraphHide = () => {
+    this.setState({ graphHide: !this.state.graphHide });
+  };
+
   toggleSidebar = () => {
     this.setState({ sidebar: !this.state.sidebar });
   };
@@ -85,14 +90,15 @@ class Map extends Component {
     if (data) {
       layer.graph = { ...layer.graph, transect_plot: data };
       var graphSelection = { id: layer.id, type: "transect_plot" };
-      this.setState({ layers, graphSelection });
+      this.setState({ layers, graphSelection, graphHide: false });
     } else {
-      console.error(
+      window.alert(
         "Failed to collect transect from the server. Please try again."
       );
     }
     this.loaded();
   };
+
   getProfile = async (latlng, id) => {
     var { language } = this.props;
     var { period, layers } = this.state;
@@ -106,16 +112,17 @@ class Map extends Component {
       period,
       latlng
     );
+    this.loaded();
     if (data) {
       layer.graph = { ...layer.graph, profile_plot: data };
       var graphSelection = { id: layer.id, type: "profile_plot" };
-      this.setState({ layers, graphSelection });
+      this.setState({ layers, graphSelection, graphHide: false });
+      return { lat: data.lat, lng: data.lng };
     } else {
-      console.error(
+      window.alert(
         "Failed to collect profile from the server. Please try again."
       );
     }
-    this.loaded();
   };
 
   addLayers = async (add, initial) => {
@@ -198,26 +205,34 @@ class Map extends Component {
         "",
         `?layers=${active_layers.map((l) => l.id).join(",")}`
       );
-      if ("graph" in layer) {
-        delete layer.graph;
-        let graph_layers = layers.filter((l) => "graph" in l);
-        if (graph_layers.length > 0) {
-          let graph_layer = graph_layers[0];
-          graphSelection = {
-            id: graph_layer.id,
-            type: Object.keys(graph_layer.graph)[0],
-          };
-        } else {
-          graphSelection = false;
-        }
-      }
-
+      ({ layer, graphSelection } = this.removeGraph(
+        layer,
+        layers,
+        graphSelection
+      ));
       this.setState({ layers, updates, selection, graphSelection });
     }
   };
 
+  removeGraph = (layer, layers, graphSelection) => {
+    if ("graph" in layer) {
+      delete layer.graph;
+      let graph_layers = layers.filter((l) => "graph" in l);
+      if (graph_layers.length > 0) {
+        let graph_layer = graph_layers[0];
+        graphSelection = {
+          id: graph_layer.id,
+          type: Object.keys(graph_layer.graph)[0],
+        };
+      } else {
+        graphSelection = false;
+      }
+    }
+    return { layer, graphSelection };
+  };
+
   setDepth = (value) => {
-    var { layers, depth, updates } = this.state;
+    var { layers, depth, updates, graphSelection } = this.state;
     if (
       depth !== value &&
       layers.filter((l) => l.depth && l.active).length > 0
@@ -228,14 +243,21 @@ class Map extends Component {
         if (layer.depth && layer.active) {
           updates.push({ event: "removeLayer", id: layer.id });
           ids.push(layer.id);
+          ({ layer, graphSelection } = this.removeGraph(
+            layer,
+            layers,
+            graphSelection
+          ));
         }
       }
-      this.setState({ updates, depth }, () => this.addLayers(ids, false));
+      this.setState({ updates, depth, graphSelection }, () =>
+        this.addLayers(ids, false)
+      );
     }
   };
 
   setPeriod = (value) => {
-    var { layers, updates, period, datetime } = this.state;
+    var { layers, updates, period, datetime, graphSelection } = this.state;
     if (period !== value) {
       period = value;
       datetime = value[0];
@@ -244,9 +266,14 @@ class Map extends Component {
         if (layer.active && layer.playControls) {
           updates.push({ event: "removeLayer", id: layer.id });
           ids.push(layer.id);
+          ({ layer, graphSelection } = this.removeGraph(
+            layer,
+            layers,
+            graphSelection
+          ));
         }
       }
-      this.setState({ updates, datetime, period }, () =>
+      this.setState({ updates, datetime, period, graphSelection }, () =>
         this.addLayers(ids, false)
       );
     }
@@ -304,6 +331,7 @@ class Map extends Component {
       depth,
       sidebar,
       graphSelection,
+      graphHide
     } = this.state;
     var { language, dark } = this.props;
     var title = "";
@@ -359,6 +387,9 @@ class Map extends Component {
               getTransect={this.getTransect}
               getProfile={this.getProfile}
               selectMapGraph={this.selectMapGraph}
+              graphHide={graphHide}
+              toggleGraphHide={this.toggleGraphHide}
+              updateOptions={this.updateOptions}
             />
             <div className="map-loading" id={`map_loading_${mapId}`}>
               <div className="map-loading-inner">
