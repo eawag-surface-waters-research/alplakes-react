@@ -163,6 +163,7 @@ class Doy extends Component {
                   {...display}
                   dark={dark}
                   language={language}
+                  noYear={true}
                 />
                 <DoyLegend
                   min_year={min_year}

@@ -166,6 +166,7 @@ const processOptions = (div, data, userOptions) => {
     { name: "setDownloadGraphDiv", default: false, verify: verifyString },
     { name: "hover", default: false, verify: verifyFunction },
     { name: "onClick", default: false, verify: verifyFunction },
+    { name: "noYear", default: false, verify: verifyBool },
     {
       name: "backgroundColor",
       default: false,
@@ -382,7 +383,7 @@ const addBottomAxis = (svg, xDomain, options) => {
   var base = ax.copy();
   var axis = axisBottom(ax).ticks(5);
   if (options.xTime) {
-    axis.tickFormat(multiFormat);
+    axis.tickFormat(options.noYear ? multiFormatNoYear : multiFormat);
   } else if (scientificNotation(xDomain[0], xDomain[1])) {
     axis.tickFormat(format(".1e"));
   }
@@ -449,7 +450,7 @@ const addTopAxis = (svg, x2Domain, options) => {
   var base = ax.copy();
   var axis = axisTop(ax).ticks(5);
   if (options.xTime) {
-    axis.tickFormat(multiFormat);
+    axis.tickFormat(options.noYear ? multiFormatNoYear : multiFormat);
   } else if (scientificNotation(x2Domain[0], x2Domain[1])) {
     axis.tickFormat(format(".1e"));
   }
@@ -515,7 +516,7 @@ const addLeftAxis = (svg, yDomain, options) => {
   var base = ax.copy();
   var axis = axisLeft(ax).ticks(5);
   if (options.yTime) {
-    axis.tickFormat(multiFormat);
+    axis.tickFormat(options.noYear ? multiFormatNoYear : multiFormat);
   } else if (scientificNotation(yDomain[0], yDomain[1])) {
     axis.tickFormat(format(".1e"));
   }
@@ -574,7 +575,7 @@ const addRightAxis = (svg, y2Domain, options) => {
   var base = ax.copy();
   var axis = axisRight(ax).ticks(5);
   if (options.yTime) {
-    axis.tickFormat(multiFormat);
+    axis.tickFormat(options.noYear ? multiFormatNoYear : multiFormat);
   } else if (scientificNotation(y2Domain[0], y2Domain[1])) {
     axis.tickFormat(format(".1e"));
   }
@@ -721,7 +722,7 @@ const addTooltip = (data, div, xAxis, yAxis, options) => {
         var yu = "";
 
         if (options.xTime) {
-          xval = formatDate(data[idx].x[idy], lang);
+          xval = formatDate(data[idx].x[idy], lang, options.noYear);
         } else {
           xval = formatNumber(data[idx].x[idy]);
           if (typeof options.xUnit === "string") {
@@ -734,7 +735,7 @@ const addTooltip = (data, div, xAxis, yAxis, options) => {
         }
 
         if (options.yTime) {
-          yval = formatDate(data[idx].y[idy], lang);
+          yval = formatDate(data[idx].y[idy], lang, options.noYear);
         } else {
           yval = formatNumber(data[idx].y[idy]);
           if (typeof options.yUnit === "string") {
@@ -1304,6 +1305,32 @@ const multiFormat = (date) => {
       : timeYear(date) < date
       ? formatMonth
       : formatYear
+  )(date);
+};
+
+const multiFormatNoYear = (date) => {
+  var formatMillisecond = timeFormat(".%L"),
+    formatSecond = timeFormat(":%S"),
+    formatMinute = timeFormat("%H:%M"),
+    formatHour = timeFormat("%H:%M"),
+    formatDay = timeFormat("%d.%m"),
+    formatWeek = timeFormat("%d.%m"),
+    formatMonth = timeFormat("%B");
+
+  return (
+    timeSecond(date) < date
+      ? formatMillisecond
+      : timeMinute(date) < date
+      ? formatSecond
+      : timeHour(date) < date
+      ? formatMinute
+      : timeDay(date) < date
+      ? formatHour
+      : timeMonth(date) < date
+      ? timeWeek(date) < date
+        ? formatDay
+        : formatWeek
+      : formatMonth
   )(date);
 };
 

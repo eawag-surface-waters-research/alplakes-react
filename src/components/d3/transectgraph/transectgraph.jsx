@@ -52,6 +52,7 @@ class TransectGraph extends Component {
         display={"raster"}
         maxvalue={bounds[1]}
         minvalue={bounds[0]}
+        bcolor={false}
         dark={dark}
       />
     );

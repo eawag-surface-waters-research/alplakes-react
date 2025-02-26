@@ -235,6 +235,7 @@ class D3LineGraph extends Component {
       marginTop,
       marginRight,
       marginBottom,
+      noYear,
     } = this.props;
     var { graphid, fontSize } = this.state;
     if (this.props.header !== false) fontSize = this.props.fontSize;
@@ -286,6 +287,7 @@ class D3LineGraph extends Component {
       setDownloadGraphDiv: "png" + graphid,
       onClick: onClick,
       legend: legend,
+      noYear,
     };
     if (marginLeft) options["marginLeft"] = marginLeft;
     if (marginTop) options["marginTop"] = marginTop;

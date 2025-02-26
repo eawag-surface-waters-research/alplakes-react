@@ -100,11 +100,7 @@ class Search extends Component {
         <div className="search-bar">
           <input
             type="search"
-            placeholder={
-              Translations.search[language] +
-              " " +
-              Translations.lakes[language].toLowerCase()
-            }
+            placeholder={Translations.searchLakes[language]}
             value={search}
             onChange={setSearch}
             onKeyDown={this.handleKeyDown}

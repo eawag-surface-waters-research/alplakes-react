@@ -11,6 +11,12 @@
     "FR": "Lacs",
     "IT": "Laghi"
   },
+  "searchLakes": {
+    "EN": "Search lakes",
+    "DE": "See suchen",
+    "FR": "Recherche de lacs",
+    "IT": "Ricerca laghi"
+  }, 
   "tagline": {
     "EN": "Forecasts and monitoring of alpine lakes",
     "DE": "Prognosen und Monitoring von Alpenseen",
@@ -1263,7 +1269,7 @@
   },
   "daysAgo": {
     "EN": "# days ago",
-    "DE": "vor # Tage",
+    "DE": "vor # Tagen",
     "FR": "Il y a # jours",
     "IT": "# giorni fa"
   },
