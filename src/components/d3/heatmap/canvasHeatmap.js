@@ -155,6 +155,13 @@ class CanvasHeatmap {
   }
   _plot() {
     try {
+      this._vpi.style("opacity", 0);
+      this._tooltip.style("opacity", 0);
+      select("#zpointer_" + this._div).style("opacity", 0);
+      if (this.options.hover)
+        this.options.hover({ mousex: false, mousey: false });
+    } catch (e) {}
+    try {
       setTimeout(() => {
         this._context.clearRect(0, 0, this._canvasWidth, this._canvasHeight);
         if (this.options.contour) {
@@ -783,6 +790,8 @@ class CanvasHeatmap {
       if (this.options.hover)
         this.options.hover({ mousex: false, mousey: false });
     });
+    this._tooltip = tooltip;
+    this._vpi = vpi;
   }
   _addZoom() {
     this._zoom = d3zoom()
