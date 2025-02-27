@@ -60,6 +60,7 @@ export const update = async (
         language,
         server
       );
+    } else if (updates[i].event === "loaded") {
     } else if (updates[i].event === "removeLayer") {
       genericRemoveLayer(map, layers, updates[i].id);
     } else if (updates[i].event === "addPlay") {

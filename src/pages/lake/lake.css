@@ -492,6 +492,7 @@
     font-weight: 600;
     font-family: DM_Sans, Frutiger Neue LT Pro, Arial, sans-serif;
     padding-bottom: 5px;
+    max-width: 150px;
 }
 
 .main .lake .satellite .satellite-maps .satellite-inner .map .label .time {

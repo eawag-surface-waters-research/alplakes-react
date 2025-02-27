@@ -87,14 +87,22 @@ const satelliteMetadata = async (parameters) => {
   }
   var images = general.filterImages(available, 10, []);
   var includeDates = Object.values(images).map((m) => m.time);
-  includeDates.sort(general.compareDates);
-  var currentDate = includeDates[includeDates.length - 1];
-  var date = available[general.formatSencastDay(currentDate)];
-  var image = date.images.filter((i) => i.percent === date.max_percent)[0];
-  var graph = {
-    satellite_timeseries: available,
-  };
-  return { available, image, includeDates, graph };
+  if (includeDates.length === 0) {
+    images = general.filterImages(available, 0, []);
+    includeDates = Object.values(images).map((m) => m.time);
+  }
+  if (includeDates.length === 0) {
+    return { available, image: false, includeDates };
+  } else {
+    includeDates.sort(general.compareDates);
+    var currentDate = includeDates[includeDates.length - 1];
+    var date = available[general.formatSencastDay(currentDate)];
+    var image = date.images.filter((i) => i.percent === date.max_percent)[0];
+    var graph = {
+      satellite_timeseries: available,
+    };
+    return { available, image, includeDates, graph };
+  }
 };
 
 const measurementsMetadata = (parameters) => {
@@ -312,9 +320,7 @@ export const getProfileAlplakesHydrodynamic = async (
 ) => {
   const url = `${api}/simulations/depthtime/${model}/${lake}/${general.formatAPIDate(
     period[0]
-  )}0000/${general.formatAPIDate(period[1])}2359/${latlng.lat}/${
-    latlng.lng
-  }`;
+  )}0000/${general.formatAPIDate(period[1])}2359/${latlng.lat}/${latlng.lng}`;
   try {
     const { data } = await axios.get(url);
     if (data.distance > 500) {

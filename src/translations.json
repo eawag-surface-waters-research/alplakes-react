@@ -239,6 +239,12 @@
     "FR": "Plus",
     "IT": "Di più"
   },
+  "noProducts": {
+    "EN": "No products available",
+    "DE": "Keine Produkte verfügbar",
+    "FR": "Aucun produit disponible",
+    "IT": "Nessun prodotto disponibile"
+  },
   "watertemperature": {
     "EN": "Water temperature",
     "DE": "Wassertemperatur",

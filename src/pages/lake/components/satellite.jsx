@@ -5,6 +5,7 @@ import { daysAgo } from "../functions/general";
 import Basemap from "../../../components/leaflet/basemap";
 import Information from "../../../components/information/information";
 import MapButton from "../../../components/mapbutton/mapbutton";
+import Translations from "../../../translations.json";
 
 class Satellite extends Component {
   state = {
@@ -12,6 +13,7 @@ class Satellite extends Component {
     updates: [],
     mapId: "map_" + Math.round(Math.random() * 100000),
     image: {},
+    available: true,
   };
 
   ref = createRef();
@@ -36,7 +38,7 @@ class Satellite extends Component {
 
   onVisible = async () => {
     var { parameters } = this.props;
-    var { updates, image } = this.state;
+    var { updates, image, available } = this.state;
     for (let i = 0; i < parameters.metadata.length; i++) {
       var { data } = await axios.get(
         CONFIG.sencast_bucket + parameters.metadata[i]
@@ -52,20 +54,22 @@ class Satellite extends Component {
       }
     }
     if (!("dt" in image)) {
-      console.error("No images found in the metadata");
-      return;
+      updates.push({
+        event: "loaded",
+      });
+      available = false;
+    } else {
+      const { satellite, lake } = this.imageProperties(image.k);
+      const url = `${CONFIG.sencast_bucket}/alplakes/cropped/${satellite}/${lake}/${image.k}`;
+      parameters.displayOptions["unit"] = parameters.unit;
+      updates.push({
+        event: "addLayer",
+        type: "tiff",
+        id: "satellite_" + parameters.parameter,
+        options: { url: url, displayOptions: parameters.displayOptions },
+      });
     }
-    const { satellite, lake } = this.imageProperties(image.k);
-    const url = `${CONFIG.sencast_bucket}/alplakes/cropped/${satellite}/${lake}/${image.k}`;
-    parameters.displayOptions["unit"] = parameters.unit;
-    updates.push({
-      event: "addLayer",
-      type: "tiff",
-      id: "satellite_" + parameters.parameter,
-      options: { url: url, displayOptions: parameters.displayOptions },
-    });
-
-    this.setState({ updates, image });
+    this.setState({ updates, image, available });
   };
 
   updated = () => {
@@ -95,8 +99,12 @@ class Satellite extends Component {
   }
 
   render() {
-    var { updates, mapId, image } = this.state;
+    var { updates, mapId, image, available } = this.state;
     var { parameters, language, dark, bounds, id } = this.props;
+    if ("dt" in image) {
+      var p10 = Math.round(image.p10 * 10) / 10;
+      var p90 = Math.round(image.p90 * 10) / 10;
+    }
     return (
       <div ref={this.ref} className="satellite-inner">
         <h3>
@@ -122,10 +130,14 @@ class Satellite extends Component {
           {"dt" in image && (
             <div className="label">
               <div className="value">
-                {Math.round(image.p10 * 10) / 10} -{" "}
-                {Math.round(image.p90 * 10) / 10} {image.unit}
+                {p10 === p90 ? p10 : `${p10} - ${p90}`} {image.unit}
               </div>
               <div className="time">{daysAgo(image.dt, language)} </div>
+            </div>
+          )}
+          {!available && (
+            <div className="label">
+              <div className="value">{Translations.noProducts[language]}</div>
             </div>
           )}
         </div>

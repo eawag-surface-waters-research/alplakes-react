@@ -284,7 +284,7 @@ def satellite_layers(key, sd):
                     "max": 12,
                     "dataMin": 0,
                     "dataMax": 12,
-                    "coverage": 10
+                    "coverage": 0,
                 },
                 "sources": {
                     "sencast": {
@@ -410,7 +410,7 @@ def satellite_layers(key, sd):
             )
         layers.append(layer)
 
-    if "sentinel3" in sd and "forel_ule" in sd["sentinel3"]:
+    if ("sentinel3" in sd and "forel_ule" in sd["sentinel3"]) or ("sentinel2" in sd and "forel_ule" in sd["sentinel2"]):
         layer = {
           "id": "satellite_forelule",
           "type": "satellite",
@@ -446,12 +446,20 @@ def satellite_layers(key, sd):
             }
           }
         }
-        layer["sources"][layer["source"]]["models"].append(
-            {
-                "model": "Sentinel3",
-                "metadata": "/alplakes/metadata/sentinel3/{}/forel_ule.json".format(key)
-            }
-        )
+        if "sentinel3" in sd and "forel_ule" in sd["sentinel3"]:
+            layer["sources"][layer["source"]]["models"].append(
+                {
+                    "model": "Sentinel3",
+                    "metadata": "/alplakes/metadata/sentinel3/{}/forel_ule.json".format(key)
+                }
+            )
+        if "sentinel2" in sd and "forel_ule" in sd["sentinel2"]:
+            layer["sources"][layer["source"]]["models"].append(
+                {
+                    "model": "Sentinel2",
+                    "metadata": "/alplakes/metadata/sentinel2/{}/forel_ule.json".format(key)
+                }
+            )
         layers.append(layer)
     
     if "collection" in sd and "ST" in sd["collection"]:
