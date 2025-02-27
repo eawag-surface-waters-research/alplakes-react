@@ -13,7 +13,8 @@ import threedIcon from "../../img/3dicon.png";
 import onedIcon from "../../img/1dicon.png";
 import satelliteIcon from "../../img/satelliteicon.png";
 import insituIcon from "../../img/insituicon.png";
-import sortIcon from "../../img/sort.png";
+import dropdownIcon from "../../img/sort.png";
+import sortIcon from "../../img/sortdesc.png";
 import {
   onMouseOver,
   onMouseOut,
@@ -84,6 +85,7 @@ class Search extends Component {
     var {
       setFilter,
       setSearch,
+      clearSearch,
       search,
       language,
       filters,
@@ -99,13 +101,23 @@ class Search extends Component {
       <div className="search">
         <div className="search-bar">
           <input
-            type="search"
+            type="text"
             placeholder={Translations.searchLakes[language]}
             value={search}
             onChange={setSearch}
             onKeyDown={this.handleKeyDown}
             id="search"
           />
+          <div
+            className={
+              search.length > 0
+                ? "search-clear-text active"
+                : "search-clear-text"
+            }
+            onClick={clearSearch}
+          >
+            &#10005;
+          </div>
           <img src={searchIcon} alt="Search Icon" className="search-icon" />
           <div className="description">{Translations.tagline[language]}</div>
         </div>
@@ -125,13 +137,17 @@ class Search extends Component {
           ))}
         </div>
         <div className="sort">
-          <img
-            src={sortIcon}
-            alt="Sort"
-            onClick={toggleAscending}
-            className={ascending ? "asc" : ""}
-          />
-          <select value={sort} onChange={setSort}>
+          {sort !== "" ? (
+            <img
+              src={sortIcon}
+              alt="Sort"
+              onClick={toggleAscending}
+              className={ascending ? "sort-icon asc" : "sort-icon"}
+            />
+          ) : (
+            <img src={dropdownIcon} alt="Dropdown" className="dropdown-icon" />
+          )}
+          <select value={sort} onChange={setSort} id="sort-select">
             <option value="" disabled>
               Sort
             </option>
@@ -331,6 +347,13 @@ class Home extends Component {
     list = searchList(search, list);
     this.setState({ list });
   };
+  clearSearch = () => {
+    var { list } = this.state;
+    var search = "";
+    this.setState({ search });
+    list = searchList(search, list);
+    this.setState({ list });
+  };
   setSort = (event) => {
     this.setState({ sort: event.target.value });
   };
@@ -507,6 +530,7 @@ class Home extends Component {
             <SearchWithNavigate
               setFilter={this.setFilter}
               setSearch={this.setSearch}
+              clearSearch={this.clearSearch}
               search={search}
               language={language}
               filters={filters}

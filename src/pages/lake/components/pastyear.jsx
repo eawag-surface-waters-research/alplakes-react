@@ -20,6 +20,8 @@ class PastYear extends Component {
     start_date: false,
     end_date: false,
     display: false,
+    customPeriod: false,
+    loading: true,
   };
 
   ref = createRef();
@@ -47,40 +49,60 @@ class PastYear extends Component {
   }
 
   process = async (model, variable) => {
-    const { parameters, language } = this.props;
-    const { data, start_date, end_date, start, end } = await downloadPastYear(
-      parameters[model].model.toLowerCase(),
-      parameters[model].key,
-      variable.key,
-      true
-    );
-    var options = {
-      period: [start, end],
-      start_date,
-      end_date,
-      xlabel: "time",
-      xunits: "",
-      ylabel: "Depth",
-      yunits: "m",
-      zlabel: Translations[variable.name][language],
-      zunits: variable.unit,
-    };
-    const paletteName =
-      "paletteName" in parameters[model].displayOptions
-        ? parameters[model].displayOptions.paletteName
-        : "vik";
-    options["palette"] = COLORS[paletteName].map((c) => {
-      return { color: [c[0], c[1], c[2]], point: c[3] };
-    });
-    const display = { ...parameters[model].displayOptions, ...options, data };
-    this.setState({
-      model,
-      variable,
-      start,
-      end,
-      start_date,
-      end_date,
-      display,
+    this.setState({ loading: true }, async () => {
+      const { parameters, language } = this.props;
+      var { start_date, end_date, start, end, customPeriod, display } =
+        this.state;
+      var data;
+      if (customPeriod === false) {
+        ({ data, start_date, end_date, start, end } = await downloadPastYear(
+          parameters[model].model.toLowerCase(),
+          parameters[model].key,
+          variable.key,
+          true
+        ));
+      } else {
+        data = await download1DHeatmap(
+          parameters[model].model.toLowerCase(),
+          parameters[model].key,
+          variable.key,
+          start,
+          end
+        );
+      }
+      var options = {
+        period: [start, end],
+        start_date,
+        end_date,
+        xlabel: "time",
+        xunits: "",
+        ylabel: "Depth",
+        yunits: "m",
+        zlabel: Translations[variable.name][language],
+        zunits: variable.unit,
+      };
+      if (display && "palette" in display) {
+        options["palette"] = display.palette;
+      } else {
+        const paletteName =
+          "paletteName" in parameters[model].displayOptions
+            ? parameters[model].displayOptions.paletteName
+            : "vik";
+        options["palette"] = COLORS[paletteName].map((c) => {
+          return { color: [c[0], c[1], c[2]], point: c[3] };
+        });
+      }
+      display = { ...parameters[model].displayOptions, ...options, data };
+      this.setState({
+        model,
+        variable,
+        start,
+        end,
+        start_date,
+        end_date,
+        display,
+        loading: false,
+      });
     });
   };
 
@@ -108,18 +130,26 @@ class PastYear extends Component {
   };
 
   setPeriod = async (event) => {
-    const { parameters } = this.props;
-    const { model, variable, display } = this.state;
-    const start = new Date(event[0]);
-    const end = new Date(event[1]);
-    display.data = await download1DHeatmap(
-      parameters[model].model.toLowerCase(),
-      parameters[model].key,
-      variable.key,
-      start,
-      end
-    );
-    this.setState({ display, start, end });
+    this.setState({ loading: true }, async () => {
+      const { parameters } = this.props;
+      const { model, variable, display } = this.state;
+      const start = new Date(event[0]);
+      const end = new Date(event[1]);
+      display.data = await download1DHeatmap(
+        parameters[model].model.toLowerCase(),
+        parameters[model].key,
+        variable.key,
+        start,
+        end
+      );
+      this.setState({
+        display,
+        start,
+        end,
+        customPeriod: true,
+        loading: false,
+      });
+    });
   };
 
   setPalette = (event) => {
@@ -131,8 +161,16 @@ class PastYear extends Component {
 
   render() {
     var { language, dark, parameters } = this.props;
-    var { display, model, variable, start, end, start_date, end_date } =
-      this.state;
+    var {
+      display,
+      model,
+      variable,
+      start,
+      end,
+      start_date,
+      end_date,
+      loading,
+    } = this.state;
     const description = {
       EN: "The past year’s data illustrates the parameter’s development throughout the entire water column. It highlights lake stratification and mixing events. All data is derived from calibrated model simulations rather than in-situ measurements.",
       DE: "Die Daten des letzten Jahres veranschaulichen die Entwicklung des Parameters in der gesamten Wassersäule. Sie heben die Schichtung des Sees und Durchmischungsereignisse hervor. Alle Daten stammen aus kalibrierten Modellsimulationen und nicht aus In-situ-Messungen.",
@@ -147,11 +185,12 @@ class PastYear extends Component {
         </h3>
         <div className="map-sidebar">
           <div className="map-sidebar-left">
-            {display ? (
+            {display && (
               <div className="graph-container">
                 <DatasetHeatmap {...display} dark={dark} language={language} />
               </div>
-            ) : (
+            )}
+            {loading && (
               <div className="loading-graph">
                 <Loading />
               </div>

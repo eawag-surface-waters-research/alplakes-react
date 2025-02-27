@@ -367,7 +367,7 @@ const addPoints = async (map, layers, id, options, language, server) => {
             className: "custom-square-marker",
             html: `<div style="background-color: rgb(${color[0]},${color[1]},${
               color[2]
-            });opacity: ${station.properties.recent ? 1 : 0.3}"></div>`,
+            });opacity: ${station.properties.recent ? 1 : 0.2}"></div>`,
             iconSize: [10, 10],
             iconAnchor: [5, 5],
           }),
@@ -382,7 +382,7 @@ const addPoints = async (map, layers, id, options, language, server) => {
             className: "custom-circle-marker",
             html: `<div style="background-color: rgb(${color[0]},${color[1]},${
               color[2]
-            });opacity: ${station.properties.recent ? 1 : 0.3}"></div>`,
+            });opacity: ${station.properties.recent ? 1 : 0.2}"></div>`,
             iconSize: [14, 14],
             iconAnchor: [7, 7],
           }),

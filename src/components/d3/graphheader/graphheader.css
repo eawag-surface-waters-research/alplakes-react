@@ -66,7 +66,7 @@
   padding: 3px 5px;
   width: 50px;
   background-color: var(--highlight-color);
-  display: inline-block;
+  display: block;
   color: white;
   border-radius: 6px;
   border: none;

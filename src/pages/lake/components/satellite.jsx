@@ -137,7 +137,7 @@ class Satellite extends Component {
           )}
           {!available && (
             <div className="label">
-              <div className="value">{Translations.noProducts[language]}</div>
+              <div className="time">{Translations.noProducts[language]}</div>
             </div>
           )}
         </div>

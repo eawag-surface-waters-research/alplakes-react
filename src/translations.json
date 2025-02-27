@@ -240,10 +240,22 @@
     "IT": "Di più"
   },
   "noProducts": {
-    "EN": "No products available",
-    "DE": "Keine Produkte verfügbar",
-    "FR": "Aucun produit disponible",
-    "IT": "Nessun prodotto disponibile"
+    "EN": "No recent product available",
+    "DE": "Kein aktuelles Produkt verfügbar",
+    "FR": "Aucun produit récent disponible",
+    "IT": "Nessun prodotto recente disponibile"
+  },
+  "impressum": {
+    "EN": "Imprint",
+    "DE": "Impressum",
+    "FR": "Impressum",
+    "IT": "Impressum"
+  },
+  "notAvail": {
+    "EN": "No data is available for the selected period.",
+    "DE": "Für den gewählten Zeitraum sind keine Daten verfügbar.",
+    "FR": "Aucune donnée n'est disponible pour la période sélectionnée.",
+    "IT": "Non sono disponibili dati per il periodo selezionato."
   },
   "watertemperature": {
     "EN": "Water temperature",

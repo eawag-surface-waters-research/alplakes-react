@@ -32,7 +32,7 @@
   width: 100%;
   font-size: 18px;
   font-weight: 400;
-  padding: 12px 18px 32px 70px;
+  padding: 12px 32px 32px 70px;
   background-color: var(--box-color);
   color: var(--box-font-color);
   border-radius: 50px;
@@ -61,6 +61,24 @@
 
 .main .home .content .search input::-ms-input-placeholder {
   color: var(--box-font-color);
+}
+
+.main .home .content .search .search-bar .search-clear-text {
+  position: absolute;
+  right: 32px;
+  top: 10px;
+  display: none;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.main .home .content .search .search-bar .search-clear-text:hover {
+  font-weight: bold;
+  color: var(--highlight-color);
+}
+
+.main .home .content .search .search-bar .search-clear-text.active {
+  display: block;
 }
 
 .main .home .content .search .search-bar img.search-icon {
@@ -153,11 +171,24 @@
   position: relative;
 }
 
-.main .home .content .search .sort img {
+.main .home .content .search .sort img.dropdown-icon {
+  position: absolute;
+  left: 0;
+  top: 0;
+  pointer-events: none;
   width: 20px;
   padding: calc(var(--padding) / 4) 0 calc(var(--padding) / 4) 12px;
-  display: inline-block;
   margin-top: calc(var(--padding) / 4 + 2px);
+  cursor: pointer;
+}
+
+.main .home .content .search .sort img.sort-icon {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 17px;
+  padding: calc(var(--padding) / 4) 0 calc(var(--padding) / 4) 12px;
+  margin-top: calc(var(--padding) / 4 - 2px);
   cursor: pointer;
 }
 
@@ -173,12 +204,12 @@
   color: var(--background-subtle-font-color);
   appearance: none;
   text-align: left;
-  padding: calc(var(--padding) / 2) 10px calc(var(--padding) / 4) 10px;
+  padding: calc(var(--padding) / 2) 10px calc(var(--padding) / 4) 42px;
   display: inline-block;
   font-size: 16px;
 }
 
-.main .home .content .search .sort select:hover {
+.main .home .content .search .sort:hover select {
   color: var(--highlight-color);
 }
 
@@ -854,8 +885,13 @@
   }
 
   .main .home .content .search .sort select {
-    padding: calc(var(--padding) / 2) 10px calc(var(--padding) / 2) 10px;
     font-size: 14px;
+    margin-left: 6px;
+    padding: calc(var(--padding) / 2) 10px calc(var(--padding)/2) 36px;
+  }
+
+  .main .home .content .search .search-bar .search-clear-text {
+    right: 18px;
   }
 
   .main .home .content .search .results {

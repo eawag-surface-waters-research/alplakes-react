@@ -42,6 +42,7 @@ class Graph extends Component {
     variables: false,
     depth: false,
     depths: false,
+    noData: false,
   };
   toggle = () => {
     this.setState({ open: !this.state.open });
@@ -63,6 +64,7 @@ class Graph extends Component {
     var x = data.time.map((t) => new Date(t));
     var y = data["variables"][variable.key]["data"];
     display.data = { x, y };
+    display.noData = y.every((item) => item === null)
     this.setState({ start, end, display });
   };
 
@@ -81,6 +83,7 @@ class Graph extends Component {
     var x = data.time.map((t) => new Date(t));
     var y = data["variables"][variable.key]["data"];
     display.data = { x, y };
+    display.noData = y.every((item) => item === null)
     this.setState({ depth, display });
   };
 
@@ -102,6 +105,7 @@ class Graph extends Component {
     display.data = { x, y };
     display.ylabel = variable.description;
     display.yunits = variable.unit.replace("deg", "°");
+    display.noData = y.every((item) => item === null)
     this.setState({ variable, display });
   };
   componentDidUpdate() {
@@ -124,6 +128,7 @@ class Graph extends Component {
         data: { x: data.dt, y: data.value },
         curve: true,
         grid: true,
+        noData: data.value.every((item) => item === null)
       };
       this.setState({
         display,
@@ -134,7 +139,7 @@ class Graph extends Component {
         variable,
         variables,
         depth,
-        depths,
+        depths
       });
     }
   }

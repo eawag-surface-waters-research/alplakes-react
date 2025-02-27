@@ -223,9 +223,8 @@ const processOptions = (div, data, userOptions) => {
       options.dualaxisColor = d.lineColor;
     }
   }
-
   if (!("marginLeft" in userOptions))
-    options.marginLeft = options.fontSize * 3 + 10;
+    options.marginLeft = options.fontSize * 3 + 20;
   if (!("marginRight" in userOptions)) {
     if (options.dualaxis === "y2") {
       options.marginRight = options.fontSize * 3 + 10;

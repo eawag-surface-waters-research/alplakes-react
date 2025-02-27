@@ -4,11 +4,13 @@ import dark_icon from "../../img/dark.png";
 import light_icon from "../../img/light.png";
 import Toggle from "../sliders/toggle";
 import eawag_logo from "../../img/eawag_logo.png";
+import Translations from "../../translations.json";
 import "./footer.css";
 
 class Footer extends Component {
   render() {
-    var { dark, toggleDark, small, medium } = this.props;
+    var { dark, toggleDark, small, medium, language } = this.props;
+    const currentYear = new Date().getFullYear();
     return (
       <React.Fragment>
         <div
@@ -27,8 +29,8 @@ class Footer extends Component {
           </div>
           <NavLink to="/about">
             <div className="middle">
-              Impressum
-              <div className="copywrite">&copy; 2024 Alplakes v2.0</div>
+              {Translations.impressum[language]}
+              <div className="copywrite">&copy; {currentYear} Alplakes v2.0</div>
             </div>
           </NavLink>
           <div className="switch" title={dark ? "Light mode" : "Dark mode"}>

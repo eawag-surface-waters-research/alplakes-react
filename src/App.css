@@ -559,12 +559,18 @@ h4 {
 .main .setting .value button {
   display: inline-block;
   background-color: var(--box-color);
-  border: none;
+  box-shadow: var(--bottom-shadow);
+  border: 1px solid transparent;
   border-radius: 8px;
   cursor: pointer;
   font-size: 14px;
   margin-left: 12px;
   padding: 4px 8px;
+}
+
+.main .setting .value button:hover {
+  border: 1px solid var(--border-color);
+  box-shadow: none;
 }
 
 .main .setting select {

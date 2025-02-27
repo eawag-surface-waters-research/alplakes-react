@@ -142,6 +142,11 @@
     justify-content: center;
     align-items: center;
     height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    z-index: 999;
 }
 
 .main .lake .map-sidebar .map-sidebar-left .warning-popup {
@@ -485,6 +490,7 @@
     right: calc(var(--padding) / 2);
     padding: 12px;
     border-radius: 12px;
+    max-width: 150px;
     text-align: center;
 }
 
@@ -492,7 +498,6 @@
     font-weight: 600;
     font-family: DM_Sans, Frutiger Neue LT Pro, Arial, sans-serif;
     padding-bottom: 5px;
-    max-width: 150px;
 }
 
 .main .lake .satellite .satellite-maps .satellite-inner .map .label .time {
@@ -533,6 +538,18 @@
     flex-grow: 1;
     padding: 30px 30px 10px 20px;
     box-sizing: border-box;
+}
+
+.main .lake .map-sidebar .map-sidebar-left .line-graph-container .dataset-linegraph .dataset-linegraph-label {
+    position: absolute;
+    background-color: var(--box-color);
+    max-width: 180px;
+    z-index: 9;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 12px;
+    border-radius: 12px;
 }
 
 .main .lake .map-sidebar .map-sidebar-left .line-graph-container .graph-legend {

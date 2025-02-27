@@ -22,7 +22,7 @@
     cursor: pointer;
     transition: all .1s 0s ease;
     background-color: var(--box-color);
-    width: 50px;
+    width: 45px;
     height: 40px;
     text-align: center;
     box-sizing: border-box;
@@ -68,7 +68,7 @@
 .map-graph .map-graph-content {
     height: calc(100% - 40px);
     width: 100%;
-    padding: 12px 20px 0 20px;
+    padding: 16px 20px 0 20px;
     box-sizing: border-box;
     background-color: var(--box-color);
     border-radius: 0 0 12px 12px;

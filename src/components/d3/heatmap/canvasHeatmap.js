@@ -257,9 +257,9 @@ class CanvasHeatmap {
     }
 
     if (this.options.setDownloadGraphDiv) {
-      select("#" + this.options.setDownloadGraphDiv).on("click", function () {
-        this._downloadGraph();
-      });
+      select("#" + this.options.setDownloadGraphDiv).on("click", () =>
+        this._downloadGraph()
+      );
     }
 
     timeFormatDefaultLocale(languageOptions(this.options.language));
@@ -579,6 +579,8 @@ class CanvasHeatmap {
 
     canvasout.width = this._width;
     canvasout.height = this._height;
+    var { marginLeft, marginTop } = this.options;
+    var div = this._div;
 
     var image = new Image();
     image.onerror = function () {
@@ -587,12 +589,12 @@ class CanvasHeatmap {
     image.onload = function () {
       contextout.drawImage(image, 0, 0);
       contextout.drawImage(
-        document.getElementById("canvas_" + this._div),
-        this.options.marginLeft,
-        this.options.marginTop
+        document.getElementById("canvas_" + div),
+        marginLeft,
+        marginTop
       );
       var a = document.createElement("a");
-      a.download = "heatmap_" + this._div + ".png";
+      a.download = "heatmap_" + div + ".png";
       a.href = canvasout.toDataURL("image/png");
       a.click();
     };
