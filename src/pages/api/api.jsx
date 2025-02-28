@@ -23,7 +23,7 @@ class API extends Component {
     }
   }
   render() {
-    var { language } = this.props;
+    const language = "EN";
     var { error } = this.state;
     return (
       <React.Fragment>

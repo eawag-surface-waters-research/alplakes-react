@@ -51,16 +51,16 @@
     {
       "parameter": "secchi",
       "parameter_name": {
-        "EN": "Secchi",
-        "DE": "Secchi",
-        "FR": "Secchi",
-        "IT": "Secchi"
+        "EN": "Clarity",
+        "DE": "Sichttiefe",
+        "FR": "Clarté",
+        "IT": "Chiarezza"
       },
       "parameter_description": {
-        "EN": "Secchi depth refers to the depth at which a disk lowered into the water can no longer be seen from the surface, this is a proxy for water clarity.",
-        "DE": "Unter Secchi-Tiefe versteht man die Tiefe, bei der eine ins Wasser getauchte Scheibe von der Oberfläche aus nicht mehr zu sehen ist. Dies ist ein Indikator für die Klarheit des Wassers.",
-        "FR": "La profondeur de Secchi fait référence à la profondeur à laquelle un disque abaissé dans l'eau ne peut plus être vu depuis la surface, c'est un indicateur de la clarté de l'eau.",
-        "IT": "La profondità di Secchi si riferisce alla profondità alla quale un disco immerso nell'acqua non è più visibile dalla superficie; questo è un indicatore della limpidezza dell'acqua."
+        "EN": "Secchi depth is used as a proxy for water clarity. This is defined as the depth at which a disk lowered into the water can no longer be seen from the surface.",
+        "DE": "Die Secchi-Tiefe wird als Indikator für die Sichttiefe des Wassers verwendet. Sie ist definiert als die Tiefe, in der eine ins Wasser abgesenkte Scheibe von der Oberfläche aus nicht mehr zu sehen ist.",
+        "FR": "La profondeur de Secchi est utilisée comme indicateur de la clarté de l'eau. Elle est définie comme la profondeur à laquelle un disque plongé dans l'eau ne peut plus être vu de la surface.",
+        "IT": "La profondità Secchi viene utilizzata come indicatore della limpidezza dell'acqua. È definita come la profondità alla quale un disco calato nell'acqua non può più essere visto dalla superficie."
       },
       "unit": "m",
       "sources": [
@@ -76,16 +76,16 @@
   {
       "parameter": "forelule",
       "parameter_name": {
-        "EN": "Forel-Ule",
-        "DE": "Forel-Ule",
-        "FR": "Forel-Ule",
-        "IT": "Forel-Ule"
+        "EN": "Colour",
+        "DE": "Farbe",
+        "FR": "Couleur",
+        "IT": "Colore"
       },
       "parameter_description": {
-        "EN": "The Forel-Ule Scale is a system used to classify the color of natural water bodies, such as lakes, rivers, and oceans, based on a simple visual comparison.",
-        "DE": "Die Forel-Ule-Skala ist ein System zur Klassifizierung der Farbe natürlicher Gewässer, wie Seen, Flüsse und Ozeane, auf der Grundlage eines einfachen visuellen Vergleichs.",
-        "FR": "L'échelle de Forel-Ule est un système utilisé pour classer la couleur des masses d'eau naturelles, telles que les lacs, les rivières et les océans, sur la base d'une simple comparaison visuelle.",
-        "IT": "La Scala Forel-Ule è un sistema utilizzato per classificare il colore dei corpi idrici naturali, come laghi, fiumi e oceani, sulla base di un semplice confronto visivo."
+        "EN": "Water colour is defined using the Forel-Ule Scale. This is a system used to classify the color of natural water bodies, such as lakes, rivers, and oceans, based on a simple visual comparison.",
+        "DE": "Die Wasserfarbe wird anhand der Forel-Ule-Skala definiert. Dabei handelt es sich um ein System zur Klassifizierung der Farbe natürlicher Gewässer, wie Seen, Flüsse und Ozeane, auf der Grundlage eines einfachen visuellen Vergleichs.",
+        "FR": "La couleur de l'eau est définie à l'aide de l'échelle de Forel-Ule. Il s'agit d'un système utilisé pour classer la couleur des masses d'eau naturelles, telles que les lacs, les rivières et les océans, sur la base d'une simple comparaison visuelle.",
+        "IT": "Il colore dell'acqua viene definito utilizzando la Scala Forel-Ule. Si tratta di un sistema utilizzato per classificare il colore dei corpi idrici naturali, come laghi, fiumi e oceani, sulla base di un semplice confronto visivo."
       },
       "unit": "",
       "sources": [

@@ -29,8 +29,8 @@ class D3HeatMap extends Component {
     this.setState({ saved: [] });
   };
 
-  editFontSize = (fontSize) => {
-    this.setState({ fontSize });
+  editFontSize = (event) => {
+    this.setState({ fontSize: parseInt(event.target.value) });
   };
 
   toggleXgraph = () => {
@@ -443,7 +443,7 @@ class D3HeatMap extends Component {
       "#ffd8b1",
       "#000075",
     ];
-
+    if (xlabel === "time") xlabel = "";
     return (
       <div className={fullscreen ? "vis-main full" : "vis-main"}>
         <div className="heatmap-main">

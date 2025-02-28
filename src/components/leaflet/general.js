@@ -76,6 +76,33 @@ const formatDateIso = (datetime) => {
   }:00Z`;
 };
 
+export const formatDateYYYYMMDD = (d) => {
+  const date = new Date(d);
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}${month}${day}`;
+};
+
+export const dayName = (YYYYMMDD, language, Translations, full = false) => {
+  if (formatDateYYYYMMDD(new Date()) === YYYYMMDD) {
+    if (full) {
+      return Translations.today[language];
+    }
+    return Translations.today[language];
+  }
+  const year = parseInt(YYYYMMDD.substr(0, 4), 10);
+  const month = parseInt(YYYYMMDD.substr(4, 2), 10) - 1; // Subtracting 1 to make it zero-based
+  const day = parseInt(YYYYMMDD.substr(6, 2), 10);
+  var daysOfWeekNames = Translations.axis[language].shortDays;
+  if (full) {
+    daysOfWeekNames = Translations.axis[language].days;
+  }
+  const date = new Date(year, month, day);
+  const dayOfWeekNumber = date.getDay();
+  return daysOfWeekNames[dayOfWeekNumber];
+};
+
 export const formatWmsDate = (datetime, minutes = 120) => {
   var start = addMinutes(datetime, -minutes);
   var end = addMinutes(datetime, minutes);

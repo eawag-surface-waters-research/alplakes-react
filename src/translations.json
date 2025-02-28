@@ -73,8 +73,8 @@
   },
   "results": {
     "EN": "results",
-    "DE": "résultats",
-    "FR": "Ergebnisse",
+    "DE": "Ergebnisse",
+    "FR": "résultats",
     "IT": "risultati"
   },
   "noresults": {
@@ -949,6 +949,12 @@
     "FR": "Superficie",
     "IT": "Superficie"
   },
+  "sort": {
+    "EN": "Sort",
+    "DE": "Sortieren",
+    "FR": "Trier",
+    "IT": "Ordinare"
+  },
   "maxDepth": {
     "EN": "Max depth",
     "DE": "Maximale Tiefe",
@@ -1086,6 +1092,12 @@
     "DE": "Rückmeldung",
     "FR": "Retour",
     "IT": "Feedback"
+  },
+  "oxygenWarning": {
+    "EN": "The AED2 oxygen model is a preliminary version which works reasonably well for some lakes but is clearly wrong for others.",
+    "DE": "Das AED2-Sauerstoffmodell ist eine vorläufige Version, die für einige Seen einigermaßen gut funktioniert, für andere aber eindeutig falsch ist.",
+    "FR": "Le modèle d'oxygène AED2 est une version préliminaire qui fonctionne raisonnablement bien pour certains lacs mais qui est clairement erronée pour d'autres.",
+    "IT": "Il modello di ossigeno AED2 è una versione preliminare che funziona ragionevolmente bene per alcuni laghi, ma è chiaramente sbagliata per altri."
   },
   "feedbackText": {
     "EN": "Thank you for taking the time to provide feedback. Please include a brief message detailing your thoughts and suggestions, and if you're open to further discussion, kindly provide your email address. We appreciate your input!",

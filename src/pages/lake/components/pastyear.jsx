@@ -172,10 +172,10 @@ class PastYear extends Component {
       loading,
     } = this.state;
     const description = {
-      EN: "The past year’s data illustrates the parameter’s development throughout the entire water column. It highlights lake stratification and mixing events. All data is derived from calibrated model simulations rather than in-situ measurements.",
-      DE: "Die Daten des letzten Jahres veranschaulichen die Entwicklung des Parameters in der gesamten Wassersäule. Sie heben die Schichtung des Sees und Durchmischungsereignisse hervor. Alle Daten stammen aus kalibrierten Modellsimulationen und nicht aus In-situ-Messungen.",
-      IT: "I dati dell'ultimo anno illustrano l'andamento del parametro nell'intera colonna d'acqua. Evidenzia gli eventi di stratificazione del lago e gli eventi di miscelazione. Tutti i dati sono derivati da simulazioni calibrate del modello piuttosto che da misurazioni in situ.",
-      FR: "Les données de l'année écoulée illustrent l'évolution du paramètre dans l'ensemble de la colonne d'eau. Elles mettent en évidence les phénomènes de stratification et de mélange des lacs. Toutes les données sont dérivées de simulations de modèles calibrés plutôt que de mesures in situ.",
+      EN: "The past year’s data illustrates the parameter’s development throughout the entire water column. It highlights lake stratification and mixing events. The data shown are model simulations, not observations.",
+      DE: "Die Daten des letzten Jahres veranschaulichen die Entwicklung des Parameters in der gesamten Wassersäule. Sie heben die Schichtung des Sees und Durchmischungsereignisse hervor. Die dargestellten Daten sind Modellsimulationen, nicht Beobachtungen.",
+      IT: "I dati dell'ultimo anno illustrano l'andamento del parametro nell'intera colonna d'acqua. Evidenzia gli eventi di stratificazione del lago e gli eventi di miscelazione. I dati riportati sono simulazioni del modello, non osservazioni.",
+      FR: "Les données de l'année écoulée illustrent l'évolution du paramètre dans l'ensemble de la colonne d'eau. Elles mettent en évidence les phénomènes de stratification et de mélange des lacs. Les données présentées sont des simulations de modèles et non des observations.",
     };
     return (
       <div className="past-year subsection" ref={this.ref}>
@@ -233,6 +233,11 @@ class PastYear extends Component {
                             </option>
                           ))}
                         </select>
+                        {["OxygenSat", "Oxygen"].includes(variable.key) && (
+                          <div className="setting-warning">
+                            {Translations.oxygenWarning[language]}
+                          </div>
+                        )}
                       </div>
                       <div className="setting">
                         <div className="label">

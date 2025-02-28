@@ -149,11 +149,11 @@ class Search extends Component {
           )}
           <select value={sort} onChange={setSort} id="sort-select">
             <option value="" disabled>
-              Sort
+              {Translations.sort[language]}
             </option>
-            <option value="elevation">Elevation</option>
-            <option value="max_depth">Depth</option>
-            <option value="area">Surface Area</option>
+            <option value="elevation">{Translations.elevation[language]}</option>
+            <option value="max_depth">{Translations.depth[language]}</option>
+            <option value="area">{Translations.surfaceArea[language]}</option>
           </select>
         </div>
         <div className="results">

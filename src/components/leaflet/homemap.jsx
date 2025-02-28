@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import L from "leaflet";
-import { dayName, formatDateYYYYMMDD } from "./functions";
+import { dayName, formatDateYYYYMMDD } from "./general";
 import Translations from "../../translations.json";
 import alpinespace from "./alpinespace.json";
 import CONFIG from "../../config.json";

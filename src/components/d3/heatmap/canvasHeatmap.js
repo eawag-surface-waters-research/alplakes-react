@@ -650,23 +650,21 @@ class CanvasHeatmap {
 
     this._zoombox.on("mousemove", (event) => {
       try {
-        var hoverX = this._xAxis.ax.invert(
-          event.layerX - this.options.marginLeft ||
-            event.offsetX - this.options.marginLeft
-        );
-        var hoverY = this._yAxis.ax.invert(
-          event.layerY - this.options.marginTop ||
-            event.offsetY - this.options.marginTop
-        );
+        var rect = event.currentTarget.getBoundingClientRect();
+        var hoverX = event.clientX - rect.left;
+        var hoverY = event.clientY - rect.top;
+
+        var xValue = this._xAxis.ax.invert(hoverX);
+        var yValue = this._yAxis.ax.invert(hoverY);
 
         var idx = Math.max(
-          getFileIndex(this._xFileDomain, hoverX),
-          getFileIndex(this._yFileDomain, hoverY)
+          getFileIndex(this._xFileDomain, xValue),
+          getFileIndex(this._yFileDomain, yValue)
         );
         var process = this._data[idx];
 
-        var yi = closest(hoverY, process.y);
-        var xi = closest(hoverX, process.x);
+        var xi = closest(xValue, process.x);
+        var yi = closest(yValue, process.y);
 
         var xval, yval;
         var xu = "";
@@ -700,17 +698,42 @@ class CanvasHeatmap {
           )} ${zu}</td></tr>` +
           "</tbody></table>";
 
-        tooltip
-          .html(html)
-          .style(
-            "left",
-            this._xAxis.ax(process.x[xi]) + this.options.marginLeft + 10 + "px"
-          )
-          .style(
-            "top",
-            this._yAxis.ax(process.y[yi]) + this.options.marginTop - 20 + "px"
-          )
-          .style("opacity", 1);
+        if (hoverX > this._width / 2) {
+          tooltip
+            .html(html)
+            .style(
+              "right",
+              this._width -
+                this._xAxis.ax(process.x[xi]) -
+                this.options.marginLeft +
+                10 +
+                "px"
+            )
+            .style("left", "auto")
+            .style(
+              "top",
+              this._yAxis.ax(process.y[yi]) + this.options.marginTop - 20 + "px"
+            )
+            .attr("class", "tooltip tooltip-right")
+            .style("opacity", 1);
+        } else {
+          tooltip
+            .html(html)
+            .style(
+              "left",
+              this._xAxis.ax(process.x[xi]) +
+                this.options.marginLeft +
+                10 +
+                "px"
+            )
+            .style("right", "auto")
+            .style(
+              "top",
+              this._yAxis.ax(process.y[yi]) + this.options.marginTop - 20 + "px"
+            )
+            .attr("class", "tooltip tooltip-left")
+            .style("opacity", 1);
+        }
 
         select("#zpointer_" + this._div)
           .attr(

@@ -103,7 +103,13 @@ class Period extends Component {
             let max = new Date(maxDate);
             max.setDate(max.getDate() + 1);
             if (dates[0] !== null && dates[1] !== null) {
-              if (dates[0] === period[0] && dates[1] === period[0]) return;
+              if (
+                dates[0].toLocaleDateString("en-GB") ===
+                  period[0].toLocaleDateString("en-GB") &&
+                dates[1].toLocaleDateString("en-GB") ===
+                  period[1].toLocaleDateString("en-GB")
+              )
+                return;
               if (dates[0] > dates[1]) {
                 dates = [dates[1], dates[0]];
               }

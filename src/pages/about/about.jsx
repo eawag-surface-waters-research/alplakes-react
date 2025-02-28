@@ -72,7 +72,7 @@ class About extends Component {
     window.removeEventListener("scroll", this.handleScroll);
   }
   render() {
-    var { language } = this.props;
+    const language = "EN";
     var { visibleKey } = this.state;
     return (
       <React.Fragment>

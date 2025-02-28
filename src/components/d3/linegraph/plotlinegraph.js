@@ -385,6 +385,10 @@ const addBottomAxis = (svg, xDomain, options) => {
     axis.tickFormat(options.noYear ? multiFormatNoYear : multiFormat);
   } else if (scientificNotation(xDomain[0], xDomain[1])) {
     axis.tickFormat(format(".1e"));
+  } else {
+    axis.tickFormat(function (d) {
+      return format(",")(d).replace(/,/g, "");
+    });
   }
 
   if (options.grid) axis.tickSize(-options.canvasHeight);
@@ -452,6 +456,10 @@ const addTopAxis = (svg, x2Domain, options) => {
     axis.tickFormat(options.noYear ? multiFormatNoYear : multiFormat);
   } else if (scientificNotation(x2Domain[0], x2Domain[1])) {
     axis.tickFormat(format(".1e"));
+  } else {
+    axis.tickFormat(function (d) {
+      return format(",")(d).replace(/,/g, "");
+    });
   }
 
   var g = svg
@@ -518,6 +526,10 @@ const addLeftAxis = (svg, yDomain, options) => {
     axis.tickFormat(options.noYear ? multiFormatNoYear : multiFormat);
   } else if (scientificNotation(yDomain[0], yDomain[1])) {
     axis.tickFormat(format(".1e"));
+  } else {
+    axis.tickFormat(function (d) {
+      return format(",")(d).replace(/,/g, "");
+    });
   }
 
   if (options.grid) axis.tickSize(-options.canvasWidth);
@@ -577,6 +589,10 @@ const addRightAxis = (svg, y2Domain, options) => {
     axis.tickFormat(options.noYear ? multiFormatNoYear : multiFormat);
   } else if (scientificNotation(y2Domain[0], y2Domain[1])) {
     axis.tickFormat(format(".1e"));
+  } else {
+    axis.tickFormat(function (d) {
+      return format(",")(d).replace(/,/g, "");
+    });
   }
 
   var g = svg
@@ -710,26 +726,23 @@ const addTooltip = (data, div, xAxis, yAxis, options) => {
 
   zoombox.on("mousemove", (event) => {
     try {
-      var hoverX =
-        event.layerX - options.marginLeft || event.offsetX - options.marginLeft;
-      var hoverY =
-        event.layerY - options.marginTop || event.offsetY - options.marginTop;
+      var rect = event.currentTarget.getBoundingClientRect();
+      var hoverX = event.clientX - rect.left;
+      var hoverY = event.clientY - rect.top;
+
       var { idx, idy, distance } = closest(data, hoverX, hoverY, xAxis, yAxis);
+
       if (distance < max_distance) {
         var xval, yval;
-        var xu = "";
-        var yu = "";
+        var xu = "",
+          yu = "";
 
         if (options.xTime) {
           xval = formatDate(data[idx].x[idy], lang, options.noYear);
         } else {
           xval = formatNumber(data[idx].x[idy]);
           if (typeof options.xUnit === "string") {
-            if (data[idx].xaxis === "x2") {
-              xu = options.x2Unit;
-            } else {
-              xu = options.xUnit;
-            }
+            xu = data[idx].xaxis === "x2" ? options.x2Unit : options.xUnit;
           }
         }
 
@@ -738,19 +751,17 @@ const addTooltip = (data, div, xAxis, yAxis, options) => {
         } else {
           yval = formatNumber(data[idx].y[idy]);
           if (typeof options.yUnit === "string") {
-            if (data[idx].yaxis === "y2") {
-              yu = options.y2Unit;
-            } else {
-              yu = options.yUnit;
-            }
+            yu = data[idx].yaxis === "y2" ? options.y2Unit : options.yUnit;
           }
         }
 
-        var html =
-          `<table style="color:${data[idx].lineColor};"><tbody>` +
-          `<tr><td>x:</td><td>${xval} ${xu}</td></tr>` +
-          `<tr><td>y:</td><td>${yval} ${yu}</td></tr>` +
-          "</tbody></table>";
+        var html = `
+                <table style="color:${data[idx].lineColor};">
+                    <tbody>
+                        <tr><td>x:</td><td>${xval} ${xu}</td></tr>
+                        <tr><td>y:</td><td>${yval} ${yu}</td></tr>
+                    </tbody>
+                </table>`;
 
         if ("tooltip" in data[idx]) {
           html = data[idx].tooltip[idy] + html;

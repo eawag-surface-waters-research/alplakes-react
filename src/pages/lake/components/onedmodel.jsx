@@ -50,7 +50,6 @@ class Graph extends Component {
     this.setState({ open: !this.state.open });
   };
   setPeriod = async (event) => {
-    console.log("Firing");
     this.setState({ loading: true }, async () => {
       const { variable, display, depth } = this.state;
       const { parameter } = this.props;
@@ -215,6 +214,11 @@ class Graph extends Component {
                           </option>
                         ))}
                       </select>
+                      {["OxygenSat", "Oxygen"].includes(variable.key) && (
+                          <div className="setting-warning">
+                            {Translations.oxygenWarning[language]}
+                          </div>
+                        )}
                     </div>
                     <div className="setting">
                       <div className="label">

@@ -400,7 +400,7 @@ class Models extends Component {
     window.removeEventListener("scroll", this.handleScroll);
   }
   render() {
-    const { language } = this.props;
+    const language = "EN";
     var { one_dimensional, three_dimensional, remote_sensing, visibleKey } =
       this.state;
     return (

@@ -9,9 +9,9 @@ import Expand from "../../../components/expand/expand";
 
 class DoyLegend extends Component {
   render() {
-    const { min_year, max_year, language } = this.props;
+    const { min_year, max_year, language, fontSize } = this.props;
     return (
-      <div className="graph-legend">
+      <div className="graph-legend" style={{ fontSize: `${fontSize}px` }}>
         {max_year && (
           <div className="date">
             {Translations["referencePeriod"][language]}{" "}
@@ -56,6 +56,11 @@ class Doy extends Component {
     min_year: false,
     max_year: false,
     display: false,
+    fontSize: 12,
+  };
+
+  setFontSize = (fontSize) => {
+    this.setState({ fontSize });
   };
 
   ref = createRef();
@@ -142,12 +147,12 @@ class Doy extends Component {
 
   render() {
     var { language, dark, parameters } = this.props;
-    var { display, min_year, max_year, model, depth } = this.state;
+    var { display, min_year, max_year, model, depth, fontSize } = this.state;
     const description = {
-      EN: "The day of year statistics show the progresion of the parameter across the year. The last year and year to date are included to allow comparison of the state of the lake with the historical record. All data is from calibrated model simulations not from in-situ data.",
-      DE: "Die Tagesstatistiken zeigen die Entwicklung der Parameter im Jahresverlauf. Das letzte Jahr und das Jahr bis heute sind enthalten, um den Zustand des Sees mit den historischen Aufzeichnungen zu vergleichen. Alle Daten stammen aus kalibrierten Modellsimulationen und nicht aus In-situ-Daten.",
-      IT: "Le statistiche del giorno dell'anno mostrano la progressione del parametro nel corso dell'anno. L'ultimo anno e l'anno fino ad oggi sono inclusi per consentire il confronto dello stato del lago con il record storico. Tutti i dati provengono da simulazioni calibrate del modello e non da dati in situ.",
-      FR: "Les statistiques du jour de l'année montrent la progression du paramètre tout au long de l'année. La dernière année et l'année à ce jour sont incluses pour permettre la comparaison de l'état du lac avec les données historiques. Toutes les données proviennent de simulations de modèles calibrés et non de données in situ.",
+      EN: "The day of year statistics show the progresion of the parameter across the year. The last year and year to date are included to allow comparison of the state of the lake with the historical record. The data shown are model simulations, not observations.",
+      DE: "Die Tagesstatistiken zeigen die Entwicklung der Parameter im Jahresverlauf. Das letzte Jahr und das Jahr bis heute sind enthalten, um den Zustand des Sees mit den historischen Aufzeichnungen zu vergleichen. Die dargestellten Daten sind Modellsimulationen, nicht Beobachtungen.",
+      IT: "Le statistiche del giorno dell'anno mostrano la progressione del parametro nel corso dell'anno. L'ultimo anno e l'anno fino ad oggi sono inclusi per consentire il confronto dello stato del lago con il record storico. I dati riportati sono simulazioni del modello, non osservazioni.",
+      FR: "Les statistiques du jour de l'année montrent la progression du paramètre tout au long de l'année. La dernière année et l'année à ce jour sont incluses pour permettre la comparaison de l'état du lac avec les données historiques. Les données présentées sont des simulations de modèles et non des observations.",
     };
     return (
       <div className="doy subsection" ref={this.ref}>
@@ -164,11 +169,14 @@ class Doy extends Component {
                   dark={dark}
                   language={language}
                   noYear={true}
+                  fontSize={fontSize}
+                  setFontSize={this.setFontSize}
                 />
                 <DoyLegend
                   min_year={min_year}
                   max_year={max_year}
                   language={language}
+                  fontSize={fontSize}
                 />
               </div>
             ) : (

@@ -9,8 +9,9 @@ import Expand from "../../../components/expand/expand";
 
 class ClimateLegend extends Component {
   render() {
+    var { fontSize } = this.props;
     return (
-      <div className="graph-legend">
+      <div className="graph-legend" style={{ fontSize: `${fontSize}px` }}>
         <div className="item">
           <div className="line" style={{ borderColor: "green" }}></div>
           <div className="text">RCP 2.6</div>
@@ -36,6 +37,11 @@ class Climate extends Component {
     data: false,
     depth: "surface",
     depths: ["surface", "bottom"],
+    fontSize: 12,
+  };
+
+  setFontSize = (fontSize) => {
+    this.setState({ fontSize });
   };
 
   ref = createRef();
@@ -106,7 +112,7 @@ class Climate extends Component {
 
   render() {
     var { language, dark, parameters } = this.props;
-    var { display, model, depth, depths } = this.state;
+    var { display, model, depth, depths, fontSize } = this.state;
     const url1 =
       "https://www.nccs.admin.ch/nccs/en/home/climate-change-and-impacts/swiss-climate-change-scenarios/understanding-climate-change-scenarios.html";
     const url2 =
@@ -134,7 +140,7 @@ class Climate extends Component {
           <a href={url1} target="_blank" rel="noopener noreferrer">
             hier
           </a>{" "}
-          und weitere Einzelheiten über das Projekt
+          und weitere Einzelheiten über das Projekt{" "}
           <a href={url2} target="_blank" rel="noopener noreferrer">
             hier
           </a>
@@ -186,8 +192,10 @@ class Climate extends Component {
                   {...display}
                   dark={dark}
                   language={language}
+                  fontSize={fontSize}
+                  setFontSize={this.setFontSize}
                 />
-                <ClimateLegend language={language} />
+                <ClimateLegend language={language} fontSize={fontSize} />
               </div>
             ) : (
               <div className="loading-graph">

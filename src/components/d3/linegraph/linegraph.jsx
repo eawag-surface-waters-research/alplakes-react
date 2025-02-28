@@ -7,17 +7,14 @@ import "./linegraph.css";
 class D3LineGraph extends Component {
   state = {
     graphid: Math.round(Math.random() * 100000),
-    download: false,
     fullscreen: false,
     fontSize: this.props.fontSize ? this.props.fontSize : 12,
   };
 
-  editFontSize = (fontSize) => {
+  editFontSize = (event) => {
+    const fontSize = parseInt(event.target.value);
+    if (this.props.setFontSize !== undefined) this.props.setFontSize(fontSize);
     this.setState({ fontSize });
-  };
-
-  toggleDownload = () => {
-    this.setState({ download: !this.state.download });
   };
 
   toggleFullscreen = () => {
@@ -238,7 +235,8 @@ class D3LineGraph extends Component {
       noYear,
     } = this.props;
     var { graphid, fontSize } = this.state;
-    if (this.props.header !== false) fontSize = this.props.fontSize;
+
+    if (this.props.fontSize !== undefined) fontSize = this.props.fontSize;
 
     var lineColor = "black";
     if ("dark" in this.props && this.props.dark) lineColor = "white";
@@ -322,7 +320,7 @@ class D3LineGraph extends Component {
   }
 
   render() {
-    var { graphid, download, fullscreen, fontSize } = this.state;
+    var { graphid, fullscreen, fontSize } = this.state;
     var { title, simple, clearPlot } = this.props;
     return simple ? (
       <div className="linegraph-graph" id={"vis" + graphid} />
@@ -334,10 +332,8 @@ class D3LineGraph extends Component {
               <GraphHeader
                 id={graphid}
                 title={title}
-                download={download}
                 fullscreen={fullscreen}
                 fontSize={fontSize}
-                toggleDownload={this.toggleDownload}
                 toggleFullscreen={this.toggleFullscreen}
                 editFontSize={this.editFontSize}
                 downloadJSON={this.downloadJSON}

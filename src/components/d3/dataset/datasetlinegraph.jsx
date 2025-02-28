@@ -17,7 +17,9 @@ class DatasetLinegraph extends Component {
       padding,
       grid,
       noYear,
-      noData
+      noData,
+      fontSize,
+      setFontSize,
     } = this.props;
     var inputData = [];
     if (data !== undefined) {
@@ -51,6 +53,8 @@ class DatasetLinegraph extends Component {
             language={language}
             grid={grid}
             noYear={noYear}
+            fontSize={fontSize}
+            setFontSize={setFontSize}
           />
         )}
       </div>
