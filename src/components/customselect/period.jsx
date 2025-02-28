@@ -12,11 +12,15 @@ const parseDay = (yyyymmdd) => {
   return date;
 };
 
-const CustomInput = React.forwardRef(({ value, onClick }, ref) => (
-  <div ref={ref} onClick={onClick} className="dateperiod">
-    {value}
-  </div>
-));
+const isValidDate = (date) => {
+  return !isNaN(date.getTime());
+};
+
+const daysBetween = (date1, date2) => {
+  const oneDay = 1000 * 60 * 60 * 24;
+  const diffTime = Math.abs(date2.getTime() - date1.getTime());
+  return Math.ceil(diffTime / oneDay);
+};
 
 class Period extends Component {
   state = {
@@ -62,7 +66,7 @@ class Period extends Component {
   render() {
     var { language, minDate, maxDate, missingDates } = this.props;
     missingDates = missingDates ? missingDates : [];
-    var { period, maxPeriodDate } = this.state;
+    var { period, maxPeriodDate, maxPeriod } = this.state;
     const locale = {
       ...enGB,
       localize: {
@@ -89,11 +93,44 @@ class Period extends Component {
         onChange={(update) => {
           this.setDateRange(update);
         }}
+        onBlur={(e) => {
+          if (e.target.value) {
+            let dates = e.target.value.split(" - ").map((input) => {
+              const [day, month, year] = input.split("/").map(Number);
+              const date = new Date(year, month - 1, day);
+              return isValidDate(date) ? date : null;
+            });
+            let max = new Date(maxDate);
+            max.setDate(max.getDate() + 1);
+            if (dates[0] !== null && dates[1] !== null) {
+              if (dates[0] === period[0] && dates[1] === period[0]) return;
+              if (dates[0] > dates[1]) {
+                dates = [dates[1], dates[0]];
+              }
+              if (dates[0] < minDate) {
+                alert(
+                  `Start date must be after ${minDate.toLocaleDateString(
+                    "en-GB"
+                  )}`
+                );
+              } else if (dates[1] > max) {
+                alert(
+                  `End date must be before ${maxDate.toLocaleDateString(
+                    "en-GB"
+                  )}`
+                );
+              } else if (daysBetween(dates[0], dates[1]) > maxPeriod) {
+                alert(`Selected period must be less than ${maxPeriod} days`);
+              } else {
+                this.setDateRange(dates);
+              }
+            }
+          }
+        }}
         excludeDateIntervals={excludeDateIntervals}
         minDate={minDate}
         maxDate={maxPeriodDate ? maxPeriodDate : maxDate}
         dateFormat="dd/MM/yyyy"
-        customInput={<CustomInput />}
         locale={locale}
       />
     );

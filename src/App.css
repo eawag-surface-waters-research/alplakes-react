@@ -586,7 +586,7 @@ h4 {
   max-width: 100%;
 }
 
-.main .setting .dateperiod {
+.main .setting .period-selector input {
   background-color: var(--box-color);
   border: none;
   border-radius: 8px;

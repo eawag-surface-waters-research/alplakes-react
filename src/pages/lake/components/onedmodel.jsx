@@ -12,6 +12,7 @@ import DatasetLinegraph from "../../../components/d3/dataset/datasetlinegraph";
 import Expand from "../../../components/expand/expand";
 import Period from "../../../components/customselect/period";
 import Depth from "../../../components/customselect/depth";
+import Loading from "../../../components/loading/loading";
 
 class PlaceholderGraph extends Component {
   render() {
@@ -43,70 +44,79 @@ class Graph extends Component {
     depth: false,
     depths: false,
     noData: false,
+    loading: false,
   };
   toggle = () => {
     this.setState({ open: !this.state.open });
   };
   setPeriod = async (event) => {
-    const { variable, display, depth } = this.state;
-    const { parameter } = this.props;
-    const start = event[0];
-    const end = event[1];
-    const data = await download1DLinegraph(
-      parameter.model.toLowerCase(),
-      parameter.key,
-      start,
-      end,
-      depth,
-      variable.key,
-      false
-    );
-    var x = data.time.map((t) => new Date(t));
-    var y = data["variables"][variable.key]["data"];
-    display.data = { x, y };
-    display.noData = y.every((item) => item === null)
-    this.setState({ start, end, display });
+    console.log("Firing");
+    this.setState({ loading: true }, async () => {
+      const { variable, display, depth } = this.state;
+      const { parameter } = this.props;
+      const start = event[0];
+      const end = event[1];
+      const data = await download1DLinegraph(
+        parameter.model.toLowerCase(),
+        parameter.key,
+        start,
+        end,
+        depth,
+        variable.key,
+        false
+      );
+      var x = data.time.map((t) => new Date(t));
+      var y = data["variables"][variable.key]["data"];
+      display.data = { x, y };
+      display.noData = y.every((item) => item === null);
+      this.setState({ start, end, display, loading: false });
+    });
   };
 
   setDepth = async (depth) => {
-    const { parameter } = this.props;
-    const { variable, display, start, end } = this.state;
-    const data = await download1DLinegraph(
-      parameter.model.toLowerCase(),
-      parameter.key,
-      start,
-      end,
-      depth,
-      variable.key,
-      false
-    );
-    var x = data.time.map((t) => new Date(t));
-    var y = data["variables"][variable.key]["data"];
-    display.data = { x, y };
-    display.noData = y.every((item) => item === null)
-    this.setState({ depth, display });
+    this.setState({ loading: true }, async () => {
+      const { parameter } = this.props;
+      const { variable, display, start, end } = this.state;
+      const data = await download1DLinegraph(
+        parameter.model.toLowerCase(),
+        parameter.key,
+        start,
+        end,
+        depth,
+        variable.key,
+        false
+      );
+      var x = data.time.map((t) => new Date(t));
+      var y = data["variables"][variable.key]["data"];
+      display.data = { x, y };
+      display.noData = y.every((item) => item === null);
+      this.setState({ depth, display, loading: false });
+    });
   };
 
   setVariable = async (event) => {
-    const { parameter } = this.props;
-    const { variables, display, start, end, depth } = this.state;
-    const variable = variables.find((v) => v.key === event.target.value);
-    const data = await download1DLinegraph(
-      parameter.model.toLowerCase(),
-      parameter.key,
-      start,
-      end,
-      depth,
-      variable.key,
-      false
-    );
-    var x = data.time.map((t) => new Date(t));
-    var y = data["variables"][variable.key]["data"];
-    display.data = { x, y };
-    display.ylabel = variable.description;
-    display.yunits = variable.unit.replace("deg", "°");
-    display.noData = y.every((item) => item === null)
-    this.setState({ variable, display });
+    const variable_name = event.target.value;
+    this.setState({ loading: true }, async () => {
+      const { parameter } = this.props;
+      const { variables, display, start, end, depth } = this.state;
+      const variable = variables.find((v) => v.key === variable_name);
+      const data = await download1DLinegraph(
+        parameter.model.toLowerCase(),
+        parameter.key,
+        start,
+        end,
+        depth,
+        variable.key,
+        false
+      );
+      var x = data.time.map((t) => new Date(t));
+      var y = data["variables"][variable.key]["data"];
+      display.data = { x, y };
+      display.ylabel = variable.description;
+      display.yunits = variable.unit.replace("deg", "°");
+      display.noData = y.every((item) => item === null);
+      this.setState({ variable, display, loading: false });
+    });
   };
   componentDidUpdate() {
     const { data } = this.props;
@@ -128,7 +138,7 @@ class Graph extends Component {
         data: { x: data.dt, y: data.value },
         curve: true,
         grid: true,
-        noData: data.value.every((item) => item === null)
+        noData: data.value.every((item) => item === null),
       };
       this.setState({
         display,
@@ -139,7 +149,7 @@ class Graph extends Component {
         variable,
         variables,
         depth,
-        depths
+        depths,
       });
     }
   }
@@ -155,6 +165,7 @@ class Graph extends Component {
       variables,
       depth,
       depths,
+      loading,
     } = this.state;
     const { data, language, dark, parameter } = this.props;
     const description = {
@@ -177,6 +188,11 @@ class Graph extends Component {
           <div className="line-graph-container">
             <DatasetLinegraph {...display} dark={dark} language={language} />
           </div>
+          {loading && (
+            <div className="loading-graph">
+              <Loading />
+            </div>
+          )}
         </div>
         <div className="map-sidebar-right">
           {display && (
@@ -211,7 +227,7 @@ class Graph extends Component {
                           language={language}
                           minDate={start_date}
                           maxDate={end_date}
-                          maxPeriod={365}
+                          maxPeriod={365 * 10}
                         />
                       </div>
                     </div>
