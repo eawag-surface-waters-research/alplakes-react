@@ -166,6 +166,7 @@ const processOptions = (div, data, userOptions) => {
     { name: "setDownloadGraphDiv", default: false, verify: verifyString },
     { name: "hover", default: false, verify: verifyFunction },
     { name: "onClick", default: false, verify: verifyFunction },
+    { name: "noYear", default: false, verify: verifyBool },
     {
       name: "backgroundColor",
       default: false,
@@ -222,9 +223,8 @@ const processOptions = (div, data, userOptions) => {
       options.dualaxisColor = d.lineColor;
     }
   }
-
   if (!("marginLeft" in userOptions))
-    options.marginLeft = options.fontSize * 3 + 10;
+    options.marginLeft = options.fontSize * 3 + 20;
   if (!("marginRight" in userOptions)) {
     if (options.dualaxis === "y2") {
       options.marginRight = options.fontSize * 3 + 10;
@@ -382,9 +382,13 @@ const addBottomAxis = (svg, xDomain, options) => {
   var base = ax.copy();
   var axis = axisBottom(ax).ticks(5);
   if (options.xTime) {
-    axis.tickFormat(multiFormat);
+    axis.tickFormat(options.noYear ? multiFormatNoYear : multiFormat);
   } else if (scientificNotation(xDomain[0], xDomain[1])) {
     axis.tickFormat(format(".1e"));
+  } else {
+    axis.tickFormat(function (d) {
+      return format(",")(d).replace(/,/g, "");
+    });
   }
 
   if (options.grid) axis.tickSize(-options.canvasHeight);
@@ -411,7 +415,7 @@ const addBottomAxis = (svg, xDomain, options) => {
         "translate(" +
           options.canvasWidth / 2 +
           " ," +
-          (options.canvasHeight + options.marginBottom / 1.5) +
+          (options.canvasHeight + 35) +
           ")"
       )
       .attr("x", 6)
@@ -449,9 +453,13 @@ const addTopAxis = (svg, x2Domain, options) => {
   var base = ax.copy();
   var axis = axisTop(ax).ticks(5);
   if (options.xTime) {
-    axis.tickFormat(multiFormat);
+    axis.tickFormat(options.noYear ? multiFormatNoYear : multiFormat);
   } else if (scientificNotation(x2Domain[0], x2Domain[1])) {
     axis.tickFormat(format(".1e"));
+  } else {
+    axis.tickFormat(function (d) {
+      return format(",")(d).replace(/,/g, "");
+    });
   }
 
   var g = svg
@@ -515,9 +523,13 @@ const addLeftAxis = (svg, yDomain, options) => {
   var base = ax.copy();
   var axis = axisLeft(ax).ticks(5);
   if (options.yTime) {
-    axis.tickFormat(multiFormat);
+    axis.tickFormat(options.noYear ? multiFormatNoYear : multiFormat);
   } else if (scientificNotation(yDomain[0], yDomain[1])) {
     axis.tickFormat(format(".1e"));
+  } else {
+    axis.tickFormat(function (d) {
+      return format(",")(d).replace(/,/g, "");
+    });
   }
 
   if (options.grid) axis.tickSize(-options.canvasWidth);
@@ -574,9 +586,13 @@ const addRightAxis = (svg, y2Domain, options) => {
   var base = ax.copy();
   var axis = axisRight(ax).ticks(5);
   if (options.yTime) {
-    axis.tickFormat(multiFormat);
+    axis.tickFormat(options.noYear ? multiFormatNoYear : multiFormat);
   } else if (scientificNotation(y2Domain[0], y2Domain[1])) {
     axis.tickFormat(format(".1e"));
+  } else {
+    axis.tickFormat(function (d) {
+      return format(",")(d).replace(/,/g, "");
+    });
   }
 
   var g = svg
@@ -710,47 +726,42 @@ const addTooltip = (data, div, xAxis, yAxis, options) => {
 
   zoombox.on("mousemove", (event) => {
     try {
-      var hoverX =
-        event.layerX - options.marginLeft || event.offsetX - options.marginLeft;
-      var hoverY =
-        event.layerY - options.marginTop || event.offsetY - options.marginTop;
+      var rect = event.currentTarget.getBoundingClientRect();
+      var hoverX = event.clientX - rect.left;
+      var hoverY = event.clientY - rect.top;
+
       var { idx, idy, distance } = closest(data, hoverX, hoverY, xAxis, yAxis);
+
       if (distance < max_distance) {
         var xval, yval;
-        var xu = "";
-        var yu = "";
+        var xu = "",
+          yu = "";
 
         if (options.xTime) {
-          xval = formatDate(data[idx].x[idy], lang);
+          xval = formatDate(data[idx].x[idy], lang, options.noYear);
         } else {
           xval = formatNumber(data[idx].x[idy]);
           if (typeof options.xUnit === "string") {
-            if (data[idx].xaxis === "x2") {
-              xu = options.x2Unit;
-            } else {
-              xu = options.xUnit;
-            }
+            xu = data[idx].xaxis === "x2" ? options.x2Unit : options.xUnit;
           }
         }
 
         if (options.yTime) {
-          yval = formatDate(data[idx].y[idy], lang);
+          yval = formatDate(data[idx].y[idy], lang, options.noYear);
         } else {
           yval = formatNumber(data[idx].y[idy]);
           if (typeof options.yUnit === "string") {
-            if (data[idx].yaxis === "y2") {
-              yu = options.y2Unit;
-            } else {
-              yu = options.yUnit;
-            }
+            yu = data[idx].yaxis === "y2" ? options.y2Unit : options.yUnit;
           }
         }
 
-        var html =
-          `<table style="color:${data[idx].lineColor};"><tbody>` +
-          `<tr><td>x:</td><td>${xval} ${xu}</td></tr>` +
-          `<tr><td>y:</td><td>${yval} ${yu}</td></tr>` +
-          "</tbody></table>";
+        var html = `
+                <table style="color:${data[idx].lineColor};">
+                    <tbody>
+                        <tr><td>x:</td><td>${xval} ${xu}</td></tr>
+                        <tr><td>y:</td><td>${yval} ${yu}</td></tr>
+                    </tbody>
+                </table>`;
 
         if ("tooltip" in data[idx]) {
           html = data[idx].tooltip[idy] + html;
@@ -1304,6 +1315,32 @@ const multiFormat = (date) => {
       : timeYear(date) < date
       ? formatMonth
       : formatYear
+  )(date);
+};
+
+const multiFormatNoYear = (date) => {
+  var formatMillisecond = timeFormat(".%L"),
+    formatSecond = timeFormat(":%S"),
+    formatMinute = timeFormat("%H:%M"),
+    formatHour = timeFormat("%H:%M"),
+    formatDay = timeFormat("%d.%m"),
+    formatWeek = timeFormat("%d.%m"),
+    formatMonth = timeFormat("%B");
+
+  return (
+    timeSecond(date) < date
+      ? formatMillisecond
+      : timeMinute(date) < date
+      ? formatSecond
+      : timeHour(date) < date
+      ? formatMinute
+      : timeDay(date) < date
+      ? formatHour
+      : timeMonth(date) < date
+      ? timeWeek(date) < date
+        ? formatDay
+        : formatWeek
+      : formatMonth
   )(date);
 };
 

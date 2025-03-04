@@ -1,74 +1,45 @@
-.slider-container .slider-component {
-    width: 100%;
-    cursor: pointer;
-    background: none;
-    -webkit-appearance: none;
-    width: 100%;
-    height: 5px;
-    outline: none;
+.slider-container {
     position: relative;
-    z-index: 1;
+    padding-top: 9px;
+}
+
+.slider-container .slider-track {
+    height: 6px;
+    width: 100%;
+    background-color: #d3d3d3;
+    border-radius: 3px;
+}
+
+.slider-container .slider-thumb {
+    height: 42px;
+    width: 42px;
+    border-radius: 50%;
+}
+
+.slider-container .slider-thumb:focus-visible {
+    border: none;
+    outline: none;
+    box-shadow: none;
+    background-color: #44bca740;
+}
+
+.slider-container .slider-thumb .slider-thumb-inner {
+    height: 16px;
+    width: 16px;
+    background-color: var(--highlight-color);
+    box-shadow: var(--box-shadow);
+    margin: 13px;
+    border-radius: 50%;
 }
 
 .slider-container .slider-label {
-    visibility: hidden;
     position: absolute;
-    bottom: 30px;
-    background-color: rgba(0, 0, 0, 0.8);
-    text-align: center;
-    border-radius: 6px;
-    padding: 5px 12px;
-    color: white;
-}
-
-.slider-container .slider-label-arrow {
-    visibility: hidden;
-    bottom: 20px;
-    position: absolute;
-    width: 0;
-    height: 0;
-    border-top: solid 10px rgba(0, 0, 0, 0.8);
-    border-left: solid 10px transparent;
-    border-right: solid 10px transparent;
-}
-
-.slider-container .slider-bar {
-    position: absolute;
-    width: 100%;
-    height: 5px;
-    background-color: #d3d3d3;
-    left: 2px;
-    bottom: 4px;
-    -webkit-transition: 0.2s;
-    transition: opacity 0.2s;
-    opacity: 0.7;
-}
-
-.slider-container:hover .slider-bar {
-    opacity: 1;
-}
-
-.slider-container .slider-hover {
-    visibility: hidden;
-    position: absolute;
-    width: 60%;
-    height: 5px;
-    background-color: #f0f0f0;
-    left: 2px;
-    bottom: 4px;
-}
-
-.slider-container:hover .slider-hover {
-    visibility: visible;
-}
-
-.slider-container .slider-hindcast {
-    position: absolute;
-    width: 50%;
-    height: 5px;
-    background-color: #157bff;
-    left: 2px;
-    bottom: 4px;
-    transition: opacity 0.2s;
-    opacity: 0.2;
+    top: -32px;
+    background-color: var(--box-color);
+    color: var(--background-font-color);
+    padding: 4px 20px 0px 20px;
+    border-radius: 12px 12px 0 0;
+    font-size: 14px;
+    text-wrap: nowrap;
+    right: 0px;
 }

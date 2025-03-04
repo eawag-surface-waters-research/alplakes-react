@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import L from "leaflet";
-import { dayName, formatDateYYYYMMDD } from "./functions";
+import { dayName, formatDateYYYYMMDD } from "./general";
 import Translations from "../../translations.json";
 import alpinespace from "./alpinespace.json";
+import CONFIG from "../../config.json";
 import "./leaflet_tileclass";
 import "./css/leaflet.css";
 
@@ -71,8 +72,6 @@ class HomeMap extends Component {
     day: "",
     minZoom: 6,
     maxZoom: 13,
-    darkMap: "dark_all",
-    lightMap: "light_all",
   };
   setDay = (event) => {
     var day = event.target.id;
@@ -110,14 +109,11 @@ class HomeMap extends Component {
           },
           {
             style: {
-              fillColor: this.getColor(
-                lake.forecast.summary[day]["temperature"]
-              ),
+              fillColor: this.getColor(lake.summary[day]),
               weight: 0.5,
               opacity: 1,
               color: "grey",
-              fillOpacity:
-                lake.forecast.summary[day]["temperature"] === false ? 0 : 1,
+              fillOpacity: lake.summary[day] === false ? 0 : 1,
             },
           }
         )
@@ -132,7 +128,10 @@ class HomeMap extends Component {
     var { list, language } = this.props;
     var zoom = this.map.getZoom();
     for (let lake of list) {
-      let value = lake.forecast.summary[day]["temperature"] === false;
+      let value =
+        lake.summary &&
+        typeof lake.summary[day] === "number" &&
+        !isNaN(lake.summary[day]);
       this.labels[lake.key].marker = L.marker([lake.latitude, lake.longitude], {
         icon: L.divIcon({
           className: "leaflet-mouse-marker",
@@ -141,14 +140,12 @@ class HomeMap extends Component {
         }),
       })
         .bindTooltip(
-          `<a class="temperature-label${value ? " empty" : ""}" href="/${
+          `<a class="temperature-label${value ? "" : " empty"}" href="/${
             lake.key
           }" title='${Translations.click[language]}'><div class="name">${
             lake.name[language]
           }</div>${
-            value
-              ? ""
-              : `<div class="value">${lake.forecast.summary[day]["temperature"]}°</div>`
+            value ? `<div class="value">${lake.summary[day]}°</div>` : ""
           }</a>`,
           {
             id: lake.key,
@@ -260,9 +257,8 @@ class HomeMap extends Component {
   };
   componentDidUpdate(prevProps) {
     var { day } = this.state;
-    var { list, language } = this.props;
+    var { list, language, days } = this.props;
     if (this.plot && list.length > 0) {
-      const days = Object.keys(list[0].forecast.summary);
       day = days[0];
       this.plotPolygons(day);
       this.map.fitBounds(this.polygons.getBounds());
@@ -277,26 +273,25 @@ class HomeMap extends Component {
       this.labels = this.labelClustering(list, language);
       this.plotLabels(day);
     } else if (prevProps.dark !== this.props.dark) {
-      var { darkMap, lightMap } = this.state;
-      var mapID = this.props.dark ? darkMap : lightMap;
       this.map.removeLayer(this.tiles);
+      var { url, attribution, lightMap, darkMap, tileClass } =
+        CONFIG.basemaps["default"];
+      if (url.includes("_bright_"))
+        url = url.replace("_bright_", this.props.dark ? darkMap : lightMap);
       this.tiles = L.tileLayer
-        .default(
-          `https://{s}.basemaps.cartocdn.com/${mapID}/{z}/{x}/{y}{r}.png`,
-          {
-            maxZoom: 19,
-            attribution:
-              '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-          }
-        )
+        .default(url, {
+          maxZoom: 19,
+          attribution: attribution,
+          tileClass: tileClass,
+        })
         .addTo(this.map);
     }
   }
   async componentDidMount() {
     var { dark } = this.props;
-    var { minZoom, maxZoom, darkMap, lightMap } = this.state;
-    var center = [46.62855, 8.70415];
-    var zoom = 8;
+    var { minZoom, maxZoom } = this.state;
+    var center = [46.67, 9.962];
+    var zoom = 7;
     var map = L.map("map", {
       preferCanvas: true,
       center: center,
@@ -308,16 +303,16 @@ class HomeMap extends Component {
     });
     this.map = map;
 
-    var mapID = dark ? darkMap : lightMap;
+    var { url, attribution, lightMap, darkMap, tileClass } =
+      CONFIG.basemaps["default"];
+    if (url.includes("_bright_"))
+      url = url.replace("_bright_", dark ? darkMap : lightMap);
     this.tiles = L.tileLayer
-      .default(
-        `https://{s}.basemaps.cartocdn.com/${mapID}/{z}/{x}/{y}{r}.png`,
-        {
-          maxZoom: 19,
-          attribution:
-            '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-        }
-      )
+      .default(url, {
+        maxZoom: 19,
+        attribution: attribution,
+        tileClass: tileClass,
+      })
       .addTo(this.map);
     L.control
       .zoom({

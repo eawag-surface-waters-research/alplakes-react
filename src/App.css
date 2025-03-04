@@ -15,13 +15,26 @@
   font-weight: 1 999;
 }
 
+@font-face {
+  font-family: "Mona_Sans";
+  src: url("fonts/Mona_Sans/MonaSans-VariableFont_wdth\,wght.ttf") format("truetype-variations");
+  font-weight: 1 999;
+}
+
+@font-face {
+  font-family: "Mona_Sans_Italic";
+  src: url("fonts/Mona_Sans/MonaSans-Italic-VariableFont_wdth\,wght.ttf") format("truetype-variations");
+  font-weight: 1 999;
+}
+
 /* Variables */
 
 :root {
   --background-color: #F3F4F6;
   --background-font-color: rgb(50, 50, 50);
-  --background-suble-font-color: rgb(117, 117, 117);
+  --background-subtle-font-color: rgb(88 88 88);
   --box-color: rgb(255, 255, 255);
+  --select-color: rgb(255, 255, 255);
   --box-font-color: rgb(0, 0, 0);
   --box-inner-color: rgb(227, 227, 227);
   --border-color: #ddd;
@@ -30,11 +43,13 @@
   --bottom-shadow: 0px 3px 5px 0px rgba(214, 214, 214, 0.6);
   --search-shadow: rgba(50, 50, 93, 0.25) 0px 1px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
   --star-color: #E9C00A;
+  --live-color: #44BCA7;
   --content-width: 1280px;
   --text-width: 700px;
   --max-width: 1920px;
-  --top-margin: 75px;
-  --footer-height: 35px;
+  --top-margin: 50px;
+  --footer-height: 75px;
+  --footer-height-small: 35px;
   --footer-full-height: 114px;
   --padding: 40px;
   --list-width: 500px;
@@ -48,13 +63,14 @@
   --button-text-color: white;
   --highlight-color: rgba(68, 188, 167, 1);
   --link-color: #5594CC;
+  --link-button-color: #DDEAF5;
   --highlight-color-fill: rgba(68, 188, 167, 0.2);
   --highlight-color-subtle: #EEF9F7;
   --header-text-color: rgb(59, 59, 59);
   --pulse-color: rgb(160, 160, 160);
   --map-color: rgb(236, 236, 236);
   --map-button: rgba(0, 0, 0, 0.8);
-  --cell-size: 31px;
+  --cell-size: 29px;
   --legend-color: rgb(236 236 236 / 47%);
   --app-area-height: 127px;
   --day-selector-height: 64px;
@@ -62,14 +78,16 @@
 }
 
 :root {
-  --search-height: calc(var(--padding) * 2 + 140px);
+  --search-height: calc(var(--padding) * 2 + 132px);
   --header-height: calc(var(--padding) + 20px);
 }
 
 .dark {
   --background-color: hsl(232, 11%, 15%);
-  --background-font-color: #cccccc;
+  --background-font-color: #e9e9e9;
+  --background-subtle-font-color: rgb(163 163 163);
   --box-color: hsl(233, 8%, 19%);
+  --select-color: hsl(233, 8%, 19%);
   --box-font-color: #e5e5e5;
   --box-inner-color: #282828;
   --input-shadow: inset 0 1px 2px rgb(44 44 44), 0 0 1px #bdbdbd, 0 1px 0 #464646;
@@ -85,6 +103,7 @@
   --bottom-shadow: 0px 3px 5px 0px rgb(16 16 16 / 26%);
   --box-shadow-hover: rgb(255 255 255 / 16%) 0px 1px 8px;
   --legend-color: rgb(41 41 41 / 65%);
+  --link-button-color: #2d2d34;
 }
 
 @media screen and (max-width: 1000px) {
@@ -101,6 +120,7 @@
   :root {
     --background-color: white;
     --search-height: 138px;
+    --select-color: #F3F4F6;
   }
 
   .dark {
@@ -112,7 +132,7 @@
 /* Whole site settings */
 
 .main {
-  font-family: "DM_Sans", "Frutiger Neue LT Pro", "Arial", sans-serif;
+  font-family: "Mona_Sans", "Frutiger Neue LT Pro", "Arial", sans-serif;
   color: var(--background-font-color);
   font-size: 16px;
 }
@@ -126,27 +146,21 @@ h1 {
 h2 {
   font-size: 32px;
   font-weight: 400;
-  margin-bottom: 16px;
+  margin-bottom: 36px;
 }
 
 h3 {
   font-size: 24px;
   font-weight: 400;
   margin-bottom: 12px;
+  color: var(--background-subtle-font-color);
 }
 
 h4 {
   font-size: 16px;
-  font-weight: 600;
+  font-weight: 400;
   margin-bottom: 8px;
   text-decoration: underline;
-}
-
-p {
-  line-height: 28px;
-  font-size: 18px;
-  max-width: 700px;
-  margin-bottom: 32px;
 }
 
 .main .background {
@@ -165,13 +179,23 @@ p {
 }
 
 .tooltip-hover {
-  background-color: var(--background-color);
-  border-bottom: 2px solid var(--highlight-color);
-  border-radius: 12px;
+  background-color: var(--box-color);
+  border-radius: 8px;
   padding: 5px 8px;
   box-shadow: var(--box-shadow);
   text-align: center;
   font-size: 12px;
+}
+
+.tooltip-hover::after {
+  content: '';
+  position: absolute;
+  bottom: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 10px;
+  border-style: solid;
+  border-color: var(--box-color) transparent transparent transparent;
 }
 
 .main .tile-class.leaflet-tile {
@@ -200,8 +224,466 @@ p {
   box-sizing: border-box;
 }
 
+/* Skeletons */
+
+.list-item-skeleton {
+  border: 1px solid transparent;
+  border-radius: 16px;
+  box-sizing: border-box;
+  margin-bottom: calc(var(--padding) / 2);
+  padding: 0 calc(var(--padding) / 4);
+  position: relative;
+  transition: all .33s ease 0s;
+  width: 100%;
+  height: 110px;
+  background-color: var(--box-color);
+}
+
+.text-skeleton {
+  display: inline-block;
+  margin-left: 6px;
+  vertical-align: top;
+  margin-bottom: 11px;
+  margin-top: 5px;
+}
+
+.logos-skeleton {
+  position: absolute;
+  right: 12px;
+  top: 12px;
+}
+
+.logos-skeleton .logo-skeleton {
+  height: 25px;
+  width: 25px;
+  background-color: var(--border-color);
+  border-radius: 8px;
+  margin-left: 8px;
+  display: inline-block;
+}
+
+.text-skeleton .name-skeleton {
+  height: 22.5px;
+  width: 150px;
+  background-color: var(--border-color);
+  opacity: 0.4;
+  margin-top: 10px;
+  border-radius: 8px;
+}
+
+.skeleton-block {
+  display: inline-block;
+  width: 20%;
+  height: 54px;
+  border-right: 1px solid;
+  box-sizing: border-box;
+  opacity: 0.8;
+  border-color: var(--border-color);
+  opacity: 0.5;
+}
+
+.skeleton-data {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 30px;
+  border-top: 2px solid var(--border-color);
+  left: 0;
+  background: linear-gradient(179deg, #6b636133, #ffffff1f);
+  border-radius: 0 0 16px 16px;
+}
+
+.skeleton-block.right {
+  border-right: none;
+}
+
+@keyframes pulseColor {
+  0% {
+    background-color: var(--border-color);
+  }
+
+  100% {
+    background-color: var(--pulse-color);
+  }
+}
+
+.pulse {
+  background-color: var(--border-color);
+  animation: pulseColor 1s infinite alternate;
+}
+
+@keyframes pulseBorderColor {
+  0% {
+    border-color: var(--border-color);
+  }
+
+  100% {
+    border-color: var(--pulse-color);
+  }
+}
+
+.pulse-border {
+  border-color: var(--border-color);
+  animation: pulseBorderColor 1s infinite alternate;
+}
+
+/** Map Tooltips **/
+
+.main .temperature-label {
+  font-size: 14px;
+  transition: transform .33s 0s ease;
+}
+
+.main .temperature-label:hover {
+  transform: scale(1.1);
+}
+
+.main .temperature-label .name {
+  display: inline-block;
+  background-color: var(--box-color);
+  color: var(--box-font-color);
+  padding: 4px 8px;
+  box-shadow: var(--box-shadow);
+  border-radius: 8px 0 0 8px;
+}
+
+.main .temperature-label.empty .name {
+  border-radius: 8px;
+}
+
+.main .temperature-label .value {
+  display: inline-block;
+  background-color: var(--highlight-color);
+  color: white;
+  padding: 4px;
+  border-radius: 0 8px 8px 0;
+  font-weight: 600;
+  font-family: DM_Sans, Frutiger Neue LT Pro, Arial, sans-serif;
+}
+
+/* Setting */
+
+.main .setting {
+  padding: 0px 0px 18px 0px;
+  display: inline-block;
+  width: 100%;
+  font-size: 14px;
+}
+
+.main .setting.half {
+  margin-right: 4%;
+  vertical-align: top;
+  width: 46%;
+}
+
+.main .setting .label {
+  padding: 0px 0px 4px 0px;
+  display: inline-block;
+  color: var(--background-subtle-font-color);
+}
+
+.main .setting input[type=range] {
+  box-sizing: border-box;
+  padding: 2px 0;
+  width: 100%;
+}
+
+.main .setting input[type=number] {
+  background-color: var(--box-color);
+  border: none;
+  border-radius: 6px;
+  box-sizing: border-box;
+  color: var(--background-font-color);
+  font-size: 16px;
+  padding: 4px 10px;
+  width: 100%;
+}
+
+.main .setting input[type=number].with-button {
+  padding-right: 25px;
+}
+
+.main .setting input[type=color] {
+  background-color: #e3e3e3;
+  border: none;
+  box-sizing: border-box;
+  height: 26px;
+  padding: 0;
+  width: 100%;
+}
+
+.main .setting .color-box {
+  border: none;
+  box-sizing: border-box;
+  height: 26px;
+  padding: 0;
+  width: 100%;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.main .setting .switch {
+  display: inline-block;
+  float: right;
+  height: 20px;
+  position: relative;
+  width: 38px;
+  margin-top: 10px;
+}
+
+.main .setting .switch input {
+  height: 0;
+  opacity: 0;
+  width: 0;
+}
+
+.main .setting input[type=checkbox] {
+  margin-left: 12px;
+}
+
+.main .setting .title {
+  font-size: 15px;
+  font-weight: 700;
+  margin: 10px 0 0px;
+}
+
+.main .setting .slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.main .setting .slider:before {
+  position: absolute;
+  content: "";
+  height: 14px;
+  width: 14px;
+  left: 4px;
+  bottom: 3px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.main .setting input:checked+.slider {
+  background-color: var(--highlight-color);
+}
+
+.main .setting input:focus+.slider {
+  box-shadow: 0 0 1px var(--highlight-color);
+}
+
+.main .setting input:checked+.slider:before {
+  -webkit-transform: translateX(16px);
+  -ms-transform: translateX(16px);
+  transform: translateX(16px);
+}
+
+.main .setting .slider.round {
+  border-radius: 34px;
+}
+
+.main .setting .slider.round:before {
+  border-radius: 50%;
+}
+
+.main .setting .performance {
+  padding: 5px 20px 0px 0px;
+  display: inline-block;
+  text-align: center;
+}
+
+.main .setting .performance .performance-value {
+  font-size: 22px;
+}
+
+.main .setting .performance .performance-value .performance-unit {
+  display: inline-block;
+  font-size: 16px;
+}
+
+.main .setting .performance .performance-name {
+  color: var(--background-subtle-font-color);
+  font-size: 12px;
+}
+
+.main .setting .value {
+  float: right;
+}
+
+.main .setting button.remove {
+  background-color: var(--highlight-color);
+  border: none;
+  border-radius: 8px;
+  color: #e3e3e3;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 14px;
+  padding: 5px 12px;
+  transition: all .33s ease;
+}
+
+.main .setting button.remove:hover {
+  transform: scale(1.05);
+}
+
+.main .setting .minmax {
+  position: relative;
+}
+
+.main .setting .minmax img.reset {
+  border-radius: 8px;
+  cursor: pointer;
+  display: inline-block;
+  height: 16px;
+  margin-left: 8px;
+  opacity: .5;
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  transition: all .33s ease-in-out;
+  vertical-align: middle;
+}
+
+.main.dark .setting .minmax img.reset {
+  -webkit-filter: invert(100%);
+  filter: invert(100%);
+}
+
+.main .setting .value button {
+  display: inline-block;
+  background-color: var(--box-color);
+  box-shadow: var(--bottom-shadow);
+  border: 1px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-left: 12px;
+  padding: 4px 8px;
+}
+
+.main .setting .value button:hover {
+  border: 1px solid var(--border-color);
+  box-shadow: none;
+}
+
+.main .setting select {
+  display: block;
+  font-size: 14px;
+  background-color: var(--box-color);
+  cursor: pointer;
+  padding: 4px 8px;
+  text-align: left;
+  color: var(--background-font-color);
+  border: none;
+  border-radius: 6px;
+  max-width: 100%;
+}
+
+.main .setting .period-selector input {
+  background-color: var(--box-color);
+  border: none;
+  border-radius: 8px;
+  box-sizing: border-box;
+  color: var(--background-font-color);
+  cursor: pointer;
+  display: inline-block;
+  font-size: 16px;
+  padding: 8px 12px;
+  text-align: left;
+  min-width: 200px;
+}
+
+.main .setting .setting-warning {
+  margin-top: 12px;
+}
+
+.main .setting .react-datepicker {
+  background-color: var(--select-color);
+  border: none;
+  padding-top: 5px;
+  font-size: 16px;
+}
+
+.main .setting .react-datepicker .react-datepicker__triangle {
+  display: none;
+}
+
+.main .setting .react-datepicker .react-datepicker__header {
+  background-color: transparent;
+  border: none;
+}
+
+.main .setting .react-datepicker__day {
+  padding: 1px;
+}
+
+.main .setting .react-datepicker__day:hover {
+  background-color: var(--background-color);
+}
+
+.main .setting .react-datepicker__day-name,
+.main .setting .react-datepicker__day,
+.main .setting .react-datepicker__time-name {
+  color: var(--background-font-color);
+  width: var(--cell-size);
+  height: var(--cell-size);
+  line-height: var(--cell-size);
+  border-radius: var(--cell-size);
+  position: relative;
+  vertical-align: middle;
+  margin: 6px;
+  font-size: 14px;
+  border: 1px solid transparent;
+}
+
+.main .setting .react-datepicker__day--selected {
+  padding: 0;
+  font-weight: bold;
+}
+
+.main .setting .react-datepicker__current-month {
+  color: var(--background-font-color);
+}
+
+.main .setting .react-datepicker__day--disabled {
+  opacity: 0.2;
+  box-shadow: none;
+}
+
+.main .setting .react-datepicker__day--keyboard-selected {
+  background-color: var(--select-color);
+}
+
+.main .setting .react-datepicker__day--in-range {
+  background-color: var(--highlight-color);
+  color: white;
+}
+
+.main .setting .react-datepicker__day--in-selecting-range {
+  background-color: var(--background-color);
+}
+
+.main .setting select.subtle {
+  background-color: var(--box-color);
+  margin-bottom: 10px;
+  display: inline-block;
+}
+
 @media screen and (max-width: 1000px) {
   h1 {
     font-size: 40px;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .setting .period-selector .react-datepicker-popper {
+    display: none;
   }
 }

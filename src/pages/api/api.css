@@ -6,6 +6,14 @@
   margin-top: var(--top-margin);
   min-height: calc(100vh - var(--header-height) - var(--footer-full-height));
   box-sizing: border-box;
+  margin-bottom: 100px;
+}
+
+.main .api-container .text {
+  line-height: 28px;
+  font-size: 16px;
+  max-width: 700px;
+  margin-bottom: 32px;
 }
 
 .main .api-container .header {
@@ -48,6 +56,10 @@
 
 .main .api-container .swagger-ui .wrapper {
   padding: 0;
+}
+
+.main .api-container .swagger-ui section.models {
+  display: none;
 }
 
 .swagger-ui .opblock.opblock-get .opblock-summary-method {

@@ -12,10 +12,29 @@
   display: inline-block;
   transition: all .2s ease;
   padding: 4px 6px;
+  position: relative;
 }
 
-.vis-header .icon:hover {
+.vis-header .icon:hover img {
   transform: scale(1.1);
+}
+
+.vis-header .icon .fontsize-dropdown {
+  position: absolute;
+  bottom: -24px;
+  left: -12px;
+  display: none;
+  background-color: var(--highlight-color);
+  color: white;
+  border: none;
+  z-index: 3;
+  font-size: 14px;
+  padding: 3px 5px;
+  border-radius: 6px;
+}
+
+.vis-header .icon .fontsize-dropdown.show {
+  display: block;
 }
 
 .vis-header img {

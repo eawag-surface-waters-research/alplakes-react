@@ -1,0 +1,42 @@
+.sidebar-expand .expand-button {
+    background-color: var(--link-button-color);
+    position: relative;
+    color: var(--link-color);
+    padding: 8px 20px;
+    border-radius: 20px;
+    width: max-content;
+    margin: auto;
+    cursor: pointer;
+    display: none;
+    font-size: 14px;
+    margin-top: 12px;
+}
+
+.sidebar-expand .expand-button img {
+    height: 9px;
+    margin-left: 20px;
+}
+
+.sidebar-expand .expand-button img.rotate {
+    -moz-transform: scale(-1, -1);
+    -o-transform: scale(-1, -1);
+    -webkit-transform: scale(-1, -1);
+    transform: scale(-1, -1);
+    padding-top: 2px;
+}
+
+@media screen and (max-width: 850px) {
+    .sidebar-expand .expand-button {
+        display: block;
+    }
+
+    .sidebar-expand .expand-content.closed {
+        display: none;
+    }
+
+    .sidebar-expand.settings .expand-content {
+        background-color: var(--select-color);
+        border-radius: 12px;
+        padding: 12px;
+    }
+}

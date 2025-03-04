@@ -4,13 +4,15 @@ import requests
 import functions as func
 
 upload = True
-bucket_folder = "static/website/metadata/master"
+bucket_folder = "static/website/metadata/new"
 
 # Load Metadata
 with open("metadata.json") as f:
     metadata = json.load(f)
 with open("lakes.geojson") as f:
     shape = json.load(f)
+with open("satellite_metadata.json") as f:
+    satellite_metadata = json.load(f)
 
 # Load Satellite Data
 response = requests.get("https://eawagrs.s3.eu-central-1.amazonaws.com/alplakes/metadata/summary.json")
@@ -29,6 +31,15 @@ datalakes_parameters = response.json()
 response = requests.get("https://raw.githubusercontent.com/Eawag-AppliedSystemAnalysis/operational-simstrat/master/static/lake_parameters.json")
 simstrat = response.json()
 
+# Load Climate Data
+response = requests.get("https://alplakes-eawag.s3.eu-central-1.amazonaws.com/simulations/simstrat/ch2018/summary.json")
+climate = response.json()
+
+# Load water level data
+response = requests.get("https://alplakes-eawag.s3.eu-central-1.amazonaws.com/insitu/summary/water_level.geojson")
+wl = response.json()
+water_levels = list(set([f["properties"]["lake"] for f in wl["features"]]))
+
 s3 = boto3.client('s3')
 
 # Create files
@@ -37,9 +48,7 @@ one_dimensional_list = []
 three_dimensional_list = []
 
 for lake in metadata:
-    sat = False
-    threed = False
-    oned = False
+
     home = {"key": lake["key"],
             "name": lake["name"],
             "area": lake["area"],
@@ -49,9 +58,38 @@ for lake in metadata:
             "longitude": lake["longitude"],
             "filters": []
             }
-    data = {"metadata": lake.copy()}
     key = lake["key"]
-    if 'alplakes' in data["metadata"]:
+    data = {"key": key, "name": lake["name"], "properties": {"parameters": {}}}
+    layers = {"key": key, "name": lake["name"], "layers": []}
+
+
+    # Lake Properties
+    for p in lake:
+        if p in ["area", "ave_depth", "max_depth", "elevation", "type", "volume", "residence_time", "mixing_regime", "geothermal_flux", "trophic_state", "sediment_oxygen_uptake_rate"]:
+            data["properties"]["parameters"][p] = lake[p]
+    data["properties"]["bounds"] = func.make_bounds(shape, key)
+    layers["bounds"] = data["properties"]["bounds"]
+    bathymetry = func.make_bathymetry(lake, datalakes_lakes)
+    if len(bathymetry) > 0:
+        data["properties"]["bathymetry"] = bathymetry
+    data["properties"]["latitude"] = lake["latitude"]
+    data["properties"]["longitude"] = lake["longitude"]
+
+
+    # Trends - doy and past year are added in 1D section
+    if key in climate:
+        data["trends"] = {"climate": {}}
+        for model in climate[key]:
+            data["trends"]["climate"][model["key"]] = {
+                "model": "simstrat",
+                "project": "ch2018",
+                "key": model["key"],
+                "name": model["name"]
+              }
+
+
+    # Three Dimensional Model
+    if '3D' in lake:
         response = requests.get("https://alplakes-api.eawag.ch/simulations/metadata/delft3d-flow/{}".format(lake["key"]))
         model_metadata = response.json()
         three_dimensional_list.append({
@@ -63,17 +101,35 @@ for lake in metadata:
             "elevation": lake["elevation"],
             "depth": lake["max_depth"],
             "timeframe": "{}-{}".format(model_metadata["start_date"][0:4], model_metadata["end_date"][0:4]),
-            "overallrmse": round(lake["alplakes"]["performance"]["rmse"]["overall"], 2)
+            "overallrmse": round(lake["3D"]["performance"]["rmse"]["overall"], 2)
             })
         home["filters"].append("3D")
-        threed = True
-        del data["metadata"]['alplakes']
-    if 'simstrat' in data["metadata"]:
-        del data["metadata"]['simstrat']
+        data["forecast"] = { "3d_model": {
+            "key": key,
+            "model": "delft3d-flow",
+            "parameters": ["temperature", "velocity"],
+            "labels": lake["3D"]["3D_temperature"]
+        }}
+        layers["layers"].extend(func.model_layers(lake["key"]))
+
+
+    # One Dimensional Model
     if "simstrat" not in lake:
-        lake["simstrat"] = [key]
-    if lake["simstrat"] != False:
-        for k in lake["simstrat"]:
+        simstrat_keys = [key]
+    elif lake["simstrat"] != False:
+        simstrat_keys = lake["simstrat"]
+    else:
+        simstrat_keys = []
+    if len(simstrat_keys) > 0:
+        if "forecast" not in data:
+            data["forecast"] = {}
+        if "trends" not in data:
+            data["trends"] = {"doy": {}, "year": {}}
+        else:
+            data["trends"]["doy"] = {}
+            data["trends"]["year"] = {}
+        data["forecast"]["1d_model"] = []
+        for k in simstrat_keys:
             simstrat_metadata = [s for s in simstrat if s["key"] == k][0]
             response = requests.get(
                 "https://alplakes-api.eawag.ch/simulations/1d/metadata/simstrat/{}".format(k))
@@ -91,38 +147,97 @@ for lake in metadata:
                  "surfacermse": round(simstrat_metadata["performance"]["rmse"]["surface"], 2),
                  "bottomrmse": round(simstrat_metadata["performance"]["rmse"]["bottom"], 2)
                  })
-        oned = True
+            simstrat_parameters = {
+                "key": k,
+                "model": "Simstrat",
+                "name": simstrat_metadata["name"],
+                "meteo_source": func.simstrat_forcing_source(simstrat_metadata["forcing"], simstrat_metadata["forcing_forecast"])
+            }
+            if "performance" in simstrat_metadata:
+                simstrat_parameters["performance"] = simstrat_metadata["performance"]
+            if "inflows" in simstrat_metadata:
+                simstrat_parameters["hydro_source"] = "Bundesamt für Umwelt BAFU"
+            if "calibration_source" in simstrat_metadata:
+                simstrat_parameters["calibration_source"] = simstrat_metadata["calibration_source"]
+            data["forecast"]["1d_model"].append({**simstrat_parameters, "parameter": "T", "unit": "°"})
+            data["trends"]["doy"][k] = {
+                **simstrat_parameters,
+                "depths": [0],
+                "parameters": [{ "key": "T", "name": "temperature", "unit": "°C" }],
+                "displayOptions": {}
+            }
+            data["trends"]["year"][k] = {
+                **simstrat_parameters,
+                "parameters": [
+                  { "key": "T", "name": "temperature", "unit": "°C" },
+                  { "key": "OxygenSat", "name": "oxygensat", "unit": "%" }
+                ],
+                "displayOptions": { "paletteName": "vik", "thresholdStep": 200 }
+            }
         home["filters"].append("1D")
-    satellite_data = False
-    if key in satellite and ("sentinel3" in satellite[key] or "collection" in satellite[key] or "sentinel2" in satellite[key]):
-        home["filters"].append("satellite")
-        satellite_data = satellite[key]
-        sat = True
-    if "insitu" not in data["metadata"] and "datalakes_id" in data["metadata"]:
-        data["metadata"]["insitu"] = func.make_insitu(data["metadata"]["datalakes_id"], datalakes_datasets, datalakes_parameters)
-    data["metadata"]["bounds"] = func.make_bounds(shape, key)
-    data["metadata"]["bathymetry"] = func.make_bathymetry(lake, datalakes_lakes)
-    data["metadata"]["available"] = func.make_available(sat, threed, oned)
-    data["modules"] = func.make_modules(lake, satellite_data)
-    data["layers"] = func.make_layers(lake, satellite_data)
-    data["datasets"] = func.make_datasets(lake, simstrat)
 
-    if "insitu" in data["metadata"] and len(data["metadata"]["insitu"]) > 0:
+
+    # Measurement Data
+    if "current_temperature" in lake and lake["current_temperature"] == True:
+        data["measurements"] = {"water_temperature": {"displayOptions": {"min": 5,"max": 25,"paletteName": "Bafu Continuous"}}}
+        layers["layers"].extend(func.temperature_layers(lake["key"]))
+    if key in water_levels:
+        if "measurements" not in data:
+            data["measurements"] = {}
+        data["measurements"]["water_levels"] = {}
+    if "insitu" in lake:
+        if "measurements" not in data:
+            data["measurements"] = {}
+        for i in range(len(lake["insitu"])):
+            lake["insitu"][i]["source"] = "Datalakes"
+        data["measurements"]["scientific"] = lake["insitu"]
         home["filters"].append("insitu")
-        live = False
-        for i in range(len(data["metadata"]["insitu"])):
-            if data["metadata"]["insitu"][i]["live"]:
-                live = True
-        if live:
-            home["filters"].append("live")
+    elif "datalakes_id" in lake:
+        insitu = func.make_insitu(lake["datalakes_id"], datalakes_datasets, datalakes_parameters)
+        if len(insitu) > 0:
+            if "measurements" not in data:
+                data["measurements"] = {}
+            data["measurements"]["scientific"] = insitu
+            home["filters"].append("insitu")
+
+
+    # Satellite data
+    if key != "mondsee":
+        if key in satellite:
+            satellite_data = []
+            layers["layers"].extend(func.satellite_layers(lake["key"], satellite[key]))
+            for sat in satellite_metadata:
+                sm = []
+                for source in sat["sources"]:
+                    if source["satellite"] in satellite[key] and source["parameter"] in satellite[key][source["satellite"]]:
+                        sm.append(source["link"].replace("#key#", key))
+                if len(sm) > 0:
+                    temp = sat.copy()
+                    temp["key"] = key
+                    temp["metadata"] = sm
+                    satellite_data.append(temp)
+            if len(satellite_data) > 0:
+                home["filters"].append("satellite")
+                data["satellite"] = satellite_data
+
 
     with open('files/{}.json'.format(key), 'w') as json_file:
         json_file.write(json.dumps(data, separators=(',', ':'), ensure_ascii=False))
+    with open('files/{}_layers.json'.format(key), 'w') as json_file:
+        json_file.write(json.dumps(layers, separators=(',', ':'), ensure_ascii=False))
     if upload:
         s3.upload_file(
             'files/{}.json'.format(key),
             'alplakes-eawag',
             '{}/{}.json'.format(bucket_folder, key),
+            ExtraArgs={
+                'ContentType': 'application/json',
+            },
+        )
+        s3.upload_file(
+            'files/{}_layers.json'.format(key),
+            'alplakes-eawag',
+            '{}/{}_layers.json'.format(bucket_folder, key),
             ExtraArgs={
                 'ContentType': 'application/json',
             },

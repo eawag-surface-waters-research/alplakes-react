@@ -5,7 +5,7 @@ import GraphHeader from "../graphheader/graphheader";
 import "./heatmap.css";
 import isEqual from "lodash/isEqual";
 import D3LineGraph from "../linegraph/linegraph";
-import heatmap from "canvas-heatmap";
+import CanvasHeatmap from "./canvasHeatmap";
 
 class D3HeatMap extends Component {
   state = {
@@ -29,8 +29,8 @@ class D3HeatMap extends Component {
     this.setState({ saved: [] });
   };
 
-  editFontSize = (fontSize) => {
-    this.setState({ fontSize });
+  editFontSize = (event) => {
+    this.setState({ fontSize: parseInt(event.target.value) });
   };
 
   toggleXgraph = () => {
@@ -238,72 +238,72 @@ class D3HeatMap extends Component {
     }.${String(year).slice(-2)}`;
   };
 
-  plotHeatMap = () => {
+  prepareOptions = () => {
     var { display, graphid, fontSize, ads } = this.state;
-    if (this.props.data !== undefined) {
-      try {
-        var {
-          data,
-          xlabel,
-          ylabel,
-          zlabel,
-          xunits,
-          yunits,
-          zunits,
-          bcolor,
-          colors,
-          title,
-          minvalue,
-          maxvalue,
-          yReverse,
-          xReverse,
-          thresholdStep,
-          language,
-          levels,
-        } = this.props;
+    var {
+      xlabel,
+      ylabel,
+      zlabel,
+      xunits,
+      yunits,
+      zunits,
+      bcolor,
+      colors,
+      title,
+      minvalue,
+      maxvalue,
+      yReverse,
+      xReverse,
+      thresholdStep,
+      language,
+      levels,
+    } = this.props;
 
-        if (typeof language === "string" || language instanceof String)
-          language = language.toLowerCase();
+    if (typeof language === "string" || language instanceof String)
+      language = language.toLowerCase();
 
-        var options = {
-          xLabel: xlabel,
-          yLabel: ylabel,
-          zLabel: zlabel,
-          xUnit: xunits,
-          yUnit: yunits,
-          zUnit: zunits ? zunits : "",
-          yReverse,
-          xReverse,
-          thresholdStep: parseFloat(thresholdStep),
-          zMin: minvalue,
-          zMax: maxvalue,
-          colors,
-          title,
-          language: language,
-          backgroundColor: bcolor,
-          autoDownsample: ads,
-          fontSize,
-          contour: display === "contour",
-          hover: this.hover,
-          click: this.click,
-          setDownloadGraphDiv: "png" + graphid,
-          levels,
-        };
-        heatmap("vis" + graphid, data, options);
-      } catch (e) {
-        console.error("Heatmap failed to plot", e);
-      }
-    }
+    return {
+      xLabel: xlabel,
+      yLabel: ylabel,
+      zLabel: zlabel,
+      xUnit: xunits,
+      yUnit: yunits,
+      zUnit: zunits ? zunits : "",
+      yReverse,
+      xReverse,
+      thresholdStep: parseFloat(thresholdStep),
+      zMin: minvalue,
+      zMax: maxvalue,
+      colors,
+      title,
+      language: language,
+      backgroundColor: bcolor,
+      autoDownsample: ads,
+      fontSize,
+      contour: display === "contour",
+      hover: this.hover,
+      click: this.click,
+      setDownloadGraphDiv: "png" + graphid,
+      levels,
+    };
   };
 
   componentDidMount() {
     if ("display" in this.props) {
       this.setState({ display: this.props.display });
     }
-    this.plotHeatMap();
+    const { data } = this.props;
+    const { graphid } = this.state;
+    const options = this.prepareOptions();
+    this.heatmap = new CanvasHeatmap("vis" + graphid, data, options);
+    let firstRun = true;
     const myObserver = new ResizeObserver((entries) => {
+      if (firstRun) {
+        firstRun = false;
+        return;
+      }
       entries.forEach((entry) => {
-        this.plotHeatMap();
+        this.heatmap.resize();
       });
     });
     myObserver.observe(document.getElementById("vis" + this.state.graphid));
@@ -311,21 +311,30 @@ class D3HeatMap extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     var { display, fontSize, fullscreen, xgraph, ygraph } = this.state;
+    var compareProps = !isEqual(prevProps, this.props);
     if (
-      !isEqual(prevProps, this.props) ||
+      !isEqual(prevProps.data.z, this.props.data.z) &&
+      isEqual(
+        { ...prevProps, data: { ...prevProps.data, z: undefined } },
+        { ...this.props, data: { ...this.props.data, z: undefined } }
+      )
+    ) {
+      this.heatmap.updateData(this.props.data);
+    } else if (
+      compareProps ||
       display !== prevState.display ||
       fontSize !== prevState.fontSize ||
       fullscreen !== prevState.fullscreen ||
       xgraph !== prevState.xgraph ||
       ygraph !== prevState.ygraph
     ) {
-      setTimeout(() => this.plotHeatMap(), 1);
+      const options = this.prepareOptions();
+      this.heatmap.update(this.props.data, options);
     }
-    if (!isEqual(prevProps, this.props)) {
+    if (compareProps) {
       this.setState({ saved: [] });
     }
   }
-
   render() {
     var {
       graphid,
@@ -434,7 +443,7 @@ class D3HeatMap extends Component {
       "#ffd8b1",
       "#000075",
     ];
-
+    if (xlabel === "time") xlabel = "";
     return (
       <div className={fullscreen ? "vis-main full" : "vis-main"}>
         <div className="heatmap-main">
@@ -488,7 +497,7 @@ class D3HeatMap extends Component {
                   />
                 )}
               </div>
-              <div className={"heatmap-right" + xy} id={"vis" + graphid} />
+              <div className={"heatmap-right" + xy} id={"vis" + graphid}></div>
             </div>
             <div className={"heatmap-bottom" + xy}>
               {xgraph && (

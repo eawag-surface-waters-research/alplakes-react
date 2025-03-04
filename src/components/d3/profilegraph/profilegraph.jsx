@@ -1,37 +1,38 @@
 import React, { Component } from "react";
 import D3HeatMap from "../heatmap/heatmap";
+import Translations from "../../../translations.json";
+import COLORS from "../../colors/colors.json";
 
 class ProfileGraph extends Component {
   render() {
-    var { data: input, options, dark } = this.props;
-    var { thresholdStep, palette, variable } = options;
-    let z = input["variables"][variable].data;
-    let zlabel = variable.charAt(0).toUpperCase() + variable.slice(1);
-    let zunits = input["variables"][variable].unit;
+    var { data: input, options, dark, language } = this.props;
+    var { paletteName } = options;
+    const palette = COLORS[paletteName].map((c) => {
+      return { color: [c[0], c[1], c[2]], point: c[3] };
+    });
+    let z = input["variables"]["temperature"].data;
+    let zlabel = Translations.temperature[language];
+    let zunits = input["variables"]["temperature"].unit;
     let y = input.depth.data;
-    let ylabel = "Depth";
+    let ylabel = Translations.depth[language];
     let yunits = input.depth.unit;
     let x = input.time.map((t) => new Date(t));
     var data = { x, y, z };
     return (
-      <React.Fragment>
-        {data && (
-          <D3HeatMap
-            data={data}
-            ylabel={ylabel}
-            zlabel={zlabel}
-            xlabel={"time"}
-            yunits={yunits}
-            zunits={zunits}
-            colors={palette}
-            thresholdStep={thresholdStep}
-            yReverse={true}
-            xReverse={false}
-            display={"contour"}
-            dark={dark}
-          />
-        )}
-      </React.Fragment>
+      <D3HeatMap
+        data={data}
+        ylabel={ylabel}
+        zlabel={zlabel}
+        xlabel={"time"}
+        yunits={yunits}
+        zunits={zunits}
+        colors={palette}
+        thresholdStep={200}
+        yReverse={true}
+        xReverse={false}
+        display={"contour"}
+        dark={dark}
+      />
     );
   }
 }

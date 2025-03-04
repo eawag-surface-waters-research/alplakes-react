@@ -5,6 +5,7 @@ import logo from "../../img/icon_text.png";
 import logo_dark from "../../img/icon_text_dark.png";
 import dark_icon from "../../img/dark.png";
 import light_icon from "../../img/light.png";
+import arrow from "../../img/arrow-right.png";
 import "./navbar.css";
 import Toggle from "../sliders/toggle";
 
@@ -78,27 +79,37 @@ class NavBar extends Component {
               <div className={menu ? "nav-content" : "nav-content hide"}>
                 <NavLink to="/">
                   <div className="nav-row">
-                    {Translate.lakes[language]}{" "}
-                    <div className="arrow">{">"}</div>
+                    {Translate.lakes[language]}
+                    <div className="arrow">
+                      <img src={arrow} alt="Arrow" />
+                    </div>
                   </div>
                 </NavLink>
                 <NavLink to="/models">
                   <div className="nav-row">
-                  {Translate.models[language]} <div className="arrow">{">"}</div>
+                    {Translate.models[language]}
+                    <div className="arrow">
+                      <img src={arrow} alt="Arrow" />
+                    </div>
                   </div>
                 </NavLink>
                 <NavLink to="/api">
                   <div className="nav-row">
-                    API <div className="arrow">{">"}</div>
+                    API
+                    <div className="arrow">
+                      <img src={arrow} alt="Arrow" />
+                    </div>
                   </div>
                 </NavLink>
                 <NavLink to="/about">
                   <div className="nav-row">
-                    {Translate.about[language]}{" "}
-                    <div className="arrow">{">"}</div>
+                    {Translate.about[language]}
+                    <div className="arrow">
+                      <img src={arrow} alt="Arrow" />
+                    </div>
                   </div>
                 </NavLink>
-                <div className="nav-row">
+                <div className="nav-row settings">
                   <div className="mode">
                     <Toggle
                       left={<img src={light_icon} alt="light" />}

@@ -11,6 +11,12 @@
     "FR": "Lacs",
     "IT": "Laghi"
   },
+  "searchLakes": {
+    "EN": "Search lakes",
+    "DE": "See suchen",
+    "FR": "Recherche de lacs",
+    "IT": "Ricerca laghi"
+  }, 
   "tagline": {
     "EN": "Forecasts and monitoring of alpine lakes",
     "DE": "Prognosen und Monitoring von Alpenseen",
@@ -35,6 +41,18 @@
     "FR": "Température de l'eau",
     "IT": "Temperatura dell'acqua"
   },
+  "temperaturecurrent": {
+    "EN": "Water Temperature & Currents",
+    "DE": "Wassertemperatur und Strömungen",
+    "FR": "Température de l'eau et courants",
+    "IT": "Temperatura dell'acqua e correnti"
+  },
+  "scientific": {
+    "EN": "Scientific",
+    "DE": "Wissenschaftlich",
+    "FR": "Scientifique",
+    "IT": "Scientifico"
+  },
   "icecover": {
     "EN": "Ice cover",
     "DE": "Eisdecke",
@@ -55,8 +73,8 @@
   },
   "results": {
     "EN": "results",
-    "DE": "résultats",
-    "FR": "Ergebnisse",
+    "DE": "Ergebnisse",
+    "FR": "résultats",
     "IT": "risultati"
   },
   "noresults": {
@@ -198,10 +216,10 @@
     "IT": "Scongelato"
   },
   "forecast": {
-    "EN": "Temperature forecast",
-    "DE": "Temperaturvorhersage",
-    "FR": "Prévisions de température",
-    "IT": "Previsioni della temperatura"
+    "EN": "Forecast",
+    "DE": "Vorhersage",
+    "FR": "Prévisions",
+    "IT": "Previsioni"
   },
   "for": {
     "EN": "for",
@@ -220,6 +238,24 @@
     "DE": "Mehr",
     "FR": "Plus",
     "IT": "Di più"
+  },
+  "noProducts": {
+    "EN": "No recent product available",
+    "DE": "Kein aktuelles Produkt verfügbar",
+    "FR": "Aucun produit récent disponible",
+    "IT": "Nessun prodotto recente disponibile"
+  },
+  "impressum": {
+    "EN": "Imprint",
+    "DE": "Impressum",
+    "FR": "Impressum",
+    "IT": "Impressum"
+  },
+  "notAvail": {
+    "EN": "No data is available for the selected period.",
+    "DE": "Für den gewählten Zeitraum sind keine Daten verfügbar.",
+    "FR": "Aucune donnée n'est disponible pour la période sélectionnée.",
+    "IT": "Non sono disponibili dati per il periodo selezionato."
   },
   "watertemperature": {
     "EN": "Water temperature",
@@ -244,6 +280,12 @@
     "DE": "Chl-A",
     "FR": "Chl-A",
     "IT": "Clo-A"
+  },
+  "chlorophyll": {
+    "EN": "Chlorophyll A",
+    "DE": "Chlorophyll A",
+    "FR": "Chlorophylle A",
+    "IT": "Clorofilla A"
   },
   "secchi": {
     "EN": "Secchi Depth",
@@ -317,6 +359,72 @@
     "FR": "Cliquez pour en savoir plus",
     "IT": "Fare clic per ulteriori informazioni"
   },
+  "accessingLayers": {
+    "EN": "Accessing layers",
+    "DE": "Auf Ebenen zugreifen",
+    "FR": "Accéder aux calques",
+    "IT": "Accesso ai livelli"
+  },
+  "collectingMetadata": {
+    "EN": "Collecting metadata",
+    "DE": "Sammeln von Metadaten",
+    "FR": "Collecte de métadonnées",
+    "IT": "Raccolta di metadati"
+  },
+  "downloadingData": {
+    "EN": "Downloading data",
+    "DE": "Daten herunterladen",
+    "FR": "Téléchargement des données",
+    "IT": "Scaricamento dei dati"
+  },
+  "availableLayers": {
+    "EN": "Available Layers",
+    "DE": "Verfügbare Ebenen",
+    "FR": "Couches disponibles",
+    "IT": "Livelli disponibili"
+  },
+  "noSettings": {
+    "EN": "No settings available",
+    "DE": "Keine Einstellungen verfügbar",
+    "FR": "Aucun paramètre disponible",
+    "IT": "Nessuna impostazione disponibile"
+  },
+  "offlineWarning": {
+    "EN": "Model offline, historical data can still be accessed.",
+    "DE": "Modell offline, auf historische Daten kann weiterhin zugegriffen werden.",
+    "FR": "Modèle hors ligne, les données historiques sont toujours accessibles.",
+    "IT": "Modello offline, i dati storici sono comunque accessibili."
+  },
+  "showLocations": {
+    "EN": "Show all locations",
+    "DE": "Alle Standorte anzeigen",
+    "FR": "Afficher tous les emplacements",
+    "IT": "Mostra tutte le posizioni"
+  },
+  "hideLocations": {
+    "EN": "Hide locations",
+    "DE": "Standorte ausblenden",
+    "FR": "Masquer les emplacements",
+    "IT": "Nascondi posizioni"
+  },
+  "hideSettings": {
+    "EN": "Hide settings",
+    "DE": "Einstellungen ausblenden",
+    "FR": "Masquer les paramètres",
+    "IT": "Nascondi impostazioni"
+  },
+  "satelliteGraph": {
+    "EN": "Average lake values per satellite image",
+    "DE": "Durchschnittliche Seewerte pro Satellitenbild",
+    "FR": "Valeurs moyennes du lac par image satellite",
+    "IT": "Valori medi del lago per immagine satellitare"
+  },
+  "transectDistance": {
+    "EN": "Distance along transect",
+    "DE": "Entfernung entlang des Transekts",
+    "FR": "Distance le long du transect",
+    "IT": "Distanza lungo il transetto"
+  },
   "satelliteDescription": {
     "EN": "Filter for lakes with satellite derived products",
     "DE": "Filtern für Seen mit satellitengestützten Produkten",
@@ -359,6 +467,150 @@
     "FR": "Satellite",
     "IT": "Satellitare"
   },
+  "waterlevel": {
+    "EN": "Water Level",
+    "DE": "Wasserstand",
+    "FR": "Niveau d'eau",
+    "IT": "Livello dell'acqua"
+  },
+  "waterlevelText": {
+    "EN": "Recent lake level values collected from various sources.",
+    "DE": "Aktuelle Seepegelwerte aus verschiedenen Quellen.",
+    "FR": "Valeurs récentes du niveau du lac recueillies à partir de diverses sources.",
+    "IT": "Valori recenti del livello del lago raccolti da varie fonti."
+  },
+  "watertemperatureText": {
+    "EN": "Recent surface water temperature values collected from various sources.",
+    "DE": "Aktuelle Werte der Oberflächenwassertemperatur, gesammelt aus verschiedenen Quellen.",
+    "FR": "Valeurs récentes de la température de l’eau de surface recueillies à partir de diverses sources.",
+    "IT": "Valori recenti della temperatura delle acque superficiali raccolti da varie fonti."
+  },
+  "scientificText": {
+    "EN": "Open source scientific datasets available for the lake.",
+    "DE": "Für den See sind wissenschaftliche Open-Source-Datensätze verfügbar.",
+    "FR": "Ensembles de données scientifiques open source disponibles pour le lac.",
+    "IT": "Sono disponibili set di dati scientifici open source per il lago."
+  },
+  "onedmodelText": {
+    "EN": "Water temperature forecasted using a 1D numerical model, 1D models assume horizontal uniformity.",
+    "DE": "Die Wassertemperatur wird mithilfe eines 1D-numerischen Modells vorhergesagt. 1D-Modelle gehen von horizontaler Gleichmäßigkeit aus.",
+    "FR": "Température de l'eau prévue à l'aide d'un modèle numérique 1D, les modèles 1D supposent une uniformité horizontale.",
+    "IT": "Temperatura dell'acqua prevista mediante un modello numerico 1D; i modelli 1D presuppongono uniformità orizzontale."
+  },
+  "threedmodelText": {
+    "EN": "Water temperature and currents forecasted using a 3D numerical model.",
+    "DE": "Mithilfe eines 3D-numerischen Modells werden Wassertemperatur und Strömungen vorhergesagt.",
+    "FR": "Température de l'eau et courants prévus à l'aide d'un modèle numérique 3D.",
+    "IT": "Temperatura dell'acqua e correnti previste tramite un modello numerico 3D."
+  },
+  "doyStats": {
+    "EN": "Day of year statistics",
+    "DE": "Tagesstatistiken",
+    "FR": "Statistiques par jour de l'année",
+    "IT": "Statistiche del giorno dell'anno"
+  },
+  "doyStatsText": {
+    "EN": "Daily statistics for a given parameter over the total period of the simulation.",
+    "DE": "Tägliche Statistiken für einen bestimmten Parameter über den gesamten Simulationszeitraum.",
+    "FR": "Statistiques quotidiennes pour un paramètre donné sur la période totale de la simulation.",
+    "IT": "Statistiche giornaliere per un dato parametro per l'intero periodo della simulazione."
+  },
+  "simulation": {
+    "EN": "Simulation",
+    "DE": "Simulation",
+    "FR": "Simulation",
+    "IT": "Simulazione"
+  },
+  "variable": {
+    "EN": "Variable",
+    "DE": "Variable",
+    "FR": "Variable",
+    "IT": "Variabile"
+  },
+  "performance": {
+    "EN": "Performance",
+    "DE": "Leistung",
+    "FR": "Performance",
+    "IT": "Simulazione"
+  },
+  "meteodata": {
+    "EN": "Meteorological data",
+    "DE": "Meteorologische Daten",
+    "FR": "Données météorologiques",
+    "IT": "Dati meteorologici"
+  },
+  "hydrodata": {
+    "EN": "Hydrological data",
+    "DE": "Hydrologische Daten",
+    "FR": "Données hydrologiques",
+    "IT": "Dati idrologici"
+  },
+  "calibdata": {
+    "EN": "Calibration data",
+    "DE": "Kalibrierdaten",
+    "FR": "Données d'étalonnage",
+    "IT": "Dati di calibrazione"
+  },
+  "backToTop": {
+    "EN": "Back to top",
+    "DE": "Zurück zum Anfang",
+    "FR": "Retour au début de la page",
+    "IT": "Torna all'inizio"
+  },
+  "year": {
+    "EN": "Year",
+    "DE": "Jahr",
+    "FR": "Année",
+    "IT": "Anno"
+  },
+  "pastYear": {
+    "EN": "Past year",
+    "DE": "Letztes Jahr",
+    "FR": "L'année dernière",
+    "IT": "Anno scorso"
+  },
+  "pastYearText": {
+    "EN": "Depth time heatmap for the last year of data for a given parameter.",
+    "DE": "Tiefen-Zeit-Heatmap für das letzte Jahr der Daten für einen bestimmten Parameter.",
+    "FR": "Carte thermique temporelle de profondeur pour la dernière année de données pour un paramètre donné.",
+    "IT": "Mappa termica temporale della profondità per l'ultimo anno di dati per un dato parametro."
+  },
+  "climate": {
+    "EN": "Climate scenarios",
+    "DE": "Klimaszenarien",
+    "FR": "Scénarios climatiques",
+    "IT": "Scenari climatici"
+  },
+  "climateText": {
+    "EN": "Average yearly temperature under a range of climate change scenarios.",
+    "DE": "Durchschnittliche Jahrestemperatur unter verschiedenen Klimaszenarien.",
+    "FR": "Température annuelle moyenne dans différents scénarios de changement climatique.",
+    "IT": "Temperatura media annuale in una serie di scenari di cambiamento climatico."
+  },
+  "referencePeriod": {
+    "EN": "Reference period",
+    "DE": "Bezugszeitraum",
+    "FR": "Période de référence",
+    "IT": "Periodo di riferimento"
+  },
+  "period": {
+    "EN": "Period",
+    "DE": "Zeitraum",
+    "FR": "Période",
+    "IT": "Periodo"
+  },
+  "setDepth": {
+    "EN": "Set depth",
+    "DE": "Tiefe einstellen",
+    "FR": "Régler la profondeur",
+    "IT": "Profondità impostata"
+  },
+  "maplink": {
+    "EN": "See more",
+    "DE": "Mehr anzeigen",
+    "FR": "Voir plus",
+    "IT": "Vedi altro"
+  },
   "all": {
     "EN": "All",
     "DE": "Alle",
@@ -400,6 +652,12 @@
     "DE": "Downloads",
     "FR": "Téléchargements",
     "IT": "Downloads"
+  },
+  "hideDetails": {
+    "EN": "Hide details",
+    "DE": "Details ausblenden",
+    "FR": "Cacher les détails",
+    "IT": "Nascondi dettagli"
   },
   "fullscreen": {
     "EN": "Full screen",
@@ -691,6 +949,12 @@
     "FR": "Superficie",
     "IT": "Superficie"
   },
+  "sort": {
+    "EN": "Sort",
+    "DE": "Sortieren",
+    "FR": "Trier",
+    "IT": "Ordinare"
+  },
   "maxDepth": {
     "EN": "Max depth",
     "DE": "Maximale Tiefe",
@@ -735,9 +999,15 @@
   },
   "lakeProperties": {
     "EN": "Lake Properties",
-    "DE": "Seegrundstücke",
+    "DE": "See-Eigenschaften",
     "FR": "Propriétés du lac",
     "IT": "Proprietà del lago"
+  },
+  "parameters": {
+    "EN": "Parameters",
+    "DE": "Parameter",
+    "FR": "Paramètres",
+    "IT": "Parametri"
   },
   "lakePropertiesDesc": {
     "EN": "Key physical properties",
@@ -781,6 +1051,12 @@
     "FR": "Voir",
     "IT": "View"
   },
+  "trends": {
+    "EN": "Trends",
+    "DE": "Trends",
+    "FR": "Tendances",
+    "IT": "Tendenze"
+  },
   "insituData": {
     "EN": "Insitu Data",
     "DE": "In-situ-Daten",
@@ -816,6 +1092,12 @@
     "DE": "Rückmeldung",
     "FR": "Retour",
     "IT": "Feedback"
+  },
+  "oxygenWarning": {
+    "EN": "The AED2 oxygen model is a preliminary version which works reasonably well for some lakes but is clearly wrong for others.",
+    "DE": "Das AED2-Sauerstoffmodell ist eine vorläufige Version, die für einige Seen einigermaßen gut funktioniert, für andere aber eindeutig falsch ist.",
+    "FR": "Le modèle d'oxygène AED2 est une version préliminaire qui fonctionne raisonnablement bien pour certains lacs mais qui est clairement erronée pour d'autres.",
+    "IT": "Il modello di ossigeno AED2 è una versione preliminare che funziona ragionevolmente bene per alcuni laghi, ma è chiaramente sbagliata per altri."
   },
   "feedbackText": {
     "EN": "Thank you for taking the time to provide feedback. Please include a brief message detailing your thoughts and suggestions, and if you're open to further discussion, kindly provide your email address. We appreciate your input!",
@@ -972,6 +1254,78 @@
     "DE": "Graph schließen",
     "FR": "Fermer le graphique",
     "IT": "Chiudi il grafico"
+  },
+  "monthAgo": {
+    "EN": "1 month ago",
+    "DE": "vor 1 Monat",
+    "FR": "Il y a 1 mois",
+    "IT": "1 mese fa"
+  },
+  "monthsAgo": {
+    "EN": "# months ago",
+    "DE": "vor # Monaten",
+    "FR": "Il y a # mois",
+    "IT": "# mesi fa"
+  },
+  "weekAgo": {
+    "EN": "1 week ago",
+    "DE": "vor 1 Woche",
+    "FR": "Il y a 1 semaine",
+    "IT": "1 settimana fa"
+  },
+  "weeksAgo": {
+    "EN": "# weeks ago",
+    "DE": "vor # Wochen",
+    "FR": "Il y a # semaines",
+    "IT": "# settimane fa"
+  },
+  "day": {
+    "EN": "day",
+    "DE": "Tag",
+    "FR": "jour",
+    "IT": "giorno"
+  },
+  "days": {
+    "EN": "days",
+    "DE": "Tagen",
+    "FR": "jours",
+    "IT": "giorni"
+  },
+  "dayAgo": {
+    "EN": "1 day ago",
+    "DE": "vor 1 Tag",
+    "FR": "Il y a 1 jour",
+    "IT": "1 giorno fa"
+  },
+  "daysAgo": {
+    "EN": "# days ago",
+    "DE": "vor # Tagen",
+    "FR": "Il y a # jours",
+    "IT": "# giorni fa"
+  },
+  "hourAgo": {
+    "EN": "1 hour ago",
+    "DE": "vor 1 Stunde",
+    "FR": "Il y a 1 heure",
+    "IT": "1 ora fa"
+  },
+  "hoursAgo": {
+    "EN": "# hours ago",
+    "DE": "vor # Stunden",
+    "FR": "Il y a # heures",
+    "IT": "# ore fa"
+  },
+  "minuteAgo": {
+    "EN": "1 minute ago",
+    "DE": "vor 1 Minute",
+    "FR": "Il y a 1 minute",
+    "IT": "1 minuto fa"
+  },
+  "minutesAgo": {
+    "EN": "# minutes ago",
+    "DE": "vor # Minuten",
+    "FR": "Il y a # minutes",
+    "IT": "# minuti fa"
   },
   "c": {
     "EN": "",

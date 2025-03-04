@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import D3LineGraph from "../linegraph/linegraph";
+import Translations from "../../../translations.json";
 import { deepCopy } from "./functions";
 
 class DatasetLinegraph extends Component {
@@ -14,6 +15,11 @@ class DatasetLinegraph extends Component {
       curve,
       language,
       padding,
+      grid,
+      noYear,
+      noData,
+      fontSize,
+      setFontSize,
     } = this.props;
     var inputData = [];
     if (data !== undefined) {
@@ -21,8 +27,15 @@ class DatasetLinegraph extends Component {
     }
     return (
       <div
-        className={padding === true ? "dataset-linegraph padding" : "dataset-linegraph"}
+        className={
+          padding === true ? "dataset-linegraph padding" : "dataset-linegraph"
+        }
       >
+        {noData && (
+          <div className="dataset-linegraph-label">
+            {Translations.notAvail[language]}
+          </div>
+        )}
         {data && (
           <D3LineGraph
             data={inputData}
@@ -33,11 +46,15 @@ class DatasetLinegraph extends Component {
             dark={dark}
             marginTop={1}
             marginRight={1}
-            marginBottom={20}
+            marginBottom={xlabel === "time" ? 20 : 35}
             lcolor={[]}
             lweight={[]}
             curve={curve}
             language={language}
+            grid={grid}
+            noYear={noYear}
+            fontSize={fontSize}
+            setFontSize={setFontSize}
           />
         )}
       </div>

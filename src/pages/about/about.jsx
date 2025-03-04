@@ -10,6 +10,14 @@ import dimark_icon from "../../img/dimark.png";
 import Translations from "../../translations.json";
 import "./about.css";
 
+const Link = (url, c = "link") => {
+  return (
+    <a className={c} target="_blank" rel="noreferrer" href={url}>
+      {url}
+    </a>
+  );
+};
+
 class About extends Component {
   state = {
     visibleKey: "vision",
@@ -51,7 +59,7 @@ class About extends Component {
     if (sectionRef.current) {
       window.scrollTo({
         top: sectionRef.current.offsetTop,
-        behavior: "smooth"
+        behavior: "smooth",
       });
     }
   };
@@ -64,7 +72,7 @@ class About extends Component {
     window.removeEventListener("scroll", this.handleScroll);
   }
   render() {
-    var { language } = this.props;
+    const language = "EN";
     var { visibleKey } = this.state;
     return (
       <React.Fragment>
@@ -79,21 +87,19 @@ class About extends Component {
         <div className="about">
           <div className="content">
             <h1>{Translations.about[language]}</h1>
-            <p>
-              Alplakes is a research initiative that provides accurate
-              predictions of the condition of lakes throughout the European
-              Alpine region.
-            </p>
-            <p>
-              We integrate models and remote sensing products developed by the
-              research community to provide the most up-to-date and accurate
-              information possible.
-            </p>
-            <div
-              id="vision"
-              ref={this.divRefs["vision"]}
-              className="section"
-            >
+            <div className="intro">
+              <p>
+                Alplakes is a research initiative that provides accurate
+                predictions of the condition of lakes throughout the European
+                Alpine region.
+              </p>
+              <p>
+                We integrate models and remote sensing products developed by the
+                research community to provide the most up-to-date and accurate
+                information possible.
+              </p>
+            </div>
+            <div id="vision" ref={this.divRefs["vision"]} className="section">
               <h2>Vision</h2>
               <p>
                 This platform aims to transform how lakes are studied and
@@ -128,11 +134,7 @@ class About extends Component {
                 <li>Water quality module development</li>
               </ul>
             </div>
-            <div
-              id="contact"
-              ref={this.divRefs["contact"]}
-              className="section"
-            >
+            <div id="contact" ref={this.divRefs["contact"]} className="section">
               <h2>Contact us</h2>
               <p>
                 We encourage the use of our products. Please do not hesitate to
@@ -143,7 +145,11 @@ class About extends Component {
                 <img src={runnallja} alt="James" />
                 <div className="name">James Runnalls</div>
                 <div className="job">Software Engineer</div>
-                <div className="email">james.runnalls@eawag.ch</div>
+                <div className="email">
+                  <a href="mailto:james.runnalls@eawag.ch">
+                    james.runnalls@eawag.ch
+                  </a>
+                </div>
                 <div className="contact-head">
                   {Translations["talk"][language]}
                 </div>
@@ -153,7 +159,11 @@ class About extends Component {
                 <img src={bouffada} alt="Damien" />
                 <div className="name">Damien Bouffard</div>
                 <div className="job">Group Leader</div>
-                <div className="email">damien.bouffard@eawag.ch</div>
+                <div className="email">
+                  <a href="mailto:damien.bouffard@eawag.ch">
+                    damien.bouffard@eawag.ch
+                  </a>
+                </div>
                 <div className="contact-head">
                   {Translations["talk"][language]}
                 </div>
@@ -163,7 +173,11 @@ class About extends Component {
                 <img src={odermada} alt="Dani" />
                 <div className="name">Daniel Odermatt</div>
                 <div className="job">Group Leader</div>
-                <div className="email">daniel.odermatt@eawag.ch</div>
+                <div className="email">
+                  <a href="mailto:daniel.odermatt@eawag.ch">
+                    daniel.odermatt@eawag.ch
+                  </a>
+                </div>
                 <div className="contact-head">
                   {Translations["talk"][language]}
                 </div>
@@ -173,7 +187,11 @@ class About extends Component {
                 <img src={schmidma} alt="Martin" />
                 <div className="name">Martin Schmid</div>
                 <div className="job">Group Leader</div>
-                <div className="email">martin.schmid@eawag.ch</div>
+                <div className="email">
+                  <a href="mailto:martin.schmid@eawag.ch">
+                    martin.schmid@eawag.ch
+                  </a>
+                </div>
                 <div className="contact-head">
                   {Translations["talk"][language]}
                 </div>
@@ -205,12 +223,7 @@ class About extends Component {
                 Union through the Interreg Alpine Space programme.
               </p>
               <div className="project-info">
-                <a
-                  className="link"
-                  href="https://www.alpine-space.eu/project/dimark/"
-                >
-                  https://www.alpine-space.eu/project/dimark/
-                </a>
+                {Link("https://www.alpine-space.eu/project/dimark/")}
                 <img
                   src={dimark_icon}
                   className="project-logo"
@@ -229,9 +242,7 @@ class About extends Component {
                 calibrated and the web platform was developed.
               </p>
               <div className="project-info">
-                <a className="link" href="https://alplakes.eawag.ch">
-                  https://alplakes.eawag.ch
-                </a>
+                {Link("https://alplakes.eawag.ch")}
                 <div className="parameter">
                   <div className="circle">
                     <span className="circle-text">$</span>
@@ -256,12 +267,9 @@ class About extends Component {
                 Research & Management (SURF).
               </p>
               <div className="project-info">
-                <a
-                  className="link"
-                  href="https://github.com/Eawag-AppliedSystemAnalysis/Simstrat"
-                >
-                  https://github.com/Eawag-AppliedSystemAnalysis/Simstrat
-                </a>
+                {Link(
+                  "https://github.com/Eawag-AppliedSystemAnalysis/Simstrat"
+                )}
                 <div className="parameter">
                   <div className="circle">
                     <span className="circle-text">$</span>
@@ -286,12 +294,9 @@ class About extends Component {
                 the SURF Remote Sensing group at Eawag.
               </p>
               <div className="project-info">
-                <a
-                  className="link"
-                  href="https://github.com/eawag-surface-waters-research/sencast"
-                >
-                  https://github.com/eawag-surface-waters-research/sencast
-                </a>
+                {Link(
+                  "https://github.com/eawag-surface-waters-research/sencast"
+                )}
                 <div className="parameter">
                   <div className="circle">
                     <span className="circle-text">$</span>
@@ -335,11 +340,7 @@ class About extends Component {
                 </div>
               </div>
             </div>
-            <div
-              id="people"
-              ref={this.divRefs["people"]}
-              className="section"
-            >
+            <div id="people" ref={this.divRefs["people"]} className="section">
               <h2>Contributing people</h2>
               <h3>2024</h3>
               <p>
@@ -371,48 +372,36 @@ class About extends Component {
                 available for the community to use and contribute to.
               </p>
               <h3>3D Models</h3>
-              <a
-                className="repo"
-                href="https://github.com/eawag-surface-waters-research/alplakes-simulations"
-              >
-                https://github.com/eawag-surface-waters-research/alplakes-simulations
-              </a>
+              {Link(
+                "https://github.com/eawag-surface-waters-research/alplakes-simulations",
+                "repo"
+              )}
               <h3>1D Models</h3>
-              <a
-                className="repo"
-                href="https://github.com/Eawag-AppliedSystemAnalysis/operational-simstrat"
-              >
-                https://github.com/Eawag-AppliedSystemAnalysis/operational-simstrat
-              </a>
+              {Link(
+                "https://github.com/Eawag-AppliedSystemAnalysis/operational-simstrat",
+                "repo"
+              )}
               <h3>Remote Sensing Products</h3>
-              <a
-                className="repo"
-                href="https://github.com/eawag-surface-waters-research/sencast"
-              >
-                https://github.com/eawag-surface-waters-research/sencast
-              </a>
+              {Link(
+                "https://github.com/eawag-surface-waters-research/sencast",
+                "repo"
+              )}
               <h3>Alplakes</h3>
               <h4>Website</h4>
-              <a
-                className="repo"
-                href="https://github.com/eawag-surface-waters-research/alplakes-react"
-              >
-                https://github.com/eawag-surface-waters-research/alplakes-react
-              </a>
+              {Link(
+                "https://github.com/eawag-surface-waters-research/alplakes-react",
+                "repo"
+              )}
               <h4>API</h4>
-              <a
-                className="repo"
-                href="https://github.com/eawag-surface-waters-research/alplakes-fastapi"
-              >
-                https://github.com/eawag-surface-waters-research/alplakes-fastapi
-              </a>
+              {Link(
+                "https://github.com/eawag-surface-waters-research/alplakes-fastapi",
+                "repo"
+              )}
               <h4>Orchestrator</h4>
-              <a
-                className="repo"
-                href="https://github.com/eawag-surface-waters-research/airflow"
-              >
-                https://github.com/eawag-surface-waters-research/airflow
-              </a>
+              {Link(
+                "https://github.com/eawag-surface-waters-research/airflow",
+                "repo"
+              )}
             </div>
             <div
               id="publications"
@@ -427,7 +416,7 @@ class About extends Component {
                 (2024). Combined Earth observations reveal the sequence of
                 conditions leading to a large algal bloom in Lake Geneva.
                 Communications Earth & Environment, 5(1), 229.
-                https://doi.org/10.1038/s43247-024-01351-5
+                {Link("https://doi.org/10.1038/s43247-024-01351-5")}
               </p>
               <p>
                 Tian, W., Zhang, Z., Bouffard, D., Wu, H., Xin, K., Gu, X., &
@@ -435,7 +424,8 @@ class About extends Component {
                 of deep learning-based emulator in three-dimensional lake
                 hydrodynamics using Koopman operator and transfer learning:
                 Demonstrated on the example of lake Zurich. Water Research, 249,
-                120996. https://doi.org/10.1016/j.watres.2023.120996
+                120996.
+                {Link("https://doi.org/10.1016/j.watres.2023.120996")}
               </p>
               <p>
                 Safin, A., Bouffard, D., Ozdemir, F., Ramón, C. L., Runnalls,
@@ -443,27 +433,28 @@ class About extends Component {
                 assimilation framework for lake 3D hydrodynamic models with a
                 physics-preserving particle filtering method using SPUX-MITgcm
                 v1. Geoscientific Model Development, 15(20), 7715-7730.
-                https://doi.org/10.5194/gmd-15-7715-2022
+                {Link("https://doi.org/10.5194/gmd-15-7715-2022")}
               </p>
               <p>
                 Li, C., Odermatt, D., Bouffard, D., Wüest, A., & Kohn, T.
                 (2022). Coupling remote sensing and particle tracking to
                 estimate trajectories in large water bodies. International
                 Journal of Applied Earth Observation and Geoinformation, 110,
-                102809. https://doi.org/10.1016/j.jag.2022.102809
+                102809.
+                {Link("https://doi.org/10.1016/j.jag.2022.102809")}
               </p>
               <p>
                 Baracchini, T., Hummel, S., Verlaan, M., Cimatoribus, A., Wüest,
                 A., & Bouffard, D. (2020). An automated calibration framework
                 and open source tools for 3D lake hydrodynamic models.
                 Environmental Modelling & Software, 134, 104787
-                https://doi.org/10.1016/j.envsoft.2020.104787
+                {Link("https://doi.org/10.1016/j.envsoft.2020.104787")}
               </p>
               <p>
                 Baracchini, T., Wüest, A., & Bouffard, D. (2020). Meteolakes: An
                 operational online three-dimensional forecasting platform for
-                lake hydrodynamics. Water research, 172,
-                115529.https://doi.org/10.1016/j.watres.2020.115529
+                lake hydrodynamics. Water research, 172, 115529.
+                {Link("https://doi.org/10.1016/j.watres.2020.115529")}
               </p>
               <p>
                 Baracchini, T., Chu, P. Y., Šukys, J., Lieberherr, G., Wunderle,
@@ -471,7 +462,7 @@ class About extends Component {
                 situ and satellite remote sensing data to 3D hydrodynamic lake
                 models: a case study using Delft3D-FLOW v4. 03 and OpenDA v2. 4.
                 Geoscientific Model Development, 13(3), 1267-1284.
-                https://doi.org/10.5194/gmd-13-1267-2020
+                {Link("https://doi.org/10.5194/gmd-13-1267-2020")}
               </p>
               <p>
                 Gaudard, A., Råman Vinnå, L., Bärenbold, F., Schmid, M., &
@@ -497,7 +488,7 @@ class About extends Component {
                 Soomets, T., Kutser, T., Wüest, A., & Bouffard, D. (2019).
                 Spatial and temporal changes of primary production in a deep
                 peri-alpine lake. Inland Waters, 9(1), 49-60.
-                https://doi.org/10.1080/20442041.2018.1530529
+                {Link("https://doi.org/10.1080/20442041.2018.1530529")}
               </p>
               <h3>Framework use</h3>
               <p>
@@ -506,27 +497,28 @@ class About extends Component {
                 (2023). Spatial variability of turbulent mixing from an
                 underwater glider in a large, deep, stratified lake. Journal of
                 Geophysical Research: Oceans, 128(6), e2022JC018913.
-                https://doi.org/10.1029/2022JC018913
+                {Link("https://doi.org/10.1029/2022JC018913")}
               </p>
               <p>
                 Perolo, P., Fernández Castro, B., Escoffier, N., Lambert, T.,
                 Bouffard, D., & Perga, M. E. (2021). Accounting for surface
                 waves improves gas flux estimation at high wind speed in a large
                 lake. Earth System Dynamics, 12(4), 1169-1189.
-                https://doi.org/10.5194/esd-12-1169-2021
+                {Link("https://doi.org/10.5194/esd-12-1169-2021")}
               </p>
               <p>
                 Råman Vinnå, L., Bouffard, D., Wüest, A., Girardclos, S., &
                 Dubois, N. (2020). Assessing subaquatic mass movement hazards:
                 an integrated observational and hydrodynamic modelling approach.
                 Water Resources Management, 34(13), 4133-4146.
-                https://doi.org/10.1007/s11269-020-02660-y
+                {Link("https://doi.org/10.1007/s11269-020-02660-y")}
               </p>
               <p>
                 Nouchi, V., Kutser, T., Wüest, A., Müller, B., Odermatt, D.,
                 Baracchini, T., & Bouffard, D. (2019). Resolving biogeochemical
                 processes in lakes using remote sensing. Aquatic Sciences, 81,
-                1-13. https://doi.org/10.1007/s00027-019-0626-3
+                1-13.
+                {Link("https://doi.org/10.1007/s00027-019-0626-3")}
               </p>
               <p>
                 Bouffard, D., Kiefer, I., Wüest, A., Wunderle, S., & Odermatt,
@@ -534,12 +526,13 @@ class About extends Component {
                 deep lake related? An analysis based on satellite observations
                 in synergy with hydrodynamic modelling and in-situ data. Remote
                 sensing of environment, 209, 510-523.
-                https://doi.org/10.1016/j.rse.2018.02.056
+                {Link("https://doi.org/10.1016/j.rse.2018.02.056")}
               </p>
               <p>
                 Råman Vinnå, L., Wüest, A., & Bouffard, D. (2017). Physical
                 effects of thermal pollution in lakes. Water Resources Research,
-                53(5), 3968-3987. https://doi.org/10.1002/2016WR019686
+                53(5), 3968-3987.
+                {Link("https://doi.org/10.1002/2016WR019686")}
               </p>
             </div>
           </div>

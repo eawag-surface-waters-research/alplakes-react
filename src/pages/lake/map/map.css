@@ -1,0 +1,986 @@
+.main .map .layer-map {
+    width: calc(100% - var(--padding));
+    height: calc(100% - var(--header-height) - var(--padding));
+    position: fixed;
+    top: calc(var(--header-height) + var(--padding) / 2);
+    left: calc(var(--padding) / 2);
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.main .map.sidebar-open .layer-map .overlay-stack {
+    width: calc(100% - 436px)
+}
+
+.main .map .layer-map .leaflet-top {
+    top: 70px;
+}
+
+.main .map .layer-map .leaflet-left {
+    left: 8px;
+}
+
+.main .map .layer-map .map-loading {
+    position: absolute;
+    z-index: 9999;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    transition: all 0.3s ease-out;
+    pointer-events: none;
+    top: 0;
+}
+
+.main .map .layer-map .map-loading.closed {
+    display: none;
+}
+
+.main .map .layer-map .map-loading .map-loading-inner {
+    background-color: var(--box-color);
+    padding: 12px;
+    box-shadow: var(--box-shadow);
+    border-radius: 50px;
+}
+
+.main .map .layer-map .map-loading .map-loading-inner .loading-text {
+    display: inline-block;
+    margin-left: 20px;
+    vertical-align: super;
+    width: 200px;
+}
+
+.main .map .layer-map .back-button {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    height: 60px;
+    width: 60px;
+    background-color: var(--box-color);
+    z-index: 999;
+    text-align: center;
+    border-radius: 50%;
+}
+
+.main .map .layer-map .back-button img {
+    height: 22px;
+    margin-top: 19px;
+    padding-right: 2px;
+    transition: all .1s 0s ease;
+}
+
+.main .map .layer-map .back-button:hover img {
+    transform: scale(1.1);
+}
+
+.main .map .layer-map .map-sidebar {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 400px;
+    height: calc(100% - 24px);
+    z-index: 9999;
+}
+
+.main .map .layer-map .map-sidebar.closed {
+    width: unset;
+    height: unset;
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body {
+    box-sizing: border-box;
+    height: calc(100% - 74px);
+    width: 100%;
+    border-radius: 0 16px 16px 16px;
+    background-color: var(--box-color);
+    padding: 12px;
+}
+
+.main .map .layer-map .map-sidebar.closed .sidebar-body {
+    display: none;
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-content {
+    max-height: calc(100% - 139px);
+    width: 100%;
+    margin-top: 12px;
+    box-sizing: border-box;
+    overflow: auto;
+    padding-right: 10px;
+    position: relative;
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-content::-webkit-scrollbar {
+    width: 4px;
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-content::-webkit-scrollbar-track {
+    background-color: var(--background-color);
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-content::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .sidebar-content-close {
+    position: absolute;
+    right: 18px;
+    top: 15px;
+    background-color: var(--select-color);
+    font-size: 16px;
+    display: none;
+    border-radius: 50%;
+    font-weight: bold;
+    padding: 4px 8px;
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .sidebar-content-remove {
+    position: absolute;
+    background-color: var(--select-color);
+    padding: 4px 9px;
+    border-radius: 50%;
+    left: 18px;
+    top: 15px;
+    display: none;
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .sidebar-content-remove img {
+    height: 14px;
+}
+
+.main.dark .map .layer-map .map-sidebar .sidebar-body .sidebar-content .sidebar-content-remove img {
+    -webkit-filter: invert(100%);
+    filter: invert(100%);
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .sidebar-content-title {
+    font-size: 20px;
+    padding: 0 6px;
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .sidebar-content-subtitle {
+    color: var(--background-subtle-font-color);
+    padding: 0 6px;
+    font-size: 14px;
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .sidebar-content-description {
+    padding: 0 6px;
+    margin-top: 10px;
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .sidebar-content-settings {
+    font-size: 18px;
+    padding: 0 6px;
+    margin-top: 12px;
+    color: var(--background-subtle-font-color);
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .layer-settings {
+    background-color: var(--background-color);
+    padding: 18px;
+    border-radius: 12px;
+    margin-top: 6px;
+    text-align: left;
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .layer-settings.subtle {
+    color: var(--background-subtle-font-color);
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .layer-settings .images {
+    margin: 16px 0 16px 0;
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .layer-settings .images .image {
+    border-left: 2px solid var(--highlight-color-subtle);
+    padding-left: 8px;
+    margin: 12px 0;
+    color: var(--background-subtle-font-color);
+    position: relative;
+    cursor: pointer;
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .layer-settings .images .image.selected {
+    border-color: var(--highlight-color);
+    color: var(--background-font-color);
+    cursor: default;
+}
+
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .layer-settings .images .image:hover {
+    border-color: var(--highlight-color);
+    color: var(--background-font-color);
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .layer-settings .images .image .left {
+    display: inline-block;
+    padding-right: 8px;
+    vertical-align: bottom;
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .layer-settings .images .image .left .sat {
+    font-size: 26px;
+    line-height: 26px;
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .layer-settings .images .image .right {
+    display: inline-block;
+    font-size: 14px;
+    line-height: 20px;
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .layer-settings .images .image .right-buttons {
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .layer-settings .images .image .button {
+    background-color: var(--background-color);
+    border: 1px solid var(--border-color);
+    color: var(--background-subtle-font-color);
+    border-radius: 8px;
+    padding: 2px 6px;
+    font-size: 12px;
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .layer-settings .images .image.selected .button {
+    background-color: var(--highlight-color);
+    border-color: var(--highlight-color);
+    color: white;
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .layer-settings .images .image:hover .button {
+    background-color: var(--highlight-color);
+    border-color: var(--highlight-color);
+    color: white;
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .layer-settings .images .image button.tiff {
+    display: inline-block;
+    border-radius: 8px;
+    margin-right: 12px;
+    border: 1px solid var(--border-color);
+    background-color: var(--background-color);
+    color: var(--background-font-color);
+    cursor: pointer;
+    padding: 2px 6px;
+    font-size: 12px;
+    margin-top: 4px;
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .layer-settings .images .image button.tiff:hover {
+    background-color: var(--highlight-color);
+    color: white;
+    border-color: var(--highlight-color);
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .layer-settings .custom-css-datepicker {
+    width: 100%;
+    text-align: center;
+    padding-left: 12px;
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .layer-settings .custom-css-datepicker .react-datepicker {
+    background-color: var(--background-color);
+    border: none;
+    width: 100%;
+    font-size: 16px;
+    margin-left: -20px;
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .layer-settings .custom-css-datepicker .react-datepicker .react-datepicker__current-month,
+.react-datepicker-time__header,
+.react-datepicker-year-header {
+    font-size: 18px;
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .layer-settings .custom-css-datepicker .react-datepicker .react-datepicker__day-name,
+.react-datepicker__day,
+.react-datepicker__time-name {
+    color: var(--background-font-color);
+    width: var(--cell-size);
+    height: var(--cell-size);
+    line-height: var(--cell-size);
+    border-radius: var(--cell-size);
+    position: relative;
+    vertical-align: middle;
+    margin: 6px;
+    font-size: 14px;
+    border: 1px solid transparent;
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .layer-settings .custom-css-datepicker .react-datepicker .date {
+    z-index: 1;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding: 2px;
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .layer-settings .custom-css-datepicker .react-datepicker .percentage {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    border-radius: 50%;
+    overflow: hidden;
+    z-index: 0;
+    border: 2px solid var(--highlight-color);
+    opacity: 0.5;
+    left: 0;
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .layer-settings .custom-css-datepicker .react-datepicker .percentage::after {
+    content: '';
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    width: 80%;
+    height: 80%;
+    background-color: var(--box-color);
+    border-radius: 50%;
+    z-index: -1
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .layer-settings .custom-css-datepicker .react-datepicker .observations {
+    position: absolute;
+    font-size: 9px;
+    top: -6px;
+    right: -6px;
+    background-color: var(--box-color);
+    border: 2px solid var(--highlight-color-subtle);
+    border-radius: 22px;
+    line-height: 15px;
+    width: 15px;
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .layer-settings .custom-css-datepicker .react-datepicker .react-datepicker__day--disabled,
+.react-datepicker__month-text--disabled,
+.react-datepicker__quarter-text--disabled,
+.react-datepicker__year-text--disabled {
+    color: var(--background-subtle-font-color);
+    border: none;
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .layer-settings .custom-css-datepicker .react-datepicker .react-datepicker__day--keyboard-selected,
+.react-datepicker__month-text--keyboard-selected,
+.react-datepicker__quarter-text--keyboard-selected,
+.react-datepicker__year-text--keyboard-selected {
+    background-color: transparent;
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .layer-settings .custom-css-datepicker .react-datepicker .react-datepicker__day--selected,
+.react-datepicker__day--in-selecting-range,
+.react-datepicker__day--in-range,
+.react-datepicker__month-text--selected,
+.react-datepicker__month-text--in-selecting-range,
+.react-datepicker__month-text--in-range,
+.react-datepicker__quarter-text--selected,
+.react-datepicker__quarter-text--in-selecting-range,
+.react-datepicker__quarter-text--in-range,
+.react-datepicker__year-text--selected,
+.react-datepicker__year-text--in-selecting-range,
+.react-datepicker__year-text--in-range {
+    background-color: transparent;
+    font-weight: bold;
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .layer-settings .custom-css-datepicker .react-datepicker .react-datepicker__day--selected .percentage {
+    opacity: 1;
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .layer-settings .custom-css-datepicker .react-datepicker .react-datepicker__day--selected .observations {
+    border-color: var(--highlight-color);
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .layer-settings .custom-css-datepicker .react-datepicker .react-datepicker__day:hover,
+.react-datepicker__month-text:hover,
+.react-datepicker__quarter-text:hover,
+.react-datepicker__year-text:hover {
+    background-color: transparent;
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .layer-settings .custom-css-datepicker .react-datepicker .react-datepicker__day:hover .percentage {
+    opacity: 1;
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .layer-settings .custom-css-datepicker .react-datepicker .react-datepicker__day:hover .observations {
+    border-color: var(--highlight-color);
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .layer-settings .custom-css-datepicker .react-datepicker .react-datepicker__header {
+    background-color: var(--background-color);
+    border: none;
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .layer-settings .custom-css-datepicker .react-datepicker .react-datepicker__current-month,
+.react-datepicker-time__header,
+.react-datepicker-year-header {
+    color: var(--background-font-color);
+    font-size: 14px;
+}
+
+.main .map .layer-map .map-sidebar .sidebar-head {
+    height: 74px;
+}
+
+.main .map .layer-map .map-sidebar .sidebar-head .sidebar-title {
+    display: inline-block;
+    background-color: var(--box-color);
+    border-radius: 16px 16px 0 0;
+    width: calc(100% - 74px);
+    height: 74px;
+    position: relative;
+    vertical-align: top;
+    padding: 22px 12px;
+    box-sizing: border-box;
+    font-size: 20px;
+    text-align: center;
+}
+
+.main .map .layer-map .map-sidebar.closed .sidebar-head .sidebar-title {
+    display: none;
+}
+
+.main .map .layer-map .map-sidebar .sidebar-head .sidebar-toggle {
+    display: inline-block;
+    position: relative;
+    width: 74px;
+    height: 74px;
+    overflow: hidden;
+    float: right;
+}
+
+.main .map .layer-map .map-sidebar .sidebar-head .sidebar-toggle:after {
+    position: absolute;
+    content: '';
+    width: 74px;
+    height: 74px;
+    box-shadow: 0 0 0 1000px var(--box-color);
+    border-radius: 0 0 0 32px;
+    right: 0;
+    top: 0;
+}
+
+.main .map .layer-map .map-sidebar.closed .sidebar-head .sidebar-toggle:after {
+    display: none;
+}
+
+.main .map .layer-map .map-sidebar .sidebar-head .sidebar-toggle .settings-button {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    height: 60px;
+    width: 60px;
+    background-color: var(--box-color);
+    z-index: 999;
+    text-align: center;
+    border-radius: 50%;
+    border: 1px solid transparent;
+    cursor: pointer;
+}
+
+.main .map .layer-map .map-sidebar .sidebar-head .sidebar-toggle .settings-button img {
+    height: 30px;
+    margin-top: 15px;
+    transition: all .1s 0s ease;
+}
+
+.main .map .layer-map .map-sidebar .sidebar-head .sidebar-toggle .settings-button:hover img {
+    transform: scale(1.1);
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-layers {
+    background-color: var(--background-color);
+    border-radius: 12px;
+    text-align: center;
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-layers .active-apps .app {
+    display: inline-block;
+    font-size: 45px;
+    border-radius: 12px;
+    margin: 25px 12px 40px 12px;
+    width: 60px;
+    height: 60px;
+    text-align: center;
+    color: var(--border-color);
+    box-shadow: var(--box-shadow);
+    position: relative;
+    cursor: pointer;
+    background-color: var(--box-color);
+    line-height: 57px;
+    transition: all 0.2s ease-out;
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-layers .active-apps .app:hover {
+    transform: scale(1.05);
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-layers .active-apps .app.filled {
+    border: none;
+    box-shadow: var(--box-shadow);
+    height: 62px;
+    text-align: center;
+    vertical-align: top;
+    width: 62px;
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-layers .active-apps .app img {
+    bottom: 0;
+    height: auto;
+    left: 0;
+    margin: auto;
+    max-height: 44px;
+    max-width: 38px;
+    pointer-events: none;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transition: all .15s ease-in-out;
+    -webkit-user-select: none;
+    user-select: none;
+    width: auto;
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-layers .active-apps .app .remove {
+    background-color: var(--background-color);
+    border: 1px solid var(--border-color);
+    border-radius: 22px;
+    box-sizing: border-box;
+    color: var(--background-subtle-font-color);
+    font-size: 44px;
+    font-size: 24px;
+    height: 20px;
+    left: -10px;
+    line-height: 13px;
+    padding: 1px;
+    position: absolute;
+    text-align: center;
+    top: -10px;
+    transition: color .5s;
+    -webkit-user-select: none;
+    user-select: none;
+    width: 20px;
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-layers .active-apps .app .remove:hover {
+    color: red;
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-layers .active-apps .app .label {
+    bottom: -32px;
+    color: var(--background-font-color);
+    font-size: 12px;
+    left: -10px;
+    position: absolute;
+    text-align: center;
+    width: 84px;
+    line-height: normal;
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-layers .active-apps .app .label .under {
+    color: var(--background-subtle-font-color);
+    font-size: 10px;
+    margin-top: -2px;
+}
+
+.main .map .layer-map .app.threed,
+.icon.threed {
+    background-color: #26423d !important;
+    background-image: linear-gradient(30deg, #4aa091 12%, transparent 12.5%, transparent 87%, #4aa091 87.5%, #4aa091), linear-gradient(150deg, #4aa091 12%, transparent 12.5%, transparent 87%, #4aa091 87.5%, #4aa091), linear-gradient(30deg, #4aa091 12%, transparent 12.5%, transparent 87%, #4aa091 87.5%, #4aa091), linear-gradient(150deg, #4aa091 12%, transparent 12.5%, transparent 87%, #4aa091 87.5%, #4aa091), linear-gradient(60deg, #4aa09177 25%, transparent 25.5%, transparent 75%, #4aa09177 0, #4aa09177), linear-gradient(60deg, #4aa09177 25%, transparent 25.5%, transparent 75%, #4aa09177 0, #4aa09177);
+    background-position: 0 0, 0 0, 14px 25px, 14px 25px, 0 0, 14px 25px;
+    background-size: 28px 49px;
+}
+
+.main .map .layer-map .app.satellite,
+.icon.satellite {
+    background-color: #26423d !important;
+    background-image: repeating-radial-gradient(circle at 0 0, transparent 0, #26423d 24px), repeating-linear-gradient(#4aa09155, #4aa091);
+}
+
+.main .map .layer-map .app.measurements,
+.icon.measurements {
+    background-color: #26423d !important;
+    background: linear-gradient(135deg, #4aa09155 25%, transparent 25%) -9px 0/ 18px 18px, linear-gradient(225deg, #4aa091 25%, transparent 25%) -9px 0/ 18px 18px, linear-gradient(315deg, #4aa09155 25%, transparent 25%) 0px 0/ 18px 18px, linear-gradient(45deg, #4aa091 25%, #26423d 25%) 0px 0/ 18px 18px;
+}
+
+.main .map .layer-map .add-layers {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: calc(100% - 24px);
+    background-color: var(--background-color);
+    border-radius: 22px;
+    padding: var(--padding);
+    box-sizing: border-box;
+    z-index: 9999999;
+    height: calc(100% - 24px);
+    margin: 12px;
+    box-shadow: var(--box-shadow);
+}
+
+.main .map .layer-map .add-layers.hidden {
+    display: none;
+}
+
+.main .map .layer-map .add-layers .layers-title {
+    font-size: 22px;
+    width: fit-content;
+    padding: 0 4px;
+    margin-bottom: calc(var(--padding) / 2);
+    ;
+}
+
+.main .map .layer-map .add-layers .layers-close {
+    font-size: 32px;
+    color: var(--background-font-color);
+    cursor: pointer;
+    transition: all .2s ease-in-out;
+    line-height: 22px;
+    float: right;
+}
+
+.main .map .layer-map .add-layers .layers {
+    height: calc(100% - var(--padding)* 2);
+    width: 100%;
+    overflow-y: auto;
+    box-sizing: border-box;
+    overflow-x: hidden;
+    padding-right: 12px;
+    padding-bottom: 12px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.main .map .layer-map .add-layers .layers::-webkit-scrollbar {
+    width: 6px;
+}
+
+.main .map .layer-map .add-layers .layers::-webkit-scrollbar-track {
+    background-color: var(--background-color);
+}
+
+.main .map .layer-map .add-layers .layers::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+}
+
+.main .map .layer-map .add-layers .layers .layer {
+    margin: 6px;
+    padding: 16px;
+    background-color: var(--box-color);
+    box-shadow: var(--box-shadow);
+    border: 1px solid transparent;
+    border-radius: 12px;
+    cursor: pointer;
+    display: inline-block;
+    vertical-align: top;
+    width: 350px;
+    height: 180px;
+    text-align: left;
+    position: relative;
+    flex: 1;
+    min-width: 350px;
+    max-width: 500px;
+    box-sizing: border-box;
+}
+
+.main .map .layer-map .add-layers .layers .layer:hover {
+    border: 1px solid var(--border-color);
+    box-shadow: none;
+}
+
+.main .map .layer-map .add-layers .layers-close:hover {
+    transform: scale(1.2);
+}
+
+.main .map .layer-map .add-layers .layers .layer.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.main .map .layer-map .add-layers .layers .layer .icon {
+    width: 50px;
+    height: 50px;
+    display: inline-block;
+    border-radius: 12px;
+    text-align: center;
+    position: relative;
+}
+
+.main .map .layer-map .add-layers .layers .layer img {
+    max-width: 32px;
+    max-height: 34px;
+    top: 50%;
+    transform: translateY(-50%);
+    position: relative;
+    display: inline-block;
+}
+
+.main .map .layer-map .add-layers .layers .layer .text {
+    display: inline-block;
+    margin-left: 8px;
+    vertical-align: bottom;
+    font-size: 14px;
+}
+
+.main .map .layer-map .add-layers .layers .layer .text .parameter {
+    font-size: 20px;
+}
+
+.main .map .layer-map .add-layers .layers .layer .text .type {
+    color: var(--background-subtle-font-color);
+    font-size: 16px;
+    line-height: 22px;
+}
+
+.main .map .layer-map .add-layers .layers .layer .text .model {
+    font-size: 12px;
+}
+
+.main .map .layer-map .add-layers .layers .layer .status {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    border-radius: 8px;
+    padding: 4px 8px;
+    font-size: 14px;
+    background-color: var(--background-color);
+}
+
+.main .map .layer-map .add-layers .layers .layer:hover .status {
+    background-color: var(--highlight-color);
+    color: white;
+}
+
+.main .map .layer-map .add-layers .layers .layer .description {
+    margin-top: 8px;
+    font-size: 14px;
+    color: var(--background-subtle-font-color);
+}
+
+.main .map .layer-map .add-layers .layers .layer .tags {
+    font-size: 14px;
+    position: absolute;
+    bottom: 16px;
+    left: 16px;
+}
+
+.main .map .layer-map .add-layers .layers .layer .tags .tag {
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 4px 8px;
+    font-size: 12px;
+    width: -moz-fit-content;
+    width: fit-content;
+    margin-right: 8px;
+    display: inline-block;
+}
+
+@media screen and (max-width: 1000px) {
+    .main .map.sidebar-open .layer-map .overlay-stack {
+        width: calc(100% - 24px);
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .main .map .layer-map {
+        width: 100%;
+        height: calc(100% - var(--header-height));
+        top: var(--header-height);
+        left: 0;
+        border-radius: 0;
+        border-top: 1px solid var(--border-color);
+        box-sizing: border-box;
+    }
+
+    .main .map .layer-map .overlay-stack {
+        bottom: 105px;
+    }
+
+    .main .map .layer-map .overlay-stack .legend {
+        position: fixed;
+        right: 0;
+        top: var(--header-height);
+        width: calc(100% - 85px);
+        font-size: 14px;
+        border-radius: 12px 0 0 0;
+    }
+
+    .main .map .layer-map .overlay-stack .legend .legend-inner {
+        border-radius: 0 0 0 12px;
+        padding: 8px;
+        border-top: 1px solid var(--border-color);
+    }
+
+    .main .map .layer-map .overlay-stack .legend .legend-inner .colorbar .bar {
+        line-height: 14px;
+    }
+
+    .main .map .layer-map .map-sidebar {
+        height: unset;
+        width: 100%;
+        position: fixed;
+    }
+
+    .leaflet-control-attribution {
+        display: none;
+    }
+
+    .main .map .layer-map .map-sidebar .sidebar-head {
+        display: none;
+    }
+
+    .main .map .layer-map .map-sidebar .sidebar-body {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        height: unset;
+        border-radius: 0;
+        background-color: transparent;
+    }
+
+    .main .map .layer-map .map-sidebar.closed .sidebar-body {
+        display: block;
+    }
+
+    .main .map .layer-map .map-sidebar .sidebar-body .sidebar-layers {
+        backdrop-filter: blur(4px);
+        background-color: rgb(255 255 255 / 50%);
+    }
+
+    .main.dark .map .layer-map .map-sidebar .sidebar-body .sidebar-layers {
+        background-color: rgb(34 35 42 / 71%);
+    }
+
+    .main .map .layer-map .map-sidebar .sidebar-body .sidebar-layers .active-apps .app {
+        margin: 12px;
+    }
+
+    .main .map .layer-map .map-sidebar .sidebar-body .sidebar-layers .active-apps .app .label {
+        display: none;
+    }
+
+    .main .map .layer-map .map-sidebar .sidebar-body .sidebar-layers .active-apps .app .remove {
+        display: none;
+    }
+
+    .main .map .layer-map .map-sidebar .sidebar-body .sidebar-content {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        height: 75%;
+        background-color: var(--background-color);
+        width: 100%;
+        border-radius: 22px 22px 0 0;
+        max-height: unset;
+        z-index: -1;
+        padding: var(--padding) 12px 100px 12px;
+        box-sizing: border-box;
+        transition: bottom 0.33s ease-out;
+        overflow: hidden;
+        text-align: center;
+    }
+
+    .main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .sidebar-content-subtitle {
+        display: inline-block;
+        font-size: 12px;
+    }
+
+    .main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .sidebar-content-title {
+        display: inline-block;
+        font-size: 16px;
+        font-weight: 600;
+    }
+
+    .main .map .layer-map .map-sidebar .sidebar-body .sidebar-content.closed {
+        bottom: -75%;
+    }
+
+    .main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .sidebar-content-close {
+        display: block;
+    }
+
+    .main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .sidebar-content-remove {
+        display: block;
+    }
+
+    .main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .sidebar-content-description {
+        display: none;
+    }
+
+    .main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .sidebar-content-settings {
+        display: none;
+    }
+
+    .main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .layer-settings {
+        padding: 13px;
+        margin-top: 16px;
+        height: calc(100% - 69px);
+        overflow: auto;
+        border-bottom: 1px solid var(--border-color);
+        border-radius: 12px 12px 0 0;
+        background-color: var(--select-color);
+    }
+
+    .main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .layer-settings .custom-css-datepicker .react-datepicker {
+        background-color: var(--select-color);
+    }
+
+    .main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .layer-settings .custom-css-datepicker .react-datepicker .react-datepicker__header {
+        background-color: var(--select-color);
+    }
+
+    .main .map .layer-map .add-layers {
+        margin: 0;
+        width: 100%;
+        transition: bottom 0.33s ease-out;
+        box-shadow: none;
+        text-align: center;
+        border-radius: 22px 22px 0 0;
+        height: 83%;
+    }
+
+    .main .map .layer-map .add-layers .layers-title {
+        font-size: 16px;
+        font-weight: 600;
+        width: unset;
+        margin-bottom: 20px;
+    }
+
+    .main .map .layer-map .add-layers .layers {
+        display: block;
+    }
+
+    .main .map .layer-map .add-layers .layers-close {
+        background-color: var(--select-color);
+        font-size: 16px;
+        border-radius: 50%;
+        font-weight: bold;
+        padding: 4px 8px;
+    }
+
+    .main .map .layer-map .add-layers .layers .layer .status {
+        background-color: var(--select-color);
+        right: 0;
+        top: 0;
+    }
+
+    .main .map .layer-map .add-layers .layers .layer {
+        min-width: unset;
+        width: 100%;
+        max-width: 100%;
+        margin: 0 0 26px 0;
+        padding: 0;
+        height: unset;
+        box-shadow: none;
+    }
+
+    .main .map .layer-map .add-layers.hidden {
+        bottom: -100vh;
+        display: block;
+    }
+}

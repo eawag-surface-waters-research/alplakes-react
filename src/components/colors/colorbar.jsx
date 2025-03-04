@@ -1,18 +1,18 @@
 import React, { Component } from "react";
+import COLORS from "./colors.json";
 import "./colorbar.css";
 
 class Colorbar extends Component {
   render() {
-    var { min, max, palette, unit, text, onClick, id } = this.props;
+    var { min, max, paletteName, unit, text } = this.props;
+    const palette = COLORS[paletteName];
     var colors = [];
     for (let p of palette) {
-      colors.push(
-        `rgb(${p.color[0]},${p.color[1]},${p.color[2]}) ${p.point * 100}%`
-      );
+      colors.push(`rgb(${p[0]},${p[1]},${p[2]}) ${p[3] * 100}%`);
     }
     var background = `linear-gradient(90deg, ${colors.join(", ")})`;
     return (
-      <tr className="colorbar" onClick={() => onClick(id)}>
+      <tr className="colorbar">
         <td>
           {min}
           {unit}

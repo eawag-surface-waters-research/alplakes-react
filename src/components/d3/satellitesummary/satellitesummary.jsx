@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import D3LineGraph from "../linegraph/linegraph";
+import Translations from "../../../translations.json";
 import "react-datepicker/dist/react-datepicker.css";
 
 class SatelliteSummary extends Component {
@@ -9,21 +10,22 @@ class SatelliteSummary extends Component {
     ymax: 0,
     xmin: new Date(new Date().setMonth(new Date().getMonth() - 4)),
     xmax: new Date(),
-    selection: false,
+    coverage: 10,
   };
   setImage = (event) => {
     this.props.setImage(event.x);
   };
-  processInputs = () => {
+
+  setData = () => {
     var { xmin, xmax } = this.state;
-    var { available, selection } = this.props;
-    if (available && selection !== this.state.selection) {
-      var data = {};
-      var ymin = Infinity;
-      var ymax = -Infinity;
-      for (let date of Object.values(available)) {
-        for (let image of date.images) {
-          let tooltip = `<div><div>${image.satellite} ${image.percent}% coverage</div><div>Click to view</div></div>`;
+    var { available, options } = this.props;
+    var data = {};
+    var ymin = Infinity;
+    var ymax = -Infinity;
+    for (let date of Object.values(available)) {
+      for (let image of date.images) {
+        if (image.percent > options.coverage) {
+          let tooltip = `<div><div>${image.satellite} ${image.percent}% coverage</div><div></div>Click to view</div>`;
           if (image.time >= xmin && image.time <= xmax) {
             ymin = Math.min(ymin, image.ave);
             ymax = Math.max(ymax, image.ave);
@@ -42,49 +44,54 @@ class SatelliteSummary extends Component {
           }
         }
       }
-      data = Object.values(data);
-      this.setState({ data, ymin, ymax, selection });
     }
+    data = Object.values(data);
+    this.setState({ data, ymin, ymax, coverage: options.coverage });
   };
-  componentDidUpdate() {
-    this.processInputs();
-  }
+
   componentDidMount() {
-    this.processInputs();
+    this.setData();
   }
+
+  componentDidUpdate() {
+    if (this.props.options.coverage !== this.state.coverage) {
+      this.setData();
+    }
+  }
+
   render() {
-    var { label, unit, dark } = this.props;
+    var { label, unit, dark, language } = this.props;
     var { data, xmin, xmax, ymin, ymax } = this.state;
     return (
       <React.Fragment>
         <div className="graph-title">
-          Average lake values per satellite image
+          {Translations.satelliteGraph[language]}
         </div>
-        <div className="satellite-summary">
-          <D3LineGraph
-            data={data}
-            ylabel={label}
-            yunits={unit}
-            lcolor={new Array(10).fill(dark ? "white" : "black")}
-            lweight={[1]}
-            bcolor={["white"]}
-            simple={false}
-            lines={false}
-            scatter={true}
-            plotdots={true}
-            xmax={xmax}
-            xmin={xmin}
-            ymax={ymax}
-            ymin={ymin}
-            marginTop={1}
-            marginRight={1}
-            xscale={"Time"}
-            yscale={""}
-            legend={false}
-            header={true}
-            onClick={this.setImage}
-          />
-        </div>
+        <D3LineGraph
+          data={data}
+          ylabel={label}
+          yunits={unit}
+          lcolor={new Array(10).fill(dark ? "white" : "black")}
+          lweight={[1]}
+          bcolor={["white"]}
+          simple={false}
+          lines={false}
+          scatter={true}
+          plotdots={true}
+          xmax={xmax}
+          xmin={xmin}
+          ymax={ymax}
+          ymin={ymin}
+          marginTop={5}
+          marginRight={1}
+          marginBottom={50}
+          xscale={"Time"}
+          yscale={""}
+          legend={false}
+          header={true}
+          language={language}
+          onClick={this.setImage}
+        />
       </React.Fragment>
     );
   }

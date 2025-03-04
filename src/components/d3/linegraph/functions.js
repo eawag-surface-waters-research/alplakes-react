@@ -48,16 +48,22 @@ export const getFileIndex = (scales, p) => {
   return NaN;
 };
 
-export const formatDate = (a, lang) => {
+export const formatDate = (a, lang, noYear) => {
   var months = lang.shortMonths;
   var year = a.getFullYear();
   var month = months[a.getMonth()];
   var date = a.getDate();
   var hour = a.getHours();
   var min = a.getMinutes();
-  return `${hour < 10 ? "0" + hour : hour}:${
-    min < 10 ? "0" + min : min
-  } ${date} ${month} ${String(year).slice(-2)}`;
+  if (noYear) {
+    return `${hour < 10 ? "0" + hour : hour}:${
+      min < 10 ? "0" + min : min
+    } ${date} ${month}`;
+  } else {
+    return `${hour < 10 ? "0" + hour : hour}:${
+      min < 10 ? "0" + min : min
+    } ${date} ${month} ${String(year).slice(-2)}`;
+  }
 };
 
 export const formatNumber = (num) => {
@@ -71,7 +77,7 @@ export const formatNumber = (num) => {
 };
 
 export const languageOptions = (name) => {
-  name = name.toLowerCase()
+  name = name.toLowerCase();
   var lang = {
     de: {
       decimal: ",",
@@ -323,5 +329,5 @@ export const languageOptions = (name) => {
 };
 
 export const scientificNotation = (min, max) => {
-  return (min > -0.0001 && max < 0.0001) || (min < -10000 || max > 10000)
+  return (min > -0.0001 && max < 0.0001) || min < -10000 || max > 10000;
 };

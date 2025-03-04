@@ -1,11 +1,10 @@
 import React, { Component } from "react";
 import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
-import axios from "axios";
 import { NavLink } from "react-router-dom";
 import NavBar from "../../components/navbar/navbar";
-import HomeGraph from "../../components/d3/homegraph/homegraph";
 import HomeMap from "../../components/leaflet/homemap";
+import SummaryTable from "../../components/summarytable/summarytable";
 import Footer from "../../components/footer/footer";
 import Translations from "../../translations.json";
 import searchIcon from "../../img/search.png";
@@ -14,14 +13,16 @@ import threedIcon from "../../img/3dicon.png";
 import onedIcon from "../../img/1dicon.png";
 import satelliteIcon from "../../img/satelliteicon.png";
 import insituIcon from "../../img/insituicon.png";
-import sortIcon from "../../img/sort.png";
+import dropdownIcon from "../../img/sort.png";
+import sortIcon from "../../img/sortdesc.png";
 import {
   onMouseOver,
   onMouseOut,
   summariseData,
-  dayName,
   searchList,
   inBounds,
+  hour,
+  fetchDataParallel,
 } from "./functions";
 import CONFIG from "../../config.json";
 import "./home.css";
@@ -84,6 +85,7 @@ class Search extends Component {
     var {
       setFilter,
       setSearch,
+      clearSearch,
       search,
       language,
       filters,
@@ -99,17 +101,23 @@ class Search extends Component {
       <div className="search">
         <div className="search-bar">
           <input
-            type="search"
-            placeholder={
-              Translations.search[language] +
-              " " +
-              Translations.lakes[language].toLowerCase()
-            }
+            type="text"
+            placeholder={Translations.searchLakes[language]}
             value={search}
             onChange={setSearch}
             onKeyDown={this.handleKeyDown}
             id="search"
           />
+          <div
+            className={
+              search.length > 0
+                ? "search-clear-text active"
+                : "search-clear-text"
+            }
+            onClick={clearSearch}
+          >
+            &#10005;
+          </div>
           <img src={searchIcon} alt="Search Icon" className="search-icon" />
           <div className="description">{Translations.tagline[language]}</div>
         </div>
@@ -129,19 +137,23 @@ class Search extends Component {
           ))}
         </div>
         <div className="sort">
-          <img
-            src={sortIcon}
-            alt="Sort"
-            onClick={toggleAscending}
-            className={ascending ? "asc" : ""}
-          />
-          <select value={sort} onChange={setSort}>
+          {sort !== "" ? (
+            <img
+              src={sortIcon}
+              alt="Sort"
+              onClick={toggleAscending}
+              className={ascending ? "sort-icon asc" : "sort-icon"}
+            />
+          ) : (
+            <img src={dropdownIcon} alt="Dropdown" className="dropdown-icon" />
+          )}
+          <select value={sort} onChange={setSort} id="sort-select">
             <option value="" disabled>
-              Sort
+              {Translations.sort[language]}
             </option>
-            <option value="elevation">Elevation</option>
-            <option value="max_depth">Depth</option>
-            <option value="area">Surface Area</option>
+            <option value="elevation">{Translations.elevation[language]}</option>
+            <option value="max_depth">{Translations.depth[language]}</option>
+            <option value="area">{Translations.surfaceArea[language]}</option>
           </select>
         </div>
         <div className="results">
@@ -268,13 +280,19 @@ class ListItem extends Component {
             </div>
           </div>
           <div className="summary">
-            {(!lake.forecast.available ||
-              lake.forecast.value["temperature"].length === 0) && (
-              <div className="offline">{Translations.offline[language]}</div>
+            {lake.summary && (
+              <div className="summary-table">
+                <SummaryTable
+                  start={lake.start}
+                  end={lake.end}
+                  dt={lake.time}
+                  value={lake.values}
+                  summary={lake.summary}
+                  unit={"°"}
+                  language={language}
+                />
+              </div>
             )}
-            <div className="summary-table">
-              <SummaryTable forecast={lake.forecast} language={language} />
-            </div>
           </div>
         </div>
       </NavLink>
@@ -282,36 +300,10 @@ class ListItem extends Component {
   }
 }
 
-class SummaryTable extends Component {
-  render() {
-    var { forecast, language } = this.props;
-    return (
-      <React.Fragment>
-        {Object.keys(forecast.summary).map((day, i, arr) =>
-          forecast.summary[day]["temperature"] === false ? null : (
-            <div key={day} className={i === 0 ? "inner start" : "inner"}>
-              <div className="ave">
-                {forecast.summary[day]["temperature"]}
-                <div className="unit full">{"°"}</div>
-              </div>
-              <div className="day">{dayName(day, language, Translations)}</div>
-            </div>
-          )
-        )}
-        <HomeGraph
-          dt={forecast.dt}
-          value={forecast.value["temperature"]}
-          dtMin={forecast.dtMin}
-          dtMax={forecast.dtMax}
-        />
-      </React.Fragment>
-    );
-  }
-}
-
 class Home extends Component {
   state = {
     list: [],
+    days: [],
     search: "",
     sort: "",
     ascending: false,
@@ -355,6 +347,13 @@ class Home extends Component {
     list = searchList(search, list);
     this.setState({ list });
   };
+  clearSearch = () => {
+    var { list } = this.state;
+    var search = "";
+    this.setState({ search });
+    list = searchList(search, list);
+    this.setState({ list });
+  };
   setSort = (event) => {
     this.setState({ sort: event.target.value });
   };
@@ -393,10 +392,10 @@ class Home extends Component {
           }
         }
         // 3. Sort if forecast available
-        if (a.forecast.available && !b.forecast.available) {
+        if (a.summary && !b.summary) {
           return -1;
         }
-        if (!a.forecast.available && b.forecast.available) {
+        if (!a.summary && b.summary) {
           return 1;
         }
         // 4. Sort by surface area
@@ -438,53 +437,56 @@ class Home extends Component {
   };
   async componentDidMount() {
     window.addEventListener("keydown", this.focusSearchBar);
-    var geometry, forecast;
-    const { data: list } = await axios.get(
-      CONFIG.alplakes_bucket +
-        `/static/website/metadata/${CONFIG.branch}/list.json`
-    );
-    try {
-      ({ data: forecast } = await axios.get(
-        CONFIG.alplakes_bucket +
-          `/simulations/forecast.json?timestamp=${
-            Math.round((new Date().getTime() + 1800000) / 3600000) * 3600 - 3600
-          }`
-      ));
-    } catch (e) {
-      forecast = {};
-    }
-    try {
-      ({ data: geometry } = await axios.get(
-        CONFIG.alplakes_bucket +
-          `/static/website/metadata/${CONFIG.branch}/lakes.geojson`
-      ));
-      geometry = geometry.features.reduce((obj, item) => {
-        obj[item.properties.key] = item.geometry.coordinates;
-        return obj;
-      }, {});
-    } catch (e) {
-      geometry = {};
-    }
+    var urls = {
+      list: `${CONFIG.alplakes_bucket}/static/website/metadata/${CONFIG.branch}/list.json`,
+      forecast: `${CONFIG.alplakes_bucket}/simulations/forecast.json${hour()}`,
+      geometry: `${CONFIG.alplakes_bucket}/static/website/metadata/${CONFIG.branch}/lakes.geojson`,
+    };
+    var { list, forecast, geometry } = await fetchDataParallel(urls);
+    geometry = geometry.features.reduce((obj, item) => {
+      obj[item.properties.key] = item.geometry.coordinates;
+      return obj;
+    }, {});
+    var days = [];
     list.map((l) => {
       l.display = true;
-      l.geometry = false;
-      l.forecast = summariseData(forecast[l.key], "temperature", [
-        "temperature",
-      ]);
+      if (l.key in forecast) {
+        l.time = forecast[l.key]["time"];
+        l.values = forecast[l.key]["temperature"];
+        let { summary, start, end } = summariseData(l.time, l.values);
+        if (Object.keys(summary).length > days.length)
+          days = Object.keys(summary);
+        l.summary = summary;
+        l.start = start;
+        l.end = end;
+      } else {
+        l.summary = false;
+      }
+
       if (l.key in geometry) {
         l.geometry = geometry[l.key];
+      } else {
+        l.geometry = false;
       }
       return l;
     });
-    this.setState({ list });
+    this.setState({ list, days });
   }
   componentWillUnmount() {
     window.removeEventListener("keydown", this.focusSearchBar);
   }
   render() {
     var { language, dark } = this.props;
-    var { list, search, filters, fullscreen, favorites, sort, ascending } =
-      this.state;
+    var {
+      list,
+      search,
+      filters,
+      fullscreen,
+      favorites,
+      sort,
+      ascending,
+      days,
+    } = this.state;
     var sortedList = this.sortList(list, filters, favorites, sort, ascending);
     var results = sortedList.filter((l) => l.display && !l.filter).length;
     var filterTypes = [
@@ -528,6 +530,7 @@ class Home extends Component {
             <SearchWithNavigate
               setFilter={this.setFilter}
               setSearch={this.setSearch}
+              clearSearch={this.clearSearch}
               search={search}
               language={language}
               filters={filters}
@@ -554,6 +557,7 @@ class Home extends Component {
             <div className={fullscreen ? "home-map" : "home-map hide"}>
               <HomeMap
                 list={list}
+                days={days}
                 dark={dark}
                 language={language}
                 setBounds={this.setBounds}

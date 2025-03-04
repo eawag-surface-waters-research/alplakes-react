@@ -1,0 +1,66 @@
+.lake-map-button {
+    position: absolute;
+    z-index: 1000;
+    top: calc(var(--padding) / 4);
+    right: calc(var(--padding) / 4);
+}
+
+.lake-map-button .text {
+    background-color: var(--box-color);
+    border-radius: 12px 0 0 12px;
+    position: absolute;
+    width: max-content;
+    right: 48px;
+    padding: 4px 4px 4px 12px;
+    top: 10px;
+    color: var(--background-font-color);
+    pointer-events: none;
+}
+
+.lake-map-button .text-hover {
+    opacity: 0;
+    background-color: var(--box-color);
+    border-radius: 12px 0 0 12px;
+    position: absolute;
+    width: max-content;
+    right: 48px;
+    padding: 4px 4px 4px 12px;
+    top: 10px;
+    color: var(--background-font-color);
+    transition: all 0.3s ease;
+    pointer-events: none;
+}
+
+.lake-map-button .icon {
+    background-color: var(--box-color);
+    border-radius: 12px;
+    padding: 8px 6px 1px 8px;
+}
+
+.lake-map-button .icon img {
+    height: 34px;
+    transition: all 0.3s ease;
+}
+
+.lake-map-button .icon:hover img {
+    transform: scale(1.1);
+}
+
+.lake-map-button .icon:hover~.text-hover {
+    opacity: 1;
+}
+
+.fade-out {
+    animation: fadeOut 1s forwards;
+    animation-delay: 6s;
+}
+
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}

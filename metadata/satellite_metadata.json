@@ -1,0 +1,125 @@
+[
+    {
+      "parameter": "chlorophyll",
+      "parameter_name": {
+        "EN": "Chlorophyll A",
+        "DE": "Chlorophyll A",
+        "FR": "Chlorophylle A",
+        "IT": "Clorofilla A"
+      },
+      "parameter_description": {
+        "EN": "Chlorophyll A is a measure of the amount of algae and cyanobacteria growing in a waterbody.",
+        "DE": "Chlorophyll A ist ein Maß für die Menge an Algen und Cyanobakterien, die in einem Gewässer wachsen.",
+        "FR": "La chlorophylle A est une mesure de la quantité d’algues et de cyanobactéries se développant dans un plan d’eau.",
+        "IT": "La clorofilla è una misura della quantità di alghe e cianobatteri che crescono in un corso d'acqua."
+      },
+      "unit": "mg m-3",
+      "sources": [
+        {"parameter": "chla", "satellite": "sentinel3" , "link": "/alplakes/metadata/sentinel3/#key#/chla_latest.json"}
+      ],
+      "displayOptions": {
+        "paletteName": "bamako",
+        "min": 0,
+        "max": 12
+      }
+    },
+    {
+      "parameter": "turbidity",
+      "parameter_name": {
+        "EN": "Turbidity",
+        "DE": "Trübung",
+        "FR": "Turbidité",
+        "IT": "Torbidità"
+      },
+      "parameter_description": {
+        "EN": "Turbidity is a measurement of the cloudiness of a waterbody.",
+        "DE": "Trübung ist ein Maß für die Trübung eines Gewässers.",
+        "FR": "La turbidité est une mesure de la turbidité d’un plan d’eau.",
+        "IT": "La torbidità è una misura della torbidità di un corso d'acqua."
+      },
+      "unit": "FNU",
+      "sources": [
+        {"parameter": "tsm_binding754", "satellite": "sentinel3" , "link": "/alplakes/metadata/sentinel3/#key#/tsm_binding754_latest.json"},
+        {"parameter": "tsm_dogliotti665", "satellite": "sentinel2" , "link": "/alplakes/metadata/sentinel2/#key#/tsm_dogliotti665_latest.json"}
+      ],
+      "displayOptions": {
+        "paletteName": "bamako",
+        "min": 0,
+        "max": 3
+      }
+    },
+    {
+      "parameter": "secchi",
+      "parameter_name": {
+        "EN": "Clarity",
+        "DE": "Sichttiefe",
+        "FR": "Clarté",
+        "IT": "Chiarezza"
+      },
+      "parameter_description": {
+        "EN": "Secchi depth is used as a proxy for water clarity. This is defined as the depth at which a disk lowered into the water can no longer be seen from the surface.",
+        "DE": "Die Secchi-Tiefe wird als Indikator für die Sichttiefe des Wassers verwendet. Sie ist definiert als die Tiefe, in der eine ins Wasser abgesenkte Scheibe von der Oberfläche aus nicht mehr zu sehen ist.",
+        "FR": "La profondeur de Secchi est utilisée comme indicateur de la clarté de l'eau. Elle est définie comme la profondeur à laquelle un disque plongé dans l'eau ne peut plus être vu de la surface.",
+        "IT": "La profondità Secchi viene utilizzata come indicatore della limpidezza dell'acqua. È definita come la profondità alla quale un disco calato nell'acqua non può più essere visto dalla superficie."
+      },
+      "unit": "m",
+      "sources": [
+        {"parameter": "Zsd_lee", "satellite": "sentinel3" , "link": "/alplakes/metadata/sentinel3/#key#/Zsd_lee_latest.json"},
+        {"parameter": "Z490", "satellite": "sentinel2" , "link": "/alplakes/metadata/sentinel2/#key#/Z490_latest.json"}
+      ],
+      "displayOptions": {
+        "paletteName": "oslo",
+        "min": 0,
+        "max": 12
+      }
+    },
+  {
+      "parameter": "forelule",
+      "parameter_name": {
+        "EN": "Colour",
+        "DE": "Farbe",
+        "FR": "Couleur",
+        "IT": "Colore"
+      },
+      "parameter_description": {
+        "EN": "Water colour is defined using the Forel-Ule Scale. This is a system used to classify the color of natural water bodies, such as lakes, rivers, and oceans, based on a simple visual comparison.",
+        "DE": "Die Wasserfarbe wird anhand der Forel-Ule-Skala definiert. Dabei handelt es sich um ein System zur Klassifizierung der Farbe natürlicher Gewässer, wie Seen, Flüsse und Ozeane, auf der Grundlage eines einfachen visuellen Vergleichs.",
+        "FR": "La couleur de l'eau est définie à l'aide de l'échelle de Forel-Ule. Il s'agit d'un système utilisé pour classer la couleur des masses d'eau naturelles, telles que les lacs, les rivières et les océans, sur la base d'une simple comparaison visuelle.",
+        "IT": "Il colore dell'acqua viene definito utilizzando la Scala Forel-Ule. Si tratta di un sistema utilizzato per classificare il colore dei corpi idrici naturali, come laghi, fiumi e oceani, sulla base di un semplice confronto visivo."
+      },
+      "unit": "",
+      "sources": [
+        {"parameter": "forel_ule", "satellite": "sentinel3" , "link": "/alplakes/metadata/sentinel3/#key#/forel_ule_latest.json"},
+        {"parameter": "forel_ule", "satellite": "sentinel2" , "link": "/alplakes/metadata/sentinel2/#key#/forel_ule_latest.json"}
+      ],
+      "displayOptions": {
+        "paletteName": "Forel Ule",
+        "min": 1,
+        "max": 21
+      }
+    },
+    {
+      "parameter": "temperature",
+      "parameter_name": {
+        "EN": "Temperature",
+        "DE": "Temperatur",
+        "FR": "Température",
+        "IT": "Temperatura"
+      },
+      "parameter_description": {
+        "EN": "Skin temperature is the temperature of the upper few cm of the waterbody, this may differ from the bulk temperature.",
+        "DE": "Die Oberflächentemperatur ist die Temperatur der oberen paar Zentimeter eines Wasserkörpers. Sie kann von der Gesamttemperatur abweichen.",
+        "FR": "La température de la peau est la température des quelques centimètres supérieurs de la masse d'eau, elle peut différer de la température globale.",
+        "IT": "La temperatura cutanea è la temperatura dei primi centimetri superiori del corpo idrico e può differire dalla temperatura della massa d'acqua."
+      },
+      "unit": "°C",
+      "sources": [
+        {"parameter": "ST", "satellite": "collection" , "link": "/alplakes/metadata/collection/#key#/ST_latest.json"}
+      ],
+      "displayOptions": {
+        "paletteName": "vik",
+        "min": 0,
+        "max": 40
+      }
+    }
+  ]

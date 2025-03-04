@@ -1,9 +1,29 @@
+import axios from "axios";
+
 export const formatDate = (d) => {
   const date = new Date(d);
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, "0");
   const day = String(date.getDate()).padStart(2, "0");
   return `${year}${month}${day}`;
+};
+
+export const hour = () => {
+  return `?timestamp=${
+    Math.round((new Date().getTime() + 1800000) / 3600000) * 3600 - 3600
+  }`;
+};
+
+export const fetchDataParallel = async (urls) => {
+  const requests = Object.entries(urls).map(([key, url]) =>
+    axios
+      .get(url)
+      .then((response) => ({ [key]: response.data }))
+      .catch(() => ({ [key]: {} }))
+  );
+  const responses = await Promise.all(requests);
+  const result = Object.assign({}, ...responses);
+  return result;
 };
 
 export const parseDate = (yyyymmdd) => {
@@ -70,68 +90,43 @@ export const inBounds = (latitude, longitude, bounds) => {
   return false;
 };
 
-export const summariseData = (forecast, parameter, parameters) => {
-  var dtMin = new Date();
-  dtMin.setHours(0, 0, 0, 0);
-  dtMin = dtMin.getTime();
-  var dtMax = dtMin + 5 * 86400000 - 10800000;
-
-  var dt = [];
-  var value = parameters.reduce((obj, item) => ({ ...obj, [item]: [] }), {});
-  var summary = {};
-  for (let i = 0; i < 5; i++) {
-    summary[formatDate(dtMin + i * 86400000)] = parameters.reduce(
-      (obj, item) => ({ ...obj, [item]: [] }),
-      {}
-    );
-  }
-  var available = true;
-  if (forecast === undefined || !("time" in forecast)) {
-    dt = [dtMin, dtMax];
-    value = parameters.reduce((obj, item) => ({ ...obj, [item]: [0, 0] }), {});
-    available = false;
-  } else {
-    for (let i = 0; i < forecast.time.length; i++) {
-      let day = formatDate(forecast.time[i]);
-      if (forecast[parameter][i] !== null) {
-        dt.push(new Date(forecast.time[i]));
-        for (let p of parameters) {
-          if (p in forecast && forecast[p][i] !== null) {
-            value[p].push(forecast[p][i]);
-            if (day in summary) {
-              summary[day][p].push(forecast[p][i]);
-            }
-          }
-        }
-      }
-    }
-  }
-
-  for (let key in summary) {
-    for (let p in summary[key]) {
-      summary[key][p] = mean(summary[key][p]);
-    }
-  }
-  if (available) {
-    dtMax = parseDate(
-      Math.max(
-        ...Object.entries(summary)
-          .filter(([key, value]) => value.temperature !== false)
-          .map(([key, _]) => key)
-      ).toString()
-    );
-    dtMax.setDate(dtMax.getDate() + 1);
-  }
-
-  return {
-    dt,
-    value,
-    summary,
-    dtMin: new Date(dtMin),
-    dtMax: new Date(dtMax),
-    available,
-  };
+export const formatDateYYYYMMDD = (d) => {
+  const date = new Date(d);
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}${month}${day}`;
 };
+
+export const summariseData = (timestamps, values) => {
+  const ONE_DAY_MS = 86400000;
+  const start = new Date().setHours(0, 0, 0, 0);
+
+  const out = Array.from({ length: 10 }, (_, i) =>
+    formatDateYYYYMMDD(start + i * ONE_DAY_MS)
+  ).reduce((acc, key) => ({ ...acc, [key]: [] }), {});
+
+  timestamps.forEach((ts, i) => {
+    const key = formatDateYYYYMMDD(ts);
+    if (out[key]) out[key].push(values[i]);
+  });
+
+  const summary = Object.fromEntries(
+    Object.entries(out)
+      .filter(([_, vals]) => vals.length > 0)
+      .map(([key, vals]) => [key, mean(vals)])
+  );
+
+  const end_string = Object.keys(summary).pop();
+  const year = parseInt(end_string.slice(0, 4), 10);
+  const month = parseInt(end_string.slice(4, 6), 10) - 1;
+  const day = parseInt(end_string.slice(6, 8), 10);
+  const end = new Date(year, month, day);
+  end.setDate(end.getDate() + 1);
+
+  return { summary, start: new Date(start), end };
+};
+
 export const mean = (numbers) => {
   if (numbers.length < 3) return false;
   const sum = numbers.reduce((acc, num) => acc + num, 0);

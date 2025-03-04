@@ -115,13 +115,17 @@ L.Streamlines = (L.Layer ? L.Layer : L.Class).extend({
   },
   update: function (data, options) {
     var reset = false;
-    if (options.paths !== this.options.paths) {
-      reset = true;
+    if (data) {
+      this._data = data;
     }
-    L.Util.setOptions(this, options);
-    this._canvas.style.opacity = this.options.opacity;
-    this._canvas.style.zIndex = this.options.zIndex + 100;
-    this._data = data;
+    if (options) {
+      if (options.paths !== this.options.paths) {
+        reset = true;
+      }
+      L.Util.setOptions(this, options);
+      this._canvas.style.opacity = this.options.opacity;
+      this._canvas.style.zIndex = this.options.zIndex + 100;
+    }
     if (reset) this._reset();
   },
   _reset: function (event) {
@@ -412,13 +416,17 @@ L.Streamlines = (L.Layer ? L.Layer : L.Class).extend({
       let t = this._transformationMatrix[index[0]][index[1]];
       var u = this._data[t[0]][t[1]];
       var v = this._data[t[0]][t[1] + this._dataWidth];
+      if (isNaN(u) || isNaN(v)) {
+        return `0${this.options.unit}`;
+      }
       var magnitude = Math.abs(Math.sqrt(Math.pow(u, 2) + Math.pow(v, 2)));
       let deg = Math.round(
         (Math.atan2(u / magnitude, v / magnitude) * 180) / Math.PI
       );
       if (deg < 0) deg = 360 + deg;
-      var value = Math.round(magnitude * 1000) / 1000;
-      return value;
+      return `${this._round(magnitude, this.options.decimal)}${
+        this.options.unit
+      } ${deg}°`;
     }
   },
 });

@@ -1,4 +1,4 @@
-import L, { latLng } from "leaflet";
+import L from "leaflet";
 import { min, max } from "d3";
 
 L.Raster = L.Layer.extend({
@@ -9,6 +9,7 @@ L.Raster = L.Layer.extend({
     min: "null",
     max: "null",
     zIndex: 1,
+    decimal: 1,
     tooltipSensitivity: 500,
     interpolate: false,
     palette: [
@@ -91,7 +92,9 @@ L.Raster = L.Layer.extend({
     }
   },
   update: function (data, options) {
-    this._data = data;
+    if (data) {
+      this._data = data;
+    }
     L.Util.setOptions(this, options);
     this._canvas.style.opacity = this.options.opacity;
     this._canvas.style.zIndex = this.options.zIndex + 100;
@@ -348,10 +351,19 @@ L.Raster = L.Layer.extend({
       console.error("Leaflet raster click event failed.", e);
     }
   },
+  _round: function (value, decimals) {
+    return Math.round(value * 10 ** decimals) / 10 ** decimals;
+  },
   getFeatureValue: function (t) {
     try {
       var { value } = this._getValue(t.latlng);
-      return value;
+      if (value !== null) {
+        return `${this._round(value, this.options.decimal)} ${
+          this.options.unit
+        }`;
+      } else {
+        return null;
+      }
     } catch (e) {
       console.error("Leaflet raster getFeatureValue event failed.", e);
     }
