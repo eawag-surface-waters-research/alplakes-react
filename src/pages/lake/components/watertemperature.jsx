@@ -1,7 +1,8 @@
 import React, { Component, createRef } from "react";
 import axios from "axios";
 import CONFIG from "../../../config.json";
-import { hour, round, timeAgo } from "../functions/general";
+import { round, timeAgo } from "../functions/general";
+import { hour } from "../../../global";
 import Translations from "../../../translations.json";
 import Basemap from "../../../components/leaflet/basemap";
 import Information from "../../../components/information/information";

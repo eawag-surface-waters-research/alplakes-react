@@ -19,8 +19,7 @@ import Doy from "./components/doy";
 import PastYear from "./components/pastyear";
 import Climate from "./components/climate";
 import NotFound from "./components/notfound";
-
-
+import { hour } from "../../global";
 
 class Lake extends Component {
   state = {
@@ -54,9 +53,9 @@ class Lake extends Component {
     try {
       var { data } = await axios.get(
         CONFIG.alplakes_bucket +
-          `/static/website/metadata/${CONFIG.branch}/${id}.json?timestamp=${
-            Math.round((new Date().getTime() + 1800000) / 3600000) * 3600 - 3600
-          }`
+          `/static/website/metadata/${
+            CONFIG.branch
+          }/${id}.json?timestamp=${hour()}`
       );
       this.setState({
         id,

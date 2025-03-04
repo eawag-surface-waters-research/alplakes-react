@@ -3,6 +3,7 @@ import CONFIG from "../../../config.json";
 import pako from "pako";
 import * as d3 from "d3";
 import * as general from "./general";
+import { hour } from "../../../global";
 
 export const collectMetadata = async (layers, graphSelection) => {
   const functions = {
@@ -277,7 +278,7 @@ const measurementsDownload = async (
   initial
 ) => {
   var { data } = await axios.get(
-    layer.sources[layer.source].url + general.hour()
+    layer.sources[layer.source].url + hour()
   );
   const now = new Date();
   const minDate = new Date(now.getTime() - 48 * 60 * 60 * 1000);
@@ -371,7 +372,7 @@ export const download1DLinegraph = async (
   )}/${general.formatAPIDatetime(end)}/${depth}?variables=${parameter}`;
   const bucketUrl = `${
     CONFIG.alplakes_bucket
-  }/simulations/${model}/cache/${lake}/linegraph_${parameter}.json${general.hour()}`;
+  }/simulations/${model}/cache/${lake}/linegraph_${parameter}.json${hour()}`;
   const urls = bucket ? [[bucketUrl, apiUrl]] : [[apiUrl]];
   const response = await fetchDataParallel(urls);
   return response[0];
@@ -392,7 +393,7 @@ export const downloadPastYear = async (
   )}/${general.formatAPIDatetime(end_date)}?variables=${parameter}`;
   const bucketUrl = `${
     CONFIG.alplakes_bucket
-  }/simulations/${model}/cache/${lake}/heatmap_${parameter}.json.gz?timestamp=${general.hour()}`;
+  }/simulations/${model}/cache/${lake}/heatmap_${parameter}.json.gz?timestamp=${hour()}`;
   const urls = bucket ? [[bucketUrl, apiUrl]] : [[apiUrl]];
   const response = await fetchDataParallel(urls);
   const data = response[0];
@@ -437,7 +438,7 @@ export const downloadDoy = async (
   )}/${depth}?variables=${parameter}&resample=daily`;
   const bucketCurrent = `${
     CONFIG.alplakes_bucket
-  }/simulations/${model}/cache/${lake}/doy_currentyear.json?timestamp=${general.hour()}`;
+  }/simulations/${model}/cache/${lake}/doy_currentyear.json?timestamp=${hour()}`;
   const urls = bucket
     ? [
         [bucketUrl, apiUrl],
@@ -592,7 +593,7 @@ export const downloadModelMetadata = async (model, lake) => {
       [
         `${
           CONFIG.alplakes_bucket
-        }/simulations/${model}/cache/${lake}/metadata.json${general.hour()}`,
+        }/simulations/${model}/cache/${lake}/metadata.json${hour()}`,
         `${CONFIG.alplakes_api}/simulations/1d/metadata/${model}/${lake}`,
       ],
     ];
@@ -601,7 +602,7 @@ export const downloadModelMetadata = async (model, lake) => {
       [
         `${
           CONFIG.alplakes_bucket
-        }/simulations/${model}/cache/${lake}/metadata.json${general.hour()}`,
+        }/simulations/${model}/cache/${lake}/metadata.json${hour()}`,
         `${CONFIG.alplakes_api}/simulations/metadata/${model}/${lake}`,
       ],
     ];
@@ -611,8 +612,8 @@ export const downloadModelMetadata = async (model, lake) => {
   }
   const response = await fetchDataParallel(urls);
   const metadata = response[0];
-  metadata.start_date = general.stringToDate(metadata.start_date + " 00:00");
-  metadata.end_date = general.stringToDate(metadata.end_date + " 22:00");
+  metadata.start_date = general.dateStringToUnix(metadata.start_date, 0);
+  metadata.end_date = general.dateStringToUnix(metadata.end_date, 22);
   return metadata;
 };
 
@@ -635,7 +636,7 @@ export const download3DMap = async (
     )}/${general.formatAPIDatetime(end)}/${depth}`;
     let bucket_url = `${
       CONFIG.alplakes_bucket
-    }/simulations/${model}/cache/${lake}/${p}.txt.gz${general.hour()}`;
+    }/simulations/${model}/cache/${lake}/${p}.txt.gz${hour()}`;
     if (bucket) {
       return [bucket_url, api_url];
     }

@@ -5,6 +5,7 @@ import Basemap from "../../../components/leaflet/basemap";
 import Information from "../../../components/information/information";
 import MapButton from "../../../components/mapbutton/mapbutton";
 import { downloadModelMetadata, download3DMap } from "../functions/download";
+import { DateCEST } from "../../../global";
 import {
   formatReadableDate,
   formatTime,
@@ -68,14 +69,14 @@ class ThreeDModel extends Component {
     const data = await download3DMap(
       parameters.model.toLowerCase(),
       parameters.key,
-      new Date(metadata.end_date.getTime() - 5 * 24 * 60 * 60 * 1000),
+      metadata.end_date - 5 * 24 * 60 * 60 * 1000,
       metadata.end_date,
       0,
       ["geometry", "temperature", "velocity"],
       metadata.height,
       true
     );
-    const now = new Date();
+    const now = new DateCEST();
     var index = data.temperature.data.length - 1;
     var datetime = data.temperature.end;
     const timestep =

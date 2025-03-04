@@ -1,16 +1,9 @@
 import axios from "axios";
-
-export const formatDate = (d) => {
-  const date = new Date(d);
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const day = String(date.getDate()).padStart(2, "0");
-  return `${year}${month}${day}`;
-};
+import { DateCEST } from "../../global";
 
 export const hour = () => {
   return `?timestamp=${
-    Math.round((new Date().getTime() + 1800000) / 3600000) * 3600 - 3600
+    Math.round((new DateCEST().getTime() + 1800000) / 3600000) * 3600 - 3600
   }`;
 };
 
@@ -26,32 +19,6 @@ export const fetchDataParallel = async (urls) => {
   return result;
 };
 
-export const parseDate = (yyyymmdd) => {
-  const year = parseInt(yyyymmdd.substring(0, 4), 10);
-  const month = parseInt(yyyymmdd.substring(4, 6), 10) - 1;
-  const day = parseInt(yyyymmdd.substring(6, 8), 10);
-  const date = new Date(year, month, day);
-  return date;
-};
-
-export const dayName = (YYYYMMDD, language, Translations, full = false) => {
-  if (formatDate(new Date()) === YYYYMMDD) {
-    if (full) {
-      return Translations.today[language];
-    }
-    return Translations.today[language];
-  }
-  const year = parseInt(YYYYMMDD.substr(0, 4), 10);
-  const month = parseInt(YYYYMMDD.substr(4, 2), 10) - 1; // Subtracting 1 to make it zero-based
-  const day = parseInt(YYYYMMDD.substr(6, 2), 10);
-  var daysOfWeekNames = Translations.axis[language].shortDays;
-  if (full) {
-    daysOfWeekNames = Translations.axis[language].days;
-  }
-  const date = new Date(year, month, day);
-  const dayOfWeekNumber = date.getDay();
-  return daysOfWeekNames[dayOfWeekNumber];
-};
 
 const isSimilarSubstring = (item, term) => {
   for (let i = 0; i <= item.length - term.length; i++) {
@@ -100,14 +67,14 @@ export const formatDateYYYYMMDD = (d) => {
 
 export const summariseData = (timestamps, values) => {
   const ONE_DAY_MS = 86400000;
-  const start = new Date().setHours(0, 0, 0, 0);
+  const start = new DateCEST().setHours(0, 0, 0, 0);
 
   const out = Array.from({ length: 10 }, (_, i) =>
     formatDateYYYYMMDD(start + i * ONE_DAY_MS)
   ).reduce((acc, key) => ({ ...acc, [key]: [] }), {});
 
   timestamps.forEach((ts, i) => {
-    const key = formatDateYYYYMMDD(ts);
+    const key = formatDateYYYYMMDD(new DateCEST(ts));
     if (out[key]) out[key].push(values[i]);
   });
 

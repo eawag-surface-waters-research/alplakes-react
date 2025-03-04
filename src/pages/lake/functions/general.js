@@ -1,38 +1,19 @@
+import { DateCEST } from "../../../global";
 import Translations from "../../../translations.json";
 
-export const stringToDate = (date) => {
-  let time = "00";
-  if (date.length > 10) {
-    time = date.slice(11, 13);
-  }
+export const dateStringToUnix = (dateStr, hours) => {
   return new Date(
-    `${date.slice(0, 4)}-${date.slice(5, 7)}-${date.slice(
-      8,
-      10
-    )}T${time}:00:00.000+00:00`
-  );
-};
-
-export const hour = () => {
-  return `?timestamp=${
-    Math.round((new Date().getTime() + 1800000) / 3600000) * 3600 - 3600
-  }`;
+    `${dateStr}T${String(hours).padStart(2, "0")}:00:00Z`
+  ).getTime();
 };
 
 export const compareDates = (date1, date2) => {
   return date1 - date2;
 };
 
-export const formatAPIDatetime = (datetime) => {
-  var a = new Date(datetime);
-  var year = a.getFullYear();
-  var month = a.getMonth() + 1;
-  var date = a.getDate();
-  var hour = a.getHours();
-  var minute = a.getMinutes();
-  return `${String(year)}${month < 10 ? "0" + month : month}${
-    date < 10 ? "0" + date : date
-  }${hour < 10 ? "0" + hour : hour}${minute < 10 ? "0" + minute : minute}`;
+export const formatAPIDatetime = (unixTimestamp) => {
+  const date = new Date(unixTimestamp * 1000);
+  return date.toISOString().replace(/[-:T]/g, "").slice(0, 12);
 };
 
 export const formatAPIDate = (datetime) => {
@@ -295,7 +276,7 @@ export const removeLeap = (array) => {
 export const capitalize = (string) => {
   if (string.length === 0) return string;
   return string.charAt(0).toUpperCase() + string.slice(1);
-}
+};
 
 export const closestValue = (target, arr) => {
   const sortedArr = arr
