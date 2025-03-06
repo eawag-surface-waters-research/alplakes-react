@@ -7,16 +7,49 @@
   box-sizing: border-box;
 }
 
-.main .downloads p {
-  line-height: 28px;
-  font-size: 16px;
-  max-width: 700px;
-  margin-bottom: 12px;
+.main .downloads .header {
+  margin-bottom: var(--padding);
 }
 
-.main .downloads .header {
-  margin-top: 18px;
-  color: var(--background-font-color);
+.main .downloads h1 {
+  margin-bottom: 2px;
+}
+
+.main .downloads h2 {
+  margin-bottom: 18px;
+  margin-top: 38px;
+}
+
+.main .downloads h4 {
+  margin-top: 24px;
+}
+
+.main .downloads p {
+  max-width: 700px;
+}
+
+.main .downloads .header .link {
+  background-color: var(--highlight-color);
+  color: white;
+  padding: 6px 12px;
+  border-radius: 12px;
+  box-sizing: border-box;
+  display: inline-block;
+  margin-bottom: 20px;
+  cursor: pointer;
+  transition: all .33s 0s ease;
+}
+
+.main .downloads .header .link:hover {
+  transform: scale(1.05);
+}
+
+.main .downloads .header .link img {
+  width: 16px;
+  display: inline-block;
+  filter: brightness(0) invert(1);
+  margin-left: 12px;
+  padding-bottom: 1px;
 }
 
 .main .downloads .contact {
@@ -25,9 +58,9 @@
   font-size: 14px;
 }
 
-.main .downloads select {
+.main .downloads .selector select {
   background-color: var(--box-color);
-  padding: 8px 16px;
+  padding: 8px 12px;
   color: var(--background-font-color);
   border: 1px solid var(--border-color);
   border-radius: 16px;
@@ -38,7 +71,6 @@
 
 .main .downloads .selector {
   margin-bottom: 32px;
-  margin-top: -12px;
 }
 
 .main .downloads button.download {

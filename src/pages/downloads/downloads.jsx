@@ -7,6 +7,7 @@ import CONFIG from "../../config.json";
 import Footer from "../../components/footer/footer";
 import Translations from "../../translations.json";
 import unpluggedIcon from "../../img/unplugged.png";
+import sortIcon from "../../img/sort.png";
 import axios from "axios";
 import "./downloads.css";
 
@@ -337,6 +338,21 @@ class Downloads extends Component {
     one_dimensional: [],
     three_dimensional: [],
   };
+
+  constructor(props) {
+    super(props);
+    this.divRef = React.createRef();
+  }
+
+  scrollToSection = (sectionRef) => {
+    if (sectionRef.current) {
+      window.scrollTo({
+        top: sectionRef.current.offsetTop,
+        behavior: "smooth",
+      });
+    }
+  };
+
   async componentDidMount() {
     window.scrollTo(0, 0);
     var list = [];
@@ -381,15 +397,63 @@ class Downloads extends Component {
         </Helmet>
         <NavBar {...this.props} relative={true} />
         <div className="downloads">
-          <h1 className="header"> {Translations.downloads[language]}</h1>
+          <div className="header">
+            <h1> {Translations.downloads[language]}</h1>
+            <div
+              className="link"
+              onClick={() => this.scrollToSection(this.divRef)}
+            >
+              API Documentation
+              <img src={sortIcon} alt="Down" />
+            </div>
+          </div>
           <h2>Model Input Files</h2>
+          <p>
+            A set of example input files are provided for users that want to
+            adapt the models to their own purposes. For more information on how
+            to generate these files please see the <b>Models</b> page.
+          </p>
           <h4>3D Models</h4>
           <ModelInputs list={three_dimensional} />
           <h4>1D Models</h4>
-          <ModelInputs list={one_dimensional} />
+          <ModelInputs list={one_dimensional} full={true} />
           <h2>Model Output Files</h2>
-          <h2>Insitu Data</h2>
-          <h2>Interactive API Documentation</h2>
+          <p>
+            Raw model results can be accessed using the forms below. For
+            formatted subsets of the output files please use the API.
+          </p>
+          <h4>3D Models</h4>
+          <p>
+            Available per week in NetCDF format. The
+            dimensions and variables are not self explanatory, you can refer to
+            the notebook{" "}
+            <a
+              href="https://github.com/eawag-surface-waters-research/alplakes-simulations/blob/master/notebooks/process_results.ipynb"
+              target="_blank"
+              rel="noreferrer"
+            >
+              here
+            </a>{" "}
+            for more information.
+          </p>
+          <ThreeDimensionalResults list={three_dimensional} />
+          <h4>1D Models</h4>
+          <p>
+            Available in text format. The results are
+            formatted in a CSV where the column headers refer to the depth and
+            the first column is the number of days after the reference date
+            (01.01.1981). The notebook{" "}
+            <a
+              href="https://github.com/Eawag-AppliedSystemAnalysis/operational-simstrat/blob/master/notebooks/process_results.ipynb"
+              target="_blank"
+              rel="noreferrer"
+            >
+              here
+            </a>{" "}
+            provides an example of processing the raw data.
+          </p>
+          <OneDimensionalResults list={one_dimensional} />
+          <h2 ref={this.divRef}>API Documentation</h2>
           <p>
             The Alplakes API provides direct access to terabytes of simulation
             data. The API supports geospatial and temporal queries, allowing
