@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import DatePicker from "react-datepicker";
 import enGB from "date-fns/locale/en-GB";
-import Translate from "../../translations.json";
+import Translations from "../../translations.json";
 import "react-datepicker/dist/react-datepicker.css";
 
 const parseDay = (yyyymmdd) => {
@@ -71,8 +71,8 @@ class Period extends Component {
       ...enGB,
       localize: {
         ...enGB.localize,
-        day: (n) => Translate.axis[language].shortDays[n],
-        month: (n) => Translate.axis[language].months[n],
+        day: (n) => Translations.axis[language].shortDays[n],
+        month: (n) => Translations.axis[language].months[n],
       },
       formatLong: {
         ...enGB.formatLong,

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Colorbar from "../../components/colors/colorbar";
-import Translate from "../../translations.json";
+import Translations from "../../translations.json";
 
 class Legend extends Component {
   render() {
@@ -30,8 +30,8 @@ class Legend extends Component {
                   unit={l.unit}
                   key={l.id}
                   text={
-                    l.parameter in Translate
-                      ? Translate[l.parameter][language]
+                    l.parameter in Translations
+                      ? Translations[l.parameter][language]
                       : ""
                   }
                 />

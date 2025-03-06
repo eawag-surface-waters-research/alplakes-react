@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import DatePicker from "react-datepicker";
 import ColorRamp from "../../../components/colors/colorramp";
 import refreshIcon from "../../../img/refresh.png";
-import Translate from "../../../translations.json";
+import Translations from "../../../translations.json";
 import CONFIG from "../../../config.json";
 import {
   filterImages,
@@ -150,7 +150,7 @@ class Raster extends Component {
       key,
       start_date,
       end_date,
-      Translate.axis[language].months
+      Translations.axis[language].months
     );
     return (
       <div className="layer-settings">
@@ -404,7 +404,7 @@ class Current extends Component {
       key,
       start_date,
       end_date,
-      Translate.axis[language].months
+      Translations.axis[language].months
     );
     return (
       <div className="layer-settings">
@@ -754,14 +754,14 @@ class Tiff extends Component {
     var { unit } = this.props.layer;
     const locale = {
       localize: {
-        day: (n) => Translate.axis[language].shortDays[n],
-        month: (n) => Translate.axis[language].months[n],
+        day: (n) => Translations.axis[language].shortDays[n],
+        month: (n) => Translations.axis[language].months[n],
       },
       formatLong: {
         date: () => "dd/mm/yyyy",
       },
     };
-    var months = Translate.axis[language].months;
+    var months = Translations.axis[language].months;
     var includeDates = [];
     var images = [];
     if (available && image) {
@@ -1063,7 +1063,7 @@ class LayerSettings extends Component {
       );
     } else {
       return (
-        <div className="layer-settings subtle">{Translate.noSettings[language]}</div>
+        <div className="layer-settings subtle">{Translations.noSettings[language]}</div>
       );
     }
   }

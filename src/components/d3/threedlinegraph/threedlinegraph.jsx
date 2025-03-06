@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import D3LineGraph from "../linegraph/linegraph";
-import Translate from "../../../translations.json";
+import Translations from "../../../translations.json";
 
 class ThreedLinegraph extends Component {
   render() {
@@ -30,7 +30,7 @@ class ThreedLinegraph extends Component {
         <div className="graph-title">{data[0].title}</div>
         <D3LineGraph
           data={data}
-          ylabel={Translate[parameter][language]}
+          ylabel={Translations[parameter][language]}
           yunits={unit}
           fontSize={12}
           xReverse={false}

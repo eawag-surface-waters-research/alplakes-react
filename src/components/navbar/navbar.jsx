@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
-import Translate from "../../translations.json";
+import Translations from "../../translations.json";
 import logo from "../../img/icon_text.png";
 import logo_dark from "../../img/icon_text_dark.png";
 import dark_icon from "../../img/dark.png";
@@ -36,16 +36,16 @@ class NavBar extends Component {
 
             <div className="desktop-nav">
               <NavLink className="nav-item" to="/">
-                <div className="nav-text">{Translate.lakes[language]}</div>
+                <div className="nav-text">{Translations.lakes[language]}</div>
               </NavLink>
               <NavLink className="nav-item" to="/models">
-                <div className="nav-text">{Translate.models[language]}</div>
+                <div className="nav-text">{Translations.models[language]}</div>
               </NavLink>
-              <NavLink className="nav-item" to="/api">
-                <div className="nav-text">API</div>
+              <NavLink className="nav-item" to="/downloads">
+                <div className="nav-text">{Translations.downloads[language]}</div>
               </NavLink>
               <NavLink className="nav-item" to="/about">
-                <div className="nav-text">{Translate.about[language]}</div>
+                <div className="nav-text">{Translations.about[language]}</div>
               </NavLink>
               <div className="nav-item">
                 <div className="nav-select">
@@ -79,7 +79,7 @@ class NavBar extends Component {
               <div className={menu ? "nav-content" : "nav-content hide"}>
                 <NavLink to="/">
                   <div className="nav-row">
-                    {Translate.lakes[language]}
+                    {Translations.lakes[language]}
                     <div className="arrow">
                       <img src={arrow} alt="Arrow" />
                     </div>
@@ -87,15 +87,15 @@ class NavBar extends Component {
                 </NavLink>
                 <NavLink to="/models">
                   <div className="nav-row">
-                    {Translate.models[language]}
+                    {Translations.models[language]}
                     <div className="arrow">
                       <img src={arrow} alt="Arrow" />
                     </div>
                   </div>
                 </NavLink>
-                <NavLink to="/api">
+                <NavLink to="/downloads">
                   <div className="nav-row">
-                    API
+                    {Translations.downloads[language]}
                     <div className="arrow">
                       <img src={arrow} alt="Arrow" />
                     </div>
@@ -103,7 +103,7 @@ class NavBar extends Component {
                 </NavLink>
                 <NavLink to="/about">
                   <div className="nav-row">
-                    {Translate.about[language]}
+                    {Translations.about[language]}
                     <div className="arrow">
                       <img src={arrow} alt="Arrow" />
                     </div>

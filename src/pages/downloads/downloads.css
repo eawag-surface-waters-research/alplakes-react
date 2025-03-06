@@ -1,43 +1,107 @@
-.main .api-container {
+.main .downloads {
   width: 100%;
-  max-width: var(--content-width);
+  max-width: 1088px;
   margin: auto;
-  padding: 0 var(--padding);
   margin-top: var(--top-margin);
-  min-height: calc(100vh - var(--header-height) - var(--footer-full-height));
+  padding: 0 var(--padding);
   box-sizing: border-box;
-  margin-bottom: 100px;
 }
 
-.main .api-container .text {
-  line-height: 28px;
-  font-size: 16px;
+.main .downloads .header {
+  margin-bottom: var(--padding);
+}
+
+.main .downloads h1 {
+  margin-bottom: 2px;
+}
+
+.main .downloads h2 {
+  margin-bottom: 18px;
+  margin-top: 38px;
+}
+
+.main .downloads h4 {
+  margin-top: 24px;
+}
+
+.main .downloads p {
   max-width: 700px;
-  margin-bottom: 32px;
 }
 
-.main .api-container .header {
-  margin-top: 18px;
-  color: var(--background-font-color);
+.main .downloads .header .link {
+  background-color: var(--highlight-color);
+  color: white;
+  padding: 6px 12px;
+  border-radius: 12px;
+  box-sizing: border-box;
+  display: inline-block;
+  margin-bottom: 20px;
+  cursor: pointer;
+  transition: all .33s 0s ease;
 }
 
-.main .api-container .contact {
+.main .downloads .header .link:hover {
+  transform: scale(1.05);
+}
+
+.main .downloads .header .link img {
+  width: 16px;
+  display: inline-block;
+  filter: brightness(0) invert(1);
+  margin-left: 12px;
+  padding-bottom: 1px;
+}
+
+.main .downloads .contact {
   margin-bottom: 32px;
   margin-top: 12px;
   font-size: 14px;
 }
 
-.main .api-container .error {
-  font-size: 50px;
+.main .downloads .selector select {
+  background-color: var(--box-color);
+  padding: 8px 12px;
+  color: var(--background-font-color);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  margin-right: calc(var(--padding) / 2);
+  max-width: 220px;
+  margin-top: 12px;
 }
 
-.main .api-container .error .suberror {
+.main .downloads .selector {
+  margin-bottom: 32px;
+}
+
+.main .downloads button.download {
+  background-color: var(--highlight-color);
+  padding: 8px 16px;
+  color: white;
+  border: 1px solid var(--highlight-color);
+  border-radius: 16px;
+  cursor: pointer;
+  margin-top: 12px;
+  box-shadow: var(--box-shadow);
+}
+
+.main .downloads button.download:hover {
+  transform: scale(1.05);
+  transition: 0.2s ease-in-out all;
+}
+
+.main .downloads .error {
   font-size: 30px;
+  padding: 50px 0;
+  position: relative;
 }
 
-.main .api-container .error img {
+.main .downloads .error .suberror {
+  font-size: 20px;
+}
+
+.main .downloads .error img {
   opacity: 0.03;
-  position: fixed;
+  position: absolute;
   width: 100%;
   left: 0;
   top: 50%;
@@ -45,20 +109,24 @@
   z-index: -1;
 }
 
-.main.dark .api-container .error img {
+.main.dark .downloads .error img {
   -webkit-filter: invert(100%);
   filter: invert(100%);
 }
 
-.main .api-container .swagger-ui .info {
+.main .downloads .swagger-ui {
+  margin-top: 32px;
+}
+
+.main .downloads .swagger-ui .info {
   display: none;
 }
 
-.main .api-container .swagger-ui .wrapper {
+.main .downloads .swagger-ui .wrapper {
   padding: 0;
 }
 
-.main .api-container .swagger-ui section.models {
+.main .downloads .swagger-ui section.models {
   display: none;
 }
 
@@ -155,7 +223,7 @@
 
 @media screen and (max-width: 500px) {
 
-  .main .api-container .header {
+  .main .downloads .header {
     font-size: 26px;
   }
 

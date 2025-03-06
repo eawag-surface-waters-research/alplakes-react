@@ -158,9 +158,9 @@ h3 {
 
 h4 {
   font-size: 16px;
-  font-weight: 400;
+  font-weight: 600;
   margin-bottom: 8px;
-  text-decoration: underline;
+  color: var(--background-subtle-font-color);
 }
 
 .main .background {
