@@ -58,7 +58,6 @@ class ModelInputs extends Component {
           return { name: l.name, link: l.link };
         });
       var lake = lake_list[0].link;
-      console.log(model_list);
       this.setState({ model_list, model, lake_list, lake });
     }
   }
@@ -355,33 +354,25 @@ class Downloads extends Component {
 
   async componentDidMount() {
     window.scrollTo(0, 0);
-    var list = [];
+    var { one_dimensional, three_dimensional, swagger_error } = this.state;
     try {
-      await axios.get(`${CONFIG.alplakes_api}`);
-      var { data: one_dimensional } = await axios.get(
+      ({ data: one_dimensional } = await axios.get(
         CONFIG.alplakes_bucket +
           `/static/website/metadata/${CONFIG.branch}/one_dimensional.json`
-      );
-      this.setState({ one_dimensional });
-    } catch (e) {
-      console.error(e);
-    }
+      ));
+    } catch (e) {}
     try {
-      var { data: three_dimensional } = await axios.get(
+      ({ data: three_dimensional } = await axios.get(
         CONFIG.alplakes_bucket +
           `/static/website/metadata/${CONFIG.branch}/three_dimensional.json`
-      );
-      this.setState({ three_dimensional });
-    } catch (e) {
-      console.error(e);
-    }
+      ));
+    } catch (e) {}
     try {
       await axios.get(`${CONFIG.alplakes_api}`);
     } catch (e) {
-      this.setState({ swagger_error: true });
+      swagger_error = true;
     }
-    console.log(list);
-    this.setState({ list });
+    this.setState({ one_dimensional, three_dimensional, swagger_error });
   }
   render() {
     const language = "EN";
@@ -424,9 +415,8 @@ class Downloads extends Component {
           </p>
           <h4>3D Models</h4>
           <p>
-            Available per week in NetCDF format. The
-            dimensions and variables are not self explanatory, you can refer to
-            the notebook{" "}
+            Available per week in NetCDF format. The dimensions and variables
+            are not self explanatory, you can refer to the notebook{" "}
             <a
               href="https://github.com/eawag-surface-waters-research/alplakes-simulations/blob/master/notebooks/process_results.ipynb"
               target="_blank"
@@ -439,10 +429,9 @@ class Downloads extends Component {
           <ThreeDimensionalResults list={three_dimensional} />
           <h4>1D Models</h4>
           <p>
-            Available in text format. The results are
-            formatted in a CSV where the column headers refer to the depth and
-            the first column is the number of days after the reference date
-            (01.01.1981). The notebook{" "}
+            Available in text format. The results are formatted in a CSV where
+            the column headers refer to the depth and the first column is the
+            number of days after the reference date (01.01.1981). The notebook{" "}
             <a
               href="https://github.com/Eawag-AppliedSystemAnalysis/operational-simstrat/blob/master/notebooks/process_results.ipynb"
               target="_blank"

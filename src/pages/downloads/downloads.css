@@ -90,16 +90,18 @@
 }
 
 .main .downloads .error {
-  font-size: 50px;
+  font-size: 30px;
+  padding: 50px 0;
+  position: relative;
 }
 
 .main .downloads .error .suberror {
-  font-size: 30px;
+  font-size: 20px;
 }
 
 .main .downloads .error img {
   opacity: 0.03;
-  position: fixed;
+  position: absolute;
   width: 100%;
   left: 0;
   top: 50%;
