@@ -4,7 +4,7 @@ import Translations from "../../../translations.json";
 import Basemap from "../../../components/leaflet/basemap";
 import Information from "../../../components/information/information";
 import MapButton from "../../../components/mapbutton/mapbutton";
-import { downloadModelMetadata, download3DMap } from "../functions/download";
+import { downloadModelMetadata, download3DMap, downloadModelWarning } from "../functions/download";
 import {
   formatReadableDate,
   formatTime,
@@ -12,6 +12,7 @@ import {
 } from "../functions/general";
 import SummaryTable from "../../../components/summarytable/summarytable";
 import Expand from "../../../components/expand/expand";
+import warningIcon from "../../../img/warning.png";
 
 class PlaceholderGraph extends Component {
   render() {
@@ -65,6 +66,10 @@ class ThreeDModel extends Component {
       parameters.model.toLowerCase(),
       parameters.key
     );
+    warning = await downloadModelWarning(
+      parameters.model.toLowerCase(),
+      parameters.key
+    );
     const data = await download3DMap(
       parameters.model.toLowerCase(),
       parameters.key,
@@ -91,7 +96,12 @@ class ThreeDModel extends Component {
         parameters.key
       );
     } else {
-      warning = "offlineWarning";
+      warning = {
+        EN: "Model offline, historical data can still be accessed.",
+        DE: "Modell offline, auf historische Daten kann weiterhin zugegriffen werden.",
+        FR: "Modèle hors ligne, les données historiques sont toujours accessibles.",
+        IT: "Modello offline, i dati storici sono comunque accessibili.",
+      };
     }
     updates.push({
       event: "addLayer",
@@ -169,9 +179,9 @@ class ThreeDModel extends Component {
             />
             {warning && (
               <div className="warning-popup" onClick={this.closeWarning}>
-                <div className="warning-popup-inner">
-                  {Translations[warning][language]}
-                </div>
+                <img src={warningIcon} alt="Warning" />
+                <div className="warning-popup-inner">{warning[language]}</div>
+                <div className="close">&#10005;</div>
               </div>
             )}
             <Basemap

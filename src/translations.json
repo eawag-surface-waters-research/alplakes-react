@@ -389,12 +389,6 @@
     "FR": "Aucun paramètre disponible",
     "IT": "Nessuna impostazione disponibile"
   },
-  "offlineWarning": {
-    "EN": "Model offline, historical data can still be accessed.",
-    "DE": "Modell offline, auf historische Daten kann weiterhin zugegriffen werden.",
-    "FR": "Modèle hors ligne, les données historiques sont toujours accessibles.",
-    "IT": "Modello offline, i dati storici sono comunque accessibili."
-  },
   "showLocations": {
     "EN": "Show all locations",
     "DE": "Alle Standorte anzeigen",

@@ -381,6 +381,10 @@ L.Streamlines = (L.Layer ? L.Layer : L.Class).extend({
     }
   },
 
+  _round: function (value, decimals) {
+    return Math.round(value * 10 ** decimals) / 10 ** decimals;
+  },
+
   getLatLng: function () {
     return false;
   },

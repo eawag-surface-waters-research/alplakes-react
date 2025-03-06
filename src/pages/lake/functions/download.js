@@ -616,6 +616,22 @@ export const downloadModelMetadata = async (model, lake) => {
   return metadata;
 };
 
+export const downloadModelWarning = async (model, lake) => {
+  try {
+    const response = await axios.get(
+      `${
+        CONFIG.alplakes_bucket
+      }/simulations/${model}/events/${lake}/warning.json${general.hour()}`
+    );
+    if ("EN" in response.data) {
+      return response.data;
+    }
+    return false;
+  } catch (e) {
+    return false;
+  }
+};
+
 export const download3DMap = async (
   model,
   lake,

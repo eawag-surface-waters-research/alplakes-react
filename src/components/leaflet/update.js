@@ -104,6 +104,7 @@ const addRaster = async (map, layers, id, options, language, server) => {
         layer: layers[id]["profile_layer"],
         markerIconUrl: leaflet_marker,
         id: map.getContainer().id,
+        enabledFunction: server.disableControls,
       })
       .addTo(map);
   }
@@ -116,6 +117,7 @@ const addRaster = async (map, layers, id, options, language, server) => {
         fire: (event) => server.getTransect(event, id),
         layer: layers[id]["transect_layer"],
         id: map.getContainer().id,
+        enabledFunction: server.disableControls,
       })
       .addTo(map);
   }
@@ -263,7 +265,11 @@ const addParticles = async (map, layers, id, options, language, server) => {
   var defaultOptions = {
     opacity: 1,
   };
-  var displayOptions = { ...defaultOptions, ...options.displayOptions };
+  var displayOptions = {
+    ...defaultOptions,
+    ...options.displayOptions,
+    enabledFunction: server.disableControls,
+  };
   displayOptions.id = options.id;
   layers[id]["particles_control"] = L.control
     .particleTracking(
@@ -485,8 +491,8 @@ export const setPlayDatetime = (layers, datetime, period, data) => {
         });
       } else if (plot_type === "labels") {
         updateLabels(layers[key][plot_type], layers[key]["raster"]);
-      } else if (plot_type === "particles") {
-        layers[key][plot_type].update(datetime, {});
+      } else if (plot_type === "particles_control") {
+        layers[key][plot_type].update(datetime, false);
       } else if (
         plot_type.includes("transect") ||
         plot_type.includes("profile")
@@ -495,7 +501,7 @@ export const setPlayDatetime = (layers, datetime, period, data) => {
         if ("data" in layers[key]) {
           layers[key]["data"]["data"] = data[key][i0];
         }
-        layers[key][plot_type].update(data[key][i0], {});
+        layers[key][plot_type].update(data[key][i0], false);
       }
     }
   }

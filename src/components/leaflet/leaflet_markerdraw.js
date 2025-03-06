@@ -7,6 +7,7 @@ L.Control.MarkerDraw = L.Control.extend({
     fire: false,
     layer: false,
     id: "map",
+    enabledFunction: false,
   },
 
   onAdd: function (map) {
@@ -45,6 +46,9 @@ L.Control.MarkerDraw = L.Control.extend({
   },
 
   _enableDrawing: function () {
+    if (typeof this.options.enabledFunction === "function") {
+      this.options.enabledFunction();
+    }
     this._isAdding = true;
     this._map.dragging.disable();
     L.DomUtil.addClass(this._container, "leaflet-draw-enabled");
@@ -60,15 +64,17 @@ L.Control.MarkerDraw = L.Control.extend({
   },
 
   _disableDrawing: function () {
-    this._isAdding = false;
-    this._map.dragging.enable();
-    L.DomUtil.removeClass(this._container, "leaflet-draw-enabled");
-    document.getElementById(this.options.id).style.removeProperty("cursor");
-    this._map.off("click", this._addMarker, this);
-    if (this._textbox) {
-      this._map.getContainer().removeChild(this._textbox);
-      this._map.off("mousemove", this._updateTextboxPosition, this);
-      this._textbox = null;
+    if (this._isAdding) {
+      this._isAdding = false;
+      this._map.dragging.enable();
+      L.DomUtil.removeClass(this._container, "leaflet-draw-enabled");
+      document.getElementById(this.options.id).style.removeProperty("cursor");
+      this._map.off("click", this._addMarker, this);
+      if (this._textbox) {
+        this._map.getContainer().removeChild(this._textbox);
+        this._map.off("mousemove", this._updateTextboxPosition, this);
+        this._textbox = null;
+      }
     }
   },
 
