@@ -32,6 +32,49 @@ const findClosest = (array, key, value) => {
   return closest;
 };
 
+const round = (value, decimals) => {
+  return Math.round(value * 10 ** decimals) / 10 ** decimals;
+};
+
+class InputCoordinates extends Component {
+  state = {
+    lat: 46.5,
+    lng: 6.67,
+  };
+  updateLat = (event) => {
+    this.setState({ lat: event.target.value });
+  };
+  updateLng = (event) => {
+    this.setState({ lng: event.target.value });
+  };
+  componentDidUpdate(prevProps) {
+    var { lat, lng } = this.props;
+    if (prevProps.lat !== lat || prevProps.lng !== lng) {
+      this.setState({ lat, lng });
+    }
+  }
+  setcustomProfileLocation = () => {
+    var { lat, lng } = this.state;
+    if (lat !== this.props.lat && lng !== this.props.lng) {
+      this.props.customProfileLocation(lat, lng);
+    }
+  };
+  componentDidMount() {
+    var { lat, lng } = this.props;
+    this.setState({ lat, lng });
+  }
+  render() {
+    const { lat, lng } = this.state;
+    return (
+      <div className="input-coordinates">
+        Lat: <input value={lat} type="number" onChange={this.updateLat} />
+        Lng: <input value={lng} type="number" onChange={this.updateLng} />
+        <button onClick={this.setcustomProfileLocation}>Update</button>
+      </div>
+    );
+  }
+}
+
 class Graph extends Component {
   setImage = (event) => {
     var { layer, updateOptions } = this.props;
@@ -44,7 +87,15 @@ class Graph extends Component {
     updateOptions(layer.id, "tiff", layer.displayOptions);
   };
   render() {
-    var { layer, plotType, language, data, dark, datetime } = this.props;
+    var {
+      layer,
+      plotType,
+      language,
+      data,
+      dark,
+      datetime,
+      customProfileLocation,
+    } = this.props;
     switch (plotType) {
       default:
         return <React.Fragment></React.Fragment>;
@@ -62,12 +113,19 @@ class Graph extends Component {
         );
       case "profile_plot":
         return (
-          <ProfileGraph
-            data={data}
-            options={layer.displayOptions}
-            language={language}
-            dark={dark}
-          />
+          <React.Fragment>
+            <InputCoordinates
+              lat={round(data.lat, 3)}
+              lng={round(data.lng, 3)}
+              customProfileLocation={customProfileLocation}
+            />
+            <ProfileGraph
+              data={data}
+              options={layer.displayOptions}
+              language={language}
+              dark={dark}
+            />
+          </React.Fragment>
         );
       case "transect_plot":
         return (
@@ -95,6 +153,7 @@ class MapGraph extends Component {
       graphHide,
       toggleGraphHide,
       updateOptions,
+      customProfileLocation
     } = this.props;
     var icons = {
       satellite_timeseries: satelliteIcon,
@@ -150,6 +209,7 @@ class MapGraph extends Component {
               dark={dark}
               datetime={datetime}
               updateOptions={updateOptions}
+              customProfileLocation={customProfileLocation}
             />
           </div>
         </div>

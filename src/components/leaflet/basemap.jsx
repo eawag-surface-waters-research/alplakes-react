@@ -24,7 +24,7 @@ class Basemap extends Component {
   togglePlay = () => {
     const play = !this.state.play;
     if (play) {
-      this.disableControls()
+      this.disableControls();
       var { datetime, timestep, period, data, duration } = this.state;
       const animate = (timestep) => {
         if (datetime >= period[1]) {
@@ -69,7 +69,7 @@ class Basemap extends Component {
     } catch (e) {}
     const datetime = parseInt(event[0]);
     const { period, data } = this.state;
-    this.disableControls()
+    this.disableControls();
     setPlayDatetime(this.layers, datetime, period, data);
     if (this.props.setDatetime) this.props.setDatetime(datetime, false);
     this.setState({ datetime, play: false });
@@ -99,6 +99,15 @@ class Basemap extends Component {
       for (let key in this.layers[layer]) {
         if (key.includes("control")) {
           this.layers[layer][key]._disableDrawing();
+        }
+      }
+    }
+  };
+  customProfileLocation = (lat, lng) => {
+    for (let layer in this.layers) {
+      for (let key in this.layers[layer]) {
+        if (key === "profile_control") {
+          this.layers[layer][key].addMarker(lat, lng);
         }
       }
     }
@@ -242,6 +251,7 @@ class Basemap extends Component {
               graphHide={graphHide}
               toggleGraphHide={toggleGraphHide}
               updateOptions={updateOptions}
+              customProfileLocation={this.customProfileLocation}
             />
           )}
         </div>

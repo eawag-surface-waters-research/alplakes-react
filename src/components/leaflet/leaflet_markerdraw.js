@@ -91,6 +91,7 @@ L.Control.MarkerDraw = L.Control.extend({
   },
 
   _addMarker: async function (e) {
+    this._disableDrawing();
     var markerIcon = L.icon({
       iconUrl: this.options.markerIconUrl,
       iconSize: [25, 36],
@@ -108,7 +109,29 @@ L.Control.MarkerDraw = L.Control.extend({
       let latlng = await this.options.fire(e.latlng);
       this._marker.setLatLng(latlng);
     }
+  },
+  addMarker: async function (lat, lng) {
+    if (this._marker) {
+      this._marker.remove();
+    }
     this._disableDrawing();
+    var markerIcon = L.icon({
+      iconUrl: this.options.markerIconUrl,
+      iconSize: [25, 36],
+      iconAnchor: [12, 41],
+      popupAnchor: [1, -34],
+    });
+    this._marker = L.marker({ lat, lng }, { icon: markerIcon });
+    if (this.options.layer) {
+      this.options.layer.addLayer(this._marker);
+    } else {
+      this._marker.addTo(this._map);
+    }
+
+    if (typeof this.options.fire === "function") {
+      let latlng = await this.options.fire({ lat, lng });
+      this._marker.setLatLng(latlng);
+    }
   },
 });
 
