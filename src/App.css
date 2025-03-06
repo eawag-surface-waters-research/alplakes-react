@@ -521,7 +521,7 @@ h4 {
   background-color: var(--highlight-color);
   border: none;
   border-radius: 8px;
-  color: #e3e3e3;
+  color: white;
   cursor: pointer;
   display: inline-block;
   font-size: 14px;

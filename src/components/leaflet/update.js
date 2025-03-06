@@ -485,8 +485,8 @@ export const setPlayDatetime = (layers, datetime, period, data) => {
         });
       } else if (plot_type === "labels") {
         updateLabels(layers[key][plot_type], layers[key]["raster"]);
-      } else if (plot_type === "particles") {
-        layers[key][plot_type].update(datetime, {});
+      } else if (plot_type === "particles_control") {
+        layers[key][plot_type].update(datetime, false);
       } else if (
         plot_type.includes("transect") ||
         plot_type.includes("profile")
@@ -495,7 +495,7 @@ export const setPlayDatetime = (layers, datetime, period, data) => {
         if ("data" in layers[key]) {
           layers[key]["data"]["data"] = data[key][i0];
         }
-        layers[key][plot_type].update(data[key][i0], {});
+        layers[key][plot_type].update(data[key][i0], false);
       }
     }
   }

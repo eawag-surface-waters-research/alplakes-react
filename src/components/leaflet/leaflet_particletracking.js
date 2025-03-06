@@ -421,6 +421,18 @@ L.Control.ParticleTracking = L.Control.extend({
   },
 });
 
-L.control.particleTracking = function (geometry, data, datetime, times, options) {
-  return new L.Control.ParticleTracking(geometry, data, datetime, times, options);
+L.control.particleTracking = function (
+  geometry,
+  data,
+  datetime,
+  times,
+  options
+) {
+  return new L.Control.ParticleTracking(
+    geometry,
+    data,
+    datetime,
+    times,
+    options
+  );
 };
