@@ -1,41 +1,71 @@
-.main .api-container {
+.main .downloads {
   width: 100%;
-  max-width: var(--content-width);
+  max-width: 1088px;
   margin: auto;
-  padding: 0 var(--padding);
   margin-top: var(--top-margin);
-  min-height: calc(100vh - var(--header-height) - var(--footer-full-height));
+  padding: 0 var(--padding);
   box-sizing: border-box;
-  margin-bottom: 100px;
 }
 
-.main .api-container .text {
+.main .downloads p {
   line-height: 28px;
   font-size: 16px;
   max-width: 700px;
-  margin-bottom: 32px;
+  margin-bottom: 12px;
 }
 
-.main .api-container .header {
+.main .downloads .header {
   margin-top: 18px;
   color: var(--background-font-color);
 }
 
-.main .api-container .contact {
+.main .downloads .contact {
   margin-bottom: 32px;
   margin-top: 12px;
   font-size: 14px;
 }
 
-.main .api-container .error {
+.main .downloads select {
+  background-color: var(--box-color);
+  padding: 8px 16px;
+  color: var(--background-font-color);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  margin-right: calc(var(--padding) / 2);
+  max-width: 220px;
+  margin-top: 12px;
+}
+
+.main .downloads .selector {
+  margin-bottom: 32px;
+  margin-top: -12px;
+}
+
+.main .downloads button.download {
+  background-color: var(--highlight-color);
+  padding: 8px 16px;
+  color: white;
+  border: 1px solid var(--highlight-color);
+  border-radius: 16px;
+  cursor: pointer;
+  margin-top: 12px;
+  box-shadow: var(--box-shadow);
+}
+
+.main .downloads button.download:hover {
+  transform: scale(1.05);
+  transition: 0.2s ease-in-out all;
+}
+
+.main .downloads .error {
   font-size: 50px;
 }
 
-.main .api-container .error .suberror {
+.main .downloads .error .suberror {
   font-size: 30px;
 }
 
-.main .api-container .error img {
+.main .downloads .error img {
   opacity: 0.03;
   position: fixed;
   width: 100%;
@@ -45,20 +75,24 @@
   z-index: -1;
 }
 
-.main.dark .api-container .error img {
+.main.dark .downloads .error img {
   -webkit-filter: invert(100%);
   filter: invert(100%);
 }
 
-.main .api-container .swagger-ui .info {
+.main .downloads .swagger-ui {
+  margin-top: 32px;
+}
+
+.main .downloads .swagger-ui .info {
   display: none;
 }
 
-.main .api-container .swagger-ui .wrapper {
+.main .downloads .swagger-ui .wrapper {
   padding: 0;
 }
 
-.main .api-container .swagger-ui section.models {
+.main .downloads .swagger-ui section.models {
   display: none;
 }
 
@@ -155,7 +189,7 @@
 
 @media screen and (max-width: 500px) {
 
-  .main .api-container .header {
+  .main .downloads .header {
     font-size: 26px;
   }
 

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Translate from "../../translations.json";
+import Translations from "../../translations.json";
 
 const formatDateTime = (datetime, months) => {
   var a = new Date(datetime);
@@ -20,7 +20,7 @@ class ModuleLabels extends Component {
     if ("labels" in module) {
       labels = JSON.parse(JSON.stringify(module.labels));
       var layer = layers.find((l) => l.id === selection);
-      var months = Translate.axis[language].months;
+      var months = Translations.axis[language].months;
       for (let key of Object.keys(labels)) {
         if (labels[key] === "satelliteAverage") {
           if (layer && "image" in layer.displayOptions) {
@@ -41,7 +41,7 @@ class ModuleLabels extends Component {
             labels[key] = "";
           }
         } else if (labels[key] === "forecast5") {
-          labels[key] = Translate["forecast5"][language];
+          labels[key] = Translations["forecast5"][language];
         } else if (labels[key] === "simstratDatetime") {
           if (layer && "labels" in layer.displayOptions) {
             labels[key] = formatDateTime(

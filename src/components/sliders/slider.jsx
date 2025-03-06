@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Range, getTrackBackground } from "react-range";
-import Translate from "../../translations.json";
+import Translations from "../../translations.json";
 import "./slider.css";
 
 class Slider extends Component {
@@ -82,7 +82,7 @@ class Slider extends Component {
                 <div className="slider-label">
                   {this.formatDateTime(
                     hoverValue !== null ? hoverValue : datetime,
-                    Translate.axis[language].months
+                    Translations.axis[language].months
                   )}
                 </div>
               )}

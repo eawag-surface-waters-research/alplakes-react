@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ErrorBoundary from "./components/errorboundary/errorboundary";
 import Home from "./pages/home/home";
 import Lake from "./pages/lake/lake";
-import API from "./pages/api/api";
+import Downloads from "./pages/downloads/downloads";
 import About from "./pages/about/about";
 import Models from "./pages/models/models";
 import Map from "./pages/lake/map/map";
@@ -70,10 +70,10 @@ class App extends Component {
                 exact
               />
               <Route
-                path="/api"
+                path="/downloads"
                 element={
                   <ErrorBoundary {...this.props} {...this.state}>
-                    <API
+                    <Downloads
                       {...this.state}
                       setLanguage={this.setLanguage}
                       toggleDark={this.toggleDark}
