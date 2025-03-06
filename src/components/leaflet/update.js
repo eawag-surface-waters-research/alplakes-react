@@ -104,6 +104,7 @@ const addRaster = async (map, layers, id, options, language, server) => {
         layer: layers[id]["profile_layer"],
         markerIconUrl: leaflet_marker,
         id: map.getContainer().id,
+        enabledFunction: server.disableControls,
       })
       .addTo(map);
   }
@@ -116,6 +117,7 @@ const addRaster = async (map, layers, id, options, language, server) => {
         fire: (event) => server.getTransect(event, id),
         layer: layers[id]["transect_layer"],
         id: map.getContainer().id,
+        enabledFunction: server.disableControls,
       })
       .addTo(map);
   }
@@ -263,7 +265,11 @@ const addParticles = async (map, layers, id, options, language, server) => {
   var defaultOptions = {
     opacity: 1,
   };
-  var displayOptions = { ...defaultOptions, ...options.displayOptions };
+  var displayOptions = {
+    ...defaultOptions,
+    ...options.displayOptions,
+    enabledFunction: server.disableControls,
+  };
   displayOptions.id = options.id;
   layers[id]["particles_control"] = L.control
     .particleTracking(

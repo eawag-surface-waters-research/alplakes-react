@@ -6,6 +6,7 @@ L.Control.PolylineDraw = L.Control.extend({
     fire: false,
     layer: false,
     id: "map",
+    enabledFunction: false,
   },
 
   onAdd: function (map) {
@@ -59,6 +60,9 @@ L.Control.PolylineDraw = L.Control.extend({
   },
 
   _enableDrawing: function () {
+    if (typeof this.options.enabledFunction === "function") {
+      this.options.enabledFunction();
+    }
     this._isDrawing = true;
     this._map.dragging.disable();
     L.DomUtil.addClass(this._container, "leaflet-draw-enabled");
@@ -92,15 +96,17 @@ L.Control.PolylineDraw = L.Control.extend({
   },
 
   _disableDrawing: function () {
-    this._isDrawing = false;
-    this._map.dragging.enable();
-    L.DomUtil.removeClass(this._container, "leaflet-draw-enabled");
-    document.getElementById(this.options.id).style.removeProperty("cursor");
-    this._map.off("click", this._addPoint, this);
-    this._map.off("mousemove", this._updatePreview, this);
-    this._map.off("keydown", this._finishDrawingOnKeyPress, this);
-    this._previewPolyline.remove();
-    this._createPolyline();
+    if (this._isDrawing) {
+      this._isDrawing = false;
+      this._map.dragging.enable();
+      L.DomUtil.removeClass(this._container, "leaflet-draw-enabled");
+      document.getElementById(this.options.id).style.removeProperty("cursor");
+      this._map.off("click", this._addPoint, this);
+      this._map.off("mousemove", this._updatePreview, this);
+      this._map.off("keydown", this._finishDrawingOnKeyPress, this);
+      this._previewPolyline.remove();
+      this._createPolyline();
+    }
   },
 
   _updateTextboxPosition: function (e) {

@@ -24,6 +24,7 @@ class Basemap extends Component {
   togglePlay = () => {
     const play = !this.state.play;
     if (play) {
+      this.disableControls()
       var { datetime, timestep, period, data, duration } = this.state;
       const animate = (timestep) => {
         if (datetime >= period[1]) {
@@ -68,6 +69,7 @@ class Basemap extends Component {
     } catch (e) {}
     const datetime = parseInt(event[0]);
     const { period, data } = this.state;
+    this.disableControls()
     setPlayDatetime(this.layers, datetime, period, data);
     if (this.props.setDatetime) this.props.setDatetime(datetime, false);
     this.setState({ datetime, play: false });
@@ -92,6 +94,15 @@ class Basemap extends Component {
       data: false,
     });
   };
+  disableControls = () => {
+    for (let layer in this.layers) {
+      for (let key in this.layers[layer]) {
+        if (key.includes("control")) {
+          this.layers[layer][key]._disableDrawing();
+        }
+      }
+    }
+  };
   async componentDidUpdate(prevProps) {
     const { dark, updates, updated, mapId, language, getTransect, getProfile } =
       this.props;
@@ -99,6 +110,7 @@ class Basemap extends Component {
     const server = {
       getTransect,
       getProfile,
+      disableControls: this.disableControls,
     };
     if (updates.length > 0) {
       const loading_div = document.getElementById(`loading_${mapId}`);

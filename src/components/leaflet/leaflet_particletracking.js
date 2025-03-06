@@ -12,6 +12,7 @@ L.Control.ParticleTracking = L.Control.extend({
     nRows: 200, // number of rows in inperpolated velcity grid
     radiusFactor: 2, // search radius for quadtree search
     dt: 3, // number of compuation timesteps between each data timestep
+    enabledFunction: false,
   },
   initialize: function (geometry, data, datetime, times, options) {
     L.Util.setOptions(this, options);
@@ -251,16 +252,38 @@ L.Control.ParticleTracking = L.Control.extend({
     return closestIndex;
   },
   _enableDrawing: function () {
+    if (typeof this.options.enabledFunction === "function") {
+      this.options.enabledFunction();
+    }
     this._isAdding = true;
     L.DomUtil.addClass(this._container, "leaflet-draw-enabled");
     document.getElementById(this.options.id).style.cursor = "crosshair";
     this._map.on("click", this._addPoints, this);
+    this._textbox = L.DomUtil.create("div", "leaflet-draw-textbox");
+    this._textbox.innerHTML = "Add particles";
+    this._map.getContainer().appendChild(this._textbox);
+    this._map.on("mousemove", this._updateTextboxPosition, this);
   },
   _disableDrawing: function () {
-    this._isAdding = false;
-    L.DomUtil.removeClass(this._container, "leaflet-draw-enabled");
-    document.getElementById(this.options.id).style.removeProperty("cursor");
-    this._map.off("click", this._addPoints, this);
+    if (this._isAdding) {
+      this._isAdding = false;
+      L.DomUtil.removeClass(this._container, "leaflet-draw-enabled");
+      document.getElementById(this.options.id).style.removeProperty("cursor");
+      this._map.off("click", this._addPoints, this);
+      if (this._textbox) {
+        this._map.getContainer().removeChild(this._textbox);
+        this._map.off("mousemove", this._updateTextboxPosition, this);
+        this._textbox = null;
+      }
+    }
+  },
+  _updateTextboxPosition: function (e) {
+    var pos = this._map.mouseEventToContainerPoint(e.originalEvent);
+    if (this._textbox) {
+      this._textbox.style.display = "block";
+      this._textbox.style.left = pos.x + 5 + "px";
+      this._textbox.style.top = pos.y + 5 + "px";
+    }
   },
   _getIndexAtPoint(x, y) {
     var i = this.options.nRows - Math.round((y - this._yMin) / this._ySize);
