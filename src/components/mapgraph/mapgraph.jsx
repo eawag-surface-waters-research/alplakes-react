@@ -64,12 +64,15 @@ class InputCoordinates extends Component {
     this.setState({ lat, lng });
   }
   render() {
+    const { language } = this.props;
     const { lat, lng } = this.state;
     return (
       <div className="input-coordinates">
         Lat: <input value={lat} type="number" onChange={this.updateLat} />
         Lng: <input value={lng} type="number" onChange={this.updateLng} />
-        <button onClick={this.setcustomProfileLocation}>Update</button>
+        <button onClick={this.setcustomProfileLocation}>
+          {Translations.update[language]}
+        </button>
       </div>
     );
   }
@@ -117,6 +120,7 @@ class Graph extends Component {
             <InputCoordinates
               lat={round(data.lat, 3)}
               lng={round(data.lng, 3)}
+              language={language}
               customProfileLocation={customProfileLocation}
             />
             <ProfileGraph
@@ -153,7 +157,7 @@ class MapGraph extends Component {
       graphHide,
       toggleGraphHide,
       updateOptions,
-      customProfileLocation
+      customProfileLocation,
     } = this.props;
     var icons = {
       satellite_timeseries: satelliteIcon,

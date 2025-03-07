@@ -16,7 +16,7 @@
     "DE": "See suchen",
     "FR": "Recherche de lacs",
     "IT": "Ricerca laghi"
-  }, 
+  },
   "tagline": {
     "EN": "Forecasts and monitoring of alpine lakes",
     "DE": "Prognosen und Monitoring von Alpenseen",
@@ -454,6 +454,12 @@
     "DE": "Filter entfernen",
     "FR": "Supprimer les filtres",
     "IT": "Rimuovi filtri"
+  },
+  "update": {
+    "EN": "Update",
+    "DE": "Update",
+    "FR": "Mise à jour",
+    "IT": "Aggiornamento"
   },
   "satellite": {
     "EN": "Satellite",
