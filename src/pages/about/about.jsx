@@ -84,9 +84,11 @@ class About extends Component {
           />
         </Helmet>
         <NavBar {...this.props} relative={true} />
-        <div className="about">
+        <div className="content-width about">
           <div className="content">
-            <h1>{Translations.about[language]}</h1>
+            <div className="header">
+              <h1>{Translations.about[language]}</h1>
+            </div>
             <div className="intro">
               <p>
                 Alplakes is a research initiative that provides accurate

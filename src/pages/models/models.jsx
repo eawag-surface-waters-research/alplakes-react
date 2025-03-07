@@ -84,7 +84,7 @@ class Models extends Component {
     var { one_dimensional, three_dimensional, remote_sensing, visibleKey } =
       this.state;
     return (
-      <div className="main">
+      <React.Fragment>
         <Helmet>
           <title>Models | Alplakes</title>
           <meta
@@ -93,9 +93,11 @@ class Models extends Component {
           />
         </Helmet>
         <NavBar {...this.props} relative={true} />
-        <div className="models">
+        <div className="content-width models">
           <div className="content">
-            <h1>{Translations.models[language]}</h1>
+            <div className="header">
+              <h1>{Translations.models[language]}</h1>
+            </div>
             <div className="intro">
               <p>
                 Alplakes uses calibrated hydrodynamic models and remote sensing
@@ -355,8 +357,10 @@ class Models extends Component {
                 </a>
                 . Earth Resources Observation and Science (EROS) Center. (2020).
                 Landsat 8-9 Operational Land Imager / Thermal Infrared Sensor
-                Level-2, Collection 2 [dataset]. U.S. Geological Survey.
-                https://doi.org/10.5066/P9OGBGM6.{" "}
+                Level-2, Collection 2 [dataset]. U.S. Geological Survey. {" "}
+                <a href="https://doi.org/10.5066/P9OGBGM6">
+                  https://doi.org/10.5066/P9OGBGM6
+                </a>
               </p>
             </div>
           </div>
@@ -389,7 +393,7 @@ class Models extends Component {
           </div>
         </div>
         <Footer {...this.props} />
-      </div>
+      </React.Fragment>
     );
   }
 }

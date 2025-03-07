@@ -387,7 +387,7 @@ class Downloads extends Component {
           />
         </Helmet>
         <NavBar {...this.props} relative={true} />
-        <div className="downloads">
+        <div className="content-width downloads">
           <div className="header">
             <h1> {Translations.downloads[language]}</h1>
             <div

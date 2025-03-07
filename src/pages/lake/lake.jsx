@@ -20,8 +20,6 @@ import PastYear from "./components/pastyear";
 import Climate from "./components/climate";
 import NotFound from "./components/notfound";
 
-
-
 class Lake extends Component {
   state = {
     id: "",
@@ -90,12 +88,12 @@ class Lake extends Component {
         {error ? (
           <NotFound id={id} text={true} />
         ) : (
-          <div className="lake">
+          <div className="content-width lake">
             {"key" in metadata && (
               <div className="header">
                 <h1>{title}</h1>
                 <div
-                  className="properties-link"
+                  className="link"
                   onClick={() => this.scrollToSection(this.divRef)}
                 >
                   {Translations.lakeProperties[language]}
