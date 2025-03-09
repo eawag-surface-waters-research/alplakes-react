@@ -1,9 +1,12 @@
 import re
 import requests
 
-def make_bounds(shape, key):
+def make_bounds(shape, shape2, key):
     s = next((d for d in shape["features"] if "key" in d["properties"]
               and d["properties"]["key"] == key), None)
+    if s is None:
+        s = next((d for d in shape2["features"] if "key" in d["properties"]
+                  and d["properties"]["key"] == key), None)
     coordinates = s["geometry"]["coordinates"][0]
     min_lon = min(coord[0] for coord in coordinates)
     max_lon = max(coord[0] for coord in coordinates)
