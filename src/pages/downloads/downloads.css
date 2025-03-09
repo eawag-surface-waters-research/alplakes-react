@@ -12,11 +12,11 @@
   border-radius: 16px;
   margin-right: calc(var(--padding) / 2);
   max-width: 220px;
-  margin-top: 12px;
+  margin-bottom: 12px;
 }
 
 .main .downloads .selector {
-  margin-bottom: 32px;
+  margin-bottom: 40px;
 }
 
 .main .downloads button.download {
