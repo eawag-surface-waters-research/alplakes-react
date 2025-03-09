@@ -4006,7 +4006,7 @@
             "IT": "Domaine des Iles"
         },
         "area": 0.158,
-        "elevation": null,
+        "elevation": 480,
         "type": "Artificial",
         "simstrat": false,
         "latitude": 46.2122,
