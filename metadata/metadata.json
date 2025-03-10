@@ -2286,5 +2286,2129 @@
     "mixing_regime": "NA",
     "geothermal_flux": "NA",
     "trophic_state": "NA"
-  }
+  },
+  {
+        "key": "katzen",
+        "name": {
+            "EN": "Oberer Katzensee",
+            "DE": "Oberer Katzensee",
+            "FR": "Oberer Katzensee",
+            "IT": "Oberer Katzensee"
+        },
+        "area": 0.124,
+        "elevation": 439,
+        "type": "Natural",
+        "simstrat": false,
+        "latitude": 47.4339,
+        "longitude": 8.4976,
+        "ave_depth": "NA",
+        "max_depth": 8,
+        "volume": "NA"
+    },
+    {
+        "key": "saemtiser",
+        "name": {
+            "EN": "S\u00e4mtisersee",
+            "DE": "S\u00e4mtisersee",
+            "FR": "S\u00e4mtisersee",
+            "IT": "S\u00e4mtisersee"
+        },
+        "area": 0.17,
+        "elevation": 1207,
+        "type": "Natural",
+        "simstrat": false,
+        "latitude": 47.2709,
+        "longitude": 9.4578,
+        "ave_depth": "NA",
+        "max_depth": "NA",
+        "volume": "NA"
+    },
+    {
+        "key": "seealp",
+        "name": {
+            "EN": "Seealpsee",
+            "DE": "Seealpsee",
+            "FR": "Seealpsee",
+            "IT": "Seealpsee"
+        },
+        "area": 0.13,
+        "elevation": 1142,
+        "type": "Natural",
+        "simstrat": false,
+        "latitude": 47.2684,
+        "longitude": 9.4008,
+        "ave_depth": "NA",
+        "max_depth": 15,
+        "volume": "NA"
+    },
+    {
+        "key": "faehlen",
+        "name": {
+            "EN": "F\u00e4hlensee",
+            "DE": "F\u00e4hlensee",
+            "FR": "F\u00e4hlensee",
+            "IT": "F\u00e4hlensee"
+        },
+        "area": 0.116,
+        "elevation": 1447,
+        "type": "Natural",
+        "simstrat": false,
+        "latitude": 47.2516,
+        "longitude": 9.4177,
+        "ave_depth": "NA",
+        "max_depth": 31,
+        "volume": "NA"
+    },
+    {
+        "key": "guebsen",
+        "name": {
+            "EN": "G\u00fcbsensee",
+            "DE": "G\u00fcbsensee",
+            "FR": "G\u00fcbsensee",
+            "IT": "G\u00fcbsensee"
+        },
+        "area": 0.177,
+        "elevation": 682,
+        "type": "Artificial",
+        "simstrat": false,
+        "latitude": 47.3987,
+        "longitude": 9.3138,
+        "ave_depth": "NA",
+        "max_depth": "NA",
+        "volume": "NA"
+    },
+    {
+        "key": "mapgragg",
+        "name": {
+            "EN": "Mapraggsee",
+            "DE": "Mapraggsee",
+            "FR": "Mapraggsee",
+            "IT": "Mapraggsee"
+        },
+        "area": 0.229,
+        "elevation": 861,
+        "type": "Artificial",
+        "simstrat": false,
+        "latitude": 46.9426,
+        "longitude": 9.4789,
+        "ave_depth": "NA",
+        "max_depth": "NA",
+        "volume": "NA"
+    },
+    {
+        "key": "seelisberg",
+        "name": {
+            "EN": "Seelisbergsee",
+            "DE": "Seelisbergsee",
+            "FR": "Seelisbergsee",
+            "IT": "Seelisbergsee"
+        },
+        "area": 0.188,
+        "elevation": 738,
+        "type": "Natural",
+        "simstrat": false,
+        "latitude": 46.9585,
+        "longitude": 8.5721,
+        "ave_depth": "NA",
+        "max_depth": 37,
+        "volume": "NA"
+    },
+    {
+        "key": "gigerwald",
+        "name": {
+            "EN": "Gigerwaldsee",
+            "DE": "Gigerwaldsee",
+            "FR": "Gigerwaldsee",
+            "IT": "Gigerwaldsee"
+        },
+        "area": 0.677,
+        "elevation": 1331,
+        "type": "Artificial",
+        "simstrat": false,
+        "latitude": 46.9144,
+        "longitude": 9.3772,
+        "ave_depth": "NA",
+        "max_depth": 135,
+        "volume": "NA"
+    },
+    {
+        "key": "garichti",
+        "name": {
+            "EN": "Garichtisee",
+            "DE": "Garichtisee",
+            "FR": "Garichtisee",
+            "IT": "Garichtisee"
+        },
+        "area": 0.155,
+        "elevation": 1622,
+        "type": "Artificial",
+        "simstrat": false,
+        "latitude": 46.9556,
+        "longitude": 9.0998,
+        "ave_depth": "NA",
+        "max_depth": "NA",
+        "volume": "NA"
+    },
+    {
+        "key": "oberblegi",
+        "name": {
+            "EN": "Oberblegisee",
+            "DE": "Oberblegisee",
+            "FR": "Oberblegisee",
+            "IT": "Oberblegisee"
+        },
+        "area": 0.155,
+        "elevation": 1421,
+        "type": "Natural",
+        "simstrat": false,
+        "latitude": 46.9802,
+        "longitude": 9.0132,
+        "ave_depth": "NA",
+        "max_depth": 30,
+        "volume": "NA"
+    },
+    {
+        "key": "murg",
+        "name": {
+            "EN": "Oberer Murgsee",
+            "DE": "Oberer Murgsee",
+            "FR": "Oberer Murgsee",
+            "IT": "Oberer Murgsee"
+        },
+        "area": 0.206,
+        "elevation": 1816,
+        "type": "Natural",
+        "simstrat": false,
+        "latitude": 47.0393,
+        "longitude": 9.1544,
+        "ave_depth": "NA",
+        "max_depth": 26,
+        "volume": "NA"
+    },
+    {
+        "key": "voralp",
+        "name": {
+            "EN": "Voralpsee",
+            "DE": "Voralpsee",
+            "FR": "Voralpsee",
+            "IT": "Voralpsee"
+        },
+        "area": 0.15,
+        "elevation": 1124,
+        "type": "Natural",
+        "simstrat": false,
+        "latitude": 47.1562,
+        "longitude": 9.3764,
+        "ave_depth": 8,
+        "max_depth": 118,
+        "volume": 0.001533
+    },
+    {
+        "key": "heid",
+        "name": {
+            "EN": "Heidsee",
+            "DE": "Heidsee",
+            "FR": "Heidsee",
+            "IT": "Heidsee"
+        },
+        "area": 0.288,
+        "elevation": 1484,
+        "type": "Natural",
+        "simstrat": false,
+        "latitude": 46.7402,
+        "longitude": 9.551,
+        "ave_depth": "NA",
+        "max_depth": 5,
+        "volume": "NA"
+    },
+    {
+        "key": "limmeren",
+        "name": {
+            "EN": "Limmerensee",
+            "DE": "Limmerensee",
+            "FR": "Limmerensee",
+            "IT": "Limmerensee"
+        },
+        "area": 1.335,
+        "elevation": 1855,
+        "type": "Artificial",
+        "simstrat": false,
+        "latitude": 46.836,
+        "longitude": 9.0134,
+        "ave_depth": "NA",
+        "max_depth": 125,
+        "volume": 0.093
+    },
+    {
+        "key": "bannalp",
+        "name": {
+            "EN": "Bannalpsee",
+            "DE": "Bannalpsee",
+            "FR": "Bannalpsee",
+            "IT": "Bannalpsee"
+        },
+        "area": 0.159,
+        "elevation": 1587,
+        "type": "Artificial",
+        "simstrat": false,
+        "latitude": 46.868,
+        "longitude": 8.4298,
+        "ave_depth": "NA",
+        "max_depth": 16,
+        "volume": 0.0017
+    },
+    {
+        "key": "davoser",
+        "name": {
+            "EN": "Davosersee",
+            "DE": "Davosersee",
+            "FR": "Davosersee",
+            "IT": "Davosersee"
+        },
+        "area": 0.578,
+        "elevation": 1558,
+        "type": "Natural",
+        "simstrat": false,
+        "latitude": 46.8199,
+        "longitude": 9.8534,
+        "ave_depth": "NA",
+        "max_depth": 53,
+        "volume": 0.0156
+    },
+    {
+        "key": "griessli",
+        "name": {
+            "EN": "Griesslisee",
+            "DE": "Griesslisee",
+            "FR": "Griesslisee",
+            "IT": "Griesslisee"
+        },
+        "area": 0.115,
+        "elevation": 2098,
+        "type": "Natural",
+        "simstrat": false,
+        "latitude": 46.8565,
+        "longitude": 8.8709,
+        "ave_depth": "NA",
+        "max_depth": "NA",
+        "volume": "NA"
+    },
+    {
+        "key": "pigniu",
+        "name": {
+            "EN": "Lag da Pigniu",
+            "DE": "Panixersee",
+            "FR": "Lag da Pigniu",
+            "IT": "Lag da Pigniu"
+        },
+        "area": 0.375,
+        "elevation": 1447,
+        "type": "Artificial",
+        "simstrat": false,
+        "latitude": 46.8302,
+        "longitude": 9.1035,
+        "ave_depth": "NA",
+        "max_depth": 42,
+        "volume": "NA"
+    },
+    {
+        "key": "glattalp",
+        "name": {
+            "EN": "Glattalpsee",
+            "DE": "Glattalpsee",
+            "FR": "Glattalpsee",
+            "IT": "Glattalpsee"
+        },
+        "area": 0.275,
+        "elevation": 1852,
+        "type": "Artificial",
+        "simstrat": false,
+        "latitude": 46.9193,
+        "longitude": 8.9041,
+        "ave_depth": "NA",
+        "max_depth": "NA",
+        "volume": "NA"
+    },
+    {
+        "key": "bianco",
+        "name": {
+            "EN": "Lago Bianco",
+            "DE": "Lago Bianco",
+            "FR": "Lago Bianco",
+            "IT": "Lago Bianco"
+        },
+        "area": 1.464,
+        "elevation": 2234,
+        "type": "Artificial",
+        "simstrat": false,
+        "latitude": 46.4049,
+        "longitude": 10.0203,
+        "ave_depth": "NA",
+        "max_depth": 53,
+        "volume": 0.0186
+    },
+    {
+        "key": "vadret",
+        "name": {
+            "EN": "Lej da Vadret",
+            "DE": "Lej da Vadret",
+            "FR": "Lej da Vadret",
+            "IT": "Lej da Vadret"
+        },
+        "area": 0.426,
+        "elevation": 2160,
+        "type": "Natural",
+        "simstrat": false,
+        "latitude": 46.3992,
+        "longitude": 9.8485,
+        "ave_depth": "NA",
+        "max_depth": "NA",
+        "volume": "NA"
+    },
+    {
+        "key": "livigno",
+        "name": {
+            "EN": "Lago di Livigno",
+            "DE": "Lago di Livigno",
+            "FR": "Lago di Livigno",
+            "IT": "Lago di Livigno"
+        },
+        "area": 4.602,
+        "elevation": 1801,
+        "type": "Artificial",
+        "simstrat": false,
+        "latitude": 46.5933,
+        "longitude": 10.179,
+        "ave_depth": "NA",
+        "max_depth": 119,
+        "volume": "NA"
+    },
+    {
+        "key": "rims",
+        "name": {
+            "EN": "Lai da Rims",
+            "DE": "Rimsersee",
+            "FR": "Lai da Rims",
+            "IT": "Lai da Rims"
+        },
+        "area": 0.144,
+        "elevation": 2395,
+        "type": "Natural",
+        "simstrat": false,
+        "latitude": 46.5653,
+        "longitude": 10.3882,
+        "ave_depth": "NA",
+        "max_depth": "NA",
+        "volume": "NA"
+    },
+    {
+        "key": "dogern",
+        "name": {
+            "EN": "Aubecken Dogern",
+            "DE": "Aubecken Dogern",
+            "FR": "Aubecken Dogern",
+            "IT": "Aubecken Dogern"
+        },
+        "area": 0.212,
+        "elevation": 305,
+        "type": "Artificial",
+        "simstrat": false,
+        "latitude": 47.5964,
+        "longitude": 8.1619,
+        "ave_depth": "NA",
+        "max_depth": "NA",
+        "volume": "NA"
+    },
+    {
+        "key": "klingnau",
+        "name": {
+            "EN": "Klingnauer Stausee",
+            "DE": "Klingnauer Stausee",
+            "FR": "Klingnauer Stausee",
+            "IT": "Klingnauer Stausee"
+        },
+        "area": 1.209,
+        "elevation": 319,
+        "type": "Artificial",
+        "simstrat": false,
+        "latitude": 47.5835,
+        "longitude": 8.2369,
+        "ave_depth": "NA",
+        "max_depth": 8,
+        "volume": "NA"
+    },
+    {
+        "key": "tailleres",
+        "name": {
+            "EN": "Lac des Taill\u00e8res",
+            "DE": "Lac des Taill\u00e8res",
+            "FR": "Lac des Taill\u00e8res",
+            "IT": "Lac des Taill\u00e8res"
+        },
+        "area": 0.443,
+        "elevation": 1036,
+        "type": "Natural",
+        "simstrat": false,
+        "latitude": 46.967,
+        "longitude": 6.5747,
+        "ave_depth": "NA",
+        "max_depth": 11,
+        "volume": "NA"
+    },
+    {
+        "key": "wohlen",
+        "name": {
+            "EN": "Lake Wohlen",
+            "DE": "Wohlensee",
+            "FR": "Lac de Wohlen",
+            "IT": "Lac de Wohlen"
+        },
+        "area": 3.17,
+        "elevation": 481,
+        "type": "Artificial",
+        "simstrat": false,
+        "latitude": 46.9653,
+        "longitude": 7.3296,
+        "ave_depth": "NA",
+        "max_depth": 20,
+        "volume": 0.025
+    },
+    {
+        "key": "schiffenen",
+        "name": {
+            "EN": "Schiffenensee",
+            "DE": "Schiffenensee",
+            "FR": "Lac de Schiffenen",
+            "IT": "Lac de Schiffenen"
+        },
+        "area": 4.007,
+        "elevation": 531,
+        "type": "Artificial",
+        "simstrat": false,
+        "latitude": 46.853,
+        "longitude": 7.1654,
+        "ave_depth": "NA",
+        "max_depth": 38,
+        "volume": "NA"
+    },
+    {
+        "key": "seedorf",
+        "name": {
+            "EN": "Lac de Seedorf",
+            "DE": "Seedorfsee",
+            "FR": "Lac de Seedorf",
+            "IT": "Lac de Seedorf"
+        },
+        "area": 0.1,
+        "elevation": 609,
+        "type": "Natural",
+        "simstrat": false,
+        "latitude": 46.7957,
+        "longitude": 7.0406,
+        "ave_depth": "NA",
+        "max_depth": "NA",
+        "volume": "NA"
+    },
+    {
+        "key": "schwarz",
+        "name": {
+            "EN": "Schwarzsee",
+            "DE": "Schwarzsee",
+            "FR": "Lac Noir",
+            "IT": "Lac Noir"
+        },
+        "area": 0.46,
+        "elevation": 1045,
+        "type": "Natural",
+        "simstrat": false,
+        "latitude": 46.6655,
+        "longitude": 7.2816,
+        "ave_depth": "NA",
+        "max_depth": 9,
+        "volume": "NA"
+    },
+    {
+        "key": "montsalvens",
+        "name": {
+            "EN": "Lac de Montsalvens",
+            "DE": "Lac de Montsalvens",
+            "FR": "Lac de Montsalvens",
+            "IT": "Lac de Montsalvens"
+        },
+        "area": 0.522,
+        "elevation": 795,
+        "type": "Artificial",
+        "simstrat": false,
+        "latitude": 46.614,
+        "longitude": 7.1425,
+        "ave_depth": "NA",
+        "max_depth": 27,
+        "volume": 0.0126
+    },
+    {
+        "key": "oberstocken",
+        "name": {
+            "EN": "Oberstockensee",
+            "DE": "Oberstockensee",
+            "FR": "Oberstockensee",
+            "IT": "Oberstockensee"
+        },
+        "area": 0.121,
+        "elevation": 1666,
+        "type": "Natural",
+        "simstrat": false,
+        "latitude": 46.6872,
+        "longitude": 7.5205,
+        "ave_depth": "NA",
+        "max_depth": 44,
+        "volume": "NA"
+    },
+    {
+        "key": "spiez",
+        "name": {
+            "EN": "Stauweiher Spiez",
+            "DE": "Stauweiher Spiez",
+            "FR": "Stauweiher Spiez",
+            "IT": "Stauweiher Spiez"
+        },
+        "area": 0.107,
+        "elevation": 623,
+        "type": "Artificial",
+        "simstrat": false,
+        "latitude": 46.6895,
+        "longitude": 7.6638,
+        "ave_depth": "NA",
+        "max_depth": "NA",
+        "volume": "NA"
+    },
+    {
+        "key": "mattenalp",
+        "name": {
+            "EN": "Mattenalpsee",
+            "DE": "Mattenalpsee",
+            "FR": "Mattenalpsee",
+            "IT": "Mattenalpsee"
+        },
+        "area": 0.19,
+        "elevation": 1873,
+        "type": "Artificial",
+        "simstrat": false,
+        "latitude": 46.6302,
+        "longitude": 8.234,
+        "ave_depth": "NA",
+        "max_depth": "NA",
+        "volume": "NA"
+    },
+    {
+        "key": "gauli",
+        "name": {
+            "EN": "Gaulisee",
+            "DE": "Gaulisee",
+            "FR": "Gaulisee",
+            "IT": "Gaulisee"
+        },
+        "area": 0.467,
+        "elevation": 2140,
+        "type": "Natural",
+        "simstrat": false,
+        "latitude": 46.6098,
+        "longitude": 8.2095,
+        "ave_depth": "NA",
+        "max_depth": "NA",
+        "volume": "NA"
+    },
+    {
+        "key": "trueb",
+        "name": {
+            "EN": "Tr\u00fcbsee",
+            "DE": "Tr\u00fcbsee",
+            "FR": "Tr\u00fcbsee",
+            "IT": "Tr\u00fcbsee"
+        },
+        "area": 0.271,
+        "elevation": 1764,
+        "type": "Natural",
+        "simstrat": false,
+        "latitude": 46.794,
+        "longitude": 8.3902,
+        "ave_depth": "NA",
+        "max_depth": 9,
+        "volume": "NA"
+    },
+    {
+        "key": "engstlen",
+        "name": {
+            "EN": "Engstlensee",
+            "DE": "Engstlensee",
+            "FR": "Engstlensee",
+            "IT": "Engstlensee"
+        },
+        "area": 0.462,
+        "elevation": 1850,
+        "type": "Natural",
+        "simstrat": false,
+        "latitude": 46.7732,
+        "longitude": 8.357,
+        "ave_depth": "NA",
+        "max_depth": 49,
+        "volume": "NA"
+    },
+    {
+        "key": "melch",
+        "name": {
+            "EN": "Melchsee",
+            "DE": "Melchsee",
+            "FR": "Melchsee",
+            "IT": "Melchsee"
+        },
+        "area": 0.522,
+        "elevation": 1893,
+        "type": "Natural",
+        "simstrat": false,
+        "latitude": 46.7709,
+        "longitude": 8.2725,
+        "ave_depth": "NA",
+        "max_depth": 18,
+        "volume": "NA"
+    },
+    {
+        "key": "tannen",
+        "name": {
+            "EN": "Tannensee",
+            "DE": "Tannensee",
+            "FR": "Tannensee",
+            "IT": "Tannensee"
+        },
+        "area": 0.355,
+        "elevation": 1975,
+        "type": "Artificial",
+        "simstrat": false,
+        "latitude": 46.7738,
+        "longitude": 8.3062,
+        "ave_depth": "NA",
+        "max_depth": "NA",
+        "volume": 0.0038
+    },
+    {
+        "key": "trift",
+        "name": {
+            "EN": "Triftsee",
+            "DE": "Triftsee",
+            "FR": "Triftsee",
+            "IT": "Triftsee"
+        },
+        "area": 0.281,
+        "elevation": 1652,
+        "type": "Natural",
+        "simstrat": false,
+        "latitude": 46.6901,
+        "longitude": 8.3587,
+        "ave_depth": "NA",
+        "max_depth": 20,
+        "volume": 0.005
+    },
+    {
+        "key": "goescheneralp",
+        "name": {
+            "EN": "G\u00f6scheneralpsee",
+            "DE": "G\u00f6scheneralpsee",
+            "FR": "G\u00f6scheneralpsee",
+            "IT": "G\u00f6scheneralpsee"
+        },
+        "area": 1.293,
+        "elevation": 1798,
+        "type": "Artificial",
+        "simstrat": false,
+        "latitude": 46.6458,
+        "longitude": 8.4839,
+        "ave_depth": "NA",
+        "max_depth": 99,
+        "volume": 0.076
+    },
+    {
+        "key": "gelmer",
+        "name": {
+            "EN": "Gelmersee",
+            "DE": "Gelmersee",
+            "FR": "Gelmersee",
+            "IT": "Gelmersee"
+        },
+        "area": 0.624,
+        "elevation": 1848,
+        "type": "Artificial",
+        "simstrat": false,
+        "latitude": 46.6155,
+        "longitude": 8.3299,
+        "ave_depth": "NA",
+        "max_depth": 47,
+        "volume": 0.013
+    },
+    {
+        "key": "raeterichsboden",
+        "name": {
+            "EN": "R\u00e4terichsbodensee",
+            "DE": "R\u00e4terichsbodensee",
+            "FR": "R\u00e4terichsbodensee",
+            "IT": "R\u00e4terichsbodensee"
+        },
+        "area": 0.632,
+        "elevation": 1762,
+        "type": "Artificial",
+        "simstrat": false,
+        "latitude": 46.5853,
+        "longitude": 8.3281,
+        "ave_depth": "NA",
+        "max_depth": 77,
+        "volume": 0.025
+    },
+    {
+        "key": "grimsel",
+        "name": {
+            "EN": "Grimselsee",
+            "DE": "Grimselsee",
+            "FR": "Grimselsee",
+            "IT": "Grimselsee"
+        },
+        "area": 2.699,
+        "elevation": 1908,
+        "type": "Artificial",
+        "simstrat": false,
+        "latitude": 46.5661,
+        "longitude": 8.3015,
+        "ave_depth": "NA",
+        "max_depth": 100,
+        "volume": 0.095
+    },
+    {
+        "key": "oberalp",
+        "name": {
+            "EN": "Oberalpsee",
+            "DE": "Oberalpsee",
+            "FR": "Oberalpsee",
+            "IT": "Oberalpsee"
+        },
+        "area": 0.191,
+        "elevation": 2027,
+        "type": "Natural",
+        "simstrat": false,
+        "latitude": 46.6601,
+        "longitude": 8.6632,
+        "ave_depth": "NA",
+        "max_depth": "NA",
+        "volume": "NA"
+    },
+    {
+        "key": "nalps",
+        "name": {
+            "EN": "Lai da Nalps",
+            "DE": "Lai da Nalps",
+            "FR": "Lai da Nalps",
+            "IT": "Lai da Nalps"
+        },
+        "area": 0.877,
+        "elevation": 1904,
+        "type": "Artificial",
+        "simstrat": false,
+        "latitude": 46.6315,
+        "longitude": 8.7628,
+        "ave_depth": "NA",
+        "max_depth": 122,
+        "volume": 0.045
+    },
+    {
+        "key": "curnera",
+        "name": {
+            "EN": "Lai da Curnera",
+            "DE": "Lai da Curnera",
+            "FR": "Lai da Curnera",
+            "IT": "Lai da Curnera"
+        },
+        "area": 0.802,
+        "elevation": 1955,
+        "type": "Artificial",
+        "simstrat": false,
+        "latitude": 46.6272,
+        "longitude": 8.7135,
+        "ave_depth": "NA",
+        "max_depth": 136,
+        "volume": 0.0411
+    },
+    {
+        "key": "sontga",
+        "name": {
+            "EN": "Lai da Sontga Maria",
+            "DE": "Lai da Sontga Maria",
+            "FR": "Lai da Sontga Maria",
+            "IT": "Lai da Sontga Maria"
+        },
+        "area": 1.729,
+        "elevation": 1906,
+        "type": "Artificial",
+        "simstrat": false,
+        "latitude": 46.5754,
+        "longitude": 8.795,
+        "ave_depth": "NA",
+        "max_depth": 86,
+        "volume": "NA"
+    },
+    {
+        "key": "greina",
+        "name": {
+            "EN": "Laghet la Greina",
+            "DE": "Laghet la Greina",
+            "FR": "Laghet la Greina",
+            "IT": "Laghet la Greina"
+        },
+        "area": 0.186,
+        "elevation": 2585,
+        "type": "Natural",
+        "simstrat": false,
+        "latitude": 46.6072,
+        "longitude": 9.0195,
+        "ave_depth": "NA",
+        "max_depth": "NA",
+        "volume": "NA"
+    },
+    {
+        "key": "zervreila",
+        "name": {
+            "EN": "Zervreilasee",
+            "DE": "Zervreilasee",
+            "FR": "Zervreilasee",
+            "IT": "Zervreilasee"
+        },
+        "area": 1.527,
+        "elevation": 1857,
+        "type": "Artificial",
+        "simstrat": false,
+        "latitude": 46.569,
+        "longitude": 9.1019,
+        "ave_depth": "NA",
+        "max_depth": 140,
+        "volume": 0.101
+    },
+    {
+        "key": "luzzone",
+        "name": {
+            "EN": "Lago di Luzzone",
+            "DE": "Lago di Luzzone",
+            "FR": "Lago di Luzzone",
+            "IT": "Lago di Luzzone"
+        },
+        "area": 1.405,
+        "elevation": 1606,
+        "type": "Artificial",
+        "simstrat": false,
+        "latitude": 46.568,
+        "longitude": 8.9776,
+        "ave_depth": "NA",
+        "max_depth": 181,
+        "volume": "NA"
+    },
+    {
+        "key": "sufner",
+        "name": {
+            "EN": "Sufnersee",
+            "DE": "Sufnersee",
+            "FR": "Sufnersee",
+            "IT": "Sufnersee"
+        },
+        "area": 0.809,
+        "elevation": 1398,
+        "type": "Artificial",
+        "simstrat": false,
+        "latitude": 46.5668,
+        "longitude": 9.3686,
+        "ave_depth": "NA",
+        "max_depth": 51,
+        "volume": 0.0175
+    },
+    {
+        "key": "hongrin",
+        "name": {
+            "EN": "Lac de l'Hongrin",
+            "DE": "Lac de l'Hongrin",
+            "FR": "Lac de l'Hongrin",
+            "IT": "Lac de l'Hongrin"
+        },
+        "area": 1.437,
+        "elevation": 1249,
+        "type": "Artificial",
+        "simstrat": false,
+        "latitude": 46.4233,
+        "longitude": 7.0502,
+        "ave_depth": "NA",
+        "max_depth": 105,
+        "volume": "NA"
+    },
+    {
+        "key": "taney",
+        "name": {
+            "EN": "Lac de Taney",
+            "DE": "Lac de Taney",
+            "FR": "Lac de Taney",
+            "IT": "Lac de Taney"
+        },
+        "area": 0.18,
+        "elevation": 1409,
+        "type": "Natural",
+        "simstrat": false,
+        "latitude": 46.3455,
+        "longitude": 6.8402,
+        "ave_depth": "NA",
+        "max_depth": "NA",
+        "volume": "NA"
+    },
+    {
+        "key": "versvey",
+        "name": {
+            "EN": "\u00c9tang de Versvey",
+            "DE": "\u00c9tang de Versvey",
+            "FR": "\u00c9tang de Versvey",
+            "IT": "\u00c9tang de Versvey"
+        },
+        "area": 0.123,
+        "elevation": 377,
+        "type": "Artificial",
+        "simstrat": false,
+        "latitude": 46.3385,
+        "longitude": 6.928,
+        "ave_depth": "NA",
+        "max_depth": "NA",
+        "volume": "NA"
+    },
+    {
+        "key": "lessoc",
+        "name": {
+            "EN": "Lac de Lessoc",
+            "DE": "Lac de Lessoc",
+            "FR": "Lac de Lessoc",
+            "IT": "Lac de Lessoc"
+        },
+        "area": 0.211,
+        "elevation": 772,
+        "type": "Artificial",
+        "simstrat": false,
+        "latitude": 46.496,
+        "longitude": 7.0512,
+        "ave_depth": "NA",
+        "max_depth": "NA",
+        "volume": "NA"
+    },
+    {
+        "key": "vernex",
+        "name": {
+            "EN": "Lac du Vernex",
+            "DE": "Lac du Vernex",
+            "FR": "Lac du Vernex",
+            "IT": "Lac du Vernex"
+        },
+        "area": 0.273,
+        "elevation": 859,
+        "type": "Artificial",
+        "simstrat": false,
+        "latitude": 46.4637,
+        "longitude": 7.0717,
+        "ave_depth": "NA",
+        "max_depth": "NA",
+        "volume": "NA"
+    },
+    {
+        "key": "arnen",
+        "name": {
+            "EN": "Arnensee",
+            "DE": "Arnensee",
+            "FR": "Lac d'Arnon",
+            "IT": "Lac d'Arnon"
+        },
+        "area": 0.451,
+        "elevation": 1541,
+        "type": "Artificial",
+        "simstrat": false,
+        "latitude": 46.3889,
+        "longitude": 7.217,
+        "ave_depth": "NA",
+        "max_depth": 50,
+        "volume": 0.0105
+    },
+    {
+        "key": "sanetsch",
+        "name": {
+            "EN": "Sanetschsee",
+            "DE": "Sanetschsee",
+            "FR": "Lac de S\u00e9nin",
+            "IT": "Lac de S\u00e9nin"
+        },
+        "area": 0.286,
+        "elevation": 2033,
+        "type": "Artificial",
+        "simstrat": false,
+        "latitude": 46.3559,
+        "longitude": 7.2941,
+        "ave_depth": "NA",
+        "max_depth": "NA",
+        "volume": "NA"
+    },
+    {
+        "key": "dauben",
+        "name": {
+            "EN": "Daubensee",
+            "DE": "Daubensee",
+            "FR": "Daubensee",
+            "IT": "Daubensee"
+        },
+        "area": 0.645,
+        "elevation": 2207,
+        "type": "Natural",
+        "simstrat": false,
+        "latitude": 46.4117,
+        "longitude": 7.6188,
+        "ave_depth": "NA",
+        "max_depth": "NA",
+        "volume": "NA"
+    },
+    {
+        "key": "iffig",
+        "name": {
+            "EN": "Iffigsee",
+            "DE": "Iffigsee",
+            "FR": "Iffigsee",
+            "IT": "Iffigsee"
+        },
+        "area": 0.109,
+        "elevation": 2065,
+        "type": "Natural",
+        "simstrat": false,
+        "latitude": 46.3866,
+        "longitude": 7.406,
+        "ave_depth": "NA",
+        "max_depth": "NA",
+        "volume": "NA"
+    },
+    {
+        "key": "faverge",
+        "name": {
+            "EN": "Favergesee",
+            "DE": "Favergesee",
+            "FR": "Lac de Faverges",
+            "IT": "Lac de Faverges"
+        },
+        "area": 0.193,
+        "elevation": 2721,
+        "type": "Natural",
+        "simstrat": false,
+        "latitude": 46.3803,
+        "longitude": 7.5386,
+        "ave_depth": "NA",
+        "max_depth": "NA",
+        "volume": "NA"
+    },
+    {
+        "key": "tseuzier",
+        "name": {
+            "EN": "Lac de Tseuzier",
+            "DE": "Lac de Tseuzier",
+            "FR": "Lac de Tseuzier",
+            "IT": "Lac de Tseuzier"
+        },
+        "area": 0.823,
+        "elevation": 1774,
+        "type": "Artificial",
+        "simstrat": false,
+        "latitude": 46.3507,
+        "longitude": 7.4303,
+        "ave_depth": "NA",
+        "max_depth": 140,
+        "volume": 0.051
+    },
+    {
+        "key": "oberaar",
+        "name": {
+            "EN": "Oberaarsee",
+            "DE": "Oberaarsee",
+            "FR": "Oberaarsee",
+            "IT": "Oberaarsee"
+        },
+        "area": 1.601,
+        "elevation": 2302,
+        "type": "Artificial",
+        "simstrat": false,
+        "latitude": 46.5431,
+        "longitude": 8.2574,
+        "ave_depth": "NA",
+        "max_depth": 90,
+        "volume": "NA"
+    },
+    {
+        "key": "gibidum",
+        "name": {
+            "EN": "Stausee Gibidum",
+            "DE": "Stausee Gibidum",
+            "FR": "Stausee Gibidum",
+            "IT": "Stausee Gibidum"
+        },
+        "area": 0.19,
+        "elevation": 1428,
+        "type": "Artificial",
+        "simstrat": false,
+        "latitude": 46.375,
+        "longitude": 8.0028,
+        "ave_depth": "NA",
+        "max_depth": 104,
+        "volume": 0.0092
+    },
+    {
+        "key": "lucendro",
+        "name": {
+            "EN": "Lago di Lucendro",
+            "DE": "Lago di Lucendro",
+            "FR": "Lago di Lucendro",
+            "IT": "Lago di Lucendro"
+        },
+        "area": 0.525,
+        "elevation": 2131,
+        "type": "Artificial",
+        "simstrat": false,
+        "latitude": 46.5619,
+        "longitude": 8.5412,
+        "ave_depth": "NA",
+        "max_depth": 93,
+        "volume": 0.025
+    },
+    {
+        "key": "tote",
+        "name": {
+            "EN": "Totesee",
+            "DE": "Totesee",
+            "FR": "Totesee",
+            "IT": "Totesee"
+        },
+        "area": 0.201,
+        "elevation": 2160,
+        "type": "Natural",
+        "simstrat": false,
+        "latitude": 46.5605,
+        "longitude": 8.3402,
+        "ave_depth": "NA",
+        "max_depth": "NA",
+        "volume": "NA"
+    },
+    {
+        "key": "truebten",
+        "name": {
+            "EN": "Tr\u00fcbtensee",
+            "DE": "Tr\u00fcbtensee",
+            "FR": "Tr\u00fcbtensee",
+            "IT": "Tr\u00fcbtensee"
+        },
+        "area": 0.1,
+        "elevation": 2365,
+        "type": "Artificial",
+        "simstrat": false,
+        "latitude": 46.5526,
+        "longitude": 8.298,
+        "ave_depth": "NA",
+        "max_depth": "NA",
+        "volume": "NA"
+    },
+    {
+        "key": "chueeboden",
+        "name": {
+            "EN": "Ch\u00fcebodensee",
+            "DE": "Ch\u00fcebodensee",
+            "FR": "Ch\u00fcebodensee",
+            "IT": "Ch\u00fcebodensee"
+        },
+        "area": 0.121,
+        "elevation": 2046,
+        "type": "Natural",
+        "simstrat": false,
+        "latitude": 46.5028,
+        "longitude": 8.4467,
+        "ave_depth": "NA",
+        "max_depth": "NA",
+        "volume": "NA"
+    },
+    {
+        "key": "gries",
+        "name": {
+            "EN": "Griessee",
+            "DE": "Griessee",
+            "FR": "Griessee",
+            "IT": "Griessee"
+        },
+        "area": 0.647,
+        "elevation": 2386,
+        "type": "Artificial",
+        "simstrat": false,
+        "latitude": 46.4576,
+        "longitude": 8.3699,
+        "ave_depth": "NA",
+        "max_depth": 66,
+        "volume": 0.0186
+    },
+    {
+        "key": "cavagnoeoe",
+        "name": {
+            "EN": "Lago dei Cavagn\u00f6\u00f6",
+            "DE": "Lago dei Cavagn\u00f6\u00f6",
+            "FR": "Lago dei Cavagn\u00f6\u00f6",
+            "IT": "Lago dei Cavagn\u00f6\u00f6"
+        },
+        "area": 0.463,
+        "elevation": 2309,
+        "type": "Artificial",
+        "simstrat": false,
+        "latitude": 46.455,
+        "longitude": 8.501,
+        "ave_depth": "NA",
+        "max_depth": "NA",
+        "volume": 0.029
+    },
+    {
+        "key": "nero",
+        "name": {
+            "EN": "Lago Nero",
+            "DE": "Lago Nero",
+            "FR": "Lago Nero",
+            "IT": "Lago Nero"
+        },
+        "area": 0.132,
+        "elevation": 2388,
+        "type": "Natural",
+        "simstrat": false,
+        "latitude": 46.4492,
+        "longitude": 8.5396,
+        "ave_depth": "NA",
+        "max_depth": "NA",
+        "volume": "NA"
+    },
+    {
+        "key": "robiei",
+        "name": {
+            "EN": "Lago di Robi\u00e8i",
+            "DE": "Lago di Robi\u00e8i",
+            "FR": "Lago di Robi\u00e8i",
+            "IT": "Lago di Robi\u00e8i"
+        },
+        "area": 0.232,
+        "elevation": 1937,
+        "type": "Artificial",
+        "simstrat": false,
+        "latitude": 46.4456,
+        "longitude": 8.5166,
+        "ave_depth": "NA",
+        "max_depth": "NA",
+        "volume": 0.0067
+    },
+    {
+        "key": "zoett",
+        "name": {
+            "EN": "Lago del Z\u00f6tt",
+            "DE": "Lago del Z\u00f6tt",
+            "FR": "Lago del Z\u00f6tt",
+            "IT": "Lago del Z\u00f6tt"
+        },
+        "area": 0.139,
+        "elevation": 1939,
+        "type": "Artificial",
+        "simstrat": false,
+        "latitude": 46.4333,
+        "longitude": 8.5031,
+        "ave_depth": "NA",
+        "max_depth": 100,
+        "volume": "NA"
+    },
+    {
+        "key": "crosa",
+        "name": {
+            "EN": "Laghi della Cr\u00f2sa",
+            "DE": "Laghi della Cr\u00f2sa",
+            "FR": "Laghi della Cr\u00f2sa",
+            "IT": "Laghi della Cr\u00f2sa"
+        },
+        "area": 0.172,
+        "elevation": 2153,
+        "type": "Natural",
+        "simstrat": false,
+        "latitude": 46.3703,
+        "longitude": 8.4822,
+        "ave_depth": "NA",
+        "max_depth": 70,
+        "volume": "NA"
+    },
+    {
+        "key": "geisspfad",
+        "name": {
+            "EN": "Geisspfadsee",
+            "DE": "Geisspfadsee",
+            "FR": "Geisspfadsee",
+            "IT": "Geisspfadsee"
+        },
+        "area": 0.115,
+        "elevation": 2423,
+        "type": "Natural",
+        "simstrat": false,
+        "latitude": 46.3484,
+        "longitude": 8.2528,
+        "ave_depth": "NA",
+        "max_depth": "NA",
+        "volume": "NA"
+    },
+    {
+        "key": "sella",
+        "name": {
+            "EN": "Lago della Sella",
+            "DE": "Lago della Sella",
+            "FR": "Lago della Sella",
+            "IT": "Lago della Sella"
+        },
+        "area": 0.443,
+        "elevation": 2255,
+        "type": "Artificial",
+        "simstrat": false,
+        "latitude": 46.5629,
+        "longitude": 8.5995,
+        "ave_depth": "NA",
+        "max_depth": 34,
+        "volume": "NA"
+    },
+    {
+        "key": "ritom",
+        "name": {
+            "EN": "Lago Rit\u00f3m",
+            "DE": "Lago Rit\u00f3m",
+            "FR": "Lago Rit\u00f3m",
+            "IT": "Lago Rit\u00f3m"
+        },
+        "area": 1.483,
+        "elevation": 1849,
+        "type": "Artificial",
+        "simstrat": false,
+        "latitude": 46.5404,
+        "longitude": 8.6903,
+        "ave_depth": "NA",
+        "max_depth": 68,
+        "volume": 0.048
+    },
+    {
+        "key": "naret",
+        "name": {
+            "EN": "Lago del Nar\u00e8t",
+            "DE": "Lago del Nar\u00e8t",
+            "FR": "Lago del Nar\u00e8t",
+            "IT": "Lago del Nar\u00e8t"
+        },
+        "area": 0.714,
+        "elevation": 2308,
+        "type": "Artificial",
+        "simstrat": false,
+        "latitude": 46.4777,
+        "longitude": 8.5686,
+        "ave_depth": "NA",
+        "max_depth": 104,
+        "volume": 0.0316
+    },
+    {
+        "key": "tremorgio",
+        "name": {
+            "EN": "Lago Tremorgio",
+            "DE": "Lago Tremorgio",
+            "FR": "Lago Tremorgio",
+            "IT": "Lago Tremorgio"
+        },
+        "area": 0.318,
+        "elevation": 1820,
+        "type": "Natural",
+        "simstrat": false,
+        "latitude": 46.4793,
+        "longitude": 8.7204,
+        "ave_depth": "NA",
+        "max_depth": 50,
+        "volume": "NA"
+    },
+    {
+        "key": "sambuco",
+        "name": {
+            "EN": "Lago del Sambuco",
+            "DE": "Lago del Sambuco",
+            "FR": "Lago del Sambuco",
+            "IT": "Lago del Sambuco"
+        },
+        "area": 1.099,
+        "elevation": 1458,
+        "type": "Artificial",
+        "simstrat": false,
+        "latitude": 46.4647,
+        "longitude": 8.6486,
+        "ave_depth": "NA",
+        "max_depth": 124,
+        "volume": "NA"
+    },
+    {
+        "key": "morghirolo",
+        "name": {
+            "EN": "Lago di Morghirolo",
+            "DE": "Lago di Morghirolo",
+            "FR": "Lago di Morghirolo",
+            "IT": "Lago di Morghirolo"
+        },
+        "area": 0.119,
+        "elevation": 2263,
+        "type": "Natural",
+        "simstrat": false,
+        "latitude": 46.4509,
+        "longitude": 8.7167,
+        "ave_depth": "NA",
+        "max_depth": "NA",
+        "volume": "NA"
+    },
+    {
+        "key": "laghetto",
+        "name": {
+            "EN": "Laghetto",
+            "DE": "Laghetto",
+            "FR": "Laghetto",
+            "IT": "Laghetto"
+        },
+        "area": 0.157,
+        "elevation": 1764,
+        "type": "Natural",
+        "simstrat": false,
+        "latitude": 46.3965,
+        "longitude": 8.7998,
+        "ave_depth": "NA",
+        "max_depth": "NA",
+        "volume": "NA"
+    },
+    {
+        "key": "malvaglia",
+        "name": {
+            "EN": "Lago di Malvaglia",
+            "DE": "Lago di Malvaglia",
+            "FR": "Lago di Malvaglia",
+            "IT": "Lago di Malvaglia"
+        },
+        "area": 0.153,
+        "elevation": 985,
+        "type": "Artificial",
+        "simstrat": false,
+        "latitude": 46.4255,
+        "longitude": 9.0265,
+        "ave_depth": "NA",
+        "max_depth": "NA",
+        "volume": "NA"
+    },
+    {
+        "key": "lei",
+        "name": {
+            "EN": "Lago di Lei",
+            "DE": "Lago di Lei",
+            "FR": "Lago di Lei",
+            "IT": "Lago di Lei"
+        },
+        "area": 4.043,
+        "elevation": 1927,
+        "type": "Artificial",
+        "simstrat": false,
+        "latitude": 46.4505,
+        "longitude": 9.4437,
+        "ave_depth": "NA",
+        "max_depth": 133,
+        "volume": 0.197
+    },
+    {
+        "key": "isola",
+        "name": {
+            "EN": "Lago d'Isola",
+            "DE": "Lago d'Isola",
+            "FR": "Lago d'Isola",
+            "IT": "Lago d'Isola"
+        },
+        "area": 0.343,
+        "elevation": 1602,
+        "type": "Artificial",
+        "simstrat": false,
+        "latitude": 46.4505,
+        "longitude": 9.1887,
+        "ave_depth": "NA",
+        "max_depth": 39,
+        "volume": "NA"
+    },
+    {
+        "key": "marmorera",
+        "name": {
+            "EN": "Lai da Marmorera",
+            "DE": "Marmorerasee",
+            "FR": "Lai da Marmorera",
+            "IT": "Lai da Marmorera"
+        },
+        "area": 1.366,
+        "elevation": 1676,
+        "type": "Artificial",
+        "simstrat": false,
+        "latitude": 46.5005,
+        "longitude": 9.6363,
+        "ave_depth": "NA",
+        "max_depth": 59,
+        "volume": "NA"
+    },
+    {
+        "key": "cavloc",
+        "name": {
+            "EN": "L\u00e4gh da Cavloc",
+            "DE": "L\u00e4gh da Cavloc",
+            "FR": "L\u00e4gh da Cavloc",
+            "IT": "L\u00e4gh da Cavloc"
+        },
+        "area": 0.103,
+        "elevation": 1907,
+        "type": "Natural",
+        "simstrat": false,
+        "latitude": 46.38,
+        "longitude": 9.7047,
+        "ave_depth": "NA",
+        "max_depth": 17,
+        "volume": "NA"
+    },
+    {
+        "key": "albigna",
+        "name": {
+            "EN": "Albigna Lake",
+            "DE": "Albignasee",
+            "FR": "Lago di Albigna",
+            "IT": "Lago di Albigna"
+        },
+        "area": 1.249,
+        "elevation": 2162,
+        "type": "Artificial",
+        "simstrat": false,
+        "latitude": 46.3284,
+        "longitude": 9.6479,
+        "ave_depth": "NA",
+        "max_depth": 108,
+        "volume": "NA"
+    },
+    {
+        "key": "rhone",
+        "name": {
+            "EN": "Rh\u00f4ne",
+            "DE": "Rhone",
+            "FR": "Rh\u00f4ne",
+            "IT": "Rh\u00f4ne"
+        },
+        "area": 1.027,
+        "elevation": 369,
+        "type": "Artificial",
+        "simstrat": false,
+        "latitude": 46.1962,
+        "longitude": 6.0485,
+        "ave_depth": "NA",
+        "max_depth": "NA",
+        "volume": "NA"
+    },
+    {
+        "key": "chauderets",
+        "name": {
+            "EN": "\u00c9tang des Chauderets",
+            "DE": "\u00c9tang des Chauderets",
+            "FR": "\u00c9tang des Chauderets",
+            "IT": "\u00c9tang des Chauderets"
+        },
+        "area": 0.108,
+        "elevation": 383,
+        "type": "Artificial",
+        "simstrat": false,
+        "latitude": 46.2976,
+        "longitude": 6.9309,
+        "ave_depth": "NA",
+        "max_depth": "NA",
+        "volume": "NA"
+    },
+    {
+        "key": "avale",
+        "name": {
+            "EN": "\u00c9tang Avale",
+            "DE": "\u00c9tang Avale",
+            "FR": "\u00c9tang Avale",
+            "IT": "\u00c9tang Avale"
+        },
+        "area": 0.112,
+        "elevation": 385,
+        "type": "Artificial",
+        "simstrat": false,
+        "latitude": 46.2914,
+        "longitude": 6.9592,
+        "ave_depth": "NA",
+        "max_depth": "NA",
+        "volume": "NA"
+    },
+    {
+        "key": "salanfe",
+        "name": {
+            "EN": "Lac de Salanfe",
+            "DE": "Salanfe-See",
+            "FR": "Lac de Salanfe",
+            "IT": "Lac de Salanfe"
+        },
+        "area": 1.278,
+        "elevation": 1908,
+        "type": "Artificial",
+        "simstrat": false,
+        "latitude": 46.1407,
+        "longitude": 6.9586,
+        "ave_depth": "NA",
+        "max_depth": 48,
+        "volume": "NA"
+    },
+    {
+        "key": "emosson",
+        "name": {
+            "EN": "Lake \u00c9mosson",
+            "DE": "Lac d'\u00c9mosson",
+            "FR": "Lac d'\u00c9mosson",
+            "IT": "Lac d'\u00c9mosson"
+        },
+        "area": 3.038,
+        "elevation": 1920,
+        "type": "Artificial",
+        "simstrat": false,
+        "latitude": 46.0799,
+        "longitude": 6.9165,
+        "ave_depth": "NA",
+        "max_depth": 161,
+        "volume": "NA"
+    },
+    {
+        "key": "vieuxemosson",
+        "name": {
+            "EN": "Lac du Vieux \u00c9mosson",
+            "DE": "Lac du Vieux \u00c9mosson",
+            "FR": "Lac du Vieux \u00c9mosson",
+            "IT": "Lac du Vieux \u00c9mosson"
+        },
+        "area": 0.756,
+        "elevation": 2225,
+        "type": "Artificial",
+        "simstrat": false,
+        "latitude": 46.0615,
+        "longitude": 6.8896,
+        "ave_depth": "NA",
+        "max_depth": 42,
+        "volume": "NA"
+    },
+    {
+        "key": "domaine",
+        "name": {
+            "EN": "Domaine des Iles",
+            "DE": "Domaine des Iles",
+            "FR": "Domaine des Iles",
+            "IT": "Domaine des Iles"
+        },
+        "area": 0.158,
+        "elevation": 480,
+        "type": "Artificial",
+        "simstrat": false,
+        "latitude": 46.2122,
+        "longitude": 7.3282,
+        "ave_depth": "NA",
+        "max_depth": "NA",
+        "volume": "NA"
+    },
+    {
+        "key": "fully",
+        "name": {
+            "EN": "Lac de Fully",
+            "DE": "Lac de Fully",
+            "FR": "Lac de Fully",
+            "IT": "Lac de Fully"
+        },
+        "area": 0.178,
+        "elevation": 2130,
+        "type": "Natural",
+        "simstrat": false,
+        "latitude": 46.1787,
+        "longitude": 7.0939,
+        "ave_depth": "NA",
+        "max_depth": 46,
+        "volume": "NA"
+    },
+    {
+        "key": "cleuson",
+        "name": {
+            "EN": "Lac de Cleuson",
+            "DE": "Lac de Cleuson",
+            "FR": "Lac de Cleuson",
+            "IT": "Lac de Cleuson"
+        },
+        "area": 0.441,
+        "elevation": 2179,
+        "type": "Artificial",
+        "simstrat": false,
+        "latitude": 46.1079,
+        "longitude": 7.3236,
+        "ave_depth": "NA",
+        "max_depth": 76,
+        "volume": 0.02
+    },
+    {
+        "key": "vaux",
+        "name": {
+            "EN": "Lac des Vaux",
+            "DE": "Lac des Vaux",
+            "FR": "Lac des Vaux",
+            "IT": "Lac des Vaux"
+        },
+        "area": 0.112,
+        "elevation": 2545,
+        "type": "Natural",
+        "simstrat": false,
+        "latitude": 46.1074,
+        "longitude": 7.2725,
+        "ave_depth": "NA",
+        "max_depth": "NA",
+        "volume": "NA"
+    },
+    {
+        "key": "louvie",
+        "name": {
+            "EN": "Lac de Louvie",
+            "DE": "Lac de Louvie",
+            "FR": "Lac de Louvie",
+            "IT": "Lac de Louvie"
+        },
+        "area": 0.12,
+        "elevation": 2214,
+        "type": "Natural",
+        "simstrat": false,
+        "latitude": 46.0495,
+        "longitude": 7.3083,
+        "ave_depth": "NA",
+        "max_depth": "NA",
+        "volume": "NA"
+    },
+    {
+        "key": "ill",
+        "name": {
+            "EN": "Illsee",
+            "DE": "Illsee",
+            "FR": "Illsee",
+            "IT": "Illsee"
+        },
+        "area": 0.209,
+        "elevation": 2359,
+        "type": "Artificial",
+        "simstrat": false,
+        "latitude": 46.2573,
+        "longitude": 7.6319,
+        "ave_depth": "NA",
+        "max_depth": 64,
+        "volume": 0.0066
+    },
+    {
+        "key": "moiry",
+        "name": {
+            "EN": "Lac de Moiry",
+            "DE": "Lac de Moiry",
+            "FR": "Lac de Moiry",
+            "IT": "Lac de Moiry"
+        },
+        "area": 1.318,
+        "elevation": 2248,
+        "type": "Artificial",
+        "simstrat": false,
+        "latitude": 46.1285,
+        "longitude": 7.5708,
+        "ave_depth": "NA",
+        "max_depth": 120,
+        "volume": 0.078
+    },
+    {
+        "key": "dix",
+        "name": {
+            "EN": "Lac des Dix",
+            "DE": "Lac des Dix",
+            "FR": "Lac des Dix",
+            "IT": "Lac des Dix"
+        },
+        "area": 3.968,
+        "elevation": 2362,
+        "type": "Artificial",
+        "simstrat": false,
+        "latitude": 46.0567,
+        "longitude": 7.4,
+        "ave_depth": "NA",
+        "max_depth": 227,
+        "volume": 0.4
+    },
+    {
+        "key": "bortel",
+        "name": {
+            "EN": "Bortelsee",
+            "DE": "Bortelsee",
+            "FR": "Bortelsee",
+            "IT": "Bortelsee"
+        },
+        "area": 0.139,
+        "elevation": 2463,
+        "type": "Artificial",
+        "simstrat": false,
+        "latitude": 46.2876,
+        "longitude": 8.1079,
+        "ave_depth": "NA",
+        "max_depth": "NA",
+        "volume": 0.00366
+    },
+    {
+        "key": "mattmark",
+        "name": {
+            "EN": "Stausee Mattmark",
+            "DE": "Stausee Mattmark",
+            "FR": "Stausee Mattmark",
+            "IT": "Stausee Mattmark"
+        },
+        "area": 1.725,
+        "elevation": 2195,
+        "type": "Artificial",
+        "simstrat": false,
+        "latitude": 46.0378,
+        "longitude": 7.9607,
+        "ave_depth": "NA",
+        "max_depth": "NA",
+        "volume": 0.101
+    },
+    {
+        "key": "alzasca",
+        "name": {
+            "EN": "Lago d'Alzasca",
+            "DE": "Alzascasee",
+            "FR": "Lac d'Alzasca",
+            "IT": "Lac d'Alzasca"
+        },
+        "area": 0.106,
+        "elevation": 1855,
+        "type": "Natural",
+        "simstrat": false,
+        "latitude": 46.266,
+        "longitude": 8.5849,
+        "ave_depth": "NA",
+        "max_depth": "NA",
+        "volume": "NA"
+    },
+    {
+        "key": "vogorno",
+        "name": {
+            "EN": "Lago di Vogorno",
+            "DE": "Lago di Vogorno",
+            "FR": "Lago di Vogorno",
+            "IT": "Lago di Vogorno"
+        },
+        "area": 1.45,
+        "elevation": 455,
+        "type": "Artificial",
+        "simstrat": false,
+        "latitude": 46.212,
+        "longitude": 8.8528,
+        "ave_depth": "NA",
+        "max_depth": 189,
+        "volume": 0.105
+    },
+    {
+        "key": "palagnedra",
+        "name": {
+            "EN": "Lago di Palagnedra",
+            "DE": "Lago di Palagnedra",
+            "FR": "Lago di Palagnedra",
+            "IT": "Lago di Palagnedra"
+        },
+        "area": 0.176,
+        "elevation": 482,
+        "type": "Artificial",
+        "simstrat": false,
+        "latitude": 46.1574,
+        "longitude": 8.6246,
+        "ave_depth": "NA",
+        "max_depth": "NA",
+        "volume": 0.00426
+    },
+    {
+        "key": "cama",
+        "name": {
+            "EN": "Lagh de Cama",
+            "DE": "Lagh de Cama",
+            "FR": "Lagh de Cama",
+            "IT": "Lagh de Cama"
+        },
+        "area": 0.134,
+        "elevation": 1266,
+        "type": "Natural",
+        "simstrat": false,
+        "latitude": 46.255,
+        "longitude": 9.2271,
+        "ave_depth": "NA",
+        "max_depth": 16,
+        "volume": "NA"
+    },
+    {
+        "key": "champex",
+        "name": {
+            "EN": "Lac de Champex",
+            "DE": "Lac de Champex",
+            "FR": "Lac de Champex",
+            "IT": "Lac de Champex"
+        },
+        "area": 0.126,
+        "elevation": 1467,
+        "type": "Natural",
+        "simstrat": false,
+        "latitude": 46.0284,
+        "longitude": 7.1163,
+        "ave_depth": "NA",
+        "max_depth": "NA",
+        "volume": "NA"
+    },
+    {
+        "key": "toules",
+        "name": {
+            "EN": "Lac des Toules",
+            "DE": "Lac des Toules",
+            "FR": "Lac des Toules",
+            "IT": "Lac des Toules"
+        },
+        "area": 0.593,
+        "elevation": 1809,
+        "type": "Artificial",
+        "simstrat": false,
+        "latitude": 45.9191,
+        "longitude": 7.1986,
+        "ave_depth": "NA",
+        "max_depth": 75,
+        "volume": 0.02015
+    },
+    {
+        "key": "mauvoisin",
+        "name": {
+            "EN": "Lac de Mauvoisin",
+            "DE": "Lac de Mauvoisin",
+            "FR": "Lac de Mauvoisin",
+            "IT": "Lac de Mauvoisin"
+        },
+        "area": 2.194,
+        "elevation": 1969,
+        "type": "Artificial",
+        "simstrat": false,
+        "latitude": 45.9785,
+        "longitude": 7.3534,
+        "ave_depth": "NA",
+        "max_depth": 180,
+        "volume": "NA"
+    },
+    {
+        "key": "muzzano",
+        "name": {
+            "EN": "Lago di Muzzano",
+            "DE": "Lago di Muzzano",
+            "FR": "Lago di Muzzano",
+            "IT": "Lago di Muzzano"
+        },
+        "area": 0.226,
+        "elevation": 337,
+        "type": "Natural",
+        "simstrat": false,
+        "latitude": 45.9966,
+        "longitude": 8.9276,
+        "ave_depth": "NA",
+        "max_depth": 3,
+        "volume": "NA"
+    },
+    {
+        "key": "ober",
+        "name": {
+            "EN": "Obersee",
+            "DE": "Obersee",
+            "FR": "Obersee",
+            "IT": "Obersee"
+        },
+        "area": 0.248,
+        "elevation": 982,
+        "type": "Natural",
+        "simstrat": false,
+        "latitude": 47.0867,
+        "longitude": 9.0143,
+        "ave_depth": "NA",
+        "max_depth": "NA",
+        "volume": "NA"
+    },
+    {
+        "key": "waegitaler",
+        "name": {
+            "EN": "W\u00e4gitalersee",
+            "DE": "W\u00e4gitalersee",
+            "FR": "W\u00e4gitalersee",
+            "IT": "W\u00e4gitalersee"
+        },
+        "area": 4.1,
+        "elevation": 898,
+        "type": "Artificial",
+        "simstrat": false,
+        "latitude": 47.09,
+        "longitude": 8.9183,
+        "ave_depth": "NA",
+        "max_depth": 48,
+        "volume": 0.15
+    },
+    {
+        "key": "wichel",
+        "name": {
+            "EN": "Wichelsee",
+            "DE": "Wichelsee",
+            "FR": "Wichelsee",
+            "IT": "Wichelsee"
+        },
+        "area": 0.232,
+        "elevation": 459,
+        "type": "Artificial",
+        "simstrat": false,
+        "latitude": 46.9203,
+        "longitude": 8.2737,
+        "ave_depth": "NA",
+        "max_depth": 6,
+        "volume": 0.0004
+    },
+    {
+        "key": "mutt",
+        "name": {
+            "EN": "Muttsee",
+            "DE": "Muttsee",
+            "FR": "Muttsee",
+            "IT": "Muttsee"
+        },
+        "area": 0.626,
+        "elevation": 2474,
+        "type": "Artificial",
+        "simstrat": false,
+        "latitude": 46.8636,
+        "longitude": 9.0271,
+        "ave_depth": "NA",
+        "max_depth": 98,
+        "volume": "NA"
+    },
+    {
+        "key": "ova",
+        "name": {
+            "EN": "Lai da Ova Spin",
+            "DE": "Lai da Ova Spin",
+            "FR": "Lai da Ova Spin",
+            "IT": "Lai da Ova Spin"
+        },
+        "area": 0.343,
+        "elevation": 1630,
+        "type": "Artificial",
+        "simstrat": false,
+        "latitude": 46.67,
+        "longitude": 10.1567,
+        "ave_depth": "NA",
+        "max_depth": "NA",
+        "volume": 0.0074
+    }
 ]

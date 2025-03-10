@@ -151,7 +151,9 @@ class Search extends Component {
             <option value="" disabled>
               {Translations.sort[language]}
             </option>
-            <option value="elevation">{Translations.elevation[language]}</option>
+            <option value="elevation">
+              {Translations.elevation[language]}
+            </option>
             <option value="max_depth">{Translations.depth[language]}</option>
             <option value="area">{Translations.surfaceArea[language]}</option>
           </select>
@@ -361,11 +363,15 @@ class Home extends Component {
     var { boundingBox } = this.state;
     list.sort((a, b) => {
       if (sort !== "") {
-        if (a[sort] < b[sort]) {
+        const valA =
+          a[sort] === "NA" ? (ascending ? Infinity : -Infinity) : a[sort];
+        const valB =
+          b[sort] === "NA" ? (ascending ? Infinity : -Infinity) : b[sort];
+        if (valA < valB) {
           return ascending ? -1 : 1;
         }
-        if (a[sort] > b[sort]) {
-          return ascending ? 1 : -11;
+        if (valA > valB) {
+          return ascending ? 1 : -1;
         }
         return 0;
       } else {

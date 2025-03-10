@@ -4,7 +4,7 @@ import requests
 import functions as func
 
 upload = True
-bucket_folder = "static/website/metadata/new"
+bucket_folder = "static/website/metadata/sat"
 
 # Load Metadata
 with open("metadata.json") as f:
@@ -17,6 +17,9 @@ with open("satellite_metadata.json") as f:
 # Load Satellite Data
 response = requests.get("https://eawagrs.s3.eu-central-1.amazonaws.com/alplakes/metadata/summary.json")
 satellite = response.json()
+
+response = requests.get("https://eawagrs.s3.eu-central-1.amazonaws.com/alplakes/metadata/lakes.geojson")
+satellite_polygons = response.json()
 
 # Load Datalakes Data
 response = requests.get("https://api.datalakes-eawag.ch/selectiontables/lakes")
@@ -48,7 +51,7 @@ one_dimensional_list = []
 three_dimensional_list = []
 
 for lake in metadata:
-
+    add = False
     home = {"key": lake["key"],
             "name": lake["name"],
             "area": lake["area"],
@@ -67,7 +70,7 @@ for lake in metadata:
     for p in lake:
         if p in ["area", "ave_depth", "max_depth", "elevation", "type", "volume", "residence_time", "mixing_regime", "geothermal_flux", "trophic_state", "sediment_oxygen_uptake_rate"]:
             data["properties"]["parameters"][p] = lake[p]
-    data["properties"]["bounds"] = func.make_bounds(shape, key)
+    data["properties"]["bounds"] = func.make_bounds(shape, satellite_polygons, key)
     layers["bounds"] = data["properties"]["bounds"]
     bathymetry = func.make_bathymetry(lake, datalakes_lakes)
     if len(bathymetry) > 0:
@@ -78,6 +81,7 @@ for lake in metadata:
 
     # Trends - doy and past year are added in 1D section
     if key in climate:
+        add = True
         data["trends"] = {"climate": {}}
         for model in climate[key]:
             data["trends"]["climate"][model["key"]] = {
@@ -90,6 +94,7 @@ for lake in metadata:
 
     # Three Dimensional Model
     if '3D' in lake:
+        add = True
         response = requests.get("https://alplakes-api.eawag.ch/simulations/metadata/delft3d-flow/{}".format(lake["key"]))
         model_metadata = response.json()
         three_dimensional_list.append({
@@ -121,6 +126,7 @@ for lake in metadata:
     else:
         simstrat_keys = []
     if len(simstrat_keys) > 0:
+        add = True
         if "forecast" not in data:
             data["forecast"] = {}
         if "trends" not in data:
@@ -179,13 +185,16 @@ for lake in metadata:
 
     # Measurement Data
     if "current_temperature" in lake and lake["current_temperature"] == True:
+        add = True
         data["measurements"] = {"water_temperature": {"displayOptions": {"min": 5,"max": 25,"paletteName": "Bafu Continuous"}}}
         layers["layers"].extend(func.temperature_layers(lake["key"]))
     if key in water_levels:
+        add = True
         if "measurements" not in data:
             data["measurements"] = {}
         data["measurements"]["water_levels"] = {}
     if "insitu" in lake:
+        add = True
         if "measurements" not in data:
             data["measurements"] = {}
         for i in range(len(lake["insitu"])):
@@ -193,6 +202,7 @@ for lake in metadata:
         data["measurements"]["scientific"] = lake["insitu"]
         home["filters"].append("insitu")
     elif "datalakes_id" in lake:
+        add = True
         insitu = func.make_insitu(lake["datalakes_id"], datalakes_datasets, datalakes_parameters)
         if len(insitu) > 0:
             if "measurements" not in data:
@@ -204,6 +214,7 @@ for lake in metadata:
     # Satellite data
     if key != "mondsee":
         if key in satellite:
+            add = True
             satellite_data = []
             layers["layers"].extend(func.satellite_layers(lake["key"], satellite[key]))
             for sat in satellite_metadata:
@@ -220,29 +231,29 @@ for lake in metadata:
                 home["filters"].append("satellite")
                 data["satellite"] = satellite_data
 
-
-    with open('files/{}.json'.format(key), 'w') as json_file:
-        json_file.write(json.dumps(data, separators=(',', ':'), ensure_ascii=False))
-    with open('files/{}_layers.json'.format(key), 'w') as json_file:
-        json_file.write(json.dumps(layers, separators=(',', ':'), ensure_ascii=False))
-    if upload:
-        s3.upload_file(
-            'files/{}.json'.format(key),
-            'alplakes-eawag',
-            '{}/{}.json'.format(bucket_folder, key),
-            ExtraArgs={
-                'ContentType': 'application/json',
-            },
-        )
-        s3.upload_file(
-            'files/{}_layers.json'.format(key),
-            'alplakes-eawag',
-            '{}/{}_layers.json'.format(bucket_folder, key),
-            ExtraArgs={
-                'ContentType': 'application/json',
-            },
-        )
-    home_list.append(home)
+    if add:
+        with open('files/{}.json'.format(key), 'w') as json_file:
+            json_file.write(json.dumps(data, separators=(',', ':'), ensure_ascii=False))
+        with open('files/{}_layers.json'.format(key), 'w') as json_file:
+            json_file.write(json.dumps(layers, separators=(',', ':'), ensure_ascii=False))
+        if upload:
+            s3.upload_file(
+                'files/{}.json'.format(key),
+                'alplakes-eawag',
+                '{}/{}.json'.format(bucket_folder, key),
+                ExtraArgs={
+                    'ContentType': 'application/json',
+                },
+            )
+            s3.upload_file(
+                'files/{}_layers.json'.format(key),
+                'alplakes-eawag',
+                '{}/{}_layers.json'.format(bucket_folder, key),
+                ExtraArgs={
+                    'ContentType': 'application/json',
+                },
+            )
+        home_list.append(home)
 
 with open('files/list.json', 'w') as json_file:
     json_file.write(json.dumps(home_list, separators=(',', ':'), ensure_ascii=False))
