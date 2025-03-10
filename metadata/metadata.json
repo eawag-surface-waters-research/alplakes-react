@@ -547,7 +547,7 @@
     "residence_time": 1587.0,
     "mixing_regime": "Oligomictic",
     "geothermal_flux": 0.1,
-    "trophic_state": "Mesotrophic",
+    "trophic_state": "Oligotrophic",
     "sediment_oxygen_uptake_rate": -25.0
   },
   {

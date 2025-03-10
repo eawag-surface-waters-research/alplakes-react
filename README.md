@@ -9,6 +9,42 @@ The online deployement can be found at https://www.alplakes.eawag.ch
 
 ![React][React] ![TypeScript][TypeScript] ![Javascript][javascript-by-shield]
 
+## Changelog
+
+The changelog details significant changes to the Alplakes website, this does not include changes to the API or the inclusion of additional lakes. 
+
+### 2025-03-04
+
+- Improve lake page UI
+- Add lake levels
+- Include climate scenarios
+
+### 2025-01-16
+
+- Add Landsat Collection 2 temperature product
+
+### 2024-07-01 (v2)
+
+- Add Simstrat 1D models; forecast, DOY and last year. 
+- Redesign UI to accomodate multiple data sources
+- Add Sentinel 2 remote sensing products
+- Add insitu data
+
+### 2023-07-21
+
+- Add particle tracking module
+
+### 2023-05-12
+
+- Add Sentinel 3 remote sensing products
+
+### 2023-04-28
+
+- Alplakes made available live at https://www.alplakes.eawag.ch
+- Added 12 delft3d-flow models
+
+
+
 ## Development
 
 ### Install Node.js
