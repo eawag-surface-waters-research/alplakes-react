@@ -234,7 +234,7 @@ class ListItem extends Component {
     } = this.props;
     var selected = favorites.includes(lake.key);
     var units = {
-      elevation: "m ü. M.",
+      elevation: Translations.elevationUnit[language],
       max_depth: "m",
       area: "km²",
     };

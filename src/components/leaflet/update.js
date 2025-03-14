@@ -307,7 +307,7 @@ const addTiff = async (map, layers, id, options, language, server) => {
 };
 
 const updateTiff = async (map, layers, id, options, language) => {
-  if (layers[id]["tiff"].options.source_url === options.url) {
+  if (layers[id]["tiff"].options.url === options.url) {
     await layers[id]["tiff"].update(false, options);
   } else {
     let { data } = await axios.get(options.url, {

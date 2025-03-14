@@ -473,6 +473,12 @@
     "FR": "Niveau d'eau",
     "IT": "Livello dell'acqua"
   },
+  "elevationUnit": {
+    "EN": "m.s.l",
+    "DE": "m ü. M.",
+    "FR": "m.s.l",
+    "IT": "m.s.l"
+  },
   "waterlevelText": {
     "EN": "Recent lake level values collected from various sources.",
     "DE": "Aktuelle Seepegelwerte aus verschiedenen Quellen.",
