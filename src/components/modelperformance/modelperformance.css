@@ -1,0 +1,143 @@
+.model-performance-button {
+    position: absolute;
+    z-index: 9999;
+    left: calc(var(--padding) / 4);
+    top: calc(var(--padding) / 4);
+    cursor: pointer;
+    padding: 6px 12px;
+    border-radius: 20px;
+    box-sizing: border-box;
+    background-color: var(--box-color);
+    color: var(--background-subtle-font-color);
+    border: 1px solid transparent;
+    transition: border 0.33s 0s ease, box-shadow 0.33s 0s ease;
+    width: fit-content;
+    height: auto;
+}
+
+.model-performance-button:hover {
+    border: 1px solid var(--border-color);
+    box-shadow: none;
+}
+
+.model-performance-button .circle {
+    height: 18px;
+    width: 18px;
+    display: inline-block;
+    border-radius: 50%;
+    margin-right: 8px;
+    margin-bottom: -2px;
+    box-shadow: var(--box-shadow);
+}
+
+.model-performance {
+    position: absolute;
+    left: calc(var(--padding) / 4);
+    top: calc(var(--padding) / 4);
+    width: calc(100% - var(--padding) / 2);
+    height: calc(100% - var(--padding) / 2);
+    z-index: 9999;
+    background-color: var(--box-color);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+}
+
+.model-performance .close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: var(--background-color);
+    border-radius: 50%;
+    padding: 4px 8px;
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all .2s 0s ease;
+}
+
+.model-performance .close:hover {
+    transform: scale(1.1);
+}
+
+.model-performance .model-performance-title {
+    padding: 16px 20px;
+    line-height: 30px;
+    font-size: 18px;
+}
+
+.model-performance .model-performance-selectors {
+    padding: 0px 20px 12px 20px;
+}
+
+.model-performance .model-performance-selectors select {
+    display: inline-block;
+    font-size: 14px;
+    background-color: var(--background-color);
+    cursor: pointer;
+    padding: 4px 8px;
+    text-align: left;
+    color: var(--background-font-color);
+    border: none;
+    border-radius: 6px;
+    max-width: 100%;
+    margin-right: 12px;
+}
+
+.model-performance .model-performance-selectors .rmse {
+    display: inline-block;
+}
+
+.model-performance .model-performance-plot {
+    width: 100%;
+    height: 100%;
+    padding: 12px 20px 10px 20px;
+    box-sizing: border-box;
+}
+
+.model-performance .model-performance-plot .dataset-linegraph {
+    width: 100%;
+    height: 100%;
+}
+
+.model-performance .model-performance-legend {
+    text-align: center;
+    padding-bottom: 20px;
+}
+
+.model-performance .model-performance-legend .item {
+    display: inline-block;
+    margin: 0 12px;
+}
+
+.model-performance .model-performance-legend .item .box {
+    display: inline-block;
+    width: 30px;
+    height: 10px;
+    background-color: grey;
+    opacity: 0.15;
+    margin-right: 8px;
+}
+
+.model-performance .model-performance-legend .item .line {
+    display: inline-block;
+    width: 30px;
+    height: 5px;
+    margin-bottom: 5px;
+    margin-right: 6px;
+    border-bottom: 1px solid grey;
+}
+
+.model-performance .model-performance-legend .item .text {
+    display: inline-block;
+}
+
+@media screen and (max-width: 500px) {
+    .model-performance {
+        display: none;
+    }
+
+    .model-performance-button {
+        display: none;
+    }
+}

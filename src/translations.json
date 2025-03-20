@@ -479,6 +479,12 @@
     "FR": "m.s.l",
     "IT": "m.s.l"
   },
+  "modelPerformance": {
+    "EN": "Model performance last 10 days",
+    "DE": "Modellleistung der letzten 10 Tage",
+    "FR": "Performance du modèle au cours des 10 derniers jours",
+    "IT": "Performance del modello negli ultimi 10 giorni"
+  },
   "waterlevelText": {
     "EN": "Recent lake level values collected from various sources.",
     "DE": "Aktuelle Seepegelwerte aus verschiedenen Quellen.",
