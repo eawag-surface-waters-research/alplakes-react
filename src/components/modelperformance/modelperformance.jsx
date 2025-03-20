@@ -80,73 +80,89 @@ class ModelPerformance extends Component {
     var { rmse, language, dark, model } = this.props;
     var { open, data, location, depth, fontSize } = this.state;
     if (open) {
-      var plot = [
-        {
-          x: data[location].depth[depth].model.time,
-          y: data[location].depth[depth].model.values,
-          name: false,
-          lineColor: "#5594CC",
-          fontWeigth: 2,
-        },
-        {
-          x: data[location].depth[depth].insitu.time,
-          y: data[location].depth[depth].insitu.values,
-          name: false,
-          lineColor: "#f34b3e",
-        },
-      ];
-      return (
-        <div className="model-performance">
-          <div className="close" onClick={this.close}>
-            &#10005;
-          </div>
-          <div className="model-performance-title">
-            {Translations.modelPerformance[language]}
-          </div>
-          <div className="model-performance-selectors">
-            <select value={location} onChange={this.setLocation}>
-              {Object.keys(data).map((l) => (
-                <option key={l}>{data[l].name}</option>
-              ))}
-            </select>
-            <select value={depth} onChange={this.setDepth}>
-              {Object.keys(data[location].depth).map((d) => (
-                <option key={d}>{data[location].depth[depth].name}</option>
-              ))}
-            </select>
-            <div className="rmse">
-              RMSE: <b>{data[location].depth[depth].rmse}°C</b>
+      var available = false;
+      try {
+        var plot = [
+          {
+            x: data[location].depth[depth].model.time,
+            y: data[location].depth[depth].model.values,
+            name: false,
+            lineColor: "#5594CC",
+            fontWeigth: 2,
+          },
+          {
+            x: data[location].depth[depth].insitu.time,
+            y: data[location].depth[depth].insitu.values,
+            name: false,
+            lineColor: "#f34b3e",
+          },
+        ];
+        available = false;
+      } catch (e) {
+        console.error("Formatting error in peformance data");
+      }
+      if (
+        "insitu" in data[location].depth[depth] &&
+        "model" in data[location].depth[depth]
+      )
+        return (
+          <div className="model-performance">
+            <div className="close" onClick={this.close}>
+              &#10005;
+            </div>
+            <div className="model-performance-title">
+              {Translations.modelPerformance[language]}
+            </div>
+            <div className="model-performance-selectors">
+              <select value={location} onChange={this.setLocation}>
+                {Object.keys(data).map((l) => (
+                  <option key={l}>{data[l].name}</option>
+                ))}
+              </select>
+              <select value={depth} onChange={this.setDepth}>
+                {Object.keys(data[location].depth).map((d) => (
+                  <option key={d}>{data[location].depth[depth].name}</option>
+                ))}
+              </select>
+              <div className="rmse">
+                RMSE: <b>{data[location].depth[depth].rmse}°C</b>
+              </div>
+            </div>
+            <div className="model-performance-plot">
+              {available ? (
+                <DatasetLinegraph
+                  xlabel="time"
+                  xunits=""
+                  ylabel={Translations.watertemperature[language]}
+                  yunits="°C"
+                  data={plot}
+                  dark={dark}
+                  language={language}
+                  noYear={true}
+                  fontSize={fontSize}
+                  setFontSize={this.setFontSize}
+                />
+              ) : (
+                <div className="model-performance-plot-error">
+                  {Translations.failedPlot[language]}
+                </div>
+              )}
+            </div>
+            <div
+              className="model-performance-legend"
+              style={{ fontSize: `${fontSize}px` }}
+            >
+              <div className="item">
+                <div className="line" style={{ borderColor: "#5594CC" }}></div>
+                <div className="text">{model}</div>
+              </div>
+              <div className="item">
+                <div className="line" style={{ borderColor: "#f34b3e" }}></div>
+                <div className="text">{data[location].name}</div>
+              </div>
             </div>
           </div>
-          <div className="model-performance-plot">
-            <DatasetLinegraph
-              xlabel="time"
-              xunits=""
-              ylabel={Translations.watertemperature[language]}
-              yunits="°C"
-              data={plot}
-              dark={dark}
-              language={language}
-              noYear={true}
-              fontSize={fontSize}
-              setFontSize={this.setFontSize}
-            />
-          </div>
-          <div
-            className="model-performance-legend"
-            style={{ fontSize: `${fontSize}px` }}
-          >
-            <div className="item">
-              <div className="line" style={{ borderColor: "#5594CC" }}></div>
-              <div className="text">{model}</div>
-            </div>
-            <div className="item">
-              <div className="line" style={{ borderColor: "#f34b3e" }}></div>
-              <div className="text">{data[location].name}</div>
-            </div>
-          </div>
-        </div>
-      );
+        );
     } else {
       var rmse_color = "#76b64b";
       if (rmse >= 2) {

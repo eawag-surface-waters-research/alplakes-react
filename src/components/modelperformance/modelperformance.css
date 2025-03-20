@@ -100,6 +100,17 @@
     height: 100%;
 }
 
+.model-performance .model-performance-plot .model-performance-plot-error {
+    border: 1px solid var(--border-color);
+    height: 100%;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    color: var(--background-subtle-font-color);
+}
+
 .model-performance .model-performance-legend {
     text-align: center;
     padding-bottom: 20px;

@@ -359,6 +359,12 @@
     "FR": "Cliquez pour en savoir plus",
     "IT": "Fare clic per ulteriori informazioni"
   },
+  "failedPlot": {
+    "EN": "Failed to plot data.",
+    "DE": "Daten konnten nicht gezeichnet werden.",
+    "FR": "Échec du traçage des données.",
+    "IT": "Impossibile tracciare i dati."
+  },
   "accessingLayers": {
     "EN": "Accessing layers",
     "DE": "Auf Ebenen zugreifen",
