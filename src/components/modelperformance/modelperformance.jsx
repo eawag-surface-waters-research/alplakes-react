@@ -97,7 +97,7 @@ class ModelPerformance extends Component {
             lineColor: "#f34b3e",
           },
         ];
-        available = false;
+        available = true;
       } catch (e) {
         console.error("Formatting error in peformance data");
       }
