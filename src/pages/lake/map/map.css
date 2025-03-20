@@ -635,12 +635,15 @@
 }
 
 .main .map .layer-map .add-layers .layers-close {
-    font-size: 32px;
+    font-size: 26px;
     color: var(--background-font-color);
     cursor: pointer;
-    transition: all .2s ease-in-out;
+    transition: all .2sease-in-out;
     line-height: 22px;
     float: right;
+    background-color: var(--box-color);
+    border-radius: 50%;
+    padding: 8px 8px;
 }
 
 .main .map .layer-map .add-layers .layers {
@@ -694,7 +697,7 @@
 }
 
 .main .map .layer-map .add-layers .layers-close:hover {
-    transform: scale(1.2);
+    transform: scale(1.05);
 }
 
 .main .map .layer-map .add-layers .layers .layer.disabled {

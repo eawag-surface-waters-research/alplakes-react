@@ -29,6 +29,21 @@
       "performance": {
         "rmse": {
           "overall": 0.85
+        },
+        "live": {
+          "lexplore": {
+            "name": "LéXPLORE Thermistor Chain",
+            "type": "datalakes",
+            "id": 448,
+            "lat": 46.5,
+            "lng": 6.67,
+            "depth": {
+              "surface": {
+                "name": "Surface",
+                "depth": 0.25
+              }
+            }
+          }
         }
       },
       "3D_temperature": [
