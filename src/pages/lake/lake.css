@@ -97,8 +97,16 @@
     z-index: 999;
 }
 
-.main .lake .map-sidebar .map-sidebar-left .model-performance-button {
+.main .lake .threedmodel .map-sidebar .map-sidebar-left .model-performance-button {
     top: 90px;
+}
+
+.main .lake .onedmodel .map-sidebar .map-sidebar-left .model-performance-button {
+    box-shadow: var(--box-shadow);
+    left: unset;
+    top: unset;
+    right: 40px;
+    bottom: 40px;
 }
 
 .main .lake .map-sidebar .map-sidebar-left .popup {

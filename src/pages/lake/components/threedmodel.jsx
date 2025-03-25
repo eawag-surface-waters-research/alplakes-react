@@ -7,7 +7,6 @@ import MapButton from "../../../components/mapbutton/mapbutton";
 import {
   downloadModelMetadata,
   download3DMap,
-  downloadModelWarning,
 } from "../functions/download";
 import {
   formatReadableDate,
@@ -71,10 +70,9 @@ class ThreeDModel extends Component {
       parameters.model.toLowerCase(),
       parameters.key
     );
-    warning = await downloadModelWarning(
-      parameters.model.toLowerCase(),
-      parameters.key
-    );
+    if ("warning" in metadata) {
+      warning = metadata.warning
+    }
     const data = await download3DMap(
       parameters.model.toLowerCase(),
       parameters.key,
