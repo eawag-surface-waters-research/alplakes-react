@@ -93,7 +93,6 @@ for lake in metadata:
                 "name": model["name"]
               }
 
-
     # Three Dimensional Model
     if '3D' in lake:
         add = True
@@ -293,6 +292,14 @@ if upload:
         'remote_sensing.json',
         'alplakes-eawag',
         '{}/remote_sensing.json'.format(bucket_folder),
+        ExtraArgs={
+            'ContentType': 'application/json',
+        },
+    )
+    s3.upload_file(
+        'performance.json',
+        'alplakes-eawag',
+        '{}/performance.json'.format(bucket_folder),
         ExtraArgs={
             'ContentType': 'application/json',
         },
