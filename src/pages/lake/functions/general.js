@@ -132,6 +132,18 @@ export const formatReadableDate = (d, language) => {
   }
 };
 
+export const roundUpToNearestHalfHour = (input) => {
+  var date = new Date(input);
+  let minutes = date.getMinutes();
+  let roundedMinutes = Math.round(minutes / 30) * 30;
+  if (roundedMinutes === 60) {
+    date.setHours(date.getHours() + 1);
+    roundedMinutes = 0;
+  }
+  date.setMinutes(roundedMinutes, 0, 0);
+  return date;
+};
+
 export const formatTime = (d) => {
   const date = new Date(d);
   const hours = String(date.getHours()).padStart(2, "0");

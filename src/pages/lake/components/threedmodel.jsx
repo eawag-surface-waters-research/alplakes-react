@@ -4,14 +4,12 @@ import Translations from "../../../translations.json";
 import Basemap from "../../../components/leaflet/basemap";
 import Information from "../../../components/information/information";
 import MapButton from "../../../components/mapbutton/mapbutton";
-import {
-  downloadModelMetadata,
-  download3DMap,
-} from "../functions/download";
+import { downloadModelMetadata, download3DMap } from "../functions/download";
 import {
   formatReadableDate,
   formatTime,
   processLabels,
+  roundUpToNearestHalfHour,
 } from "../functions/general";
 import SummaryTable from "../../../components/summarytable/summarytable";
 import Expand from "../../../components/expand/expand";
@@ -71,7 +69,7 @@ class ThreeDModel extends Component {
       parameters.key
     );
     if ("warning" in metadata) {
-      warning = metadata.warning
+      warning = metadata.warning;
     }
     const data = await download3DMap(
       parameters.model.toLowerCase(),
@@ -86,12 +84,21 @@ class ThreeDModel extends Component {
     const now = new Date();
     var index = data.temperature.data.length - 1;
     var datetime = data.temperature.end;
+    var interpolate = false;
+    var indexA = index;
+    var indexB = index;
     const timestep =
       (data.temperature.end - data.temperature.start) /
       (data.temperature.data.length - 1);
     if (data.temperature.end > now) {
-      index = Math.ceil((now - data.temperature.start) / timestep);
-      datetime = new Date(data.temperature.start.getTime() + index * timestep);
+      index = Math.round((now - data.temperature.start) / timestep);
+      indexA = Math.floor((now - data.temperature.start) / timestep);
+      indexB = Math.ceil((now - data.temperature.start) / timestep);
+      datetime = roundUpToNearestHalfHour(now);
+      interpolate =
+        (datetime -
+          new Date(data.temperature.start.getTime() + indexA * timestep)) /
+        timestep;
       labels = processLabels(
         parameters.labels,
         data.geometry,
@@ -111,13 +118,16 @@ class ThreeDModel extends Component {
       type: "raster",
       id: "3D_temperature",
       options: {
-        data: data.temperature.data[index],
+        data: interpolate
+          ? [data.temperature.data[indexA], data.temperature.data[indexB]]
+          : data.temperature.data[index],
         geometry: data.geometry,
         labels,
         displayOptions: {
           min: data.temperature.min,
           max: data.temperature.max,
           unit: "°C",
+          interpolate,
         },
       },
     });
