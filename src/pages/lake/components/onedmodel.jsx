@@ -6,7 +6,7 @@ import {
 import { capitalize } from "../functions/general";
 import Translations from "../../../translations.json";
 import SummaryTable from "../../../components/summarytable/summarytable";
-import { summariseData } from "../functions/general";
+import { summariseData } from "../../../global";
 import Information from "../../../components/information/information";
 import DatasetLinegraph from "../../../components/d3/dataset/datasetlinegraph";
 import Expand from "../../../components/expand/expand";
