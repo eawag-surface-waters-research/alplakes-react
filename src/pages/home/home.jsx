@@ -18,12 +18,11 @@ import sortIcon from "../../img/sortdesc.png";
 import {
   onMouseOver,
   onMouseOut,
-  summariseData,
   searchList,
   inBounds,
-  hour,
   fetchDataParallel,
 } from "./functions";
+import { hour, summariseData } from "../../global";
 import CONFIG from "../../config.json";
 import "./home.css";
 
