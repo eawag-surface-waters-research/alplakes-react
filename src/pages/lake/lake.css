@@ -97,26 +97,46 @@
     z-index: 999;
 }
 
-.main .lake .map-sidebar .map-sidebar-left .warning-popup {
+.main .lake .threedmodel .map-sidebar .map-sidebar-left .model-performance-button {
+    top: 90px;
+}
+
+.main .lake .onedmodel .map-sidebar .map-sidebar-left .model-performance-button {
+    box-shadow: var(--box-shadow);
+    left: unset;
+    top: unset;
+    right: 40px;
+    bottom: 40px;
+}
+
+.main .lake .map-sidebar .map-sidebar-left .popup {
     position: absolute;
     z-index: 9999;
-    left: 12px;
+    right: 12px;
     bottom: 90px;
     cursor: pointer;
+    flex-direction: column;
+    align-items: flex-end;
+    max-width: calc(100% - 24px);
+}
+
+.main .lake .map-sidebar .map-sidebar-left .popup .warning-popup {
     background-color: var(--box-color);
     padding: 12px 32px 12px 12px;
     border-radius: 12px;
-    max-width: calc(100% - 24px);
+    max-width: 100%;
     box-sizing: border-box;
+    position: relative;
+    margin-top: 12px;
 }
 
-.main .lake .map-sidebar .map-sidebar-left .warning-popup .warning-popup-inner {
+.main .lake .map-sidebar .map-sidebar-left .popup .warning-popup .warning-popup-inner {
     max-width: calc(100% - 36px);
     box-sizing: border-box;
     display: inline-block;
 }
 
-.main .lake .map-sidebar .map-sidebar-left .warning-popup img {
+.main .lake .map-sidebar .map-sidebar-left .popup .warning-popup img {
     display: inline-block;
     width: 24px;
     margin-right: 12px;
@@ -124,7 +144,7 @@
     vertical-align: top;
 }
 
-.main .lake .map-sidebar .map-sidebar-left .warning-popup .close {
+.main .lake .map-sidebar .map-sidebar-left .popup .warning-popup .close {
     position: absolute;
     top: 6px;
     right: 6px;
@@ -689,6 +709,12 @@
 
     .main .lake .past-year .map-sidebar .map-sidebar-left .graph-container {
         padding: 0;
+    }
+
+
+    .main .lake .map-sidebar .map-sidebar-left .popup {
+        max-width: calc(100% - 82px);
+        bottom: 70px;
     }
 
     .main .lake .measurements .water-levels {

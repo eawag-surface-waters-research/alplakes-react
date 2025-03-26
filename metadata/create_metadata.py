@@ -77,6 +77,8 @@ for lake in metadata:
         data["properties"]["bathymetry"] = bathymetry
     data["properties"]["latitude"] = lake["latitude"]
     data["properties"]["longitude"] = lake["longitude"]
+    if "default_depth" in lake:
+        data["properties"]["default_depth"] = lake["default_depth"]
 
 
     # Trends - doy and past year are added in 1D section
@@ -90,7 +92,6 @@ for lake in metadata:
                 "key": model["key"],
                 "name": model["name"]
               }
-
 
     # Three Dimensional Model
     if '3D' in lake:
@@ -113,7 +114,8 @@ for lake in metadata:
             "key": key,
             "model": "delft3d-flow",
             "parameters": ["temperature", "velocity"],
-            "labels": lake["3D"]["3D_temperature"]
+            "labels": lake["3D"]["3D_temperature"],
+            "performance": lake["3D"]["performance"]
         }}
         layers["layers"].extend(func.model_layers(lake["key"]))
 
@@ -290,6 +292,14 @@ if upload:
         'remote_sensing.json',
         'alplakes-eawag',
         '{}/remote_sensing.json'.format(bucket_folder),
+        ExtraArgs={
+            'ContentType': 'application/json',
+        },
+    )
+    s3.upload_file(
+        'performance.json',
+        'alplakes-eawag',
+        '{}/performance.json'.format(bucket_folder),
         ExtraArgs={
             'ContentType': 'application/json',
         },
