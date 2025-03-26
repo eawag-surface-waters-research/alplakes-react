@@ -71,7 +71,10 @@ class ModelPerformance extends Component {
     this.setState({ fontSize });
   };
   setLocation = (event) => {
-    this.setState({ location: event.target.value });
+    var { data } = this.state;
+    const location = event.target.value;
+    const depth = Object.keys(data[location].depth)[0];
+    this.setState({ location, depth });
   };
   setDepth = (event) => {
     this.setState({ depth: event.target.value });
@@ -104,7 +107,7 @@ class ModelPerformance extends Component {
       if (
         "insitu" in data[location].depth[depth] &&
         "model" in data[location].depth[depth]
-      )
+      ) {
         return (
           <div className="model-performance">
             <div className="close" onClick={this.close}>
@@ -116,12 +119,12 @@ class ModelPerformance extends Component {
             <div className="model-performance-selectors">
               <select value={location} onChange={this.setLocation}>
                 {Object.keys(data).map((l) => (
-                  <option key={l}>{data[l].name}</option>
+                  <option value={l} key={l}>{data[l].name}</option>
                 ))}
               </select>
               <select value={depth} onChange={this.setDepth}>
                 {Object.keys(data[location].depth).map((d) => (
-                  <option key={d}>{data[location].depth[depth].name}</option>
+                  <option value={d} key={d}>{data[location].depth[d].name}</option>
                 ))}
               </select>
               <div className="rmse">
@@ -163,6 +166,7 @@ class ModelPerformance extends Component {
             </div>
           </div>
         );
+      }
     } else {
       var rmse_color = "#76b64b";
       if (rmse >= 2) {
