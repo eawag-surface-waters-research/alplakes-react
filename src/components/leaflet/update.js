@@ -125,7 +125,14 @@ const addRaster = async (map, layers, id, options, language, server) => {
   if ("labels" in options) {
     const labelLayer = L.layerGroup([]).addTo(map);
     for (let i = 0; i < options.labels.length; i++) {
-      let value = options.data[options.labels[i].i][options.labels[i].j];
+      var value;
+      if (options.data.length === 2) {
+        let valueA = options.data[0][options.labels[i].i][options.labels[i].j];
+        let valueB = options.data[1][options.labels[i].i][options.labels[i].j];
+        value = valueA + (valueB - valueA) / displayOptions.interpolate;
+      } else {
+        value = options.data[options.labels[i].i][options.labels[i].j];
+      }
       let marker = L.marker(options.labels[i].latlng, {
         icon: L.divIcon({
           className: "leaflet-mouse-marker",
