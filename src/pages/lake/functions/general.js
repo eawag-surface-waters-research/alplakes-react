@@ -1,4 +1,5 @@
 import Translations from "../../../translations.json";
+import { summariseData } from "../../../global";
 
 export const stringToDate = (date) => {
   let time = "00";
@@ -144,35 +145,6 @@ export const mean = (numbers) => {
   return mean;
 };
 
-export const summariseData = (timestamps, values) => {
-  const ONE_DAY_MS = 86400000;
-  const start = new Date().setHours(0, 0, 0, 0);
-
-  const out = Array.from({ length: 10 }, (_, i) =>
-    formatDateYYYYMMDD(start + i * ONE_DAY_MS)
-  ).reduce((acc, key) => ({ ...acc, [key]: [] }), {});
-
-  timestamps.forEach((ts, i) => {
-    const key = formatDateYYYYMMDD(ts);
-    if (out[key]) out[key].push(values[i]);
-  });
-
-  const summary = Object.fromEntries(
-    Object.entries(out)
-      .filter(([_, vals]) => vals.length > 0)
-      .map(([key, vals]) => [key, mean(vals)])
-  );
-
-  const end_string = Object.keys(summary).pop();
-  const year = parseInt(end_string.slice(0, 4), 10);
-  const month = parseInt(end_string.slice(4, 6), 10) - 1;
-  const day = parseInt(end_string.slice(6, 8), 10);
-  const end = new Date(year, month, day);
-  end.setDate(end.getDate() + 1);
-
-  return { summary, start: new Date(start), end };
-};
-
 export const daysAgo = (time, language) => {
   const currentDate = new Date();
   currentDate.setHours(0, 0, 0, 0);
@@ -295,7 +267,7 @@ export const removeLeap = (array) => {
 export const capitalize = (string) => {
   if (string.length === 0) return string;
   return string.charAt(0).toUpperCase() + string.slice(1);
-}
+};
 
 export const closestValue = (target, arr) => {
   const sortedArr = arr
