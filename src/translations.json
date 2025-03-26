@@ -359,6 +359,12 @@
     "FR": "Cliquez pour en savoir plus",
     "IT": "Fare clic per ulteriori informazioni"
   },
+  "failedPlot": {
+    "EN": "Failed to plot data.",
+    "DE": "Daten konnten nicht gezeichnet werden.",
+    "FR": "Échec du traçage des données.",
+    "IT": "Impossibile tracciare i dati."
+  },
   "accessingLayers": {
     "EN": "Accessing layers",
     "DE": "Auf Ebenen zugreifen",
@@ -478,6 +484,12 @@
     "DE": "m ü. M.",
     "FR": "m.s.l",
     "IT": "m.s.l"
+  },
+  "modelPerformance": {
+    "EN": "Model performance last 10 days",
+    "DE": "Modellleistung der letzten 10 Tage",
+    "FR": "Performance du modèle au cours des 10 derniers jours",
+    "IT": "Performance del modello negli ultimi 10 giorni"
   },
   "waterlevelText": {
     "EN": "Recent lake level values collected from various sources.",

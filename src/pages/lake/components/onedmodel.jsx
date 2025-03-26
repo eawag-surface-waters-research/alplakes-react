@@ -13,6 +13,7 @@ import Expand from "../../../components/expand/expand";
 import Period from "../../../components/customselect/period";
 import Depth from "../../../components/customselect/depth";
 import Loading from "../../../components/loading/loading";
+import ModelPerformance from "../../../components/modelperformance/modelperformance";
 
 class PlaceholderGraph extends Component {
   render() {
@@ -184,6 +185,15 @@ class Graph extends Component {
           </div>
         </div>
         <div className="map-sidebar-left">
+          {data.metadata.rmse && (
+            <ModelPerformance
+              rmse={data.metadata.rmse}
+              dark={dark}
+              language={language}
+              model={parameter.model}
+              lake={parameter.key}
+            />
+          )}
           <div className="line-graph-container">
             <DatasetLinegraph {...display} dark={dark} language={language} />
           </div>
@@ -215,10 +225,10 @@ class Graph extends Component {
                         ))}
                       </select>
                       {["OxygenSat", "Oxygen"].includes(variable.key) && (
-                          <div className="setting-warning">
-                            {Translations.oxygenWarning[language]}
-                          </div>
-                        )}
+                        <div className="setting-warning">
+                          {Translations.oxygenWarning[language]}
+                        </div>
+                      )}
                     </div>
                     <div className="setting">
                       <div className="label">

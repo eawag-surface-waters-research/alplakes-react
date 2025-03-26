@@ -29,6 +29,38 @@
       "performance": {
         "rmse": {
           "overall": 0.85
+        },
+        "live": {
+          "lexplore": {
+            "name": "LéXPLORE Thermistor Chain",
+            "type": "datalakes",
+            "id": 448,
+            "lat": 46.5,
+            "lng": 6.67,
+            "depth": {
+              "surface": {
+                "name": "Surface",
+                "depth": 0.25
+              },
+              "bottom": {
+                "name": "Bottom",
+                "depth": 90
+              }
+            }
+          },
+          "buchillon": {
+            "name": "Buchillon Field Station",
+            "type": "datalakes",
+            "id": 597,
+            "lat": 46.459,
+            "lng":  6.399,
+            "depth": {
+              "surface": {
+                "name": "Surface",
+                "depth": 1
+              }
+            }
+          }
         }
       },
       "3D_temperature": [
@@ -306,6 +338,21 @@
       "performance": {
         "rmse": {
           "overall": 0.80
+        },
+        "live": {
+          "murten": {
+            "name": "Thermistor chain",
+            "type": "datalakes",
+            "id": 956,
+            "lat": 46.934,
+            "lng": 7.077,
+            "depth": {
+              "surface": {
+                "name": "Surface",
+                "depth": 1
+              }
+            }
+          }
         }
       },
       "3D_temperature": [
@@ -376,6 +423,21 @@
       "performance": {
         "rmse": {
           "overall": 0.68
+        },
+        "live": {
+          "aegeri": {
+            "name": "Idronaut profiler",
+            "type": "datalakes",
+            "id": 1077,
+            "lat": 47.125,
+            "lng": 8.609,
+            "depth": {
+              "surface": {
+                "name": "Surface",
+                "depth": 2
+              }
+            }
+          }
         }
       },
       "3D_temperature": [
@@ -453,6 +515,21 @@
       "performance": {
         "rmse": {
           "overall": 1.22
+        },
+        "live": {
+          "hallwil": {
+            "name": "Thermistor chain",
+            "type": "datalakes",
+            "id": 1046,
+            "lat": 47.278,
+            "lng": 8.214,
+            "depth": {
+              "surface": {
+                "name": "Surface",
+                "depth": 0.5
+              }
+            }
+          }
         }
       },
       "3D_temperature": [
