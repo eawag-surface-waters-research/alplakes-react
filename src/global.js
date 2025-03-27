@@ -81,7 +81,7 @@ export const summariseData = (timestamps, values) => {
 
   const summary = Object.fromEntries(
     Object.entries(out)
-      .filter(([_, vals]) => vals.length > 0)
+      .filter(([_, vals]) => vals.length > 2)
       .map(([key, vals]) => [key, mean(vals)])
   );
 
