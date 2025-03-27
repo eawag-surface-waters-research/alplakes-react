@@ -4,7 +4,7 @@ import requests
 import functions as func
 
 upload = True
-bucket_folder = "static/website/metadata/sat"
+bucket_folder = "static/website/metadata/germany"
 
 # Load Metadata
 with open("metadata.json") as f:

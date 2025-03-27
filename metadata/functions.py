@@ -521,6 +521,8 @@ def simstrat_forcing_source(forcing, forecast):
         out = "Mistral Meteo-Hub"
     elif "thredds" in meteo_type.lower():
         out = "ESPRI IPSL Thredds"
+    elif "dwd" in meteo_type.lower():
+        out = "Deutscher Wetterdienst"
     elif "geosphere" in meteo_type.lower():
         out = "GeoSphere Austria"
     forecast_type = forecast["source"]
