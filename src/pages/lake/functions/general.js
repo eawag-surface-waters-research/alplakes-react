@@ -164,7 +164,10 @@ export const daysAgo = (time, language) => {
   const givenDate = new Date(time);
   givenDate.setHours(0, 0, 0, 0);
 
-  const difference = (currentDate - givenDate) / 86400000;
+  const difference = Math.max(
+    1,
+    Math.round((currentDate - givenDate) / 86400000)
+  );
 
   if (difference % 30 === 0 || difference > 84) {
     let count = Math.ceil(difference / 30);
