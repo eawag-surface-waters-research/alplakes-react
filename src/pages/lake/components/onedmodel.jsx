@@ -343,6 +343,9 @@ class OneDModel extends Component {
         parameters[i].model.toLowerCase(),
         parameters[i].key
       );
+      if ("simstrat_oxygen" in parameters[0] && parameters[0]["simstrat_oxygen"] === false) {
+        ["Oxygen", "OxygenSat"].forEach(key => delete metadata.variables[key]);
+      }
       let depth = Math.min(...metadata.depth);
       let download = await download1DLinegraph(
         parameters[i].model.toLowerCase(),

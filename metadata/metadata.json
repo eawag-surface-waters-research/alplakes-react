@@ -4410,5 +4410,404 @@
         "ave_depth": "NA",
         "max_depth": "NA",
         "volume": 0.0074
+    },
+    {
+        "key": "riegsee",
+        "name": {
+            "EN": "Riegsee",
+            "DE": "Riegsee",
+            "FR": "Riegsee",
+            "IT": "Riegsee"
+        },
+        "area": 1.88,
+        "ave_depth": 6.78,
+        "max_depth": 15.4,
+        "elevation": 655.6,
+        "latitude": 47.7,
+        "longitude": 11.226,
+        "simstrat_oxygen": false,
+        "type": "Natural",
+        "volume": "NA",
+        "datalakes_id": 222
+    },
+    {
+        "key": "worthsee",
+        "name": {
+            "EN": "W\u00f6rthsee",
+            "DE": "W\u00f6rthsee",
+            "FR": "W\u00f6rthsee",
+            "IT": "W\u00f6rthsee"
+        },
+        "area": 4.33,
+        "ave_depth": 14.66,
+        "max_depth": 34.0,
+        "elevation": 560.4,
+        "latitude": 48.058,
+        "longitude": 11.179,
+        "simstrat_oxygen": false,
+        "type": "Natural",
+        "volume": "NA",
+        "datalakes_id": 223
+    },
+    {
+        "key": "weissensee",
+        "name": {
+            "EN": "Weissensee",
+            "DE": "Weissensee",
+            "FR": "Weissensee",
+            "IT": "Weissensee"
+        },
+        "area": 1.35,
+        "ave_depth": 12.24,
+        "max_depth": 24.7,
+        "elevation": 787.3,
+        "latitude": 47.572,
+        "longitude": 10.637,
+        "simstrat_oxygen": false,
+        "type": "Natural",
+        "volume": "NA",
+        "datalakes_id": 224
+    },
+    {
+        "key": "walchensee",
+        "name": {
+            "EN": "Walchensee",
+            "DE": "Walchensee",
+            "FR": "Walchensee",
+            "IT": "Walchensee"
+        },
+        "area": 16.11,
+        "ave_depth": 80.8,
+        "max_depth": 189.5,
+        "elevation": 800.8,
+        "latitude": 47.59,
+        "longitude": 11.347,
+        "simstrat_oxygen": false,
+        "type": "Natural",
+        "volume": "NA",
+        "datalakes_id": 225
+    },
+    {
+        "key": "tachinger",
+        "name": {
+            "EN": "Tachinger See",
+            "DE": "Tachinger See",
+            "FR": "Tachinger See",
+            "IT": "Tachinger See"
+        },
+        "area": 2.36,
+        "ave_depth": 9.15,
+        "max_depth": 16.5,
+        "elevation": 442.1,
+        "latitude": 47.971,
+        "longitude": 12.743,
+        "simstrat_oxygen": false,
+        "type": "Natural",
+        "volume": "NA",
+        "datalakes_id": 226
+    },
+    {
+        "key": "tegernsee",
+        "name": {
+            "EN": "Tegernsee",
+            "DE": "Tegernsee",
+            "FR": "Tegernsee",
+            "IT": "Tegernsee"
+        },
+        "area": 8.9,
+        "ave_depth": 36.3,
+        "max_depth": 72.6,
+        "elevation": 725.5,
+        "latitude": 47.719,
+        "longitude": 11.739,
+        "simstrat_oxygen": false,
+        "type": "Natural",
+        "volume": "NA",
+        "datalakes_id": 227
+    },
+    {
+        "key": "starnberger",
+        "name": {
+            "EN": "Starnberger See",
+            "DE": "Starnberger See",
+            "FR": "Starnberger See",
+            "IT": "Starnberger See"
+        },
+        "area": 56.36,
+        "ave_depth": 53.21,
+        "max_depth": 127.8,
+        "elevation": 584.2,
+        "latitude": 47.9,
+        "longitude": 11.317,
+        "simstrat_oxygen": false,
+        "type": "Natural",
+        "volume": "NA",
+        "datalakes_id": 228
+    },
+    {
+        "key": "staffelsee",
+        "name": {
+            "EN": "Staffelsee",
+            "DE": "Staffelsee",
+            "FR": "Staffelsee",
+            "IT": "Staffelsee"
+        },
+        "area": 7.66,
+        "ave_depth": 9.78,
+        "max_depth": 39.4,
+        "elevation": 648.6,
+        "latitude": 47.69,
+        "longitude": 11.161,
+        "simstrat_oxygen": false,
+        "type": "Natural",
+        "volume": "NA",
+        "datalakes_id": 229
+    },
+    {
+        "key": "simssee",
+        "name": {
+            "EN": "Simssee",
+            "DE": "Simssee",
+            "FR": "Simssee",
+            "IT": "Simssee"
+        },
+        "area": 6.49,
+        "ave_depth": 13.41,
+        "max_depth": 22.5,
+        "elevation": 470.1,
+        "latitude": 47.873,
+        "longitude": 12.239,
+        "simstrat_oxygen": false,
+        "type": "Natural",
+        "volume": "NA",
+        "datalakes_id": 230
+    },
+    {
+        "key": "seehamer",
+        "name": {
+            "EN": "Seehamer See",
+            "DE": "Seehamer See",
+            "FR": "Seehamer See",
+            "IT": "Seehamer See"
+        },
+        "area": 1.11,
+        "ave_depth": 5.42,
+        "max_depth": 16.5,
+        "elevation": 653.0,
+        "latitude": 47.85,
+        "longitude": 11.855,
+        "simstrat_oxygen": false,
+        "type": "Natural",
+        "volume": "NA",
+        "datalakes_id": 231
+    },
+    {
+        "key": "schliersee",
+        "name": {
+            "EN": "Schliersee",
+            "DE": "Schliersee",
+            "FR": "Schliersee",
+            "IT": "Schliersee"
+        },
+        "area": 2.22,
+        "ave_depth": 23.93,
+        "max_depth": 40.5,
+        "elevation": 776.8,
+        "latitude": 47.723,
+        "longitude": 11.862,
+        "simstrat_oxygen": false,
+        "type": "Natural",
+        "volume": "NA",
+        "datalakes_id": 232
+    },
+    {
+        "key": "niedersonthofener",
+        "name": {
+            "EN": "Niedersonthofener See",
+            "DE": "Niedersonthofener See",
+            "FR": "Niedersonthofener See",
+            "IT": "Niedersonthofener See"
+        },
+        "area": 1.35,
+        "ave_depth": 10.0,
+        "max_depth": 21.3,
+        "elevation": 703.0,
+        "latitude": 47.635,
+        "longitude": 10.266,
+        "simstrat_oxygen": false,
+        "type": "Natural",
+        "volume": "NA",
+        "datalakes_id": 233
+    },
+    {
+        "key": "konigsee",
+        "name": {
+            "EN": "K\u00f6nigssee",
+            "DE": "K\u00f6nigssee",
+            "FR": "K\u00f6nigssee",
+            "IT": "K\u00f6nigssee"
+        },
+        "area": 5.22,
+        "ave_depth": 98.08,
+        "max_depth": 190.0,
+        "elevation": 603.3,
+        "latitude": 47.553,
+        "longitude": 12.978,
+        "simstrat_oxygen": false,
+        "type": "Natural",
+        "volume": "NA",
+        "datalakes_id": 234
+    },
+    {
+        "key": "kochelsee",
+        "name": {
+            "EN": "Kochelsee",
+            "DE": "Kochelsee",
+            "FR": "Kochelsee",
+            "IT": "Kochelsee"
+        },
+        "area": 5.95,
+        "ave_depth": 31.04,
+        "max_depth": 65.9,
+        "elevation": 598.8,
+        "latitude": 47.647,
+        "longitude": 11.34,
+        "simstrat_oxygen": false,
+        "type": "Natural",
+        "volume": "NA",
+        "datalakes_id": 235
+    },
+    {
+        "key": "hopfensee",
+        "name": {
+            "EN": "Hopfensee",
+            "DE": "Hopfensee",
+            "FR": "Hopfensee",
+            "IT": "Hopfensee"
+        },
+        "area": 1.94,
+        "ave_depth": 4.63,
+        "max_depth": 10.4,
+        "elevation": 783.8,
+        "latitude": 47.601,
+        "longitude": 10.671,
+        "simstrat_oxygen": false,
+        "type": "Natural",
+        "volume": "NA",
+        "datalakes_id": 236
+    },
+    {
+        "key": "gruntensee",
+        "name": {
+            "EN": "Gr\u00fcntensee",
+            "DE": "Gr\u00fcntensee",
+            "FR": "Gr\u00fcntensee",
+            "IT": "Gr\u00fcntensee"
+        },
+        "area": 1.25,
+        "ave_depth": 4.08,
+        "max_depth": 11.2,
+        "elevation": 876.0,
+        "latitude": 47.618,
+        "longitude": 10.448,
+        "simstrat_oxygen": false,
+        "type": "Natural",
+        "volume": "NA",
+        "datalakes_id": 237
+    },
+    {
+        "key": "grosseralpsee",
+        "name": {
+            "EN": "Gro\u00dfer Alpsee",
+            "DE": "Gro\u00dfer Alpsee",
+            "FR": "Gro\u00dfer Alpsee",
+            "IT": "Gro\u00dfer Alpsee"
+        },
+        "area": 2.47,
+        "ave_depth": 13.23,
+        "max_depth": 22.7,
+        "elevation": 724.6,
+        "latitude": 47.572,
+        "longitude": 10.175,
+        "simstrat_oxygen": false,
+        "type": "Natural",
+        "volume": "NA",
+        "datalakes_id": 238
+    },
+    {
+        "key": "eibsee",
+        "name": {
+            "EN": "Eibsee",
+            "DE": "Eibsee",
+            "FR": "Eibsee",
+            "IT": "Eibsee"
+        },
+        "area": 1.77,
+        "ave_depth": 15.0,
+        "max_depth": 36.0,
+        "elevation": 972.7,
+        "latitude": 47.458,
+        "longitude": 10.974,
+        "simstrat_oxygen": false,
+        "type": "Natural",
+        "volume": "NA",
+        "datalakes_id": 239
+    },
+    {
+        "key": "chiemsee",
+        "name": {
+            "EN": "Chiemsee",
+            "DE": "Chiemsee",
+            "FR": "Chiemsee",
+            "IT": "Chiemsee"
+        },
+        "area": 79.9,
+        "ave_depth": 25.63,
+        "max_depth": 73.4,
+        "elevation": 518.2,
+        "latitude": 47.878,
+        "longitude": 12.451,
+        "simstrat_oxygen": false,
+        "type": "Natural",
+        "volume": "NA",
+        "datalakes_id": 240
+    },
+    {
+        "key": "bannwaldsee",
+        "name": {
+            "EN": "Bannwaldsee",
+            "DE": "Bannwaldsee",
+            "FR": "Bannwaldsee",
+            "IT": "Bannwaldsee"
+        },
+        "area": 2.28,
+        "ave_depth": 6.18,
+        "max_depth": 12.0,
+        "elevation": 785.9,
+        "latitude": 47.6,
+        "longitude": 10.776,
+        "simstrat_oxygen": false,
+        "type": "Natural",
+        "volume": "NA",
+        "datalakes_id": 241
+    },
+    {
+        "key": "ammersee",
+        "name": {
+            "EN": "Ammersee",
+            "DE": "Ammersee",
+            "FR": "Ammersee",
+            "IT": "Ammersee"
+        },
+        "area": 46.6,
+        "ave_depth": 37.55,
+        "max_depth": 81.1,
+        "elevation": 532.9,
+        "latitude": 48.002,
+        "longitude": 11.125,
+        "simstrat_oxygen": false,
+        "type": "Natural",
+        "volume": "NA",
+        "datalakes_id": 242
     }
 ]

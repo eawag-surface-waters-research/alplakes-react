@@ -128,6 +128,9 @@ for lake in metadata:
     else:
         simstrat_keys = []
     if len(simstrat_keys) > 0:
+        simstrat_oxygen = True
+        if "simstrat_oxygen" in lake and lake["simstrat_oxygen"] == False:
+            simstrat_oxygen = False
         add = True
         if "forecast" not in data:
             data["forecast"] = {}
@@ -167,19 +170,27 @@ for lake in metadata:
                 simstrat_parameters["hydro_source"] = "Bundesamt für Umwelt BAFU"
             if "calibration_source" in simstrat_metadata:
                 simstrat_parameters["calibration_source"] = simstrat_metadata["calibration_source"]
-            data["forecast"]["1d_model"].append({**simstrat_parameters, "parameter": "T", "unit": "°"})
+            data["forecast"]["1d_model"].append({**simstrat_parameters, "parameter": "T", "unit": "°", "simstrat_oxygen": simstrat_oxygen})
             data["trends"]["doy"][k] = {
                 **simstrat_parameters,
                 "depths": [0],
                 "parameters": [{ "key": "T", "name": "temperature", "unit": "°C" }],
                 "displayOptions": {}
             }
-            data["trends"]["year"][k] = {
-                **simstrat_parameters,
-                "parameters": [
+
+
+            if simstrat_oxygen:
+                sp = [
                   { "key": "T", "name": "temperature", "unit": "°C" },
                   { "key": "OxygenSat", "name": "oxygensat", "unit": "%" }
-                ],
+                ]
+            else:
+                sp = [
+                    {"key": "T", "name": "temperature", "unit": "°C"}
+                ]
+            data["trends"]["year"][k] = {
+                **simstrat_parameters,
+                "parameters": sp,
                 "displayOptions": { "paletteName": "vik", "thresholdStep": 200 }
             }
         home["filters"].append("1D")
