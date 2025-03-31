@@ -4425,6 +4425,7 @@
         "elevation": 655.6,
         "latitude": 47.7,
         "longitude": 11.226,
+        "simstrat_oxygen": false,
         "type": "Natural",
         "volume": "NA",
         "datalakes_id": 222
@@ -4443,6 +4444,7 @@
         "elevation": 560.4,
         "latitude": 48.058,
         "longitude": 11.179,
+        "simstrat_oxygen": false,
         "type": "Natural",
         "volume": "NA",
         "datalakes_id": 223
@@ -4461,6 +4463,7 @@
         "elevation": 787.3,
         "latitude": 47.572,
         "longitude": 10.637,
+        "simstrat_oxygen": false,
         "type": "Natural",
         "volume": "NA",
         "datalakes_id": 224
@@ -4479,6 +4482,7 @@
         "elevation": 800.8,
         "latitude": 47.59,
         "longitude": 11.347,
+        "simstrat_oxygen": false,
         "type": "Natural",
         "volume": "NA",
         "datalakes_id": 225
@@ -4497,6 +4501,7 @@
         "elevation": 442.1,
         "latitude": 47.971,
         "longitude": 12.743,
+        "simstrat_oxygen": false,
         "type": "Natural",
         "volume": "NA",
         "datalakes_id": 226
@@ -4515,6 +4520,7 @@
         "elevation": 725.5,
         "latitude": 47.719,
         "longitude": 11.739,
+        "simstrat_oxygen": false,
         "type": "Natural",
         "volume": "NA",
         "datalakes_id": 227
@@ -4533,6 +4539,7 @@
         "elevation": 584.2,
         "latitude": 47.9,
         "longitude": 11.317,
+        "simstrat_oxygen": false,
         "type": "Natural",
         "volume": "NA",
         "datalakes_id": 228
@@ -4551,6 +4558,7 @@
         "elevation": 648.6,
         "latitude": 47.69,
         "longitude": 11.161,
+        "simstrat_oxygen": false,
         "type": "Natural",
         "volume": "NA",
         "datalakes_id": 229
@@ -4569,6 +4577,7 @@
         "elevation": 470.1,
         "latitude": 47.873,
         "longitude": 12.239,
+        "simstrat_oxygen": false,
         "type": "Natural",
         "volume": "NA",
         "datalakes_id": 230
@@ -4587,6 +4596,7 @@
         "elevation": 653.0,
         "latitude": 47.85,
         "longitude": 11.855,
+        "simstrat_oxygen": false,
         "type": "Natural",
         "volume": "NA",
         "datalakes_id": 231
@@ -4605,6 +4615,7 @@
         "elevation": 776.8,
         "latitude": 47.723,
         "longitude": 11.862,
+        "simstrat_oxygen": false,
         "type": "Natural",
         "volume": "NA",
         "datalakes_id": 232
@@ -4623,6 +4634,7 @@
         "elevation": 703.0,
         "latitude": 47.635,
         "longitude": 10.266,
+        "simstrat_oxygen": false,
         "type": "Natural",
         "volume": "NA",
         "datalakes_id": 233
@@ -4641,6 +4653,7 @@
         "elevation": 603.3,
         "latitude": 47.553,
         "longitude": 12.978,
+        "simstrat_oxygen": false,
         "type": "Natural",
         "volume": "NA",
         "datalakes_id": 234
@@ -4659,6 +4672,7 @@
         "elevation": 598.8,
         "latitude": 47.647,
         "longitude": 11.34,
+        "simstrat_oxygen": false,
         "type": "Natural",
         "volume": "NA",
         "datalakes_id": 235
@@ -4677,6 +4691,7 @@
         "elevation": 783.8,
         "latitude": 47.601,
         "longitude": 10.671,
+        "simstrat_oxygen": false,
         "type": "Natural",
         "volume": "NA",
         "datalakes_id": 236
@@ -4695,6 +4710,7 @@
         "elevation": 876.0,
         "latitude": 47.618,
         "longitude": 10.448,
+        "simstrat_oxygen": false,
         "type": "Natural",
         "volume": "NA",
         "datalakes_id": 237
@@ -4713,6 +4729,7 @@
         "elevation": 724.6,
         "latitude": 47.572,
         "longitude": 10.175,
+        "simstrat_oxygen": false,
         "type": "Natural",
         "volume": "NA",
         "datalakes_id": 238
@@ -4731,6 +4748,7 @@
         "elevation": 972.7,
         "latitude": 47.458,
         "longitude": 10.974,
+        "simstrat_oxygen": false,
         "type": "Natural",
         "volume": "NA",
         "datalakes_id": 239
@@ -4749,6 +4767,7 @@
         "elevation": 518.2,
         "latitude": 47.878,
         "longitude": 12.451,
+        "simstrat_oxygen": false,
         "type": "Natural",
         "volume": "NA",
         "datalakes_id": 240
@@ -4767,6 +4786,7 @@
         "elevation": 785.9,
         "latitude": 47.6,
         "longitude": 10.776,
+        "simstrat_oxygen": false,
         "type": "Natural",
         "volume": "NA",
         "datalakes_id": 241
@@ -4785,6 +4805,7 @@
         "elevation": 532.9,
         "latitude": 48.002,
         "longitude": 11.125,
+        "simstrat_oxygen": false,
         "type": "Natural",
         "volume": "NA",
         "datalakes_id": 242
