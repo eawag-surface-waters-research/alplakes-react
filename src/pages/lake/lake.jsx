@@ -15,6 +15,7 @@ import Scientific from "./components/scientific";
 import Parameters from "./components/parameters";
 import Bathymetry from "./components/bathymetry";
 import WaterLevel from "./components/waterlevel";
+import Webcams from "./components/webcams";
 import Doy from "./components/doy";
 import PastYear from "./components/pastyear";
 import Climate from "./components/climate";
@@ -152,6 +153,14 @@ class Lake extends Component {
                   />
                 )}
               </div>
+            )}
+            {"satellite" in metadata && (
+              <Webcams
+                id={id}
+                parameters={metadata["webcams"]}
+                language={language}
+                dark={dark}
+              />
             )}
             {"satellite" in metadata && (
               <div className="section satellite">

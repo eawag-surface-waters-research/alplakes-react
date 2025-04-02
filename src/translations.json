@@ -503,6 +503,18 @@
     "FR": "Valeurs récentes de la température de l’eau de surface recueillies à partir de diverses sources.",
     "IT": "Valori recenti della temperatura delle acque superficiali raccolti da varie fonti."
   },
+  "webcams": {
+    "EN": "Webcams",
+    "DE": "Webcams",
+    "FR": "Webcams",
+    "IT": "Webcam"
+  },
+  "webcamsText": {
+    "EN": "Webcams with views of the lake, collected from Windy.com.",
+    "DE": "Webcams mit Blick auf den See, gesammelt von Windy.com.",
+    "FR": "Webcams avec vue sur le lac, collectées sur Windy.com.",
+    "IT": "Webcam con vista sul lago, raccolte da Windy.com."
+  },
   "scientificText": {
     "EN": "Open source scientific datasets available for the lake.",
     "DE": "Für den See sind wissenschaftliche Open-Source-Datensätze verfügbar.",
