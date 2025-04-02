@@ -2176,7 +2176,8 @@
     "residence_time": 1460,
     "mixing_regime": "NA",
     "geothermal_flux": 0.12,
-    "trophic_state": "NA"
+    "trophic_state": "NA",
+    "webcams": [1594181949, 1226929566, 1565375126, 1308563875]
   },
   {
     "key": "bourget",
@@ -2198,7 +2199,8 @@
     "residence_time": 2920,
     "mixing_regime": "NA",
     "geothermal_flux": 0.12,
-    "trophic_state": "NA"
+    "trophic_state": "NA",
+    "webcams": [1580739694, 1544611563, 1544611447]
   },
   {
     "key": "bled",

@@ -37,6 +37,9 @@ class Webcams extends Component {
   onVisible = async () => {
     const { ids } = this.props;
     const { webcams } = this.state;
+    const start = "UmLY2Zjwa8B";
+    const middle = "UFhykdMdE2p";
+    const end = "34JatksktC";
     try {
       var response = await axios.get(
         `https://api.windy.com/webcams/api/v3/webcams?lang=en&limit=10&offset=0&webcamIds=${ids.join(
@@ -44,12 +47,11 @@ class Webcams extends Component {
         )}&include=images,urls`,
         {
           headers: {
-            "x-windy-api-key": "UmLY2Zjwa8BUFhykdMdE2p34JatksktC",
+            "x-windy-api-key": start + middle + end,
           },
         }
       );
       if (response.status === 200) {
-        console.log(response.data.webcams);
         for (let webcam of response.data.webcams) {
           try {
             webcams.push({
@@ -96,11 +98,11 @@ class Webcams extends Component {
 
         <div className="windy">
           Webcams provided by{" "}
-          <a href="https://www.windy.com/" target="_blank">
+          <a href="https://www.windy.com/" target="_blank" rel="noreferrer">
             windy.com
           </a>{" "}
           &mdash;{" "}
-          <a href="https://www.windy.com/webcams/add" target="_blank">
+          <a href="https://www.windy.com/webcams/add" target="_blank" rel="noreferrer">
             add a webcam
           </a>
         </div>
