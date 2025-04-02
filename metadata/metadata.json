@@ -114,6 +114,7 @@
     "type": "Natural",
     "surface_area": 88.5,
     "default_depth": 1,
+    "webcams": [1684180304,1372681309,1632332807,1697032784],
     "3D": {
       "performance": {
         "rmse": {
@@ -152,6 +153,7 @@
     "datalakes_id": 2,
     "swiss_bathy": true,
     "default_depth": 0.7,
+    "webcams": [1649936556,1649909237],
     "3D": {
       "performance": {
         "rmse": {
@@ -191,6 +193,7 @@
     "sediment_oxygen_uptake_rate": -32.5,
     "default_depth": 0.7,
     "current_temperature": true,
+    "webcams": [1592132837,1217940701],
     "3D": {
       "performance": {
         "rmse": {
@@ -221,6 +224,7 @@
     "flags": ["italian"],
     "datalakes_id": 59,
     "default_depth": 1,
+    "webcams": [1620391489,1602344249,1600351830,1600352313],
     "3D": {
       "performance": {
         "rmse": {
@@ -262,6 +266,7 @@
     "trophic_state": "Mesotrophic",
     "sediment_oxygen_uptake_rate": -33.1,
     "default_depth": 1,
+    "webcams": [1453939473],
     "3D": {
       "performance": {
         "rmse": {
@@ -303,6 +308,7 @@
     "current_temperature": true,
     "sediment_oxygen_uptake_rate": -32.8,
     "default_depth": 1,
+    "webcams": [1249042608,1451403794],
     "3D": {
       "performance": {
         "rmse": {
@@ -332,6 +338,7 @@
     "flags": ["italian"],
     "datalakes_id": 189,
     "default_depth": 1,
+    "webcams": [1471001482,1737368970],
     "3D": {
       "performance": {
         "rmse": {
@@ -373,6 +380,7 @@
     "current_temperature": true,
     "sediment_oxygen_uptake_rate": -19.7,
     "default_depth": 1,
+    "webcams": [1336805325],
     "3D": {
       "performance": {
         "rmse": {
@@ -450,6 +458,7 @@
     "current_temperature": true,
     "sediment_oxygen_uptake_rate": -28.1,
     "default_depth": 1,
+    "webcams": [1545397647,1697037678],
     "3D": {
       "performance": {
         "rmse": {
@@ -486,6 +495,7 @@
     "trophic_state": "",
     "datalakes_id": 41,
     "default_depth": 1,
+    "webcams": [1732896011,1700205092],
     "3D": {
       "performance": {
         "rmse": {
@@ -549,6 +559,7 @@
     "mixing_regime": "Oligomictic",
     "geothermal_flux": 0.1,
     "trophic_state": "Oligotrophic",
+    "webcams": [1576860180,1594984710,1621377008,1697040708],
     "sediment_oxygen_uptake_rate": -25.0
   },
   {
@@ -575,6 +586,7 @@
     "datalakes_id": 12,
     "swiss_bathy": true,
     "current_temperature": true,
+    "webcams": [1697040784,1588059959,1461848356],
     "sediment_oxygen_uptake_rate": -10.6
   },
   {
@@ -601,6 +613,7 @@
     "datalakes_id": 16,
     "sediment_oxygen_uptake_rate": -14.0,
     "swiss_bathy": true,
+    "webcams": [1697030972,1292513874,1514960696,1371732007],
     "current_temperature": true
   },
   {
@@ -624,6 +637,7 @@
     "mixing_regime": "Monomictic",
     "geothermal_flux": 0.08,
     "trophic_state": "",
+    "webcams": [1371651001],
     "datalakes_id": 19
   },
   {
@@ -647,6 +661,7 @@
     "mixing_regime": "Dimictic",
     "geothermal_flux": 0.09,
     "trophic_state": "",
+    "webcams": [1318757469],
     "datalakes_id": 20
   },
   {
@@ -672,6 +687,7 @@
     "trophic_state": "Oligotrophic",
     "datalakes_id": 14,
     "swiss_bathy": true,
+    "webcams": [1706687563,1239614773,1423567457,1712829136],
     "sediment_oxygen_uptake_rate": -26.6
   },
   {

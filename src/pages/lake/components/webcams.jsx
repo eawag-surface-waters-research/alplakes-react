@@ -35,7 +35,7 @@ class Webcams extends Component {
   }
 
   onVisible = async () => {
-    const { ids } = this.props;
+    const { ids, properties } = this.props;
     const { webcams } = this.state;
     const start = "UmLY2Zjwa8B";
     const middle = "UFhykdMdE2p";
@@ -58,7 +58,9 @@ class Webcams extends Component {
               id: webcam.webcamId,
               title: webcam.title,
               image: webcam.images.current.preview,
-              link: webcam.urls.detail,
+              link:
+                webcam.urls.detail +
+                `?${properties.latitude},${properties.longitude},12`,
               time: new Date(webcam.lastUpdatedOn),
             });
           } catch (e) {}
@@ -102,7 +104,11 @@ class Webcams extends Component {
             windy.com
           </a>{" "}
           &mdash;{" "}
-          <a href="https://www.windy.com/webcams/add" target="_blank" rel="noreferrer">
+          <a
+            href="https://www.windy.com/webcams/add"
+            target="_blank"
+            rel="noreferrer"
+          >
             add a webcam
           </a>
         </div>

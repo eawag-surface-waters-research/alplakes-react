@@ -155,6 +155,7 @@ class Lake extends Component {
                 {"webcams" in metadata["measurements"] && (
                   <Webcams
                     ids={metadata.measurements["webcams"]}
+                    properties={metadata.properties}
                     language={language}
                     dark={dark}
                   />
