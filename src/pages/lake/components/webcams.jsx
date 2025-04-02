@@ -1,13 +1,13 @@
 import React, { Component, createRef } from "react";
 import axios from "axios";
-import CONFIG from "../../../config.json";
+import { timeAgo2 } from "../functions/general";
 import Translations from "../../../translations.json";
 import Information from "../../../components/information/information";
 
 class Webcams extends Component {
   state = {
     hasBeenVisible: false,
-    levels: [],
+    webcams: [],
   };
 
   ref = createRef();
@@ -34,17 +34,76 @@ class Webcams extends Component {
     }
   }
 
-  onVisible = async () => {};
+  onVisible = async () => {
+    const { ids } = this.props;
+    const { webcams } = this.state;
+    try {
+      var response = await axios.get(
+        `https://api.windy.com/webcams/api/v3/webcams?lang=en&limit=10&offset=0&webcamIds=${ids.join(
+          ","
+        )}&include=images,urls`,
+        {
+          headers: {
+            "x-windy-api-key": "UmLY2Zjwa8BUFhykdMdE2p34JatksktC",
+          },
+        }
+      );
+      if (response.status === 200) {
+        console.log(response.data.webcams);
+        for (let webcam of response.data.webcams) {
+          try {
+            webcams.push({
+              id: webcam.webcamId,
+              title: webcam.title,
+              image: webcam.images.current.preview,
+              link: webcam.urls.detail,
+              time: new Date(webcam.lastUpdatedOn),
+            });
+          } catch (e) {}
+        }
+        this.setState({ webcams });
+      }
+    } catch (e) {}
+  };
 
   render() {
-    var { language } = this.props;
+    const { language } = this.props;
+    const { webcams } = this.state;
     return (
       <div className="webcams subsection" ref={this.ref}>
         <h3>
           {Translations.webcams[language]}
           <Information information={Translations.webcamsText[language]} />
         </h3>
-        <img src="https://images-webcams.windy.com/47/1252954747/current/full/1252954747.jpg" />
+        <div className="webcams-outer">
+          {webcams.map((w) => (
+            <a
+              href={w.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              key={w.id}
+            >
+              <div className="webcams-inner">
+                <img src={w.image} alt={w.title} />
+                <div className="label">
+                  <div className="value">{w.title.split(":")[0]}</div>
+                  <div className="time">{timeAgo2(w.time, language)}</div>
+                </div>
+              </div>
+            </a>
+          ))}
+        </div>
+
+        <div className="windy">
+          Webcams provided by{" "}
+          <a href="https://www.windy.com/" target="_blank">
+            windy.com
+          </a>{" "}
+          &mdash;{" "}
+          <a href="https://www.windy.com/webcams/add" target="_blank">
+            add a webcam
+          </a>
+        </div>
       </div>
     );
   }

@@ -25,6 +25,7 @@
     "sediment_oxygen_uptake_rate": -37.5,
     "default_depth": 0.7,
     "current_temperature": true,
+    "webcams": [1697037687, 1371660606, 1551967599, 1357984128],
     "3D": {
       "performance": {
         "rmse": {

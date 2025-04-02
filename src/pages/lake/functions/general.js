@@ -203,6 +203,52 @@ export const timeAgo = (time, language) => {
   }
 };
 
+export const timeAgo2 = (time, language) => {
+  const currentDate = new Date();
+  const givenDate = new Date(time);
+  const differenceInMilliseconds = currentDate - givenDate;
+
+  const differenceInMinutes = Math.round(differenceInMilliseconds / 60000);
+  const differenceInDays = Math.max(
+    1,
+    Math.round(differenceInMilliseconds / 86400000)
+  );
+
+  // Handling Months (if the difference is in months)
+  if (differenceInDays % 30 === 0 || differenceInDays > 84) {
+    let count = Math.ceil(differenceInDays / 30);
+    return count === 1
+      ? Translations["monthAgo"][language]
+      : Translations["monthsAgo"][language].replace("#", count);
+  } 
+  // Handling Weeks (if the difference is in weeks)
+  else if (differenceInDays % 7 === 0 || differenceInDays > 21) {
+    let count = Math.ceil(differenceInDays / 7);
+    return count === 1
+      ? Translations["weekAgo"][language]
+      : Translations["weeksAgo"][language].replace("#", count);
+  } 
+  // Handling Days (if the difference is in days)
+  else if (differenceInDays > 1) {
+    return differenceInDays === 1
+      ? Translations["dayAgo"][language]
+      : Translations["daysAgo"][language].replace("#", differenceInDays);
+  } 
+  // Handling Hours (if the difference is in hours)
+  else if (differenceInMinutes >= 60 || differenceInMinutes > 120) {
+    let count = Math.ceil(differenceInMinutes / 60);
+    return count === 1
+      ? Translations["hourAgo"][language]
+      : Translations["hoursAgo"][language].replace("#", count);
+  } 
+  // Handling Minutes (if the difference is in minutes)
+  else {
+    return differenceInMinutes === 1
+      ? Translations["minuteAgo"][language]
+      : Translations["minutesAgo"][language].replace("#", differenceInMinutes);
+  }
+};
+
 export const round = (value, decimals) => {
   return Math.round(value * 10 ** decimals) / 10 ** decimals;
 };

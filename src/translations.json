@@ -509,11 +509,23 @@
     "FR": "Webcams",
     "IT": "Webcam"
   },
+  "windy": {
+    "EN": "Webcams provided by",
+    "DE": "Webcams bereitgestellt von",
+    "FR": "Webcams fournies par",
+    "IT": "Webcam fornite da"
+  },
+  "windyAdd": {
+    "EN": "add a webcam",
+    "DE": "eine Webcam hinzufügen",
+    "FR": "ajouter une webcam",
+    "IT": "aggiungere una webcam"
+  },
   "webcamsText": {
-    "EN": "Webcams with views of the lake, collected from Windy.com.",
-    "DE": "Webcams mit Blick auf den See, gesammelt von Windy.com.",
-    "FR": "Webcams avec vue sur le lac, collectées sur Windy.com.",
-    "IT": "Webcam con vista sul lago, raccolte da Windy.com."
+    "EN": "Selected webcams with views of the lake from Windy.com.",
+    "DE": "Ausgewählte Webcams mit Seeblick von Windy.com.",
+    "FR": "Webcams sélectionnées avec vue sur le lac de Windy.com.",
+    "IT": "Webcam selezionate con vista sul lago da Windy.com."
   },
   "scientificText": {
     "EN": "Open source scientific datasets available for the lake.",

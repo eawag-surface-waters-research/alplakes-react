@@ -152,15 +152,14 @@ class Lake extends Component {
                     bounds={metadata.properties.bounds}
                   />
                 )}
+                {"webcams" in metadata["measurements"] && (
+                  <Webcams
+                    ids={metadata.measurements["webcams"]}
+                    language={language}
+                    dark={dark}
+                  />
+                )}
               </div>
-            )}
-            {"satellite" in metadata && (
-              <Webcams
-                id={id}
-                parameters={metadata["webcams"]}
-                language={language}
-                dark={dark}
-              />
             )}
             {"satellite" in metadata && (
               <div className="section satellite">

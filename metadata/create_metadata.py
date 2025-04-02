@@ -206,6 +206,11 @@ for lake in metadata:
         if "measurements" not in data:
             data["measurements"] = {}
         data["measurements"]["water_levels"] = {}
+    if "webcams" in lake:
+        add = True
+        if "measurements" not in data:
+            data["measurements"] = {}
+        data["measurements"]["webcams"] = lake["webcams"]
     if "insitu" in lake:
         add = True
         if "measurements" not in data:
