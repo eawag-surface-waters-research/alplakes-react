@@ -39,7 +39,7 @@
   box-sizing: border-box;
   border: 1px solid var(--border-color);
   outline: none;
-  transition: all .2s 0s ease;
+  transition: border-color .2s 0s ease;
 }
 
 .main .home .content .search .search-bar {
@@ -129,7 +129,7 @@
   cursor: pointer;
   margin-right: calc(var(--padding) / 4);
   color: var(--background-subtle-font-color);
-  transition: all .2s 0s ease;
+  transition: border-color .2s 0s ease;
   vertical-align: top;
   box-sizing: border-box;
   position: relative;
@@ -276,7 +276,7 @@
   width: 100%;
   border-radius: 16px;
   border: 1px solid transparent;
-  transition: all .33s 0s ease;
+  transition: border-color 0.33s ease, box-shadow 0.33s ease;
   margin-bottom: 12px;
   background-color: var(--box-color);
   box-shadow: var(--box-shadow);
@@ -347,7 +347,6 @@
   font-size: 18px;
   display: inline-block;
   padding: 10px 0 12px 15px;
-  transition: all .1s 0s ease;
   vertical-align: top;
   width: calc(100% - 180px);
   font-size: 20px;

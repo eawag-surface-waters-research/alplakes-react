@@ -437,6 +437,73 @@
     min-width: 300px
 }
 
+.main .lake .webcams .webcams-outer .webcams-skeleton {
+    position: relative;
+    background-color: var(--box-color);
+    border-radius: 20px;
+    box-shadow: var(--box-shadow);
+    margin-right: var(--padding);
+    margin-bottom: calc(var(--padding)/2);
+    width: 400px;
+    height: 210px;
+    max-width: 100%;
+    display: inline-block;
+}
+
+.main .lake .webcams .webcams-outer .webcams-inner {
+    position: relative;
+    background-color: var(--box-color);
+    border-radius: 20px;
+    box-shadow: var(--box-shadow);
+    overflow: hidden;
+    margin-right: var(--padding);
+    margin-bottom: calc(var(--padding)/2);
+    width: 400px;
+    height: 210px;
+    max-width: 100%;
+    display: inline-block;
+    transition: border 0.33s 0s ease, box-shadow 0.33s 0s ease;
+    cursor: pointer;
+    text-decoration: none;
+    color: var(--background-font-color);
+}
+
+.main .lake .webcams .webcams-outer .webcams-inner:hover {
+    box-shadow: none;
+}
+
+.main .lake .webcams .webcams-outer .webcams-inner .label {
+    position: absolute;
+    z-index: 999;
+    background-color: var(--box-color);
+    bottom: calc(var(--padding) / 2);
+    right: calc(var(--padding) / 2);
+    padding: 12px;
+    border-radius: 12px;
+    max-width: 200px;
+    text-align: center;
+}
+
+.main .lake .webcams .webcams-outer .webcams-inner .label .value {
+    font-weight: 600;
+    font-family: DM_Sans, Frutiger Neue LT Pro, Arial, sans-serif;
+    padding-bottom: 5px;
+}
+
+.main .lake .webcams .webcams-outer .webcams-inner .label .time {
+    color: var(--background-subtle-font-color);
+}
+
+.main .lake .webcams .windy {
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--background-subtle-font-color);
+}
+
+.main .lake .webcams .windy a {
+    color: var(--link-color);
+}
+
 /** Satellite **/
 
 .main .lake .satellite .satellite-maps {
