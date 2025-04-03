@@ -319,7 +319,6 @@ p {
   margin-bottom: calc(var(--padding) / 2);
   padding: 0 calc(var(--padding) / 4);
   position: relative;
-  transition: all .33s ease 0s;
   width: 100%;
   height: 110px;
   background-color: var(--box-color);
