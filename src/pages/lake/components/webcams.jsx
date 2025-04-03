@@ -71,7 +71,7 @@ class Webcams extends Component {
   };
 
   render() {
-    const { language } = this.props;
+    const { language, ids } = this.props;
     const { webcams } = this.state;
     return (
       <div className="webcams subsection" ref={this.ref}>
@@ -80,22 +80,24 @@ class Webcams extends Component {
           <Information information={Translations.webcamsText[language]} />
         </h3>
         <div className="webcams-outer">
-          {webcams.map((w) => (
-            <a
-              href={w.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              key={w.id}
-            >
-              <div className="webcams-inner">
-                <img src={w.image} alt={w.title} />
-                <div className="label">
-                  <div className="value">{w.title.split(":")[0]}</div>
-                  <div className="time">{timeAgo2(w.time, language)}</div>
-                </div>
-              </div>
-            </a>
-          ))}
+          {webcams.length > 0
+            ? webcams.map((w) => (
+                <a
+                  href={w.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  key={w.id}
+                >
+                  <div className="webcams-inner">
+                    <img src={w.image} alt={w.title} />
+                    <div className="label">
+                      <div className="value">{w.title.split(":")[0]}</div>
+                      <div className="time">{timeAgo2(w.time, language)}</div>
+                    </div>
+                  </div>
+                </a>
+              ))
+            : ids.map((i) => <div className="webcams-skeleton" key={i} />)}
         </div>
 
         <div className="windy">

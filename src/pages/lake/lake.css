@@ -437,6 +437,19 @@
     min-width: 300px
 }
 
+.main .lake .webcams .webcams-outer .webcams-skeleton {
+    position: relative;
+    background-color: var(--box-color);
+    border-radius: 20px;
+    box-shadow: var(--box-shadow);
+    margin-right: var(--padding);
+    margin-bottom: calc(var(--padding)/2);
+    width: 400px;
+    height: 210px;
+    max-width: 100%;
+    display: inline-block;
+}
+
 .main .lake .webcams .webcams-outer .webcams-inner {
     position: relative;
     background-color: var(--box-color);
@@ -445,8 +458,8 @@
     overflow: hidden;
     margin-right: var(--padding);
     margin-bottom: calc(var(--padding)/2);
-    width: fit-content;
-    max-height: 210px;
+    width: 400px;
+    height: 210px;
     max-width: 100%;
     display: inline-block;
     transition: border 0.33s 0s ease, box-shadow 0.33s 0s ease;

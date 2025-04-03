@@ -87,11 +87,7 @@
   font-size: 14px;
   font-weight: bold;
   height: 30px;
-  -webkit-transition: all 0.3s ease-out;
-  -moz-transition: all 0.3s ease-out;
-  -ms-transition: all 0.3s ease-out;
-  -o-transition: all 0.3s ease-out;
-  transition: all 0.3s ease-out;
+  transition: opacity 0.3s ease-out;
   opacity: 0.7;
 }
 
