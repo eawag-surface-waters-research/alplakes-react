@@ -8,6 +8,7 @@ class Webcams extends Component {
   state = {
     hasBeenVisible: false,
     webcams: [],
+    loaded: false,
   };
 
   ref = createRef();
@@ -65,14 +66,16 @@ class Webcams extends Component {
             });
           } catch (e) {}
         }
-        this.setState({ webcams });
+        this.setState({ webcams, loaded: true });
       }
-    } catch (e) {}
+    } catch (e) {
+      this.setState({ loaded: true });
+    }
   };
 
   render() {
     const { language, ids } = this.props;
-    const { webcams } = this.state;
+    const { webcams, loaded } = this.state;
     return (
       <div className="webcams subsection" ref={this.ref}>
         <h3>
@@ -80,7 +83,7 @@ class Webcams extends Component {
           <Information information={Translations.webcamsText[language]} />
         </h3>
         <div className="webcams-outer">
-          {webcams.length > 0
+          {loaded
             ? webcams.map((w) => (
                 <a
                   href={w.link}
