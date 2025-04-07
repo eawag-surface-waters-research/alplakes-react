@@ -1,63 +1,17 @@
-export const DateCEST = (...args) => {
-  if (args.length === 0) {
-    const date = new Date();
-    const options = {
-      timeZone: "Europe/Paris",
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
-    };
-    const formattedDate = new Intl.DateTimeFormat("en-GB", options).format(
-      date
-    );
-    const [day, month, year, hour, minute, second] =
-      formattedDate.split(/[/,: ]+/);
-    const adjustedDate = new Date(
-      `${year}-${month}-${day}T${hour}:${minute}:${second}`
-    );
-    return adjustedDate;
-  }
-  if (typeof args[0] === "number") {
-    const timestampDate = new Date(args[0]);
-    const options = {
-      timeZone: "Europe/Paris",
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
-    };
-    const formattedDate = new Intl.DateTimeFormat("en-GB", options).format(
-      timestampDate
-    );
-    const [day, month, year, hour, minute, second] =
-      formattedDate.split(/[/,: ]+/);
-    const adjustedDate = new Date(
-      `${year}-${month}-${day}T${hour}:${minute}:${second}`
-    );
-    return adjustedDate;
-  }
-  return new Date(...args);
-};
+import { DateTime } from "luxon";
 
-export const europeTime = (date) => {
-  const localTime = new Date(date);
-  const localOffset = localTime.getTimezoneOffset();
-  const europeOffset = new Date().toLocaleString("en-US", {
-    timeZone: "Europe/Paris",
-    timeZoneName: "short",
-  });
-  const match = europeOffset.match(/([+-]\d{2}):?(\d{2})/);
-  const europeHoursOffset = match ? parseInt(match[1]) : 1;
-  const differenceInMinutes = europeHoursOffset * 60 + localOffset;
-  const europeTime = new Date(
-    localTime.getTime() + differenceInMinutes * 60 * 1000
-  );
-  return europeTime;
+export const DateCEST = (input) => {
+  let dt;
+  if (input === undefined) {
+    dt = DateTime.now().setZone("Europe/Paris");
+  } else if (input instanceof Date) {
+    dt = DateTime.fromJSDate(input).setZone("Europe/Paris");
+  } else if (typeof input === 'string') {
+    dt = DateTime.fromISO(input, { zone: "Europe/Paris" });
+  } else if (typeof input === 'number') {
+    dt = DateTime.fromMillis(input, { zone: "Europe/Paris" });
+  }
+  return dt.toJSDate();
 };
 
 export const hour = () => {
@@ -68,14 +22,14 @@ export const hour = () => {
 
 export const summariseData = (timestamps, values) => {
   const ONE_DAY_MS = 86400000;
-  const start = new DateCEST().setHours(0, 0, 0, 0);
+  const start = DateCEST().setHours(0, 0, 0, 0);
 
   const out = Array.from({ length: 5 }, (_, i) =>
     formatDateYYYYMMDD(start + i * ONE_DAY_MS)
   ).reduce((acc, key) => ({ ...acc, [key]: [] }), {});
 
   timestamps.forEach((ts, i) => {
-    const key = formatDateYYYYMMDD(new DateCEST(ts));
+    const key = formatDateYYYYMMDD(DateCEST(ts));
     if (out[key]) out[key].push(values[i]);
   });
 

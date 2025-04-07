@@ -164,7 +164,6 @@ class HomeMap extends Component {
       }
     }
   };
-
   boxCoords = (latitude, longitude, width, height, zoom) => {
     var point = this.map.project([latitude, longitude], zoom);
     var box = {
@@ -175,61 +174,61 @@ class HomeMap extends Component {
     };
     return box;
   };
-
-  boxConflictZoomLevel = (pointA, pointB, minZoom, maxZoom) => {
-    for (var i = minZoom; i <= maxZoom; i++) {
-      let boxA = this.boxCoords(pointA.latitude, pointA.longitude, 200, 50, i);
-      let boxB = this.boxCoords(pointB.latitude, pointB.longitude, 200, 50, i);
-      if (
-        !(
-          boxB.left < boxA.right &&
-          boxB.right > boxA.left &&
-          boxB.bottom < boxA.top &&
-          boxB.top > boxA.bottom
-        )
-      ) {
-        break;
+  labelClustering = (list) => {
+    const { minZoom, maxZoom } = this.state;
+    const levels = {};
+    const labels = {};
+    for (let z = minZoom; z <= maxZoom; z++) {
+      levels[z] = new Set();
+    }
+    const boxes = {};
+    for (let lake of list) {
+      boxes[lake.key] = {};
+      for (let z = minZoom; z <= maxZoom; z++) {
+        boxes[lake.key][z] = this.boxCoords(
+          lake.latitude,
+          lake.longitude,
+          200,
+          50,
+          z
+        );
       }
     }
-    return i - 1;
-  };
-
-  labelClustering = (list, language) => {
-    var { minZoom, maxZoom } = this.state;
-    var levels = {};
-    var labels = {};
-    for (let i = minZoom; i <= maxZoom; i++) {
-      levels[i] = [];
-    }
-    for (let i = minZoom; i <= maxZoom; i++) {
+    for (let z = minZoom; z <= maxZoom; z++) {
       for (let lake of list) {
-        if (!levels[i].includes(lake.key)) {
-          if (!(lake.key in labels)) labels[lake.key] = { zoom: i };
-          for (let innerLake of list) {
-            if (
-              lake.key !== innerLake.key &&
-              !levels[i].includes(innerLake.key)
-            ) {
-              let zoom = this.boxConflictZoomLevel(
-                innerLake,
-                lake,
-                minZoom,
-                maxZoom
-              );
-              if (zoom >= minZoom && zoom <= maxZoom) {
-                for (let j = minZoom; j <= zoom; j++) {
-                  if (!levels[j].includes(innerLake.key)) {
-                    levels[j].push(innerLake.key);
-                  }
-                }
-              }
+        if (levels[z].has(lake.key)) continue;
+        if (!(lake.key in labels)) {
+          labels[lake.key] = { zoom: z };
+        }
+        for (let other of list) {
+          if (lake.key === other.key || levels[z].has(other.key)) continue;
+          let lastConflictZoom = null;
+          for (let zi = z; zi <= maxZoom; zi++) {
+            const boxA = boxes[lake.key][zi];
+            const boxB = boxes[other.key][zi];
+            const intersects =
+              boxB.left < boxA.right &&
+              boxB.right > boxA.left &&
+              boxB.bottom < boxA.top &&
+              boxB.top > boxA.bottom;
+            if (intersects) {
+              lastConflictZoom = zi;
+            } else {
+              break;
+            }
+          }
+          if (lastConflictZoom !== null) {
+            for (let j = z; j <= lastConflictZoom; j++) {
+              levels[j].add(other.key);
             }
           }
         }
       }
     }
     for (let lake of list) {
-      if (!(lake.key in labels)) labels[lake.key] = { zoom: 14 };
+      if (!(lake.key in labels)) {
+        labels[lake.key] = { zoom: 14 };
+      }
     }
     return labels;
   };
@@ -257,20 +256,19 @@ class HomeMap extends Component {
   };
   componentDidUpdate(prevProps) {
     var { day } = this.state;
-    var { list, language, days } = this.props;
+    var { list, days } = this.props;
     if (this.plot && list.length > 0) {
       day = days[0];
       this.plotPolygons(day);
       this.map.fitBounds(this.polygons.getBounds());
       this.setState({ day, days });
-      this.labels = this.labelClustering(list, language);
+      this.labels = this.labelClustering(list);
       this.plotLabels(day);
       var map = this.map;
       map.on("zoomend", this.displayLabels);
       this.plot = false;
     } else if (prevProps.language !== this.props.language) {
       this.removeLabels();
-      this.labels = this.labelClustering(list, language);
       this.plotLabels(day);
     } else if (prevProps.dark !== this.props.dark) {
       this.map.removeLayer(this.tiles);
@@ -290,7 +288,7 @@ class HomeMap extends Component {
   async componentDidMount() {
     var { dark } = this.props;
     var { minZoom, maxZoom } = this.state;
-    var center = [46.67, 9.962];
+    var center = [46.77, 9.962];
     var zoom = 7;
     var map = L.map("map", {
       preferCanvas: true,
