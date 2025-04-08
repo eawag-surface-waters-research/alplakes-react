@@ -65,11 +65,16 @@ class Graph extends Component {
         variable.key,
         false
       );
-      var x = data.time.map((t) => new Date(t));
-      var y = data["variables"][variable.key]["data"];
-      display.data = { x, y };
-      display.noData = y.every((item) => item === null);
-      this.setState({ start, end, display, loading: false });
+      if (data) {
+        var x = data.time.map((t) => new Date(t));
+        var y = data["variables"][variable.key]["data"];
+        display.data = { x, y };
+        display.noData = y.every((item) => item === null);
+        this.setState({ start, end, display, loading: false });
+      } else {
+        window.alert(Translations.serverAlert[this.props.language]);
+        this.setState({ loading: false });
+      }
     });
   };
 
@@ -86,11 +91,16 @@ class Graph extends Component {
         variable.key,
         false
       );
-      var x = data.time.map((t) => new Date(t));
-      var y = data["variables"][variable.key]["data"];
-      display.data = { x, y };
-      display.noData = y.every((item) => item === null);
-      this.setState({ depth, display, loading: false });
+      if (data) {
+        var x = data.time.map((t) => new Date(t));
+        var y = data["variables"][variable.key]["data"];
+        display.data = { x, y };
+        display.noData = y.every((item) => item === null);
+        this.setState({ depth, display, loading: false });
+      } else {
+        window.alert(Translations.serverAlert[this.props.language]);
+        this.setState({ loading: false });
+      }
     });
   };
 
@@ -109,13 +119,18 @@ class Graph extends Component {
         variable.key,
         false
       );
-      var x = data.time.map((t) => new Date(t));
-      var y = data["variables"][variable.key]["data"];
-      display.data = { x, y };
-      display.ylabel = variable.description;
-      display.yunits = variable.unit.replace("deg", "°");
-      display.noData = y.every((item) => item === null);
-      this.setState({ variable, display, loading: false });
+      if (data) {
+        var x = data.time.map((t) => new Date(t));
+        var y = data["variables"][variable.key]["data"];
+        display.data = { x, y };
+        display.ylabel = variable.description;
+        display.yunits = variable.unit.replace("deg", "°");
+        display.noData = y.every((item) => item === null);
+        this.setState({ variable, display, loading: false });
+      } else {
+        window.alert(Translations.serverAlert[this.props.language]);
+        this.setState({ loading: false });
+      }
     });
   };
   componentDidUpdate() {
@@ -343,8 +358,13 @@ class OneDModel extends Component {
         parameters[i].model.toLowerCase(),
         parameters[i].key
       );
-      if ("simstrat_oxygen" in parameters[0] && parameters[0]["simstrat_oxygen"] === false) {
-        ["Oxygen", "OxygenSat"].forEach(key => delete metadata.variables[key]);
+      if (
+        "simstrat_oxygen" in parameters[0] &&
+        parameters[0]["simstrat_oxygen"] === false
+      ) {
+        ["Oxygen", "OxygenSat"].forEach(
+          (key) => delete metadata.variables[key]
+        );
       }
       let depth = Math.min(...metadata.depth);
       let download = await download1DLinegraph(

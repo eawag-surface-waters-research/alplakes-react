@@ -127,7 +127,7 @@ export const downloadData = async (
   var data;
   for (let layer of layers) {
     if (add.includes(layer.id)) {
-      ({ data, updates, period, datetime, depth } = await functions[layer.type](
+      let out = await functions[layer.type](
         layer,
         updates,
         period,
@@ -135,9 +135,14 @@ export const downloadData = async (
         depth,
         mapId,
         initial
-      ));
-      if (data) {
-        layer["sources"][layer["source"]]["data"] = data;
+      );
+      if (out) {
+        ({ data, updates, period, datetime, depth } = out);
+        if (data) {
+          layer["sources"][layer["source"]]["data"] = data;
+        }
+      } else {
+        return false;
       }
     }
   }
@@ -189,59 +194,63 @@ const threedDownload = async (
     source.metadata.height,
     initial
   );
-  layer.displayOptions.unit = layer.unit;
-  layer.displayOptions.min = data[layer.parameter].min;
-  layer.displayOptions.max = data[layer.parameter].max;
-  layer.displayOptions.dataMin = data[layer.parameter].min;
-  layer.displayOptions.dataMax = data[layer.parameter].max;
-  var index;
-  const timestep =
-    (data[layer.parameter].end - data[layer.parameter].start) /
-    (data[layer.parameter].data.length - 1);
-  if (datetime === false) {
-    index = data[layer.parameter].data.length - 1;
-    datetime = data[layer.parameter].end;
-    const now = new Date();
-    if (data[layer.parameter].end > now) {
-      index = Math.ceil((now - data[layer.parameter].start) / timestep);
-      datetime = new Date(
-        data[layer.parameter].start.getTime() + index * timestep
-      );
+  if (data) {
+    layer.displayOptions.unit = layer.unit;
+    layer.displayOptions.min = data[layer.parameter].min;
+    layer.displayOptions.max = data[layer.parameter].max;
+    layer.displayOptions.dataMin = data[layer.parameter].min;
+    layer.displayOptions.dataMax = data[layer.parameter].max;
+    var index;
+    const timestep =
+      (data[layer.parameter].end - data[layer.parameter].start) /
+      (data[layer.parameter].data.length - 1);
+    if (datetime === false) {
+      index = data[layer.parameter].data.length - 1;
+      datetime = data[layer.parameter].end;
+      const now = new Date();
+      if (data[layer.parameter].end > now) {
+        index = Math.ceil((now - data[layer.parameter].start) / timestep);
+        datetime = new Date(
+          data[layer.parameter].start.getTime() + index * timestep
+        );
+      }
+    } else {
+      index = Math.ceil((datetime - data[layer.parameter].start) / timestep);
     }
+    const plotTypes = ["raster", "streamlines", "vector"].filter(
+      (p) => p in layer.displayOptions && layer.displayOptions[p]
+    );
+    for (let plotType of plotTypes) {
+      updates.push({
+        event: "addLayer",
+        type: plotType,
+        id: layer.id,
+        options: {
+          data: data[layer.parameter].data[index],
+          geometry: data.geometry,
+          displayOptions: layer.displayOptions,
+        },
+      });
+    }
+    if (layer.display === "particles") {
+      updates.push({
+        event: "addLayer",
+        type: "particles",
+        id: layer.id,
+        options: {
+          id: mapId,
+          data: data[layer.parameter].data,
+          datetime: datetime.getTime(),
+          times: data[layer.parameter].time.map((t) => t.getTime()),
+          geometry: data.geometry,
+          displayOptions: layer.displayOptions,
+        },
+      });
+    }
+    return { data, updates, period, datetime, depth };
   } else {
-    index = Math.ceil((datetime - data[layer.parameter].start) / timestep);
+    return false;
   }
-  const plotTypes = ["raster", "streamlines", "vector"].filter(
-    (p) => p in layer.displayOptions && layer.displayOptions[p]
-  );
-  for (let plotType of plotTypes) {
-    updates.push({
-      event: "addLayer",
-      type: plotType,
-      id: layer.id,
-      options: {
-        data: data[layer.parameter].data[index],
-        geometry: data.geometry,
-        displayOptions: layer.displayOptions,
-      },
-    });
-  }
-  if (layer.display === "particles") {
-    updates.push({
-      event: "addLayer",
-      type: "particles",
-      id: layer.id,
-      options: {
-        id: mapId,
-        data: data[layer.parameter].data,
-        datetime: datetime.getTime(),
-        times: data[layer.parameter].time.map((t) => t.getTime()),
-        geometry: data.geometry,
-        displayOptions: layer.displayOptions,
-      },
-    });
-  }
-  return { data, updates, period, datetime, depth };
 };
 
 const satelliteDownload = async (
@@ -410,10 +419,14 @@ export const download1DHeatmap = async (model, lake, parameter, start, end) => {
   )}/${general.formatAPIDatetime(end)}?variables=${parameter}`;
   const response = await fetchDataParallel([[apiUrl]]);
   const data = response[0];
-  var x = data.time.map((t) => new Date(t));
-  var y = data.depth["data"];
-  var z = data["variables"][parameter]["data"];
-  return { x, y, z };
+  if (data) {
+    var x = data.time.map((t) => new Date(t));
+    var y = data.depth["data"];
+    var z = data["variables"][parameter]["data"];
+    return { x, y, z };
+  } else {
+    return false;
+  }
 };
 
 export const downloadDoy = async (
@@ -647,9 +660,7 @@ export const download3DMap = async (
     try {
       data[parameters[i]] = process3dData(response[i], parameters[i], height);
     } catch (e) {
-      console.error(`Failed to process ${parameters[i]}`);
-      console.error(e);
-      data[parameters[i]] = false;
+      return false;
     }
   }
   return data;

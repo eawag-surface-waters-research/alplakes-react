@@ -70,39 +70,44 @@ class PastYear extends Component {
           end
         );
       }
-      var options = {
-        period: [start, end],
-        start_date,
-        end_date,
-        xlabel: "time",
-        xunits: "",
-        ylabel: "Depth",
-        yunits: "m",
-        zlabel: Translations[variable.name][language],
-        zunits: variable.unit,
-      };
-      if (display && "palette" in display) {
-        options["palette"] = display.palette;
-      } else {
-        const paletteName =
-          "paletteName" in parameters[model].displayOptions
-            ? parameters[model].displayOptions.paletteName
-            : "vik";
-        options["palette"] = COLORS[paletteName].map((c) => {
-          return { color: [c[0], c[1], c[2]], point: c[3] };
+      if (data) {
+        var options = {
+          period: [start, end],
+          start_date,
+          end_date,
+          xlabel: "time",
+          xunits: "",
+          ylabel: "Depth",
+          yunits: "m",
+          zlabel: Translations[variable.name][language],
+          zunits: variable.unit,
+        };
+        if (display && "palette" in display) {
+          options["palette"] = display.palette;
+        } else {
+          const paletteName =
+            "paletteName" in parameters[model].displayOptions
+              ? parameters[model].displayOptions.paletteName
+              : "vik";
+          options["palette"] = COLORS[paletteName].map((c) => {
+            return { color: [c[0], c[1], c[2]], point: c[3] };
+          });
+        }
+        display = { ...parameters[model].displayOptions, ...options, data };
+        this.setState({
+          model,
+          variable,
+          start,
+          end,
+          start_date,
+          end_date,
+          display,
+          loading: false,
         });
+      } else {
+        window.alert(Translations.serverAlert[this.props.language]);
+        this.setState({ loading: false });
       }
-      display = { ...parameters[model].displayOptions, ...options, data };
-      this.setState({
-        model,
-        variable,
-        start,
-        end,
-        start_date,
-        end_date,
-        display,
-        loading: false,
-      });
     });
   };
 
@@ -135,20 +140,26 @@ class PastYear extends Component {
       const { model, variable, display } = this.state;
       const start = new Date(event[0]);
       const end = new Date(event[1]);
-      display.data = await download1DHeatmap(
+      const data = await download1DHeatmap(
         parameters[model].model.toLowerCase(),
         parameters[model].key,
         variable.key,
         start,
         end
       );
-      this.setState({
-        display,
-        start,
-        end,
-        customPeriod: true,
-        loading: false,
-      });
+      if (data) {
+        display.data = data;
+        this.setState({
+          display,
+          start,
+          end,
+          customPeriod: true,
+          loading: false,
+        });
+      } else {
+        window.alert(Translations.serverAlert[this.props.language]);
+        this.setState({ loading: false });
+      }
     });
   };
 

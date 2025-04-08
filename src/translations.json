@@ -359,6 +359,12 @@
     "FR": "Cliquez pour en savoir plus",
     "IT": "Fare clic per ulteriori informazioni"
   },
+  "serverAlert": {
+    "EN": "We're currently unable to retrieve data from the server. Please try again later.",
+    "DE": "Wir können derzeit keine Daten vom Server abrufen. Bitte versuchen Sie es später noch einmal.",
+    "FR": "Nous ne parvenons actuellement pas à récupérer les données du serveur. Veuillez réessayer ultérieurement.",
+    "IT": "Al momento non siamo in grado di recuperare i dati dal server. Riprova più tardi."
+  },
   "failedPlot": {
     "EN": "Failed to plot data.",
     "DE": "Daten konnten nicht gezeichnet werden.",

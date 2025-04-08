@@ -92,9 +92,7 @@ class Map extends Component {
       var graphSelection = { id: layer.id, type: "transect_plot" };
       this.setState({ layers, graphSelection, graphHide: false });
     } else {
-      window.alert(
-        "Failed to collect transect from the server. Please try again."
-      );
+      window.alert(Translations.serverAlert[this.props.language]);
     }
     this.loaded();
   };
@@ -119,9 +117,7 @@ class Map extends Component {
       this.setState({ layers, graphSelection, graphHide: false });
       return { lat: data.lat, lng: data.lng };
     } else {
-      window.alert(
-        "Failed to collect profile from the server. Please try again."
-      );
+      window.alert(Translations.serverAlert[this.props.language]);
     }
   };
 
@@ -146,7 +142,7 @@ class Map extends Component {
       graphSelection
     ));
     this.loading(Translations.downloadingData[language]);
-    ({ updates, layers, period, datetime, depth } = await downloadData(
+    let download = await downloadData(
       add,
       layers,
       updates,
@@ -155,28 +151,47 @@ class Map extends Component {
       depth,
       mapId,
       initial
-    ));
-    let active_layers = layers.filter((l) => l.active);
-    if (active_layers.length > 0 && window.innerWidth > 500) {
-      selection = add[add.length - 1];
-    } else {
-      selection = false;
-    }
-    window.history.replaceState(
-      {},
-      "",
-      `?layers=${active_layers.map((l) => l.id).join(",")}`
     );
-    this.loaded();
-    this.setState({
-      layers,
-      updates,
-      period,
-      datetime,
-      depth,
-      selection,
-      graphSelection,
-    });
+    if (download) {
+      ({ updates, layers, period, datetime, depth } = download);
+      let active_layers = layers.filter((l) => l.active);
+      if (active_layers.length > 0 && window.innerWidth > 500) {
+        selection = add[add.length - 1];
+      } else {
+        selection = false;
+      }
+      window.history.replaceState(
+        {},
+        "",
+        `?layers=${active_layers.map((l) => l.id).join(",")}`
+      );
+      this.loaded();
+      this.setState({
+        layers,
+        updates,
+        period,
+        datetime,
+        depth,
+        selection,
+        graphSelection,
+      });
+    } else {
+      window.alert(Translations.serverAlert[this.props.language]);
+      for (let layer_id of add) {
+        layers.find((l) => l.id === layer_id).active = false;
+      }
+      let active_layers = layers.filter((l) => l.active);
+      window.history.replaceState(
+        {},
+        "",
+        `?layers=${active_layers.map((l) => l.id).join(",")}`
+      );
+      this.loaded();
+      this.setState({
+        layers,
+        selection: false,
+      });
+    }
   };
 
   updateOptions = (id, type, options) => {
@@ -331,7 +346,7 @@ class Map extends Component {
       depth,
       sidebar,
       graphSelection,
-      graphHide
+      graphHide,
     } = this.state;
     var { language, dark } = this.props;
     var title = "";
