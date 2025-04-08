@@ -36,16 +36,7 @@ class ModelInputs extends Component {
   };
   setExample = (event) => {
     var example = event.target.value;
-    if (example === "downloads") {
-      const userInput = window.prompt("Please enter the password:");
-      if (userInput === "simstrat") {
-        this.setState({ example });
-      } else if (userInput !== null) {
-        window.alert("Incorrect password!");
-      }
-    } else {
-      this.setState({ example });
-    }
+    this.setState({ example });
   };
   componentDidUpdate() {
     const { list } = this.props;
