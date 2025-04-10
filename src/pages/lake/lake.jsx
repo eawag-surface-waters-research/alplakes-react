@@ -20,6 +20,7 @@ import Doy from "./components/doy";
 import PastYear from "./components/pastyear";
 import Climate from "./components/climate";
 import NotFound from "./components/notfound";
+import LandCover from "./components/landcover";
 
 class Lake extends Component {
   state = {
@@ -211,6 +212,13 @@ class Lake extends Component {
                 {"parameters" in metadata["properties"] && (
                   <Parameters
                     parameters={metadata.properties["parameters"]}
+                    language={language}
+                    dark={dark}
+                    bounds={metadata.properties.bounds}
+                  />
+                )}
+                {"parameters" in metadata["properties"] && (
+                  <LandCover
                     language={language}
                     dark={dark}
                     bounds={metadata.properties.bounds}
