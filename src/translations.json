@@ -509,6 +509,18 @@
     "FR": "Valeurs récentes de la température de l’eau de surface recueillies à partir de diverses sources.",
     "IT": "Valori recenti della temperatura delle acque superficiali raccolti da varie fonti."
   },
+  "landcover": {
+    "EN": "Catchment land cover",
+    "DE": "Landbedeckung im Einzugsgebiet",
+    "FR": "Couverture terrestre du bassin versant",
+    "IT": "Copertura del bacino idrografico"
+  },
+  "landcoverText": {
+    "EN": "Land cover for the catchment area from ESA WorldCover 2021.",
+    "DE": "Landbedeckung für das Einzugsgebiet von ESA WorldCover 2021.",
+    "FR": "Couverture terrestre du bassin versant d'après ESA WorldCover 2021.",
+    "IT": "Copertura del suolo per il bacino idrografico da ESA WorldCover 2021."
+  },
   "webcams": {
     "EN": "Webcams",
     "DE": "Webcams",
