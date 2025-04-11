@@ -1,0 +1,11 @@
+.main .blog .post {
+    margin: var(--padding) 0;
+}
+
+.main .blog .post a {
+    color: var(--link-color);
+}
+
+.main .blog .post .date {
+    margin-top: 12px;
+}

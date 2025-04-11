@@ -3,6 +3,7 @@
   "alplakes_api": "https://alplakes-api.eawag.ch",
   "alplakes_bucket": "https://alplakes-eawag.s3.eu-central-1.amazonaws.com",
   "sencast_bucket": "https://eawagrs.s3.eu-central-1.amazonaws.com",
+  "blog_url": "https://alplakes-eawag.s3.eu-central-1.amazonaws.com/static/website/blog.json",
   "datalakes_api": "https://api.datalakes-eawag.ch",
   "sentinel2_wms": "https://services.sentinel-hub.com/ogc/wms/a595b5c3-8963-4076-98ad-5cbe7e9d7999",
   "sentinel3_wms": "https://creodias.sentinel-hub.com/ogc/wms/fea4245d-9a3b-4337-8cc2-9bbdbd22ff1a",
