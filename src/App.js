@@ -6,6 +6,7 @@ import Lake from "./pages/lake/lake";
 import Downloads from "./pages/downloads/downloads";
 import About from "./pages/about/about";
 import Models from "./pages/models/models";
+import Blog from "./pages/blog/blog";
 import Map from "./pages/lake/map/map";
 import "./App.css";
 
@@ -87,6 +88,19 @@ class App extends Component {
                 element={
                   <ErrorBoundary {...this.props} {...this.state}>
                     <Models
+                      {...this.state}
+                      setLanguage={this.setLanguage}
+                      toggleDark={this.toggleDark}
+                    />
+                  </ErrorBoundary>
+                }
+                exact
+              />
+              <Route
+                path="/blog"
+                element={
+                  <ErrorBoundary {...this.props} {...this.state}>
+                    <Blog
                       {...this.state}
                       setLanguage={this.setLanguage}
                       toggleDark={this.toggleDark}
