@@ -829,6 +829,10 @@
         position: fixed;
     }
 
+    .main .map .layer-map .add-layers .layers .layer:hover {
+        border-color: transparent;
+    }
+
     .leaflet-control-attribution {
         display: none;
     }
