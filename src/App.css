@@ -111,6 +111,7 @@
     --list-width: 100%;
     --padding: 20px;
     --header-height: calc(var(--padding) * 2 + 22px);
+    --footer-height: 58px;
     --top-margin: 87px;
     --search-height: calc(var(--padding) * 2.5 + 125px);
   }
@@ -135,6 +136,16 @@
   font-family: "Mona_Sans", "Frutiger Neue LT Pro", "Arial", sans-serif;
   color: var(--background-font-color);
   font-size: 16px;
+}
+
+.main .text-width {
+  margin: auto;
+  box-sizing: border-box;
+  margin-top: var(--top-margin);
+  max-width: calc(var(--text-width) + 2 * var(--padding));
+  min-height: calc(100vh - var(--header-height) - var(--footer-height) - var(--top-margin));
+  padding: 0 var(--padding);
+  width: 100%;
 }
 
 .main .content-width {
@@ -175,7 +186,19 @@
   padding-bottom: 1px;
 }
 
+@media screen and (max-width: 1000px) {
+  .main .text-width {
+    min-height: calc(100vh - var(--footer-height) - var(--top-margin));
+  }
+}
+
 @media screen and (max-width: 500px) {
+
+  .main .text-width {
+    padding: 0 var(--padding);
+    margin-top: var(--header-height);
+  }
+
   .main .content-width {
     padding: 0 var(--padding);
     margin-top: var(--header-height);
@@ -215,7 +238,7 @@ h4 {
 }
 
 p {
-  font-size: 18px;
+  font-size: 17px;
   line-height: 28px;
   margin-bottom: 22px;
   max-width: 700px;
