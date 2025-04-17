@@ -5,18 +5,18 @@ import Translations from "../../../translations.json";
 import Information from "../../../components/information/information";
 import CatchmentMap from "../../../components/leaflet/catchment";
 
-class LandCover extends Component {
+class Nutrients extends Component {
   state = {
     hasBeenVisible: false,
     mapId: "map_" + Math.round(Math.random() * 100000),
     polygon: false,
     wmts: {
-      url: "https://services.terrascope.be/wmts/v2",
+      url: "https://wmts{s}.geo.admin.ch/1.0.0/ch.bafu.gewaesserschutz-diffuse_eintraege_phosphor/default/current/3857/{z}/{x}/{y}.png",
       options: {
-        layer: "WORLDCOVER_2021_MAP",
-        tilematrixset: "EPSG:3857",
         format: "image/png",
-        attribution: "© ESA WorldCover 2021, produced by VITO",
+        subdomains: ["1", "2", "3", "4"],
+        maxZoom: 19,
+        attribution: "© swisstopo",
       },
     },
   };
@@ -90,8 +90,8 @@ class LandCover extends Component {
     return (
       <div className="water-temperature subsection" ref={this.ref}>
         <h3>
-          {Translations.landcover[language]}
-          <Information information={Translations.landcoverText[language]} />
+          {Translations.nutrientInputs[language]}
+          <Information information={Translations.nutrientInputsText[language]} />
         </h3>
         <div className="map-sidebar">
           <div className="map-sidebar-left">
@@ -111,4 +111,4 @@ class LandCover extends Component {
   }
 }
 
-export default LandCover;
+export default Nutrients;

@@ -509,11 +509,35 @@
     "FR": "Valeurs récentes de la température de l’eau de surface recueillies à partir de diverses sources.",
     "IT": "Valori recenti della temperatura delle acque superficiali raccolti da varie fonti."
   },
+  "catchment": {
+    "EN": "Catchment",
+    "DE": "Einzugsgebiet",
+    "FR": "Bassin versant",
+    "IT": "Bacino idrografico"
+  },
+  "catchmentText": {
+    "EN": "A lake catchment is the land area that contributes water into a lake.",
+    "DE": "Ein Seeeinzugsgebiet ist die Landfläche, die Wasser in einen See einspeist.",
+    "FR": "Un bassin versant est la zone terrestre qui fournit de l’eau à un lac.",
+    "IT": "Un bacino idrografico di un lago è l'area di terra che apporta acqua al lago."
+  },
   "landcover": {
-    "EN": "Catchment land cover",
-    "DE": "Landbedeckung im Einzugsgebiet",
-    "FR": "Couverture terrestre du bassin versant",
-    "IT": "Copertura del bacino idrografico"
+    "EN": "Land cover",
+    "DE": "Landbedeckung",
+    "FR": "Couverture terrestre",
+    "IT": "Copertura"
+  },
+  "nutrientInputs": {
+    "EN": "Nutrient Inputs",
+    "DE": "Nährstoffzufuhr",
+    "FR": "Apports nutritionnels",
+    "IT": "Apporto di nutrienti"
+  },
+  "nutrientInputsText": {
+    "EN": "Nitrogen and phosphorus inputs into Swiss water bodies (2020)",
+    "DE": "Stickstoff- und Phosphoreinträge in Schweizer Gewässer (2020)",
+    "FR": "Apports d'azote et de phosphore dans les masses d'eau suisses (2020)",
+    "IT": "Apporto di azoto e fosforo nei corpi idrici svizzeri (2020)"
   },
   "landcoverText": {
     "EN": "Land cover for the catchment area from ESA WorldCover 2021.",
@@ -1062,6 +1086,12 @@
     "DE": "See-Eigenschaften",
     "FR": "Propriétés du lac",
     "IT": "Proprietà del lago"
+  },
+  "catchmentProperties": {
+    "EN": "Catchment Properties",
+    "DE": "Einzugsgebietseigenschaften",
+    "FR": "Propriétés du bassin versant",
+    "IT": "Proprietà del bacino idrografico"
   },
   "parameters": {
     "EN": "Parameters",

@@ -21,6 +21,7 @@ import PastYear from "./components/pastyear";
 import Climate from "./components/climate";
 import NotFound from "./components/notfound";
 import LandCover from "./components/landcover";
+import Nutrients from "./components/nutrients";
 
 class Lake extends Component {
   state = {
@@ -217,19 +218,31 @@ class Lake extends Component {
                     bounds={metadata.properties.bounds}
                   />
                 )}
-                {"parameters" in metadata["properties"] && (
-                  <LandCover
-                    language={language}
-                    dark={dark}
-                    bounds={metadata.properties.bounds}
-                  />
-                )}
                 {"bathymetry" in metadata["properties"] && (
                   <Bathymetry
                     parameters={metadata.properties["bathymetry"]}
                     language={language}
                     dark={dark}
                     bounds={metadata.properties.bounds}
+                  />
+                )}
+              </div>
+            )}
+            {"properties" in metadata && (
+              <div className="section catchment">
+                <h2>{Translations.catchmentProperties[language]}</h2>
+                {"parameters" in metadata["properties"] && (
+                  <LandCover
+                    id={id}
+                    language={language}
+                    dark={dark}
+                  />
+                )}
+                {"parameters" in metadata["properties"] && (
+                  <Nutrients
+                    id={id}
+                    language={language}
+                    dark={dark}
                   />
                 )}
               </div>
