@@ -1,5 +1,6 @@
 import L from "leaflet";
 
+
 L.TileLayer.ClippedWMTS = L.TileLayer.extend({
   defaultWmtsParams: {
     service: "WMTS",
@@ -55,7 +56,7 @@ L.TileLayer.ClippedWMTS = L.TileLayer.extend({
     this._map = map;
 
     if (this._clipPolygon) {
-      this._createClipPath();
+      this._updateClipPath();
     }
 
     map.on("moveend", this._updateClipPath, this);
@@ -63,7 +64,6 @@ L.TileLayer.ClippedWMTS = L.TileLayer.extend({
 
     if (map.options.zoomAnimation && L.Browser.any3d) {
       map.on("zoomanim", this._animateZoom, this);
-      map.on("zoomend", this._resetClipTransform, this);
     }
 
     return this;
@@ -75,115 +75,58 @@ L.TileLayer.ClippedWMTS = L.TileLayer.extend({
 
     if (map.options.zoomAnimation && L.Browser.any3d) {
       map.off("zoomanim", this._animateZoom, this);
-      map.off("zoomend", this._resetClipTransform, this);
     }
 
-    if (this._clipSvg) {
-      document.body.removeChild(this._clipSvg);
-      this._clipSvg = null;
-      this._clipPolygonElement = null;
+    // Clear any clip-path styling
+    if (this._container) {
+      this._container.style.clipPath = '';
+      this._container.style.webkitClipPath = '';
     }
 
     L.TileLayer.prototype.onRemove.call(this, map);
   },
 
-  _createClipPath: function () {
-    if (!this._clipPolygon || !this._container) return;
-
-    this._clipId = "clip-" + L.Util.stamp(this);
-
-    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-    svg.setAttribute("width", 0);
-    svg.setAttribute("height", 0);
-    svg.style.display = "block";
-    svg.style.position = "absolute";
-    svg.style.pointerEvents = "none";
-    svg.style.transition = "transform 0.3s ease";
-    svg.style.transformOrigin = "top left";
-
-    const defs = document.createElementNS("http://www.w3.org/2000/svg", "defs");
-    const clipPath = document.createElementNS(
-      "http://www.w3.org/2000/svg",
-      "clipPath"
-    );
-    clipPath.setAttribute("id", this._clipId);
-
-    const polygon = document.createElementNS(
-      "http://www.w3.org/2000/svg",
-      "polygon"
-    );
-    polygon.style.transition = "all 0.3s ease"; // optional smooth morphing
-    this._clipPolygonElement = polygon;
-
-    clipPath.appendChild(polygon);
-    defs.appendChild(clipPath);
-    svg.appendChild(defs);
-    document.body.appendChild(svg);
-
-    this._clipSvg = svg;
-
-    this._container.style.clipPath = `url(#${this._clipId})`;
-    this._container.style.zIndex = 2;
-    this._updateClipPath();
-  },
-
   _updateClipPath: function () {
-    if (!this._map || !this._clipPolygon || !this._clipPolygonElement) return;
+    if (!this._map || !this._clipPolygon || !this._container) return;
 
-    window.requestAnimationFrame(() => {
-      const points = [];
-
-      const containerPoint = this._map.getContainer().getBoundingClientRect();
-      const tileContainerPoint = this._container.getBoundingClientRect();
-      const offsetX = tileContainerPoint.left - containerPoint.left;
-      const offsetY = tileContainerPoint.top - containerPoint.top;
-
-      for (let i = 0; i < this._clipPolygon.length; i++) {
-        const latLng = L.latLng(this._clipPolygon[i]);
-        const containerPt = this._map.latLngToContainerPoint(latLng);
-
-        const x = containerPt.x - offsetX;
-        const y = containerPt.y - offsetY;
-
-        points.push(`${x},${y}`);
-      }
-
-      this._clipPolygonElement.setAttribute("points", points.join(" "));
-    });
+    // Create an array to store polygon points
+    const points = [];
+    
+    // Convert each lat/lng in the polygon to container points
+    for (let i = 0; i < this._clipPolygon.length; i++) {
+      const latLng = L.latLng(this._clipPolygon[i]);
+      const point = this._map.latLngToContainerPoint(latLng);
+      
+      // Get the position relative to the tile container
+      const containerPos = this._map.getContainer().getBoundingClientRect();
+      const tilePos = this._container.getBoundingClientRect();
+      
+      const x = point.x - (tilePos.left - containerPos.left);
+      const y = point.y - (tilePos.top - containerPos.top);
+      
+      points.push(`${x}px ${y}px`);
+    }
+    
+    // Create the CSS polygon clip-path value
+    const clipValue = `polygon(${points.join(', ')})`;
+    
+    // Apply the clip path to the container with vendor prefixes for maximum compatibility
+    this._container.style.clipPath = clipValue;
+    this._container.style.webkitClipPath = clipValue; // For Safari
   },
 
   _animateZoom: function (e) {
-    if (!this._map || !this._clipSvg) return;
-
-    const scale = this._map.getZoomScale(e.zoom);
-    const offset = this._map
-      ._latLngToNewLayerPoint(this._map.getCenter(), e.zoom, e.center)
-      .subtract(this._map._getMapPanePos())
-      .multiplyBy(-(scale - 1));
-
-    const transformStr = `translate(${offset.x}px, ${offset.y}px) scale(${scale})`;
-
-    this._clipSvg.style.transition = "transform 0.3s ease";
-    this._clipSvg.style.transformOrigin = "top left";
-    this._clipSvg.style.transform = transformStr;
-  },
-
-  _resetClipTransform: function () {
-    if (this._clipSvg) {
-      this._clipSvg.style.transition = "";
-      this._clipSvg.style.transform = "";
-    }
+    if (!this._map || !this._container) return;
+    
+    // Update clip path immediately after zoom animation completes
+    this._map.once('zoomend', this._updateClipPath, this);
   },
 
   setClipPolygon: function (polygon) {
     this._clipPolygon = polygon;
 
     if (this._map) {
-      if (this._clipPolygonElement) {
-        this._updateClipPath();
-      } else {
-        this._createClipPath();
-      }
+      this._updateClipPath();
     }
 
     return this;
