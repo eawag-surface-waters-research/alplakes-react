@@ -228,19 +228,29 @@ class Lake extends Component {
                 )}
               </div>
             )}
-            {"properties" in metadata && (
+            {"catchmentProperties" in metadata && (
               <div className="section catchment">
                 <h2>{Translations.catchmentProperties[language]}</h2>
-                {"parameters" in metadata["properties"] && (
+                {"parameters" in metadata["catchmentProperties"] && (
+                  <Parameters
+                    parameters={metadata.catchmentProperties["parameters"]}
+                    language={language}
+                    dark={dark}
+                    bounds={metadata.properties.bounds}
+                  />
+                )}
+                {"landuse" in metadata["catchmentProperties"] && (
                   <LandCover
                     id={id}
+                    parameters={metadata.catchmentProperties["landuse"]}
                     language={language}
                     dark={dark}
                   />
                 )}
-                {"parameters" in metadata["properties"] && (
+                {"nutrients" in metadata["catchmentProperties"] && (
                   <Nutrients
                     id={id}
+                    parameters={metadata.catchmentProperties["nutrients"]}
                     language={language}
                     dark={dark}
                   />

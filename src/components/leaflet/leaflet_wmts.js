@@ -1,6 +1,5 @@
 import L from "leaflet";
 
-
 L.TileLayer.ClippedWMTS = L.TileLayer.extend({
   defaultWmtsParams: {
     service: "WMTS",
@@ -55,6 +54,10 @@ L.TileLayer.ClippedWMTS = L.TileLayer.extend({
     L.TileLayer.prototype.onAdd.call(this, map);
     this._map = map;
 
+    if (this._container) {
+      this._container.style.zIndex = 2;
+    }
+
     if (this._clipPolygon) {
       this._updateClipPath();
     }
@@ -79,8 +82,8 @@ L.TileLayer.ClippedWMTS = L.TileLayer.extend({
 
     // Clear any clip-path styling
     if (this._container) {
-      this._container.style.clipPath = '';
-      this._container.style.webkitClipPath = '';
+      this._container.style.clipPath = "";
+      this._container.style.webkitClipPath = "";
     }
 
     L.TileLayer.prototype.onRemove.call(this, map);
@@ -91,25 +94,25 @@ L.TileLayer.ClippedWMTS = L.TileLayer.extend({
 
     // Create an array to store polygon points
     const points = [];
-    
+
     // Convert each lat/lng in the polygon to container points
     for (let i = 0; i < this._clipPolygon.length; i++) {
       const latLng = L.latLng(this._clipPolygon[i]);
       const point = this._map.latLngToContainerPoint(latLng);
-      
+
       // Get the position relative to the tile container
       const containerPos = this._map.getContainer().getBoundingClientRect();
       const tilePos = this._container.getBoundingClientRect();
-      
+
       const x = point.x - (tilePos.left - containerPos.left);
       const y = point.y - (tilePos.top - containerPos.top);
-      
+
       points.push(`${x}px ${y}px`);
     }
-    
+
     // Create the CSS polygon clip-path value
-    const clipValue = `polygon(${points.join(', ')})`;
-    
+    const clipValue = `polygon(${points.join(", ")})`;
+
     // Apply the clip path to the container with vendor prefixes for maximum compatibility
     this._container.style.clipPath = clipValue;
     this._container.style.webkitClipPath = clipValue; // For Safari
@@ -117,9 +120,9 @@ L.TileLayer.ClippedWMTS = L.TileLayer.extend({
 
   _animateZoom: function (e) {
     if (!this._map || !this._container) return;
-    
+
     // Update clip path immediately after zoom animation completes
-    this._map.once('zoomend', this._updateClipPath, this);
+    this._map.once("zoomend", this._updateClipPath, this);
   },
 
   setClipPolygon: function (polygon) {

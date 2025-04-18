@@ -10,6 +10,7 @@ class Nutrients extends Component {
     hasBeenVisible: false,
     mapId: "map_" + Math.round(Math.random() * 100000),
     polygon: false,
+    points: false,
     wmts: {
       url: "https://wmts{s}.geo.admin.ch/1.0.0/ch.bafu.gewaesserschutz-diffuse_eintraege_phosphor/default/current/3857/{z}/{x}/{y}.png",
       options: {
@@ -80,18 +81,23 @@ class Nutrients extends Component {
     var { data } = await axios.get(
       CONFIG.alplakes_bucket + `/static/catchments/${id}.json`
     );
+    var { data: points } = await axios.get(
+      CONFIG.alplakes_bucket + `/static/discharge/${id}.json`
+    );
     const polygon = this.extractPolygonFromGeoJSON(data);
-    this.setState({ polygon });
+    this.setState({ polygon, points });
   };
 
   render() {
-    var { mapId, polygon, wmts } = this.state;
+    var { mapId, polygon, points, wmts } = this.state;
     var { dark, language } = this.props;
     return (
-      <div className="water-temperature subsection" ref={this.ref}>
+      <div className="nutrients subsection" ref={this.ref}>
         <h3>
           {Translations.nutrientInputs[language]}
-          <Information information={Translations.nutrientInputsText[language]} />
+          <Information
+            information={Translations.nutrientInputsText[language]}
+          />
         </h3>
         <div className="map-sidebar">
           <div className="map-sidebar-left">
@@ -100,6 +106,7 @@ class Nutrients extends Component {
                 dark={dark}
                 mapId={mapId}
                 polygon={polygon}
+                points={points}
                 wmts={wmts}
               />
             )}

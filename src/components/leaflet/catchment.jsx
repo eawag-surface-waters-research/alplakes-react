@@ -7,7 +7,7 @@ import "./css/leaflet.css";
 
 class CatchmentMap extends Component {
   async componentDidMount() {
-    var { dark, mapId, polygon, wmts } = this.props;
+    var { dark, mapId, polygon, points, wmts } = this.props;
     this.map = L.map(mapId, {
       preferCanvas: true,
       center: [46.9, 8.2],
@@ -44,19 +44,33 @@ class CatchmentMap extends Component {
 
     wmts["options"]["clipPolygon"] = polygon;
 
-    var swissTopoLayer = L.tileLayer.clippedWmts(wmts["url"], wmts["options"]);
-
-    // Add the SwissTopo WMTS layer to the map
-    swissTopoLayer.addTo(map);
-
-    
+    L.tileLayer.clippedWmts(wmts["url"], wmts["options"]).addTo(map);
 
     L.polygon(polygon, {
-      color: "red",
+      color: "black",
       fillColor: "red",
       fillOpacity: 0,
       weight: 3,
     }).addTo(map);
+
+    if (points) {
+      points.features.forEach((feature) => {
+        const [lng, lat] = feature.geometry.coordinates;
+        const props = feature.properties;
+
+        L.circleMarker([lat, lng], {
+          radius: 3,
+          fillColor: props.color || "black",
+          color: "#000",
+          weight: 1,
+          opacity: 1,
+          fillOpacity: 0.8,
+        })
+          .bindPopup(props.dcpName)
+          .addTo(map);
+      });
+    }
+
     this.map.attributionControl.setPosition("bottomleft");
   }
 

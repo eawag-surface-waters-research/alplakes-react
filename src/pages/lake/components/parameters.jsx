@@ -8,6 +8,11 @@ import flux_icon from "../../../img/flux.png";
 import mixing_icon from "../../../img/mixing.png";
 import trophic_icon from "../../../img/trophic.png";
 import type_icon from "../../../img/type.png";
+import person_icon from "../../../img/person.png";
+import outflow_icon from "../../../img/outflow.png";
+import rainfall_icon from "../../../img/rainfall.png";
+import cropland_icon from "../../../img/cropland.png";
+import dam_icon from "../../../img/dam.png";
 import Translations from "../../../translations.json";
 
 class Parameters extends Component {
@@ -74,6 +79,36 @@ class Parameters extends Component {
         unit: "",
         label: Translations["trophicState"][language],
         img: trophic_icon,
+      },
+      {
+        key: "population",
+        unit: "",
+        label: Translations["population"][language],
+        img: person_icon,
+      },
+      {
+        key: "outflows",
+        unit: "",
+        label: Translations["outflows"][language],
+        img: outflow_icon,
+      },
+      {
+        key: "rainfall",
+        unit: "mm/yr",
+        label: Translations["rainfall"][language],
+        img: rainfall_icon,
+      },
+      {
+        key: "cropland",
+        unit: "%",
+        label: Translations["cropland"][language],
+        img: cropland_icon,
+      },
+      {
+        key: "dams",
+        unit: "",
+        label: Translations["dams"][language],
+        img: dam_icon,
       },
     ];
     var plot = properties.filter(

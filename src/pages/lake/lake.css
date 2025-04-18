@@ -390,18 +390,17 @@
 
 /** Properties **/
 
-.main .lake .properties .parameters .parameters-box {
+.main .lake .parameters .parameters-box {
     background-color: var(--box-color);
     border: 1px solid var(--border-color);
     border-radius: 12px;
-    max-width: 700px;
     padding: var(--padding) 0;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
 }
 
-.main .lake .properties .parameters .parameters-box .parameter {
+.main .lake .parameters .parameters-box .parameter {
     display: inline-block;
     margin: 0;
     text-align: center;
@@ -411,30 +410,42 @@
     padding: calc(var(--padding) / 2);
 }
 
-.main .lake .properties .parameters .parameters-box .parameter img {
+.main .lake .parameters .parameters-box .parameter img {
     height: 30px;
     opacity: 0.7;
     margin-bottom: 3px;
 }
 
-.main.dark .lake .properties .parameters .parameters-box .parameter img {
+.main.dark .lake .parameters .parameters-box .parameter img {
     filter: invert(1);
 }
 
 
-.main .lake .properties .parameters .parameters-box .parameter .value {
+.main .lake .parameters .parameters-box .parameter .value {
     font-size: 18px;
     color: var(--background-font-color);
     margin-bottom: 5px;
 }
 
-.main .lake .properties .parameters .parameters-box .parameter .label {
+.main .lake .parameters .parameters-box .parameter .label {
     font-size: 16px;
     color: var(--background-subtle-font-color);
 }
 
 .main .lake .properties .bathymetry .clickable-box {
     min-width: 300px
+}
+
+/** Catchment Properties **/
+
+.main .lake .catchment .landcover .map-sidebar .map-sidebar-right table {
+    width: 100%;
+    border-spacing: 10px;
+    border-collapse: separate;
+}
+
+.main .lake .catchment .landcover .map-sidebar .map-sidebar-right table th {
+    text-align: left;
 }
 
 .main .lake .webcams .webcams-outer .webcams-skeleton {
@@ -809,7 +820,7 @@
         height: 300px;
     }
 
-    .main .lake .properties .parameters .parameters-box {
+    .main .lake .parameters .parameters-box {
         border: none;
     }
 

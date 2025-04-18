@@ -1081,6 +1081,36 @@
     "FR": "État trophique",
     "IT": "Stato trofico"
   },
+  "population": {
+    "EN": "Population",
+    "DE": "Bevölkerung",
+    "FR": "Population",
+    "IT": "Popolazione"
+  },
+  "outflows": {
+    "EN": "Outflows",
+    "DE": "Abflüsse",
+    "FR": "Sorties",
+    "IT": "Deflussi"
+  },
+  "rainfall": {
+    "EN": "Rainfall",
+    "DE": "Regen",
+    "FR": "Précipitations",
+    "IT": "Piovosità"
+  },
+  "cropland": {
+    "EN": "Cropland",
+    "DE": "Ackerland",
+    "FR": "Terres cultivées",
+    "IT": "Terreno coltivabile"
+  },
+  "dams": {
+    "EN": "Dams",
+    "DE": "Dämme",
+    "FR": "Barrages",
+    "IT": "Dighe"
+  },
   "lakeProperties": {
     "EN": "Lake Properties",
     "DE": "See-Eigenschaften",
