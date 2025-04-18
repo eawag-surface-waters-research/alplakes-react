@@ -448,6 +448,52 @@
     text-align: left;
 }
 
+.main .lake .catchment .nutrients .map-sidebar .map-sidebar-left .nutrient-legend {
+    position: absolute;
+    right: 6px;
+    bottom: 6px;
+    background-color: var(--box-color);
+    padding: 6px 12px;
+    z-index: 9999;
+    border-radius: 8px;
+    max-width: 32%;
+}
+
+.main .lake .catchment .nutrients .map-sidebar .map-sidebar-left .nutrient-legend .circle {
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 12px;
+    height: 12px;
+    border-radius: 100%;
+    border: 1px solid black;
+    display: inline-block;
+    margin-right: 8px;
+}
+
+.main .lake .catchment .nutrients .map-sidebar .map-sidebar-left .layer-selection {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    z-index: 9999;
+    background-color: var(--box-color);
+    padding: 12px;
+    border-radius: 8px;
+}
+
+.main .lake .catchment .nutrients .map-sidebar .map-sidebar-left .layer-selection .layer-option {
+    cursor: pointer;
+    color: var(--background-subtle-font-color);
+}
+
+.main .lake .catchment .nutrients .map-sidebar .map-sidebar-left .layer-selection .layer-option:hover {
+    color: var(--background-font-color);
+}
+
+.main .lake .catchment .nutrients .map-sidebar .map-sidebar-left .layer-selection .layer-option.selected {
+    color: var(--highlight-color);
+    font-weight: bold;
+    cursor: auto;
+}
+
 .main .lake .webcams .webcams-outer .webcams-skeleton {
     position: relative;
     background-color: var(--box-color);

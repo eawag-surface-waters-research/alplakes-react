@@ -11,13 +11,73 @@ class Nutrients extends Component {
     mapId: "map_" + Math.round(Math.random() * 100000),
     polygon: false,
     points: false,
+    selected: "total_phosphorus",
     wmts: {
-      url: "https://wmts{s}.geo.admin.ch/1.0.0/ch.bafu.gewaesserschutz-diffuse_eintraege_phosphor/default/current/3857/{z}/{x}/{y}.png",
-      options: {
-        format: "image/png",
-        subdomains: ["1", "2", "3", "4"],
-        maxZoom: 19,
-        attribution: "© swisstopo",
+      dissolved_phosphorus: {
+        url: "https://wmts{s}.geo.admin.ch/1.0.0/ch.bafu.gewaesserschutz-diffuse_eintraege_phosphor/default/current/3857/{z}/{x}/{y}.png",
+        name: "Dissolved Phosphorus",
+        options: {
+          format: "image/png",
+          subdomains: ["1", "2", "3", "4"],
+          maxZoom: 13,
+          attribution: "© swisstopo",
+          lookup: {
+            "0,97,0,255": "<0.1 [kg / ha * a]",
+            "60,128,0,255": "0.1 - 0.2 [kg / ha * a]",
+            "107,161,0,255": "0.2 - 0.4 [kg / ha * a]",
+            "255,255,0,255": "0.4 - 0.6 [kg / ha * a]",
+            "255,170,0,255": "0.6 - 0.8 [kg / ha * a]",
+            "255,84,0,255": "0.8 - 1.0 [kg / ha * a]",
+            "255,0,0,255": "1.0 - 1.2 [kg / ha * a]",
+            "189,0,0,255": "1.2 - 1.4 [kg / ha * a]",
+            "133,0,0,255": "1.4 - 1.8 [kg / ha * a]",
+            "82,0,0,255": ">1.8 [kg / ha * a]",
+          },
+        },
+      },
+      total_phosphorus: {
+        url: "https://wmts{s}.geo.admin.ch/1.0.0/ch.bafu.gewaesserschutz-diffuse_eintraege_gesamt_phosphor/default/current/3857/{z}/{x}/{y}.png",
+        name: "Total Phosphorus",
+        options: {
+          format: "image/png",
+          subdomains: ["1", "2", "3", "4"],
+          maxZoom: 13,
+          attribution: "© swisstopo",
+          lookup: {
+            "0,97,0,255": "<0.1 [kg / ha * a]",
+            "60,128,0,255": "0.1 - 0.2 [kg / ha * a]",
+            "107,161,0,255": "0.2 - 0.4 [kg / ha * a]",
+            "255,255,0,255": "0.4 - 0.6 [kg / ha * a]",
+            "255,170,0,255": "0.6 - 0.8 [kg / ha * a]",
+            "255,84,0,255": "0.8 - 1.0 [kg / ha * a]",
+            "255,0,0,255": "1.0 - 1.2 [kg / ha * a]",
+            "189,0,0,255": "1.2 - 1.4 [kg / ha * a]",
+            "133,0,0,255": "1.4 - 1.8 [kg / ha * a]",
+            "82,0,0,255": ">1.8 [kg / ha * a]",
+          },
+        },
+      },
+      total_nitrogen: {
+        url: "https://wmts{s}.geo.admin.ch/1.0.0/ch.bafu.gewaesserschutz-diffuse_eintraege_stickstoff/default/current/3857/{z}/{x}/{y}.png",
+        name: "Total Nitrogen",
+        options: {
+          format: "image/png",
+          subdomains: ["1", "2", "3", "4"],
+          maxZoom: 13,
+          attribution: "© swisstopo",
+          lookup: {
+            "0,97,0,255": "<1 [kg / ha * a]",
+            "60,128,0,255": "1 - 5 [kg / ha * a]",
+            "107,161,0,255": "5 - 10 [kg / ha * a]",
+            "164,196,0,255": "10 - 20 [kg / ha * a]",
+            "223,235,0,255": "20 - 30 [kg / ha * a]",
+            "255,234,0,255": "30 - 40 [kg / ha * a]",
+            "255,187,0,255": "40 - 50 [kg / ha * a]",
+            "255,145,0,255": "50 - 60 [kg / ha * a]",
+            "255,98,0,255": "60 - 70 [kg / ha * a]",
+            "255,34,0,255": ">70 [kg / ha * a]",
+          },
+        },
       },
     },
   };
@@ -26,6 +86,10 @@ class Nutrients extends Component {
 
   updated = () => {
     this.setState({ updates: [] });
+  };
+
+  setSelected = (selected) => {
+    this.setState({ selected });
   };
 
   extractPolygonFromGeoJSON = (geojson) => {
@@ -89,7 +153,7 @@ class Nutrients extends Component {
   };
 
   render() {
-    var { mapId, polygon, points, wmts } = this.state;
+    var { mapId, polygon, points, wmts, selected } = this.state;
     var { dark, language } = this.props;
     return (
       <div className="nutrients subsection" ref={this.ref}>
@@ -107,11 +171,31 @@ class Nutrients extends Component {
                 mapId={mapId}
                 polygon={polygon}
                 points={points}
-                wmts={wmts}
+                wmts_url={wmts[selected].url}
+                options={wmts[selected].options}
+                maxZoom={13}
               />
             )}
+            <div className="nutrient-legend">
+              <div className="circle" /> UWWTD Discharge Points
+            </div>
+            <div className="layer-selection">
+              {Object.keys(wmts).map((w) => (
+                <div
+                  className={
+                    w === selected ? "layer-option selected" : "layer-option"
+                  }
+                  key={w}
+                  onClick={() => this.setSelected(w)}
+                >
+                  {wmts[w].name}
+                </div>
+              ))}
+            </div>
           </div>
-          <div className="map-sidebar-right"></div>
+          <div className="map-sidebar-right">
+            Phosphorus and Nitrogen inputs into water bodies (2020) are available for Switzerland.
+          </div>
         </div>
       </div>
     );

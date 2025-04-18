@@ -1,6 +1,9 @@
 import L from "leaflet";
 
 L.TileLayer.ClippedWMTS = L.TileLayer.extend({
+  options: {
+    crossOrigin: "anonymous",
+  },
   defaultWmtsParams: {
     service: "WMTS",
     request: "GetTile",
@@ -123,6 +126,65 @@ L.TileLayer.ClippedWMTS = L.TileLayer.extend({
 
     // Update clip path immediately after zoom animation completes
     this._map.once("zoomend", this._updateClipPath, this);
+  },
+
+  getFeatureValue: function (e) {
+    const latlng = e.latlng || e;
+    if (!this._insidePolygon(latlng)) return null;
+    var size = this.getTileSize();
+    var point = this._map.project(latlng, this._tileZoom).floor();
+    var coords = point.unscaleBy(size).floor();
+    var offset = point.subtract(coords.scaleBy(size));
+    coords.z = this._tileZoom;
+    var tile = this._tiles[this._tileCoordsToKey(coords)];
+    if (!tile || !tile.loaded) return null;
+    try {
+      var canvas = document.createElement("canvas");
+      canvas.width = 1;
+      canvas.height = 1;
+      var context = canvas.getContext("2d");
+      context.drawImage(tile.el, -offset.x, -offset.y, size.x, size.y);
+      const rgb = context.getImageData(0, 0, 1, 1).data.toString();
+      if (this.options.lookup && rgb in this.options.lookup) {
+        return this.options.lookup[rgb];
+      }
+      return null;
+    } catch (e) {
+      return null;
+    }
+  },
+
+  _insidePolygon: function (latlng) {
+    let inside = false;
+    const n = this._clipPolygon.length;
+    let x = latlng.lng,
+      y = latlng.lat;
+    let xinters;
+    let p1x, p1y, p2x, p2y;
+    let i,
+      j = n - 1;
+
+    for (i = 0; i < n; i++) {
+      p1x = this._clipPolygon[i][1];
+      p1y = this._clipPolygon[i][0];
+      p2x = this._clipPolygon[j][1];
+      p2y = this._clipPolygon[j][0];
+      if (y > Math.min(p1y, p2y)) {
+        if (y <= Math.max(p1y, p2y)) {
+          if (x <= Math.max(p1x, p2x)) {
+            if (p1y !== p2y) {
+              xinters = ((y - p1y) * (p2x - p1x)) / (p2y - p1y) + p1x;
+            }
+            if (p1x === p2x || x <= xinters) {
+              inside = !inside;
+            }
+          }
+        }
+      }
+      j = i;
+    }
+
+    return inside;
   },
 
   setClipPolygon: function (polygon) {
