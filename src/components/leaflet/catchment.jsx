@@ -6,7 +6,7 @@ import "./leaflet_tileclass";
 import "./leaflet_wmts";
 import "./css/leaflet.css";
 import "./css/catchment.css";
-import opacity_icon from "../../img/opacity.png";
+import opacity_icon from "../../img/opacity.png"
 
 class CatchmentMap extends Component {
   state = {

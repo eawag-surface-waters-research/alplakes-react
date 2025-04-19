@@ -4,11 +4,14 @@ import CONFIG from "../../../config.json";
 import Translations from "../../../translations.json";
 import Information from "../../../components/information/information";
 import CatchmentMap from "../../../components/leaflet/catchment";
+import grow_icon from "../../../img/full.png";
+import shrink_icon from "../../../img/shrink.png";
 
 class Nutrients extends Component {
   state = {
     hasBeenVisible: false,
     mapId: "map_" + Math.round(Math.random() * 100000),
+    fullscreen: false,
     polygon: false,
     points: false,
     selected: "total_phosphorus",
@@ -92,6 +95,12 @@ class Nutrients extends Component {
     this.setState({ selected });
   };
 
+  toggleFullscreen = () => {
+    this.setState({ fullscreen: !this.state.fullscreen }, () => {
+      window.dispatchEvent(new Event("resize"));
+    });
+  };
+
   extractPolygonFromGeoJSON = (geojson) => {
     if (
       geojson.type === "FeatureCollection" &&
@@ -153,7 +162,7 @@ class Nutrients extends Component {
   };
 
   render() {
-    var { mapId, polygon, points, wmts, selected } = this.state;
+    var { mapId, polygon, points, wmts, selected, fullscreen } = this.state;
     var { dark, language } = this.props;
     return (
       <div className="nutrients subsection" ref={this.ref}>
@@ -164,7 +173,11 @@ class Nutrients extends Component {
           />
         </h3>
         <div className="map-sidebar">
-          <div className="map-sidebar-left">
+          <div
+            className={
+              fullscreen ? "map-sidebar-left fullscreen" : "map-sidebar-left"
+            }
+          >
             {polygon && (
               <CatchmentMap
                 dark={dark}
@@ -178,6 +191,16 @@ class Nutrients extends Component {
             )}
             <div className="nutrient-legend">
               <div className="circle" /> UWWTD Discharge Points
+            </div>
+            <div
+              className="toggle-fullscreen"
+              onClick={this.toggleFullscreen}
+              title={fullscreen ? "Shrink" : "Fullscreen"}
+            >
+              <img
+                src={fullscreen ? shrink_icon : grow_icon}
+                alt="Fullscreen"
+              />
             </div>
             <div className="layer-selection">
               {Object.keys(wmts).map((w) => (
@@ -194,7 +217,8 @@ class Nutrients extends Component {
             </div>
           </div>
           <div className="map-sidebar-right">
-            Phosphorus and Nitrogen inputs into water bodies (2020) are available for Switzerland.
+            Phosphorus and Nitrogen inputs into water bodies (2020) are
+            available for Switzerland.
           </div>
         </div>
       </div>

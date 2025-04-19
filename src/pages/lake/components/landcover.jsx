@@ -4,18 +4,27 @@ import CONFIG from "../../../config.json";
 import Translations from "../../../translations.json";
 import Information from "../../../components/information/information";
 import CatchmentMap from "../../../components/leaflet/catchment";
+import grow_icon from "../../../img/full.png";
+import shrink_icon from "../../../img/shrink.png";
 
 class LandCover extends Component {
   state = {
     hasBeenVisible: false,
     mapId: "map_" + Math.round(Math.random() * 100000),
     polygon: false,
+    fullscreen: false,
   };
 
   ref = createRef();
 
   updated = () => {
     this.setState({ updates: [] });
+  };
+
+  toggleFullscreen = () => {
+    this.setState({ fullscreen: !this.state.fullscreen }, () => {
+      window.dispatchEvent(new Event("resize"));
+    });
   };
 
   extractPolygonFromGeoJSON = (geojson) => {
@@ -76,7 +85,7 @@ class LandCover extends Component {
   };
 
   render() {
-    var { mapId, polygon } = this.state;
+    var { mapId, polygon, fullscreen } = this.state;
     var { dark, language, parameters } = this.props;
     const wmts = {
       url: "https://services.terrascope.be/wmts/v2",
@@ -177,7 +186,9 @@ class LandCover extends Component {
           <Information information={Translations.landcoverText[language]} />
         </h3>
         <div className="map-sidebar">
-          <div className="map-sidebar-left">
+          <div className={
+              fullscreen ? "map-sidebar-left fullscreen" : "map-sidebar-left"
+            }>
             {polygon && (
               <CatchmentMap
                 dark={dark}
@@ -188,6 +199,16 @@ class LandCover extends Component {
                 lookup={lookup}
               />
             )}
+            <div
+              className="toggle-fullscreen"
+              onClick={this.toggleFullscreen}
+              title={fullscreen ? "Shrink" : "Fullscreen"}
+            >
+              <img
+                src={fullscreen ? shrink_icon : grow_icon}
+                alt="Fullscreen"
+              />
+            </div>
           </div>
           <div className="map-sidebar-right">
             Land cover for the catchment is extracted from the ESA WorldCover
