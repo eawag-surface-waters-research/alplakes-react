@@ -42,7 +42,12 @@ class NavBar extends Component {
                 <div className="nav-text">{Translations.models[language]}</div>
               </NavLink>
               <NavLink className="nav-item" to="/downloads">
-                <div className="nav-text">{Translations.downloads[language]}</div>
+                <div className="nav-text">
+                  {Translations.downloads[language]}
+                </div>
+              </NavLink>
+              <NavLink className="nav-item" to="/blog">
+                <div className="nav-text">Blog</div>
               </NavLink>
               <NavLink className="nav-item" to="/about">
                 <div className="nav-text">{Translations.about[language]}</div>
@@ -96,6 +101,14 @@ class NavBar extends Component {
                 <NavLink to="/downloads">
                   <div className="nav-row">
                     {Translations.downloads[language]}
+                    <div className="arrow">
+                      <img src={arrow} alt="Arrow" />
+                    </div>
+                  </div>
+                </NavLink>
+                <NavLink to="/blog">
+                  <div className="nav-row">
+                    Blog
                     <div className="arrow">
                       <img src={arrow} alt="Arrow" />
                     </div>

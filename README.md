@@ -11,7 +11,15 @@ The online deployement can be found at https://www.alplakes.eawag.ch
 
 ## Changelog
 
-The changelog details significant changes to the Alplakes website, this does not include changes to the API or the inclusion of additional lakes. 
+The changelog details significant changes to the Alplakes website, this does not include changes to the API or the inclusion of additional lakes.
+
+### 2025-04-11
+
+- Add blog section to the website
+
+### 2025-04-03
+
+- Add webcams to the lake pages
 
 ### 2025-03-04
 
