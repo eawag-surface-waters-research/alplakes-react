@@ -27,6 +27,29 @@ export const downloadPerformance = async (model, lake) => {
   }
   const response = await axios.get(url);
   if (response.status === 200) {
+    const data = response.data;
+    for (let l in data) {
+      let valid = false;
+      for (let d in data[l].depth) {
+        try {
+          data[l].depth[d].model.time = data[l].depth[d].model.time.map(
+            (t) => new Date(t)
+          );
+          data[l].depth[d].insitu.time = data[l].depth[d].insitu.time.map(
+            (t) => new Date(t)
+          );
+          valid = true;
+        } catch (e) {
+          delete data[l].depth[d];
+        }
+      }
+      if (!valid) {
+        delete data[l];
+      }
+    }
+    if (Object.keys(data).length === 0) {
+      return false;
+    }
     return response.data;
   }
   return false;
@@ -46,16 +69,6 @@ class ModelPerformance extends Component {
     if (data === false) {
       data = await downloadPerformance(model.toLowerCase(), lake);
       if (data) {
-        for (let l in data) {
-          for (let d in data[l].depth) {
-            data[l].depth[d].model.time = data[l].depth[d].model.time.map(
-              (t) => new Date(t)
-            );
-            data[l].depth[d].insitu.time = data[l].depth[d].insitu.time.map(
-              (t) => new Date(t)
-            );
-          }
-        }
         location = Object.keys(data)[0];
         depth = Object.keys(data[location].depth)[0];
         this.setState({ open: true, data, location, depth });
@@ -119,12 +132,16 @@ class ModelPerformance extends Component {
             <div className="model-performance-selectors">
               <select value={location} onChange={this.setLocation}>
                 {Object.keys(data).map((l) => (
-                  <option value={l} key={l}>{data[l].name}</option>
+                  <option value={l} key={l}>
+                    {data[l].name}
+                  </option>
                 ))}
               </select>
               <select value={depth} onChange={this.setDepth}>
                 {Object.keys(data[location].depth).map((d) => (
-                  <option value={d} key={d}>{data[location].depth[d].name}</option>
+                  <option value={d} key={d}>
+                    {data[location].depth[d].name}
+                  </option>
                 ))}
               </select>
               <div className="rmse">
