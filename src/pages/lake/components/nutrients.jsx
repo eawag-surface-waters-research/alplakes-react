@@ -148,12 +148,17 @@ class Nutrients extends Component {
 
   onVisible = async () => {
     const { id } = this.props;
+    var { points } = this.state;
     var { data } = await axios.get(
       CONFIG.alplakes_bucket + `/static/catchments/${id}.json`
     );
-    var { data: points } = await axios.get(
-      CONFIG.alplakes_bucket + `/static/discharge/${id}.json`
-    );
+    try {
+      ({ data: points } = await axios.get(
+        CONFIG.alplakes_bucket + `/static/discharge/${id}.json`
+      ));
+    } catch (e) {
+      console.error("Failed to find disharge points");
+    }
     const polygon = this.extractPolygonFromGeoJSON(data);
     this.setState({ polygon, points });
   };
@@ -187,16 +192,18 @@ class Nutrients extends Component {
                 fullscreen={fullscreen}
               />
             )}
-            <div className="nutrient-legend">
-              <div className="circle" />{" "}
-              <a
-                href="https://www.eea.europa.eu/en/datahub/datahubitem-view/21874828-fa7a-4e7e-8a0a-52ec7d92f99f"
-                target="_blank"
-                rel="noreferrer"
-              >
-                UWWTD {Translations.dischargePoints[language]}
-              </a>
-            </div>
+            {points && (
+              <div className="nutrient-legend">
+                <div className="circle" />{" "}
+                <a
+                  href="https://www.eea.europa.eu/en/datahub/datahubitem-view/21874828-fa7a-4e7e-8a0a-52ec7d92f99f"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  UWWTD {Translations.dischargePoints[language]}
+                </a>
+              </div>
+            )}
             <div
               className="toggle-fullscreen"
               onClick={this.toggleFullscreen}

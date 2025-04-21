@@ -1,0 +1,52 @@
+{
+  "geneva": {
+    "parameters": {
+      "catchmentArea": 7980,
+      "population": 1240000,
+      "outflows": 127,
+      "rainfall": 1138,
+      "dams": 15
+    },
+    "landuse": [
+      { "type": 10, "percent": 34, "area": 2691 },
+      { "type": 30, "percent": 26, "area": 2108 },
+      { "type": 70, "percent": 11, "area": 892 },
+      { "type": 60, "percent": 10, "area": 830 },
+      { "type": 80, "percent": 8, "area": 619 },
+      { "type": 40, "percent": 4, "area": 306 },
+      { "type": 100, "percent": 3, "area": 276 },
+      { "type": 50, "percent": 3, "area": 250 }
+    ],
+    "nutrients": {
+      "dissolved_phosphorus": 72,
+      "total_phosphorus": 879,
+      "total_nitrogen": 5142,
+      "data_coverage": 85
+    }
+  },
+  "zurich": {
+    "parameters": {
+      "catchmentArea": 2167,
+      "population": 568000,
+      "outflows": 127,
+      "rainfall": 1614,
+      "dams": 6
+    },
+    "landuse": [
+      { "type": 30, "percent": 44.0, "area": 963.0 },
+      { "type": 10, "percent": 38.0, "area": 816.0 },
+      { "type": 80, "percent": 6.0, "area": 137.0 },
+      { "type": 50, "percent": 4.0, "area": 86.0 },
+      { "type": 60, "percent": 4.0, "area": 79.0 },
+      { "type": 70, "percent": 2.0, "area": 37.0 },
+      { "type": 40, "percent": 1.0, "area": 26.0 },
+      { "type": 100, "percent": 1.0, "area": 23.0 }
+    ],
+    "nutrients": {
+      "data_coverage": 100,
+      "dissolved_phosphorus": 53,
+      "total_phosphorus": 267,
+      "total_nitrogen": 2491
+    }
+  }
+}

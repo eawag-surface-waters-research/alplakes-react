@@ -9,6 +9,8 @@ bucket_folder = "static/website/metadata/catchment"
 # Load Metadata
 with open("metadata.json") as f:
     metadata = json.load(f)
+with open("catchment.json") as f:
+    catchment = json.load(f)
 with open("lakes.geojson") as f:
     shape = json.load(f)
 with open("satellite_metadata.json") as f:
@@ -79,6 +81,10 @@ for lake in metadata:
     data["properties"]["longitude"] = lake["longitude"]
     if "default_depth" in lake:
         data["properties"]["default_depth"] = lake["default_depth"]
+
+    # Catchment
+    if key in catchment:
+        data["catchmentProperties"] = catchment[key]
 
 
     # Trends - doy and past year are added in 1D section
