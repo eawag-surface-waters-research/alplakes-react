@@ -419,10 +419,20 @@
     padding: calc(var(--padding) / 2);
 }
 
-.main .lake .parameters .parameters-box .parameter img {
+.main .lake .parameters .parameters-box .parameter img.icon {
     height: 30px;
     opacity: 0.7;
     margin-bottom: 3px;
+}
+
+.main .lake .parameters .parameters-box .parameter img.link {
+    height: 14px;
+    margin-left: 8px;
+    transition: transform .33s 0s ease;
+}
+
+.main .lake .parameters .parameters-box .parameter img.link:hover {
+    transform: scale(1.1);
 }
 
 .main.dark .lake .parameters .parameters-box .parameter img {
@@ -439,6 +449,11 @@
 .main .lake .parameters .parameters-box .parameter .label {
     font-size: 16px;
     color: var(--background-subtle-font-color);
+    display: inline-block;
+}
+
+.main .lake .parameters .parameters-box .parameter .information  .information-symbol {
+    background-color: var(--background-color);
 }
 
 /** Catchment Properties **/
@@ -479,6 +494,10 @@
     margin-right: 8px;
 }
 
+.main .lake .catchment .nutrients .map-sidebar .map-sidebar-left .nutrient-legend a {
+    color: var(--background-font-color);
+}
+
 .main .lake .catchment .nutrients .map-sidebar .map-sidebar-left .layer-selection {
     position: absolute;
     top: 6px;
@@ -506,6 +525,41 @@
     color: var(--highlight-color);
     font-weight: bold;
     cursor: auto;
+}
+
+.main .lake .catchment .nutrients .map-sidebar .map-sidebar-right .nutrient-values .nutrient-value {
+    display: inline-block;
+    vertical-align: top;
+    margin-right: 22px;
+    text-align: center;
+    margin-top: 12px;
+}
+
+.main .lake .catchment .nutrients .map-sidebar .map-sidebar-right .nutrient-values .nutrient-value .value {
+    display: inline-block;
+    font-size: 45px;
+}
+
+.main .lake .catchment .nutrients .map-sidebar .map-sidebar-right .nutrient-values .nutrient-value .value.selected {
+    color: var(--highlight-color);
+}
+
+.main .lake .catchment .nutrients .map-sidebar .map-sidebar-right .nutrient-values .nutrient-value .unit {
+    display: inline-block;
+    color: var(--background-subtle-font-color);
+    margin-left: 8px;
+}
+
+.main .lake .catchment .nutrients .map-sidebar .map-sidebar-right .coverage {
+    margin-top: 18px;
+    color: var(--background-subtle-font-color);
+}
+
+.main .lake .catchment .nutrients .map-sidebar .map-sidebar-right a {
+    display: block;
+    color: var(--link-color);
+    margin-top: 8px;
+    margin-bottom: 12px;
 }
 
 .main .lake .catchment .map-sidebar .map-sidebar-left .toggle-fullscreen {
@@ -900,6 +954,10 @@
     .main .lake .map-sidebar .map-sidebar-right {
         padding: 0;
         overflow: visible;
+    }
+
+    .main .lake .catchment .map-sidebar .map-sidebar-right {
+        margin-top: 12px;
     }
 
     .main .lake .satellite .satellite-maps .satellite-inner .map {

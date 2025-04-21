@@ -11,8 +11,8 @@ import type_icon from "../../../img/type.png";
 import person_icon from "../../../img/person.png";
 import outflow_icon from "../../../img/outflow.png";
 import rainfall_icon from "../../../img/rainfall.png";
-import cropland_icon from "../../../img/cropland.png";
 import dam_icon from "../../../img/dam.png";
+import arrow_icon from "../../../img/arrow.png";
 import Translations from "../../../translations.json";
 
 class Parameters extends Component {
@@ -23,6 +23,14 @@ class Parameters extends Component {
         key: "area",
         unit: "km²",
         label: Translations["surfaceArea"][language],
+        img: area_icon,
+      },
+      {
+        key: "catchmentArea",
+        unit: "km²",
+        label: Translations["surfaceArea"][language],
+        source: "Generated using Global Watersheds Web App",
+        link: "https://mghydro.com/watersheds/",
         img: area_icon,
       },
       {
@@ -84,30 +92,32 @@ class Parameters extends Component {
         key: "population",
         unit: "",
         label: Translations["population"][language],
+        source: "GlobPOP",
+        link: "https://zenodo.org/records/10088105",
         img: person_icon,
       },
       {
         key: "outflows",
         unit: "",
         label: Translations["outflows"][language],
+        source: "Urban Waste Water Treatment Directive discharge points",
+        link: "https://www.eea.europa.eu/en/datahub/datahubitem-view/21874828-fa7a-4e7e-8a0a-52ec7d92f99f",
         img: outflow_icon,
       },
       {
         key: "rainfall",
         unit: "mm/yr",
         label: Translations["rainfall"][language],
+        source: "WorldClim",
+        link: "https://www.worldclim.org/data/worldclim21.html",
         img: rainfall_icon,
-      },
-      {
-        key: "cropland",
-        unit: "%",
-        label: Translations["cropland"][language],
-        img: cropland_icon,
       },
       {
         key: "dams",
         unit: "",
         label: Translations["dams"][language],
+        source: "Global Dam Watch",
+        link: "https://www.globaldamwatch.org/home",
         img: dam_icon,
       },
     ];
@@ -120,11 +130,16 @@ class Parameters extends Component {
         <div className="parameters-box">
           {plot.map((p) => (
             <div className="parameter" key={p.key}>
-              <img src={p.img} alt={p.label} />
+              <img className="icon" src={p.img} alt={p.label} />
               <div className="value">
                 {parameters[p.key]} {p.unit}
               </div>
               <div className="label">{p.label}</div>
+              {"link" in p && (
+                <a href={p.link} target="_blank" rel="noreferrer">
+                  <img className="link" src={arrow_icon} title={p.source} alt="Link" />
+                </a>
+              )}
             </div>
           ))}
         </div>
