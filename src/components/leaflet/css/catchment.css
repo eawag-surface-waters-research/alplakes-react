@@ -5,6 +5,11 @@
     z-index: 9999;
 }
 
+.catchment-opacity.full {
+    left: 22px;
+    bottom: 22px;
+}
+
 .catchment-opacity img {
     height: 16px;
     margin-right: 8px;

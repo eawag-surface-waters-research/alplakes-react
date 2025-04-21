@@ -254,6 +254,7 @@ class LandCover extends Component {
                 wmts_url={wmts.url}
                 options={wmts.options}
                 lookup={lookup}
+                fullscreen={fullscreen}
               />
             )}
             <div

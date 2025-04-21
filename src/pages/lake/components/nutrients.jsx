@@ -184,6 +184,7 @@ class Nutrients extends Component {
                 wmts_url={wmts[selected].url}
                 options={wmts[selected].options}
                 maxZoom={13}
+                fullscreen={fullscreen}
               />
             )}
             <div className="nutrient-legend">

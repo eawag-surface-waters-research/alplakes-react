@@ -128,11 +128,11 @@ class CatchmentMap extends Component {
   }
 
   render() {
-    const { mapId } = this.props;
+    const { mapId, fullscreen } = this.props;
     const { opacity } = this.state;
     return (
       <React.Fragment>
-        <div className="catchment-opacity">
+        <div className={fullscreen ? "catchment-opacity full" : "catchment-opacity"}>
           <img src={opacity_icon} alt="opacity" />
           <input
             type="range"
