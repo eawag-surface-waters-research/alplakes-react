@@ -441,19 +441,20 @@
     color: var(--background-subtle-font-color);
 }
 
-.main .lake .properties .bathymetry .clickable-box {
-    min-width: 300px
-}
-
 /** Catchment Properties **/
 
-.main .lake .catchment .landcover .map-sidebar .map-sidebar-right table {
+.main .lake .catchment .landcover .map-sidebar .map-sidebar-right .landcover-table {
+    width: 100%;
+    overflow: auto;
+}
+
+.main .lake .catchment .landcover .map-sidebar .map-sidebar-right .landcover-table table {
     width: 100%;
     border-spacing: 10px;
     border-collapse: separate;
 }
 
-.main .lake .catchment .landcover .map-sidebar .map-sidebar-right table th {
+.main .lake .catchment .landcover .map-sidebar .map-sidebar-right .landcover-table table th {
     text-align: left;
 }
 

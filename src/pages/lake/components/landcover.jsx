@@ -186,9 +186,11 @@ class LandCover extends Component {
           <Information information={Translations.landcoverText[language]} />
         </h3>
         <div className="map-sidebar">
-          <div className={
+          <div
+            className={
               fullscreen ? "map-sidebar-left fullscreen" : "map-sidebar-left"
-            }>
+            }
+          >
             {polygon && (
               <CatchmentMap
                 dark={dark}
@@ -214,34 +216,36 @@ class LandCover extends Component {
             Land cover for the catchment is extracted from the ESA WorldCover
             2020 Global land cover product at 10 m resolution for 2020 based on
             Sentinel-1 and 2 data.
-            <table>
-              <tbody>
-                <tr>
-                  <th style={{ width: "50px" }}></th>
-                  <th>Type</th>
-                  <th>Coverage</th>
-                  <th>Area</th>
-                </tr>
-
-                {parameters.map((p) => (
-                  <tr
-                    title={details.find((d) => d.type === p.type).description}
-                    key={p.type}
-                  >
-                    <td
-                      style={{
-                        backgroundColor: `rgb(${
-                          details.find((d) => d.type === p.type).rgb
-                        })`,
-                      }}
-                    ></td>
-                    <td>{details.find((d) => d.type === p.type).name}</td>
-                    <td>{p.percent}%</td>
-                    <td>{p.area}km²</td>
+            <div className="landcover-table">
+              <table>
+                <tbody>
+                  <tr>
+                    <th style={{ width: "50px" }}></th>
+                    <th>Type</th>
+                    <th>Coverage</th>
+                    <th>Area</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+
+                  {parameters.map((p) => (
+                    <tr
+                      title={details.find((d) => d.type === p.type).description}
+                      key={p.type}
+                    >
+                      <td
+                        style={{
+                          backgroundColor: `rgb(${
+                            details.find((d) => d.type === p.type).rgb
+                          })`,
+                        }}
+                      ></td>
+                      <td>{details.find((d) => d.type === p.type).name}</td>
+                      <td>{p.percent}%</td>
+                      <td>{p.area}km²</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
