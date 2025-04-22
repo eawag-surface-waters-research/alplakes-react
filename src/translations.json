@@ -113,6 +113,12 @@
     "FR": "Superficie",
     "IT": "Superficie"
   },
+  "coverage": {
+    "EN": "Coverage",
+    "DE": "Abdeckung",
+    "FR": "Couverture",
+    "IT": "Copertura"
+  },
   "depth": {
     "EN": "Depth",
     "DE": "Tiefe",
@@ -509,6 +515,42 @@
     "FR": "Valeurs récentes de la température de l’eau de surface recueillies à partir de diverses sources.",
     "IT": "Valori recenti della temperatura delle acque superficiali raccolti da varie fonti."
   },
+  "catchment": {
+    "EN": "Catchment",
+    "DE": "Einzugsgebiet",
+    "FR": "Bassin versant",
+    "IT": "Bacino idrografico"
+  },
+  "catchmentText": {
+    "EN": "A lake catchment is the land area that contributes water into a lake.",
+    "DE": "Ein Seeeinzugsgebiet ist die Landfläche, die Wasser in einen See einspeist.",
+    "FR": "Un bassin versant est la zone terrestre qui fournit de l’eau à un lac.",
+    "IT": "Un bacino idrografico di un lago è l'area di terra che apporta acqua al lago."
+  },
+  "landcover": {
+    "EN": "Land cover",
+    "DE": "Landbedeckung",
+    "FR": "Couverture terrestre",
+    "IT": "Copertura"
+  },
+  "nutrientInputs": {
+    "EN": "Nutrient Inputs",
+    "DE": "Nährstoffzufuhr",
+    "FR": "Apports nutritionnels",
+    "IT": "Apporto di nutrienti"
+  },
+  "nutrientInputsText": {
+    "EN": "Nitrogen and phosphorus inputs into Swiss water bodies (2020)",
+    "DE": "Stickstoff- und Phosphoreinträge in Schweizer Gewässer (2020)",
+    "FR": "Apports d'azote et de phosphore dans les masses d'eau suisses (2020)",
+    "IT": "Apporto di azoto e fosforo nei corpi idrici svizzeri (2020)"
+  },
+  "landcoverText": {
+    "EN": "Land cover for the catchment area from ESA WorldCover 2021.",
+    "DE": "Landbedeckung für das Einzugsgebiet von ESA WorldCover 2021.",
+    "FR": "Couverture terrestre du bassin versant d'après ESA WorldCover 2021.",
+    "IT": "Copertura del suolo per il bacino idrografico da ESA WorldCover 2021."
+  },
   "webcams": {
     "EN": "Webcams",
     "DE": "Webcams",
@@ -712,6 +754,12 @@
     "DE": "Ganzer Bildschirm",
     "FR": "Plein écran",
     "IT": "A schermo intero"
+  },
+  "collapse": {
+    "EN": "Collapse",
+    "DE": "Zusammenbruch",
+    "FR": "Effondrement",
+    "IT": "Crollo"
   },
   "reportissue": {
     "EN": "Report Issue",
@@ -1045,17 +1093,107 @@
     "FR": "État trophique",
     "IT": "Stato trofico"
   },
+  "population": {
+    "EN": "Population",
+    "DE": "Bevölkerung",
+    "FR": "Population",
+    "IT": "Popolazione"
+  },
+  "outflows": {
+    "EN": "Outflows",
+    "DE": "Abflüsse",
+    "FR": "Sorties",
+    "IT": "Deflussi"
+  },
+  "rainfall": {
+    "EN": "Rainfall",
+    "DE": "Regen",
+    "FR": "Précipitations",
+    "IT": "Piovosità"
+  },
+  "cropland": {
+    "EN": "Cropland",
+    "DE": "Ackerland",
+    "FR": "Terres cultivées",
+    "IT": "Terreno coltivabile"
+  },
+  "dams": {
+    "EN": "Dams",
+    "DE": "Dämme",
+    "FR": "Barrages",
+    "IT": "Dighe"
+  },
   "lakeProperties": {
     "EN": "Lake Properties",
     "DE": "See-Eigenschaften",
     "FR": "Propriétés du lac",
     "IT": "Proprietà del lago"
   },
+  "catchmentProperties": {
+    "EN": "Catchment Properties",
+    "DE": "Einzugsgebietseigenschaften",
+    "FR": "Propriétés du bassin versant",
+    "IT": "Proprietà del bacino idrografico"
+  },
+  "dissolved_phosphorus": {
+    "EN": "Dissolved Phosphorus",
+    "DE": "Gelöster Phosphor",
+    "FR": "Phosphore dissous",
+    "IT": "Fosforo disciolto"
+  },
+  "total_phosphorus": {
+    "EN": "Total Phosphorus",
+    "DE": "Gesamtphosphor",
+    "FR": "Phosphore total",
+    "IT": "Fosforo totale"
+  },
+  "total_nitrogen": {
+    "EN": "Total Nitrogen",
+    "DE": "Gesamtstickstoff",
+    "FR": "Azote total",
+    "IT": "Azoto totale"
+  },
+  "landCoverDescription": {
+    "EN": "Land cover for the catchment is extracted from the ESA WorldCover 2020 Global land cover product at 10 m resolution for 2020 based on Sentinel-1 and 2 data.",
+    "DE": "Die Landbedeckung für das Einzugsgebiet wird aus dem globalen Landbedeckungsprodukt ESA WorldCover 2020 mit einer Auflösung von 10 m für 2020 basierend auf Sentinel-1- und 2-Daten extrahiert.",
+    "FR": "La couverture terrestre du bassin versant est extraite du produit de couverture terrestre mondiale ESA WorldCover 2020 à une résolution de 10 m pour 2020 sur la base des données Sentinel-1 et 2.",
+    "IT": "La copertura del suolo per il bacino idrografico è estratta dal prodotto ESA WorldCover 2020 Global land cover con risoluzione di 10 m per il 2020, basato sui dati Sentinel-1 e 2."
+  },
+  "nutrientsDescription": {
+    "EN": "Diffuse phosphorus and nitrogen inputs into Swiss water bodies have been estimated using the MODIFFUS model (Agroscope, 2020). These diffuse sources include contributions from surface runoff and seepage, but exclude point sources such as wastewater treatment plants.",
+    "DE": "Die diffusen Phosphor- und Stickstoffeinträge in Schweizer Gewässer wurden mit dem MODIFFUS-Modell (Agroscope, 2020) geschätzt. Diese diffusen Quellen umfassen Beiträge aus Oberflächenabfluss und Versickerung, schliessen jedoch Punktquellen wie Kläranlagen aus.",
+    "FR": "Les apports diffus de phosphore et d'azote dans les masses d'eau suisses ont été estimés à l'aide du modèle MODIFFUS (Agroscope, 2020). Ces sources diffuses incluent les apports du ruissellement de surface et des infiltrations, mais excluent les sources ponctuelles telles que les stations d'épuration.",
+    "IT": "Gli apporti diffusi di fosforo e azoto nei corpi idrici svizzeri sono stati stimati utilizzando il modello MODIFFUS (Agroscope, 2020). Queste fonti diffuse includono i contributi derivanti dal deflusso superficiale e dalle infiltrazioni, ma escludono le fonti puntuali come gli impianti di trattamento delle acque reflue."
+  },
+  "moreInformation": {
+    "EN": "More information",
+    "DE": "Weitere Informationen",
+    "FR": "Plus d'informations",
+    "IT": "Ulteriori informazioni"
+  },
   "parameters": {
     "EN": "Parameters",
     "DE": "Parameter",
     "FR": "Paramètres",
     "IT": "Parametri"
+  },
+  "totalValues": {
+    "EN": "Total values for the catchment",
+    "DE": "Gesamtwerte für das Einzugsgebiet",
+    "FR": "Valeurs totales pour le bassin versant",
+    "IT": "Valori totali per il bacino idrografico"
+  },
+  "watershedCoverage": {
+    "EN": "Watershed data coverage",
+    "DE": "Datenabdeckung für Wassereinzugsgebiete",
+    "FR": "Couverture des données sur les bassins versants",
+    "IT": "Copertura dei dati del bacino idrografico"
+  },
+  "dischargePoints": {
+    "EN": "Discharge Points",
+    "DE": "Entladestellen",
+    "FR": "Points de décharge",
+    "IT": "Punti di scarico"
   },
   "lakePropertiesDesc": {
     "EN": "Key physical properties",
