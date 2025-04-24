@@ -44,11 +44,11 @@ export const canvasContour = (
     return getRGBAColor(v, options.zMin, options.zMax, options.colors, options.colorCache);
   };
 
-  for (var i = 0; i < data.length; i++) {
+  for (let i = 0; i < data.length; i++) {
     fill(prepContours.baseContour[i], data[i], false);
-    prepContours.mainContour[i].forEach((contour, index) => {
-      if (index !== 0) fill(contour, data[i], false);
-    });
+    for (let index = 1; index < prepContours.mainContour[i].length; index++) {
+      fill(prepContours.mainContour[i][index], data[i], false);
+    }
     fill(prepContours.nanContour[i], data[i], [255, 255, 255]);
   }
 
