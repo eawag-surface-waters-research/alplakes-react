@@ -41,15 +41,19 @@ export const canvasContour = (
   prepContours
 ) => {
   const colorScale = (v) => {
-    return getRGBAColor(v, options.zMin, options.zMax, options.colors, options.colorCache);
+    return getRGBAColor(
+      v,
+      options.zMin,
+      options.zMax,
+      options.colors,
+      options.colorCache
+    );
   };
 
   for (let i = 0; i < data.length; i++) {
-    fill(prepContours.baseContour[i], data[i], false);
-    for (let index = 1; index < prepContours.mainContour[i].length; index++) {
-      fill(prepContours.mainContour[i][index], data[i], false);
+    for (let index = 1; index < prepContours.contour[i].length; index++) {
+      fill(prepContours.contour[i][index], data[i], false);
     }
-    fill(prepContours.nanContour[i], data[i], [255, 255, 255]);
   }
 
   function fill(geometry, plotdata, fixedColor) {
@@ -153,7 +157,13 @@ const putImgDataSingleMatrix = (
   options
 ) => {
   const colorScale = (v) => {
-    return getRGBAColor(v, options.zMin, options.zMax, options.colors, options.colorCache);
+    return getRGBAColor(
+      v,
+      options.zMin,
+      options.zMax,
+      options.colors,
+      options.colorCache
+    );
   };
   var { indexxpix, indexypix } = pixelMapping(arr, scaleX, scaleY, options);
   var imgData = context.createImageData(
@@ -201,7 +211,13 @@ const putImgDataMultMatrix = (
   options
 ) => {
   const colorScale = (v) => {
-    return getRGBAColor(v, options.zMin, options.zMax, options.colors, options.colorCache);
+    return getRGBAColor(
+      v,
+      options.zMin,
+      options.zMax,
+      options.colors,
+      options.colorCache
+    );
   };
   var imgData = context.createImageData(
     options.canvasWidth,
