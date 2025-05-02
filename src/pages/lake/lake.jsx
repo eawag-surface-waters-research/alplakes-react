@@ -22,6 +22,7 @@ import Climate from "./components/climate";
 import NotFound from "./components/notfound";
 import LandCover from "./components/landcover";
 import Nutrients from "./components/nutrients";
+import ScrollUp from "../../components/scrollup/scrollup";
 
 class Lake extends Component {
   state = {
@@ -42,10 +43,6 @@ class Lake extends Component {
         behavior: "smooth",
       });
     }
-  };
-
-  scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   async componentDidMount() {
@@ -257,12 +254,7 @@ class Lake extends Component {
                 )}
               </div>
             )}
-            {"key" in metadata && (
-              <div className="scroll-up" onClick={this.scrollToTop}>
-                {Translations.backToTop[language]}
-                <img src={sortIcon} alt="Down" />
-              </div>
-            )}
+            {"key" in metadata && <ScrollUp />}
           </div>
         )}
         <Footer {...this.props} />

@@ -1,0 +1,27 @@
+.main .lake .scroll-up {
+    background-color: var(--box-color);
+    padding: 13px;
+    box-sizing: border-box;
+    cursor: pointer;
+    height: 48px;
+    width: 48px;
+    border-radius: 50%;
+    position: fixed;
+    z-index: 9999999;
+    bottom: var(--padding);
+    right: var(--padding);
+    transition: right 0.4s ease;
+}
+
+.main .lake .scroll-up.hidden {
+    right: -100px;
+}
+
+.main .lake .scroll-up img {
+    width: 24px;
+    transition: transform .33s 0s ease;
+}
+
+.main .lake .scroll-up:hover img {
+    transform: scale(1.1);
+}

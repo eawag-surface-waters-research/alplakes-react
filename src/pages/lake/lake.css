@@ -22,34 +22,6 @@
     font-weight: 600;
 }
 
-.main .lake .scroll-up {
-    background-color: var(--highlight-color);
-    color: white;
-    padding: 6px 12px;
-    border-radius: 12px;
-    box-sizing: border-box;
-    display: inline-block;
-    margin-bottom: 20px;
-    cursor: pointer;
-    transition: all .33s 0s ease;
-}
-
-.main .lake .scroll-up:hover {
-    transform: scale(1.02);
-}
-
-.main .lake .scroll-up img {
-    width: 16px;
-    display: inline-block;
-    filter: brightness(0) invert(1);
-    margin-left: 12px;
-    padding-bottom: 1px;
-    -moz-transform: scale(-1, -1);
-    -o-transform: scale(-1, -1);
-    -webkit-transform: scale(-1, -1);
-    transform: scale(-1, -1);
-}
-
 .main .lake .section {
     margin-bottom: calc(var(--padding)*2);
 }
