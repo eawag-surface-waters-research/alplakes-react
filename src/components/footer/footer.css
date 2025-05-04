@@ -8,6 +8,7 @@
     padding: calc(var(--padding) / 2) var(--padding);
     margin: auto;
     max-width: var(--max-width);
+    min-height: 60px;
 }
 
 .footer.small {
@@ -142,6 +143,12 @@
     }
 
     .footer .switch {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    .footer .left {
         display: none;
     }
 }
