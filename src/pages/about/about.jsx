@@ -9,6 +9,7 @@ import schmidma from "../../img/schmidma.jpg";
 import dimark_icon from "../../img/dimark.png";
 import Translations from "../../translations.json";
 import "./about.css";
+import ScrollUp from "../../components/scrollup/scrollup";
 
 const Link = (url, c = "link") => {
   return (
@@ -93,10 +94,7 @@ class About extends Component {
               <p>
                 Alplakes is a research initiative that provides accurate
                 predictions of the condition of lakes throughout the European
-                Alpine region.
-              </p>
-              <p>
-                We integrate models and remote sensing products developed by the
+                Alpine region. We integrate models and remote sensing products developed by the
                 research community to provide the most up-to-date and accurate
                 information possible.
               </p>
@@ -584,6 +582,7 @@ class About extends Component {
             </div>
           </div>
         </div>
+        <ScrollUp />
         <Footer {...this.props} />
       </React.Fragment>
     );

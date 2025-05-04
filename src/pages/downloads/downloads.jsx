@@ -10,6 +10,7 @@ import unpluggedIcon from "../../img/unplugged.png";
 import sortIcon from "../../img/sort.png";
 import axios from "axios";
 import "./downloads.css";
+import ScrollUp from "../../components/scrollup/scrollup";
 
 class ModelInputs extends Component {
   state = {
@@ -474,6 +475,7 @@ class Downloads extends Component {
             />
           )}
         </div>
+        <ScrollUp />
         <Footer {...this.props} />
       </React.Fragment>
     );

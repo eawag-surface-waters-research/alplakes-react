@@ -8,6 +8,7 @@ import Translations from "../../translations.json";
 import CONFIG from "../../config.json";
 import "./models.css";
 import SortableTable from "../../components/table/table";
+import ScrollUp from "../../components/scrollup/scrollup";
 
 class Models extends Component {
   state = {
@@ -392,6 +393,7 @@ class Models extends Component {
             </div>
           </div>
         </div>
+        <ScrollUp />
         <Footer {...this.props} />
       </React.Fragment>
     );

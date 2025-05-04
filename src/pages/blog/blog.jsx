@@ -5,6 +5,7 @@ import Footer from "../../components/footer/footer";
 import axios from "axios";
 import CONFIG from "../../config.json";
 import "./blog.css";
+import ScrollUp from "../../components/scrollup/scrollup";
 
 class Blog extends Component {
   state = {
@@ -45,6 +46,7 @@ class Blog extends Component {
             ))}
           </div>
         </div>
+        <ScrollUp />
         <Footer {...this.props} />
       </React.Fragment>
     );
