@@ -140,4 +140,8 @@
         height: 25px;
         padding-top: 8px;
     }
+
+    .footer .switch {
+        display: none;
+    }
 }
