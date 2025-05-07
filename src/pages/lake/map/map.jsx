@@ -34,7 +34,6 @@ class Map extends Component {
     graphSelection: false,
     graphHide: window.innerWidth > 500 ? false : true,
     mapId: "map_" + Math.round(Math.random() * 100000),
-    iframe: false,
   };
 
   loading = (text) => {
@@ -305,7 +304,6 @@ class Map extends Component {
     const id = url.pathname.replace("map", "").replace(/[^a-zA-Z ]/g, "");
     const queryParams = new URLSearchParams(window.location.search);
     if (queryParams.get("iframe")) {
-      iframe = true;
       sidebar = false;
     }
     var active_layers = [];
@@ -357,7 +355,6 @@ class Map extends Component {
       sidebar,
       graphSelection,
       graphHide,
-      iframe,
     } = this.state;
     var { language, dark } = this.props;
     var title = "";
@@ -366,6 +363,8 @@ class Map extends Component {
       documentTitle = name[language] + " | Alplakes";
       title = name[language];
     }
+    const queryParams = new URLSearchParams(window.location.search);
+    const iframe = queryParams.get("iframe") ? true : false;
     return (
       <div className={sidebar ? "map sidebar-open" : "map"}>
         <Helmet>
