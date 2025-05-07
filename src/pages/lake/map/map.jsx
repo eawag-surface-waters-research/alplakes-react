@@ -13,6 +13,7 @@ import {
 import "./map.css";
 import Basemap from "../../../components/leaflet/basemap";
 import back from "../../../img/back.png";
+import logo from "../../../img/logo.png";
 import Sidebar from "./sidebar";
 import Loading from "../../../components/loading/loading";
 import NotFound from "../components/notfound";
@@ -29,10 +30,11 @@ class Map extends Component {
     datetime: false,
     depth: false,
     selection: false,
-    sidebar: true,
+    sidebar: false,
     graphSelection: false,
     graphHide: window.innerWidth > 500 ? false : true,
     mapId: "map_" + Math.round(Math.random() * 100000),
+    iframe: false,
   };
 
   loading = (text) => {
@@ -160,11 +162,7 @@ class Map extends Component {
       } else {
         selection = false;
       }
-      window.history.replaceState(
-        {},
-        "",
-        `?layers=${active_layers.map((l) => l.id).join(",")}`
-      );
+      this.updateLayersInUrl(active_layers);
       this.loaded();
       this.setState({
         layers,
@@ -181,11 +179,7 @@ class Map extends Component {
         layers.find((l) => l.id === layer_id).active = false;
       }
       let active_layers = layers.filter((l) => l.active);
-      window.history.replaceState(
-        {},
-        "",
-        `?layers=${active_layers.map((l) => l.id).join(",")}`
-      );
+      this.updateLayersInUrl(active_layers);
       this.loaded();
       this.setState({
         layers,
@@ -199,6 +193,19 @@ class Map extends Component {
     updates.push({ event: "updateLayer", id, type, options });
     layers.find((l) => l.id === id).displayOptions = options;
     this.setState({ layers, updates });
+  };
+
+  updateLayersInUrl = (active_layers) => {
+    const params = new URLSearchParams(window.location.search);
+
+    if (active_layers.length > 0) {
+      params.set("layers", active_layers.map((l) => l.id).join(","));
+    } else {
+      params.delete("layers");
+    }
+
+    const newUrl = `${window.location.pathname}?${params.toString()}`;
+    window.history.replaceState({}, "", newUrl);
   };
 
   removeLayer = (id) => {
@@ -215,11 +222,7 @@ class Map extends Component {
       let active_layers = layers.filter((l) => l.active);
       if (active_layers.length > 0 && window.innerWidth > 500)
         selection = active_layers[0].id;
-      window.history.replaceState(
-        {},
-        "",
-        `?layers=${active_layers.map((l) => l.id).join(",")}`
-      );
+      this.updateLayersInUrl(active_layers);
       ({ layer, graphSelection } = this.removeGraph(
         layer,
         layers,
@@ -296,10 +299,15 @@ class Map extends Component {
 
   async componentDidMount() {
     window.scrollTo(0, 0);
-    var { updates } = this.state;
+    var { updates, iframe, sidebar } = this.state;
+    sidebar = true;
     const url = new URL(window.location.href);
     const id = url.pathname.replace("map", "").replace(/[^a-zA-Z ]/g, "");
     const queryParams = new URLSearchParams(window.location.search);
+    if (queryParams.get("iframe")) {
+      iframe = true;
+      sidebar = false;
+    }
     var active_layers = [];
     if (queryParams.get("layers")) {
       active_layers = queryParams
@@ -324,12 +332,14 @@ class Map extends Component {
           name: data.name,
           updates,
           layers,
+          iframe,
+          sidebar,
         },
         () => this.addLayers(active_layers, true)
       );
     } catch (e) {
       console.error(e);
-      this.setState({ error: true, id });
+      this.setState({ error: true, id, iframe });
     }
   }
 
@@ -347,6 +357,7 @@ class Map extends Component {
       sidebar,
       graphSelection,
       graphHide,
+      iframe,
     } = this.state;
     var { language, dark } = this.props;
     var title = "";
@@ -365,10 +376,10 @@ class Map extends Component {
         {error ? (
           <NotFound id={id} text={true} />
         ) : (
-          <div className="layer-map">
+          <div className={iframe ? "layer-map iframe" : "layer-map"}>
             <NavLink to={`/${id}`}>
-              <div className="back-button">
-                <img src={back} alt="Back" />
+              <div className={iframe ? "back-button iframe" : "back-button"}>
+                <img src={iframe ? logo : back} alt="Back" />
               </div>
             </NavLink>
             <Sidebar
