@@ -45,6 +45,49 @@
         }
       }
     },
+    "greifensee": {
+      "profiler": {
+        "name": "CTD Profiler",
+        "type": "datalakes",
+        "id": 515,
+        "lat": 47.366,
+        "lng": 8.665,
+        "depth": {
+          "surface": {
+            "name": "Surface",
+            "depth": 1
+          }
+        }
+      }
+    },
+    "zurich": {
+      "tiefenbrunnen": {
+        "name": "Zürich Police - Tiefenbrunnen",
+        "type": "zurich_police",
+        "id": "tiefenbrunnen",
+        "lat": 47.348139,
+        "lng": 8.561413,
+        "depth": {
+          "surface": {
+            "name": "Surface",
+            "depth": 0.65
+          }
+        }
+      },
+      "mythenquai": {
+        "name": "Zürich Police - Mythenquai",
+        "type": "zurich_police",
+        "id": "mythenquai",
+        "lat": 47.357655,
+        "lng": 8.536529,
+        "depth": {
+          "surface": {
+            "name": "Surface",
+            "depth": 0.65
+          }
+        }
+      }
+    },
     "geneva": {
       "lexplore": {
         "name": "LéXPLORE Thermistor Chain",
@@ -120,6 +163,21 @@
           "surface": {
             "name": "Surface",
             "depth": 0.5
+          }
+        }
+      }
+    },
+    "greifensee": {
+      "profiler": {
+        "name": "CTD Profiler",
+        "type": "datalakes",
+        "id": 515,
+        "lat": 47.366,
+        "lng": 8.665,
+        "depth": {
+          "surface": {
+            "name": "Surface",
+            "depth": 1
           }
         }
       }

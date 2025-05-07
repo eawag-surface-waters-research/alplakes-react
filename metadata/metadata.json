@@ -2781,10 +2781,37 @@
         "volume": 0.51,
         "residence_time": "NA",
         "mixing_regime": "NA",
-        "geothermal_flux": 0.12,
+        "geothermal_flux": "NA",
         "trophic_state": "NA",
         "webcams": [
             1663678597
+        ]
+    },
+    {
+        "key": "traunsee",
+        "name": {
+            "EN": "Traunsee",
+            "DE": "Traunsee",
+            "FR": "Traunsee",
+            "IT": "Traunsee"
+        },
+        "area": 24.35,
+        "ave_depth": "NA",
+        "max_depth": 191.0,
+        "elevation": 423,
+        "latitude": 47.868,
+        "longitude": 13.796,
+        "flags": [
+            "austrian"
+        ],
+        "type": "Natural",
+        "volume": 2.3,
+        "residence_time": "NA",
+        "mixing_regime": "NA",
+        "geothermal_flux": "NA",
+        "trophic_state": "NA",
+        "webcams": [
+            1721134569, 1473153168
         ]
     },
     {
