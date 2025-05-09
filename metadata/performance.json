@@ -60,6 +60,21 @@
         }
       }
     },
+    "lugano": {
+      "profiler": {
+        "name": "Ticino Mooring",
+        "type": "datalakes",
+        "id": 1334,
+        "lat": 45.999,
+        "lng": 8.98,
+        "depth": {
+          "surface": {
+            "name": "Surface",
+            "depth": 0.5
+          }
+        }
+      }
+    },
     "zurich": {
       "tiefenbrunnen": {
         "name": "Zürich Police - Tiefenbrunnen",
