@@ -105,7 +105,7 @@ class Graph extends Component {
       case "satellite_timeseries":
         return (
           <SatelliteSummary
-            available={data}
+            input={data}
             language={language}
             label={Translations[layer.parameter][language]}
             options={layer.displayOptions}

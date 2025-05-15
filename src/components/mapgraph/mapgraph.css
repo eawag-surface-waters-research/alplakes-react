@@ -124,6 +124,16 @@
     font-size: 14px;
     text-align: center;
     width: 100%;
+    z-index: 999;
+}
+
+.map-graph .map-graph-content .graph-title .graph-title-selection {
+    display: inline-block;
+    margin-right: 20px;
+}
+
+.map-graph .map-graph-content .graph-title .graph-title-selection input {
+    margin-right: 6px;
 }
 
 .map-graph-icon {
