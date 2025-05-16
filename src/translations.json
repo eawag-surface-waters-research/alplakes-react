@@ -425,11 +425,11 @@
     "FR": "Masquer les paramètres",
     "IT": "Nascondi impostazioni"
   },
-  "satelliteGraph": {
-    "EN": "Average lake values per satellite image",
-    "DE": "Durchschnittliche Seewerte pro Satellitenbild",
-    "FR": "Valeurs moyennes du lac par image satellite",
-    "IT": "Valori medi del lago per immagine satellitare"
+  "lakeAverage": {
+    "EN": "lake average",
+    "DE": "Seedurchschnitt",
+    "FR": "moyenne du lac",
+    "IT": "media del lago"
   },
   "transectDistance": {
     "EN": "Distance along transect",

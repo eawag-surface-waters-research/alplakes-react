@@ -34,6 +34,19 @@ const threedMetadata = async (parameters) => {
 
 const satelliteMetadata = async (parameters) => {
   var available = {};
+  var reference = false;
+  if ("reference" in parameters) {
+    try {
+      ({ data: reference } = await axios.get(
+        CONFIG.sencast_bucket + parameters.reference
+      ));
+      reference.datetime = reference.datetime.map((t) =>
+        general.satelliteStringToDate(t)
+      );
+    } catch (e) {
+      console.error("Cannot find reference dataset");
+    }
+  }
   for (let model of parameters.models) {
     let { data: files } = await axios.get(
       CONFIG.sencast_bucket + model.metadata
@@ -99,7 +112,7 @@ const satelliteMetadata = async (parameters) => {
     var date = available[general.formatSencastDay(currentDate)];
     var image = date.images.filter((i) => i.percent === date.max_percent)[0];
     var graph = {
-      satellite_timeseries: available,
+      satellite_timeseries: { available, reference },
     };
     return { available, image, includeDates, graph };
   }

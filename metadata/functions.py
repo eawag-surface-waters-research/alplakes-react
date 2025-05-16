@@ -345,6 +345,8 @@ def satellite_layers(key, sd):
             }
           }
         }
+        if key in ["thun", "brienz"]:
+            layer["sources"][layer["source"]]["reference"] = "/insitu/reference/{}/secchi.json".format(key)
         if "sentinel3" in sd and "Zsd_lee" in sd["sentinel3"]:
             layer["sources"][layer["source"]]["models"].append(
                 {

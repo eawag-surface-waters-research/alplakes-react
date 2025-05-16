@@ -1,24 +1,33 @@
 import React, { Component } from "react";
 import D3LineGraph from "../linegraph/linegraph";
 import Translations from "../../../translations.json";
-import "react-datepicker/dist/react-datepicker.css";
 
 class SatelliteSummary extends Component {
   state = {
-    data: [],
+    data: {},
     ymin: 0,
     ymax: 0,
     xmin: new Date(new Date().setMonth(new Date().getMonth() - 4)),
     xmax: new Date(),
     coverage: 10,
+    satellites: {},
+    latitude: "",
+    longitude: "",
   };
   setImage = (event) => {
     this.props.setImage(event.x);
   };
 
+  setSatellites = (satellite) => {
+    var { satellites } = this.state;
+    satellites[satellite] = !satellites[satellite];
+    this.setState({ satellites });
+  };
+
   setData = () => {
-    var { xmin, xmax } = this.state;
-    var { available, options } = this.props;
+    var { xmin, xmax, satellites, latitude, longitude } = this.state;
+    var { input, options } = this.props;
+    var { available, reference } = input;
     var data = {};
     var ymin = Infinity;
     var ymax = -Infinity;
@@ -45,8 +54,31 @@ class SatelliteSummary extends Component {
         }
       }
     }
-    data = Object.values(data);
-    this.setState({ data, ymin, ymax, coverage: options.coverage });
+    if (reference) {
+      latitude = reference.latitude.toFixed(2);
+      longitude = reference.longitude.toFixed(2);
+      data["insitu"] = {
+        x: reference.datetime,
+        y: reference.value,
+        tooltip: reference.value.map((r) => "Insitu value"),
+        lineColor: "red",
+      };
+    }
+
+    for (let key of ["S2", "S3", "insitu"]) {
+      if (Object.keys(data).some((str) => str.includes(key))) {
+        satellites[key] = true;
+      }
+    }
+    this.setState({
+      data,
+      ymin,
+      ymax,
+      coverage: options.coverage,
+      satellites,
+      latitude,
+      longitude,
+    });
   };
 
   componentDidMount() {
@@ -61,14 +93,40 @@ class SatelliteSummary extends Component {
 
   render() {
     var { label, unit, dark, language } = this.props;
-    var { data, xmin, xmax, ymin, ymax } = this.state;
+    var { data, xmin, xmax, ymin, ymax, satellites, latitude, longitude } =
+      this.state;
+    const graph_data = Object.entries(data)
+      .filter(([key, value]) =>
+        Object.entries(satellites)
+          .filter(([key, value]) => value === true)
+          .map(([key]) => key)
+          .some((sub) => key.includes(sub))
+      )
+      .map((g) => g[1]);
+    if (graph_data.length === 0) {
+      graph_data.push({ x: [], y: [] });
+    }
+    var lookup = {
+      S2: `Sentinel 2 (${Translations.lakeAverage[language]})`,
+      S3: `Sentinel 3 (${Translations.lakeAverage[language]})`,
+      insitu: `Insitu (${latitude}, ${longitude})`,
+    };
     return (
       <React.Fragment>
         <div className="graph-title">
-          {Translations.satelliteGraph[language]}
+          {Object.keys(satellites).map((s) => (
+            <div key={s} className="graph-title-selection">
+              <input
+                type="checkbox"
+                checked={satellites[s]}
+                onChange={() => this.setSatellites(s)}
+              ></input>
+              {lookup[s]}
+            </div>
+          ))}
         </div>
         <D3LineGraph
-          data={data}
+          data={graph_data}
           ylabel={label}
           yunits={unit}
           lcolor={new Array(10).fill(dark ? "white" : "black")}
