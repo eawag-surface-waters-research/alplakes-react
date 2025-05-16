@@ -130,6 +130,9 @@
 .map-graph .map-graph-content .graph-title .graph-title-selection {
     display: inline-block;
     margin-right: 20px;
+    max-width: 25%;
+    overflow: hidden;
+    white-space: nowrap;
 }
 
 .map-graph .map-graph-content .graph-title .graph-title-selection input {
