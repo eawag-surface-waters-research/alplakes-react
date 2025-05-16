@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import D3LineGraph from "../linegraph/linegraph";
+import Translations from "../../../translations.json";
 
 class SatelliteSummary extends Component {
   state = {
@@ -18,7 +19,6 @@ class SatelliteSummary extends Component {
   };
 
   setSatellites = (satellite) => {
-    console.log(satellite);
     var { satellites } = this.state;
     satellites[satellite] = !satellites[satellite];
     this.setState({ satellites });
@@ -103,9 +103,12 @@ class SatelliteSummary extends Component {
           .some((sub) => key.includes(sub))
       )
       .map((g) => g[1]);
+    if (graph_data.length === 0) {
+      graph_data.push({ x: [], y: [] });
+    }
     var lookup = {
-      S2: "Sentinel 2 (lake average)",
-      S3: "Sentinel 3 (lake average)",
+      S2: `Sentinel 2 (${Translations.lakeAverage[language]})`,
+      S3: `Sentinel 3 (${Translations.lakeAverage[language]})`,
       insitu: `Insitu (${latitude}, ${longitude})`,
     };
     return (
