@@ -33,6 +33,7 @@ class Basemap extends Component {
           datetime = datetime + timestep;
         }
         setPlayDatetime(this.layers, datetime, period, data);
+        this.map.triggerLayersUpdate();
         if (this.props.setDatetime) {
           this.props.setDatetime(datetime);
         }

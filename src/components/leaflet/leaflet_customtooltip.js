@@ -35,7 +35,7 @@ L.Map.include({
         }
       });
       this._updateCursorLocationTooltip(
-        content,
+        `<div class="tooltip-hover">${content}</div>`,
         this._cursorLocationTooltip.customData.latlng
       );
     }
