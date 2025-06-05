@@ -39,7 +39,7 @@ class Blog extends Component {
                 <h2>{p.title}</h2>
                 <p>{p.description}</p>
                 <a href={p.link} target="_blank" rel="noopener noreferrer">
-                  Read more
+                  {"link_text" in p ? p.link_text : "Read more"}
                 </a>
                 <div className="date">{p.date}</div>
               </div>
