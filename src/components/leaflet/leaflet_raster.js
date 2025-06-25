@@ -18,10 +18,10 @@ L.Raster = L.Layer.extend({
     ],
   },
   initialize: function (geometry, data, options) {
-    this._geometry = geometry;
     this._dataWidth = geometry[0].length / 2;
     this._dataHeight = geometry.length;
     this._data = data;
+    this._geometry = this._interpolateGeometryBoundary(geometry);
     this._grid_vertices();
     L.Util.setOptions(this, options);
     if (isNaN(this.options.min)) this.options.min = min(data.flat());
@@ -99,6 +99,41 @@ L.Raster = L.Layer.extend({
     this._canvas.style.opacity = this.options.opacity;
     this._canvas.style.zIndex = this.options.zIndex + 100;
     this._reset();
+  },
+  _interpolateGeometryBoundary: function (g) {
+    var geometry = g.map(row => row.slice());
+    const d = this._dataWidth;
+    for (var i = 1; i < this._dataHeight - 1; i++) {
+      for (var j = 1; j < this._dataWidth - 1; j++) {
+        if (isNaN(g[i][j])) {
+          // Top
+          if (!isNaN(g[i - 1][j]) && !isNaN(g[i - 2][j])) {
+            geometry[i][j] = 2 * g[i - 1][j] - g[i - 2][j];
+            geometry[i][j + d] = 2 * g[i - 1][j + d] - g[i - 2][j + d];
+            continue
+          }
+          // Bottom
+          if (!isNaN(g[i + 1][j]) && !isNaN(g[i + 2][j])) {
+            geometry[i][j] = 2 * g[i + 1][j] - g[i + 2][j];
+            geometry[i][j + d] = 2 * g[i + 1][j + d] - g[i + 2][j + d];
+            continue
+          }
+          // Left
+          if (!isNaN(g[i][j - 1]) && !isNaN(g[i][j - 2])) {
+            geometry[i][j] = 2 * g[i][j - 1] - g[i][j - 2];
+            geometry[i][j + d] = 2 * g[i][j + d - 1] - g[i][j + d - 2];
+            continue
+          }
+          // Right
+          if (!isNaN(g[i][j + 1]) && !isNaN(g[i][j + 2])) {
+            geometry[i][j] = 2 * g[i][j + 1] - g[i][j + 2];
+            geometry[i][j + d] = 2 * g[i][j + d + 1] - g[i][j + d + 2];
+            continue
+          }
+        }
+      }
+    }
+    return geometry;
   },
   _grid_vertices: function () {
     var vertices = [];
@@ -212,6 +247,7 @@ L.Raster = L.Layer.extend({
     this._points = points;
   },
   _drawCell: function (ctx, coords, color) {
+    console.log(color)
     ctx.strokeStyle = color;
     ctx.fillStyle = color;
     ctx.beginPath();
@@ -328,9 +364,9 @@ L.Raster = L.Layer.extend({
       (palette[index + 1].point - palette[index].point);
 
     var rgb = [
-      color1[0] + (color2[0] - color1[0]) * f,
-      color1[1] + (color2[1] - color1[1]) * f,
-      color1[2] + (color2[2] - color1[2]) * f,
+      Math.round(color1[0] + (color2[0] - color1[0]) * f),
+      Math.round(color1[1] + (color2[1] - color1[1]) * f),
+      Math.round(color1[2] + (color2[2] - color1[2]) * f),
     ];
 
     return rgb;
