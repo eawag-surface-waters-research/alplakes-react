@@ -107,21 +107,27 @@ class SatelliteSummary extends Component {
       graph_data.push({ x: [], y: [] });
     }
     var lookup = {
-      S2: `Sentinel 2 (${Translations.lakeAverage[language]})`,
-      S3: `Sentinel 3 (${Translations.lakeAverage[language]})`,
-      insitu: `Insitu (${latitude}, ${longitude})`,
+      S2: {
+        label: `Sentinel 2 [×] (${Translations.lakeAverage[language]})`,
+        class: "",
+      },
+      S3: {
+        label: `Sentinel 3 [o] (${Translations.lakeAverage[language]})`,
+        class: "",
+      },
+      insitu: { label: `Insitu [o] (${latitude}, ${longitude})`, class: "red" },
     };
     return (
       <React.Fragment>
         <div className="graph-title">
           {Object.keys(satellites).map((s) => (
-            <div key={s} className="graph-title-selection">
+            <div key={s} className={"graph-title-selection " + lookup[s].class}>
               <input
                 type="checkbox"
                 checked={satellites[s]}
                 onChange={() => this.setSatellites(s)}
               ></input>
-              {lookup[s]}
+              {lookup[s].label}
             </div>
           ))}
         </div>

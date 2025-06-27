@@ -139,6 +139,10 @@
     margin-right: 6px;
 }
 
+.map-graph .map-graph-content .graph-title .graph-title-selection.red {
+    color: red;
+}
+
 .map-graph-icon {
     pointer-events: all;
     width: 50px;
