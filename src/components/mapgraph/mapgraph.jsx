@@ -109,6 +109,7 @@ class Graph extends Component {
             language={language}
             label={Translations[layer.parameter][language]}
             options={layer.displayOptions}
+            parameter={layer.parameter}
             unit={layer.unit}
             dark={dark}
             setImage={this.setImage}

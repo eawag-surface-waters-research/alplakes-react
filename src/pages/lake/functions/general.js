@@ -74,6 +74,21 @@ export const formatSencastDay = (datetime) => {
   }`;
 };
 
+export const formatDateWithUTC = (date = new Date()) => {
+  const pad = (n, z = 2) => String(n).padStart(z, '0');
+
+  const year = date.getUTCFullYear();
+  const month = pad(date.getUTCMonth() + 1);
+  const day = pad(date.getUTCDate());
+
+  const hours = pad(date.getUTCHours());
+  const minutes = pad(date.getUTCMinutes());
+  const seconds = pad(date.getUTCSeconds());
+  const ms = pad(date.getUTCMilliseconds(), 3);
+
+  return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}.${ms}+00:00`;
+};
+
 export const satelliteStringToDate = (date) => {
   return new Date(
     `${date.slice(0, 4)}-${date.slice(4, 6)}-${date.slice(6, 8)}T${date.slice(
@@ -220,27 +235,27 @@ export const timeAgo2 = (time, language) => {
     return count === 1
       ? Translations["monthAgo"][language]
       : Translations["monthsAgo"][language].replace("#", count);
-  } 
+  }
   // Handling Weeks (if the difference is in weeks)
   else if (differenceInDays % 7 === 0 || differenceInDays > 21) {
     let count = Math.ceil(differenceInDays / 7);
     return count === 1
       ? Translations["weekAgo"][language]
       : Translations["weeksAgo"][language].replace("#", count);
-  } 
+  }
   // Handling Days (if the difference is in days)
   else if (differenceInDays > 1) {
     return differenceInDays === 1
       ? Translations["dayAgo"][language]
       : Translations["daysAgo"][language].replace("#", differenceInDays);
-  } 
+  }
   // Handling Hours (if the difference is in hours)
   else if (differenceInMinutes >= 60 || differenceInMinutes > 120) {
     let count = Math.ceil(differenceInMinutes / 60);
     return count === 1
       ? Translations["hourAgo"][language]
       : Translations["hoursAgo"][language].replace("#", count);
-  } 
+  }
   // Handling Minutes (if the difference is in minutes)
   else {
     return differenceInMinutes === 1

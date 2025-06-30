@@ -283,8 +283,8 @@
     background-color: var(--background-color);
     color: var(--background-font-color);
     cursor: pointer;
-    padding: 2px 6px;
-    font-size: 12px;
+    padding: 3px 6px;
+    font-size: 11px;
     margin-top: 4px;
 }
 

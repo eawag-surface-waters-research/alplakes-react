@@ -815,7 +815,9 @@ class Tiff extends Component {
                   </div>
                   <div className="under">
                     <a href={i.url} title="Download image as GeoTIFF">
-                      <button className="tiff">GeoTIFF</button>
+                      <button className="tiff">
+                        {Translations.download[language]}
+                      </button>
                     </a>
                   </div>
                 </div>
@@ -1063,7 +1065,9 @@ class LayerSettings extends Component {
       );
     } else {
       return (
-        <div className="layer-settings subtle">{Translations.noSettings[language]}</div>
+        <div className="layer-settings subtle">
+          {Translations.noSettings[language]}
+        </div>
       );
     }
   }

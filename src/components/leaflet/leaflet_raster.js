@@ -247,7 +247,6 @@ L.Raster = L.Layer.extend({
     this._points = points;
   },
   _drawCell: function (ctx, coords, color) {
-    console.log(color)
     ctx.strokeStyle = color;
     ctx.fillStyle = color;
     ctx.beginPath();

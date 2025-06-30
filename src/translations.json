@@ -737,6 +737,12 @@
     "FR": "Paramètres",
     "IT": "Impostazioni"
   },
+  "download": {
+    "EN": "Download",
+    "DE": "Download",
+    "FR": "Téléchargement",
+    "IT": "Download"
+  },
   "downloads": {
     "EN": "Downloads",
     "DE": "Downloads",

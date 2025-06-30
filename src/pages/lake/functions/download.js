@@ -14,7 +14,7 @@ export const collectMetadata = async (layers, graphSelection) => {
     if (layer.active && !("metadata" in layer["sources"][layer["source"]])) {
       layer["sources"][layer["source"]]["metadata"] = await functions[
         layer.type
-      ](layer["sources"][layer["source"]]);
+      ](layer["sources"][layer["source"]], layer.unit);
       if ("graph" in layer["sources"][layer["source"]]["metadata"]) {
         layer.graph = layer["sources"][layer["source"]]["metadata"]["graph"];
         graphSelection = { id: layer.id, type: Object.keys(layer.graph)[0] };
@@ -24,7 +24,7 @@ export const collectMetadata = async (layers, graphSelection) => {
   return { layers, graphSelection };
 };
 
-const threedMetadata = async (parameters) => {
+const threedMetadata = async (parameters, unit) => {
   const metadata = await downloadModelMetadata(
     parameters.model.toLowerCase(),
     parameters.key
@@ -32,9 +32,10 @@ const threedMetadata = async (parameters) => {
   return metadata;
 };
 
-const satelliteMetadata = async (parameters) => {
+const satelliteMetadata = async (parameters, unit) => {
   var available = {};
   var reference = false;
+  var csv = `data:text/csv;charset=utf-8,Datetime,Satellite,Mean (${unit}),Min (${unit}),Max (${unit}),Pixel Coverage (%),URL\n`;
   if ("reference" in parameters) {
     try {
       ({ data: reference } = await axios.get(
@@ -47,6 +48,7 @@ const satelliteMetadata = async (parameters) => {
       console.error("Cannot find reference dataset");
     }
   }
+  var overallLake = "";
   for (let model of parameters.models) {
     let { data: files } = await axios.get(
       CONFIG.sencast_bucket + model.metadata
@@ -56,11 +58,17 @@ const satelliteMetadata = async (parameters) => {
       let time = general.satelliteStringToDate(file.dt);
       let date = general.formatSencastDay(time);
       let { lake, satellite, group } = general.componentsFromFilename(file.k);
+      overallLake = lake;
       let url = `${CONFIG.sencast_bucket}/alplakes/cropped/${group}/${lake}/${file.k}`;
       let split = file.k.split("_");
       let tile = split[split.length - 1].split(".")[0];
       let percent = Math.ceil((parseFloat(file.vp) / max_pixels) * 100);
       let { min, max, mean: ave } = file;
+      csv =
+        csv +
+        `${general.formatDateWithUTC(
+          time
+        )},${satellite},${ave},${min},${max},${percent},${url}\n`;
       let image = {
         url,
         time,
@@ -72,6 +80,7 @@ const satelliteMetadata = async (parameters) => {
         min,
         max,
       };
+
       if (date in available) {
         available[date].images.push(image);
         available[date].max_percent = Math.max(
@@ -112,13 +121,13 @@ const satelliteMetadata = async (parameters) => {
     var date = available[general.formatSencastDay(currentDate)];
     var image = date.images.filter((i) => i.percent === date.max_percent)[0];
     var graph = {
-      satellite_timeseries: { available, reference },
+      satellite_timeseries: { available, reference, csv, lake: overallLake },
     };
     return { available, image, includeDates, graph };
   }
 };
 
-const measurementsMetadata = (parameters) => {
+const measurementsMetadata = (parameters, unit) => {
   return {};
 };
 

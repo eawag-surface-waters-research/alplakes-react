@@ -24,6 +24,17 @@ class SatelliteSummary extends Component {
     this.setState({ satellites });
   };
 
+  downloadMetadata = () => {
+    const { csv, lake } = this.props.input;
+    var name = `${lake}_${this.props.parameter}_satellite_summary.csv`;
+    var encodedUri = encodeURI(csv);
+    var link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", name);
+    document.body.appendChild(link);
+    link.click();
+  };
+
   setData = () => {
     var { xmin, xmax, satellites, latitude, longitude } = this.state;
     var { input, options } = this.props;
@@ -130,6 +141,9 @@ class SatelliteSummary extends Component {
               {lookup[s].label}
             </div>
           ))}
+        </div>
+        <div className="download-metadata" onClick={this.downloadMetadata}>
+          {Translations.download[language]}
         </div>
         <D3LineGraph
           data={graph_data}

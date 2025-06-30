@@ -143,6 +143,27 @@
     color: red;
 }
 
+.map-graph .map-graph-content .download-metadata {
+    position: absolute;
+    right: 0;
+    bottom: 9px;
+    z-index: 1000;
+    border-radius: 8px;
+    margin-right: 16px;
+    border: 1px solid var(--border-color);
+    background-color: var(--background-color);
+    color: var(--background-font-color);
+    cursor: pointer;
+    padding: 3px 6px;
+    font-size: 11px;
+}
+
+.map-graph .map-graph-content .download-metadata:hover {
+    background-color: var(--highlight-color);
+    color: white;
+    border-color: var(--highlight-color);
+}
+
 .map-graph-icon {
     pointer-events: all;
     width: 50px;
