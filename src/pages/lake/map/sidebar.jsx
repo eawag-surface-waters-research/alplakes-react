@@ -41,6 +41,7 @@ class Sidebar extends Component {
       period,
       depth,
       setPeriod,
+      setModel,
       setDepth,
       sidebar,
       toggleSidebar,
@@ -127,6 +128,7 @@ class Sidebar extends Component {
                     updateOptions={updateOptions}
                     setDepth={setDepth}
                     setPeriod={setPeriod}
+                    setModel={setModel}
                   />
                 </React.Fragment>
               )}

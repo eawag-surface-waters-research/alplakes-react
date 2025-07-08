@@ -4,7 +4,7 @@ import requests
 import functions as func
 
 upload = True
-bucket_folder = "static/website/metadata/master"
+bucket_folder = "static/website/metadata/mitgcm"
 
 # Load Metadata
 with open("metadata.json") as f:
@@ -102,28 +102,30 @@ for lake in metadata:
     # Three Dimensional Model
     if '3D' in lake:
         add = True
-        response = requests.get("https://alplakes-api.eawag.ch/simulations/metadata/delft3d-flow/{}".format(lake["key"]))
-        model_metadata = response.json()
-        three_dimensional_list.append({
-            "link": lake["key"],
-            "name": lake["name"]["EN"],
-            "model": "Delft3D-flow",
-            "LatLng": "{}, {}".format(lake["latitude"], lake["longitude"]),
-            "area": lake["area"],
-            "elevation": lake["elevation"],
-            "depth": lake["max_depth"],
-            "timeframe": "{}-{}".format(model_metadata["start_date"][0:4], model_metadata["end_date"][0:4]),
-            "overallrmse": round(lake["3D"]["performance"]["rmse"]["overall"], 2)
-            })
         home["filters"].append("3D")
-        data["forecast"] = { "3d_model": {
-            "key": key,
-            "model": "delft3d-flow",
-            "parameters": ["temperature", "velocity"],
-            "labels": lake["3D"]["3D_temperature"],
-            "performance": lake["3D"]["performance"]
-        }}
-        layers["layers"].extend(func.model_layers(lake["key"]))
+        for model_id in lake["3D"]["models"].keys():
+            response = requests.get("https://alplakes-api.eawag.ch/simulations/metadata/{}/{}".format(lake["3D"]["models"][model_id]["model"],lake["key"]))
+            model_metadata = response.json()
+            three_dimensional_list.append({
+                "link": lake["key"],
+                "name": lake["name"]["EN"],
+                "model": lake["3D"]["models"][model_id]["name"],
+                "LatLng": "{}, {}".format(lake["latitude"], lake["longitude"]),
+                "area": lake["area"],
+                "elevation": lake["elevation"],
+                "depth": lake["max_depth"],
+                "timeframe": "{}-{}".format(model_metadata["start_date"][0:4], model_metadata["end_date"][0:4]),
+                "overallrmse": lake["3D"]["models"][model_id]["performance"]["rmse"]["overall"]
+                })
+            if model_id == lake["3D"]["default"]:
+                data["forecast"] = { "3d_model": {
+                    "key": key,
+                    "model": lake["3D"]["models"][lake["3D"]["default"]]["model"],
+                    "parameters": ["temperature", "velocity"],
+                    "labels": lake["3D"]["3D_temperature"],
+                    "performance": lake["3D"]["models"][lake["3D"]["default"]]["performance"]
+                }}
+        layers["layers"].extend(func.model_layers(lake["3D"]["default"], lake["3D"]["models"]))
 
 
     # One Dimensional Model

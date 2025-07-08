@@ -26,11 +26,11 @@ export const compareDates = (date1, date2) => {
 
 export const formatAPIDatetime = (datetime) => {
   var a = new Date(datetime);
-  var year = a.getFullYear();
-  var month = a.getMonth() + 1;
-  var date = a.getDate();
-  var hour = a.getHours();
-  var minute = a.getMinutes();
+  var year = a.getUTCFullYear();
+  var month = a.getUTCMonth() + 1;
+  var date = a.getUTCDate();
+  var hour = a.getUTCHours();
+  var minute = a.getUTCMinutes();
   return `${String(year)}${month < 10 ? "0" + month : month}${
     date < 10 ? "0" + date : date
   }${hour < 10 ? "0" + hour : hour}${minute < 10 ? "0" + minute : minute}`;
