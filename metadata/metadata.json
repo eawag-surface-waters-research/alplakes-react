@@ -35,9 +35,17 @@
             1357984128
         ],
         "3D": {
-            "performance": {
-                "rmse": {
-                    "overall": 0.85
+            "default": "alplakes_delft3d",
+            "models": {
+                "alplakes_delft3d": {
+                    "model": "delft3d-flow",
+                    "name": "Delft3D-FLOW",
+                    "key": "geneva",
+                    "performance": {
+                        "rmse": {
+                            "overall": 0.85
+                        }
+                    }
                 }
             },
             "3D_temperature": [
@@ -182,9 +190,27 @@
             1697032784
         ],
         "3D": {
-            "performance": {
-                "rmse": {
-                    "overall": 1.03
+            "default": "alplakes_delft3d",
+            "models": {
+                "alplakes_delft3d": {
+                    "model": "delft3d-flow",
+                    "name": "Delft3D-FLOW",
+                    "key": "zurich",
+                    "performance": {
+                        "rmse": {
+                            "overall": 1.03
+                        }
+                    }
+                },
+                "alplakes_mitgcm": {
+                    "model": "mitgcm",
+                    "name": "MITgcm",
+                    "key": "zurich",
+                    "performance": {
+                        "rmse": {
+                            "overall": "NA"
+                        }
+                    }
                 }
             },
             "3D_temperature": [
@@ -244,9 +270,17 @@
             1649909237
         ],
         "3D": {
-            "performance": {
-                "rmse": {
-                    "overall": 1.12
+            "default": "alplakes_delft3d",
+            "models": {
+                "alplakes_delft3d": {
+                    "model": "delft3d-flow",
+                    "name": "Delft3D-FLOW",
+                    "key": "biel",
+                    "performance": {
+                        "rmse": {
+                            "overall": 1.12
+                        }
+                    }
                 }
             },
             "3D_temperature": [
@@ -307,9 +341,17 @@
             1217940701
         ],
         "3D": {
-            "performance": {
-                "rmse": {
-                    "overall": 0.69
+            "default": "alplakes_delft3d",
+            "models": {
+                "alplakes_delft3d": {
+                    "model": "delft3d-flow",
+                    "name": "Delft3D-FLOW",
+                    "key": "greifensee",
+                    "performance": {
+                        "rmse": {
+                            "overall": 0.69
+                        }
+                    }
                 }
             },
             "3D_temperature": [
@@ -357,9 +399,17 @@
             1600352313
         ],
         "3D": {
-            "performance": {
-                "rmse": {
-                    "overall": 0.73
+            "default": "alplakes_delft3d",
+            "models": {
+                "alplakes_delft3d": {
+                    "model": "delft3d-flow",
+                    "name": "Delft3D-FLOW",
+                    "key": "garda",
+                    "performance": {
+                        "rmse": {
+                            "overall": 0.73
+                        }
+                    }
                 }
             },
             "3D_temperature": [
@@ -434,9 +484,17 @@
             1453939473
         ],
         "3D": {
-            "performance": {
-                "rmse": {
-                    "overall": 0.9
+            "default": "alplakes_delft3d",
+            "models": {
+                "alplakes_delft3d": {
+                    "model": "delft3d-flow",
+                    "name": "Delft3D-FLOW",
+                    "key": "lugano",
+                    "performance": {
+                        "rmse": {
+                            "overall": 0.9
+                        }
+                    }
                 }
             },
             "3D_temperature": [
@@ -505,9 +563,17 @@
             1451403794
         ],
         "3D": {
-            "performance": {
-                "rmse": {
-                    "overall": 0.8
+            "default": "alplakes_delft3d",
+            "models": {
+                "alplakes_delft3d": {
+                    "model": "delft3d-flow",
+                    "name": "Delft3D-FLOW",
+                    "key": "murten",
+                    "performance": {
+                        "rmse": {
+                            "overall": 0.8
+                        }
+                    }
                 }
             },
             "3D_temperature": [
@@ -546,9 +612,17 @@
             1737368970
         ],
         "3D": {
-            "performance": {
-                "rmse": {
-                    "overall": 1.67
+            "default": "alplakes_delft3d",
+            "models": {
+                "alplakes_delft3d": {
+                    "model": "delft3d-flow",
+                    "name": "Delft3D-FLOW",
+                    "key": "caldonazzo",
+                    "performance": {
+                        "rmse": {
+                            "overall": 1.67
+                        }
+                    }
                 }
             },
             "3D_temperature": [
@@ -606,9 +680,17 @@
             1336805325
         ],
         "3D": {
-            "performance": {
-                "rmse": {
-                    "overall": 0.68
+            "default": "alplakes_delft3d",
+            "models": {
+                "alplakes_delft3d": {
+                    "model": "delft3d-flow",
+                    "name": "Delft3D-FLOW",
+                    "key": "ageri",
+                    "performance": {
+                        "rmse": {
+                            "overall": 0.68
+                        }
+                    }
                 }
             },
             "3D_temperature": [
@@ -657,9 +739,17 @@
         "swiss_bathy": true,
         "default_depth": 0.7,
         "3D": {
-            "performance": {
-                "rmse": {
-                    "overall": 1.05
+            "default": "alplakes_delft3d",
+            "models": {
+                "alplakes_delft3d": {
+                    "model": "delft3d-flow",
+                    "name": "Delft3D-FLOW",
+                    "key": "joux",
+                    "performance": {
+                        "rmse": {
+                            "overall": 1.05
+                        }
+                    }
                 }
             },
             "3D_temperature": [
@@ -721,9 +811,17 @@
             1697037678
         ],
         "3D": {
-            "performance": {
-                "rmse": {
-                    "overall": 1.22
+            "default": "alplakes_delft3d",
+            "models": {
+                "alplakes_delft3d": {
+                    "model": "delft3d-flow",
+                    "name": "Delft3D-FLOW",
+                    "key": "hallwil",
+                    "performance": {
+                        "rmse": {
+                            "overall": 1.22
+                        }
+                    }
                 }
             },
             "3D_temperature": [
@@ -775,9 +873,17 @@
             1700205092
         ],
         "3D": {
-            "performance": {
-                "rmse": {
-                    "overall": 2.29
+            "default": "alplakes_delft3d",
+            "models": {
+                "alplakes_delft3d": {
+                    "model": "delft3d-flow",
+                    "name": "Delft3D-FLOW",
+                    "key": "stmoritz",
+                    "performance": {
+                        "rmse": {
+                            "overall": 2.29
+                        }
+                    }
                 }
             },
             "3D_temperature": [

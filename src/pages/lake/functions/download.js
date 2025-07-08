@@ -15,7 +15,7 @@ export const collectMetadata = async (layers, graphSelection) => {
       layer["sources"][layer["source"]]["metadata"] = await functions[
         layer.type
       ](layer["sources"][layer["source"]], layer.unit);
-      if ("graph" in layer["sources"][layer["source"]]["metadata"]) {
+      if ("metadata" in layer["sources"][layer["source"]] && "graph" in layer["sources"][layer["source"]]["metadata"]) {
         layer.graph = layer["sources"][layer["source"]]["metadata"]["graph"];
         graphSelection = { id: layer.id, type: Object.keys(layer.graph)[0] };
       }
@@ -631,7 +631,7 @@ export const downloadModelMetadata = async (model, lake) => {
         `${CONFIG.alplakes_api}/simulations/1d/metadata/${model}/${lake}`,
       ],
     ];
-  } else if (model === "delft3d-flow") {
+  } else if (["delft3d-flow", "mitgcm"].includes(model)) {
     urls = [
       [
         `${

@@ -135,15 +135,24 @@ class Raster extends Component {
 
   render() {
     var { _min, _max, id } = this.state;
-    var { language, layer, period, setPeriod, depth, setDepth } = this.props;
+    var { language, layer, period, setPeriod, depth, setDepth, setModel } =
+      this.props;
     var { paletteName, opacity } = this.props.options;
     var { model, key } = layer.sources[layer.source];
-    var {
-      depth: depths,
-      missingDates,
-      start_date,
-      end_date,
-    } = layer.sources[layer.source].metadata;
+    var depths = [];
+    var missingDates = [];
+    var start_date = new Date();
+    var end_date = new Date();
+    end_date.setDate(start_date.getDate() - 7);
+    if ("metadata" in layer.sources[layer.source]) {
+      ({
+        depth: depths,
+        missingDates,
+        start_date,
+        end_date,
+      } = layer.sources[layer.source].metadata);
+    }
+
     if (opacity === undefined) opacity = 1;
     var downloadDates = this.downloadDates(
       model,
@@ -154,6 +163,19 @@ class Raster extends Component {
     );
     return (
       <div className="layer-settings">
+        <div className="setting">
+          <div className="label">Model</div>
+          <select
+            value={layer["source"]}
+            onChange={(event) => setModel(event, layer.id)}
+          >
+            {Object.entries(layer["sources"]).map(([key, value]) => (
+              <option key={key} value={key}>
+                {value.name}
+              </option>
+            ))}
+          </select>
+        </div>
         <div className="setting">
           <div className="label">Period</div>
           <div className="period-selector">
@@ -379,7 +401,8 @@ class Current extends Component {
 
   render() {
     var { _paths, id } = this.state;
-    var { language, period, setPeriod, depth, setDepth, layer } = this.props;
+    var { language, period, setPeriod, depth, setDepth, setModel, layer } =
+      this.props;
     var {
       opacity,
       velocityScale,
@@ -391,14 +414,20 @@ class Current extends Component {
       streamlinesColor,
     } = this.props.options;
     var { model, key } = layer.sources[layer.source];
-    var {
-      depth: depths,
-      missingDates,
-      start_date,
-      end_date,
-    } = layer.sources[layer.source].metadata;
-    depths = depths ? depths : [];
-    missingDates = missingDates ? missingDates : [];
+    var depths = [];
+    var missingDates = [];
+    var start_date = new Date();
+    var end_date = new Date();
+    end_date.setDate(start_date.getDate() - 7);
+    if ("metadata" in layer.sources[layer.source]) {
+      ({
+        depth: depths,
+        missingDates,
+        start_date,
+        end_date,
+      } = layer.sources[layer.source].metadata);
+    }
+
     var downloadDates = this.downloadDates(
       model,
       key,
@@ -408,6 +437,19 @@ class Current extends Component {
     );
     return (
       <div className="layer-settings">
+        <div className="setting">
+          <div className="label">Model</div>
+          <select
+            value={layer["source"]}
+            onChange={(event) => setModel(event, layer.id)}
+          >
+            {Object.entries(layer["sources"]).map(([key, value]) => (
+              <option key={key} value={key}>
+                {value.name}
+              </option>
+            ))}
+          </select>
+        </div>
         <div className="setting">
           <div className="label">Period</div>
           <div className="period-selector">
@@ -961,19 +1003,38 @@ class Particles extends Component {
   };
 
   render() {
-    var { language, depth, setDepth, layer, period, setPeriod } = this.props;
+    var { language, depth, setDepth, layer, period, setPeriod, setModel } =
+      this.props;
     var { paths, spread, opacity } = this.props.options;
-    var {
-      depth: depths,
-      missingDates,
-      minDate,
-      maxDate,
-    } = layer.sources[layer.source].metadata;
-    depths = depths ? depths : [];
+    var depths = [];
+    var missingDates = [];
+    var start_date = new Date();
+    var end_date = new Date();
+    end_date.setDate(start_date.getDate() - 7);
+    if ("metadata" in layer.sources[layer.source]) {
+      ({
+        depth: depths,
+        missingDates,
+        start_date,
+        end_date,
+      } = layer.sources[layer.source].metadata);
+    }
     opacity = opacity ? opacity : 1;
-    missingDates = missingDates ? missingDates : [];
     return (
       <div className="layer-settings">
+        <div className="setting">
+          <div className="label">Model</div>
+          <select
+            value={layer["source"]}
+            onChange={(event) => setModel(event, layer.id)}
+          >
+            {Object.entries(layer["sources"]).map(([key, value]) => (
+              <option key={key} value={key}>
+                {value.name}
+              </option>
+            ))}
+          </select>
+        </div>
         <div className="setting">
           <div className="label">Period</div>
           <div className="period-selector">
@@ -981,8 +1042,8 @@ class Particles extends Component {
               period={period}
               setPeriod={setPeriod}
               language={language}
-              minDate={minDate}
-              maxDate={maxDate}
+              minDate={start_date}
+              maxDate={end_date}
               missingDates={missingDates}
             />
           </div>

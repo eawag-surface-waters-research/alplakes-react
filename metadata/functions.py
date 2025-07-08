@@ -98,7 +98,56 @@ def make_bathymetry(data, datalakes_lakes):
         })
     return bathymetry
 
-def model_layers(key):
+def model_layers(default, sources):
+    temperature = {}
+    current = {}
+    thermocline = {}
+    particles = {}
+    for source in sources.keys():
+        temperature[source] = {
+          "model": sources[source]["model"],
+          "name": sources[source]["name"],
+          "key": sources[source]["key"],
+          "description": {
+            "EN": "Water temperatures are hindcasted and forecasted using the 3D hydrodynamic model. On sunny afternoons, shoreline temperatures can typically be 1-2°C warmer than model predictions due to lake models' large horizontal grid size. Meteorological forcing data is produced from Meteoswiss products, hindcasts use the ICON 1-day deterministic product and forecasts use the ICON 5-day ensemble forecast. Where river inputs are used this data is sourced from Bafu. This model is calibrated using in-situ measurements collected by several 3rd parties.",
+            "DE": "Die Wassertemperaturen werden mit dem 3D-hydrodynamischen Modell rückwärts berechnet und prognostiziert. An sonnigen Nachmittagen können die Temperaturen an der Küste aufgrund der großen horizontalen Rastergröße der Seemodelle typischerweise 1-2 °C wärmer sein als in den Modellvorhersagen. Meteorologische Antriebsdaten werden aus Meteoswiss-Produkten erzeugt, Rückprognosen verwenden das deterministische 1-Tages-Produkt ICON und Prognosen verwenden die 5-Tages-Ensembleprognose ICON. Wo Flusseingänge verwendet werden, stammen diese Daten von Bafu. Dieses Modell wird mithilfe von vor Ort durchgeführten Messungen kalibriert, die von mehreren Drittanbietern durchgeführt werden.",
+            "FR": "Les températures de l'eau sont calculées et prévues à l'aide du modèle hydrodynamique 3D. Lors des après-midi ensoleillés, les températures du littoral peuvent généralement être de 1 à 2 °C plus élevées que les prévisions du modèle en raison de la grande taille de la grille horizontale des modèles de lacs. Les données de forçage météorologique sont produites à partir des produits Meteoswiss, les prévisions rétrospectives utilisent le produit déterministe ICON sur 1 jour et les prévisions utilisent la prévision d'ensemble ICON sur 5 jours. Lorsque des données fluviales sont utilisées, ces données proviennent de Bafu. Ce modèle est calibré à l'aide de mesures in situ collectées par plusieurs tiers.",
+            "IT": "Le temperature dell'acqua sono retrospettive e previste utilizzando il modello idrodinamico 3D. Nei pomeriggi soleggiati, le temperature della costa possono essere in genere più calde di 1-2 °C rispetto alle previsioni del modello a causa delle grandi dimensioni della griglia orizzontale dei modelli lacustri. I dati di forzatura meteorologica sono prodotti da prodotti Meteoswiss, le retrospettive utilizzano il prodotto deterministico ICON a 1 giorno e le previsioni utilizzano la previsione d'insieme ICON a 5 giorni. Laddove vengono utilizzati input fluviali, questi dati provengono da Bafu. Questo modello è calibrato utilizzando misurazioni in situ raccolte da diverse terze parti."
+          }
+        }
+        current[source] = {
+            "model": sources[source]["model"],
+            "name": sources[source]["name"],
+            "key": sources[source]["key"],
+            "description": {
+                "EN": "Lake currents are hindcasted and forecasted using the 3D hydrodynamic model. Meteorological forcing data is produced from Meteoswiss products, hindcasts use the ICON 1-day deterministic product and forecasts use the ICON 5-day ensemble forecast. Where river inputs are used this data is sourced from Bafu. This model is calibrated using in-situ measurements collected by several 3rd parties.",
+                "DE": "Seeströmungen werden mit dem 3D-hydrodynamischen Modell rückwärts und vorhergesagt. Meteorologische Antriebsdaten werden aus Meteoswiss-Produkten erzeugt, Rückwärtsprognosen verwenden das deterministische 1-Tages-Produkt ICON und Prognosen verwenden die 5-Tages-Ensembleprognose ICON. Wo Flusseingänge verwendet werden, stammen diese Daten vom Bafu. Dieses Modell wird mithilfe von In-situ-Messungen kalibriert, die von mehreren Drittparteien durchgeführt werden.",
+                "FR": "Les courants lacustres sont anticipés et prévus à l'aide du modèle hydrodynamique 3D. Les données de forçage météorologique sont produites à partir des produits Meteoswiss, les prévisions rétrospectives utilisent le produit déterministe ICON sur 1 jour et les prévisions utilisent la prévision d'ensemble ICON sur 5 jours. Lorsque des données fluviales sont utilisées, ces données proviennent de Bafu. Ce modèle est calibré à l'aide de mesures in situ collectées par plusieurs tiers.",
+                "IT": "Le correnti del lago sono hindcast e previste utilizzando il modello idrodinamico 3D. I dati di forzatura meteorologica sono prodotti da prodotti Meteoswiss, gli hindcast utilizzano il prodotto deterministico ICON a 1 giorno e le previsioni utilizzano la previsione d'insieme ICON a 5 giorni. Laddove vengono utilizzati input fluviali, questi dati provengono da Bafu. Questo modello è calibrato utilizzando misurazioni in situ raccolte da diverse terze parti."
+              }
+        }
+        thermocline[source] = {
+            "model": sources[source]["model"],
+            "name": sources[source]["name"],
+            "key": sources[source]["key"],
+            "description": {
+                "EN": "Thermocline depth is calculated using Pylake and the 3D hydrodynamic model. Meteorological forcing data is produced from Meteoswiss products, hindcasts use the ICON  1-day deterministic product and forecasts use the ICON 5-day ensemble forecast. Where river inputs are used this data is sourced from Bafu. This model is calibrated using in-situ measurements collected by several 3rd parties.",
+                "DE": "Die Thermoklinentiefe wird mit Pylake und dem 3D-hydrodynamischen Modell berechnet. Meteorologische Antriebsdaten werden aus Meteoswiss-Produkten erzeugt, Rückprognosen verwenden das deterministische 1-Tages-Produkt von ICON und Prognosen verwenden die 5-Tages-Ensembleprognose von ICON. Wo Flusseingänge verwendet werden, stammen diese Daten von Bafu. Dieses Modell wird mithilfe von In-situ-Messungen kalibriert, die von mehreren Drittanbietern durchgeführt werden.",
+                "FR": "La profondeur de la thermocline est calculée à l'aide de Pylake et du modèle hydrodynamique 3D. Les données de forçage météorologique sont produites à partir des produits Meteoswiss, les prévisions rétrospectives utilisent le produit déterministe ICON à 1 jour et les prévisions utilisent les prévisions d'ensemble ICON à 5 jours. Lorsque des données fluviales sont utilisées, ces données proviennent de Bafu. Ce modèle est calibré à l'aide de mesures in situ collectées par plusieurs tiers.",
+                "IT": "La profondità della termoclina è calcolata utilizzando Pylake e il modello idrodinamico 3D. I dati di forzatura meteorologica sono prodotti da prodotti Meteoswiss, gli hindcast utilizzano il prodotto deterministico ICON a 1 giorno e le previsioni utilizzano la previsione ensemble ICON a 5 giorni. Laddove vengono utilizzati input fluviali, questi dati provengono da Bafu. Questo modello è calibrato utilizzando misurazioni in situ raccolte da diverse terze parti."
+              }
+        }
+        particles[source] = {
+            "model": sources[source]["model"],
+            "name": sources[source]["name"],
+            "key": sources[source]["key"],
+            "description": {
+                "EN": "Track particles using the Alplakes 3D hydrodynamic model. Click the particles button (top left) to add some particles. Press play to see where the particles go.",
+                "DE": "Verfolgen Sie Partikel mithilfe des hydrodynamischen 3D-Modells von Alplakes. Klicken Sie auf die Schaltfläche „Partikel“ (oben links), um einige Partikel hinzuzufügen. Drücken Sie die Wiedergabetaste, um zu sehen, wohin die Partikel gehen.",
+                "FR": "Suivez les particules à l'aide du modèle hydrodynamique 3D Alplakes. Cliquez sur le bouton Particules (en haut à gauche) pour ajouter des particules. Appuyez sur Lecture pour voir où vont les particules.",
+                "IT": "Traccia le particelle usando il modello idrodinamico 3D di Alplakes. Fai clic sul pulsante delle particelle (in alto a sinistra) per aggiungere alcune particelle. Premi play per vedere dove vanno le particelle."
+              }
+        }
     return [
     {
       "id": "3D_temperature",
@@ -109,7 +158,7 @@ def model_layers(key):
       "parameter": "temperature",
       "unit": "°C",
       "display": "raster",
-      "source": "alplakes_delft3d",
+      "source": default,
       "summaryGraph": "threed_linegraph",
       "displayOptions": {
         "raster": True,
@@ -119,18 +168,7 @@ def model_layers(key):
         "zIndex": 1,
         "interpolate": True
       },
-      "sources": {
-        "alplakes_delft3d": {
-          "model": "delft3d-flow",
-          "key": key,
-          "description": {
-            "EN": "Water temperatures are hindcasted and forecasted using the 3D hydrodynamic model Delft3D-flow. On sunny afternoons, shoreline temperatures can typically be 1-2°C warmer than model predictions due to lake models' large horizontal grid size. Meteorological forcing data is produced from Meteoswiss products, hindcasts use the ICON 1-day deterministic product and forecasts use the ICON 5-day ensemble forecast. Where river inputs are used this data is sourced from Bafu. This model is calibrated using in-situ measurements collected by several 3rd parties.",
-            "DE": "Die Wassertemperaturen werden mit dem 3D-hydrodynamischen Modell Delft3D-flow rückwärts berechnet und prognostiziert. An sonnigen Nachmittagen können die Temperaturen an der Küste aufgrund der großen horizontalen Rastergröße der Seemodelle typischerweise 1-2 °C wärmer sein als in den Modellvorhersagen. Meteorologische Antriebsdaten werden aus Meteoswiss-Produkten erzeugt, Rückprognosen verwenden das deterministische 1-Tages-Produkt ICON und Prognosen verwenden die 5-Tages-Ensembleprognose ICON. Wo Flusseingänge verwendet werden, stammen diese Daten von Bafu. Dieses Modell wird mithilfe von vor Ort durchgeführten Messungen kalibriert, die von mehreren Drittanbietern durchgeführt werden.",
-            "FR": "Les températures de l'eau sont calculées et prévues à l'aide du modèle hydrodynamique 3D Delft3D-flow. Lors des après-midi ensoleillés, les températures du littoral peuvent généralement être de 1 à 2 °C plus élevées que les prévisions du modèle en raison de la grande taille de la grille horizontale des modèles de lacs. Les données de forçage météorologique sont produites à partir des produits Meteoswiss, les prévisions rétrospectives utilisent le produit déterministe ICON sur 1 jour et les prévisions utilisent la prévision d'ensemble ICON sur 5 jours. Lorsque des données fluviales sont utilisées, ces données proviennent de Bafu. Ce modèle est calibré à l'aide de mesures in situ collectées par plusieurs tiers.",
-            "IT": "Le temperature dell'acqua sono retrospettive e previste utilizzando il modello idrodinamico 3D Delft3D-flow. Nei pomeriggi soleggiati, le temperature della costa possono essere in genere più calde di 1-2 °C rispetto alle previsioni del modello a causa delle grandi dimensioni della griglia orizzontale dei modelli lacustri. I dati di forzatura meteorologica sono prodotti da prodotti Meteoswiss, le retrospettive utilizzano il prodotto deterministico ICON a 1 giorno e le previsioni utilizzano la previsione d'insieme ICON a 5 giorni. Laddove vengono utilizzati input fluviali, questi dati provengono da Bafu. Questo modello è calibrato utilizzando misurazioni in situ raccolte da diverse terze parti."
-          }
-        }
-      }
+      "sources": temperature
     },
     {
       "id": "3D_currents",
@@ -141,7 +179,7 @@ def model_layers(key):
       "parameter": "velocity",
       "unit": "m/s",
       "display": "current",
-      "source": "alplakes_delft3d",
+      "source": default,
       "displayOptions": {
         "raster": False,
         "streamlines": False,
@@ -158,18 +196,7 @@ def model_layers(key):
         "zIndex": 3,
         "paletteName": "Thermal"
       },
-      "sources": {
-        "alplakes_delft3d": {
-          "model": "delft3d-flow",
-          "key": key,
-          "description": {
-            "EN": "Lake currents are hindcasted and forecasted using the 3D hydrodynamic model Delft3D-flow. Meteorological forcing data is produced from Meteoswiss products, hindcasts use the ICON 1-day deterministic product and forecasts use the ICON 5-day ensemble forecast. Where river inputs are used this data is sourced from Bafu. This model is calibrated using in-situ measurements collected by several 3rd parties.",
-            "DE": "Seeströmungen werden mit dem 3D-hydrodynamischen Modell Delft3D-flow rückwärts und vorhergesagt. Meteorologische Antriebsdaten werden aus Meteoswiss-Produkten erzeugt, Rückwärtsprognosen verwenden das deterministische 1-Tages-Produkt ICON und Prognosen verwenden die 5-Tages-Ensembleprognose ICON. Wo Flusseingänge verwendet werden, stammen diese Daten vom Bafu. Dieses Modell wird mithilfe von In-situ-Messungen kalibriert, die von mehreren Drittparteien durchgeführt werden.",
-            "FR": "Les courants lacustres sont anticipés et prévus à l'aide du modèle hydrodynamique 3D Delft3D-flow. Les données de forçage météorologique sont produites à partir des produits Meteoswiss, les prévisions rétrospectives utilisent le produit déterministe ICON sur 1 jour et les prévisions utilisent la prévision d'ensemble ICON sur 5 jours. Lorsque des données fluviales sont utilisées, ces données proviennent de Bafu. Ce modèle est calibré à l'aide de mesures in situ collectées par plusieurs tiers.",
-            "IT": "Le correnti del lago sono hindcast e previste utilizzando il modello idrodinamico 3D Delft3D-flow. I dati di forzatura meteorologica sono prodotti da prodotti Meteoswiss, gli hindcast utilizzano il prodotto deterministico ICON a 1 giorno e le previsioni utilizzano la previsione d'insieme ICON a 5 giorni. Laddove vengono utilizzati input fluviali, questi dati provengono da Bafu. Questo modello è calibrato utilizzando misurazioni in situ raccolte da diverse terze parti."
-          }
-        }
-      }
+      "sources": current
     },
     {
       "id": "3D_thermocline",
@@ -180,25 +207,14 @@ def model_layers(key):
       "parameter": "thermocline",
       "unit": "m",
       "display": "raster",
-      "source": "alplakes_delft3d",
+      "source": default,
       "displayOptions": {
         "raster": True,
         "paletteName": "navia",
         "zIndex": 2,
         "interpolate": True
       },
-      "sources": {
-        "alplakes_delft3d": {
-          "model": "delft3d-flow",
-          "key": key,
-          "description": {
-            "EN": "Thermocline depth is calculated using Pylake and the 3D hydrodynamic model Delft3D-flow. Meteorological forcing data is produced from Meteoswiss products, hindcasts use the ICON  1-day deterministic product and forecasts use the ICON 5-day ensemble forecast. Where river inputs are used this data is sourced from Bafu. This model is calibrated using in-situ measurements collected by several 3rd parties.",
-            "DE": "Die Thermoklinentiefe wird mit Pylake und dem 3D-hydrodynamischen Modell Delft3D-flow berechnet. Meteorologische Antriebsdaten werden aus Meteoswiss-Produkten erzeugt, Rückprognosen verwenden das deterministische 1-Tages-Produkt von ICON und Prognosen verwenden die 5-Tages-Ensembleprognose von ICON. Wo Flusseingänge verwendet werden, stammen diese Daten von Bafu. Dieses Modell wird mithilfe von In-situ-Messungen kalibriert, die von mehreren Drittanbietern durchgeführt werden.",
-            "FR": "La profondeur de la thermocline est calculée à l'aide de Pylake et du modèle hydrodynamique 3D Delft3D-flow. Les données de forçage météorologique sont produites à partir des produits Meteoswiss, les prévisions rétrospectives utilisent le produit déterministe ICON à 1 jour et les prévisions utilisent les prévisions d'ensemble ICON à 5 jours. Lorsque des données fluviales sont utilisées, ces données proviennent de Bafu. Ce modèle est calibré à l'aide de mesures in situ collectées par plusieurs tiers.",
-            "IT": "La profondità della termoclina è calcolata utilizzando Pylake e il modello idrodinamico 3D Delft3D-flow. I dati di forzatura meteorologica sono prodotti da prodotti Meteoswiss, gli hindcast utilizzano il prodotto deterministico ICON a 1 giorno e le previsioni utilizzano la previsione ensemble ICON a 5 giorni. Laddove vengono utilizzati input fluviali, questi dati provengono da Bafu. Questo modello è calibrato utilizzando misurazioni in situ raccolte da diverse terze parti."
-          }
-        }
-      }
+      "sources": thermocline
     },
     {
       "id": "3D_particles",
@@ -209,25 +225,14 @@ def model_layers(key):
       "parameter": "velocity",
       "unit": "m/s",
       "display": "particles",
-      "source": "alplakes_delft3d",
+      "source": default,
       "displayOptions": {
         "paths": 10,
         "spread": 1500,
         "zIndex": 4,
         "particles": True
       },
-      "sources": {
-        "alplakes_delft3d": {
-          "model": "delft3d-flow",
-          "key": key,
-          "description": {
-            "EN": "Track particles using the Alplakes 3D hydrodynamic model. Click the particles button (top left) to add some particles. Press play to see where the particles go.",
-            "DE": "Verfolgen Sie Partikel mithilfe des hydrodynamischen 3D-Modells von Alplakes. Klicken Sie auf die Schaltfläche „Partikel“ (oben links), um einige Partikel hinzuzufügen. Drücken Sie die Wiedergabetaste, um zu sehen, wohin die Partikel gehen.",
-            "FR": "Suivez les particules à l'aide du modèle hydrodynamique 3D Alplakes. Cliquez sur le bouton Particules (en haut à gauche) pour ajouter des particules. Appuyez sur Lecture pour voir où vont les particules.",
-            "IT": "Traccia le particelle usando il modello idrodinamico 3D di Alplakes. Fai clic sul pulsante delle particelle (in alto a sinistra) per aggiungere alcune particelle. Premi play per vedere dove vanno le particelle."
-          }
-        }
-      }
+      "sources": particles
     }]
 
 def temperature_layers(key):

@@ -296,6 +296,21 @@ class Map extends Component {
     }
   };
 
+  setModel = (event, id) => {
+    var { layers, updates, graphSelection } = this.state;
+    var layer = layers.find((f) => f.id === id);
+    layer.source = event.target.value;
+    updates.push({ event: "removeLayer", id: layer.id });
+    ({ layer, graphSelection } = this.removeGraph(
+      layer,
+      layers,
+      graphSelection
+    ));
+    this.setState({ updates, graphSelection }, () =>
+      this.addLayers([id], false)
+    );
+  };
+
   async componentDidMount() {
     window.scrollTo(0, 0);
     var { updates, iframe, sidebar } = this.state;
@@ -397,6 +412,7 @@ class Map extends Component {
               removeLayer={this.removeLayer}
               setDepth={this.setDepth}
               setPeriod={this.setPeriod}
+              setModel={this.setModel}
             />
             <Basemap
               updates={updates}
