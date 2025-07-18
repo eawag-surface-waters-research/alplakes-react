@@ -157,7 +157,7 @@
         },
         "area": 89,
         "ave_depth": 49,
-        "max_depth": 104,
+        "max_depth": 136,
         "elevation": 406,
         "latitude": 47.24,
         "longitude": 8.68,
@@ -387,6 +387,7 @@
         "elevation": 65,
         "latitude": 45.58,
         "longitude": 10.63,
+        "current_temperature": true,
         "flags": [
             "italian"
         ],
@@ -471,6 +472,7 @@
             22,
             24
         ],
+        "current_temperature": true,
         "surface_area": 47.8,
         "type": "Natural",
         "volume": 5.83,
@@ -1114,6 +1116,7 @@
         "volume": 37.0,
         "residence_time": 1460.0,
         "mixing_regime": "Oligomictic",
+        "current_temperature": true,
         "geothermal_flux": 0.05,
         "trophic_state": "Oligotrophic",
         "datalakes_id": 14,
@@ -2794,6 +2797,7 @@
         "elevation": 446.97,
         "latitude": 45.854,
         "longitude": 6.176,
+        "current_temperature": true,
         "flags": [
             "france"
         ],
@@ -2824,6 +2828,7 @@
         "elevation": 231.5,
         "latitude": 45.742,
         "longitude": 5.862,
+        "current_temperature": true,
         "flags": [
             "france"
         ],
@@ -2857,6 +2862,7 @@
             "slovenian"
         ],
         "type": "Natural",
+        "current_temperature": true,
         "volume": 0.0257,
         "residence_time": "NA",
         "mixing_regime": "NA",
@@ -2885,6 +2891,7 @@
         ],
         "type": "Natural",
         "volume": 0.51,
+        "current_temperature": true,
         "residence_time": "NA",
         "mixing_regime": "NA",
         "geothermal_flux": "NA",
@@ -2907,6 +2914,7 @@
         "elevation": 423,
         "latitude": 47.868,
         "longitude": 13.796,
+        "current_temperature": true,
         "flags": [
             "austrian"
         ],
@@ -5136,6 +5144,7 @@
         "latitude": 48.058,
         "longitude": 11.179,
         "simstrat_oxygen": false,
+        "current_temperature": true,
         "type": "Natural",
         "volume": "NA",
         "datalakes_id": 223,
@@ -5219,6 +5228,7 @@
         "latitude": 47.719,
         "longitude": 11.739,
         "simstrat_oxygen": false,
+        "current_temperature": true,
         "type": "Natural",
         "volume": "NA",
         "datalakes_id": 227,
@@ -5242,6 +5252,7 @@
         "latitude": 47.9,
         "longitude": 11.317,
         "simstrat_oxygen": false,
+        "current_temperature": true,
         "type": "Natural",
         "volume": "NA",
         "datalakes_id": 228,
@@ -5326,6 +5337,7 @@
         "latitude": 47.723,
         "longitude": 11.862,
         "simstrat_oxygen": false,
+        "current_temperature": true,
         "type": "Natural",
         "volume": "NA",
         "datalakes_id": 232,
@@ -5367,6 +5379,7 @@
         "latitude": 47.553,
         "longitude": 12.978,
         "simstrat_oxygen": false,
+        "current_temperature": true,
         "type": "Natural",
         "volume": "NA",
         "datalakes_id": 234
@@ -5488,6 +5501,7 @@
         "latitude": 47.878,
         "longitude": 12.451,
         "simstrat_oxygen": false,
+        "current_temperature": true,
         "type": "Natural",
         "volume": "NA",
         "datalakes_id": 240,
@@ -5532,6 +5546,7 @@
         "latitude": 48.002,
         "longitude": 11.125,
         "simstrat_oxygen": false,
+        "current_temperature": true,
         "type": "Natural",
         "volume": "NA",
         "datalakes_id": 242,
