@@ -311,6 +311,7 @@ class Home extends Component {
     filters: [],
     boundingBox: false,
     fullscreen: false,
+    insitu: false,
     favorites:
       JSON.parse(localStorage.getItem("favorites")) === null
         ? []
@@ -446,8 +447,11 @@ class Home extends Component {
       list: `${CONFIG.alplakes_bucket}/static/website/metadata/${CONFIG.branch}/list.json`,
       forecast: `${CONFIG.alplakes_bucket}/simulations/forecast.json${hour()}`,
       geometry: `${CONFIG.alplakes_bucket}/static/website/metadata/${CONFIG.branch}/lakes.geojson`,
+      insitu: `${
+        CONFIG.alplakes_bucket
+      }/insitu/summary/water_temperature.geojson${hour()}`,
     };
-    var { list, forecast, geometry } = await fetchDataParallel(urls);
+    var { list, forecast, geometry, insitu } = await fetchDataParallel(urls);
     geometry = geometry.features.reduce((obj, item) => {
       obj[item.properties.key] = item.geometry.coordinates;
       return obj;
@@ -475,7 +479,7 @@ class Home extends Component {
       }
       return l;
     });
-    this.setState({ list, days });
+    this.setState({ list, days, insitu });
   }
   componentWillUnmount() {
     window.removeEventListener("keydown", this.focusSearchBar);
@@ -484,6 +488,7 @@ class Home extends Component {
     var { language, dark } = this.props;
     var {
       list,
+      insitu,
       search,
       filters,
       fullscreen,
@@ -562,6 +567,7 @@ class Home extends Component {
             <div className={fullscreen ? "home-map" : "home-map hide"}>
               <HomeMap
                 list={list}
+                insitu={insitu}
                 days={days}
                 dark={dark}
                 language={language}

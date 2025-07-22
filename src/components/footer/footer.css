@@ -60,7 +60,7 @@
     margin: 0 30px;
 }
 
-.footer .switch {
+.footer .light-switch {
     float: right;
 }
 
@@ -99,11 +99,11 @@
     filter: invert(100%);
 }
 
-.footer .switch:hover .toggle {
+.footer .light-switch:hover .toggle {
     border-color: var(--background-font-color);
 }
 
-.footer .switch img {
+.footer .light-switch img {
     height: 18px;
     margin-bottom: -4px;
 }
@@ -142,7 +142,7 @@
         padding-top: 8px;
     }
 
-    .footer .switch {
+    .footer .light-switch {
         display: none;
     }
 }

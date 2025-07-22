@@ -4,6 +4,7 @@ import { dayName, formatDateYYYYMMDD } from "./general";
 import Translations from "../../translations.json";
 import alpinespace from "./alpinespace.json";
 import CONFIG from "../../config.json";
+import { round, formatDatetime, capitalize } from "./general";
 import "./leaflet_tileclass";
 import "./css/leaflet.css";
 
@@ -72,13 +73,37 @@ class HomeMap extends Component {
     day: "",
     minZoom: 6,
     maxZoom: 13,
+    measurements: false,
+    today: true,
   };
   setDay = (event) => {
+    const { days, measurements } = this.state;
     var day = event.target.id;
     this.removeLabels();
     this.plotPolygons(day, this.state.min, this.state.max);
     this.plotLabels(day);
-    this.setState({ day });
+    const today = day === days[0];
+    if (today) {
+      if (!this.map.hasLayer(this.insitu) && measurements) {
+        this.map.addLayer(this.insitu);
+        this.scaleTooltip();
+      }
+    } else {
+      if (this.map.hasLayer(this.insitu)) {
+        this.map.removeLayer(this.insitu);
+      }
+    }
+    this.setState({ day, today });
+  };
+  toggleMeasurements = () => {
+    var { measurements } = this.state;
+    if (measurements) {
+      this.map.removeLayer(this.insitu);
+    } else {
+      this.map.addLayer(this.insitu);
+      this.scaleTooltip();
+    }
+    this.setState({ measurements: !measurements });
   };
   getColor = (value) => {
     if (value === null || isNaN(value)) {
@@ -162,6 +187,77 @@ class HomeMap extends Component {
       if (zoom >= this.labels[lake.key].zoom) {
         this.labels[lake.key].marker.addTo(this.map);
       }
+    }
+  };
+  plotInsitu = (insitu) => {
+    const { language } = this.props;
+    const midnight = new Date();
+    midnight.setHours(0, 0, 0, 0);
+    for (let i = 0; i < insitu.features.length; i++) {
+      let station = insitu.features[i];
+      let time = new Date(station.properties.last_time * 1000);
+      var color = this.getColor(station.properties.last_value);
+      if (station.properties.icon === "lake" && time > midnight) {
+        const marker = L.marker(
+          [station.geometry.coordinates[1], station.geometry.coordinates[0]],
+          {
+            icon: L.divIcon({
+              className: "custom-circle-marker tooltip-small",
+              html: `<div style="background-color: ${color};border-color:white;"></div>`,
+              iconSize: [14, 14],
+              iconAnchor: [7, 7],
+            }),
+            value: station.properties.latest_value,
+          }
+        ).addTo(this.insitu);
+        marker.bindTooltip(
+          `<div class="value now">${
+            round(station.properties.last_value, 1) + "°"
+          }</div>`,
+          {
+            direction: "top",
+            permanent: true,
+            className: "current_temperature_tooltip_subtle tooltip-hidden",
+            offset: [0, -2],
+          }
+        );
+        var { label, source: dataSource, url, icon } = station.properties;
+        marker.bindPopup(
+          `<div class=title>${label}</div><table><tr><td>${
+            Translations.lastreading[language]
+          }</td><td>${
+            round(station.properties.last_value, 2) + "°C"
+          }</td></tr><tr><td>Time</td><td>${formatDatetime(
+            time
+          )}</td></tr><tr><td>${
+            Translations.type[language]
+          }</td><td>${capitalize(icon)} station</td></tr><tr><td>${
+            Translations.source[language]
+          }</td><td>${dataSource}</td></tr></table><a class="external-link" href="${url}" target="_blank">${
+            Translations.viewdataset[language]
+          }</a>`
+        );
+      }
+    }
+    this.map.on("zoomend", () => {
+      this.scaleTooltip();
+    });
+  };
+  scaleTooltip = () => {
+    if (this.map.hasLayer(this.insitu)) {
+      const zoom = this.map.getZoom();
+      this.insitu.getLayers().forEach((marker) => {
+        const markerEl = marker.getElement();
+        const tooltip = marker.getTooltip();
+        if (!tooltip || !tooltip._container) return;
+        if (zoom >= 11) {
+          markerEl.classList.remove("tooltip-small");
+          tooltip._container.classList.remove("tooltip-hidden");
+        } else {
+          markerEl.classList.add("tooltip-small");
+          tooltip._container.classList.add("tooltip-hidden");
+        }
+      });
     }
   };
   boxCoords = (latitude, longitude, width, height, zoom) => {
@@ -256,10 +352,11 @@ class HomeMap extends Component {
   };
   componentDidUpdate(prevProps) {
     var { day } = this.state;
-    var { list, days } = this.props;
+    var { list, days, insitu } = this.props;
     if (this.plot && list.length > 0) {
       day = days[0];
       this.plotPolygons(day);
+      this.plotInsitu(insitu);
       this.map.fitBounds(this.polygons.getBounds());
       this.setState({ day, days });
       this.labels = this.labelClustering(list);
@@ -328,6 +425,7 @@ class HomeMap extends Component {
       },
     }).addTo(this.map);
     this.polygons = L.featureGroup().addTo(this.map);
+    this.insitu = L.featureGroup();
     this.labels = {};
     this.plot = true;
     if ("setBounds" in this.props) {
@@ -347,7 +445,7 @@ class HomeMap extends Component {
   }
 
   render() {
-    var { days, day } = this.state;
+    var { days, day, measurements, today } = this.state;
     var { language } = this.props;
     if (day === "") {
       day = formatDateYYYYMMDD(new Date());
@@ -356,8 +454,19 @@ class HomeMap extends Component {
       <React.Fragment>
         <div className="legend">
           <div className="label">
-            {Translations["temperature"][language]}
+            {Translations["watertemperature"][language]}
             <MapLegend />
+          </div>
+          <div className={today ? "measurements" : "measurements disabled"}>
+            {Translations["measurements"][language]}
+            <label className="switch">
+              <input
+                type="checkbox"
+                checked={measurements}
+                onChange={this.toggleMeasurements}
+              />
+              <span className="slider round"></span>
+            </label>
           </div>
         </div>
         <div id="map">

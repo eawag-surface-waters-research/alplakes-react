@@ -637,16 +637,19 @@
   line-height: 40px;
 }
 
-.main .home .content .home-map .legend .label {
-  background-color: var(--box-color);
-  padding: 12px;
+.main .home .content .home-map .legend {
   position: absolute;
   top: calc(var(--padding)/2);
   left: calc(var(--padding)/2);
+  z-index: 99999;
+}
+
+.main .home .content .home-map .legend .label {
+  background-color: var(--box-color);
+  padding: 12px;
   border-radius: 8px;
   text-align: left;
   text-wrap: nowrap;
-  z-index: 99999;
 }
 
 .main .home .content .home-map .legend .label table {
@@ -663,6 +666,22 @@
   display: inline-block;
   vertical-align: bottom;
   margin: 3px 6px;
+}
+
+.main .home .content .home-map .legend .measurements {
+  margin-top: 12px;
+  font-size: 14px;
+  background-color: var(--box-color);
+  padding: 12px;
+  border-radius: 8px;
+  text-align: left;
+  text-wrap: nowrap;
+  color: var(--background-subtle-font-color);
+}
+
+.main .home .content .home-map .legend .measurements.disabled {
+  opacity: 0.4;
+  pointer-events: none;
 }
 
 @media screen and (min-width: 2000px) {

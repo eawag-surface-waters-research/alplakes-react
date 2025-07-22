@@ -34,6 +34,8 @@ class Map extends Component {
     graphSelection: false,
     graphHide: window.innerWidth > 500 ? false : true,
     mapId: "map_" + Math.round(Math.random() * 100000),
+    disable_measurements: true,
+    measurements: false,
   };
 
   loading = (text) => {
