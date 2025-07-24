@@ -191,13 +191,13 @@ class HomeMap extends Component {
   };
   plotInsitu = (insitu) => {
     const { language } = this.props;
-    const midnight = new Date();
-    midnight.setHours(0, 0, 0, 0);
+    const now = new Date();
+    const minDate = new Date(now.getTime() - 24 * 60 * 60 * 1000);
     for (let i = 0; i < insitu.features.length; i++) {
       let station = insitu.features[i];
       let time = new Date(station.properties.last_time * 1000);
       var color = this.getColor(station.properties.last_value);
-      if (station.properties.icon === "lake" && time > midnight) {
+      if (station.properties.icon === "lake" && time > minDate) {
         const marker = L.marker(
           [station.geometry.coordinates[1], station.geometry.coordinates[0]],
           {
@@ -457,7 +457,10 @@ class HomeMap extends Component {
             {Translations["watertemperature"][language]}
             <MapLegend />
           </div>
-          <div className={today ? "measurements" : "measurements disabled"}>
+          <div
+            className={today ? "measurements" : "measurements disabled"}
+            title="Water temperature measurements from the last 24hrs"
+          >
             {Translations["measurements"][language]}
             <label className="switch">
               <input

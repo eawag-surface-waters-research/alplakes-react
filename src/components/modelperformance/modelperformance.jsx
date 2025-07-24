@@ -4,6 +4,7 @@ import DatasetLinegraph from "../d3/dataset/datasetlinegraph";
 import CONFIG from "../../config.json";
 import Translations from "../../translations.json";
 import "./modelperformance.css";
+import Loading from "../loading/loading";
 
 export const hour = () => {
   return `?timestamp=${
@@ -57,28 +58,13 @@ export const downloadPerformance = async (model, lake) => {
 
 class ModelPerformance extends Component {
   state = {
-    open: false,
-    data: false,
+    data: [],
+    plot: false,
+    table: false,
     location: false,
     depth: false,
+    failed: false,
     fontSize: 12,
-  };
-  open = async () => {
-    var { model, lake } = this.props;
-    var { data, location, depth } = this.state;
-    if (data === false) {
-      data = await downloadPerformance(model.toLowerCase(), lake);
-      if (data) {
-        location = Object.keys(data)[0];
-        depth = Object.keys(data[location].depth)[0];
-        this.setState({ open: true, data, location, depth });
-      }
-    } else {
-      this.setState({ open: true });
-    }
-  };
-  close = () => {
-    this.setState({ open: false });
   };
   setFontSize = (fontSize) => {
     this.setState({ fontSize });
@@ -92,64 +78,96 @@ class ModelPerformance extends Component {
   setDepth = (event) => {
     this.setState({ depth: event.target.value });
   };
-  render() {
-    var { rmse, language, dark, model } = this.props;
-    var { open, data, location, depth, fontSize } = this.state;
-    if (open) {
-      var available = false;
-      try {
-        var plot = [
-          {
-            x: data[location].depth[depth].model.time,
-            y: data[location].depth[depth].model.values,
-            name: false,
-            lineColor: "#5594CC",
-            fontWeigth: 2,
-          },
-          {
-            x: data[location].depth[depth].insitu.time,
-            y: data[location].depth[depth].insitu.values,
-            name: false,
-            lineColor: "#f34b3e",
-          },
-        ];
-        available = true;
-      } catch (e) {
-        console.error("Formatting error in peformance data");
-      }
+  closeModal = (event) => {
+    const inner = document.getElementById("model-performance-inner");
+    if (!inner.contains(event.target)) {
+      this.props.togglePerformance();
+    }
+  };
+  prepareData = (location, depth) => {
+    const { data } = this.state;
+    const lineColor = {
+      simstrat: "#5594CC",
+      "delft3d-flow": "#FFCF56",
+      mitgcm: "#698F3F",
+    };
+    const plot = [];
+    const table = [];
+    let selected_location = data.find((l) => l.name === location);
+    let selected_depth = selected_location.depth.find((l) => l.name === depth);
+    plot.push({
+      x: selected_depth.data.time.map((t) => new Date(t)),
+      y: selected_depth.data.values,
+      lineColor: "#f34b3e",
+      name: false,
+    });
+    for (let i = 0; i < selected_location.models.length; i++) {
       if (
-        "insitu" in data[location].depth[depth] &&
-        "model" in data[location].depth[depth]
+        "data" in selected_location.models[i] &&
+        depth in selected_location.models[i].data
       ) {
-        return (
-          <div className="model-performance">
-            <div className="close" onClick={this.close}>
-              &#10005;
-            </div>
-            <div className="model-performance-title">
-              {Translations.modelPerformance[language]}
-            </div>
-            <div className="model-performance-selectors">
-              <select value={location} onChange={this.setLocation}>
-                {Object.keys(data).map((l) => (
-                  <option value={l} key={l}>
-                    {data[l].name}
-                  </option>
-                ))}
-              </select>
-              <select value={depth} onChange={this.setDepth}>
-                {Object.keys(data[location].depth).map((d) => (
-                  <option value={d} key={d}>
-                    {data[location].depth[d].name}
-                  </option>
-                ))}
-              </select>
-              <div className="rmse">
-                RMSE: <b>{data[location].depth[depth].rmse}°C</b>
-              </div>
-            </div>
-            <div className="model-performance-plot">
-              {available ? (
+        plot.push({
+          x: selected_location.models[i].data[depth].data.time.map(
+            (t) => new Date(t)
+          ),
+          y: selected_location.models[i].data[depth].data.values,
+          name: false,
+          lineColor: lineColor[selected_location.models[i].type],
+        });
+        table.push({
+          type: selected_location.models[i].type,
+          color: lineColor[selected_location.models[i].type],
+          rmse: selected_location.models[i].data[depth].rmse,
+        });
+      }
+    }
+    this.setState({ location, depth, plot, table });
+  };
+  async componentDidMount() {
+    const { lake } = this.props;
+    try {
+    } catch (e) {
+      console.error(e);
+      this.setState({ failed: true });
+    }
+    const url = `${CONFIG.alplakes_bucket}/performance/${lake}.json${hour()}`;
+    const response = await axios.get(url);
+    if (response.status === 200) {
+      const data = response.data;
+      var location = false;
+      var depth = false;
+      outer: for (let i = 0; i < data.length; i++) {
+        for (let j = 0; j < data[i].depth.length; j++) {
+          if ("data" in data[i].depth[j]) {
+            location = data[i]["name"];
+            depth = data[i].depth[j]["name"];
+            break outer;
+          }
+        }
+      }
+      if (location) {
+        this.setState({ data }, () => this.prepareData(location, depth));
+      } else {
+        this.setState({ failed: true });
+      }
+    }
+  }
+  render() {
+    var { language, dark, togglePerformance } = this.props;
+    var { location, depth, fontSize, plot, table, data } = this.state;
+    const location_metadata = data.find((d) => d.name === location);
+    return (
+      <div className="model-performance" onClick={this.closeModal}>
+        <div className="model-performance-inner" id="model-performance-inner">
+          <div className="close" onClick={togglePerformance}>
+            &#10005;
+          </div>
+          <div className="model-performance-title">
+            {Translations.modelPerformance[language]}
+          </div>
+          <div className="model-performance-left">
+            {plot ? (
+              <div className="model-performance-left-inner">
                 <DatasetLinegraph
                   xlabel="time"
                   xunits=""
@@ -162,46 +180,60 @@ class ModelPerformance extends Component {
                   fontSize={fontSize}
                   setFontSize={this.setFontSize}
                 />
-              ) : (
-                <div className="model-performance-plot-error">
-                  {Translations.failedPlot[language]}
+                <div
+                  className="model-performance-legend"
+                  style={{ fontSize: `${fontSize}px` }}
+                >
+                  <div className="item">
+                    <div
+                      className="line"
+                      style={{ borderColor: "#f34b3e" }}
+                    ></div>
+                    <div className="text">
+                      {Translations.measurements[language]}
+                    </div>
+                  </div>
+                  {table.map((t) => (
+                    <div className="item" key={"legend_" + t.type}>
+                      <div
+                        className="line"
+                        style={{ borderColor: t.color }}
+                      ></div>
+                      <div className="text">{t.type}</div>
+                    </div>
+                  ))}
                 </div>
-              )}
-            </div>
-            <div
-              className="model-performance-legend"
-              style={{ fontSize: `${fontSize}px` }}
-            >
-              <div className="item">
-                <div className="line" style={{ borderColor: "#5594CC" }}></div>
-                <div className="text">{model}</div>
               </div>
-              <div className="item">
-                <div className="line" style={{ borderColor: "#f34b3e" }}></div>
-                <div className="text">{data[location].name}</div>
-              </div>
-            </div>
+            ) : (
+              <Loading />
+            )}
           </div>
-        );
-      }
-    } else {
-      var rmse_color = "#76b64b";
-      if (rmse >= 2) {
-        rmse_color = "#f34b3e";
-      } else if (rmse >= 1) {
-        rmse_color = "#fbd247";
-      }
-      return (
-        <div
-          className="model-performance-button"
-          title={Translations.modelPerformance[language]}
-          onClick={this.open}
-        >
-          <div className="circle" style={{ backgroundColor: rmse_color }} />
-          &#177; {rmse}°C
+          <div className="model-performance-right">
+            {location && (
+              <div>
+                <div className="location-title">{location}</div>
+                <div className="location-coords">
+                  {location_metadata.lat}, {location_metadata.lng}
+                </div>
+                <div className="location-source">
+                  {location_metadata.source}
+                </div>
+                <table>
+                  <tbody>
+                    {table.map((t) => (
+                      <tr>
+                        <td>{t.type}</td>
+                        <td>± {t.rmse}°</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
         </div>
-      );
-    }
+      </div>
+    );
   }
 }
 

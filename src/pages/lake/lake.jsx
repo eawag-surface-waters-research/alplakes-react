@@ -23,18 +23,24 @@ import NotFound from "./components/notfound";
 import LandCover from "./components/landcover";
 import Nutrients from "./components/nutrients";
 import ScrollUp from "../../components/scrollup/scrollup";
+import ModelPerformance from "../../components/modelperformance/modelperformance";
 
 class Lake extends Component {
   state = {
     id: "",
     metadata: {},
     error: false,
+    performance: false,
   };
 
   constructor(props) {
     super(props);
     this.divRef = React.createRef();
   }
+
+  togglePerformance = () => {
+    this.setState({ performance: !this.state.performance });
+  };
 
   scrollToSection = (sectionRef) => {
     if (sectionRef.current) {
@@ -67,7 +73,7 @@ class Lake extends Component {
   }
 
   render() {
-    var { metadata, error, id } = this.state;
+    var { metadata, error, id, performance } = this.state;
     var { language, dark } = this.props;
     var title = "";
     var documentTitle = "Alplakes";
@@ -101,6 +107,14 @@ class Lake extends Component {
                 </div>
               </div>
             )}
+            {performance && (
+              <ModelPerformance
+                language={language}
+                dark={dark}
+                lake={id}
+                togglePerformance={this.togglePerformance}
+              />
+            )}
             {"forecast" in metadata && (
               <div className="section forecast">
                 <h2>{Translations.forecast[language]}</h2>
@@ -111,6 +125,7 @@ class Lake extends Component {
                     language={language}
                     dark={dark}
                     bounds={metadata.properties.bounds}
+                    togglePerformance={this.togglePerformance}
                   />
                 )}
                 {"1d_model" in metadata["forecast"] && (
@@ -119,6 +134,7 @@ class Lake extends Component {
                     language={language}
                     name={title}
                     dark={dark}
+                    togglePerformance={this.togglePerformance}
                   />
                 )}
               </div>

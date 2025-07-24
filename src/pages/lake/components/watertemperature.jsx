@@ -52,7 +52,7 @@ class WaterTemperature extends Component {
         hour()
     );
     const now = new Date();
-    const minDate = new Date(now.getTime() - 48 * 60 * 60 * 1000);
+    const minDate = new Date(now.getTime() - 24 * 60 * 60 * 1000);
     for (let i = 0; i < data.features.length; i++) {
       let time = new Date(data.features[i].properties.last_time * 1000);
       if (data.features[i].properties.lake === id && time > minDate) {

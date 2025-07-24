@@ -31,22 +31,31 @@
 }
 
 .model-performance {
-    position: absolute;
-    left: calc(var(--padding) / 4);
-    top: calc(var(--padding) / 4);
-    width: calc(100% - var(--padding) / 2);
-    height: calc(100% - var(--padding) / 2);
-    z-index: 9999;
-    background-color: var(--box-color);
-    border-radius: 8px;
-    display: flex;
-    flex-direction: column;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 999999;
+    background-color: rgba(0, 0, 0, 0.3);
 }
 
-.model-performance .close {
+.model-performance .model-performance-inner {
+    top: 10%;
+    left: 50%;
+    transform: translate(-50%, 0);
     position: absolute;
-    top: 10px;
-    right: 10px;
+    width: calc(100% - var(--padding) * 2);
+    height: 80%;
+    background-color: var(--box-color);
+    max-width: calc(var(--content-width) - 2 * var(--padding));
+    border-radius: 18px;
+}
+
+.model-performance .model-performance-inner .close {
+    position: absolute;
+    top: 14px;
+    right: 14px;
     background-color: var(--background-color);
     border-radius: 50%;
     padding: 4px 8px;
@@ -56,21 +65,62 @@
     transition: all .2s 0s ease;
 }
 
-.model-performance .close:hover {
+.model-performance .model-performance-inner .close:hover {
     transform: scale(1.1);
 }
 
-.model-performance .model-performance-title {
-    padding: 16px 20px;
+.model-performance .model-performance-inner .model-performance-title {
+    padding: 25px 30px;
     line-height: 30px;
-    font-size: 18px;
+    font-size: 24px;
+    margin-bottom: 10px;
 }
 
-.model-performance .model-performance-selectors {
+
+.model-performance .model-performance-inner .model-performance-left {
+    display: inline-block;
+    width: calc(100% - var(--padding) * 2 - 400px);
+    height: calc(100% - 110px);
+    margin-right: var(--padding);
+    box-sizing: border-box;
+    background-color: var(--box-color);
+    position: relative;
+    margin-left: 20px;
+}
+
+.model-performance .model-performance-inner .model-performance-left .loading-symbol-x10 {
+    position: absolute;
+    left: 50%;
+    top: 40%;
+    transform: translate(-50%, -50%);
+}
+
+.model-performance .model-performance-inner .model-performance-left-inner {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+}
+
+.model-performance .model-performance-inner .model-performance-left .dataset-linegraph {
+    width: 100%;
+    height: 100%;
+}
+
+.model-performance .model-performance-inner .model-performance-right {
+    display: inline-block;
+    width: 400px;
+    max-height: calc(100% - 90px);
+    overflow-y: auto;
+    box-sizing: border-box;
+    vertical-align: top;
+}
+
+.model-performance .model-performance-inner .model-performance-selectors {
     padding: 0px 20px 12px 20px;
 }
 
-.model-performance .model-performance-selectors select {
+.model-performance .model-performance-inner .model-performance-selectors select {
     display: inline-block;
     font-size: 14px;
     background-color: var(--background-color);
@@ -84,23 +134,20 @@
     margin-right: 12px;
 }
 
-.model-performance .model-performance-selectors .rmse {
+.model-performance .model-performance-inner .model-performance-selectors .rmse {
     display: inline-block;
 }
 
-.model-performance .model-performance-plot {
+.model-performance .model-performance-inner .model-performance-plot {
     width: 100%;
     height: 100%;
     padding: 12px 20px 10px 20px;
     box-sizing: border-box;
 }
 
-.model-performance .model-performance-plot .dataset-linegraph {
-    width: 100%;
-    height: 100%;
-}
 
-.model-performance .model-performance-plot .model-performance-plot-error {
+
+.model-performance .model-performance-inner .model-performance-plot .model-performance-plot-error {
     border: 1px solid var(--border-color);
     height: 100%;
     border-radius: 8px;
@@ -111,17 +158,17 @@
     color: var(--background-subtle-font-color);
 }
 
-.model-performance .model-performance-legend {
+.model-performance .model-performance-inner .model-performance-legend {
     text-align: center;
     padding-bottom: 20px;
 }
 
-.model-performance .model-performance-legend .item {
+.model-performance .model-performance-inner .model-performance-legend .item {
     display: inline-block;
     margin: 0 12px;
 }
 
-.model-performance .model-performance-legend .item .box {
+.model-performance .model-performance-inner .model-performance-legend .item .box {
     display: inline-block;
     width: 30px;
     height: 10px;
@@ -130,7 +177,7 @@
     margin-right: 8px;
 }
 
-.model-performance .model-performance-legend .item .line {
+.model-performance .model-performance-inner .model-performance-legend .item .line {
     display: inline-block;
     width: 30px;
     height: 5px;
@@ -139,11 +186,11 @@
     border-bottom: 1px solid grey;
 }
 
-.model-performance .model-performance-legend .item .text {
+.model-performance .model-performance-inner .model-performance-legend .item .text {
     display: inline-block;
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 800px) {
     .model-performance {
         display: none;
     }
