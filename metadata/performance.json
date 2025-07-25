@@ -1,216 +1,410 @@
 {
-  "delft3d-flow": {
-    "murten": {
-      "bafu": {
-        "name": "Thermistor chain",
-        "type": "datalakes",
-        "id": 956,
-        "lat": 46.934,
-        "lng": 7.077,
-        "depth": {
-          "surface": {
-            "name": "Surface",
-            "depth": 1
-          }
-        }
-      }
+  "zurich": [
+    {
+      "name": "Zürich Police - Tiefenbrunnen",
+      "type": "lake-scrape",
+      "id": "zurich_police_tiefenbrunnen",
+      "source": "Stadtpolizei Zürich",
+      "url": "https://www.tecson-data.ch/zurich/tiefenbrunnen/index.php",
+      "lat": 47.348139,
+      "lng": 8.561413,
+      "depth": [{"name": "1.0 m", "depth": 1}],
+      "models": [
+        {"type": "delft3d-flow", "id": "zurich"},
+        {"type": "mitgcm", "id": "zurich"},
+        {"type": "simstrat", "id": "lowerzurich"}
+
+      ]
     },
-    "ageri": {
-      "bafu": {
-        "name": "Idronaut profiler",
-        "type": "datalakes",
-        "id": 1077,
-        "lat": 47.125,
-        "lng": 8.609,
-        "depth": {
-          "surface": {
-            "name": "Surface",
-            "depth": 2
-          }
-        }
-      }
-    },
-    "hallwil": {
-      "bafu": {
-        "name": "Thermistor chain",
-        "type": "datalakes",
-        "id": 1046,
-        "lat": 47.278,
-        "lng": 8.214,
-        "depth": {
-          "surface": {
-            "name": "Surface",
-            "depth": 0.5
-          }
-        }
-      }
-    },
-    "greifensee": {
-      "profiler": {
-        "name": "CTD Profiler",
-        "type": "datalakes",
-        "id": 515,
-        "lat": 47.366,
-        "lng": 8.665,
-        "depth": {
-          "surface": {
-            "name": "Surface",
-            "depth": 1
-          }
-        }
-      }
-    },
-    "lugano": {
-      "profiler": {
-        "name": "Ticino Mooring",
-        "type": "datalakes",
-        "id": 1334,
-        "lat": 45.999,
-        "lng": 8.98,
-        "depth": {
-          "surface": {
-            "name": "Surface",
-            "depth": 0.5
-          }
-        }
-      }
-    },
-    "zurich": {
-      "tiefenbrunnen": {
-        "name": "Zürich Police - Tiefenbrunnen",
-        "type": "zurich_police",
-        "id": "tiefenbrunnen",
-        "lat": 47.348139,
-        "lng": 8.561413,
-        "depth": {
-          "surface": {
-            "name": "Surface",
-            "depth": 0.65
-          }
-        }
-      },
-      "mythenquai": {
-        "name": "Zürich Police - Mythenquai",
-        "type": "zurich_police",
-        "id": "mythenquai",
-        "lat": 47.357655,
-        "lng": 8.536529,
-        "depth": {
-          "surface": {
-            "name": "Surface",
-            "depth": 0.65
-          }
-        }
-      }
-    },
-    "geneva": {
-      "lexplore": {
-        "name": "LéXPLORE Thermistor Chain",
-        "type": "datalakes",
-        "id": 448,
-        "lat": 46.5,
-        "lng": 6.67,
-        "depth": {
-          "surface": {
-            "name": "Surface",
-            "depth": 0.25
-          },
-          "bottom": {
-            "name": "Bottom",
-            "depth": 90
-          }
-        }
-      },
-      "buchillon": {
-        "name": "Buchillon Field Station",
-        "type": "datalakes",
-        "id": 597,
-        "lat": 46.459,
-        "lng": 6.399,
-        "depth": {
-          "surface": {
-            "name": "Surface",
-            "depth": 1
-          }
-        }
-      }
+    {
+      "name": "Zürich Police - Mythenquai",
+      "type": "lake-scrape",
+      "id": "zurich_police_mythenquai",
+      "source": "Stadtpolizei Zürich",
+      "url": "https://www.tecson-data.ch/zurich/mythenquai/index.php",
+      "lat": 47.357655,
+      "lng": 8.536529,
+      "depth": [{"name": "1.0 m", "depth": 1}],
+      "models": [
+        {"type": "delft3d-flow", "id": "zurich"},
+        {"type": "mitgcm", "id": "zurich"},
+        {"type": "simstrat", "id": "lowerzurich"}
+
+      ]
     }
-  },
-  "simstrat": {
-    "murten": {
-      "bafu": {
-        "name": "Thermistor chain",
-        "type": "datalakes",
-        "id": 956,
-        "lat": 46.934,
-        "lng": 7.077,
-        "depth": {
-          "surface": {
-            "name": "Surface",
-            "depth": 1
-          }
-        }
-      }
-    },
-    "aegeri": {
-      "bafu": {
-        "name": "Idronaut profiler",
-        "type": "datalakes",
-        "id": 1077,
-        "lat": 47.125,
-        "lng": 8.609,
-        "depth": {
-          "surface": {
-            "name": "Surface",
-            "depth": 2
-          }
-        }
-      }
-    },
-    "hallwil": {
-      "bafu": {
-        "name": "Thermistor chain",
-        "type": "datalakes",
-        "id": 1046,
-        "lat": 47.278,
-        "lng": 8.214,
-        "depth": {
-          "surface": {
-            "name": "Surface",
-            "depth": 0.5
-          }
-        }
-      }
-    },
-    "greifensee": {
-      "profiler": {
-        "name": "CTD Profiler",
-        "type": "datalakes",
-        "id": 515,
-        "lat": 47.366,
-        "lng": 8.665,
-        "depth": {
-          "surface": {
-            "name": "Surface",
-            "depth": 1
-          }
-        }
-      }
-    },
-    "geneva": {
-      "lexplore": {
-        "name": "LéXPLORE Thermistor Chain",
-        "type": "datalakes",
-        "id": 448,
-        "lat": 46.5,
-        "lng": 6.67,
-        "depth": {
-          "surface": {
-            "name": "Surface",
-            "depth": 0.25
-          }
-        }
-      }
+  ],
+  "murten": [
+    {
+      "name": "Thermister Chain",
+      "type": "datalakes",
+      "id": "956",
+      "source": "Eawag / EPFL",
+      "url": "https://www.datalakes-eawag.ch/datadetail/956",
+      "lat": 46.934,
+      "lng": 7.077,
+      "depth": [{"name": "1.0 m", "depth": 1}],
+      "models": [
+        {"type": "delft3d-flow", "id": "murten"},
+        {"type": "simstrat", "id": "murten"}
+
+      ]
     }
-  }
+  ],
+  "ageri": [
+    {
+      "name": "Idronaut Profiler",
+      "type": "datalakes",
+      "id": "1077",
+      "source": "Eawag / EPFL",
+      "url": "https://www.datalakes-eawag.ch/datadetail/1077",
+      "lat": 47.125,
+      "lng": 8.609,
+      "depth": [{"name": "2.0 m", "depth": 2}],
+      "models": [
+        {"type": "delft3d-flow", "id": "ageri"},
+        {"type": "simstrat", "id": "aegeri"}
+
+      ]
+    }
+  ],
+  "hallwil": [
+    {
+      "name": "Thermister Chain",
+      "type": "datalakes",
+      "id": "1046",
+      "source": "Eawag / Canton Aargau / FOEN",
+      "url": "https://www.datalakes-eawag.ch/datadetail/1046",
+      "lat": 47.278,
+      "lng": 8.214,
+      "depth": [{"name": "0.5 m", "depth": 0.5}],
+      "models": [
+        {"type": "delft3d-flow", "id": "hallwil"},
+        {"type": "simstrat", "id": "hallwil"}
+
+      ]
+    }
+  ],
+  "greifensee": [
+    {
+      "name": "CTD Profiler",
+      "type": "datalakes",
+      "id": "515",
+      "source": "Eawag",
+      "url": "https://www.datalakes-eawag.ch/datadetail/515",
+      "lat": 47.366,
+      "lng": 8.665,
+      "depth": [{"name": "1.0 m", "depth": 1.0}],
+      "models": [
+        {"type": "delft3d-flow", "id": "greifensee"},
+        {"type": "simstrat", "id": "greifensee"}
+
+      ]
+    }
+  ],
+  "lugano": [
+    {
+      "name": "Castagnola Monitoring Buoy",
+      "type": "datalakes",
+      "id": "1334",
+      "source": "Canton Ticino",
+      "url": "https://www.datalakes-eawag.ch/datadetail/1334",
+      "lat": 45.999,
+      "lng": 8.98,
+      "depth": [{"name": "0.5 m", "depth": 0.5}],
+      "models": [
+        {"type": "delft3d-flow", "id": "lugano"},
+        {"type": "simstrat", "id": "upperlugano"}
+
+      ]
+    }
+  ],
+  "garda": [
+    {
+      "name": "Spiaggia dei Sabbioni, Lago di Garda",
+      "type": "lake-scrape",
+      "id": "appa_garda",
+      "source": "APPA",
+      "url": "https://www.appa.provincia.tn.it/content/view/full/23087",
+      "lat": 45.88,
+      "lng": 10.848,
+      "depth": [{"name": "1.0 m", "depth": 1.0}],
+      "models": [
+        {"type": "delft3d-flow", "id": "garda"},
+        {"type": "simstrat", "id": "garda"}
+
+      ]
+    }
+  ],
+  "geneva": [
+    {
+      "name": "LéXPLORE Thermistor Chain",
+      "type": "datalakes",
+      "id": "448",
+      "source": "Eawag / EPFL",
+      "url": "https://www.datalakes-eawag.ch/datadetail/448",
+      "lat": 46.5,
+      "lng": 6.67,
+      "depth": [{"name": "0.25 m", "depth": 0.25},{"name": "90.0 m", "depth": 90.0}],
+      "models": [
+        {"type": "delft3d-flow", "id": "geneva"},
+        {"type": "simstrat", "id": "geneva"}
+
+      ]
+    },
+    {
+      "name": "Buchillon Field Station",
+      "type": "datalakes",
+      "id": "597",
+      "source": "Eawag / EPFL",
+      "url": "https://www.datalakes-eawag.ch/datadetail/597",
+      "lat": 46.459,
+      "lng": 6.399,
+      "depth": [{"name": "1.0 m", "depth": 1.0}],
+      "models": [
+        {"type": "delft3d-flow", "id": "geneva"},
+        {"type": "simstrat", "id": "geneva"}
+
+      ]
+    }
+  ],
+  "constance": [
+    {
+      "name": "Lindau, Bodensee",
+      "type": "lake-scrape",
+      "id": "gkd_lindau-20001001",
+      "source": "Gewässerkundlicher Dienst Bayern",
+      "url": "https://www.gkd.bayern.de/en/lakes/watertemperature/iller_lech/lindau-20001001/current-values",
+      "lat": 47.5446,
+      "lng": 9.6849,
+      "depth": [{"name": "Surface", "depth": 1.0}],
+      "models": [
+        {"type": "simstrat", "id": "upperconstance"}
+
+      ]
+    },
+    {
+      "name": "Altnau Steg Meteomedia",
+      "type": "lake-scrape",
+      "id": "thurgau_M1090",
+      "source": "Canton Thurgau",
+      "url": "http://www.hydrodaten.tg.ch/app/index.html#M1090",
+      "lat": 47.624878998826,
+      "lng": 9.27075448601148,
+      "depth": [{"name": "Surface", "depth": 1.0}],
+      "models": [
+        {"type": "simstrat", "id": "upperconstance"}
+
+      ]
+    }
+  ],
+  "bled": [
+    {
+      "name": "Postaja Mlino, Blejsko jezero",
+      "type": "lake-scrape",
+      "id": "arso_H3350_t_1",
+      "source": "ARSO",
+      "url": "https://www.arso.gov.si/vode/podatki/amp/H3350_t_1.html",
+      "lat": 46.36,
+      "lng": 14.1,
+      "depth": [{"name": "Surface", "depth": 1.0}],
+      "models": [
+        {"type": "simstrat", "id": "bled"}
+      ]
+    }
+  ],
+  "annecy": [
+    {
+      "name": "SRV Annecy",
+      "type": "lake-scrape",
+      "id": "srv_annecy",
+      "source": "SRV Annecy",
+      "url": "https://en.lac-annecy.com/weather-forecast/",
+      "lat": 45.895,
+      "lng": 6.135,
+      "depth": [{"name": "Surface", "depth": 1.0}],
+      "models": [
+        {"type": "simstrat", "id": "annecy"}
+      ]
+    }
+  ],
+  "bourget": [
+    {
+      "name": "Phare du Grand Port, Lac du Bourget",
+      "type": "lake-scrape",
+      "id": "romma_153",
+      "source": "ARSO",
+      "url": "https://www.romma.fr/station_24.php?id=153&tempe=1",
+      "lat": 45.702,
+      "lng": 5.884,
+      "depth": [{"name": "1.2 m", "depth": 1.2}],
+      "models": [
+        {"type": "simstrat", "id": "bourget"}
+      ]
+    }
+  ],
+  "maggiore": [
+    {
+      "name": "Porto Ronco Mooring",
+      "type": "datalakes",
+      "id": "1333",
+      "source": "Canton Ticino",
+      "url": "https://www.datalakes-eawag.ch/datadetail/1333",
+      "lat": 46.144,
+      "lng": 8.731,
+      "depth": [{"name": "0.5 m", "depth": 0.5}],
+      "models": [
+        {"type": "simstrat", "id": "maggiore"}
+      ]
+    }
+  ],
+  "lucerne": [
+    {
+      "name": "Kastanienbaum",
+      "type": "datalakes",
+      "id": "1264",
+      "source": "Eawag",
+      "url": "https://www.datalakes-eawag.ch/datadetail/1264",
+      "lat": 47.0,
+      "lng": 8.33,
+      "depth": [{"name": "0.5 m", "depth": 0.5}],
+      "models": [
+        {"type": "simstrat", "id": "lucernekreuztrichterandvitznauerbecken"}
+      ]
+    }
+  ],
+  "ammersee": [
+    {
+      "name": "Ammersee",
+      "type": "lake-scrape",
+      "id": "gkd_stegen-16602008",
+      "source": "Gewässerkundlicher Dienst Bayern",
+      "url": "https://www.gkd.bayern.de/en/lakes/watertemperature/isar/stegen-16602008/current-values",
+      "lat": 48.0764,
+      "lng": 11.1309,
+      "depth": [{"name": "Surface", "depth": 1.0}],
+      "models": [
+        {"type": "simstrat", "id": "ammersee"}
+      ]
+    }
+  ],
+  "worthsee": [
+    {
+      "name": "Wörthsee",
+      "type": "lake-scrape",
+      "id": "gkd_woerthsee-16651003",
+      "source": "Gewässerkundlicher Dienst Bayern",
+      "url": "https://www.gkd.bayern.de/en/lakes/watertemperature/isar/woerthsee-16651003/current-values",
+      "lat": 48.0764,
+      "lng": 11.1309,
+      "depth": [{"name": "Surface", "depth": 1.0}],
+      "models": [
+        {"type": "simstrat", "id": "worthsee"}
+      ]
+    }
+  ],
+  "starnberger": [
+    {
+      "name": "Starnberg, Starnbergersee",
+      "type": "lake-scrape",
+      "id": "gkd_starnberg-16663002",
+      "source": "Gewässerkundlicher Dienst Bayern",
+      "url": "https://www.gkd.bayern.de/en/lakes/watertemperature/isar/starnberg-16663002/current-values",
+      "lat": 47.9973,
+      "lng": 11.3493,
+      "depth": [{"name": "Surface", "depth": 1.0}],
+      "models": [
+        {"type": "simstrat", "id": "starnberger"}
+      ]
+    }
+  ],
+  "tegernsee": [
+    {
+      "name": "Tegernsee",
+      "type": "lake-scrape",
+      "id": "gkd_gmund_tegernsee-18201303",
+      "source": "Gewässerkundlicher Dienst Bayern",
+      "url": "https://www.gkd.bayern.de/en/lakes/watertemperature/isar/gmund_tegernsee-18201303/current-values",
+      "lat": 47.7478,
+      "lng": 11.7354,
+      "depth": [{"name": "Surface", "depth": 1.0}],
+      "models": [
+        {"type": "simstrat", "id": "tegernsee"}
+      ]
+    }
+  ],
+  "schliersee": [
+    {
+      "name": "Schliersee",
+      "type": "lake-scrape",
+      "id": "gkd_schliersee-18222008",
+      "url": "https://www.gkd.bayern.de/en/lakes/watertemperature/isar/schliersee-18222008/current-values",
+      "source": "Gewässerkundlicher Dienst Bayern",
+      "lat": 47.7306,
+      "lng": 11.868,
+      "depth": [{"name": "Surface", "depth": 1.0}],
+      "models": [
+        {"type": "simstrat", "id": "schliersee"}
+      ]
+    }
+  ],
+  "konigsee": [
+    {
+      "name": "Königssee",
+      "type": "lake-scrape",
+      "id": "gkd_koenigssee-18624806",
+      "source": "Gewässerkundlicher Dienst Bayern",
+      "url": "https://www.gkd.bayern.de/en/lakes/watertemperature/inn/koenigssee-18624806/current-values",
+      "lat": 47.5872,
+      "lng": 12.9902,
+      "depth": [{"name": "Surface", "depth": 1.0}],
+      "models": [
+        {"type": "simstrat", "id": "konigsee"}
+      ]
+    }
+  ],
+  "chiemsee": [
+    {
+      "name": "Chiemsee",
+      "type": "lake-scrape",
+      "id": "gkd_stock-18400503",
+      "source": "Gewässerkundlicher Dienst Bayern",
+      "url": "https://www.gkd.bayern.de/en/lakes/watertemperature/isar/stock-18400503/current-values",
+      "lat": 47.8612,
+      "lng": 12.3658,
+      "depth": [{"name": "Surface", "depth": 1.0}],
+      "models": [
+        {"type": "simstrat", "id": "chiemsee"}
+      ]
+    }
+  ],
+  "mondsee": [
+    {
+      "name": "Mondsee (Limnolog.Institut)",
+      "type": "lake-scrape",
+      "id": "ooe_16581",
+      "source": "Land Oberösterreich",
+      "url": "https://hydro.ooe.gv.at/#/overview/Wasserstand/station/16581/Mondsee%20%28Limnolog.Institut%29/Wassertemperatur",
+      "lat": 47.84951808678084,
+      "lng": 13.342742828840162,
+      "depth": [{"name": "Surface", "depth": 1.0}],
+      "models": [
+        {"type": "simstrat", "id": "mondsee"}
+      ]
+    }
+  ],
+  "traunsee": [
+    {
+      "name": "Gmunden (Esplanade)",
+      "type": "lake-scrape",
+      "id": "ooe_16576",
+      "source": "Land Oberösterreich",
+      "url": "https://hydro.ooe.gv.at/#/overview/Wasserstand/station/16576/Gmunden%20%28Esplanade%29/Wassertemperatur",
+      "lat": 47.914527345004124,
+      "lng": 13.791300363977653,
+      "depth": [{"name": "Surface", "depth": 1.0}],
+      "models": [
+        {"type": "simstrat", "id": "traunsee"}
+      ]
+    }
+  ]
 }

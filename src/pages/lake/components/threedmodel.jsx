@@ -14,7 +14,7 @@ import {
 import SummaryTable from "../../../components/summarytable/summarytable";
 import Expand from "../../../components/expand/expand";
 import warningIcon from "../../../img/warning.png";
-import ModelPerformance from "../../../components/modelperformance/modelperformance";
+import ModelPerformanceButton from "../../../components/modelperformance/modelperformancebutton";
 
 class PlaceholderGraph extends Component {
   render() {
@@ -171,7 +171,7 @@ class ThreeDModel extends Component {
   }
   render() {
     var { updates, mapId, datetime, labels, warning, metadata } = this.state;
-    var { dark, bounds, language, id, parameters } = this.props;
+    var { dark, bounds, language, id, parameters, togglePerformance } = this.props;
     return (
       <div className="threedmodel subsection">
         <h3>
@@ -191,12 +191,10 @@ class ThreeDModel extends Component {
               language={language}
             />
             {metadata.rmse && (
-              <ModelPerformance
+              <ModelPerformanceButton
                 rmse={metadata.rmse}
-                dark={dark}
                 language={language}
-                model={parameters.model}
-                lake={parameters.key}
+                open={togglePerformance}
               />
             )}
             <div className="popup">

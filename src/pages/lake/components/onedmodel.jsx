@@ -13,7 +13,7 @@ import Expand from "../../../components/expand/expand";
 import Period from "../../../components/customselect/period";
 import Depth from "../../../components/customselect/depth";
 import Loading from "../../../components/loading/loading";
-import ModelPerformance from "../../../components/modelperformance/modelperformance";
+import ModelPerformanceButton from "../../../components/modelperformance/modelperformancebutton";
 
 class PlaceholderGraph extends Component {
   render() {
@@ -182,7 +182,7 @@ class Graph extends Component {
       depths,
       loading,
     } = this.state;
-    const { data, language, dark, parameter } = this.props;
+    const { data, language, dark, parameter, togglePerformance } = this.props;
     const description = {
       EN: "1D lake models simplify lake processes by representing the lake as a single vertical column, divided into layers from the surface to the bottom. Instead of simulating horizontal variations, they focus on vertical changes in temperature, density, and other properties.",
       DE: "1D-See-Modelle vereinfachen die Prozesse in Seen, indem sie den See als eine einzige vertikale Säule darstellen, die in Schichten von der Oberfläche bis zum Grund unterteilt ist. Anstatt horizontale Schwankungen zu simulieren, konzentrieren sie sich auf vertikale Veränderungen von Temperatur, Dichte und anderen Eigenschaften.",
@@ -201,12 +201,10 @@ class Graph extends Component {
         </div>
         <div className="map-sidebar-left">
           {data.metadata.rmse && (
-            <ModelPerformance
+            <ModelPerformanceButton
               rmse={data.metadata.rmse}
-              dark={dark}
               language={language}
-              model={parameter.model}
-              lake={parameter.key}
+              open={togglePerformance}
             />
           )}
           <div className="line-graph-container">
@@ -397,7 +395,7 @@ class OneDModel extends Component {
     this.setState({ data });
   }
   render() {
-    var { language, parameters, dark } = this.props;
+    var { language, parameters, dark, togglePerformance } = this.props;
     var { data } = this.state;
     return (
       <div className="onedmodel subsection">
@@ -413,6 +411,7 @@ class OneDModel extends Component {
               language={language}
               dark={dark}
               parameter={p}
+              togglePerformance={togglePerformance}
             />
           ))}
         </div>

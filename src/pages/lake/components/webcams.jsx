@@ -3,6 +3,7 @@ import axios from "axios";
 import { timeAgo2 } from "../functions/general";
 import Translations from "../../../translations.json";
 import Information from "../../../components/information/information";
+import Loading from "../../../components/loading/loading";
 
 class Webcams extends Component {
   state = {
@@ -92,7 +93,12 @@ class Webcams extends Component {
                   key={w.id}
                 >
                   <div className="webcams-inner">
-                    <img src={w.image} alt={w.title} />
+                    <div className="webcam-loading">
+                      <Loading />
+                    </div>
+                    <div className="webcam-image">
+                      <img src={w.image} alt={w.title} />
+                    </div>
                     <div className="label">
                       <div className="value">{w.title.split(":")[0]}</div>
                       <div className="time">{timeAgo2(w.time, language)}</div>
