@@ -50,6 +50,7 @@
     background-color: var(--box-color);
     max-width: calc(var(--content-width) - 2 * var(--padding));
     border-radius: 18px;
+    border: 1px solid var(--border-color);
 }
 
 .model-performance .model-performance-inner .close {
@@ -63,6 +64,10 @@
     cursor: pointer;
     font-weight: bold;
     transition: all .2s 0s ease;
+}
+
+.model-performance .model-performance-inner a {
+    color: var(--link-color);
 }
 
 .model-performance .model-performance-inner .close:hover {
@@ -114,6 +119,31 @@
     overflow-y: auto;
     box-sizing: border-box;
     vertical-align: top;
+}
+
+.model-performance .model-performance-inner .model-performance-right .section-title {
+    color: var(--background-subtle-font-color);
+    font-size: 18px;
+    margin-top: 12px;
+    padding: 0 6px;
+}
+
+.model-performance .model-performance-inner .model-performance-right .settings-inner {
+    background-color: var(--background-color);
+    border-radius: 12px;
+    margin-top: 6px;
+    padding: 18px;
+    text-align: left;
+}
+
+.model-performance .model-performance-inner .model-performance-right .settings-inner .circle {
+    height: 18px;
+    width: 18px;
+    display: inline-block;
+    border-radius: 50%;
+    margin-right: 8px;
+    margin-bottom: -2px;
+    box-shadow: var(--box-shadow);
 }
 
 .model-performance .model-performance-inner .model-performance-selectors {
@@ -177,13 +207,13 @@
     margin-right: 8px;
 }
 
-.model-performance .model-performance-inner .model-performance-legend .item .line {
+.model-performance .model-performance-inner .line {
     display: inline-block;
     width: 30px;
     height: 5px;
-    margin-bottom: 5px;
+    margin-bottom: 4px;
     margin-right: 6px;
-    border-bottom: 1px solid grey;
+    border-bottom: 2px solid grey;
 }
 
 .model-performance .model-performance-inner .model-performance-legend .item .text {

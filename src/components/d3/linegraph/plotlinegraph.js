@@ -901,7 +901,7 @@ const plotLines = (div, g, data, xAxis, yAxis, curve) => {
     );
   }
   for (let j = 0; j < data.length; j++) {
-    if (curve) {
+    if (curve || data[j].curve) {
       g.append("path")
         .datum(data[j].x)
         .attr("id", `line_${j}_${div}`)

@@ -407,6 +407,12 @@
     "FR": "Aucun paramètre disponible",
     "IT": "Nessuna impostazione disponibile"
   },
+  "location": {
+    "EN": "Location",
+    "DE": "Standort",
+    "FR": "Emplacement",
+    "IT": "Posizione"
+  },
   "showLocations": {
     "EN": "Show all locations",
     "DE": "Alle Standorte anzeigen",
@@ -1422,6 +1428,12 @@
     "DE": "Quelle",
     "FR": "Source",
     "IT": "Fonte"
+  },
+  "coordinates": {
+    "EN": "Coordinates",
+    "DE": "Koordinaten",
+    "FR": "Coordonnés",
+    "IT": "Coordinate"
   },
   "viewdataset": {
     "EN": "View dataset",

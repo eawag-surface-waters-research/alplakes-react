@@ -424,7 +424,7 @@
     display: inline-block;
 }
 
-.main .lake .parameters .parameters-box .parameter .information  .information-symbol {
+.main .lake .parameters .parameters-box .parameter .information .information-symbol {
     background-color: var(--background-color);
 }
 
@@ -593,6 +593,21 @@
 
 .main .lake .webcams .webcams-outer .webcams-inner:hover {
     box-shadow: none;
+}
+
+.main .lake .webcams .webcams-outer .webcams-inner .webcam-loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+}
+
+.main .lake .webcams .webcams-outer .webcams-inner .webcam-image {
+    height: 100%;
+    width: 100%;
+    position: relative;
+    z-index: 2;
 }
 
 .main .lake .webcams .webcams-outer .webcams-inner .label {
