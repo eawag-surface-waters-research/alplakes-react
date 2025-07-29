@@ -77,7 +77,7 @@ class WaterLevel extends Component {
             >
               <div className="clickable-box">
                 <div className="right">
-                  {round(l.last_value, 2)} {l.unit}
+                  {round(l.last_value, 2)} {Translations.elevationUnit[language]}
                   <div className="time">
                     {timeAgo(l.last_time * 1000, language)}
                   </div>

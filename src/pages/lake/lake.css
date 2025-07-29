@@ -258,6 +258,7 @@
     font-size: 16px;
     color: var(--link-color);
     text-decoration: underline;
+    max-width: 215px;
 }
 
 .main .lake .clickable-box .right {
