@@ -52,12 +52,12 @@ class SatelliteSummary extends Component {
           }
           if (image.satellite in data) {
             data[image.satellite].x.push(image.time);
-            data[image.satellite].y.push(image.ave);
+            data[image.satellite].y.push(Math.round(image.ave*10)/10);
             data[image.satellite].tooltip.push(tooltip);
           } else {
             data[image.satellite] = {
               x: [image.time],
-              y: [image.ave],
+              y: [Math.round(image.ave*10)/10],
               tooltip: [tooltip],
               symbol: image.satellite.includes("S2") ? "x" : "o",
             };
