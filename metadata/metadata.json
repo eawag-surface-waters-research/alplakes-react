@@ -2929,6 +2929,367 @@
         ]
     },
     {
+        "key": "attersee",
+        "name": {
+            "EN": "Attersee",
+            "DE": "Attersee",
+            "FR": "Attersee",
+            "IT": "Attersee"
+        },
+        "area": 46.2,
+        "ave_depth": 85.0,
+        "max_depth": 169.0,
+        "elevation": 469,
+        "latitude": 47.88,
+        "longitude": 13.55,
+        "current_temperature": true,
+        "flags": [
+            "austrian"
+        ],
+        "type": "Natural",
+        "volume": 3.943,
+        "residence_time": "NA",
+        "mixing_regime": "NA",
+        "geothermal_flux": "NA",
+        "trophic_state": "NA",
+        "webcams": [
+            1420617893, 1621033846, 1511334387
+        ]
+    },
+    {
+        "key": "faaker",
+        "name": {
+            "EN": "Faaker See",
+            "DE": "Faaker See",
+            "FR": "Faaker See",
+            "IT": "Faaker See"
+        },
+        "area": 2.2,
+        "ave_depth": 16.1,
+        "max_depth": 29.5,
+        "elevation": 554,
+        "latitude": 46.58,
+        "longitude": 13.93,
+        "current_temperature": true,
+        "flags": [
+            "austrian"
+        ],
+        "type": "Natural",
+        "volume": 0.035,
+        "residence_time": "NA",
+        "mixing_regime": "NA",
+        "geothermal_flux": "NA",
+        "trophic_state": "NA",
+        "webcams": [
+            1528494560, 1610402097
+        ]
+    },
+    {
+        "key": "fuschlsee",
+        "name": {
+            "EN": "Fuschlsee",
+            "DE": "Fuschlsee",
+            "FR": "Fuschlsee",
+            "IT": "Fuschlsee"
+        },
+        "area": 2.7,
+        "ave_depth": "NA",
+        "max_depth": 66.0,
+        "elevation": 664,
+        "latitude": 47.8,
+        "longitude": 13.28,
+        "current_temperature": false,
+        "flags": [
+            "austrian"
+        ],
+        "type": "Natural",
+        "volume": 0.098,
+        "residence_time": "NA",
+        "mixing_regime": "NA",
+        "geothermal_flux": "NA",
+        "trophic_state": "NA",
+        "webcams": [
+            1592498441
+        ]
+    },
+    {
+        "key": "wolfgangsee",
+        "name": {
+            "EN": "Wolfgangsee",
+            "DE": "Wolfgangsee",
+            "FR": "Wolfgangsee",
+            "IT": "Wolfgangsee"
+        },
+        "area": 13.0,
+        "ave_depth": "NA",
+        "max_depth": 114.0,
+        "elevation": 538,
+        "latitude": 47.75,
+        "longitude": 13.39,
+        "current_temperature": true,
+        "flags": [
+            "austrian"
+        ],
+        "type": "Natural",
+        "volume": 0.139,
+        "residence_time": "NA",
+        "mixing_regime": "NA",
+        "geothermal_flux": "NA",
+        "trophic_state": "NA",
+        "webcams": [
+            1592498499, 1346151882, 1592498108, 1592498254
+        ]
+    },
+    {
+        "key": "grabensee",
+        "name": {
+            "EN": "Grabensee",
+            "DE": "Grabensee",
+            "FR": "Grabensee",
+            "IT": "Grabensee"
+        },
+        "area": 1.3,
+        "ave_depth": 9.0,
+        "max_depth": 14.0,
+        "elevation": 503,
+        "latitude": 47.99,
+        "longitude": 13.09,
+        "current_temperature": false,
+        "flags": [
+            "austrian"
+        ],
+        "type": "Natural",
+        "volume": 0.012,
+        "residence_time": "NA",
+        "mixing_regime": "NA",
+        "geothermal_flux": "NA",
+        "trophic_state": "NA"
+    },
+    {
+        "key": "irrsee",
+        "name": {
+            "EN": "Irrsee",
+            "DE": "Irrsee",
+            "FR": "Irrsee",
+            "IT": "Irrsee"
+        },
+        "area": 3.5,
+        "ave_depth": "NA",
+        "max_depth": 32.0,
+        "elevation": 553,
+        "latitude": 47.91,
+        "longitude": 13.307,
+        "current_temperature": true,
+        "flags": [
+            "austrian"
+        ],
+        "type": "Natural",
+        "volume": 0.0531,
+        "residence_time": "NA",
+        "mixing_regime": "NA",
+        "geothermal_flux": "NA",
+        "trophic_state": "NA",
+        "webcams": [
+            1182078679, 1713281027
+        ]
+    },
+    {
+        "key": "mattsee",
+        "name": {
+            "EN": "Mattsee",
+            "DE": "Mattsee",
+            "FR": "Mattsee",
+            "IT": "Mattsee"
+        },
+        "area": 3.6,
+        "ave_depth": "NA",
+        "max_depth": 42.0,
+        "elevation": 503,
+        "latitude": 47.983,
+        "longitude": 13.122,
+        "current_temperature": false,
+        "flags": [
+            "austrian"
+        ],
+        "type": "Natural",
+        "volume": 0.061,
+        "residence_time": "NA",
+        "mixing_regime": "NA",
+        "geothermal_flux": "NA",
+        "trophic_state": "NA",
+        "webcams": [
+            1723153847
+        ]
+    },
+    {
+        "key": "millstaetter",
+        "name": {
+            "EN": "Millstätter See",
+            "DE": "Millstätter See",
+            "FR": "Millstätter See",
+            "IT": "Millstätter See"
+        },
+        "area": 13.28,
+        "ave_depth": 89.0,
+        "max_depth": 142.0,
+        "elevation": 588,
+        "latitude": 46.794,
+        "longitude": 13.584,
+        "current_temperature": true,
+        "flags": [
+            "austrian"
+        ],
+        "type": "Natural",
+        "volume": 1.205,
+        "residence_time": "NA",
+        "mixing_regime": "NA",
+        "geothermal_flux": "NA",
+        "trophic_state": "NA",
+        "webcams": [
+            1511734271, 1568843403, 1575668979, 1621633824
+        ]
+    },
+    {
+        "key": "obertrumer",
+        "name": {
+            "EN": "Obertrumer",
+            "DE": "Obertrumer",
+            "FR": "Obertrumer",
+            "IT": "Obertrumer"
+        },
+        "area": 4.88,
+        "ave_depth": 17.0,
+        "max_depth": 36.0,
+        "elevation": 503,
+        "latitude": 47.964,
+        "longitude": 13.087,
+        "current_temperature": false,
+        "flags": [
+            "austrian"
+        ],
+        "type": "Natural",
+        "volume": 0.08463,
+        "residence_time": "NA",
+        "mixing_regime": "NA",
+        "geothermal_flux": "NA",
+        "trophic_state": "NA",
+        "webcams": [
+            1581872800
+        ]
+    },
+    {
+        "key": "ossiacher",
+        "name": {
+            "EN": "Ossiacher See",
+            "DE": "Ossiacher See",
+            "FR": "Ossiacher See",
+            "IT": "Ossiacher See"
+        },
+        "area": 10.38,
+        "ave_depth": 19.6,
+        "max_depth": 52.6,
+        "elevation": 501,
+        "latitude": 46.666,
+        "longitude": 13.956,
+        "current_temperature": true,
+        "flags": [
+            "austrian"
+        ],
+        "type": "Natural",
+        "volume": 0.21,
+        "residence_time": "NA",
+        "mixing_regime": "NA",
+        "geothermal_flux": "NA",
+        "trophic_state": "NA",
+        "webcams": [
+            1713738977, 1573768199
+        ]
+    },
+    {
+        "key": "wallersee",
+        "name": {
+            "EN": "Wallersee",
+            "DE": "Wallersee",
+            "FR": "Wallersee",
+            "IT": "Wallersee"
+        },
+        "area": 6.1,
+        "ave_depth": 13.3,
+        "max_depth": 23.3,
+        "elevation": 505,
+        "latitude": 47.912,
+        "longitude": 13.169,
+        "current_temperature": false,
+        "flags": [
+            "austrian"
+        ],
+        "type": "Natural",
+        "volume": 0.0763,
+        "residence_time": "NA",
+        "mixing_regime": "NA",
+        "geothermal_flux": "NA",
+        "trophic_state": "NA",
+        "webcams": [
+            1348040275, 1658235358, 1669726559
+        ]
+    },
+    {
+        "key": "worthersee",
+        "name": {
+            "EN": "Wörthersee",
+            "DE": "Wörthersee",
+            "FR": "Wörthersee",
+            "IT": "Wörthersee"
+        },
+        "area": 19.39,
+        "ave_depth": 42.1,
+        "max_depth": 85.2,
+        "elevation": 439,
+        "latitude": 46.627,
+        "longitude": 14.11,
+        "current_temperature": true,
+        "flags": [
+            "austrian"
+        ],
+        "type": "Natural",
+        "volume": 0.8164,
+        "residence_time": 10.5,
+        "mixing_regime": "NA",
+        "geothermal_flux": "NA",
+        "trophic_state": "NA",
+        "webcams": [
+            1349910056, 1529358535, 1373920936, 1690471321
+        ]
+    },
+    {
+        "key": "zeller",
+        "name": {
+            "EN": "Zeller",
+            "DE": "Zeller",
+            "FR": "Zeller",
+            "IT": "Zeller"
+        },
+        "area": 4.55,
+        "ave_depth": 39.0,
+        "max_depth": 69.8,
+        "elevation": 750,
+        "latitude": 47.322,
+        "longitude": 12.807,
+        "current_temperature": false,
+        "flags": [
+            "austrian"
+        ],
+        "type": "Natural",
+        "volume": 0.1782,
+        "residence_time": "NA",
+        "mixing_regime": "NA",
+        "geothermal_flux": "NA",
+        "trophic_state": "NA",
+        "webcams": [
+            1345920833, 1481845982
+        ]
+    },
+    {
         "key": "como",
         "name": {
             "EN": "Lake Como",
