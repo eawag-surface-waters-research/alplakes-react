@@ -13,6 +13,27 @@ The online deployement can be found at https://www.alplakes.eawag.ch
 
 The changelog details significant changes to the Alplakes website, this does not include changes to the API or the inclusion of additional lakes.
 
+### 2025-07-25
+
+- Update model performance monitoring UI, compare multiple models
+
+### 2025-07-22
+
+- Add near real-time insitu measurements to home page
+
+### 2025-07-14
+
+- Add functionality for multiple 3D models (MITgcm model added for Lake Zürich)
+
+### 2025-05-16
+
+- Add functionality for comparing satellite data to insitu data
+
+### 2025-04-22
+
+- Include catchment information where available
+
+
 ### 2025-04-11
 
 - Add blog section to the website
