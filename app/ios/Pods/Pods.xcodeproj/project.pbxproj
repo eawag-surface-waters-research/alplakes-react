@@ -1,0 +1,1557 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 54;
+	objects = {
+
+/* Begin PBXAggregateTarget section */
+		0412DEF5B0065DDF6F89C12727DA5240 /* GoNativeCore */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = B666B4136198B755ED2CE5C7AFA5A25C /* Build configuration list for PBXAggregateTarget "GoNativeCore" */;
+			buildPhases = (
+				BAF2C4E43E0946BE8292D66A878BA60A /* [CP] Copy XCFrameworks */,
+			);
+			dependencies = (
+				A6EB1653E5DEC49C6EC899E4EE731D6D /* PBXTargetDependency */,
+				0046573501715246C2A67872B9F519C8 /* PBXTargetDependency */,
+			);
+			name = GoNativeCore;
+		};
+/* End PBXAggregateTarget section */
+
+/* Begin PBXBuildFile section */
+		02549A98713D4F71EE8E5D4AB1B6C4F3 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = BF40FC01D00005DD8C05B69F89BA4364 /* PrivacyInfo.xcprivacy */; };
+		03588B938BECEEF89042E2C73159BEA2 /* mz_strm_wzaes.h in Headers */ = {isa = PBXBuildFile; fileRef = 229D6BE45A08C6B11802CCBD4C21A757 /* mz_strm_wzaes.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		090CC8DB2713055B65F3693A67A9F0AF /* mz_zip_rw.c in Sources */ = {isa = PBXBuildFile; fileRef = AAFC144D678EBFB3CFA38CA309C161FA /* mz_zip_rw.c */; };
+		0F0C13AD4DAF662871D11E237EFF1C5E /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4940B54381EA4A971EBE043A6DF7C5 /* Font.swift */; };
+		1567206362BF074F1B55F70FBA33DEC2 /* FontAwesome6_Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 52CADFEABD17F4C45F6D04CAC67B925F /* FontAwesome6_Regular.ttf */; };
+		2447F98C827F2FE7082D6036FEC94BF5 /* FontAwesome6_Brands.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6B7107C5C4520C66BD61E5AA71FA0A0B /* FontAwesome6_Brands.ttf */; };
+		27293E7084BFE6AF873BB233419CFA2D /* mz_strm_mem.c in Sources */ = {isa = PBXBuildFile; fileRef = 4F244AB78F3C000EAC31BC0D600B82F5 /* mz_strm_mem.c */; };
+		2D6FB8768A6B2798FC84316E93E457A3 /* FontAwesome6_Solid.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7C48CB66566123686B5EF1469AC57615 /* FontAwesome6_Solid.ttf */; };
+		2D9F62E98AFF9F1A8637FB2DB029D98F /* Pods-Alplakes-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 35FA6775E9AAFFB9B7D02533526999D2 /* Pods-Alplakes-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		352E63E404CED072E7F714C52FF93E49 /* mz_compat.c in Sources */ = {isa = PBXBuildFile; fileRef = EFC54BF52BDAEAD5D745CA745308D775 /* mz_compat.c */; };
+		3683A04365A59519AAB2F47C5FA6FA3C /* mz_os_posix.c in Sources */ = {isa = PBXBuildFile; fileRef = A94453B6A5890D48F0ADE871C384C4BB /* mz_os_posix.c */; };
+		374FECA22750A2F7F17CA125C25DB352 /* mz_compat.h in Headers */ = {isa = PBXBuildFile; fileRef = D628E9F3250D04F5CC155BF0F389F7DD /* mz_compat.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		3D28363861BB9B6266837E87745B7F18 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F29E5F7EEDB83D0B063DAD0B5196072 /* Foundation.framework */; };
+		4569AD436BB87FA37A01C5C982F025A2 /* SSZipArchive.h in Headers */ = {isa = PBXBuildFile; fileRef = C92FFB14DA6A87983303A2FE8E48F2CB /* SSZipArchive.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4940BEF2C2ED6F1A786C9C4C70B371A1 /* FontAwesome6_Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 83A58C486077990021F365D1674161C0 /* FontAwesome6_Thin.ttf */; };
+		49900106BEFC9C1BEB3E96558C0C4AE8 /* mz_zip.h in Headers */ = {isa = PBXBuildFile; fileRef = FC2C61E79C6C162DC7B5B0D8595CA8FE /* mz_zip.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		4B537D7EED02B9651AD870CABF49BABE /* MedianIcons-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B75D5B0BD36CAD92C8F7E8109BACB4A /* MedianIcons-dummy.m */; };
+		4C652DF3EC0F0F39B29287E72864FC11 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F29E5F7EEDB83D0B063DAD0B5196072 /* Foundation.framework */; };
+		4C8A5ADD06D2DFC9E7FA2A1CA9DD565A /* mz_strm_pkcrypt.c in Sources */ = {isa = PBXBuildFile; fileRef = FF044C717CF733C62A03C5F8A584070B /* mz_strm_pkcrypt.c */; };
+		4E56BA148170B3A6E7FA6D312B06C784 /* mz_zip_rw.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D752CD9C0117B2E07A800A6564C15EF /* mz_zip_rw.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		50C171D1890D70EED265FCE3C5240091 /* FontAwesome.json in Resources */ = {isa = PBXBuildFile; fileRef = 1BDAA894B01399001E5CB0ACD63FC404 /* FontAwesome.json */; };
+		5AE8274362638FD006B41882BF55F387 /* UIImage+Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D73110369BE4A28EF13752A5A795595 /* UIImage+Font.swift */; };
+		5C3453F2DD57FBB3E8CDA20B84FB62EB /* NSAttributedString+Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF16C8EA872D6018C81CCDF3CBCA8A9A /* NSAttributedString+Font.swift */; };
+		60E384ABEF99F5104C99DCB596E2BE95 /* mz_crypt.c in Sources */ = {isa = PBXBuildFile; fileRef = 204F59915C89FE8F1FC15E4826052071 /* mz_crypt.c */; };
+		6577A9EB1AED47B915B7F77C3F8BF335 /* mz_os.c in Sources */ = {isa = PBXBuildFile; fileRef = 2ADBAAD1ED51D12E0474B888A5991DE7 /* mz_os.c */; };
+		68D4A83EA695C463981E04DAD037064F /* mz_strm_split.c in Sources */ = {isa = PBXBuildFile; fileRef = 8B969D2CB4138067441D0CF176A8B6A0 /* mz_strm_split.c */; };
+		78007C9ED0A4E32F3CA05B99CCF59A05 /* Pods-MedianIOSTests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 38E562D703940288101552FF5FB46C8A /* Pods-MedianIOSTests-dummy.m */; };
+		7819DD27A1B62DFC933835DFAFBDBF42 /* mz.h in Headers */ = {isa = PBXBuildFile; fileRef = CA4C3D3D9A0B44303F7C63AFB371DE9B /* mz.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		7ED6C3C05EA6EE83780A3600C7088B46 /* mz_crypt.h in Headers */ = {isa = PBXBuildFile; fileRef = B6A9111BBE01DC0EC4DD400CB3732A68 /* mz_crypt.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		817909CFA2E8032670693BF57A2D5519 /* mz_strm_mem.h in Headers */ = {isa = PBXBuildFile; fileRef = C7773E0EDBC498A04D307C60CF61CD73 /* mz_strm_mem.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		823033F3DF2D5C7C4B123A277DB55073 /* mz_strm.c in Sources */ = {isa = PBXBuildFile; fileRef = 55EBDFF9ACFDD0AE02C215AE40F19C91 /* mz_strm.c */; };
+		835C687083E3D51DE87C2F2C4C681B1C /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C330BC62C9ACD3F9E7AF138812EF298C /* Security.framework */; };
+		8415E191A2886EC3426A01BC86299E1F /* mz_strm_buf.c in Sources */ = {isa = PBXBuildFile; fileRef = C5538D322258F5F27934B643D49C4A0C /* mz_strm_buf.c */; };
+		84B5FB65B38C19F534F49DE6471C0E5B /* mz_strm_zlib.c in Sources */ = {isa = PBXBuildFile; fileRef = D068264355A9020A5E9806F96D765097 /* mz_strm_zlib.c */; };
+		8F43694404EAFF6D73EE58928154C0F2 /* mz_strm_buf.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C45274AE11C989A45C95A6508D08E7 /* mz_strm_buf.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		982E562468DAEA210F469728F0F0E537 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00E68EA1499C3C165BE914B43467D49 /* Utilities.swift */; };
+		A190A9DFC23558006BE5D8D5B6DAE51C /* mz_strm_zlib.h in Headers */ = {isa = PBXBuildFile; fileRef = FE1A7358ACB43782886506FC51A5205B /* mz_strm_zlib.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		A3493A729D8C9051D132F4BF69F4FD85 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F29E5F7EEDB83D0B063DAD0B5196072 /* Foundation.framework */; };
+		A71E222C76A20B18600A6DE4091CFB0E /* SSZipArchive.m in Sources */ = {isa = PBXBuildFile; fileRef = F51FDC0C2667BAAC9C2508574EBC3C21 /* SSZipArchive.m */; };
+		A90260F860E51EC89130250EA3E61F22 /* SSZipArchive-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = FBDBFDF5C52262862D0AA7F7B645C3CD /* SSZipArchive-dummy.m */; };
+		AAF2B7BD4C56295DBA1BB6039AC0EDD4 /* ZipArchive.h in Headers */ = {isa = PBXBuildFile; fileRef = FB81A7AA5B739688B3DFAAFC4748A689 /* ZipArchive.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		AD3334681B057E7FAEB50F6C79347164 /* FontAwesome6_Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3124464FE4D69BED57FB5D6AAF12117D /* FontAwesome6_Light.ttf */; };
+		AE0F1284A9C414203C1D5C66EDE95E8E /* mz_strm.h in Headers */ = {isa = PBXBuildFile; fileRef = 918B6137EB6BAA60021C5C8CB28882CA /* mz_strm.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		B4DF1CDCE2413AF579E102954A4033F6 /* mz_strm_os_posix.c in Sources */ = {isa = PBXBuildFile; fileRef = 68CFA1F57280574961E194B5F0DE9600 /* mz_strm_os_posix.c */; };
+		BE9F1461F54BCB68FCA4EC42572F2D0A /* FontFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE67C07B7FCAE3A3E5A56D25AE1E432C /* FontFactory.swift */; };
+		C53D326186927C0C85580CC5FEB133E3 /* mz_os.h in Headers */ = {isa = PBXBuildFile; fileRef = 224E5F926509D1AD36F4EF2EB1353E7F /* mz_os.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		C64C28E8B15C171323473E543C608E68 /* mz_strm_os.h in Headers */ = {isa = PBXBuildFile; fileRef = C77BBDD9F2A72F7CBA75438163290CA7 /* mz_strm_os.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		C9AFC6682FD2C8231E779A4349DBDFD6 /* mz_strm_wzaes.c in Sources */ = {isa = PBXBuildFile; fileRef = EA2E3AA9B87D95676372B6714D71B865 /* mz_strm_wzaes.c */; };
+		D077148F7C355824C44ECBFAC5D50323 /* MaterialDesign.json in Resources */ = {isa = PBXBuildFile; fileRef = 78505AB11E39B8C2B589301C09D93639 /* MaterialDesign.json */; };
+		D2E6ED217227452C59C9B29C62858F7C /* SSZipArchive-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 486D8DAEA07C49883727C6FF93837E52 /* SSZipArchive-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D9C15A8B92E62396D95DB88415A38A8F /* mz_strm_split.h in Headers */ = {isa = PBXBuildFile; fileRef = F0EA4C40EF0789922C2DDD2C4F388405 /* mz_strm_split.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		DE5FDBDD5D7E1CD682CB14A90D07961D /* FontLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F9445D8C8424BA20D3A9AE0EBC3E78 /* FontLoader.swift */; };
+		E283D8FF283E09D9CF863A27B55886EF /* mz_crypt_apple.c in Sources */ = {isa = PBXBuildFile; fileRef = 3A17217E06CB99F3EAA64DBBAC07E91E /* mz_crypt_apple.c */; };
+		E4482CD4C4A4EEBEE27D535EB5A2EC04 /* MaterialDesign.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3953DFBC92F05145FE99E41C997D9D78 /* MaterialDesign.ttf */; };
+		E5FA0235CD286C13C0F568946EB0AEA8 /* mz_strm_pkcrypt.h in Headers */ = {isa = PBXBuildFile; fileRef = 791B607F6522CF8BBCF9B39E4F34B4D1 /* mz_strm_pkcrypt.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		E7E1D39A70E4143B30BA4BDB62EDE1DC /* Pods-Alplakes-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = CC67B620489C536DEBFE4E875A3AE40F /* Pods-Alplakes-dummy.m */; };
+		E8AB8A25209B21B7D1E61138E4C88E1C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F29E5F7EEDB83D0B063DAD0B5196072 /* Foundation.framework */; };
+		EAD3977EB3EE3DEB3E6E67C003AB9D0C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 520B29F22B4B110F2A243BDA9797F138 /* Images.xcassets */; };
+		F16CA13AB620DDBD6A2B833A04189345 /* MedianIcons-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = A7C54A266B66897D8CA72BEE176A984F /* MedianIcons-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F3593512CBA3B89501776B07F5E33C7B /* Pods-MedianIOSTests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 9EC09D5C78E35DEDE7CF7A7814DF7CDB /* Pods-MedianIOSTests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		FBF481A2EC25D99DC41914AE7B9754D2 /* mz_zip.c in Sources */ = {isa = PBXBuildFile; fileRef = B103C83FBCF88589578BBD014DC3FC08 /* mz_zip.c */; };
+		FF500FD55C6C8DD8418FA2290B95811A /* SSZipCommon.h in Headers */ = {isa = PBXBuildFile; fileRef = 3418C56943F72B28BBA3DC16388D3799 /* SSZipCommon.h */; settings = {ATTRIBUTES = (Public, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		128354317C6759B7959DCCE47542CA58 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 342DC4BCB960507542891730A007EEC5;
+			remoteInfo = "GoNativeCore-GoNativeCore_Privacy";
+		};
+		438D56CAB89BB85F9FD580273EF853BD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0412DEF5B0065DDF6F89C12727DA5240;
+			remoteInfo = GoNativeCore;
+		};
+		4CF0548907AAC28D8BEF505D5F3C0134 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 42D9E1CFE057ACA78611354A64E68592;
+			remoteInfo = MedianIcons;
+		};
+		63096D0F2CCB9B0935308F8BD26BCC86 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BAB09BCC6C174BC6386EEBD9FBEC68E2;
+			remoteInfo = "GoNativeCore-GoNativeCoreResources";
+		};
+		82CD8BD12AFC8EBE72DD2A86E948ACB3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A644F7B46D04F591D89D69CADB010A3F;
+			remoteInfo = "Pods-Alplakes";
+		};
+		BEBC96676D129FBEEF817588F0574F72 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F60E38364AFF5E1349FF07415B944396;
+			remoteInfo = SSZipArchive;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		0BFA62D1C836B06EA0A331FB02A0B605 /* SSZipArchive.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SSZipArchive.debug.xcconfig; sourceTree = "<group>"; };
+		1A4940B54381EA4A971EBE043A6DF7C5 /* Font.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Font.swift; path = MedianIcons/Classes/Font.swift; sourceTree = "<group>"; };
+		1BDAA894B01399001E5CB0ACD63FC404 /* FontAwesome.json */ = {isa = PBXFileReference; includeInIndex = 1; name = FontAwesome.json; path = MedianIcons/Assets/FontAwesome.json; sourceTree = "<group>"; };
+		204F59915C89FE8F1FC15E4826052071 /* mz_crypt.c */ = {isa = PBXFileReference; includeInIndex = 1; name = mz_crypt.c; path = SSZipArchive/minizip/mz_crypt.c; sourceTree = "<group>"; };
+		208A9A51E6B12AA8021F624AD7566737 /* Pods-MedianIOSTests */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-MedianIOSTests"; path = Pods_MedianIOSTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		224E5F926509D1AD36F4EF2EB1353E7F /* mz_os.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = mz_os.h; path = SSZipArchive/minizip/mz_os.h; sourceTree = "<group>"; };
+		229D6BE45A08C6B11802CCBD4C21A757 /* mz_strm_wzaes.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = mz_strm_wzaes.h; path = SSZipArchive/minizip/mz_strm_wzaes.h; sourceTree = "<group>"; };
+		23744D614FC340C1A1746A487CDAF33A /* Pods-Alplakes-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Alplakes-Info.plist"; sourceTree = "<group>"; };
+		24B9500AD75FD25F8220EC4DEACFAF5C /* MedianIcons.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = MedianIcons.debug.xcconfig; sourceTree = "<group>"; };
+		2ADBAAD1ED51D12E0474B888A5991DE7 /* mz_os.c */ = {isa = PBXFileReference; includeInIndex = 1; name = mz_os.c; path = SSZipArchive/minizip/mz_os.c; sourceTree = "<group>"; };
+		2D73110369BE4A28EF13752A5A795595 /* UIImage+Font.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "UIImage+Font.swift"; path = "MedianIcons/Classes/UIImage+Font.swift"; sourceTree = "<group>"; };
+		2F29E5F7EEDB83D0B063DAD0B5196072 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		30BD0EB9BDAD10CE1BDE5894BE6E07A0 /* Pods-MedianIOSTests-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-MedianIOSTests-Info.plist"; sourceTree = "<group>"; };
+		3124464FE4D69BED57FB5D6AAF12117D /* FontAwesome6_Light.ttf */ = {isa = PBXFileReference; includeInIndex = 1; name = FontAwesome6_Light.ttf; path = MedianIcons/Assets/FontAwesome6_Light.ttf; sourceTree = "<group>"; };
+		3418C56943F72B28BBA3DC16388D3799 /* SSZipCommon.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SSZipCommon.h; path = SSZipArchive/SSZipCommon.h; sourceTree = "<group>"; };
+		35FA6775E9AAFFB9B7D02533526999D2 /* Pods-Alplakes-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Alplakes-umbrella.h"; sourceTree = "<group>"; };
+		38E562D703940288101552FF5FB46C8A /* Pods-MedianIOSTests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-MedianIOSTests-dummy.m"; sourceTree = "<group>"; };
+		38E8F7E9D930B4EBF2BB84C0171F2D7D /* Pods-Alplakes-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Alplakes-frameworks.sh"; sourceTree = "<group>"; };
+		3953DFBC92F05145FE99E41C997D9D78 /* MaterialDesign.ttf */ = {isa = PBXFileReference; includeInIndex = 1; name = MaterialDesign.ttf; path = MedianIcons/Assets/MaterialDesign.ttf; sourceTree = "<group>"; };
+		39A93385A10FCD9A36FF6DD42634F7A4 /* GoNativeCore-GoNativeCore_Privacy */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = "GoNativeCore-GoNativeCore_Privacy"; path = GoNativeCore_Privacy.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		3A17217E06CB99F3EAA64DBBAC07E91E /* mz_crypt_apple.c */ = {isa = PBXFileReference; includeInIndex = 1; name = mz_crypt_apple.c; path = SSZipArchive/minizip/mz_crypt_apple.c; sourceTree = "<group>"; };
+		3C8FF7A37891D4A6E9DBDB6DAB839F41 /* GoNativeCore.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; name = GoNativeCore.xcframework; path = GoNativeCore/Frameworks/GoNativeCore.xcframework; sourceTree = "<group>"; };
+		3DB33E4BF071E85E96385D450D137E32 /* MedianIcons.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = MedianIcons.modulemap; sourceTree = "<group>"; };
+		42F9445D8C8424BA20D3A9AE0EBC3E78 /* FontLoader.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FontLoader.swift; path = MedianIcons/Classes/FontLoader.swift; sourceTree = "<group>"; };
+		43C45274AE11C989A45C95A6508D08E7 /* mz_strm_buf.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = mz_strm_buf.h; path = SSZipArchive/minizip/mz_strm_buf.h; sourceTree = "<group>"; };
+		453FDBE840EEBBCF96FCB63D9E0D4CAD /* Pods-Alplakes.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-Alplakes.modulemap"; sourceTree = "<group>"; };
+		466448623B810659650581333D8F88C3 /* Pods-MedianIOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-MedianIOSTests.release.xcconfig"; sourceTree = "<group>"; };
+		47F69FD70C4B31CB7B49B85B10B637C6 /* GoNativeCore-GoNativeCoreResources */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = "GoNativeCore-GoNativeCoreResources"; path = GoNativeCoreResources.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		486D8DAEA07C49883727C6FF93837E52 /* SSZipArchive-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SSZipArchive-umbrella.h"; sourceTree = "<group>"; };
+		4B75D5B0BD36CAD92C8F7E8109BACB4A /* MedianIcons-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "MedianIcons-dummy.m"; sourceTree = "<group>"; };
+		4BC711D46E90890DC99DEA771A25E24B /* Pods-MedianIOSTests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-MedianIOSTests-acknowledgements.markdown"; sourceTree = "<group>"; };
+		4CDA3FF71B8C7DFE4BEDACABFE18B404 /* Pods-Alplakes */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-Alplakes"; path = Pods_Alplakes.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4E1BF402DF8DD55682AE4814975F2301 /* Pods-Alplakes-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Alplakes-acknowledgements.plist"; sourceTree = "<group>"; };
+		4F244AB78F3C000EAC31BC0D600B82F5 /* mz_strm_mem.c */ = {isa = PBXFileReference; includeInIndex = 1; name = mz_strm_mem.c; path = SSZipArchive/minizip/mz_strm_mem.c; sourceTree = "<group>"; };
+		520B29F22B4B110F2A243BDA9797F138 /* Images.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = GoNativeCore/Resources/Images.xcassets; sourceTree = "<group>"; };
+		52CADFEABD17F4C45F6D04CAC67B925F /* FontAwesome6_Regular.ttf */ = {isa = PBXFileReference; includeInIndex = 1; name = FontAwesome6_Regular.ttf; path = MedianIcons/Assets/FontAwesome6_Regular.ttf; sourceTree = "<group>"; };
+		54B51299431A08329F934AD88F716976 /* SSZipArchive.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = SSZipArchive.modulemap; sourceTree = "<group>"; };
+		54EEACA274D6B0FBA632B79A57317D83 /* GoNativeCore.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = GoNativeCore.debug.xcconfig; sourceTree = "<group>"; };
+		55EBDFF9ACFDD0AE02C215AE40F19C91 /* mz_strm.c */ = {isa = PBXFileReference; includeInIndex = 1; name = mz_strm.c; path = SSZipArchive/minizip/mz_strm.c; sourceTree = "<group>"; };
+		5A0B1F8E1E30BC17A08A172336DFCF3D /* MedianIcons.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = MedianIcons.release.xcconfig; sourceTree = "<group>"; };
+		5D752CD9C0117B2E07A800A6564C15EF /* mz_zip_rw.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = mz_zip_rw.h; path = SSZipArchive/minizip/mz_zip_rw.h; sourceTree = "<group>"; };
+		68CFA1F57280574961E194B5F0DE9600 /* mz_strm_os_posix.c */ = {isa = PBXFileReference; includeInIndex = 1; name = mz_strm_os_posix.c; path = SSZipArchive/minizip/mz_strm_os_posix.c; sourceTree = "<group>"; };
+		6B7107C5C4520C66BD61E5AA71FA0A0B /* FontAwesome6_Brands.ttf */ = {isa = PBXFileReference; includeInIndex = 1; name = FontAwesome6_Brands.ttf; path = MedianIcons/Assets/FontAwesome6_Brands.ttf; sourceTree = "<group>"; };
+		72BFF0B513DBF2A6F7A2FE5EBCD42C09 /* Pods-Alplakes-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Alplakes-acknowledgements.markdown"; sourceTree = "<group>"; };
+		749C7D012A75F12ED59A7A84E300F3A8 /* Pods-Alplakes.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Alplakes.debug.xcconfig"; sourceTree = "<group>"; };
+		768F84459637F403AC2634B2937B597D /* Pods-MedianIOSTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-MedianIOSTests-acknowledgements.plist"; sourceTree = "<group>"; };
+		78505AB11E39B8C2B589301C09D93639 /* MaterialDesign.json */ = {isa = PBXFileReference; includeInIndex = 1; name = MaterialDesign.json; path = MedianIcons/Assets/MaterialDesign.json; sourceTree = "<group>"; };
+		791B607F6522CF8BBCF9B39E4F34B4D1 /* mz_strm_pkcrypt.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = mz_strm_pkcrypt.h; path = SSZipArchive/minizip/mz_strm_pkcrypt.h; sourceTree = "<group>"; };
+		7C48CB66566123686B5EF1469AC57615 /* FontAwesome6_Solid.ttf */ = {isa = PBXFileReference; includeInIndex = 1; name = FontAwesome6_Solid.ttf; path = MedianIcons/Assets/FontAwesome6_Solid.ttf; sourceTree = "<group>"; };
+		7FB2C6622FD82916305A6329E9975993 /* SSZipArchive-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "SSZipArchive-Info.plist"; sourceTree = "<group>"; };
+		839E31E952DC89AD1CD933966531D8BB /* Pods-MedianIOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-MedianIOSTests.debug.xcconfig"; sourceTree = "<group>"; };
+		83A58C486077990021F365D1674161C0 /* FontAwesome6_Thin.ttf */ = {isa = PBXFileReference; includeInIndex = 1; name = FontAwesome6_Thin.ttf; path = MedianIcons/Assets/FontAwesome6_Thin.ttf; sourceTree = "<group>"; };
+		87655FCDA8583BE09E6167B53EDD0B53 /* SSZipArchive.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SSZipArchive.release.xcconfig; sourceTree = "<group>"; };
+		8B969D2CB4138067441D0CF176A8B6A0 /* mz_strm_split.c */ = {isa = PBXFileReference; includeInIndex = 1; name = mz_strm_split.c; path = SSZipArchive/minizip/mz_strm_split.c; sourceTree = "<group>"; };
+		918B6137EB6BAA60021C5C8CB28882CA /* mz_strm.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = mz_strm.h; path = SSZipArchive/minizip/mz_strm.h; sourceTree = "<group>"; };
+		91B23470DEB9A986332BEB5034234BC7 /* SSZipArchive */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = SSZipArchive; path = SSZipArchive.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9EC09D5C78E35DEDE7CF7A7814DF7CDB /* Pods-MedianIOSTests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-MedianIOSTests-umbrella.h"; sourceTree = "<group>"; };
+		A13A62E63FEFFEAACF78A543BFBC8005 /* MedianIcons-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "MedianIcons-Info.plist"; sourceTree = "<group>"; };
+		A5CA21FE6403D1859C9E21B426DC45F8 /* Pods-Alplakes-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Alplakes-resources.sh"; sourceTree = "<group>"; };
+		A7C54A266B66897D8CA72BEE176A984F /* MedianIcons-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "MedianIcons-umbrella.h"; sourceTree = "<group>"; };
+		A94453B6A5890D48F0ADE871C384C4BB /* mz_os_posix.c */ = {isa = PBXFileReference; includeInIndex = 1; name = mz_os_posix.c; path = SSZipArchive/minizip/mz_os_posix.c; sourceTree = "<group>"; };
+		AAFC144D678EBFB3CFA38CA309C161FA /* mz_zip_rw.c */ = {isa = PBXFileReference; includeInIndex = 1; name = mz_zip_rw.c; path = SSZipArchive/minizip/mz_zip_rw.c; sourceTree = "<group>"; };
+		AE67C07B7FCAE3A3E5A56D25AE1E432C /* FontFactory.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FontFactory.swift; path = MedianIcons/Classes/FontFactory.swift; sourceTree = "<group>"; };
+		B103C83FBCF88589578BBD014DC3FC08 /* mz_zip.c */ = {isa = PBXFileReference; includeInIndex = 1; name = mz_zip.c; path = SSZipArchive/minizip/mz_zip.c; sourceTree = "<group>"; };
+		B6A9111BBE01DC0EC4DD400CB3732A68 /* mz_crypt.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = mz_crypt.h; path = SSZipArchive/minizip/mz_crypt.h; sourceTree = "<group>"; };
+		B6D373EF12091244904560A5A7CB9B76 /* MedianIcons */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = MedianIcons; path = MedianIcons.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BF40FC01D00005DD8C05B69F89BA4364 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; name = PrivacyInfo.xcprivacy; path = GoNativeCore/Resources/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		C307E0CF238421AF5040BEE95E3BB3E6 /* Pods-Alplakes.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Alplakes.release.xcconfig"; sourceTree = "<group>"; };
+		C330BC62C9ACD3F9E7AF138812EF298C /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.0.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
+		C5538D322258F5F27934B643D49C4A0C /* mz_strm_buf.c */ = {isa = PBXFileReference; includeInIndex = 1; name = mz_strm_buf.c; path = SSZipArchive/minizip/mz_strm_buf.c; sourceTree = "<group>"; };
+		C7773E0EDBC498A04D307C60CF61CD73 /* mz_strm_mem.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = mz_strm_mem.h; path = SSZipArchive/minizip/mz_strm_mem.h; sourceTree = "<group>"; };
+		C77BBDD9F2A72F7CBA75438163290CA7 /* mz_strm_os.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = mz_strm_os.h; path = SSZipArchive/minizip/mz_strm_os.h; sourceTree = "<group>"; };
+		C8069A7A46B8C0A55DC0AF71F31ED5B2 /* ResourceBundle-GoNativeCore_Privacy-GoNativeCore-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "ResourceBundle-GoNativeCore_Privacy-GoNativeCore-Info.plist"; sourceTree = "<group>"; };
+		C92FFB14DA6A87983303A2FE8E48F2CB /* SSZipArchive.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SSZipArchive.h; path = SSZipArchive/SSZipArchive.h; sourceTree = "<group>"; };
+		CA4C3D3D9A0B44303F7C63AFB371DE9B /* mz.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = mz.h; path = SSZipArchive/minizip/mz.h; sourceTree = "<group>"; };
+		CC67B620489C536DEBFE4E875A3AE40F /* Pods-Alplakes-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Alplakes-dummy.m"; sourceTree = "<group>"; };
+		CE431C0692E05F978FD28B7DE2782D9B /* ResourceBundle-GoNativeCoreResources-GoNativeCore-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "ResourceBundle-GoNativeCoreResources-GoNativeCore-Info.plist"; sourceTree = "<group>"; };
+		CF16C8EA872D6018C81CCDF3CBCA8A9A /* NSAttributedString+Font.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "NSAttributedString+Font.swift"; path = "MedianIcons/Classes/NSAttributedString+Font.swift"; sourceTree = "<group>"; };
+		D00E68EA1499C3C165BE914B43467D49 /* Utilities.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Utilities.swift; path = MedianIcons/Classes/Utilities.swift; sourceTree = "<group>"; };
+		D068264355A9020A5E9806F96D765097 /* mz_strm_zlib.c */ = {isa = PBXFileReference; includeInIndex = 1; name = mz_strm_zlib.c; path = SSZipArchive/minizip/mz_strm_zlib.c; sourceTree = "<group>"; };
+		D628E9F3250D04F5CC155BF0F389F7DD /* mz_compat.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = mz_compat.h; path = SSZipArchive/minizip/mz_compat.h; sourceTree = "<group>"; };
+		D831177B9126FA21916BC413ABB57856 /* GoNativeCore-xcframeworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "GoNativeCore-xcframeworks.sh"; sourceTree = "<group>"; };
+		D8DA71749BE57F1D8FDAC9DF3BEE0756 /* GoNativeCore.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = GoNativeCore.release.xcconfig; sourceTree = "<group>"; };
+		DA2355FBFE26240B1E0E2C79E5C9DB34 /* SSZipArchive-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SSZipArchive-prefix.pch"; sourceTree = "<group>"; };
+		EA2E3AA9B87D95676372B6714D71B865 /* mz_strm_wzaes.c */ = {isa = PBXFileReference; includeInIndex = 1; name = mz_strm_wzaes.c; path = SSZipArchive/minizip/mz_strm_wzaes.c; sourceTree = "<group>"; };
+		EC2CF5B082A1CC7EEF7B66AA98100CFD /* MedianIcons-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "MedianIcons-prefix.pch"; sourceTree = "<group>"; };
+		EFC54BF52BDAEAD5D745CA745308D775 /* mz_compat.c */ = {isa = PBXFileReference; includeInIndex = 1; name = mz_compat.c; path = SSZipArchive/minizip/mz_compat.c; sourceTree = "<group>"; };
+		F0EA4C40EF0789922C2DDD2C4F388405 /* mz_strm_split.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = mz_strm_split.h; path = SSZipArchive/minizip/mz_strm_split.h; sourceTree = "<group>"; };
+		F3BBD42515CCB111206F60856C79DFDC /* Pods-MedianIOSTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-MedianIOSTests.modulemap"; sourceTree = "<group>"; };
+		F51FDC0C2667BAAC9C2508574EBC3C21 /* SSZipArchive.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SSZipArchive.m; path = SSZipArchive/SSZipArchive.m; sourceTree = "<group>"; };
+		FB81A7AA5B739688B3DFAAFC4748A689 /* ZipArchive.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ZipArchive.h; path = SSZipArchive/include/ZipArchive.h; sourceTree = "<group>"; };
+		FBDBFDF5C52262862D0AA7F7B645C3CD /* SSZipArchive-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "SSZipArchive-dummy.m"; sourceTree = "<group>"; };
+		FC2C61E79C6C162DC7B5B0D8595CA8FE /* mz_zip.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = mz_zip.h; path = SSZipArchive/minizip/mz_zip.h; sourceTree = "<group>"; };
+		FE1A7358ACB43782886506FC51A5205B /* mz_strm_zlib.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = mz_strm_zlib.h; path = SSZipArchive/minizip/mz_strm_zlib.h; sourceTree = "<group>"; };
+		FF044C717CF733C62A03C5F8A584070B /* mz_strm_pkcrypt.c */ = {isa = PBXFileReference; includeInIndex = 1; name = mz_strm_pkcrypt.c; path = SSZipArchive/minizip/mz_strm_pkcrypt.c; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		00ED1F6380ED698B3A6B6A6BDC85D4C1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4388C257A8D4F19E89A35E9E6D85B272 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A3493A729D8C9051D132F4BF69F4FD85 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7B7CCC4D3C186BB73A6D1F0A0DCB559D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4C652DF3EC0F0F39B29287E72864FC11 /* Foundation.framework in Frameworks */,
+				835C687083E3D51DE87C2F2C4C681B1C /* Security.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9537ED8A30D285137D4A8A2071FBEE8D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E8AB8A25209B21B7D1E61138E4C88E1C /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B61133EF4D39A4A327D58EACEEE9D935 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FC24D503C72F12496B1FC47AB8BE9A2E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3D28363861BB9B6266837E87745B7F18 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0201231C0F0EDF7D4B4F18653E8066D0 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				39A93385A10FCD9A36FF6DD42634F7A4 /* GoNativeCore-GoNativeCore_Privacy */,
+				47F69FD70C4B31CB7B49B85B10B637C6 /* GoNativeCore-GoNativeCoreResources */,
+				B6D373EF12091244904560A5A7CB9B76 /* MedianIcons */,
+				4CDA3FF71B8C7DFE4BEDACABFE18B404 /* Pods-Alplakes */,
+				208A9A51E6B12AA8021F624AD7566737 /* Pods-MedianIOSTests */,
+				91B23470DEB9A986332BEB5034234BC7 /* SSZipArchive */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		1628BF05B4CAFDCC3549A101F5A10A17 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				6F3906880344F426015F35B4FA31944D /* iOS */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		19E726D69E0EA8B8C990BDE098A9B169 /* SSZipArchive */ = {
+			isa = PBXGroup;
+			children = (
+				CA4C3D3D9A0B44303F7C63AFB371DE9B /* mz.h */,
+				EFC54BF52BDAEAD5D745CA745308D775 /* mz_compat.c */,
+				D628E9F3250D04F5CC155BF0F389F7DD /* mz_compat.h */,
+				204F59915C89FE8F1FC15E4826052071 /* mz_crypt.c */,
+				B6A9111BBE01DC0EC4DD400CB3732A68 /* mz_crypt.h */,
+				3A17217E06CB99F3EAA64DBBAC07E91E /* mz_crypt_apple.c */,
+				2ADBAAD1ED51D12E0474B888A5991DE7 /* mz_os.c */,
+				224E5F926509D1AD36F4EF2EB1353E7F /* mz_os.h */,
+				A94453B6A5890D48F0ADE871C384C4BB /* mz_os_posix.c */,
+				55EBDFF9ACFDD0AE02C215AE40F19C91 /* mz_strm.c */,
+				918B6137EB6BAA60021C5C8CB28882CA /* mz_strm.h */,
+				C5538D322258F5F27934B643D49C4A0C /* mz_strm_buf.c */,
+				43C45274AE11C989A45C95A6508D08E7 /* mz_strm_buf.h */,
+				4F244AB78F3C000EAC31BC0D600B82F5 /* mz_strm_mem.c */,
+				C7773E0EDBC498A04D307C60CF61CD73 /* mz_strm_mem.h */,
+				C77BBDD9F2A72F7CBA75438163290CA7 /* mz_strm_os.h */,
+				68CFA1F57280574961E194B5F0DE9600 /* mz_strm_os_posix.c */,
+				FF044C717CF733C62A03C5F8A584070B /* mz_strm_pkcrypt.c */,
+				791B607F6522CF8BBCF9B39E4F34B4D1 /* mz_strm_pkcrypt.h */,
+				8B969D2CB4138067441D0CF176A8B6A0 /* mz_strm_split.c */,
+				F0EA4C40EF0789922C2DDD2C4F388405 /* mz_strm_split.h */,
+				EA2E3AA9B87D95676372B6714D71B865 /* mz_strm_wzaes.c */,
+				229D6BE45A08C6B11802CCBD4C21A757 /* mz_strm_wzaes.h */,
+				D068264355A9020A5E9806F96D765097 /* mz_strm_zlib.c */,
+				FE1A7358ACB43782886506FC51A5205B /* mz_strm_zlib.h */,
+				B103C83FBCF88589578BBD014DC3FC08 /* mz_zip.c */,
+				FC2C61E79C6C162DC7B5B0D8595CA8FE /* mz_zip.h */,
+				AAFC144D678EBFB3CFA38CA309C161FA /* mz_zip_rw.c */,
+				5D752CD9C0117B2E07A800A6564C15EF /* mz_zip_rw.h */,
+				C92FFB14DA6A87983303A2FE8E48F2CB /* SSZipArchive.h */,
+				F51FDC0C2667BAAC9C2508574EBC3C21 /* SSZipArchive.m */,
+				3418C56943F72B28BBA3DC16388D3799 /* SSZipCommon.h */,
+				FB81A7AA5B739688B3DFAAFC4748A689 /* ZipArchive.h */,
+				8DD7CCD22E93859F518BD829F7E49BFC /* Support Files */,
+			);
+			name = SSZipArchive;
+			path = SSZipArchive;
+			sourceTree = "<group>";
+		};
+		2696471EC35DEA46BC0A8DFA88457931 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				3DB33E4BF071E85E96385D450D137E32 /* MedianIcons.modulemap */,
+				4B75D5B0BD36CAD92C8F7E8109BACB4A /* MedianIcons-dummy.m */,
+				A13A62E63FEFFEAACF78A543BFBC8005 /* MedianIcons-Info.plist */,
+				EC2CF5B082A1CC7EEF7B66AA98100CFD /* MedianIcons-prefix.pch */,
+				A7C54A266B66897D8CA72BEE176A984F /* MedianIcons-umbrella.h */,
+				24B9500AD75FD25F8220EC4DEACFAF5C /* MedianIcons.debug.xcconfig */,
+				5A0B1F8E1E30BC17A08A172336DFCF3D /* MedianIcons.release.xcconfig */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/MedianIcons";
+			sourceTree = "<group>";
+		};
+		2CF77DDE8C59E92FD574CEB8B0366217 /* MedianIcons */ = {
+			isa = PBXGroup;
+			children = (
+				1A4940B54381EA4A971EBE043A6DF7C5 /* Font.swift */,
+				AE67C07B7FCAE3A3E5A56D25AE1E432C /* FontFactory.swift */,
+				42F9445D8C8424BA20D3A9AE0EBC3E78 /* FontLoader.swift */,
+				CF16C8EA872D6018C81CCDF3CBCA8A9A /* NSAttributedString+Font.swift */,
+				2D73110369BE4A28EF13752A5A795595 /* UIImage+Font.swift */,
+				D00E68EA1499C3C165BE914B43467D49 /* Utilities.swift */,
+				A769B587C08B3A10B8C80C7F4A452622 /* Resources */,
+				2696471EC35DEA46BC0A8DFA88457931 /* Support Files */,
+			);
+			name = MedianIcons;
+			path = MedianIcons;
+			sourceTree = "<group>";
+		};
+		435261A427434840FB9D3DA75D0EAAEF /* Pods-Alplakes */ = {
+			isa = PBXGroup;
+			children = (
+				453FDBE840EEBBCF96FCB63D9E0D4CAD /* Pods-Alplakes.modulemap */,
+				72BFF0B513DBF2A6F7A2FE5EBCD42C09 /* Pods-Alplakes-acknowledgements.markdown */,
+				4E1BF402DF8DD55682AE4814975F2301 /* Pods-Alplakes-acknowledgements.plist */,
+				CC67B620489C536DEBFE4E875A3AE40F /* Pods-Alplakes-dummy.m */,
+				38E8F7E9D930B4EBF2BB84C0171F2D7D /* Pods-Alplakes-frameworks.sh */,
+				23744D614FC340C1A1746A487CDAF33A /* Pods-Alplakes-Info.plist */,
+				A5CA21FE6403D1859C9E21B426DC45F8 /* Pods-Alplakes-resources.sh */,
+				35FA6775E9AAFFB9B7D02533526999D2 /* Pods-Alplakes-umbrella.h */,
+				749C7D012A75F12ED59A7A84E300F3A8 /* Pods-Alplakes.debug.xcconfig */,
+				C307E0CF238421AF5040BEE95E3BB3E6 /* Pods-Alplakes.release.xcconfig */,
+			);
+			name = "Pods-Alplakes";
+			path = "Target Support Files/Pods-Alplakes";
+			sourceTree = "<group>";
+		};
+		4D537F20A7E10B578CC690BCAEFB254A /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				BF40FC01D00005DD8C05B69F89BA4364 /* PrivacyInfo.xcprivacy */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		588C1500D87A0D1067F658027619B2AB /* Targets Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				435261A427434840FB9D3DA75D0EAAEF /* Pods-Alplakes */,
+				990F1362B3BD51E1BE1B7FC2EF0FE71E /* Pods-MedianIOSTests */,
+			);
+			name = "Targets Support Files";
+			sourceTree = "<group>";
+		};
+		6F3906880344F426015F35B4FA31944D /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				2F29E5F7EEDB83D0B063DAD0B5196072 /* Foundation.framework */,
+				C330BC62C9ACD3F9E7AF138812EF298C /* Security.framework */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
+		722417EF568EE2F55BC740FBCBF12D25 /* Binary */ = {
+			isa = PBXGroup;
+			children = (
+				E38A9494FD2F5A38C32612224B3FAAD9 /* Frameworks */,
+				924474504E6EB615D82C997998DE2C28 /* Resources */,
+			);
+			name = Binary;
+			sourceTree = "<group>";
+		};
+		8DD7CCD22E93859F518BD829F7E49BFC /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				54B51299431A08329F934AD88F716976 /* SSZipArchive.modulemap */,
+				FBDBFDF5C52262862D0AA7F7B645C3CD /* SSZipArchive-dummy.m */,
+				7FB2C6622FD82916305A6329E9975993 /* SSZipArchive-Info.plist */,
+				DA2355FBFE26240B1E0E2C79E5C9DB34 /* SSZipArchive-prefix.pch */,
+				486D8DAEA07C49883727C6FF93837E52 /* SSZipArchive-umbrella.h */,
+				0BFA62D1C836B06EA0A331FB02A0B605 /* SSZipArchive.debug.xcconfig */,
+				87655FCDA8583BE09E6167B53EDD0B53 /* SSZipArchive.release.xcconfig */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/SSZipArchive";
+			sourceTree = "<group>";
+		};
+		924474504E6EB615D82C997998DE2C28 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				520B29F22B4B110F2A243BDA9797F138 /* Images.xcassets */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		986A8722E4B2D5D58B2C47431C69004C /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				FF72165B898A6E50F22F61DE34D0006D /* GoNativeCore */,
+				2CF77DDE8C59E92FD574CEB8B0366217 /* MedianIcons */,
+				19E726D69E0EA8B8C990BDE098A9B169 /* SSZipArchive */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		990F1362B3BD51E1BE1B7FC2EF0FE71E /* Pods-MedianIOSTests */ = {
+			isa = PBXGroup;
+			children = (
+				F3BBD42515CCB111206F60856C79DFDC /* Pods-MedianIOSTests.modulemap */,
+				4BC711D46E90890DC99DEA771A25E24B /* Pods-MedianIOSTests-acknowledgements.markdown */,
+				768F84459637F403AC2634B2937B597D /* Pods-MedianIOSTests-acknowledgements.plist */,
+				38E562D703940288101552FF5FB46C8A /* Pods-MedianIOSTests-dummy.m */,
+				30BD0EB9BDAD10CE1BDE5894BE6E07A0 /* Pods-MedianIOSTests-Info.plist */,
+				9EC09D5C78E35DEDE7CF7A7814DF7CDB /* Pods-MedianIOSTests-umbrella.h */,
+				839E31E952DC89AD1CD933966531D8BB /* Pods-MedianIOSTests.debug.xcconfig */,
+				466448623B810659650581333D8F88C3 /* Pods-MedianIOSTests.release.xcconfig */,
+			);
+			name = "Pods-MedianIOSTests";
+			path = "Target Support Files/Pods-MedianIOSTests";
+			sourceTree = "<group>";
+		};
+		A769B587C08B3A10B8C80C7F4A452622 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				1BDAA894B01399001E5CB0ACD63FC404 /* FontAwesome.json */,
+				6B7107C5C4520C66BD61E5AA71FA0A0B /* FontAwesome6_Brands.ttf */,
+				3124464FE4D69BED57FB5D6AAF12117D /* FontAwesome6_Light.ttf */,
+				52CADFEABD17F4C45F6D04CAC67B925F /* FontAwesome6_Regular.ttf */,
+				7C48CB66566123686B5EF1469AC57615 /* FontAwesome6_Solid.ttf */,
+				83A58C486077990021F365D1674161C0 /* FontAwesome6_Thin.ttf */,
+				78505AB11E39B8C2B589301C09D93639 /* MaterialDesign.json */,
+				3953DFBC92F05145FE99E41C997D9D78 /* MaterialDesign.ttf */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		C351672A12AAD4ADC9B49E1C0F2C557B /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				D831177B9126FA21916BC413ABB57856 /* GoNativeCore-xcframeworks.sh */,
+				54EEACA274D6B0FBA632B79A57317D83 /* GoNativeCore.debug.xcconfig */,
+				D8DA71749BE57F1D8FDAC9DF3BEE0756 /* GoNativeCore.release.xcconfig */,
+				C8069A7A46B8C0A55DC0AF71F31ED5B2 /* ResourceBundle-GoNativeCore_Privacy-GoNativeCore-Info.plist */,
+				CE431C0692E05F978FD28B7DE2782D9B /* ResourceBundle-GoNativeCoreResources-GoNativeCore-Info.plist */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/GoNativeCore";
+			sourceTree = "<group>";
+		};
+		CF1408CF629C7361332E53B88F7BD30C = {
+			isa = PBXGroup;
+			children = (
+				9D940727FF8FB9C785EB98E56350EF41 /* Podfile */,
+				1628BF05B4CAFDCC3549A101F5A10A17 /* Frameworks */,
+				986A8722E4B2D5D58B2C47431C69004C /* Pods */,
+				0201231C0F0EDF7D4B4F18653E8066D0 /* Products */,
+				588C1500D87A0D1067F658027619B2AB /* Targets Support Files */,
+			);
+			sourceTree = "<group>";
+		};
+		E38A9494FD2F5A38C32612224B3FAAD9 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3C8FF7A37891D4A6E9DBDB6DAB839F41 /* GoNativeCore.xcframework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		FF72165B898A6E50F22F61DE34D0006D /* GoNativeCore */ = {
+			isa = PBXGroup;
+			children = (
+				722417EF568EE2F55BC740FBCBF12D25 /* Binary */,
+				4D537F20A7E10B578CC690BCAEFB254A /* Resources */,
+				C351672A12AAD4ADC9B49E1C0F2C557B /* Support Files */,
+			);
+			name = GoNativeCore;
+			path = GoNativeCore;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		27FFF4C96FCF43A36C7F92DC3E4E3904 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F16CA13AB620DDBD6A2B833A04189345 /* MedianIcons-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		65CDCD725E404567B6CEDE98BCE6EB88 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7819DD27A1B62DFC933835DFAFBDBF42 /* mz.h in Headers */,
+				374FECA22750A2F7F17CA125C25DB352 /* mz_compat.h in Headers */,
+				7ED6C3C05EA6EE83780A3600C7088B46 /* mz_crypt.h in Headers */,
+				C53D326186927C0C85580CC5FEB133E3 /* mz_os.h in Headers */,
+				AE0F1284A9C414203C1D5C66EDE95E8E /* mz_strm.h in Headers */,
+				8F43694404EAFF6D73EE58928154C0F2 /* mz_strm_buf.h in Headers */,
+				817909CFA2E8032670693BF57A2D5519 /* mz_strm_mem.h in Headers */,
+				C64C28E8B15C171323473E543C608E68 /* mz_strm_os.h in Headers */,
+				E5FA0235CD286C13C0F568946EB0AEA8 /* mz_strm_pkcrypt.h in Headers */,
+				D9C15A8B92E62396D95DB88415A38A8F /* mz_strm_split.h in Headers */,
+				03588B938BECEEF89042E2C73159BEA2 /* mz_strm_wzaes.h in Headers */,
+				A190A9DFC23558006BE5D8D5B6DAE51C /* mz_strm_zlib.h in Headers */,
+				49900106BEFC9C1BEB3E96558C0C4AE8 /* mz_zip.h in Headers */,
+				4E56BA148170B3A6E7FA6D312B06C784 /* mz_zip_rw.h in Headers */,
+				4569AD436BB87FA37A01C5C982F025A2 /* SSZipArchive.h in Headers */,
+				D2E6ED217227452C59C9B29C62858F7C /* SSZipArchive-umbrella.h in Headers */,
+				FF500FD55C6C8DD8418FA2290B95811A /* SSZipCommon.h in Headers */,
+				AAF2B7BD4C56295DBA1BB6039AC0EDD4 /* ZipArchive.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		914A77F3F9314A06BD5FED024116A73A /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2D9F62E98AFF9F1A8637FB2DB029D98F /* Pods-Alplakes-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CC0C897EBC3B29AABE36FAA5663867E5 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F3593512CBA3B89501776B07F5E33C7B /* Pods-MedianIOSTests-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		342DC4BCB960507542891730A007EEC5 /* GoNativeCore-GoNativeCore_Privacy */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9EF348062E803DEB2811AB756BBD71B5 /* Build configuration list for PBXNativeTarget "GoNativeCore-GoNativeCore_Privacy" */;
+			buildPhases = (
+				3466054A68BBA69FAD428B91EAD57FBE /* Sources */,
+				00ED1F6380ED698B3A6B6A6BDC85D4C1 /* Frameworks */,
+				3451FAF14A1D8FD410A2D181F10C8886 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "GoNativeCore-GoNativeCore_Privacy";
+			productName = GoNativeCore_Privacy;
+			productReference = 39A93385A10FCD9A36FF6DD42634F7A4 /* GoNativeCore-GoNativeCore_Privacy */;
+			productType = "com.apple.product-type.bundle";
+		};
+		42D9E1CFE057ACA78611354A64E68592 /* MedianIcons */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2C9E4ED75A63FEAFBE28C8946ACFCEDC /* Build configuration list for PBXNativeTarget "MedianIcons" */;
+			buildPhases = (
+				27FFF4C96FCF43A36C7F92DC3E4E3904 /* Headers */,
+				BCCDCBA8043AE53BCBB39E8283CCB6A3 /* Sources */,
+				9537ED8A30D285137D4A8A2071FBEE8D /* Frameworks */,
+				18325E06C9FFB4F356459AB66A7AF540 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MedianIcons;
+			productName = MedianIcons;
+			productReference = B6D373EF12091244904560A5A7CB9B76 /* MedianIcons */;
+			productType = "com.apple.product-type.framework";
+		};
+		73F338EB12754A10607D281C43AE89D3 /* Pods-MedianIOSTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 498133FA852BD61100BD8406932493C3 /* Build configuration list for PBXNativeTarget "Pods-MedianIOSTests" */;
+			buildPhases = (
+				CC0C897EBC3B29AABE36FAA5663867E5 /* Headers */,
+				F2F6C23AD1BCD2CD6527C7CDFF9FE609 /* Sources */,
+				FC24D503C72F12496B1FC47AB8BE9A2E /* Frameworks */,
+				A3152C79C517591F880B8220B1AC0CED /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				97A14303CC17E87A4E6B88806B3550DF /* PBXTargetDependency */,
+			);
+			name = "Pods-MedianIOSTests";
+			productName = Pods_MedianIOSTests;
+			productReference = 208A9A51E6B12AA8021F624AD7566737 /* Pods-MedianIOSTests */;
+			productType = "com.apple.product-type.framework";
+		};
+		A644F7B46D04F591D89D69CADB010A3F /* Pods-Alplakes */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A2D279F12693DCD006391C6334F50B8D /* Build configuration list for PBXNativeTarget "Pods-Alplakes" */;
+			buildPhases = (
+				914A77F3F9314A06BD5FED024116A73A /* Headers */,
+				7D00FCE6263A959B2F59B2C091032036 /* Sources */,
+				4388C257A8D4F19E89A35E9E6D85B272 /* Frameworks */,
+				69750838086F5C4A1D5467294D867E02 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5AF20CB62B67FE70D46D25FA320F0507 /* PBXTargetDependency */,
+				47AEFA56564C1789CB7F55F01B839A8F /* PBXTargetDependency */,
+				CD665C071C865A0350317EFAC1DEB679 /* PBXTargetDependency */,
+			);
+			name = "Pods-Alplakes";
+			productName = Pods_Alplakes;
+			productReference = 4CDA3FF71B8C7DFE4BEDACABFE18B404 /* Pods-Alplakes */;
+			productType = "com.apple.product-type.framework";
+		};
+		BAB09BCC6C174BC6386EEBD9FBEC68E2 /* GoNativeCore-GoNativeCoreResources */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3FF2CE87E50B095871CDCC8509773451 /* Build configuration list for PBXNativeTarget "GoNativeCore-GoNativeCoreResources" */;
+			buildPhases = (
+				15830AA9AF21C003F80EE2E91ABBD473 /* Sources */,
+				B61133EF4D39A4A327D58EACEEE9D935 /* Frameworks */,
+				9DA8C172469081F668E84207F2CB92F3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "GoNativeCore-GoNativeCoreResources";
+			productName = GoNativeCoreResources;
+			productReference = 47F69FD70C4B31CB7B49B85B10B637C6 /* GoNativeCore-GoNativeCoreResources */;
+			productType = "com.apple.product-type.bundle";
+		};
+		F60E38364AFF5E1349FF07415B944396 /* SSZipArchive */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4E86C95B2CC48E329293EC1606BA231C /* Build configuration list for PBXNativeTarget "SSZipArchive" */;
+			buildPhases = (
+				65CDCD725E404567B6CEDE98BCE6EB88 /* Headers */,
+				049BE71707DDB25A944AB502CE7E174A /* Sources */,
+				7B7CCC4D3C186BB73A6D1F0A0DCB559D /* Frameworks */,
+				68B18CAE9D89E3559204AEEBF86D5F3B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SSZipArchive;
+			productName = SSZipArchive;
+			productReference = 91B23470DEB9A986332BEB5034234BC7 /* SSZipArchive */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		BFDFE7DC352907FC980B868725387E98 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1600;
+				LastUpgradeCheck = 1600;
+			};
+			buildConfigurationList = 4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */;
+			compatibilityVersion = "Xcode 12.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = CF1408CF629C7361332E53B88F7BD30C;
+			minimizedProjectReferenceProxies = 0;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 0201231C0F0EDF7D4B4F18653E8066D0 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				0412DEF5B0065DDF6F89C12727DA5240 /* GoNativeCore */,
+				342DC4BCB960507542891730A007EEC5 /* GoNativeCore-GoNativeCore_Privacy */,
+				BAB09BCC6C174BC6386EEBD9FBEC68E2 /* GoNativeCore-GoNativeCoreResources */,
+				42D9E1CFE057ACA78611354A64E68592 /* MedianIcons */,
+				A644F7B46D04F591D89D69CADB010A3F /* Pods-Alplakes */,
+				73F338EB12754A10607D281C43AE89D3 /* Pods-MedianIOSTests */,
+				F60E38364AFF5E1349FF07415B944396 /* SSZipArchive */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		18325E06C9FFB4F356459AB66A7AF540 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				50C171D1890D70EED265FCE3C5240091 /* FontAwesome.json in Resources */,
+				2447F98C827F2FE7082D6036FEC94BF5 /* FontAwesome6_Brands.ttf in Resources */,
+				AD3334681B057E7FAEB50F6C79347164 /* FontAwesome6_Light.ttf in Resources */,
+				1567206362BF074F1B55F70FBA33DEC2 /* FontAwesome6_Regular.ttf in Resources */,
+				2D6FB8768A6B2798FC84316E93E457A3 /* FontAwesome6_Solid.ttf in Resources */,
+				4940BEF2C2ED6F1A786C9C4C70B371A1 /* FontAwesome6_Thin.ttf in Resources */,
+				D077148F7C355824C44ECBFAC5D50323 /* MaterialDesign.json in Resources */,
+				E4482CD4C4A4EEBEE27D535EB5A2EC04 /* MaterialDesign.ttf in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3451FAF14A1D8FD410A2D181F10C8886 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				02549A98713D4F71EE8E5D4AB1B6C4F3 /* PrivacyInfo.xcprivacy in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		68B18CAE9D89E3559204AEEBF86D5F3B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		69750838086F5C4A1D5467294D867E02 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9DA8C172469081F668E84207F2CB92F3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EAD3977EB3EE3DEB3E6E67C003AB9D0C /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A3152C79C517591F880B8220B1AC0CED /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		BAF2C4E43E0946BE8292D66A878BA60A /* [CP] Copy XCFrameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/GoNativeCore/GoNativeCore-xcframeworks-input-files.xcfilelist",
+			);
+			name = "[CP] Copy XCFrameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/GoNativeCore/GoNativeCore-xcframeworks-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/GoNativeCore/GoNativeCore-xcframeworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		049BE71707DDB25A944AB502CE7E174A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				352E63E404CED072E7F714C52FF93E49 /* mz_compat.c in Sources */,
+				60E384ABEF99F5104C99DCB596E2BE95 /* mz_crypt.c in Sources */,
+				E283D8FF283E09D9CF863A27B55886EF /* mz_crypt_apple.c in Sources */,
+				6577A9EB1AED47B915B7F77C3F8BF335 /* mz_os.c in Sources */,
+				3683A04365A59519AAB2F47C5FA6FA3C /* mz_os_posix.c in Sources */,
+				823033F3DF2D5C7C4B123A277DB55073 /* mz_strm.c in Sources */,
+				8415E191A2886EC3426A01BC86299E1F /* mz_strm_buf.c in Sources */,
+				27293E7084BFE6AF873BB233419CFA2D /* mz_strm_mem.c in Sources */,
+				B4DF1CDCE2413AF579E102954A4033F6 /* mz_strm_os_posix.c in Sources */,
+				4C8A5ADD06D2DFC9E7FA2A1CA9DD565A /* mz_strm_pkcrypt.c in Sources */,
+				68D4A83EA695C463981E04DAD037064F /* mz_strm_split.c in Sources */,
+				C9AFC6682FD2C8231E779A4349DBDFD6 /* mz_strm_wzaes.c in Sources */,
+				84B5FB65B38C19F534F49DE6471C0E5B /* mz_strm_zlib.c in Sources */,
+				FBF481A2EC25D99DC41914AE7B9754D2 /* mz_zip.c in Sources */,
+				090CC8DB2713055B65F3693A67A9F0AF /* mz_zip_rw.c in Sources */,
+				A71E222C76A20B18600A6DE4091CFB0E /* SSZipArchive.m in Sources */,
+				A90260F860E51EC89130250EA3E61F22 /* SSZipArchive-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		15830AA9AF21C003F80EE2E91ABBD473 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3466054A68BBA69FAD428B91EAD57FBE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7D00FCE6263A959B2F59B2C091032036 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E7E1D39A70E4143B30BA4BDB62EDE1DC /* Pods-Alplakes-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BCCDCBA8043AE53BCBB39E8283CCB6A3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0F0C13AD4DAF662871D11E237EFF1C5E /* Font.swift in Sources */,
+				BE9F1461F54BCB68FCA4EC42572F2D0A /* FontFactory.swift in Sources */,
+				DE5FDBDD5D7E1CD682CB14A90D07961D /* FontLoader.swift in Sources */,
+				4B537D7EED02B9651AD870CABF49BABE /* MedianIcons-dummy.m in Sources */,
+				5C3453F2DD57FBB3E8CDA20B84FB62EB /* NSAttributedString+Font.swift in Sources */,
+				5AE8274362638FD006B41882BF55F387 /* UIImage+Font.swift in Sources */,
+				982E562468DAEA210F469728F0F0E537 /* Utilities.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F2F6C23AD1BCD2CD6527C7CDFF9FE609 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				78007C9ED0A4E32F3CA05B99CCF59A05 /* Pods-MedianIOSTests-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		0046573501715246C2A67872B9F519C8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "GoNativeCore-GoNativeCoreResources";
+			target = BAB09BCC6C174BC6386EEBD9FBEC68E2 /* GoNativeCore-GoNativeCoreResources */;
+			targetProxy = 63096D0F2CCB9B0935308F8BD26BCC86 /* PBXContainerItemProxy */;
+		};
+		47AEFA56564C1789CB7F55F01B839A8F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = MedianIcons;
+			target = 42D9E1CFE057ACA78611354A64E68592 /* MedianIcons */;
+			targetProxy = 4CF0548907AAC28D8BEF505D5F3C0134 /* PBXContainerItemProxy */;
+		};
+		5AF20CB62B67FE70D46D25FA320F0507 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = GoNativeCore;
+			target = 0412DEF5B0065DDF6F89C12727DA5240 /* GoNativeCore */;
+			targetProxy = 438D56CAB89BB85F9FD580273EF853BD /* PBXContainerItemProxy */;
+		};
+		97A14303CC17E87A4E6B88806B3550DF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Pods-Alplakes";
+			target = A644F7B46D04F591D89D69CADB010A3F /* Pods-Alplakes */;
+			targetProxy = 82CD8BD12AFC8EBE72DD2A86E948ACB3 /* PBXContainerItemProxy */;
+		};
+		A6EB1653E5DEC49C6EC899E4EE731D6D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "GoNativeCore-GoNativeCore_Privacy";
+			target = 342DC4BCB960507542891730A007EEC5 /* GoNativeCore-GoNativeCore_Privacy */;
+			targetProxy = 128354317C6759B7959DCCE47542CA58 /* PBXContainerItemProxy */;
+		};
+		CD665C071C865A0350317EFAC1DEB679 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SSZipArchive;
+			target = F60E38364AFF5E1349FF07415B944396 /* SSZipArchive */;
+			targetProxy = BEBC96676D129FBEEF817588F0574F72 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		0B25309284329FC32D8F356D6F128E82 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C307E0CF238421AF5040BEE95E3BB3E6 /* Pods-Alplakes.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGNING_ALLOWED = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				INFOPLIST_FILE = "Target Support Files/Pods-Alplakes/Pods-Alplakes-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-Alplakes/Pods-Alplakes.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		0F8412601D906EA6D2C3B1101BB2A703 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 87655FCDA8583BE09E6167B53EDD0B53 /* SSZipArchive.release.xcconfig */;
+			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CODE_SIGNING_ALLOWED = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GCC_PREFIX_HEADER = "Target Support Files/SSZipArchive/SSZipArchive-prefix.pch";
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "Target Support Files/SSZipArchive/SSZipArchive-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MODULEMAP_FILE = "Target Support Files/SSZipArchive/SSZipArchive.modulemap";
+				PRODUCT_MODULE_NAME = SSZipArchive;
+				PRODUCT_NAME = SSZipArchive;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_INSTALL_OBJC_HEADER = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		2A164B4DC15CEAC42A517E9AF9A35374 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 54EEACA274D6B0FBA632B79A57317D83 /* GoNativeCore.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGNING_ALLOWED = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		4119814943D6090D427BC26FC7B32A15 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 466448623B810659650581333D8F88C3 /* Pods-MedianIOSTests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGNING_ALLOWED = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				INFOPLIST_FILE = "Target Support Files/Pods-MedianIOSTests/Pods-MedianIOSTests-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-MedianIOSTests/Pods-MedianIOSTests.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		4A84DC82C843A8BA34139D1D10BADD78 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D8DA71749BE57F1D8FDAC9DF3BEE0756 /* GoNativeCore.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGNING_ALLOWED = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		4F02BB0D67AB73A5C8DF429B52E0B018 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 54EEACA274D6B0FBA632B79A57317D83 /* GoNativeCore.debug.xcconfig */;
+			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CODE_SIGNING_ALLOWED = NO;
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/GoNativeCore";
+				IBSC_MODULE = GoNativeCore;
+				INFOPLIST_FILE = "Target Support Files/GoNativeCore/ResourceBundle-GoNativeCoreResources-GoNativeCore-Info.plist";
+				PRODUCT_NAME = GoNativeCoreResources;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Debug;
+		};
+		7F03EE7839E9A1F5233EE0B70D31F22F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 54EEACA274D6B0FBA632B79A57317D83 /* GoNativeCore.debug.xcconfig */;
+			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CODE_SIGNING_ALLOWED = NO;
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/GoNativeCore";
+				IBSC_MODULE = GoNativeCore;
+				INFOPLIST_FILE = "Target Support Files/GoNativeCore/ResourceBundle-GoNativeCore_Privacy-GoNativeCore-Info.plist";
+				PRODUCT_NAME = GoNativeCore_Privacy;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Debug;
+		};
+		84A6BA75C392975BBC4631386D09EA11 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D8DA71749BE57F1D8FDAC9DF3BEE0756 /* GoNativeCore.release.xcconfig */;
+			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CODE_SIGNING_ALLOWED = NO;
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/GoNativeCore";
+				IBSC_MODULE = GoNativeCore;
+				INFOPLIST_FILE = "Target Support Files/GoNativeCore/ResourceBundle-GoNativeCoreResources-GoNativeCore-Info.plist";
+				PRODUCT_NAME = GoNativeCoreResources;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Release;
+		};
+		88E6F27854257644B165623F6BC16DF8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 839E31E952DC89AD1CD933966531D8BB /* Pods-MedianIOSTests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGNING_ALLOWED = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				INFOPLIST_FILE = "Target Support Files/Pods-MedianIOSTests/Pods-MedianIOSTests-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-MedianIOSTests/Pods-MedianIOSTests.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		8DE5143C03248BB6CD542DE3963D6F3A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_DEBUG=1",
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRIP_INSTALLED_PRODUCT = NO;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				SYMROOT = "${SRCROOT}/../build";
+			};
+			name = Debug;
+		};
+		9E406C6AAF85E580207CD97B0044DEAB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_RELEASE=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRIP_INSTALLED_PRODUCT = NO;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				SYMROOT = "${SRCROOT}/../build";
+			};
+			name = Release;
+		};
+		9EE48FA7DDA2EDDB8AB207D37AA3BBAC /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D8DA71749BE57F1D8FDAC9DF3BEE0756 /* GoNativeCore.release.xcconfig */;
+			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CODE_SIGNING_ALLOWED = NO;
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/GoNativeCore";
+				IBSC_MODULE = GoNativeCore;
+				INFOPLIST_FILE = "Target Support Files/GoNativeCore/ResourceBundle-GoNativeCore_Privacy-GoNativeCore-Info.plist";
+				PRODUCT_NAME = GoNativeCore_Privacy;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Release;
+		};
+		A725DD0378573E6B16C1DD8E9BC7629B /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5A0B1F8E1E30BC17A08A172336DFCF3D /* MedianIcons.release.xcconfig */;
+			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGNING_ALLOWED = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GCC_PREFIX_HEADER = "Target Support Files/MedianIcons/MedianIcons-prefix.pch";
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "Target Support Files/MedianIcons/MedianIcons-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MODULEMAP_FILE = "Target Support Files/MedianIcons/MedianIcons.modulemap";
+				PRODUCT_MODULE_NAME = MedianIcons;
+				PRODUCT_NAME = MedianIcons;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_INSTALL_OBJC_HEADER = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		ABCE78140CC26D7C52EEFF124CFAD891 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0BFA62D1C836B06EA0A331FB02A0B605 /* SSZipArchive.debug.xcconfig */;
+			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CODE_SIGNING_ALLOWED = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GCC_PREFIX_HEADER = "Target Support Files/SSZipArchive/SSZipArchive-prefix.pch";
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "Target Support Files/SSZipArchive/SSZipArchive-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MODULEMAP_FILE = "Target Support Files/SSZipArchive/SSZipArchive.modulemap";
+				PRODUCT_MODULE_NAME = SSZipArchive;
+				PRODUCT_NAME = SSZipArchive;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_INSTALL_OBJC_HEADER = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		C79942EBD50A62EB4DC8E1678DEDBFFE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 24B9500AD75FD25F8220EC4DEACFAF5C /* MedianIcons.debug.xcconfig */;
+			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGNING_ALLOWED = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GCC_PREFIX_HEADER = "Target Support Files/MedianIcons/MedianIcons-prefix.pch";
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "Target Support Files/MedianIcons/MedianIcons-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MODULEMAP_FILE = "Target Support Files/MedianIcons/MedianIcons.modulemap";
+				PRODUCT_MODULE_NAME = MedianIcons;
+				PRODUCT_NAME = MedianIcons;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_INSTALL_OBJC_HEADER = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		FBC0F8DCAEA7CB95C77F32B06BABCDAF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 749C7D012A75F12ED59A7A84E300F3A8 /* Pods-Alplakes.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGNING_ALLOWED = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				INFOPLIST_FILE = "Target Support Files/Pods-Alplakes/Pods-Alplakes-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-Alplakes/Pods-Alplakes.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2C9E4ED75A63FEAFBE28C8946ACFCEDC /* Build configuration list for PBXNativeTarget "MedianIcons" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C79942EBD50A62EB4DC8E1678DEDBFFE /* Debug */,
+				A725DD0378573E6B16C1DD8E9BC7629B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3FF2CE87E50B095871CDCC8509773451 /* Build configuration list for PBXNativeTarget "GoNativeCore-GoNativeCoreResources" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4F02BB0D67AB73A5C8DF429B52E0B018 /* Debug */,
+				84A6BA75C392975BBC4631386D09EA11 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8DE5143C03248BB6CD542DE3963D6F3A /* Debug */,
+				9E406C6AAF85E580207CD97B0044DEAB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		498133FA852BD61100BD8406932493C3 /* Build configuration list for PBXNativeTarget "Pods-MedianIOSTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				88E6F27854257644B165623F6BC16DF8 /* Debug */,
+				4119814943D6090D427BC26FC7B32A15 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4E86C95B2CC48E329293EC1606BA231C /* Build configuration list for PBXNativeTarget "SSZipArchive" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ABCE78140CC26D7C52EEFF124CFAD891 /* Debug */,
+				0F8412601D906EA6D2C3B1101BB2A703 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9EF348062E803DEB2811AB756BBD71B5 /* Build configuration list for PBXNativeTarget "GoNativeCore-GoNativeCore_Privacy" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7F03EE7839E9A1F5233EE0B70D31F22F /* Debug */,
+				9EE48FA7DDA2EDDB8AB207D37AA3BBAC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A2D279F12693DCD006391C6334F50B8D /* Build configuration list for PBXNativeTarget "Pods-Alplakes" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FBC0F8DCAEA7CB95C77F32B06BABCDAF /* Debug */,
+				0B25309284329FC32D8F356D6F128E82 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B666B4136198B755ED2CE5C7AFA5A25C /* Build configuration list for PBXAggregateTarget "GoNativeCore" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2A164B4DC15CEAC42A517E9AF9A35374 /* Debug */,
+				4A84DC82C843A8BA34139D1D10BADD78 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+}

@@ -1,0 +1,11 @@
+{
+    "platform": "github",
+    "autodiscover": false,
+    "repositories": ["gonativeio/gonative-ios-private"],
+    "packageRules": [
+      {
+        "matchManagers": ["cocoapods"],
+        "automerge": false
+      }
+    ]
+  }

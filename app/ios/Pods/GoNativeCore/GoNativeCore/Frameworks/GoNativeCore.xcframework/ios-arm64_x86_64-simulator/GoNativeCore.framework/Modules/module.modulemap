@@ -1,0 +1,11 @@
+framework module GoNativeCore {
+  umbrella header "GoNativeCore-umbrella.h"
+
+  export *
+  module * { export * }
+}
+
+module GoNativeCore.Swift {
+  header "GoNativeCore-Swift.h"
+  requires objc
+}

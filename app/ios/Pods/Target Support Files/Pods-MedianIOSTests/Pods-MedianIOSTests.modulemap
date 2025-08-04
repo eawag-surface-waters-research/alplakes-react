@@ -1,0 +1,6 @@
+framework module Pods_MedianIOSTests {
+  umbrella header "Pods-MedianIOSTests-umbrella.h"
+
+  export *
+  module * { export * }
+}

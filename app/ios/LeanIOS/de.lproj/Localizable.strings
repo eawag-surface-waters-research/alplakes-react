@@ -1,0 +1,23 @@
+/* Button: Cancel */
+"button-cancel" = "Abbrechen";
+
+/* Button: Done */
+"button-done" = "Fertig";
+
+/* Button: OK */
+"button-ok" = "OK";
+
+/* Button: View */
+"button-view" = "Anzeigen";
+
+/* Button: Menu */
+"button-menu" = "Menü";
+
+/* Button: Copy Link */
+"button-copy-link" = "Linkadresse kopieren";
+
+/* Button: Open External */
+"button-open-external" = "Link in externem Browser öffnen";
+
+/* Button: Share External */
+"button-share-link" = "Link teilen";
