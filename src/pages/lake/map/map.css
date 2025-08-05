@@ -813,7 +813,6 @@
         top: var(--header-height);
         left: 0;
         border-radius: 0;
-        border-top: 1px solid var(--border-color);
         box-sizing: border-box;
     }
 
@@ -833,7 +832,6 @@
     .main .map .layer-map .overlay-stack .legend .legend-inner {
         border-radius: 0 0 0 12px;
         padding: 8px;
-        border-top: 1px solid var(--border-color);
     }
 
     .main .map .layer-map .overlay-stack .legend .legend-inner .colorbar .bar {

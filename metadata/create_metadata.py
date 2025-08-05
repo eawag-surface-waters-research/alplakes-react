@@ -238,7 +238,7 @@ for lake in metadata:
 
 
     # Satellite data
-    if key not in  ["mondsee", "traunsee"]:
+    if "flags" not in lake or lake["flags"][0] != "austrian":
         if key in satellite:
             add = True
             satellite_data = []
@@ -256,7 +256,8 @@ for lake in metadata:
             if len(satellite_data) > 0:
                 home["filters"].append("satellite")
                 data["satellite"] = satellite_data
-
+    else:
+        print("Not adding satellite data for ", key)
     if add:
         with open('files/{}.json'.format(key), 'w') as json_file:
             json_file.write(json.dumps(data, separators=(',', ':'), ensure_ascii=False))
