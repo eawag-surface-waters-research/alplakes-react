@@ -34,6 +34,7 @@
   --background-font-color: rgb(50, 50, 50);
   --background-subtle-font-color: rgb(88 88 88);
   --box-color: rgb(255, 255, 255);
+  --box-color-translucent: rgb(255, 255, 255, 0.9);
   --select-color: rgb(255, 255, 255);
   --box-font-color: rgb(0, 0, 0);
   --box-inner-color: rgb(227, 227, 227);
@@ -86,7 +87,8 @@
   --background-color: hsl(232, 11%, 15%);
   --background-font-color: #e9e9e9;
   --background-subtle-font-color: rgb(163 163 163);
-  --box-color: hsl(233, 8%, 19%);
+  --box-color: rgb(45, 45, 52);
+  --box-color-translucent: rgb(45, 45, 52, 0.9);
   --select-color: hsl(233, 8%, 19%);
   --box-font-color: #e5e5e5;
   --box-inner-color: #282828;
@@ -125,7 +127,8 @@
   }
 
   .dark {
-    --box-color: hsl(232, 11%, 15%);
+    --box-color: rgb(34, 35, 42);
+    --box-color-translucent: rgb(34, 35, 42, 0.9);
   }
 }
 

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Helmet } from "react-helmet";
+import { NavLink } from "react-router-dom";
 import axios from "axios";
 import NavBar from "../../components/navbar/navbar";
 import Footer from "../../components/footer/footer";
@@ -24,6 +25,7 @@ import LandCover from "./components/landcover";
 import Nutrients from "./components/nutrients";
 import ScrollUp from "../../components/scrollup/scrollup";
 import ModelPerformance from "../../components/modelperformance/modelperformance";
+import back from "../../img/back.png";
 
 class Lake extends Component {
   state = {
@@ -115,6 +117,9 @@ class Lake extends Component {
                 togglePerformance={this.togglePerformance}
               />
             )}
+            <NavLink to="/" className="back-button">
+              <img src={back} alt="Back to lakes" />
+            </NavLink>
             {"forecast" in metadata && (
               <div className="section forecast">
                 <h2>{Translations.forecast[language]}</h2>

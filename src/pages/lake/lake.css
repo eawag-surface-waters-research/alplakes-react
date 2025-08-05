@@ -210,6 +210,29 @@
     box-shadow: none;
 }
 
+.main .lake .back-button {
+    display: none;
+    box-sizing: border-box;
+    cursor: pointer;
+    height: 48px;
+    width: 48px;
+    border-radius: 50%;
+    position: fixed;
+    z-index: 9999999;
+    left: var(--padding);
+    transition: right 0.4s ease;
+    background-color: var(--box-color-translucent);
+    bottom: var(--padding);
+    box-shadow: var(--box-shadow);
+    border: 1px solid var(--highlight-color-fill);
+    padding: 12px;
+}
+
+.main .lake .back-button img {
+    height: 22px;
+    padding-left: 2px;
+}
+
 .main .lake .clickable-box-parent {
     display: flex;
     flex-wrap: wrap;
@@ -975,6 +998,10 @@
     .main .lake .map-sidebar .title {
         font-size: 18px;
         padding-top: 4px;
+    }
+
+    .main .lake .back-button {
+        display: block;
     }
 
 }
