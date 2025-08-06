@@ -171,7 +171,8 @@ class ThreeDModel extends Component {
   }
   render() {
     var { updates, mapId, datetime, labels, warning, metadata } = this.state;
-    var { dark, bounds, language, id, parameters, togglePerformance } = this.props;
+    var { dark, bounds, language, id, parameters, togglePerformance } =
+      this.props;
     return (
       <div className="threedmodel subsection">
         <h3>
@@ -186,6 +187,17 @@ class ThreeDModel extends Component {
                 <div>{formatTime(datetime)}</div>
               </div>
             )}
+            <div className="model-source">
+              <b>{parameters.model}</b> {Translations.developedAt[language]}{" "}
+              <a
+                href="https://www.eawag.ch"
+                alt="Eawag"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Eawag
+              </a>
+            </div>
             <MapButton
               link={`/map/${id}?layers=3D_temperature,3D_currents`}
               language={language}

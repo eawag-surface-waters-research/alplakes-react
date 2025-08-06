@@ -503,6 +503,12 @@
     "FR": "m.s.l",
     "IT": "m.s.l"
   },
+  "developedAt": {
+    "EN": "model developed at",
+    "DE": "Modell entwickelt bei",
+    "FR": "modèle développé à",
+    "IT": "modello sviluppato presso"
+  },
   "modelPerformance": {
     "EN": "Model performance last 10 days",
     "DE": "Modellleistung der letzten 10 Tage",

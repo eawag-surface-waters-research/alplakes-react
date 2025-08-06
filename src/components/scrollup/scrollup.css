@@ -28,10 +28,8 @@
 
 @media screen and (max-width: 1000px) {
     .main .scroll-up {
-        background-color: var(--box-color-translucent);
-        bottom: var(--padding);
-        box-shadow: var(--box-shadow);
-        border: 1px solid var(--highlight-color-fill);
-        padding: 12px;
+        right: calc(var(--padding)/2);
+        bottom: calc(var(--padding)/2);
+        background-color: var(--link-button-color);
     }
 }

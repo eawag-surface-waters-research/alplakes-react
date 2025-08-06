@@ -220,6 +220,27 @@ class Doy extends Component {
                           ))}
                         </select>
                       </div>
+                      <div className="setting half">
+                        <div className="label">
+                          {Translations.model[language]}
+                        </div>
+                        <div>{parameters[model].model}</div>
+                      </div>
+                      <div className="setting half">
+                        <div className="label">
+                          {Translations.source[language]}
+                        </div>
+                        <div>
+                          <a
+                            href="https://www.eawag.ch"
+                            alt="Eawag"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            Eawag
+                          </a>
+                        </div>
+                      </div>
                       {"performance" in parameters[model] && (
                         <div className="setting">
                           <div className="label">

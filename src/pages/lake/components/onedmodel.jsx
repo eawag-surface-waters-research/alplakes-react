@@ -264,6 +264,27 @@ class Graph extends Component {
                       onChange={this.setDepth}
                       language={language}
                     />
+                    <div className="setting half">
+                      <div className="label">
+                        {Translations.model[language]}
+                      </div>
+                      <div>{parameter.model}</div>
+                    </div>
+                    <div className="setting half">
+                      <div className="label">
+                        {Translations.source[language]}
+                      </div>
+                      <div>
+                        <a
+                          href="https://www.eawag.ch"
+                          alt="Eawag"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          Eawag
+                        </a>
+                      </div>
+                    </div>
                     {"performance" in parameter && (
                       <div className="setting">
                         <div className="label">

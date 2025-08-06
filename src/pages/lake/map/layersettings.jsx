@@ -163,7 +163,7 @@ class Raster extends Component {
     );
     return (
       <div className="layer-settings">
-        <div className="setting">
+        <div className="setting half">
           <div className="label">Model</div>
           <select
             value={layer["source"]}
@@ -175,6 +175,19 @@ class Raster extends Component {
               </option>
             ))}
           </select>
+        </div>
+        <div className="setting half">
+          <div className="label">{Translations.source[language]}</div>
+          <div>
+            <a
+              href="https://www.eawag.ch"
+              alt="Eawag"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Eawag
+            </a>
+          </div>
         </div>
         <div className="setting">
           <div className="label">Period</div>
@@ -437,7 +450,7 @@ class Current extends Component {
     );
     return (
       <div className="layer-settings">
-        <div className="setting">
+        <div className="setting half">
           <div className="label">Model</div>
           <select
             value={layer["source"]}
@@ -449,6 +462,19 @@ class Current extends Component {
               </option>
             ))}
           </select>
+        </div>
+        <div className="setting half">
+          <div className="label">{Translations.source[language]}</div>
+          <div>
+            <a
+              href="https://www.eawag.ch"
+              alt="Eawag"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Eawag
+            </a>
+          </div>
         </div>
         <div className="setting">
           <div className="label">Period</div>

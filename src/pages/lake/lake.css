@@ -30,6 +30,10 @@
     margin-bottom: var(--padding);
 }
 
+.main .lake .section .subsection a {
+    color: var(--link-color);
+}
+
 .main .lake .map-sidebar {
     width: 100%;
     position: relative;
@@ -219,12 +223,11 @@
     border-radius: 50%;
     position: fixed;
     z-index: 9999999;
-    left: var(--padding);
+    left: calc(var(--padding) / 2);
     transition: right 0.4s ease;
-    background-color: var(--box-color-translucent);
-    bottom: var(--padding);
+    background-color: var(--link-button-color);
+    bottom: calc(var(--padding) / 2);
     box-shadow: var(--box-shadow);
-    border: 1px solid var(--highlight-color-fill);
     padding: 12px;
 }
 
@@ -355,6 +358,24 @@
     min-width: 80px;
     box-sizing: border-box;
 }
+
+.main .lake .forecast .threedmodel .map-sidebar .map-sidebar-left .model-source {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    z-index: 999;
+    position: absolute;
+    right: 12px;
+    bottom: 6px;
+    z-index: 1001;
+    font-size: 14px;
+    color: var(--background-subtle-font-color);
+}
+
+.main .lake .forecast .threedmodel .map-sidebar .map-sidebar-left .model-source a {
+    color: var(--link-color);
+}
+
 
 .main .lake .clickable-box .summary-table .inner .ave {
     font-size: 18px;

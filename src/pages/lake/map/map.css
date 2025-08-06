@@ -202,6 +202,10 @@
     text-align: left;
 }
 
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .layer-settings a {
+    color: var(--link-color);
+}
+
 .main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .layer-settings.subtle {
     color: var(--background-subtle-font-color);
 }
