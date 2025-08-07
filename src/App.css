@@ -64,7 +64,7 @@
   --button-text-color: white;
   --highlight-color: rgba(68, 188, 167, 1);
   --link-color: #5594CC;
-  --link-button-color: #DDEAF5;
+  --link-button-color: #F3F4F6;
   --highlight-color-fill: rgba(68, 188, 167, 0.2);
   --highlight-color-subtle: #EEF9F7;
   --header-text-color: rgb(59, 59, 59);
@@ -75,6 +75,7 @@
   --legend-color: rgb(236 236 236 / 47%);
   --app-area-height: 127px;
   --day-selector-height: 64px;
+  --mobile-fade-out: linear-gradient(0deg, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0) 100%);
   color-scheme: light;
 }
 
@@ -106,6 +107,7 @@
   --box-shadow-hover: rgb(255 255 255 / 16%) 0px 1px 8px;
   --legend-color: rgb(41 41 41 / 65%);
   --link-button-color: #2d2d34;
+  --mobile-fade-out: linear-gradient(0deg, rgba(34, 35, 42, 1) 0%, rgba(34, 35, 42, 0.0) 100%)
 }
 
 @media screen and (max-width: 1000px) {

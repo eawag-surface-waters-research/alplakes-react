@@ -1,3 +1,15 @@
+.main .home .mobile-fade-out {
+  display: none;
+  position: fixed;
+  pointer-events: none;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  height: calc(var(--padding) * 5 + 48px);
+  background: var(--mobile-fade-out);
+}
+
 .main .home .content {
   max-width: var(--max-width);
   margin: auto;
@@ -817,6 +829,10 @@
 }
 
 @media screen and (max-width: 500px) {
+
+  .main .home .mobile-fade-out {
+    display: block;
+  }
 
   .main .home .content {
     padding: 0;

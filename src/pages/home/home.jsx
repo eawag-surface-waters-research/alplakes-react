@@ -536,6 +536,7 @@ class Home extends Component {
         </Helmet>
         <NavBar {...this.props} small={true} />
         <div className="home">
+          <div className="mobile-fade-out" />
           <div className="content">
             <SearchWithNavigate
               setFilter={this.setFilter}
