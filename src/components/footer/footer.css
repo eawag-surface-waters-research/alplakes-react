@@ -127,6 +127,7 @@
 @media screen and (max-width: 1000px) {
     .footer {
         margin-bottom: calc(var(--padding)/2);
+        z-index: 1000;
     }
 
     .footer.small {

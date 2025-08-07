@@ -214,6 +214,19 @@
     box-shadow: none;
 }
 
+.main .lake .mobile-fade-out {
+    display: none;
+    position: fixed;
+    pointer-events: none;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    height: calc(var(--padding) * 5 + 48px);
+    background: #22232A;
+    background: linear-gradient(0deg, rgba(34, 35, 42, 1) 0%, rgba(34, 35, 42, 0.0) 100%);
+}
+
 .main .lake .back-button {
     display: none;
     box-sizing: border-box;
@@ -222,11 +235,11 @@
     width: 48px;
     border-radius: 50%;
     position: fixed;
-    z-index: 9999999;
-    left: calc(var(--padding) / 2);
+    z-index: 1001;
+    left: var(--padding);
     transition: right 0.4s ease;
     background-color: var(--link-button-color);
-    bottom: calc(var(--padding) / 2);
+    bottom: var(--padding);
     box-shadow: var(--box-shadow);
     padding: 12px;
 }
@@ -496,7 +509,7 @@
     bottom: 6px;
     background-color: var(--box-color);
     padding: 6px 12px;
-    z-index: 9999;
+    z-index: 999;
     border-radius: 8px;
     max-width: 32%;
 }
@@ -519,7 +532,7 @@
     position: absolute;
     top: 6px;
     left: 6px;
-    z-index: 9999;
+    z-index: 999;
     max-width: calc(100% - 70px);
 }
 
@@ -584,7 +597,7 @@
     top: 6px;
     right: 6px;
     background-color: var(--box-color);
-    z-index: 9999;
+    z-index: 999;
     cursor: pointer;
     padding: 12px;
     border-radius: 12px;
@@ -1022,6 +1035,10 @@
     }
 
     .main .lake .back-button {
+        display: block;
+    }
+
+    .main .lake .mobile-fade-out {
         display: block;
     }
 

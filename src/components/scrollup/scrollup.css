@@ -28,8 +28,9 @@
 
 @media screen and (max-width: 1000px) {
     .main .scroll-up {
-        right: calc(var(--padding)/2);
-        bottom: calc(var(--padding)/2);
+        right: var(--padding);
+        bottom: var(--padding);
         background-color: var(--link-button-color);
+        z-index: 1001;
     }
 }

@@ -117,6 +117,7 @@ class Lake extends Component {
                 togglePerformance={this.togglePerformance}
               />
             )}
+            <div className="mobile-fade-out" />
             <NavLink to="/" className="back-button">
               <img src={back} alt="Back to lakes" />
             </NavLink>
