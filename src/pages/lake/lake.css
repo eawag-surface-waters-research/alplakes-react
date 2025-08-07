@@ -404,6 +404,18 @@
     width: 500px;
 }
 
+/** AI Summary **/
+
+.main .lake .forecast .aisummary .subtext {
+    color: var(--background-subtle-font-color);
+    font-size: 14px;
+}
+
+.main .lake .forecast .aisummary .subtext a {
+    color: var(--link-color);
+}
+
+
 /** Scientific **/
 
 .main .lake .measurements .scientific .clickable-box {
