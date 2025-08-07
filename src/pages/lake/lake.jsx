@@ -26,6 +26,7 @@ import Nutrients from "./components/nutrients";
 import ScrollUp from "../../components/scrollup/scrollup";
 import ModelPerformance from "../../components/modelperformance/modelperformance";
 import back from "../../img/back.png";
+import AiSummary from "./components/aisummary";
 
 class Lake extends Component {
   state = {
@@ -141,6 +142,12 @@ class Lake extends Component {
                     name={title}
                     dark={dark}
                     togglePerformance={this.togglePerformance}
+                  />
+                )}
+                {"ai_summary" in metadata["forecast"] && (
+                  <AiSummary
+                    lake={id}
+                    language={language}
                   />
                 )}
               </div>
