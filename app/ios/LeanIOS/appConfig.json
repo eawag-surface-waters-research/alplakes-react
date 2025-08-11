@@ -20,16 +20,16 @@
     "androidPackageName": "co.median.android.brzmjx",
     "iosBundleId": "co.median.ios.brzmjx",
     "keepScreenOn": null,
-    "iosUserAgentAdd": "median",
+    "iosUserAgentAdd": "alplakes-ios",
     "iosForceUserAgent": "",
-    "androidUserAgentAdd": "median",
+    "androidUserAgentAdd": "alplakes-andriod",
     "androidForceUserAgent": "",
     "androidSigningKey": "release",
     "injectMedianJS": true,
     "forceSessionCookieExpiry": 0,
     "iosCustomHeaders": {},
     "androidCustomHeaders": {},
-    "version": 4
+    "version": 11
   },
   "navigation": {
     "tabNavigation": {
@@ -200,7 +200,9 @@
       "enabled": false,
       "numWindows": 5,
       "autoClose": false
-    }
+    },
+    "iosOfflinePageUrl": "https://s3.amazonaws.com/gonativeio/app_files/brzmjx/ios_offline_html.html",
+    "androidOfflinePageUrl": "https://s3.amazonaws.com/gonativeio/app_files/brzmjx/android_offline_html.html"
   },
   "styling": {
     "splashScreen": {
@@ -208,8 +210,8 @@
         "animationLoop": "once",
         "backgroundColor": "#ffffff",
         "backgroundColorDark": "#22232a",
-        "backgroundImage": "https://gonativeio.s3.amazonaws.com/app_files/brzmjx/1754309471572_atzc1r02t8tpg_ffffff_1_2x2.png",
-        "backgroundImageDark": "https://gonativeio.s3.amazonaws.com/app_files/brzmjx/1754309471582_jzrycxzjjh45c_22232a_1_2x2.png",
+        "backgroundImage": "https://gonativeio.s3.amazonaws.com/app_files/brzmjx/1754566798829_jdnemmvdv16ap_ffffff_1_2x2.png",
+        "backgroundImageDark": "https://gonativeio.s3.amazonaws.com/app_files/brzmjx/1754566798837_u92h2n76gjevg_22232a_1_2x2.png",
         "animated": false,
         "centerImage": "https://s3.amazonaws.com/gonativeio/app_files/brzmjx/splashscreen_ios.png",
         "centerImageDark": "https://s3.amazonaws.com/gonativeio/app_files/brzmjx/splashscreen_ios_dark.png",
@@ -220,18 +222,18 @@
       },
       "android": {
         "launchImages": {
-          "mdpi": "https://gonativeio.s3.amazonaws.com/app_files/brzmjx/1754309471696_vgfgb391td35e_180x180.png",
-          "hdpi": "https://gonativeio.s3.amazonaws.com/app_files/brzmjx/1754309471708_05vpc8dqz2kke_270x270.png",
-          "xhdpi": "https://gonativeio.s3.amazonaws.com/app_files/brzmjx/1754309471722_x1776z0w9q32y_360x360.png",
-          "xxhdpi": "https://gonativeio.s3.amazonaws.com/app_files/brzmjx/1754309471733_kq38kgqh8qcqj_540x540.png",
-          "xxxhdpi": "https://gonativeio.s3.amazonaws.com/app_files/brzmjx/1754309471743_hwyukq6pjz58c_720x720.png"
+          "mdpi": "https://gonativeio.s3.amazonaws.com/app_files/brzmjx/1754566798964_px9rv25krkee2_180x180.png",
+          "hdpi": "https://gonativeio.s3.amazonaws.com/app_files/brzmjx/1754566798970_8vtbg9xhj9ea8_270x270.png",
+          "xhdpi": "https://gonativeio.s3.amazonaws.com/app_files/brzmjx/1754566798976_52c03y0uumbb2_360x360.png",
+          "xxhdpi": "https://gonativeio.s3.amazonaws.com/app_files/brzmjx/1754566798981_gvaj0qpxdawq2_540x540.png",
+          "xxxhdpi": "https://gonativeio.s3.amazonaws.com/app_files/brzmjx/1754566798988_kx3mn70jeev66_720x720.png"
         },
         "launchImagesDark": {
-          "mdpi": "https://gonativeio.s3.amazonaws.com/app_files/brzmjx/1754309471751_mmv4g9rcgu9bu_180x180.png",
-          "hdpi": "https://gonativeio.s3.amazonaws.com/app_files/brzmjx/1754309471777_24zkk7r6e2ybw_270x270.png",
-          "xhdpi": "https://gonativeio.s3.amazonaws.com/app_files/brzmjx/1754309471798_bve60k9kjg6m8_360x360.png",
-          "xxhdpi": "https://gonativeio.s3.amazonaws.com/app_files/brzmjx/1754309471810_7zn8k0b41a5qa_540x540.png",
-          "xxxhdpi": "https://gonativeio.s3.amazonaws.com/app_files/brzmjx/1754309471831_ke91yfmffxuke_720x720.png"
+          "mdpi": "https://gonativeio.s3.amazonaws.com/app_files/brzmjx/1754566798999_y36301v9jgv0y_180x180.png",
+          "hdpi": "https://gonativeio.s3.amazonaws.com/app_files/brzmjx/1754566799009_443kdvr4gwxnc_270x270.png",
+          "xhdpi": "https://gonativeio.s3.amazonaws.com/app_files/brzmjx/1754566799017_3wy4rrygy566e_360x360.png",
+          "xxhdpi": "https://gonativeio.s3.amazonaws.com/app_files/brzmjx/1754566799024_ezneh4qx90na6_540x540.png",
+          "xxxhdpi": "https://gonativeio.s3.amazonaws.com/app_files/brzmjx/1754566799033_8w86yfaegq0w6_720x720.png"
         },
         "showSplash": true,
         "animationLoop": "once",
@@ -246,7 +248,7 @@
     },
     "transitionInteractiveDelayMax": 0.2,
     "menuAnimationDuration": 0.15,
-    "disableAnimations": false,
+    "disableAnimations": true,
     "hideWebviewAlpha": 0.5,
     "iosDarkMode": "auto",
     "iosTitleColor": "#0E0D08",
