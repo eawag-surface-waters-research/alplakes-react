@@ -509,6 +509,12 @@
     "FR": "modèle développé à",
     "IT": "modello sviluppato presso"
   },
+  "overview": {
+    "EN": "Overview",
+    "DE": "Überblick",
+    "FR": "Aperçu",
+    "IT": "Panoramica"
+  },
   "modelPerformance": {
     "EN": "Model performance last 10 days",
     "DE": "Modellleistung der letzten 10 Tage",
