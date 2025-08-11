@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { NavLink } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import axios from "axios";
 import NavBar from "../../../components/navbar/navbar";
@@ -381,7 +380,10 @@ class Map extends Component {
       title = name[language];
     }
     const queryParams = new URLSearchParams(window.location.search);
-    const iframe = queryParams.get("iframe") ? true : false;
+    const iframe =
+      queryParams.get("iframe") && queryParams.get("iframe") === "true"
+        ? true
+        : false;
     return (
       <div className={sidebar ? "map sidebar-open" : "map"}>
         <Helmet>
@@ -393,11 +395,16 @@ class Map extends Component {
           <NotFound id={id} text={true} />
         ) : (
           <div className={iframe ? "layer-map iframe" : "layer-map"}>
-            <NavLink to={`/${id}`}>
+            <a
+              href={`/${id}`}
+              alt="Link to Alplakes"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <div className={iframe ? "back-button iframe" : "back-button"}>
                 <img src={iframe ? logo : back} alt="Back" />
               </div>
-            </NavLink>
+            </a>
             <Sidebar
               sidebar={sidebar}
               toggleSidebar={this.toggleSidebar}
