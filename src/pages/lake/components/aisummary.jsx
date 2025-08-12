@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
+import { hour } from "../functions/general";
 import Information from "../../../components/information/information";
 import CONFIG from "../../../config.json";
 import Translations from "../../../translations.json";
@@ -12,7 +13,7 @@ class AiSummary extends Component {
     const { lake } = this.props;
     try {
       const { data } = await axios.get(
-        CONFIG.alplakes_bucket + `/aisummary/${lake}/forecast.json`
+        CONFIG.alplakes_bucket + `/aisummary/${lake}/forecast.json` + hour()
       );
       if (Date.now() - data.produced * 1000 < 13 * 60 * 60 * 1000) {
         this.setState({ summary: data });
