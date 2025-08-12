@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { NavLink } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import axios from "axios";
 import NavBar from "../../../components/navbar/navbar";
@@ -395,16 +396,24 @@ class Map extends Component {
           <NotFound id={id} text={true} />
         ) : (
           <div className={iframe ? "layer-map iframe" : "layer-map"}>
-            <a
-              href={`/${id}`}
-              alt="Link to Alplakes"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <div className={iframe ? "back-button iframe" : "back-button"}>
-                <img src={iframe ? logo : back} alt="Back" />
-              </div>
-            </a>
+            {iframe ? (
+              <a
+                href={`/${id}`}
+                alt="Link to Alplakes"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <div className="back-button iframe">
+                  <img src={logo} alt="Logo" />
+                </div>
+              </a>
+            ) : (
+              <NavLink to={`/${id}`}>
+                <div className="back-button">
+                  <img src={back} alt="Back" />
+                </div>
+              </NavLink>
+            )}
             <Sidebar
               sidebar={sidebar}
               toggleSidebar={this.toggleSidebar}
