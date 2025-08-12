@@ -406,12 +406,30 @@
 
 /** AI Summary **/
 
-.main .lake .forecast .aisummary .subtext {
-    color: var(--background-subtle-font-color);
-    font-size: 14px;
+.main .lake .forecast .ai-summary .ai-content {
+    max-width: 716px;
+    box-sizing: border-box;
+    background-color: var(--background-color);
+    border-radius: 20px;
+    padding: 20px;
+    background: linear-gradient(var(--background-color), var(--background-color)) padding-box,
+        linear-gradient(to right, #44bca7, darkorchid) border-box;
+    border: 2px solid transparent;
 }
 
-.main .lake .forecast .aisummary .subtext a {
+
+.main .lake .forecast .ai-summary .ai-content .ai-source {
+    color: var(--background-subtle-font-color);
+    font-size: 14px;
+    margin-top: 8px;
+}
+
+.main .lake .forecast .ai-summary .ai-content .ai-source .ai-model {
+    display: inline-block;
+    font-weight: bold;
+}
+
+.main .lake .forecast .ai-summary .ai-content .ai-source a {
     color: var(--link-color);
 }
 
