@@ -10,7 +10,6 @@ import Blog from "./pages/blog/blog";
 import Map from "./pages/lake/map/map";
 import "./App.css";
 
-
 class App extends Component {
   state = {
     languages: ["EN", "DE", "FR", "IT"],
@@ -37,7 +36,10 @@ class App extends Component {
     this.setState({ dark: !this.state.dark });
   };
   componentDidMount() {
-    if (JSON.parse(localStorage.getItem("dark")) === null) {
+    const queryParams = new URLSearchParams(window.location.search);
+    if (queryParams.get("iframe") && queryParams.get("iframe") === "true") {
+      this.setState({ dark: false });
+    } else if (JSON.parse(localStorage.getItem("dark")) === null) {
       if (
         window.matchMedia &&
         window.matchMedia("(prefers-color-scheme: dark)").matches

@@ -381,7 +381,10 @@ class Map extends Component {
       title = name[language];
     }
     const queryParams = new URLSearchParams(window.location.search);
-    const iframe = queryParams.get("iframe") ? true : false;
+    const iframe =
+      queryParams.get("iframe") && queryParams.get("iframe") === "true"
+        ? true
+        : false;
     return (
       <div className={sidebar ? "map sidebar-open" : "map"}>
         <Helmet>
@@ -393,11 +396,24 @@ class Map extends Component {
           <NotFound id={id} text={true} />
         ) : (
           <div className={iframe ? "layer-map iframe" : "layer-map"}>
-            <NavLink to={`/${id}`}>
-              <div className={iframe ? "back-button iframe" : "back-button"}>
-                <img src={iframe ? logo : back} alt="Back" />
-              </div>
-            </NavLink>
+            {iframe ? (
+              <a
+                href={`/${id}`}
+                alt="Link to Alplakes"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <div className="back-button iframe">
+                  <img src={logo} alt="Logo" />
+                </div>
+              </a>
+            ) : (
+              <NavLink to={`/${id}`}>
+                <div className="back-button">
+                  <img src={back} alt="Back" />
+                </div>
+              </NavLink>
+            )}
             <Sidebar
               sidebar={sidebar}
               toggleSidebar={this.toggleSidebar}

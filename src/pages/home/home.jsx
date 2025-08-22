@@ -15,6 +15,7 @@ import satelliteIcon from "../../img/satelliteicon.png";
 import insituIcon from "../../img/insituicon.png";
 import dropdownIcon from "../../img/sort.png";
 import sortIcon from "../../img/sortdesc.png";
+import back from "../../img/back.png";
 import {
   onMouseOver,
   onMouseOut,
@@ -574,16 +575,19 @@ class Home extends Component {
                 language={language}
                 setBounds={this.setBounds}
               />
+              <div
+                className={fullscreen ? "back-button" : "back-button hide"}
+                onClick={this.toggleFullscreen}
+              >
+                <img src={back} alt="Back" />
+              </div>
             </div>
             <div
-              className={fullscreen ? "map-button map-view" : "map-button"}
+              className={fullscreen ? "map-button hide" : "map-button"}
               onClick={this.toggleFullscreen}
             >
-              {fullscreen ? "Search" : "Map"}
-              <img
-                src={fullscreen ? searchIcon : mapIcon}
-                alt={fullscreen ? "Search" : "Map"}
-              />
+              {Translations.map[language]}
+              <img src={mapIcon} alt="Map" />
             </div>
           </div>
           <Footer {...this.props} small={true} />

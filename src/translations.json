@@ -491,6 +491,12 @@
     "FR": "Satellite",
     "IT": "Satellitare"
   },
+  "map": {
+    "EN": "Map",
+    "DE": "Karte",
+    "FR": "Carte",
+    "IT": "Mappa"
+  },
   "waterlevel": {
     "EN": "Water Level",
     "DE": "Wasserstand",
