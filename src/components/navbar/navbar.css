@@ -103,6 +103,16 @@
   display: none;
 }
 
+.navbar .mobile-nav .app-button {
+  float: right;
+  margin-right: var(--padding);
+  padding: 15px 0 11px 0;
+}
+
+.navbar .mobile-nav .app-button img {
+  height: 36px;
+}
+
 .mobile-nav .nav-header {
   width: 100%;
   height: var(--header-height);
@@ -168,6 +178,7 @@
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
