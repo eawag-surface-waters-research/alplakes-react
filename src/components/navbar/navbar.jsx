@@ -23,7 +23,7 @@ class NavBar extends Component {
     var app = false;
     const ua = navigator.userAgent.toLowerCase();
     if (!ua.includes("alplakes-ios") && !ua.includes("alplakes-android")) {
-      if (/iphone|ipad|ipod/i.test(ua) && !/Safari/i.test(ua)) {
+      if (/iphone|ipad|ipod/i.test(ua)) {
         app = "ios";
       } else if (/android/i.test(ua)) {
         app = false;
