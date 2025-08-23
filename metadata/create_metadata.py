@@ -4,7 +4,7 @@ import requests
 import functions as func
 
 upload = True
-bucket_folder = "static/website/metadata/master"
+bucket_folder = "static/website/metadata/ai"
 
 # Load Metadata
 with open("metadata.json") as f:
@@ -202,6 +202,13 @@ for lake in metadata:
                 "displayOptions": { "paletteName": "vik", "thresholdStep": 200 }
             }
         home["filters"].append("1D")
+
+    # AI summary
+    if "ai_summary" in lake and lake["ai_summary"]:
+        if "forecast" not in data:
+            data["forecast"] = {"ai_summary": True}
+        else:
+            data["forecast"]["ai_summary"] = True
 
 
     # Measurement Data
