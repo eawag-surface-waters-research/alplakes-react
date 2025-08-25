@@ -32,6 +32,7 @@ class About extends Component {
       people: React.createRef(),
       opensource: React.createRef(),
       publications: React.createRef(),
+      privacy: React.createRef(),
     };
   }
   handleScroll = () => {
@@ -94,9 +95,9 @@ class About extends Component {
               <p>
                 Alplakes is a research initiative that provides accurate
                 predictions of the condition of lakes throughout the European
-                Alpine region. We integrate models and remote sensing products developed by the
-                research community to provide the most up-to-date and accurate
-                information possible.
+                Alpine region. We integrate models and remote sensing products
+                developed by the research community to provide the most
+                up-to-date and accurate information possible.
               </p>
             </div>
             <div id="vision" ref={this.divRefs["vision"]} className="section">
@@ -403,6 +404,169 @@ class About extends Component {
                 "repo"
               )}
             </div>
+
+            <div id="privacy" ref={this.divRefs["privacy"]} className="section">
+              <h2>Privacy Policy</h2>
+              <p>
+                <strong>Effective Date:</strong> August 19, 2025
+              </p>
+              <p>
+                Alplakes (“we,” “our,” or “us”) respects your privacy and is
+                committed to protecting the personal information you share with
+                us through our app and website. This Privacy Policy explains
+                what information we collect, how we use it, and your choices
+                regarding your data.
+              </p>
+
+              <h3>1. Information We Collect</h3>
+
+              <h4>1.1 Usage Data</h4>
+              <p>
+                We use <strong>Umami</strong>, an analytics platform, to collect
+                non-identifiable usage information about how users interact with
+                our app and website. This may include:
+              </p>
+              <ul>
+                <li>Pages visited</li>
+                <li>Features used</li>
+                <li>Session duration</li>
+                <li>Device and browser information</li>
+              </ul>
+              <p>
+                <strong>Important:</strong> Umami does not track personal
+                information such as your name, email, or IP address in a
+                personally identifiable way.
+              </p>
+
+              <h4>1.2 Crash Reports</h4>
+              <p>
+                We use <strong>Sentry</strong> to monitor and fix errors in our
+                app and website. Sentry collects technical information about
+                crashes, which may include:
+              </p>
+              <ul>
+                <li>Error messages and stack traces</li>
+                <li>Device information (model, OS version)</li>
+                <li>App version</li>
+                <li>Anonymous identifiers</li>
+              </ul>
+              <p>
+                Sentry may collect limited information from logs, but we do not
+                intentionally collect personal data unless you provide it in an
+                error message or log.
+              </p>
+
+              <h3>2. How We Use Your Data</h3>
+              <p>The data we collect is used to:</p>
+              <ul>
+                <li>Understand how users interact with Alplakes</li>
+                <li>Improve our app and website performance</li>
+                <li>Identify and fix errors and crashes</li>
+                <li>Make data-driven decisions to enhance user experience</li>
+              </ul>
+              <p>
+                We <strong>do not sell or share</strong> your personal
+                information with third parties for marketing purposes.
+              </p>
+
+              <h3>3. Cookies and Tracking</h3>
+              <p>
+                We do not use personal tracking cookies. The only analytics and
+                crash reporting tools used are Umami and Sentry, which collect
+                data as described above.
+              </p>
+
+              <h3>4. Data Retention</h3>
+              <p>
+                <strong>Umami data:</strong> Retained for 13 months to analyze
+                trends and improve services.
+              </p>
+              <p>
+                <strong>Sentry crash data:</strong> Retained for 90 days to
+                diagnose and fix issues.
+              </p>
+              <p>
+                After the retention period, data is automatically deleted or
+                anonymized.
+              </p>
+
+              <h3>5. Your Rights</h3>
+              <p>Depending on your jurisdiction, you may have the right to:</p>
+              <ul>
+                <li>Request access to the data we hold about you</li>
+                <li>Request correction of inaccurate data</li>
+                <li>Request deletion of your data</li>
+                <li>Opt-out of tracking where applicable</li>
+              </ul>
+              <p>
+                To exercise these rights, contact us at{" "}
+                <strong>james.runnalls@eawag.ch</strong>.
+              </p>
+
+              <h3>6. Security</h3>
+              <p>
+                We take reasonable measures to protect your data from
+                unauthorized access, alteration, disclosure, or destruction.
+                However, no method of electronic storage or transmission is 100%
+                secure.
+              </p>
+
+              <h3>7. Third-Party Services</h3>
+              <p>
+                Our app and website use third-party services (Umami and Sentry)
+                to provide analytics and crash reporting. These services may
+                have their own privacy policies:
+              </p>
+              <ul>
+                <li>
+                  <a
+                    href="https://umami.is/docs/privacy"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Umami Privacy Policy
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="https://sentry.io/privacy/"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Sentry Privacy Policy
+                  </a>
+                </li>
+              </ul>
+              <p>
+                We encourage you to review their policies for more information.
+              </p>
+
+              <h3>8. Children’s Privacy</h3>
+              <p>
+                Alplakes is not intended for children under 13 (or the minimum
+                age in your jurisdiction). We do not knowingly collect personal
+                information from children.
+              </p>
+
+              <h3>9. Changes to This Policy</h3>
+              <p>
+                We may update this Privacy Policy from time to time. Changes
+                will be posted on this page with an updated “Effective Date.”
+              </p>
+
+              <h3>10. Contact Us</h3>
+              <p>
+                If you have any questions about this Privacy Policy or our
+                practices, please contact us at:
+              </p>
+              <p>
+                <strong>Email:</strong> james.runnalls@eawag.ch
+              </p>
+              <p>
+                <strong>Address:</strong> Ueberlandstrasse 133, 8600 Dübendorf
+              </p>
+            </div>
+
             <div
               id="publications"
               ref={this.divRefs["publications"]}
@@ -568,6 +732,12 @@ class About extends Component {
                 onClick={() => this.scrollToSection(this.divRefs["opensource"])}
               >
                 Open source
+              </div>
+              <div
+                className={visibleKey === "privacy" ? "link active" : "link"}
+                onClick={() => this.scrollToSection(this.divRefs["privacy"])}
+              >
+                Privacy Policy
               </div>
               <div
                 className={

@@ -6,18 +6,33 @@ import logo_dark from "../../img/icon_text_dark.png";
 import dark_icon from "../../img/dark.png";
 import light_icon from "../../img/light.png";
 import arrow from "../../img/arrow-right.png";
+import iosIcon from "../../img/ios.png";
+import googleIcon from "../../img/googleplay.png";
 import "./navbar.css";
 import Toggle from "../sliders/toggle";
 
 class NavBar extends Component {
   state = {
     menu: false,
+    app: false,
   };
   toggleMenu = () => {
     this.setState({ menu: !this.state.menu });
   };
+  componentDidMount() {
+    var app = false;
+    const ua = navigator.userAgent.toLowerCase();
+    if (!ua.includes("alplakes-ios") && !ua.includes("alplakes-android")) {
+      if (/iphone|ipad|ipod/i.test(ua)) {
+        app = "ios";
+      } else if (/android/i.test(ua)) {
+        app = false;
+      }
+      this.setState({ app });
+    }
+  }
   render() {
-    var { menu } = this.state;
+    var { menu, app } = this.state;
     var { language, languages, setLanguage, dark, toggleDark, relative } =
       this.props;
     return (
@@ -80,6 +95,20 @@ class NavBar extends Component {
                   <div className={menu ? "bar x" : "bar"}></div>
                   <div className={menu ? "bar x" : "bar"}></div>
                 </div>
+                {app === "ios" && (
+                  <div className="app-button">
+                    <a href="https://apps.apple.com/us/app/alplakes/id6749540359?itscg=30200&itsct=apps_box_link&mttnsubad=6749540359">
+                      <img src={iosIcon} alt="Download on the App Store" />
+                    </a>
+                  </div>
+                )}
+                {app === "andriod" && (
+                  <div className="app-button">
+                    <a href="">
+                      <img src={googleIcon} alt="Get it on Google Play" />
+                    </a>
+                  </div>
+                )}
               </div>
               <div className={menu ? "nav-content" : "nav-content hide"}>
                 <NavLink to="/">
