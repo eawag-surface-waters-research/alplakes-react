@@ -4,6 +4,7 @@ import { hour } from "../functions/general";
 import Information from "../../../components/information/information";
 import CONFIG from "../../../config.json";
 import Translations from "../../../translations.json";
+import downloadIcon from "../../../img/download.png";
 
 class AiSummary extends Component {
   state = {
@@ -22,6 +23,31 @@ class AiSummary extends Component {
       console.error(e);
     }
   }
+  downloadFile = () => {
+    const { lake } = this.props;
+    const { summary } = this.state;
+    const blob = new Blob([summary.prompt], { type: "text/plain" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `${lake}_prompt_${this.formatDate(summary.produced)}.txt`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
+
+  formatDate = (unix) => {
+    const date = new Date(unix * 1000);
+    const pad = (n) => n.toString().padStart(2, "0");
+    const year = date.getFullYear();
+    const month = pad(date.getMonth() + 1); // Months are 0-based
+    const day = pad(date.getDate());
+    const hours = pad(date.getHours());
+    const minutes = pad(date.getMinutes());
+    return `${year}${month}${day}_${hours}${minutes}`;
+  };
+
   render() {
     var { language } = this.props;
     var { summary } = this.state;
@@ -42,6 +68,9 @@ class AiSummary extends Component {
                 {Translations.here[language]}
               </a>
               .
+            </div>
+            <div className="ai-prompt" title="Download model prompt" onClick={this.downloadFile}>
+              <img src={downloadIcon} alt="Download" />
             </div>
           </div>
           <p></p>

@@ -407,6 +407,7 @@
 /** AI Summary **/
 
 .main .lake .forecast .ai-summary .ai-content {
+    position: relative;
     max-width: 716px;
     box-sizing: border-box;
     background-color: var(--background-color);
@@ -431,6 +432,29 @@
 
 .main .lake .forecast .ai-summary .ai-content .ai-source a {
     color: var(--link-color);
+}
+
+.main .lake .forecast .ai-summary .ai-content .ai-prompt {
+    background-color: var(--box-color);
+    position: absolute;
+    right: 12px;
+    bottom: 12px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.main .lake .forecast .ai-summary .ai-content .ai-prompt:hover {
+    transform: scale(1.1);
+}
+
+.main .lake .forecast .ai-summary .ai-content .ai-prompt img {
+    height: 18px;
+    padding: 6px 8px 5px 8px;
+}
+
+.main.dark .lake .forecast .ai-summary .ai-content .ai-prompt img {
+    filter: invert(1);
 }
 
 
