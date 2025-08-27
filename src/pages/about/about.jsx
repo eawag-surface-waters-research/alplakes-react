@@ -79,7 +79,7 @@ class About extends Component {
     return (
       <React.Fragment>
         <Helmet>
-          <title>About | Alplakes</title>
+          <title>About - Alplakes</title>
           <meta
             name="description"
             content="Learn more about the Alplakes project and our partners."

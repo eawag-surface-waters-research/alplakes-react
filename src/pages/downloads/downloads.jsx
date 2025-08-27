@@ -372,7 +372,7 @@ class Downloads extends Component {
     return (
       <React.Fragment>
         <Helmet>
-          <title>{Translations.downloads[language]} | Alplakes</title>
+          <title>{Translations.downloads[language]} - Alplakes</title>
           <meta
             name="description"
             content="Discover the open source data available on Alplakes."

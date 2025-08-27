@@ -77,21 +77,20 @@ class Lake extends Component {
   render() {
     var { metadata, error, id, performance } = this.state;
     var { language, dark } = this.props;
-    var title = "";
-    var documentTitle = "Alplakes";
-    if ("name" in metadata) {
-      documentTitle = metadata.name[language] + " | Alplakes";
-      title = metadata.name[language];
-    }
+    const title = "name" in metadata ? metadata.name[language] : ""
     return (
       <div className="main">
-        <Helmet>
-          <title>{documentTitle}</title>
-          <meta
-            name="description"
-            content="View the latest temperature forecast and water quality information."
-          />
-        </Helmet>
+        {"name" in metadata && (
+          <Helmet>
+            <title>
+              {metadata.name["EN"] + " - Forecasts, Measurements & Trends"}
+            </title>
+            <meta
+              name="description"
+              content={`Discover the latest water temperature, forecasts, real-time measurements, and long-term trends for ${metadata.name["EN"]}.`}
+            />
+          </Helmet>
+        )}
         <NavBar {...this.props} relative={true} />
         {error ? (
           <NotFound id={id} text={true} />

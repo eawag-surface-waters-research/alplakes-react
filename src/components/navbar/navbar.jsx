@@ -104,7 +104,7 @@ class NavBar extends Component {
                 )}
                 {app === "andriod" && (
                   <div className="app-button">
-                    <a href="">
+                    <a href="https://play.google.com/store/apps?hl=en" alt="Get it on Google Play">
                       <img src={googleIcon} alt="Get it on Google Play" />
                     </a>
                   </div>

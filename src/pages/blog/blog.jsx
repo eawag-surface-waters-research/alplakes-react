@@ -24,7 +24,7 @@ class Blog extends Component {
     return (
       <React.Fragment>
         <Helmet>
-          <title>Blog | Alplakes</title>
+          <title>Blog - Alplakes</title>
           <meta
             name="description"
             content="Blog posts related to the Alplakes project."
