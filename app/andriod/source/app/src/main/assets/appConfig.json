@@ -17,7 +17,7 @@
     "deviceRegKey": "efb5f3px9ffjvkgjr58a2y5deg",
     "appName": "Alplakes",
     "initialUrl": "https://www.alplakes.eawag.ch/",
-    "androidPackageName": "co.median.android.brzmjx",
+    "androidPackageName": "ch.eawag.alplakes",
     "iosBundleId": "co.median.ios.brzmjx",
     "keepScreenOn": null,
     "iosUserAgentAdd": "alplakes-ios",
