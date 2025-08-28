@@ -27,7 +27,9 @@ export const update = async (
   language,
   addControls,
   removeControls,
-  server
+  server,
+  play,
+  togglePlay
 ) => {
   const functions = {
     addLayer: {
@@ -46,6 +48,7 @@ export const update = async (
       wms: updateWms,
     },
   };
+  if (play) togglePlay();
   for (let i = 0; i < updates.length; i++) {
     if (
       updates[i].event in functions &&

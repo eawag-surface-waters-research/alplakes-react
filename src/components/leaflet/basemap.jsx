@@ -133,7 +133,9 @@ class Basemap extends Component {
         language,
         this.addControls,
         this.removeControls,
-        server
+        server,
+        this.state.play,
+        this.togglePlay
       );
       loading_div.style.opacity = 0;
     }
