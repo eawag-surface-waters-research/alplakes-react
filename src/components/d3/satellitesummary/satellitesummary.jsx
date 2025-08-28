@@ -52,14 +52,16 @@ class SatelliteSummary extends Component {
           }
           if (image.satellite in data) {
             data[image.satellite].x.push(image.time);
-            data[image.satellite].y.push(Math.round(image.ave*10)/10);
+            data[image.satellite].y.push(Math.round(image.ave * 10) / 10);
             data[image.satellite].tooltip.push(tooltip);
           } else {
             data[image.satellite] = {
               x: [image.time],
-              y: [Math.round(image.ave*10)/10],
+              y: [Math.round(image.ave * 10) / 10],
               tooltip: [tooltip],
-              symbol: image.satellite.includes("S2") ? "x" : "o",
+              symbol: ["S2", "L8"].includes(image.satellite.slice(0, 2))
+                ? "x"
+                : "o",
             };
           }
         }
@@ -76,7 +78,7 @@ class SatelliteSummary extends Component {
       };
     }
 
-    for (let key of ["S2", "S3", "insitu"]) {
+    for (let key of ["S2", "S3", "L8", "L9", "insitu"]) {
       if (Object.keys(data).some((str) => str.includes(key))) {
         satellites[key] = true;
       }
@@ -124,6 +126,14 @@ class SatelliteSummary extends Component {
       },
       S3: {
         label: `Sentinel 3 [o] (${Translations.lakeAverage[language]})`,
+        class: "",
+      },
+      L8: {
+        label: `Landsat 8 [x] (${Translations.lakeAverage[language]})`,
+        class: "",
+      },
+      L9: {
+        label: `Landsat 9 [o] (${Translations.lakeAverage[language]})`,
         class: "",
       },
       insitu: { label: `Insitu [o] (${latitude}, ${longitude})`, class: "red" },
