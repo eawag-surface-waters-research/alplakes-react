@@ -1403,7 +1403,46 @@
         "webcams": [
             1673271732,
             1295436939
-        ]
+        ],
+        "3D": {
+            "default": "alplakes_mitgcm",
+            "models": {
+                "alplakes_mitgcm": {
+                    "model": "mitgcm",
+                    "name": "MITgcm",
+                    "key": "zug",
+                    "performance": {
+                        "rmse": {
+                            "overall": "NA"
+                        }
+                    }
+                }
+            },
+            "3D_temperature": [
+                {
+                    "name": "Zug",
+                    "latlng": [
+                        47.170,
+                        8.5121
+                    ]
+                },
+                {
+                    "name": "Walchwil",
+                    "latlng": [
+                        47.09806,
+                        8.51124
+                    ]
+                },
+                {
+                    "name": "Arth",
+                    "latlng": [
+                        47.064,
+                        8.519
+                    ]
+                }
+            ],
+            "3D_thermocline": []
+        }
     },
     {
         "key": "sihlsee",
