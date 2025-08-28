@@ -138,6 +138,7 @@ class SatelliteSummary extends Component {
       },
       insitu: { label: `Insitu [o] (${latitude}, ${longitude})`, class: "red" },
     };
+    const no_data = graph_data.length === 1 && graph_data[0].x.length === 0;
     return (
       <React.Fragment>
         <div className="graph-title">
@@ -180,6 +181,9 @@ class SatelliteSummary extends Component {
           language={language}
           onClick={this.setImage}
         />
+        <div className={no_data ? "no-data" : "no-data hide"}>
+          {Translations.noSatelliteData[language]}
+        </div>
       </React.Fragment>
     );
   }

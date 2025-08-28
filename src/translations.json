@@ -779,6 +779,12 @@
     "FR": "Plein écran",
     "IT": "A schermo intero"
   },
+  "noSatelliteData": {
+    "EN": "No data to plot. Please try reducing the minimum coverage filter.",
+    "DE": "Keine Daten zum Plotten. Bitte versuchen Sie, den Mindestabdeckungsfilter zu reduzieren.",
+    "FR": "Aucune donnée à tracer. Veuillez essayer de réduire le filtre de couverture minimale.",
+    "IT": "Nessun dato da tracciare. Prova a ridurre il filtro di copertura minima."
+  },
   "collapse": {
     "EN": "Collapse",
     "DE": "Zusammenbruch",
