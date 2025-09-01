@@ -46,12 +46,13 @@ class Depth extends Component {
   }
   render() {
     var { depth, step, min, max, depths } = this.state;
+    const update = depth === this.props.depth;
     const { language } = this.props;
     return (
       <React.Fragment>
         <div className="setting">
-          <div className="label">{Translations.depth[language]} (m)</div>
-          <div className="value">
+          <div className="label">{Translations.depth[language]}</div>
+          <div className="depth">
             <select
               value={depth}
               onChange={this.updateDepth}
@@ -59,12 +60,15 @@ class Depth extends Component {
             >
               {depths.map((d) => (
                 <option value={d} key={d}>
-                  {d}
+                  {d + " m"}
                 </option>
               ))}
             </select>
-            <button className="set" onClick={this.setDepth}>
-              {Translations.setDepth[language]}
+            <button
+              className={update ? "set" : "set active"}
+              onClick={this.setDepth}
+            >
+              {Translations.apply[language]}
             </button>
           </div>
           <input
@@ -75,6 +79,14 @@ class Depth extends Component {
             value={depth}
             onChange={this.updateDepth}
           ></input>
+          <table className="depth-minmax">
+            <tbody>
+              <tr>
+                <td>{min} m</td>
+                <td style={{ textAlign: "right" }}>{max} m</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </React.Fragment>
     );

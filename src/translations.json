@@ -119,6 +119,24 @@
     "FR": "Couverture",
     "IT": "Copertura"
   },
+  "lakeCoverage": {
+    "EN": "lake coverage",
+    "DE": "seeabdeckung",
+    "FR": "couverture des lacs",
+    "IT": "copertura laghi"
+  },
+  "imagesAvailable": {
+    "EN": "images available",
+    "DE": "verfügbare bilder",
+    "FR": "images disponibles",
+    "IT": "immagini disponibili"
+  },
+  "geotiffDownload": {
+    "EN": "Download image as GeoTIFF",
+    "DE": "Bild als GeoTIFF herunterladen",
+    "FR": "Télécharger l’image en GeoTIFF",
+    "IT": "Scarica immagine come GeoTIFF"
+  },
   "depth": {
     "EN": "Depth",
     "DE": "Tiefe",
@@ -329,6 +347,12 @@
     "FR": "Turbidité",
     "IT": "Torbidità"
   },
+  "color": {
+    "EN": "Color",
+    "DE": "Farbe",
+    "FR": "Couleur",
+    "IT": "Colore"
+  },
   "realcolor": {
     "EN": "Real Color",
     "DE": "Echte Farbe",
@@ -337,8 +361,8 @@
   },
   "particles": {
     "EN": "Particles",
-    "DE": "Particles",
-    "FR": "Particles",
+    "DE": "Partikel",
+    "FR": "Particelle",
     "IT": "Particles"
   },
   "transect": {
@@ -496,6 +520,18 @@
     "DE": "Karte",
     "FR": "Carte",
     "IT": "Mappa"
+  },
+  "paths": {
+    "EN": "Paths",
+    "DE": "Pfadzahl",
+    "FR": "Nombre de trajectoires",
+    "IT": "Numero di tracce"
+  },
+  "speed": {
+    "EN": "Speed",
+    "DE": "Tempo",
+    "FR": "Vitesse",
+    "IT": "Velocità"
   },
   "waterlevel": {
     "EN": "Water Level",
@@ -707,12 +743,6 @@
     "FR": "Période",
     "IT": "Periodo"
   },
-  "setDepth": {
-    "EN": "Set depth",
-    "DE": "Tiefe einstellen",
-    "FR": "Régler la profondeur",
-    "IT": "Profondità impostata"
-  },
   "maplink": {
     "EN": "See more",
     "DE": "Mehr anzeigen",
@@ -766,6 +796,12 @@
     "DE": "Downloads",
     "FR": "Téléchargements",
     "IT": "Downloads"
+  },
+  "selectWeek": {
+    "EN": "Select week",
+    "DE": "Woche auswählen",
+    "FR": "Sélectionner la semaine",
+    "IT": "Seleziona settimana"
   },
   "hideDetails": {
     "EN": "Hide details",
@@ -1153,6 +1189,60 @@
     "FR": "Barrages",
     "IT": "Dighe"
   },
+  "arrows": {
+    "EN": "Arrows",
+    "DE": "Pfeile",
+    "FR": "Flèches",
+    "IT": "Frecce"
+  },
+  "streamlines": {
+    "EN": "Streamlines",
+    "DE": "Stromlinien",
+    "FR": "Lignes de courant",
+    "IT": "Linee di flusso"
+  },
+  "raster": {
+    "EN": "Raster",
+    "DE": "Raster",
+    "FR": "Grille",
+    "IT": "Reticolo"
+  },
+  "spread": {
+    "EN": "Spread",
+    "DE": "Streuung",
+    "FR": "Dispersion",
+    "IT": "Dispersione"
+  },
+  "removeParticles": {
+    "EN": "Remove particles",
+    "DE": "Partikel entfernen",
+    "FR": "Supprimer les particules",
+    "IT": "RetiRimuovi particellecolo"
+  },
+  "smoothing": {
+    "EN": "Smoothing",
+    "DE": "Glätten",
+    "FR": "Lissage",
+    "IT": "Lisciatura"
+  },
+  "minCoverage": {
+    "EN": "Min Coverage",
+    "DE": "Min. Abdeckung",
+    "FR": "Couverture min.",
+    "IT": "Copertura min."
+  },
+  "imagery": {
+    "EN": "Imagery",
+    "DE": "Bildmaterial",
+    "FR": "Imagerie",
+    "IT": "Immagini"
+  },
+  "validPixelExpression": {
+    "EN": "Valid Pixel Expression",
+    "DE": "Gültiger Pixel-Ausdruck",
+    "FR": "Expression pixel valide",
+    "IT": "Espressione pixel valida"
+  },
   "lakeProperties": {
     "EN": "Lake Properties",
     "DE": "See-Eigenschaften",
@@ -1237,6 +1327,12 @@
     "FR": "Taper",
     "IT": "Tipo"
   },
+  "opacity": {
+    "EN": "Opacity",
+    "DE": "Deckkraft",
+    "FR": "Opacité",
+    "IT": "Opacità"
+  },
   "availableData": {
     "EN": "Available Data",
     "DE": "Verfügbare Daten",
@@ -1308,6 +1404,12 @@
     "DE": "Rückmeldung",
     "FR": "Retour",
     "IT": "Feedback"
+  },
+  "apply": {
+    "EN": "Apply",
+    "DE": "Übernehmen",
+    "FR": "Appliquer",
+    "IT": "Applica"
   },
   "oxygenWarning": {
     "EN": "The AED2 oxygen model is a preliminary version which works reasonably well for some lakes but is clearly wrong for others.",
