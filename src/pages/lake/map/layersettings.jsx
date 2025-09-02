@@ -816,7 +816,7 @@ class Tiff extends Component {
       convolve,
       validpixelexpression,
       coverage,
-      //wms,
+      wms,
     } = this.props.options;
     var { available, image } = layer.sources[layer.source].metadata;
     var { unit } = this.props.layer;
@@ -978,13 +978,19 @@ class Tiff extends Component {
             onChange={this.setCoverage}
           ></input>
         </div>
-        {/*<div className="setting half">
-          <div className="label">{Translations.imagery[language]}</div>
-          <label className="switch">
-            <input type="checkbox" checked={wms} onChange={this.setWms}></input>
-            <span className="slider round"></span>
-          </label>
-        </div>*/}
+        {layer.id !== "satellite_temperature" && (
+          <div className="setting half">
+            <div className="label">{Translations.imagery[language]}</div>
+            <label className="switch">
+              <input
+                type="checkbox"
+                checked={wms}
+                onChange={this.setWms}
+              ></input>
+              <span className="slider round"></span>
+            </label>
+          </div>
+        )}
         <div className="setting">
           <div className="label">Palette</div>
           <div className="value">{paletteName}</div>

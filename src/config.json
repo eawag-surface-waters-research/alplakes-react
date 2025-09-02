@@ -6,7 +6,8 @@
   "blog_url": "https://alplakes-eawag.s3.eu-central-1.amazonaws.com/static/website/blog.json",
   "datalakes_api": "https://api.datalakes-eawag.ch",
   "sentinel2_wms": "https://services.sentinel-hub.com/ogc/wms/a595b5c3-8963-4076-98ad-5cbe7e9d7999",
-  "sentinel3_wms": "https://creodias.sentinel-hub.com/ogc/wms/fea4245d-9a3b-4337-8cc2-9bbdbd22ff1a",
+  "sentinel3_wms": "https://sh.dataspace.copernicus.eu/ogc/wms/72f97144-cd2d-4c22-b6cc-f9ab88a17afd",
+  "landsat89_wms": "https://services-uswest2.sentinel-hub.com/ogc/wms/782577a5-f48b-4986-9606-08f6c5cac6dd",
   "basemaps": {
     "default": {
       "url": "https://{s}.basemaps.cartocdn.com/_bright_/{z}/{x}/{y}{r}.png",
