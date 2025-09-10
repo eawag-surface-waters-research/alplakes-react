@@ -45,35 +45,13 @@ L.Raster = L.Layer.extend({
     map.on("moveend", this._reset, this);
     map.on("mousemove", this._onMousemove, this);
 
-    // ✅ Desktop zoom animation
+    // ✅ Smooth zoom animation (desktop + pinch zoom)
     if (map.options.zoomAnimation && L.Browser.any3d) {
       map.on("zoomanim", this._animateZoom, this);
     }
 
-    // ✅ Mobile pinch zoom handling
-    map.on("zoomstart", () => {
-      L.DomUtil.addClass(this._canvas, "leaflet-zoom-animating");
-    });
-
-    map.on("zoom", () => {
-      var scale = this._map.getZoomScale(this._map.getZoom());
-      var offset = this._map
-        ._getCenterOffset(this._map.getCenter())
-        ._multiplyBy(-scale)
-        .subtract(this._map._getMapPanePos());
-
-      if (L.DomUtil.setTransform) {
-        L.DomUtil.setTransform(this._canvas, offset, scale);
-      } else {
-        this._canvas.style[L.DomUtil.TRANSFORM] =
-          L.DomUtil.getTranslateString(offset) + " scale(" + scale + ")";
-      }
-    });
-
-    map.on("zoomend", () => {
-      this._reset(); // redraw at final zoom level
-      L.DomUtil.removeClass(this._canvas, "leaflet-zoom-animating");
-    });
+    // ✅ Keep in sync during pinch-zoom
+    map.on("zoom", this._reset, this);
 
     this._reset();
   },
@@ -118,15 +96,11 @@ L.Raster = L.Layer.extend({
     map.off("moveend", this._reset, this);
     map.off("mousemove", this._onMousemove, this);
 
-    // Desktop zoom animation cleanup
     if (map.options.zoomAnimation) {
       map.off("zoomanim", this._animateZoom, this);
     }
 
-    // Mobile pinch zoom cleanup
-    map.off("zoomstart");
-    map.off("zoom");
-    map.off("zoomend");
+    map.off("zoom", this._reset, this);
   },
   update: function (data, options) {
     if (data) {
@@ -198,11 +172,13 @@ L.Raster = L.Layer.extend({
     this._drawLayer();
   },
   _animateZoom: function (e) {
-    var scale = this._map.getZoomScale(e.zoom),
+    // This is adapted from GridLayer._setZoomTransform
+    var scale = this._map.getZoomScale(e.zoom, this._map.getZoom()),
       offset = this._map
         ._getCenterOffset(e.center)
         ._multiplyBy(-scale)
         .subtract(this._map._getMapPanePos());
+
     if (L.DomUtil.setTransform) {
       L.DomUtil.setTransform(this._canvas, offset, scale);
     } else {
