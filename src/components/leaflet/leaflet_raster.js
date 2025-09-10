@@ -40,12 +40,41 @@ L.Raster = L.Layer.extend({
     } else {
       map._panes.overlayPane.appendChild(this._canvas);
     }
+
     map.on("click", this._onClick, this);
     map.on("moveend", this._reset, this);
     map.on("mousemove", this._onMousemove, this);
+
+    // ✅ Desktop zoom animation
     if (map.options.zoomAnimation && L.Browser.any3d) {
       map.on("zoomanim", this._animateZoom, this);
     }
+
+    // ✅ Mobile pinch zoom handling
+    map.on("zoomstart", () => {
+      L.DomUtil.addClass(this._canvas, "leaflet-zoom-animating");
+    });
+
+    map.on("zoom", () => {
+      var scale = this._map.getZoomScale(this._map.getZoom());
+      var offset = this._map
+        ._getCenterOffset(this._map.getCenter())
+        ._multiplyBy(-scale)
+        .subtract(this._map._getMapPanePos());
+
+      if (L.DomUtil.setTransform) {
+        L.DomUtil.setTransform(this._canvas, offset, scale);
+      } else {
+        this._canvas.style[L.DomUtil.TRANSFORM] =
+          L.DomUtil.getTranslateString(offset) + " scale(" + scale + ")";
+      }
+    });
+
+    map.on("zoomend", () => {
+      this._reset(); // redraw at final zoom level
+      L.DomUtil.removeClass(this._canvas, "leaflet-zoom-animating");
+    });
+
     this._reset();
   },
   _initCanvas: function () {
@@ -84,12 +113,20 @@ L.Raster = L.Layer.extend({
     } else {
       map.getPanes().overlayPane.removeChild(this._canvas);
     }
+
     map.off("click", this._onClick, this);
     map.off("moveend", this._reset, this);
     map.off("mousemove", this._onMousemove, this);
+
+    // Desktop zoom animation cleanup
     if (map.options.zoomAnimation) {
       map.off("zoomanim", this._animateZoom, this);
     }
+
+    // Mobile pinch zoom cleanup
+    map.off("zoomstart");
+    map.off("zoom");
+    map.off("zoomend");
   },
   update: function (data, options) {
     if (data) {
@@ -101,7 +138,7 @@ L.Raster = L.Layer.extend({
     this._reset();
   },
   _interpolateGeometryBoundary: function (g) {
-    var geometry = g.map(row => row.slice());
+    var geometry = g.map((row) => row.slice());
     const d = this._dataWidth;
     for (var i = 1; i < this._dataHeight - 1; i++) {
       for (var j = 1; j < this._dataWidth - 1; j++) {
@@ -110,25 +147,25 @@ L.Raster = L.Layer.extend({
           if (!isNaN(g[i - 1][j]) && !isNaN(g[i - 2][j])) {
             geometry[i][j] = 2 * g[i - 1][j] - g[i - 2][j];
             geometry[i][j + d] = 2 * g[i - 1][j + d] - g[i - 2][j + d];
-            continue
+            continue;
           }
           // Bottom
           if (!isNaN(g[i + 1][j]) && !isNaN(g[i + 2][j])) {
             geometry[i][j] = 2 * g[i + 1][j] - g[i + 2][j];
             geometry[i][j + d] = 2 * g[i + 1][j + d] - g[i + 2][j + d];
-            continue
+            continue;
           }
           // Left
           if (!isNaN(g[i][j - 1]) && !isNaN(g[i][j - 2])) {
             geometry[i][j] = 2 * g[i][j - 1] - g[i][j - 2];
             geometry[i][j + d] = 2 * g[i][j + d - 1] - g[i][j + d - 2];
-            continue
+            continue;
           }
           // Right
           if (!isNaN(g[i][j + 1]) && !isNaN(g[i][j + 2])) {
             geometry[i][j] = 2 * g[i][j + 1] - g[i][j + 2];
             geometry[i][j + d] = 2 * g[i][j + d + 1] - g[i][j + d + 2];
-            continue
+            continue;
           }
         }
       }
