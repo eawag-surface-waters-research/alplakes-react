@@ -41,7 +41,7 @@ L.VectorField = (L.Layer ? L.Layer : L.Class).extend({
     if (this.options.pane) {
       this.getPane().appendChild(this._canvas);
     } else {
-      map._panes.overlayPane.appendChild(this._canvas);
+      map._panes.tilePane.appendChild(this._canvas);
     }
 
     map.on("click", this._onClick, this);
