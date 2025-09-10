@@ -34,25 +34,23 @@ L.VectorField = (L.Layer ? L.Layer : L.Class).extend({
   onAdd: function (map) {
     this._map = map;
 
-    if (!this._canvas) {
-      this._initCanvas();
-    }
+    if (!this._canvas) this._initCanvas();
 
-    if (this.options.pane) {
-      this.getPane().appendChild(this._canvas);
-    } else {
-      map._panes.tilePane.appendChild(this._canvas);
-    }
+    map._panes.overlayPane.appendChild(this._canvas);
 
+    // Event handlers
     map.on("click", this._onClick, this);
     map.on("mousemove", this._onMousemove, this);
 
-    // Smooth desktop zoom animation
+    // Desktop zoom animation
     if (map.options.zoomAnimation && L.Browser.any3d) {
       map.on("zoomanim", this._animateZoom, this);
     }
 
-    // Redraw arrows only after zoom ends (mobile pinch or any zoom)
+    // Mobile / pinch zoom — manually transform canvas each frame
+    map.on("zoom", this._onZoomTransform, this);
+
+    // Redraw arrows at the end of zoom
     map.on("zoomend", this._reset, this);
 
     this._reset();
@@ -88,20 +86,22 @@ L.VectorField = (L.Layer ? L.Layer : L.Class).extend({
     this._height = canvas.height;
   },
   onRemove: function (map) {
-    if (this.options.pane) {
-      this.getPane().removeChild(this._canvas);
-    } else {
-      map.getPanes().overlayPane.removeChild(this._canvas);
-    }
-
     map.off("click", this._onClick, this);
-    map.off("mousemove", this._onMousemove, this);
-
-    if (map.options.zoomAnimation) {
-      map.off("zoomanim", this._animateZoom, this);
-    }
-
+    map.off("mousemove", this._onMousemove);
+    if (map.options.zoomAnimation) map.off("zoomanim", this._animateZoom, this);
+    map.off("zoom", this._onZoomTransform, this);
     map.off("zoomend", this._reset, this);
+  },
+
+  // New handler for live scaling
+  _onZoomTransform: function (e) {
+    const map = this._map;
+    const scale = map.getZoomScale(map.getZoom(), e.oldZoom || map.getZoom());
+    const offset = map
+      ._getCenterOffset(map.getCenter())
+      ._multiplyBy(-scale)
+      .subtract(map._getMapPanePos());
+    L.DomUtil.setTransform(this._canvas, offset, scale);
   },
   redraw: function () {
     if (!this._frame && this._map && !this._map._animating) {
@@ -371,8 +371,7 @@ L.VectorField = (L.Layer ? L.Layer : L.Class).extend({
   },
 
   _animateZoom: function (e) {
-    // GPU-accelerated transform
-    var scale = this._map.getZoomScale(e.zoom, this._map.getZoom()),
+    var scale = this._map.getZoomScale(e.zoom),
       offset = this._map
         ._getCenterOffset(e.center)
         ._multiplyBy(-scale)
