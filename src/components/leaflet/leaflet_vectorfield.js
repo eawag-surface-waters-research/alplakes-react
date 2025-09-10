@@ -43,12 +43,18 @@ L.VectorField = (L.Layer ? L.Layer : L.Class).extend({
     } else {
       map._panes.overlayPane.appendChild(this._canvas);
     }
+
     map.on("click", this._onClick, this);
-    map.on("moveend", this._reset, this);
     map.on("mousemove", this._onMousemove, this);
+
+    // Smooth desktop zoom animation
     if (map.options.zoomAnimation && L.Browser.any3d) {
       map.on("zoomanim", this._animateZoom, this);
     }
+
+    // Redraw arrows only after zoom ends (mobile pinch or any zoom)
+    map.on("zoomend", this._reset, this);
+
     this._reset();
   },
   _initCanvas: function () {
@@ -87,13 +93,15 @@ L.VectorField = (L.Layer ? L.Layer : L.Class).extend({
     } else {
       map.getPanes().overlayPane.removeChild(this._canvas);
     }
+
     map.off("click", this._onClick, this);
-    map.off("moveend", this._reset, this);
     map.off("mousemove", this._onMousemove, this);
 
     if (map.options.zoomAnimation) {
       map.off("zoomanim", this._animateZoom, this);
     }
+
+    map.off("zoomend", this._reset, this);
   },
   redraw: function () {
     if (!this._frame && this._map && !this._map._animating) {
@@ -363,7 +371,8 @@ L.VectorField = (L.Layer ? L.Layer : L.Class).extend({
   },
 
   _animateZoom: function (e) {
-    var scale = this._map.getZoomScale(e.zoom),
+    // GPU-accelerated transform
+    var scale = this._map.getZoomScale(e.zoom, this._map.getZoom()),
       offset = this._map
         ._getCenterOffset(e.center)
         ._multiplyBy(-scale)
