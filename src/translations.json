@@ -131,6 +131,12 @@
     "FR": "images disponibles",
     "IT": "immagini disponibili"
   },
+  "privacyPolicy": {
+    "EN": "Privacy Policy",
+    "DE": "Datenschutzrichtlinie",
+    "FR": "Politique de confidentialité",
+    "IT": "Informativa sulla privacy"
+  },
   "geotiffDownload": {
     "EN": "Download image as GeoTIFF",
     "DE": "Bild als GeoTIFF herunterladen",

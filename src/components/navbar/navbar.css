@@ -198,6 +198,8 @@
   border-radius: 0 0 calc(var(--padding)) calc(var(--padding));
   z-index: 2;
   transition: top .4s ease-in;
+  max-height: calc(100% - 100px);
+  overflow-x: auto;
 }
 
 .navbar .mobile-nav .nav-content a {
@@ -205,7 +207,7 @@
 }
 
 .navbar .mobile-nav .nav-content.hide {
-  top: -60vh;
+  top: calc(-1 * 100% - 74px);
 }
 
 .navbar .mobile-nav .nav-content .nav-row {

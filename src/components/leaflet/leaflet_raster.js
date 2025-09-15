@@ -46,7 +46,19 @@ L.Raster = L.Layer.extend({
     if (map.options.zoomAnimation && L.Browser.any3d) {
       map.on("zoomanim", this._animateZoom, this);
     }
+    map.on("touchstart", this._onZoomStart, this);
+    map.on("touchmove", this._onZoom, this);
+    map.on("touchend", this._onZoomEnd, this);
     this._reset();
+  },
+  _onZoomStart: function (e) {
+    console.log("Start");
+  },
+  _onZoom: function (e) {
+    console.log("Zoom");
+  },
+  _onZoomEnd: function (e) {
+    console.log("End");
   },
   _initCanvas: function () {
     var canvas = (this._canvas = L.DomUtil.create(
@@ -101,7 +113,7 @@ L.Raster = L.Layer.extend({
     this._reset();
   },
   _interpolateGeometryBoundary: function (g) {
-    var geometry = g.map(row => row.slice());
+    var geometry = g.map((row) => row.slice());
     const d = this._dataWidth;
     for (var i = 1; i < this._dataHeight - 1; i++) {
       for (var j = 1; j < this._dataWidth - 1; j++) {
@@ -110,25 +122,25 @@ L.Raster = L.Layer.extend({
           if (!isNaN(g[i - 1][j]) && !isNaN(g[i - 2][j])) {
             geometry[i][j] = 2 * g[i - 1][j] - g[i - 2][j];
             geometry[i][j + d] = 2 * g[i - 1][j + d] - g[i - 2][j + d];
-            continue
+            continue;
           }
           // Bottom
           if (!isNaN(g[i + 1][j]) && !isNaN(g[i + 2][j])) {
             geometry[i][j] = 2 * g[i + 1][j] - g[i + 2][j];
             geometry[i][j + d] = 2 * g[i + 1][j + d] - g[i + 2][j + d];
-            continue
+            continue;
           }
           // Left
           if (!isNaN(g[i][j - 1]) && !isNaN(g[i][j - 2])) {
             geometry[i][j] = 2 * g[i][j - 1] - g[i][j - 2];
             geometry[i][j + d] = 2 * g[i][j + d - 1] - g[i][j + d - 2];
-            continue
+            continue;
           }
           // Right
           if (!isNaN(g[i][j + 1]) && !isNaN(g[i][j + 2])) {
             geometry[i][j] = 2 * g[i][j + 1] - g[i][j + 2];
             geometry[i][j + d] = 2 * g[i][j + d + 1] - g[i][j + d + 2];
-            continue
+            continue;
           }
         }
       }

@@ -69,6 +69,15 @@ class About extends Component {
     window.scrollTo(0, 0);
     window.addEventListener("scroll", this.handleScroll);
     this.handleScroll();
+    const query = window.location.search;
+    if (query) {
+      const sectionKey = query.replace("?", "");
+      if (this.divRefs[sectionKey]) {
+        setTimeout(() => {
+          this.scrollToSection(this.divRefs[sectionKey]);
+        }, 300);
+      }
+    }
   }
   componentWillUnmount() {
     window.removeEventListener("scroll", this.handleScroll);
