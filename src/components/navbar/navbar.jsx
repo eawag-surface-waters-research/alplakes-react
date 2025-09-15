@@ -104,7 +104,10 @@ class NavBar extends Component {
                 )}
                 {app === "andriod" && (
                   <div className="app-button">
-                    <a href="">
+                    <a
+                      href="https://play.google.com/store/apps?hl=en"
+                      alt="Get it on Google Play"
+                    >
                       <img src={googleIcon} alt="Get it on Google Play" />
                     </a>
                   </div>
@@ -138,6 +141,14 @@ class NavBar extends Component {
                 <NavLink to="/blog">
                   <div className="nav-row">
                     Blog
+                    <div className="arrow">
+                      <img src={arrow} alt="Arrow" />
+                    </div>
+                  </div>
+                </NavLink>
+                <NavLink to="/about?privacy">
+                  <div className="nav-row">
+                    {Translations.privacyPolicy[language]}
                     <div className="arrow">
                       <img src={arrow} alt="Arrow" />
                     </div>

@@ -1,7 +1,7 @@
 import L from "leaflet";
 import * as d3 from "d3";
 
-L.Streamlines = (L.Layer ? L.Layer : L.Class).extend({
+L.Streamlines = L.ImageOverlay.extend({
   options: {
     paths: 800,
     streamlinesColor: "white",

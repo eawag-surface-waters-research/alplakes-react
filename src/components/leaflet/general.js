@@ -103,9 +103,19 @@ export const dayName = (YYYYMMDD, language, Translations, full = false) => {
   return daysOfWeekNames[dayOfWeekNumber];
 };
 
-export const formatWmsDate = (datetime, minutes = 120) => {
-  var start = addMinutes(datetime, -minutes);
-  var end = addMinutes(datetime, minutes);
+export const formatWmsDate = (datetime, minutes = 120, day = false) => {
+  var start, end;
+  if (day) {
+    start = new Date(
+      datetime.getFullYear(),
+      datetime.getMonth(),
+      datetime.getDate()
+    );
+    end = new Date(start.getTime() + 24 * 60 * 60 * 1000);
+  } else {
+    start = addMinutes(datetime, -minutes);
+    end = addMinutes(datetime, minutes);
+  }
   return `${formatDateIso(start)}/${formatDateIso(end)}`;
 };
 

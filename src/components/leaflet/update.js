@@ -27,7 +27,9 @@ export const update = async (
   language,
   addControls,
   removeControls,
-  server
+  server,
+  play,
+  togglePlay
 ) => {
   const functions = {
     addLayer: {
@@ -46,6 +48,7 @@ export const update = async (
       wms: updateWms,
     },
   };
+  if (play) togglePlay();
   for (let i = 0; i < updates.length; i++) {
     if (
       updates[i].event in functions &&
@@ -332,12 +335,21 @@ const updateWms = async (map, layers, id, options, language) => {
   } catch (e) {}
   if (options.wms) {
     var url = "";
-    var type = "TRUE-COLOR";
+    var type = "TRUE_COLOR";
+    var time = formatWmsDate(options.time);
     if (options.url.includes("sentinel2")) {
       url = CONFIG.sentinel2_wms;
-      type = "TRUE_COLOR";
+    } else if (options.url.includes("sentinel3")) {
+      url = CONFIG.sentinel3_wms;
+    } else if (
+      options.url.includes("_L9_") ||
+      options.url.includes("_L8_") ||
+      options.url.includes("landsat")
+    ) {
+      url = CONFIG.landsat89_wms;
+      type = "TRUE-COLOR-L1";
+      time = formatWmsDate(options.time, 240);
     }
-    if (options.url.includes("sentinel3")) url = CONFIG.sentinel3_wms;
     layers[id]["wms"] = L.tileLayer
       .wms(url, {
         tileSize: 512,
@@ -347,7 +359,7 @@ const updateWms = async (map, layers, id, options, language) => {
         maxZoom: 16,
         preset: type,
         layers: type,
-        time: formatWmsDate(options.time),
+        time: time,
         gain: 1,
         gamma: 1,
       })

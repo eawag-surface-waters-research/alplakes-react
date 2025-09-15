@@ -600,6 +600,12 @@ p {
   height: 26px;
   padding: 0;
   width: 100%;
+  position: absolute;
+  top: 0;
+}
+
+.main .setting .color {
+  position: relative;
 }
 
 .main .setting .color-box {
@@ -700,6 +706,32 @@ p {
 .main .setting .value button:hover {
   border: 1px solid var(--border-color);
   box-shadow: none;
+}
+
+.main .setting .depth button.set {
+  display: inline-block; 
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-left: 12px;
+  padding: 4px 12px;
+}
+
+.main .setting .depth button.set.active {
+  box-shadow: var(--bottom-shadow);
+  background-color: var(--highlight-color);
+  border: 1px solid transparent;
+  color: white;
+}
+
+.main .setting .depth button.set.active:hover {
+  box-shadow: none;
+}
+
+.main .setting table.depth-minmax {
+  width: 100%;
+  margin-top: -5px;
 }
 
 .main .setting select {

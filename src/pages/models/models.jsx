@@ -87,7 +87,7 @@ class Models extends Component {
     return (
       <React.Fragment>
         <Helmet>
-          <title>Models | Alplakes</title>
+          <title>Models - Alplakes</title>
           <meta
             name="description"
             content="Learn more about the Alplakes models."

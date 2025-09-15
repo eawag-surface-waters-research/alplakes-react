@@ -42,7 +42,10 @@
       "url": "https://www.datalakes-eawag.ch/datadetail/956",
       "lat": 46.934,
       "lng": 7.077,
-      "depth": [{"name": "1.0 m", "depth": 1}],
+      "depth": [
+        {"name": "1.0 m", "depth": 1},
+        {"name": "43.0 m", "depth": 43}
+      ],
       "models": [
         {"type": "delft3d-flow", "id": "murten"},
         {"type": "simstrat", "id": "murten"}
@@ -59,7 +62,10 @@
       "url": "https://www.datalakes-eawag.ch/datadetail/1077",
       "lat": 47.125,
       "lng": 8.609,
-      "depth": [{"name": "2.0 m", "depth": 2}],
+      "depth": [
+        {"name": "2.0 m", "depth": 2},
+        {"name": "79.0 m", "depth": 79}
+      ],
       "models": [
         {"type": "delft3d-flow", "id": "ageri"},
         {"type": "simstrat", "id": "aegeri"}
@@ -76,7 +82,9 @@
       "url": "https://www.datalakes-eawag.ch/datadetail/1046",
       "lat": 47.278,
       "lng": 8.214,
-      "depth": [{"name": "0.5 m", "depth": 0.5}],
+      "depth": [
+        {"name": "0.5 m", "depth": 0.5},
+        {"name": "43.0 m", "depth": 43.0}],
       "models": [
         {"type": "delft3d-flow", "id": "hallwil"},
         {"type": "simstrat", "id": "hallwil"}
@@ -93,7 +101,10 @@
       "url": "https://www.datalakes-eawag.ch/datadetail/515",
       "lat": 47.366,
       "lng": 8.665,
-      "depth": [{"name": "1.0 m", "depth": 1.0}],
+      "depth": [
+        {"name": "1.0 m", "depth": 1.0},
+        {"name": "16.9 m", "depth": 16.9}
+      ],
       "models": [
         {"type": "delft3d-flow", "id": "greifensee"},
         {"type": "simstrat", "id": "greifensee"}
@@ -404,6 +415,137 @@
       "depth": [{"name": "Surface", "depth": 1.0}],
       "models": [
         {"type": "simstrat", "id": "traunsee"}
+      ]
+    }
+  ],
+  "worthersee": [
+    {
+      "name": "Pörtschach am Wörthersee",
+      "type": "lake-scrape",
+      "id": "ktn_212985",
+      "source": "Hydrographischer Dienst Land Kärnten",
+      "url": "https://hydrographie.ktn.gv.at/gewasser/seen-wasserstaende",
+      "lat": 46.634,
+      "lng": 14.138,
+      "depth": [{"name": "Surface", "depth": 1.0}],
+      "models": [
+        {"type": "simstrat", "id": "worthersee"}
+      ]
+    }
+  ],
+  "faaker": [
+    {
+      "name": "Faak Bundessportheim",
+      "type": "lake-scrape",
+      "id": "ktn_212795",
+      "source": "Hydrographischer Dienst Land Kärnten",
+      "url": "https://hydrographie.ktn.gv.at/gewasser/seen-wasserstaende",
+      "lat": 46.577,
+      "lng": 13.914,
+      "depth": [{"name": "Surface", "depth": 1.0}],
+      "models": [
+        {"type": "simstrat", "id": "faaker"}
+      ]
+    }
+  ],
+  "ossiacher": [
+    {
+      "name": "St. Andrä",
+      "type": "lake-scrape",
+      "id": "ktn_213272",
+      "source": "Hydrographischer Dienst Land Kärnten",
+      "url": "https://hydrographie.ktn.gv.at/gewasser/seen-wasserstaende",
+      "lat": 46.652,
+      "lng": 13.903,
+      "depth": [{"name": "Surface", "depth": 1.0}],
+      "models": [
+        {"type": "simstrat", "id": "ossiacher"}
+      ]
+    }
+  ],
+  "millstaetter": [
+    {
+      "name": "Millstatt",
+      "type": "lake-scrape",
+      "id": "ktn_212514",
+      "source": "Hydrographischer Dienst Land Kärnten",
+      "url": "https://hydrographie.ktn.gv.at/gewasser/seen-wasserstaende",
+      "lat": 46.801,
+      "lng": 13.571,
+      "depth": [{"name": "Surface", "depth": 1.0}],
+      "models": [
+        {"type": "simstrat", "id": "millstaetter"}
+      ]
+    }
+  ],
+  "irrsee": [
+    {
+      "name": "Zell am Moos",
+      "type": "lake-scrape",
+      "id": "ooe_16579",
+      "source": "Land Oberösterreich",
+      "url": "https://hydro.ooe.gv.at/#/overview/Wasserstand/station/16579/Zell%20am%20Moos/Wassertemperatur",
+      "lat": 47.9020660890905,
+      "lng": 13.312280456514305,
+      "depth": [{"name": "Surface", "depth": 1.0}],
+      "models": [
+        {"type": "simstrat", "id": "irrsee"}
+      ]
+    }
+  ],
+  "wolfgangsee": [
+    {
+      "name": "Strobl",
+      "type": "lake-scrape",
+      "id": "ooe_16566",
+      "source": "Land Oberösterreich",
+      "url": "https://hydro.ooe.gv.at/#/overview/Wasserstand/station/16566/Strobl/Wassertemperatur",
+      "lat": 47.7232006427997,
+      "lng": 13.484417180117116,
+      "depth": [{"name": "Surface", "depth": 1.0}],
+      "models": [
+        {"type": "simstrat", "id": "wolfgangsee"}
+      ]
+    }
+  ],
+  "attersee": [
+    {
+      "name": "Unterach am Attersee",
+      "type": "lake-scrape",
+      "id": "ooe_16585",
+      "source": "Land Oberösterreich",
+      "url": "https://hydro.ooe.gv.at/#/overview/Wasserstand/station/16585/Unterach%20am%20Attersee/Wassertemperatur",
+      "lat": 47.80417264468823,
+      "lng": 13.490006522292452,
+      "depth": [{"name": "Surface", "depth": 1.0}],
+      "models": [
+        {"type": "simstrat", "id": "attersee"}
+      ]
+    },
+    {
+      "name": "Weissenbach am Attersee",
+      "type": "lake-scrape",
+      "id": "ooe_986446",
+      "source": "Land Oberösterreich",
+      "url": "https://hydro.ooe.gv.at/#/overview/Wasserstand/station/986446/Wei%C3%9Fenbach%20am%20Attersee%20%28Seepegel%29/Wassertemperatur",
+      "lat": 47.81409530906625,
+      "lng": 13.546620670631906,
+      "depth": [{"name": "Surface", "depth": 1.0}],
+      "models": [
+        {"type": "simstrat", "id": "attersee"}
+      ]
+    },
+    {
+      "name": "Kammer",
+      "type": "lake-scrape",
+      "id": "ooe_16589",
+      "source": "Land Oberösterreich",
+      "url": "https://hydro.ooe.gv.at/#/overview/Wasserstand/station/16589/Kammer/Wassertemperatur",
+      "lat": 47.943111010459354,
+      "lng": 13.593917045314797,
+      "depth": [{"name": "Surface", "depth": 1.0}],
+      "models": [
+        {"type": "simstrat", "id": "attersee"}
       ]
     }
   ]

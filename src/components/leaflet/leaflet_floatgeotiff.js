@@ -27,7 +27,7 @@ L.FloatGeotiff = L.ImageOverlay.extend({
     await this._processData();
     this._convolve();
     this._createColorRamp();
-    this._redraw();
+    this._reset();
     if (document.getElementById("loading")) {
       document.getElementById("loading").style.visibility = "hidden";
     }
@@ -40,7 +40,7 @@ L.FloatGeotiff = L.ImageOverlay.extend({
     }
     this._convolve();
     this._createColorRamp();
-    this._redraw();
+    this._reset();
     if (document.getElementById("loading")) {
       document.getElementById("loading").style.visibility = "hidden";
     }
@@ -52,16 +52,16 @@ L.FloatGeotiff = L.ImageOverlay.extend({
     }
     map._panes.overlayPane.appendChild(this._image);
     map.on("click", this._onClick, this);
-    map.on("moveend", this._redraw, this);
+    map.on("moveend", this._reset, this);
     map.on("mousemove", this._onMousemove, this);
     if (map.options.zoomAnimation && L.Browser.any3d) {
       map.on("zoomanim", this._animateZoom, this);
     }
-    this._redraw();
+    this._reset();
   },
   onRemove: function (map) {
     map.getPanes().overlayPane.removeChild(this._image);
-    map.off("moveend", this._redraw, this);
+    map.off("moveend", this._reset, this);
     map.off("click", this._onClick, this);
     map.off("mousemove", this._onMousemove, this);
     if (map.options.zoomAnimation) {
@@ -183,47 +183,26 @@ L.FloatGeotiff = L.ImageOverlay.extend({
     }
   },
   _animateZoom: function (e) {
-    if (L.version >= "1.0") {
-      var scale = this._map.getZoomScale(e.zoom),
-        offset = this._map._latLngBoundsToNewLayerBounds(
-          this._map.getBounds(),
-          e.zoom,
-          e.center
-        ).min;
-      L.DomUtil.setTransform(this._image, offset, scale);
-    } else {
-      this.scale = this._map.getZoomScale(e.zoom);
-      this.nw = this._map.getBounds().getNorthWest();
-      this.se = this._map.getBounds().getSouthEast();
-      this.topLeft = this._map._latLngToNewLayerPoint(
-        this.nw,
+    var scale = this._map.getZoomScale(e.zoom),
+      offset = this._map._latLngBoundsToNewLayerBounds(
+        this._map.getBounds(),
         e.zoom,
         e.center
-      );
-      this.size = this._map
-        ._latLngToNewLayerPoint(this.se, e.zoom, e.center)
-        ._subtract(this.topLeft);
-      this._image.style[L.DomUtil.TRANSFORM] =
-        L.DomUtil.getTranslateString(this.topLeft) +
-        " scale(" +
-        this.scale +
-        ") ";
-    }
+      ).min;
+    L.DomUtil.setTransform(this._image, offset, scale);
   },
-  _reset: function () {},
-  _redraw: function () {
+  _reset: function () {
     if (this.hasOwnProperty("_map")) {
       if (this._rasterBounds) {
-        this.topLeft = this._map.latLngToLayerPoint(
-          this._map.getBounds().getNorthWest()
-        );
-        this.size = this._map
-          .latLngToLayerPoint(this._map.getBounds().getSouthEast())
-          ._subtract(this.topLeft);
-
-        L.DomUtil.setPosition(this._image, this.topLeft);
-        this._image.style.width = this.size.x + "px";
-        this._image.style.height = this.size.y + "px";
+        var topLeft = this._map.latLngToLayerPoint(
+            this._map.getBounds().getNorthWest()
+          ),
+          size = this._map
+            .latLngToLayerPoint(this._map.getBounds().getSouthEast())
+            ._subtract(topLeft);
+        L.DomUtil.setPosition(this._image, topLeft);
+        this._image.style.width = size.x + "px";
+        this._image.style.height = size.y + "px";
 
         this._drawImage();
       }
@@ -242,33 +221,34 @@ L.FloatGeotiff = L.ImageOverlay.extend({
         this._map.latLngToContainerPoint(this._rasterBounds.getNorthWest()),
         this._map.latLngToContainerPoint(this._rasterBounds.getSouthEast())
       );
-      args.xStart =
-        args.rasterPixelBounds.min.x > 0 ? args.rasterPixelBounds.min.x : 0;
-      args.xFinish =
-        args.rasterPixelBounds.max.x < this.size.x
-          ? args.rasterPixelBounds.max.x
-          : this.size.x;
-      args.yStart =
-        args.rasterPixelBounds.min.y > 0 ? args.rasterPixelBounds.min.y : 0;
-      args.yFinish =
-        args.rasterPixelBounds.max.y < this.size.y
-          ? args.rasterPixelBounds.max.y
-          : this.size.y;
+
+      args.xStart = Math.max(0, Math.round(args.rasterPixelBounds.min.x));
+      args.xFinish = Math.min(
+        Math.round(args.rasterPixelBounds.max.x),
+        Math.round(this.size.x)
+      );
+      args.yStart = Math.max(0, Math.round(args.rasterPixelBounds.min.y));
+      args.yFinish = Math.min(
+        Math.round(args.rasterPixelBounds.max.y),
+        Math.round(this.size.y)
+      );
+
       args.plotWidth = args.xFinish - args.xStart;
       args.plotHeight = args.yFinish - args.yStart;
 
       if (args.plotWidth <= 0 || args.plotHeight <= 0) {
         let plotCanvas = document.createElement("canvas");
-        plotCanvas.width = this.size.x;
-        plotCanvas.height = this.size.y;
+        plotCanvas.width = Math.round(this.size.x);
+        plotCanvas.height = Math.round(this.size.y);
         let ctx = plotCanvas.getContext("2d");
         ctx.clearRect(0, 0, plotCanvas.width, plotCanvas.height);
         this._image.src = plotCanvas.toDataURL();
         return;
       }
 
-      args.xOrigin = this._map.getPixelBounds().min.x + args.xStart;
-      args.yOrigin = this._map.getPixelBounds().min.y + args.yStart;
+      args.xOrigin = Math.round(this._map.getPixelBounds().min.x + args.xStart);
+      args.yOrigin = Math.round(this._map.getPixelBounds().min.y + args.yStart);
+
       args.lngSpan =
         (this._rasterBounds._northEast.lng -
           this._rasterBounds._southWest.lng) /
@@ -278,16 +258,15 @@ L.FloatGeotiff = L.ImageOverlay.extend({
           this._rasterBounds._southWest.lat) /
         this.raster.height;
 
-      //Draw image data to canvas and pass to image element
       let plotCanvas = document.createElement("canvas");
-      plotCanvas.width = this.size.x;
-      plotCanvas.height = this.size.y;
+      plotCanvas.width = Math.round(this.size.x);
+      plotCanvas.height = Math.round(this.size.y);
       let ctx = plotCanvas.getContext("2d");
       ctx.clearRect(0, 0, plotCanvas.width, plotCanvas.height);
 
       this._render(ctx, args);
 
-      this._image.src = String(plotCanvas.toDataURL());
+      this._image.src = plotCanvas.toDataURL();
       this._image.style.opacity = this.options.opacity;
       this._image.style.zIndex = this.options.zIndex + 100;
     }
@@ -349,49 +328,73 @@ L.FloatGeotiff = L.ImageOverlay.extend({
   },
   _render: function (ctx, args) {
     ctx.globalAlpha = this.options.opacity;
-    var imgData = ctx.createImageData(args.plotWidth, args.plotHeight);
-    var e = Math.abs(Math.max(args.rasterPixelBounds.min.x, 0));
-    var n = Math.abs(Math.max(args.rasterPixelBounds.min.y, 0));
-    var validpixelexpression =
+    const imgData = ctx.createImageData(args.plotWidth, args.plotHeight);
+    const data = imgData.data;
+
+    const e = Math.abs(Math.max(args.rasterPixelBounds.min.x, 0));
+    const n = Math.abs(Math.max(args.rasterPixelBounds.min.y, 0));
+
+    const rasterWidth = this.raster.width;
+    const rasterHeight = this.raster.height;
+    const boundsSW = this._rasterBounds._southWest;
+    const boundsNE = this._rasterBounds._northEast;
+    const latDiff = boundsNE.lat - boundsSW.lat;
+    const lngDiff = boundsNE.lng - boundsSW.lng;
+    const validpixelexpression =
       this.raster.data.length > 1 && this.options.validpixelexpression;
-    var rasterWidth = this.raster.width;
-    var rasterHeight = this.raster.height;
-    var boundsSW = this._rasterBounds._southWest;
-    var boundsNE = this._rasterBounds._northEast;
-    var latDiff = boundsNE.lat - boundsSW.lat;
-    var lngDiff = boundsNE.lng - boundsSW.lng;
-    var data = imgData.data;
-    var pixelIndex = 0;
+
+    let pixelIndex = 0;
     for (let y = 0; y < args.plotHeight; y++) {
+      const latLngLeft = this._map.containerPointToLatLng([e, y + n]);
+      const latLngRight = this._map.containerPointToLatLng([
+        args.plotWidth + e,
+        y + n,
+      ]);
+
+      const dLng = (latLngRight.lng - latLngLeft.lng) / args.plotWidth;
+      const dLat = (latLngRight.lat - latLngLeft.lat) / args.plotWidth;
+      let curLng = latLngLeft.lng;
+      let curLat = latLngLeft.lat;
+
       for (let x = 0; x < args.plotWidth; x++) {
-        let latLng = this._map.containerPointToLatLng([x + e, y + n]);
-        let xx = Math.floor(
-          (rasterWidth * (latLng.lng - boundsSW.lng)) / lngDiff
+        const xx = Math.floor(
+          (rasterWidth * (curLng - boundsSW.lng)) / lngDiff
         );
-        let yy =
+        const yy =
           rasterHeight -
-          Math.ceil((rasterHeight * (latLng.lat - boundsSW.lat)) / latDiff);
-        var ii = yy * rasterWidth + xx;
-        let color = this._getColor(this.plotData[ii]);
-        if (color) {
-          data[pixelIndex] = color[0];
-          data[pixelIndex + 1] = color[1];
-          data[pixelIndex + 2] = color[2];
-          data[pixelIndex + 3] = validpixelexpression
-            ? this.raster.data[1][ii] === this.options.invalidpixel
-              ? 0
-              : 255
-            : 255;
+          Math.ceil((rasterHeight * (curLat - boundsSW.lat)) / latDiff);
+
+        if (xx >= 0 && xx < rasterWidth && yy >= 0 && yy < rasterHeight) {
+          const ii = yy * rasterWidth + xx;
+          const color = this._getColor(this.plotData[ii]);
+
+          if (color) {
+            data[pixelIndex] = color[0];
+            data[pixelIndex + 1] = color[1];
+            data[pixelIndex + 2] = color[2];
+            data[pixelIndex + 3] =
+              validpixelexpression &&
+              this.raster.data[1][ii] === this.options.invalidpixel
+                ? 0
+                : 255;
+          } else {
+            data[pixelIndex] = 0;
+            data[pixelIndex + 1] = 0;
+            data[pixelIndex + 2] = 0;
+            data[pixelIndex + 3] = 0;
+          }
         } else {
           data[pixelIndex] = 0;
           data[pixelIndex + 1] = 0;
           data[pixelIndex + 2] = 0;
           data[pixelIndex + 3] = 0;
         }
+
+        curLng += dLng;
+        curLat += dLat;
         pixelIndex += 4;
       }
     }
-
     ctx.putImageData(imgData, args.xStart, args.yStart);
   },
   transform: function (rasterImageData, args) {

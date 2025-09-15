@@ -532,7 +532,7 @@ class Home extends Component {
           <title>Alplakes</title>
           <meta
             name="description"
-            content="Monitoring and forecasting of lakes across the European alpine region."
+            content="Check the latest conditions of hundreds of lakes across the European Alps, with forecasts, measurements, and trends at your fingertips."
           />
         </Helmet>
         <NavBar {...this.props} small={true} />

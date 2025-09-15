@@ -1,0 +1,7 @@
+.toggle-box .toggle-box-content {
+    padding: 0 8px;
+}
+
+.toggle-box .toggle-box-content.hide {
+    display: none;
+}

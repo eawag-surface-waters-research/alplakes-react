@@ -28,7 +28,7 @@ class AddLayers extends Component {
                 onClick={() => this.addLayer(l.id)}
                 title={l.active ? "" : "Add to map"}
               >
-                <div className="status">{l.active ? "Added" : "Add"}</div>
+                <div className="status">{l.active ? "✔" : "+"}</div>
                 <div className={"icon " + l.type}>
                   <img src={images[l.name]} alt={l.name} />
                 </div>

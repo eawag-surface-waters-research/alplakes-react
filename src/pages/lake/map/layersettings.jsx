@@ -16,6 +16,7 @@ import "./map.css";
 import Period from "../../../components/customselect/period";
 import Depth from "../../../components/customselect/depth";
 import Color from "../../../components/customselect/color";
+import ToggleBox from "../../../components/togglebox/togglebox";
 
 class Raster extends Component {
   state = {
@@ -164,7 +165,7 @@ class Raster extends Component {
     return (
       <div className="layer-settings">
         <div className="setting half">
-          <div className="label">Model</div>
+          <div className="label">{Translations.model[language]}</div>
           <select
             value={layer["source"]}
             onChange={(event) => setModel(event, layer.id)}
@@ -190,7 +191,7 @@ class Raster extends Component {
           </div>
         </div>
         <div className="setting">
-          <div className="label">Period</div>
+          <div className="label">{Translations.period[language]}</div>
           <div className="period-selector">
             <Period
               period={period}
@@ -253,7 +254,7 @@ class Raster extends Component {
           </div>
         </div>
         <div className="setting">
-          <div className="label">Opacity</div>
+          <div className="label">{Translations.opacity[language]}</div>
           <div className="value">{opacity}</div>
           <input
             type="range"
@@ -270,10 +271,10 @@ class Raster extends Component {
           <ColorRamp onChange={this.setPalette} value={paletteName} />
         </div>
         <div className="setting">
-          <div className="label">Download</div>
+          <div className="label">{Translations.download[language]}</div>
           <select defaultValue="" onChange={this.downloadFile}>
             <option disabled value="">
-              Select week
+              {Translations.selectWeek[language]}
             </option>
             {downloadDates.reverse().map((d) => (
               <option key={d.url} value={d.url}>
@@ -451,7 +452,7 @@ class Current extends Component {
     return (
       <div className="layer-settings">
         <div className="setting half">
-          <div className="label">Model</div>
+          <div className="label">{Translations.model[language]}</div>
           <select
             value={layer["source"]}
             onChange={(event) => setModel(event, layer.id)}
@@ -477,7 +478,7 @@ class Current extends Component {
           </div>
         </div>
         <div className="setting">
-          <div className="label">Period</div>
+          <div className="label">{Translations.period[language]}</div>
           <div className="period-selector">
             <Period
               period={period}
@@ -495,93 +496,91 @@ class Current extends Component {
           onChange={setDepth}
           language={language}
         />
+        <ToggleBox
+          open={vector}
+          title={Translations.arrows[language]}
+          set="vector"
+          toggleDisplay={this.toggleDisplay}
+          content={
+            <div className="setting half">
+              <div className="label">{Translations.color[language]}</div>
+              <Color value={arrowsColor} onChange={this.setArrowsColor} />
+            </div>
+          }
+        />
+        <ToggleBox
+          open={streamlines}
+          title={Translations.streamlines[language]}
+          set="streamlines"
+          toggleDisplay={this.toggleDisplay}
+          content={
+            <React.Fragment>
+              <div className="setting half">
+                <div className="label">{Translations.paths[language]}</div>
+                <input
+                  type="number"
+                  value={_paths}
+                  onChange={this.setPaths}
+                  step="100"
+                  id={"streamlines_paths_" + id}
+                />
+              </div>
+              <div className="setting half">
+                <div className="label">{Translations.color[language]}</div>
+                <Color
+                  value={streamlinesColor}
+                  onChange={this.setStreamlinesColor}
+                />
+              </div>
+              <div className="setting">
+                <div className="label">{Translations.speed[language]}</div>
+                <div className="value">
+                  x {parseInt(Math.round(velocityScale * 10 ** 4) * 1000)}
+                </div>
+                <input
+                  type="range"
+                  min="0"
+                  step="0.01"
+                  max="1"
+                  value={this.convertSpeed(velocityScale)}
+                  onChange={this.setSpeed}
+                />
+              </div>
+            </React.Fragment>
+          }
+        />
+        <ToggleBox
+          open={raster}
+          title={Translations.raster[language]}
+          set="raster"
+          toggleDisplay={this.toggleDisplay}
+          content={
+            <React.Fragment>
+              <div className="setting">
+                <div className="label">Palette</div>
+                <div className="value">{paletteName}</div>
+                <ColorRamp onChange={this.setPalette} value={paletteName} />
+              </div>
+              <div className="setting">
+                <div className="label">{Translations.opacity[language]}</div>
+                <div className="value">{opacity}</div>
+                <input
+                  type="range"
+                  min="0"
+                  max="1"
+                  step="0.1"
+                  value={opacity}
+                  onChange={this.setOpacity}
+                ></input>
+              </div>
+            </React.Fragment>
+          }
+        />
         <div className="setting">
-          <label className="switch">
-            <input
-              type="checkbox"
-              checked={vector}
-              onChange={() => this.toggleDisplay("vector")}
-            />
-            <span className="slider round"></span>
-          </label>
-          <div className="title">Arrows</div>
-        </div>
-        <div className="setting half">
-          <div className="label">Color</div>
-          <Color value={arrowsColor} onChange={this.setArrowsColor} />
-        </div>
-        <div className="setting">
-          <label className="switch">
-            <input
-              type="checkbox"
-              checked={streamlines}
-              onChange={() => this.toggleDisplay("streamlines")}
-            />
-            <span className="slider round"></span>
-          </label>
-          <div className="title">Streamlines</div>
-        </div>
-        <div className="setting half">
-          <div className="label">Paths</div>
-          <input
-            type="number"
-            value={_paths}
-            onChange={this.setPaths}
-            step="100"
-            id={"streamlines_paths_" + id}
-          />
-        </div>
-        <div className="setting half">
-          <div className="label">Color</div>
-          <Color value={streamlinesColor} onChange={this.setStreamlinesColor} />
-        </div>
-        <div className="setting half">
-          <div className="label">Speed</div>
-          <div className="value">
-            x {parseInt(Math.round(velocityScale * 10 ** 4) * 1000)}
-          </div>
-          <input
-            type="range"
-            min="0"
-            step="0.01"
-            max="1"
-            value={this.convertSpeed(velocityScale)}
-            onChange={this.setSpeed}
-          />
-        </div>
-        <div className="setting">
-          <label className="switch">
-            <input
-              type="checkbox"
-              checked={raster}
-              onChange={() => this.toggleDisplay("raster")}
-            />
-            <span className="slider round"></span>
-          </label>
-          <div className="title">Raster</div>
-        </div>
-        <div className="setting">
-          <div className="label">Palette</div>
-          <div className="value">{paletteName}</div>
-          <ColorRamp onChange={this.setPalette} value={paletteName} />
-        </div>
-        <div className="setting">
-          <div className="label">Opacity</div>
-          <div className="value">{opacity}</div>
-          <input
-            type="range"
-            min="0"
-            max="1"
-            step="0.1"
-            value={opacity}
-            onChange={this.setOpacity}
-          ></input>
-        </div>
-        <div className="setting">
-          <div className="label">Download</div>
+          <div className="label">{Translations.download[language]}</div>
           <select defaultValue="" onChange={this.downloadFile}>
             <option disabled value="">
-              Select week
+              {Translations.selectWeek[language]}
             </option>
             {downloadDates.reverse().map((d) => (
               <option key={d.url} value={d.url}>
@@ -744,6 +743,7 @@ class Tiff extends Component {
   };
 
   addCssRules = (date, available) => {
+    const { language } = this.props;
     var { id } = this.state;
     var start = new Date(date.getFullYear(), date.getMonth(), 1);
     var end = this.addOneMonth(start);
@@ -780,7 +780,7 @@ class Tiff extends Component {
         if (element.length > 0) {
           if (element[0].querySelector("div") === null) {
             let deg = Math.ceil((p / 100) * 180) + 180;
-            element[0].title = `${p}% lake coverage (${obs} images available)`;
+            element[0].title = `${p}% ${Translations.lakeCoverage[language]} (${obs} ${Translations.imagesAvailable[language]})`;
             if (obs > 0) {
               element[0].innerHTML = `<div class="percentage" style="background: conic-gradient(transparent 180deg, var(--highlight-color) 180deg ${deg}deg, transparent ${deg}deg 360deg);"></div></div><div class="observations">${obs}</div><div class="date">${day}</div>`;
             } else {
@@ -865,7 +865,7 @@ class Tiff extends Component {
                 >
                   <div className="right-buttons">
                     <div className="button">
-                      {i.url === image.url ? "Selected" : "Select"}
+                      {i.url === image.url ? "✔" : "+"}
                     </div>
                   </div>
                   <div className="left">
@@ -877,12 +877,17 @@ class Tiff extends Component {
                   <div className="right">
                     <div>{formatDateTime(i.time, months)}</div>
                     <div>
-                      {`${i.percent}% coverage`} |{" "}
-                      {`${Math.round(i.ave * 10) / 10} ${unit}`}
+                      {`${i.percent}% ${Translations.coverage[
+                        language
+                      ].toLowerCase()}`}{" "}
+                      | {`${Math.round(i.ave * 10) / 10} ${unit}`}
                     </div>
                   </div>
                   <div className="under">
-                    <a href={i.url} title="Download image as GeoTIFF">
+                    <a
+                      href={i.url}
+                      title={Translations.geotiffDownload[language]}
+                    >
                       <button className="tiff">
                         {Translations.download[language]}
                       </button>
@@ -938,7 +943,7 @@ class Tiff extends Component {
           </div>
         </div>
         <div className="setting half">
-          <div className="label">Opacity</div>
+          <div className="label">{Translations.opacity[language]}</div>
           <div className="value">{opacity}</div>
           <input
             type="range"
@@ -950,7 +955,7 @@ class Tiff extends Component {
           ></input>
         </div>
         <div className="setting half">
-          <div className="label">Smoothing</div>
+          <div className="label">{Translations.smoothing[language]}</div>
           <div className="value">{convolve}</div>
           <input
             type="range"
@@ -962,7 +967,7 @@ class Tiff extends Component {
           ></input>
         </div>
         <div className="setting half">
-          <div className="label">Min Coverage</div>
+          <div className="label">{Translations.minCoverage[language]}</div>
           <div className="value">{coverage} %</div>
           <input
             type="range"
@@ -973,20 +978,26 @@ class Tiff extends Component {
             onChange={this.setCoverage}
           ></input>
         </div>
-        <div className="setting half">
-          <div className="label">Imagery</div>
-          <label className="switch">
-            <input type="checkbox" checked={wms} onChange={this.setWms}></input>
-            <span className="slider round"></span>
-          </label>
-        </div>
+        {layer.id !== "satellite_temperature" && (
+          <div className="setting half">
+            <div className="label">{Translations.imagery[language]}</div>
+            <label className="switch">
+              <input
+                type="checkbox"
+                checked={wms}
+                onChange={this.setWms}
+              ></input>
+              <span className="slider round"></span>
+            </label>
+          </div>
+        )}
         <div className="setting">
           <div className="label">Palette</div>
           <div className="value">{paletteName}</div>
           <ColorRamp onChange={this.setPalette} value={paletteName} />
         </div>
         <div className="setting">
-          Valid Pixel Expression
+          {Translations.validPixelExpression[language]}
           <input
             type="checkbox"
             checked={
@@ -1049,7 +1060,7 @@ class Particles extends Component {
     return (
       <div className="layer-settings">
         <div className="setting">
-          <div className="label">Model</div>
+          <div className="label">{Translations.model[language]}</div>
           <select
             value={layer["source"]}
             onChange={(event) => setModel(event, layer.id)}
@@ -1062,7 +1073,7 @@ class Particles extends Component {
           </select>
         </div>
         <div className="setting">
-          <div className="label">Period</div>
+          <div className="label">{Translations.period[language]}</div>
           <div className="period-selector">
             <Period
               period={period}
@@ -1081,7 +1092,7 @@ class Particles extends Component {
           language={language}
         />
         <div className="setting half">
-          <div className="label">Particles</div>
+          <div className="label">{Translations.particles[language]}</div>
           <div className="value">{paths}</div>
           <input
             type="range"
@@ -1093,7 +1104,7 @@ class Particles extends Component {
           ></input>
         </div>
         <div className="setting half">
-          <div className="label">Spread</div>
+          <div className="label">{Translations.spread[language]}</div>
           <div className="value">{Math.ceil(spread)}</div>
           <input
             type="range"
@@ -1105,7 +1116,7 @@ class Particles extends Component {
           ></input>
         </div>
         <div className="setting half">
-          <div className="label">Opacity</div>
+          <div className="label">{Translations.opacity[language]}</div>
           <div className="value">{opacity}</div>
           <input
             type="range"
@@ -1118,7 +1129,7 @@ class Particles extends Component {
         </div>
         <div className="setting">
           <button className="remove" onClick={this.removeParticles}>
-            Remove Particles
+            {Translations.removeParticles[language]}
           </button>
         </div>
       </div>

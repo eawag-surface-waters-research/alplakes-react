@@ -75,6 +75,22 @@
     position: relative;
 }
 
+.map-graph .map-graph-content .no-data {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--box-color);
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    z-index: 9;
+}
+
+.map-graph .map-graph-content .no-data.hide {
+    display: none;
+}
+
 .map-graph .map-graph-content .input-coordinates {
     position: absolute;
     left: 20px;
