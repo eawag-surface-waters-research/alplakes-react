@@ -404,6 +404,71 @@
     width: 500px;
 }
 
+/** AI Summary **/
+
+.main .lake .forecast .ai-summary .ai-beta {
+    font-size: 14px;
+    font-weight: bold;
+    display: inline-block;
+    background-color: var(--highlight-color);
+    padding: 2px 10px;
+    border-radius: 8px;
+    color: white;
+    margin-left: 5px;
+}
+
+.main .lake .forecast .ai-summary .ai-content {
+    position: relative;
+    max-width: 716px;
+    box-sizing: border-box;
+    background-color: var(--background-color);
+    border-radius: 20px;
+    padding: 20px;
+    background: linear-gradient(var(--background-color), var(--background-color)) padding-box,
+        linear-gradient(to right, #44bca7, darkorchid) border-box;
+    border: 2px solid transparent;
+}
+
+
+.main .lake .forecast .ai-summary .ai-content .ai-source {
+    color: var(--background-subtle-font-color);
+    font-size: 14px;
+    margin-top: 8px;
+}
+
+.main .lake .forecast .ai-summary .ai-content .ai-source .ai-model {
+    display: inline-block;
+    font-weight: bold;
+}
+
+.main .lake .forecast .ai-summary .ai-content .ai-source a {
+    color: var(--link-color);
+}
+
+.main .lake .forecast .ai-summary .ai-content .ai-prompt {
+    background-color: var(--box-color);
+    position: absolute;
+    right: 12px;
+    bottom: 12px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.main .lake .forecast .ai-summary .ai-content .ai-prompt:hover {
+    transform: scale(1.1);
+}
+
+.main .lake .forecast .ai-summary .ai-content .ai-prompt img {
+    height: 18px;
+    padding: 6px 8px 5px 8px;
+}
+
+.main.dark .lake .forecast .ai-summary .ai-content .ai-prompt img {
+    filter: invert(1);
+}
+
+
 /** Scientific **/
 
 .main .lake .measurements .scientific .clickable-box {

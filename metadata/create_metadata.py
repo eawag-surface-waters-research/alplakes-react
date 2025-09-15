@@ -203,6 +203,13 @@ for lake in metadata:
             }
         home["filters"].append("1D")
 
+    # AI summary
+    if "ai_summary" in lake and lake["ai_summary"]:
+        if "forecast" not in data:
+            data["forecast"] = {"ai_summary": True}
+        else:
+            data["forecast"]["ai_summary"] = True
+
 
     # Measurement Data
     if "current_temperature" in lake and lake["current_temperature"] == True:

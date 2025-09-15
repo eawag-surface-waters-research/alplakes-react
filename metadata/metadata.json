@@ -13,6 +13,7 @@
         "elevation": 372,
         "latitude": 46.45,
         "longitude": 6.5,
+        "ai_summary": true,
         "flags": [
             "swiss",
             "french"
@@ -323,6 +324,7 @@
         "elevation": 435,
         "latitude": 47.36,
         "longitude": 8.68,
+        "ai_summary": true,
         "flags": [
             "swiss"
         ],
@@ -387,6 +389,7 @@
         "elevation": 65,
         "latitude": 45.58,
         "longitude": 10.63,
+        "ai_summary": true,
         "current_temperature": true,
         "flags": [
             "italian"
@@ -941,6 +944,7 @@
         "elevation": 395.0,
         "latitude": 47.629,
         "longitude": 9.374,
+        "ai_summary": true,
         "flags": [
             "swiss",
             "german",
@@ -2897,6 +2901,7 @@
         "elevation": 475,
         "latitude": 46.364,
         "longitude": 14.095,
+        "ai_summary": true,
         "flags": [
             "slovenian"
         ],
@@ -2925,6 +2930,7 @@
         "elevation": 481,
         "latitude": 47.827,
         "longitude": 13.38,
+        "ai_summary": true,
         "flags": [
             "austrian"
         ],
