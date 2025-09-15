@@ -1,7 +1,7 @@
 import L from "leaflet";
 import { min, max } from "d3";
 
-L.VectorField = (L.Layer ? L.Layer : L.Class).extend({
+L.VectorField = L.ImageOverlay.extend({
   options: {
     vectorArrowColor: false,
     tooltipSensitivity: 0.00001,

@@ -1,7 +1,7 @@
 import L from "leaflet";
 import { min, max } from "d3";
 
-L.Raster = L.Layer.extend({
+L.Raster = L.ImageOverlay.extend({
   options: {
     parameter: "",
     unit: "",
@@ -46,19 +46,7 @@ L.Raster = L.Layer.extend({
     if (map.options.zoomAnimation && L.Browser.any3d) {
       map.on("zoomanim", this._animateZoom, this);
     }
-    map.on("touchstart", this._onZoomStart, this);
-    map.on("touchmove", this._onZoom, this);
-    map.on("touchend", this._onZoomEnd, this);
     this._reset();
-  },
-  _onZoomStart: function (e) {
-    console.log("Start");
-  },
-  _onZoom: function (e) {
-    console.log("Zoom");
-  },
-  _onZoomEnd: function (e) {
-    console.log("End");
   },
   _initCanvas: function () {
     var canvas = (this._canvas = L.DomUtil.create(
