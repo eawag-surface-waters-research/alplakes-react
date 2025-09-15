@@ -55,7 +55,8 @@ class AiSummary extends Component {
       return (
         <div className="ai-summary subsection">
           <h3>
-            {Translations.overview[language]}
+            {Translations.overview[language]}{" "}
+            <div className="ai-beta">BETA</div>
             <Information information={Translations.overviewText[language]} />
           </h3>
           <div className="ai-content">
@@ -69,7 +70,11 @@ class AiSummary extends Component {
               </a>
               .
             </div>
-            <div className="ai-prompt" title="Download model prompt" onClick={this.downloadFile}>
+            <div
+              className="ai-prompt"
+              title="Download model prompt"
+              onClick={this.downloadFile}
+            >
               <img src={downloadIcon} alt="Download" />
             </div>
           </div>

@@ -406,6 +406,17 @@
 
 /** AI Summary **/
 
+.main .lake .forecast .ai-summary .ai-beta {
+    font-size: 14px;
+    font-weight: bold;
+    display: inline-block;
+    background-color: var(--highlight-color);
+    padding: 2px 10px;
+    border-radius: 8px;
+    color: white;
+    margin-left: 5px;
+}
+
 .main .lake .forecast .ai-summary .ai-content {
     position: relative;
     max-width: 716px;
