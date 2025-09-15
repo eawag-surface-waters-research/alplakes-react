@@ -221,33 +221,34 @@ L.FloatGeotiff = L.ImageOverlay.extend({
         this._map.latLngToContainerPoint(this._rasterBounds.getNorthWest()),
         this._map.latLngToContainerPoint(this._rasterBounds.getSouthEast())
       );
-      args.xStart =
-        args.rasterPixelBounds.min.x > 0 ? args.rasterPixelBounds.min.x : 0;
-      args.xFinish =
-        args.rasterPixelBounds.max.x < this.size.x
-          ? args.rasterPixelBounds.max.x
-          : this.size.x;
-      args.yStart =
-        args.rasterPixelBounds.min.y > 0 ? args.rasterPixelBounds.min.y : 0;
-      args.yFinish =
-        args.rasterPixelBounds.max.y < this.size.y
-          ? args.rasterPixelBounds.max.y
-          : this.size.y;
+
+      args.xStart = Math.max(0, Math.round(args.rasterPixelBounds.min.x));
+      args.xFinish = Math.min(
+        Math.round(args.rasterPixelBounds.max.x),
+        Math.round(this.size.x)
+      );
+      args.yStart = Math.max(0, Math.round(args.rasterPixelBounds.min.y));
+      args.yFinish = Math.min(
+        Math.round(args.rasterPixelBounds.max.y),
+        Math.round(this.size.y)
+      );
+
       args.plotWidth = args.xFinish - args.xStart;
       args.plotHeight = args.yFinish - args.yStart;
 
       if (args.plotWidth <= 0 || args.plotHeight <= 0) {
         let plotCanvas = document.createElement("canvas");
-        plotCanvas.width = this.size.x;
-        plotCanvas.height = this.size.y;
+        plotCanvas.width = Math.round(this.size.x);
+        plotCanvas.height = Math.round(this.size.y);
         let ctx = plotCanvas.getContext("2d");
         ctx.clearRect(0, 0, plotCanvas.width, plotCanvas.height);
         this._image.src = plotCanvas.toDataURL();
         return;
       }
 
-      args.xOrigin = this._map.getPixelBounds().min.x + args.xStart;
-      args.yOrigin = this._map.getPixelBounds().min.y + args.yStart;
+      args.xOrigin = Math.round(this._map.getPixelBounds().min.x + args.xStart);
+      args.yOrigin = Math.round(this._map.getPixelBounds().min.y + args.yStart);
+
       args.lngSpan =
         (this._rasterBounds._northEast.lng -
           this._rasterBounds._southWest.lng) /
@@ -257,16 +258,15 @@ L.FloatGeotiff = L.ImageOverlay.extend({
           this._rasterBounds._southWest.lat) /
         this.raster.height;
 
-      //Draw image data to canvas and pass to image element
       let plotCanvas = document.createElement("canvas");
-      plotCanvas.width = this.size.x;
-      plotCanvas.height = this.size.y;
+      plotCanvas.width = Math.round(this.size.x);
+      plotCanvas.height = Math.round(this.size.y);
       let ctx = plotCanvas.getContext("2d");
       ctx.clearRect(0, 0, plotCanvas.width, plotCanvas.height);
 
       this._render(ctx, args);
 
-      this._image.src = String(plotCanvas.toDataURL());
+      this._image.src = plotCanvas.toDataURL();
       this._image.style.opacity = this.options.opacity;
       this._image.style.zIndex = this.options.zIndex + 100;
     }
@@ -340,29 +340,22 @@ L.FloatGeotiff = L.ImageOverlay.extend({
     const boundsNE = this._rasterBounds._northEast;
     const latDiff = boundsNE.lat - boundsSW.lat;
     const lngDiff = boundsNE.lng - boundsSW.lng;
-
     const validpixelexpression =
       this.raster.data.length > 1 && this.options.validpixelexpression;
 
     let pixelIndex = 0;
-
-    // Loop rows
     for (let y = 0; y < args.plotHeight; y++) {
-      // compute latLng at left + right edge of this row
       const latLngLeft = this._map.containerPointToLatLng([e, y + n]);
       const latLngRight = this._map.containerPointToLatLng([
         args.plotWidth + e,
         y + n,
       ]);
 
-      // linear increments per column
       const dLng = (latLngRight.lng - latLngLeft.lng) / args.plotWidth;
       const dLat = (latLngRight.lat - latLngLeft.lat) / args.plotWidth;
-
       let curLng = latLngLeft.lng;
       let curLat = latLngLeft.lat;
 
-      // Loop cols
       for (let x = 0; x < args.plotWidth; x++) {
         const xx = Math.floor(
           (rasterWidth * (curLng - boundsSW.lng)) / lngDiff
@@ -391,21 +384,17 @@ L.FloatGeotiff = L.ImageOverlay.extend({
             data[pixelIndex + 3] = 0;
           }
         } else {
-          // transparent if outside bounds
           data[pixelIndex] = 0;
           data[pixelIndex + 1] = 0;
           data[pixelIndex + 2] = 0;
           data[pixelIndex + 3] = 0;
         }
 
-        // step forward
         curLng += dLng;
         curLat += dLat;
-
         pixelIndex += 4;
       }
     }
-
     ctx.putImageData(imgData, args.xStart, args.yStart);
   },
   transform: function (rasterImageData, args) {
