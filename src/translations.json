@@ -821,6 +821,12 @@
     "FR": "Paramètres",
     "IT": "Impostazioni"
   },
+  "downloadData": {
+    "EN": "Download data",
+    "DE": "Daten herunterladen",
+    "FR": "Télécharger les données",
+    "IT": "Scarica i dati"
+  },
   "download": {
     "EN": "Download",
     "DE": "Download",

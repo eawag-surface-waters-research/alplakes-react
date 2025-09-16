@@ -62,6 +62,7 @@ class GraphHeader extends Component {
       toggleDisplay,
       downloadJSON,
       downloadCSV,
+      removeDownload,
     } = this.props;
     var { font, download } = this.state;
     var fulllabel = "Fullscreen";
@@ -167,20 +168,24 @@ class GraphHeader extends Component {
             <button id={"png" + id} title="Download PNG">
               PNG
             </button>
-            <button
-              className="blue"
-              onClick={downloadJSON}
-              title="Download as JSON"
-            >
-              JSON
-            </button>
-            <button
-              className="red"
-              onClick={downloadCSV}
-              title="Download as CSV"
-            >
-              CSV
-            </button>
+            {!removeDownload && (
+              <React.Fragment>
+                <button
+                  className="blue"
+                  onClick={downloadJSON}
+                  title="Download as JSON"
+                >
+                  JSON
+                </button>
+                <button
+                  className="red"
+                  onClick={downloadCSV}
+                  title="Download as CSV"
+                >
+                  CSV
+                </button>
+              </React.Fragment>
+            )}
           </div>
         </div>
       </React.Fragment>

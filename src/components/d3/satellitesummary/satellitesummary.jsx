@@ -154,7 +154,7 @@ class SatelliteSummary extends Component {
           ))}
         </div>
         <div className="download-metadata" onClick={this.downloadMetadata}>
-          {Translations.download[language]}
+          {Translations.downloadData[language]} (CSV)
         </div>
         <D3LineGraph
           data={graph_data}
@@ -180,6 +180,7 @@ class SatelliteSummary extends Component {
           header={true}
           language={language}
           onClick={this.setImage}
+          removeDownload={true}
         />
         <div className={no_data ? "no-data" : "no-data hide"}>
           {Translations.noSatelliteData[language]}

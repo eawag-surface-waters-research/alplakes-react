@@ -321,7 +321,7 @@ class D3LineGraph extends Component {
 
   render() {
     var { graphid, fullscreen, fontSize } = this.state;
-    var { title, simple, clearPlot } = this.props;
+    var { title, simple, clearPlot, removeDownload } = this.props;
     return simple ? (
       <div className="linegraph-graph" id={"vis" + graphid} />
     ) : (
@@ -338,6 +338,7 @@ class D3LineGraph extends Component {
                 editFontSize={this.editFontSize}
                 downloadJSON={this.downloadJSON}
                 downloadCSV={this.downloadCSV}
+                removeDownload={removeDownload}
                 clearPlot={clearPlot}
               />
             </div>
