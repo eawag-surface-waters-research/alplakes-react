@@ -26,7 +26,7 @@ class NavBar extends Component {
       if (/iphone|ipad|ipod/i.test(ua)) {
         app = "ios";
       } else if (/android/i.test(ua)) {
-        app = false;
+        app = "andriod";
       }
       this.setState({ app });
     }
@@ -105,7 +105,7 @@ class NavBar extends Component {
                 {app === "andriod" && (
                   <div className="app-button">
                     <a
-                      href="https://play.google.com/store/apps?hl=en"
+                      href="https://play.google.com/store/apps/details?id=ch.eawag.alplakes&pcampaignid=web_share"
                       alt="Get it on Google Play"
                     >
                       <img src={googleIcon} alt="Get it on Google Play" />
