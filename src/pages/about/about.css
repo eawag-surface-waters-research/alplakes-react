@@ -3,15 +3,16 @@
     vertical-align: top;
     text-align: left;
     margin-top: 66px;
-    position: sticky;
+    position: fixed;
     top: var(--padding);
     padding-left: var(--padding);
+    right: 0;
 }
 
 .main .about .sidebar .sidebar-inner {
     background-color: var(--box-color);
     padding: 16px 24px;
-    border-radius: 16px;
+    border-radius: 16px 0 0 16px;
     width: 200px;
 }
 
@@ -32,7 +33,6 @@
 .main .about .content {
     height: 100%;
     display: inline-block;
-    width: var(--text-width);
     text-align: left;
     max-width: 100%;
 }
@@ -41,14 +41,28 @@
     color: var(--link-color);
 }
 
-.main .about .content .intro {
-    margin-bottom: 60px;
+.main .about .content .intro .tagline {
+    font-size: 22px;
+    margin: var(--padding) 0;
+}
+
+.main .about .content .intro .app-icon {
+    display: inline-block;
+    margin-right: 20px;
+}
+
+.main .about .content .intro .app-icon img {
+    height: 50px;
 }
 
 .main .about .content .section {
     margin-bottom: 40px;
-    border-top: 3px solid var(--border-color);
     padding-top: 60px;
+}
+
+.main .about .content .section .vision {
+    font-size: 22px;
+    margin-bottom: var(--padding);
 }
 
 .main .about .content .project-info {
@@ -61,6 +75,7 @@
     width: 300px;
     margin-top: 8px;
     margin-bottom: 8px;
+    border-radius: 8px;
 
 }
 
@@ -189,6 +204,11 @@
 
 .main .about table td {
     padding: 5px 5px 5px 20px;
+}
+
+.main .about .paper {
+    padding: calc(var(--padding)/2);
+    margin-bottom: calc(var(--padding)/2);
 }
 
 
