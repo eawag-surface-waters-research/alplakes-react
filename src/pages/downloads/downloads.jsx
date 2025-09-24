@@ -380,74 +380,79 @@ class Downloads extends Component {
         </Helmet>
         <NavBar {...this.props} relative={true} />
         <div className="content-width downloads">
-          <div className="header">
-            <h1> {Translations.downloads[language]}</h1>
-            <div
-              className="link"
-              onClick={() => this.scrollToSection(this.divRef)}
-            >
-              API Documentation
-              <img src={sortIcon} alt="Down" />
+          <div className="text-width">
+            <div className="header">
+              <h1> {Translations.downloads[language]}</h1>
+              <div
+                className="link"
+                onClick={() => this.scrollToSection(this.divRef)}
+              >
+                API Documentation
+                <img src={sortIcon} alt="Down" />
+              </div>
             </div>
+            <h2>Model Input Files</h2>
+            <p>
+              A set of example input files are provided for users that want to
+              adapt the models to their own purposes. For more information on
+              how to generate these files please see the <b>Models</b> page.
+            </p>
+            <h4>3D Models</h4>
+            <ModelInputs list={three_dimensional} />
+            <h4>1D Models</h4>
+            <ModelInputs list={one_dimensional} full={true} />
+            <h2>Model Output Files</h2>
+            <p>
+              Raw model results can be accessed using the forms below. For
+              formatted subsets of the output files please use the API.
+            </p>
+            <h4>3D Models</h4>
+            <p>
+              Available per week in NetCDF format. The dimensions and variables
+              are not self explanatory, you can refer to the notebook{" "}
+              <a
+                href="https://github.com/eawag-surface-waters-research/alplakes-simulations/blob/master/notebooks/process_results.ipynb"
+                target="_blank"
+                rel="noreferrer"
+              >
+                here
+              </a>{" "}
+              for more information.
+            </p>
+            <ThreeDimensionalResults list={three_dimensional} />
+            <h4>1D Models</h4>
+            <p>
+              Available in text format. The results are formatted in a CSV where
+              the column headers refer to the depth and the first column is the
+              number of days after the reference date (01.01.1981). The notebook{" "}
+              <a
+                href="https://github.com/Eawag-AppliedSystemAnalysis/operational-simstrat/blob/master/notebooks/process_results.ipynb"
+                target="_blank"
+                rel="noreferrer"
+              >
+                here
+              </a>{" "}
+              provides an example of processing the raw data.
+            </p>
+            <OneDimensionalResults list={one_dimensional} />
+            <h2 ref={this.divRef}>API Documentation</h2>
+            <p>
+              The Alplakes API provides direct access to terabytes of simulation
+              data. The API supports geospatial and temporal queries, allowing
+              access to subsets of the data for easier handling. Remote sensing
+              products are stored in an S3 bucket, and the file URL's are
+              available via the metadata endpoints in the API documentation
+              below.
+            </p>
+            <p>
+              Please email{" "}
+              <a href="mailto:james.runnalls@eawag.ch">
+                james.runnalls@eawag.ch
+              </a>{" "}
+              for any questions regarding the API or to be kept informed of any
+              future updates.
+            </p>
           </div>
-          <h2>Model Input Files</h2>
-          <p>
-            A set of example input files are provided for users that want to
-            adapt the models to their own purposes. For more information on how
-            to generate these files please see the <b>Models</b> page.
-          </p>
-          <h4>3D Models</h4>
-          <ModelInputs list={three_dimensional} />
-          <h4>1D Models</h4>
-          <ModelInputs list={one_dimensional} full={true} />
-          <h2>Model Output Files</h2>
-          <p>
-            Raw model results can be accessed using the forms below. For
-            formatted subsets of the output files please use the API.
-          </p>
-          <h4>3D Models</h4>
-          <p>
-            Available per week in NetCDF format. The dimensions and variables
-            are not self explanatory, you can refer to the notebook{" "}
-            <a
-              href="https://github.com/eawag-surface-waters-research/alplakes-simulations/blob/master/notebooks/process_results.ipynb"
-              target="_blank"
-              rel="noreferrer"
-            >
-              here
-            </a>{" "}
-            for more information.
-          </p>
-          <ThreeDimensionalResults list={three_dimensional} />
-          <h4>1D Models</h4>
-          <p>
-            Available in text format. The results are formatted in a CSV where
-            the column headers refer to the depth and the first column is the
-            number of days after the reference date (01.01.1981). The notebook{" "}
-            <a
-              href="https://github.com/Eawag-AppliedSystemAnalysis/operational-simstrat/blob/master/notebooks/process_results.ipynb"
-              target="_blank"
-              rel="noreferrer"
-            >
-              here
-            </a>{" "}
-            provides an example of processing the raw data.
-          </p>
-          <OneDimensionalResults list={one_dimensional} />
-          <h2 ref={this.divRef}>API Documentation</h2>
-          <p>
-            The Alplakes API provides direct access to terabytes of simulation
-            data. The API supports geospatial and temporal queries, allowing
-            access to subsets of the data for easier handling. Remote sensing
-            products are stored in an S3 bucket, and the file URL's are
-            available via the metadata endpoints in the API documentation below.
-          </p>
-          <p>
-            Please email{" "}
-            <a href="mailto:james.runnalls@eawag.ch">james.runnalls@eawag.ch</a>{" "}
-            for any questions regarding the API or to be kept informed of any
-            future updates.
-          </p>
 
           {swagger_error ? (
             <div className="error">

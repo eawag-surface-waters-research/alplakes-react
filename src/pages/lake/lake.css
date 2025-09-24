@@ -424,7 +424,7 @@
     background-color: var(--background-color);
     border-radius: 20px;
     padding: 20px;
-    background: linear-gradient(var(--background-color), var(--background-color)) padding-box,
+    background: linear-gradient(var(--box-color), var(--box-color)) padding-box,
         linear-gradient(to right, #44bca7, darkorchid) border-box;
     border: 2px solid transparent;
 }

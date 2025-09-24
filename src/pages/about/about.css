@@ -85,7 +85,7 @@
     margin-bottom: 20px;
 }
 
-@media screen and (max-width: 1280px) {
+@media screen and (max-width: 1380px) {
     .main .about .sidebar {
         display: none;
     }
@@ -213,6 +213,15 @@
 
 
 @media screen and (max-width: 700px) {
+    .main .about .content .intro .tagline {
+        font-size: 18px;
+    }
+    .main .about .content .section .vision {
+        font-size: 18px;
+    }
+    .main .about .content .intro .app-icon img {
+        height: 44px;
+    }
     .main .about .images img {
         height: 28px;
         padding: 12px;
@@ -225,7 +234,6 @@
 
 @media screen and (max-width: 500px) {
     .main .about .content .section {
-        border-top: 2px solid var(--border-color);
         padding-top: 30px;
     }
     .main .about .content .intro {

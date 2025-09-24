@@ -236,157 +236,156 @@ class About extends Component {
                 development of the Alplakes platform and/or the models and
                 products it offers.
               </p>
-
-              <h3>DiMark</h3>
-              <p>
-                The rise in water temperatures combined with pollution will
-                alter habitat conditions for many Alpine species. DiMark
-                provides monitoring and early warning system solutions (by
-                linking traditional and satellite observations) to mitigate
-                tourism and eutrophication pressure on Alpine lakes. By creating
-                an innovative monitoring of water quality and early warning
-                systems, the project improves water management, as well as
-                climate mitigation. This project is co-funded by the European
-                Union through the Interreg Alpine Space programme.
-              </p>
-              <div className="project-info">
-                {Link("https://www.alpine-space.eu/project/dimark/")}
-                <img
-                  src={dimark_icon}
-                  className="project-logo"
-                  alt="DiMark Icon"
-                />
-              </div>
-
-              <h3>Alplakes</h3>
-              <p>
-                Alplakes is an open-source ESA funded research project aimed at
-                providing operational products based on a combination of remote
-                sensing and hydrodynamic models for a number of European lakes.
-                The project is a collaboration between Eawag, Università di
-                Trento and CNR. As part of this project 12 3D hydrodynamic
-                models where built and calibrated, Sentinel 2 products were
-                calibrated and the web platform was developed.
-              </p>
-              <div className="project-info">
-                {Link("https://alplakes.eawag.ch")}
-                <div className="parameter">
-                  <div className="circle">
-                    <span className="circle-text">$</span>
-                  </div>
-                  <div className="text">European Space Agency</div>
+              <div className="nonclickbox">
+                <h3>DiMark</h3>
+                <p>
+                  The rise in water temperatures combined with pollution will
+                  alter habitat conditions for many Alpine species. DiMark
+                  provides monitoring and early warning system solutions (by
+                  linking traditional and satellite observations) to mitigate
+                  tourism and eutrophication pressure on Alpine lakes. By
+                  creating an innovative monitoring of water quality and early
+                  warning systems, the project improves water management, as
+                  well as climate mitigation. This project is co-funded by the
+                  European Union through the Interreg Alpine Space programme.
+                </p>
+                <div className="project-info">
+                  {Link("https://www.alpine-space.eu/project/dimark/")}
+                  <img
+                    src={dimark_icon}
+                    className="project-logo"
+                    alt="DiMark Icon"
+                  />
                 </div>
-                <div className="parameter">
-                  <div className="circle">
-                    <span className="circle-text">PI</span>
+                <h3>Alplakes</h3>
+                <p>
+                  Alplakes is an open-source ESA funded research project aimed
+                  at providing operational products based on a combination of
+                  remote sensing and hydrodynamic models for a number of
+                  European lakes. The project is a collaboration between Eawag,
+                  Università di Trento and CNR. As part of this project 12 3D
+                  hydrodynamic models where built and calibrated, Sentinel 2
+                  products were calibrated and the web platform was developed.
+                </p>
+                <div className="project-info">
+                  {Link("https://alplakes.eawag.ch")}
+                  <div className="parameter">
+                    <div className="circle">
+                      <span className="circle-text">$</span>
+                    </div>
+                    <div className="text">European Space Agency</div>
                   </div>
-                  <div className="text">Damien Bouffard</div>
+                  <div className="parameter">
+                    <div className="circle">
+                      <span className="circle-text">PI</span>
+                    </div>
+                    <div className="text">Damien Bouffard</div>
+                  </div>
                 </div>
-              </div>
-
-              <h3>Simstrat</h3>
-              <p>
-                Simstrat is a one-dimensional physical lake model for the
-                simulation of stratification and mixing in deep stratified
-                lakes. The model is under continuous development at Eawag. This
-                project is developed jointly by the Aquatic Physics and Applied
-                System Analysis groups in the Department Surface Waters -
-                Research & Management (SURF).
-              </p>
-              <div className="project-info">
-                {Link(
-                  "https://github.com/Eawag-AppliedSystemAnalysis/Simstrat"
-                )}
-                <div className="parameter">
-                  <div className="circle">
-                    <span className="circle-text">$</span>
+                <h3>Simstrat</h3>
+                <p>
+                  Simstrat is a one-dimensional physical lake model for the
+                  simulation of stratification and mixing in deep stratified
+                  lakes. The model is under continuous development at Eawag.
+                  This project is developed jointly by the Aquatic Physics and
+                  Applied System Analysis groups in the Department Surface
+                  Waters - Research & Management (SURF).
+                </p>
+                <div className="project-info">
+                  {Link(
+                    "https://github.com/Eawag-AppliedSystemAnalysis/Simstrat"
+                  )}
+                  <div className="parameter">
+                    <div className="circle">
+                      <span className="circle-text">$</span>
+                    </div>
+                    <div className="text">Eawag</div>
                   </div>
-                  <div className="text">Eawag</div>
+                  <div className="parameter">
+                    <div className="circle">
+                      <span className="circle-text">PI</span>
+                    </div>
+                    <div className="text">Martin Schmid</div>
+                  </div>
                 </div>
-                <div className="parameter">
-                  <div className="circle">
-                    <span className="circle-text">PI</span>
+                <h3>Sencast</h3>
+                <p>
+                  Sencast is a toolbox to download and derive water quality
+                  parameters from satellite images. It acts as a framework for
+                  the use a variety of processors such as Idepix, Polymer,
+                  Sen2Cor and Acolite. It supports ESA satellites Sentinel 2 and
+                  Sentinel 3 and USGS satellite Landsat 8. It is developed and
+                  maintained by the SURF Remote Sensing group at Eawag.
+                </p>
+                <div className="project-info">
+                  {Link(
+                    "https://github.com/eawag-surface-waters-research/sencast"
+                  )}
+                  <div className="parameter">
+                    <div className="circle">
+                      <span className="circle-text">$</span>
+                    </div>
+                    <div className="text">Eawag</div>
                   </div>
-                  <div className="text">Martin Schmid</div>
+                  <div className="parameter">
+                    <div className="circle">
+                      <span className="circle-text">PI</span>
+                    </div>
+                    <div className="text">Daniel Odermatt</div>
+                  </div>
                 </div>
-              </div>
-
-              <h3>Sencast</h3>
-              <p>
-                Sencast is a toolbox to download and derive water quality
-                parameters from satellite images. It acts as a framework for the
-                use a variety of processors such as Idepix, Polymer, Sen2Cor and
-                Acolite. It supports ESA satellites Sentinel 2 and Sentinel 3
-                and USGS satellite Landsat 8. It is developed and maintained by
-                the SURF Remote Sensing group at Eawag.
-              </p>
-              <div className="project-info">
-                {Link(
-                  "https://github.com/eawag-surface-waters-research/sencast"
-                )}
-                <div className="parameter">
-                  <div className="circle">
-                    <span className="circle-text">$</span>
+                <h3>Meteolakes</h3>
+                <p>
+                  Meteolakes is a web application that shares some results of 3D
+                  coupled hydrodynamic-biological simulations performed daily
+                  with 4.5 days forecasts for several Swiss lakes using
+                  real-time atmospheric, rivers and WWTPs data. Additionally it
+                  provides measurements from a field station and satellite
+                  observations downloaded in real-time. With direct impacts at
+                  scientific and community level, this combination also aims at
+                  assisting stakeholders in evidence-based decision-making and
+                  towards the sustainable management of our lakes. This product
+                  was developed by Theo Baracchini as part of his PhD thesis. It
+                  has been superceeded by the Alplakes platform.{" "}
+                </p>
+                <div className="project-info">
+                  <div className="parameter">
+                    <div className="circle">
+                      <span className="circle-text">$</span>
+                    </div>
+                    <div className="text">European Space Agency</div>
                   </div>
-                  <div className="text">Eawag</div>
-                </div>
-                <div className="parameter">
-                  <div className="circle">
-                    <span className="circle-text">PI</span>
+                  <div className="parameter">
+                    <div className="circle">
+                      <span className="circle-text">PI</span>
+                    </div>
+                    <div className="text">Damien Bouffard</div>
                   </div>
-                  <div className="text">Daniel Odermatt</div>
-                </div>
-              </div>
-
-              <h3>Meteolakes</h3>
-              <p>
-                Meteolakes is a web application that shares some results of 3D
-                coupled hydrodynamic-biological simulations performed daily with
-                4.5 days forecasts for several Swiss lakes using real-time
-                atmospheric, rivers and WWTPs data. Additionally it provides
-                measurements from a field station and satellite observations
-                downloaded in real-time. With direct impacts at scientific and
-                community level, this combination also aims at assisting
-                stakeholders in evidence-based decision-making and towards the
-                sustainable management of our lakes. This product was developed
-                by Theo Baracchini as part of his PhD thesis. It has been
-                superceeded by the Alplakes platform.{" "}
-              </p>
-              <div className="project-info">
-                <div className="parameter">
-                  <div className="circle">
-                    <span className="circle-text">$</span>
-                  </div>
-                  <div className="text">European Space Agency</div>
-                </div>
-                <div className="parameter">
-                  <div className="circle">
-                    <span className="circle-text">PI</span>
-                  </div>
-                  <div className="text">Damien Bouffard</div>
                 </div>
               </div>
             </div>
             <div id="people" ref={this.divRefs["people"]} className="section">
               <h2>Contributing people</h2>
-              <h3>2024</h3>
-              <p>
-                Amadori Marina, Bärenbold Fabian, Bouffard Damien, Brescani
-                Mariano , Giardino Claudia, Irani Rahaghi Abolfazl, Odermatt,
-                Daniel, Runnalls James, Schmid Martin, Toffolon Marco, Werther
-                Mortimer
-              </p>
-              <h3>2020 - 2023</h3>
-              <p>
-                Amadori Marina, Bärenbold Fabian, Bouffard Damien, Cruz Hugo,
-                Irani Rahaghi Abolfazl, Odermatt, Daniel, Runnalls James, Schmid
-                Martin, Šukys Jonas, Toffolon Marco, Werther Mortimer
-              </p>
-              <h3>2016 - 2019</h3>
-              <p>
-                Anneville Orlane, Baracchini Theo, Bouffard Damien, Gaudard
-                Adrien, Schmid Martin, Soulignac Frédéric, Odermatt, Daniel
-              </p>
+              <div className="nonclickbox">
+                <h3>2024</h3>
+                <p>
+                  Amadori Marina, Bärenbold Fabian, Bouffard Damien, Brescani
+                  Mariano , Giardino Claudia, Irani Rahaghi Abolfazl, Odermatt,
+                  Daniel, Runnalls James, Schmid Martin, Toffolon Marco, Werther
+                  Mortimer
+                </p>
+                <h3>2020 - 2023</h3>
+                <p>
+                  Amadori Marina, Bärenbold Fabian, Bouffard Damien, Cruz Hugo,
+                  Irani Rahaghi Abolfazl, Odermatt, Daniel, Runnalls James,
+                  Schmid Martin, Šukys Jonas, Toffolon Marco, Werther Mortimer
+                </p>
+                <h3>2016 - 2019</h3>
+                <p>
+                  Anneville Orlane, Baracchini Theo, Bouffard Damien, Gaudard
+                  Adrien, Schmid Martin, Soulignac Frédéric, Odermatt, Daniel
+                </p>
+              </div>
             </div>
             <div
               id="opensource"

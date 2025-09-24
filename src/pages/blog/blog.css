@@ -3,7 +3,6 @@
 }
 
 .main .blog .post a {
-    margin-top: 12px;
     color: white;
     background-color: var(--highlight-color);
     text-decoration: none;
