@@ -139,7 +139,47 @@ class About extends Component {
                 through a seamless, user-friendly platform that combines
                 scientific rigor with practical utility.
               </div>
-              <h3>Future development roadmap</h3>
+              <h3>Future developments</h3>
+
+              <div className="grid">
+                <div class="grid-inner">
+                  <div class="card-header">
+                    <div class="card-icon">🧊</div>
+                    <div class="card-title">3D Models</div>
+                  </div>
+                  <p class="card-description">
+                    Automated Python pipeline for managing 3D hydrodynamic
+                    simulations (Delft3D-Flow, MITgcm) - handles data
+                    preprocessing, simulation execution, and results
+                    postprocessing.
+                  </p>
+                </div>
+                <div class="grid-inner">
+                  <div class="card-header">
+                    <div class="card-icon">📏</div>
+                    <div class="card-title">1D Models</div>
+                  </div>
+                  <p class="card-description">
+                    Automated Python pipeline for managing 1D hydrodynamic
+                    simulations (Simstrat) - handles data preprocessing,
+                    simulation execution, and results postprocessing.
+                  </p>
+                </div>
+                <div class="grid-inner">
+                  <div class="card-header">
+                    <div class="card-icon">🛰️</div>
+                    <div class="card-title">Satellite Products</div>
+                  </div>
+                  <p class="card-description">
+                    Sencast: Satellite data processing pipeline for water
+                    quality monitoring. Processes Sentinel-2/3 and Landsat
+                    imagery to derive various lake parameters.
+                  </p>
+                </div>
+              </div>
+
+
+
               <h4>Expansion plans</h4>
               <ul>
                 <li>Include additional Alpine lakes</li>
@@ -163,66 +203,91 @@ class About extends Component {
             </div>
             <div id="contact" ref={this.divRefs["contact"]} className="section">
               <h2>Contact us</h2>
-              <p>
-                We encourage the use of our products. Please do not hesitate to
-                contact us in case you have feedback or are interested in
-                collaborating.
-              </p>
-              <div className="person">
-                <img src={runnallja} alt="James" />
-                <div className="name">James Runnalls</div>
-                <div className="job">Software Engineer</div>
-                <div className="email">
-                  <a href="mailto:james.runnalls@eawag.ch">
-                    james.runnalls@eawag.ch
-                  </a>
-                </div>
-                <div className="contact-head">
-                  {Translations["talk"][language]}
-                </div>
-                <div className="contact">Bug reports, new features</div>
+              <div className="subtitle">
+                Connect directly with our team members based on your specific
+                need
               </div>
-              <div className="person">
-                <img src={bouffada} alt="Damien" />
-                <div className="name">Damien Bouffard</div>
-                <div className="job">Group Leader</div>
-                <div className="email">
-                  <a href="mailto:damien.bouffard@eawag.ch">
-                    damien.bouffard@eawag.ch
+              <div className="grid">
+                <div class="grid-inner">
+                  <div class="member-photo">
+                    <img src={runnallja} alt="James Runnalls" />
+                  </div>
+                  <div class="member-name">James Runnalls</div>
+                  <div class="member-role">Research Software Engineer</div>
+
+                  <div class="member-expertise">
+                    <div class="expertise-title">Talk to me about</div>
+                    <div class="expertise-list">
+                      Software development, system architecture, and technical
+                      implementation.
+                    </div>
+                  </div>
+
+                  <a href="mailto:james.runnalls@eawag.ch" class="contact-btn">
+                    <span>✉️</span>
+                    Contact James
                   </a>
                 </div>
-                <div className="contact-head">
-                  {Translations["talk"][language]}
-                </div>
-                <div className="contact">3D models, particle tracking</div>
-              </div>
-              <div className="person">
-                <img src={odermada} alt="Dani" />
-                <div className="name">Daniel Odermatt</div>
-                <div className="job">Group Leader</div>
-                <div className="email">
-                  <a href="mailto:daniel.odermatt@eawag.ch">
-                    daniel.odermatt@eawag.ch
+
+                <div class="grid-inner">
+                  <div class="member-photo">
+                    <img src={bouffada} alt="Damien Bouffard" />
+                  </div>
+                  <div class="member-name">Damien Bouffard</div>
+                  <div class="member-role">Group Leader</div>
+
+                  <div class="member-expertise">
+                    <div class="expertise-title">Talk to me about</div>
+                    <div class="expertise-list">
+                      3D modeling and particle tracking systems.
+                    </div>
+                  </div>
+
+                  <a href="mailto:damien.bouffard@eawag.ch" class="contact-btn">
+                    <span>✉️</span>
+                    Contact Damien
                   </a>
                 </div>
-                <div className="contact-head">
-                  {Translations["talk"][language]}
-                </div>
-                <div className="contact">Remote sensing products</div>
-              </div>
-              <div className="person" style={{ margin: 0 }}>
-                <img src={schmidma} alt="Martin" />
-                <div className="name">Martin Schmid</div>
-                <div className="job">Group Leader</div>
-                <div className="email">
-                  <a href="mailto:martin.schmid@eawag.ch">
-                    martin.schmid@eawag.ch
+
+                <div class="grid-inner">
+                  <div class="member-photo">
+                    <img src={odermada} alt="Daniel Odermatt" />
+                  </div>
+                  <div class="member-name">Daniel Odermatt</div>
+                  <div class="member-role">Group Leader</div>
+
+                  <div class="member-expertise">
+                    <div class="expertise-title">Talk to me about</div>
+                    <div class="expertise-list">
+                      Remote sensing technologies and satellite data analysis.
+                    </div>
+                  </div>
+
+                  <a href="mailto:daniel.odermatt@eawag.ch" class="contact-btn">
+                    <span>✉️</span>
+                    Contact Daniel
                   </a>
                 </div>
-                <div className="contact-head">
-                  {Translations["talk"][language]}
+
+                <div class="grid-inner">
+                  <div class="member-photo">
+                    <img src={schmidma} alt="Martin Schmid" />
+                  </div>
+                  <div class="member-name">Martin Schmid</div>
+                  <div class="member-role">Group Leader</div>
+
+                  <div class="member-expertise">
+                    <div class="expertise-title">Talk to me about</div>
+                    <div class="expertise-list">
+                      One-dimensional modeling and numerical simulations.
+                    </div>
+                  </div>
+
+                  <a href="mailto:martin.schmid@eawag.ch" class="contact-btn">
+                    <span>✉️</span>
+                    Contact Martin
+                  </a>
                 </div>
-                <div className="contact">1D models</div>
               </div>
             </div>
             <div
@@ -231,7 +296,7 @@ class About extends Component {
               className="section"
             >
               <h2>Contributing projects</h2>
-              <p>
+              <p className="subtitle">
                 The following projects have played a pivotal role in the
                 development of the Alplakes platform and/or the models and
                 products it offers.
@@ -393,41 +458,150 @@ class About extends Component {
               className="section"
             >
               <h2>Open source</h2>
-              <p>
+              <p className="subtitle">
                 All the code and simulations that power Alplakes are made
                 available for the community to use and contribute to.
               </p>
-              <h3>3D Models</h3>
-              {Link(
-                "https://github.com/eawag-surface-waters-research/alplakes-simulations",
-                "repo"
-              )}
-              <h3>1D Models</h3>
-              {Link(
-                "https://github.com/Eawag-AppliedSystemAnalysis/operational-simstrat",
-                "repo"
-              )}
-              <h3>Remote Sensing Products</h3>
-              {Link(
-                "https://github.com/eawag-surface-waters-research/sencast",
-                "repo"
-              )}
-              <h3>Alplakes</h3>
-              <h4>Website</h4>
-              {Link(
-                "https://github.com/eawag-surface-waters-research/alplakes-react",
-                "repo"
-              )}
-              <h4>API</h4>
-              {Link(
-                "https://github.com/eawag-surface-waters-research/alplakes-fastapi",
-                "repo"
-              )}
-              <h4>Orchestrator</h4>
-              {Link(
-                "https://github.com/eawag-surface-waters-research/airflow",
-                "repo"
-              )}
+              <h3>Platform & Infrastructure</h3>
+              <div className="grid">
+                <div class="grid-inner">
+                  <div class="card-header">
+                    <div class="card-icon">💻</div>
+                    <div class="card-title">Website</div>
+                  </div>
+                  <p class="card-description">
+                    Modern React frontend with interactive visualizations.
+                    Features real-time data displays, 3D lake models, and
+                    responsive design for desktop and mobile platforms.
+                  </p>
+                  <div class="card-actions">
+                    <a
+                      href="https://github.com/eawag-surface-waters-research/alplakes-react"
+                      class="btn btn-primary"
+                    >
+                      View on GitHub
+                    </a>
+                  </div>
+                </div>
+                <div class="grid-inner">
+                  <div class="card-header">
+                    <div class="card-icon">🔌</div>
+                    <div class="card-title">API</div>
+                  </div>
+                  <p class="card-description">
+                    High-performance FastAPI backend for accessing remote
+                    sensing and simulation lake products. The RESTful API
+                    supports geospatial and temporal queries.
+                  </p>
+                  <div class="card-actions">
+                    <a
+                      href="https://github.com/eawag-surface-waters-research/alplakes-fastapi"
+                      class="btn btn-primary"
+                    >
+                      View on GitHub
+                    </a>
+                    <a
+                      href="https://alplakes-api.eawag.ch/docs"
+                      class="btn btn-secondary"
+                    >
+                      📖 Docs
+                    </a>
+                  </div>
+                </div>
+                <div class="grid-inner">
+                  <div class="card-header">
+                    <div class="card-icon">⚙️</div>
+                    <div class="card-title">Orchestrator</div>
+                  </div>
+                  <p class="card-description">
+                    Apache Airflow workflows for automated data processing.
+                    Schedules simulations, manages data pipelines, and ensures
+                    reliable execution of complex computational workflows.
+                  </p>
+                  <div class="card-actions">
+                    <a
+                      href="https://github.com/eawag-surface-waters-research/airflow"
+                      class="btn btn-primary"
+                    >
+                      View on GitHub
+                    </a>
+                    <a
+                      href="https://airflow.apache.org/docs/apache-airflow/stable/index.html"
+                      class="btn btn-secondary"
+                    >
+                      📖 Docs
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              <h3 className="between-grid">Products</h3>
+              <div className="grid">
+                <div class="grid-inner">
+                  <div class="card-header">
+                    <div class="card-icon">🧊</div>
+                    <div class="card-title">3D Models</div>
+                  </div>
+                  <p class="card-description">
+                    Automated Python pipeline for managing 3D hydrodynamic
+                    simulations (Delft3D-Flow, MITgcm) - handles data
+                    preprocessing, simulation execution, and results
+                    postprocessing.
+                  </p>
+                  <div class="card-actions">
+                    <a
+                      href="https://github.com/eawag-surface-waters-research/alplakes-simulations"
+                      class="btn btn-primary"
+                    >
+                      View on GitHub
+                    </a>
+                  </div>
+                </div>
+                <div class="grid-inner">
+                  <div class="card-header">
+                    <div class="card-icon">📏</div>
+                    <div class="card-title">1D Models</div>
+                  </div>
+                  <p class="card-description">
+                    Automated Python pipeline for managing 1D hydrodynamic
+                    simulations (Simstrat) - handles data preprocessing,
+                    simulation execution, and results postprocessing.
+                  </p>
+                  <div class="card-actions">
+                    <a
+                      href="https://github.com/Eawag-AppliedSystemAnalysis/operational-simstrat"
+                      class="btn btn-primary"
+                    >
+                      View on GitHub
+                    </a>
+                  </div>
+                </div>
+                <div class="grid-inner">
+                  <div class="card-header">
+                    <div class="card-icon">🛰️</div>
+                    <div class="card-title">Satellite Products</div>
+                  </div>
+                  <p class="card-description">
+                    Sencast: Satellite data processing pipeline for water
+                    quality monitoring. Processes Sentinel-2/3 and Landsat
+                    imagery to derive various lake parameters.
+                  </p>
+                  <div class="card-actions">
+                    <a
+                      href="https://github.com/eawag-surface-waters-research/sencast"
+                      class="btn btn-primary"
+                    >
+                      View on GitHub
+                    </a>
+                    <a
+                      href="https://sencast.readthedocs.io/en/latest/"
+                      class="btn btn-secondary"
+                    >
+                      📖 Docs
+                    </a>
+                  </div>
+                </div>
+              </div>
             </div>
 
             <div id="privacy" ref={this.divRefs["privacy"]} className="section">

@@ -53,6 +53,11 @@
 
 .main .about .content .intro .app-icon img {
     height: 50px;
+    transition: all 0.3s ease;
+}
+
+.main .about .content .intro .app-icon img:hover {
+    transform: translateY(-2px);
 }
 
 .main .about .content .section {
@@ -67,7 +72,7 @@
 
 .main .about .content .project-info {
     margin-top: -25px;
-    margin-bottom: 20px;
+    margin-bottom: 40px;
 
 }
 
@@ -91,38 +96,175 @@
     }
 }
 
-.main .about .content .person {
-    width: 163px;
-    display: inline-block;
-    margin-right: 16px;
-    margin-bottom: var(--padding);
-    vertical-align: top;
-}
-
-.main .about .content .person img {
-    width: 100%;
-    border-bottom: 4px solid var(--highlight-color);
-}
-
-.main .about .content .person .name {
-    font-size: 18px;
-}
-
-.main .about .content .person .job {
+.main .about .content .subtitle {
     font-size: 16px;
-    font-weight: 200;
+    color: var(--background-subtle-font-color);
 }
 
-.main .about .content .person .email {
-    font-size: 12px;
-    text-decoration: underline;
-    color: var(--link-color);
+.main .about .content .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
 }
 
-.main .about .content .person .contact-head {
-    margin-top: 12px;
-    font-size: 14px;
-    margin-bottom: 4px;
+.main .about .content .grid-inner {
+    background: var(--box-color);
+    border-radius: 16px;
+    padding: 2rem;
+    text-align: center;
+    border: 1px solid var(--border-color);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.main .about .content .member-photo {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin: 0 auto 1.5rem;
+    background: var(--background-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    color: var(--background-subtle-font-color);
+}
+
+.main .about .content .member-photo img {
+    border-radius: 100%;
+    height: 120px;
+}
+
+.main .about .content .member-name {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--background-font-color);
+    margin-bottom: 0.5rem;
+}
+
+.main .about .content .member-role {
+    color: var(--highlight-color);
+    font-weight: 500;
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.main .about .content .member-expertise {
+    background: var(--background-color);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+    height: 100px;
+}
+
+.main .about .content .expertise-title {
+    font-weight: 600;
+    color: var(--background-font-color);
+    margin-bottom: 0.75rem;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.main .about .content .expertise-list {
+    color: var(--background-subtle-font-color);
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.main .about .content .contact-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--highlight-color);
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.main .about .content .contact-btn:hover {
+    transform: translateY(-2px);
+}
+
+.main .about .content .card-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.main .about .content .between-grid {
+    margin-top: var(--padding);
+}
+
+.main .about .content .card-icon {
+    width: 40px;
+    height: 40px;
+    background: var(--background-color);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+    font-size: 20px;
+    padding-bottom: 6px;
+    box-sizing: border-box;
+}
+
+.main .about .content .card-title {
+    font-size: 1.3em;
+    color: var(--background-font-color);
+    font-weight: 600;
+}
+
+.main .about .content .card-description {
+    color: var(--background-subtle-font-color);
+    line-height: 1.6;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.main .about .content .card-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.main .about .content .btn {
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.95em;
+}
+
+.main .about .content .btn-primary {
+    background: var(--highlight-color);
+    color: white;
+}
+
+.main .about .content .btn-primary:hover {
+    transform: translateY(-2px);
+}
+
+.main .about .content .btn-secondary {
+    background: var(--background-color);
+    color: var(--background-subtle-font-color);
+}
+
+.main .about .content .btn-secondary:hover {
+    transform: translateY(-2px);
 }
 
 .main .about .section-content .projects {
@@ -216,12 +358,15 @@
     .main .about .content .intro .tagline {
         font-size: 18px;
     }
+
     .main .about .content .section .vision {
         font-size: 18px;
     }
+
     .main .about .content .intro .app-icon img {
         height: 44px;
     }
+
     .main .about .images img {
         height: 28px;
         padding: 12px;
@@ -236,9 +381,11 @@
     .main .about .content .section {
         padding-top: 30px;
     }
+
     .main .about .content .intro {
         margin-bottom: 20px;
     }
+
     .main .about .content .project-info {
         margin-top: 0;
     }
