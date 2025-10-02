@@ -144,60 +144,108 @@ class About extends Component {
               <div className="grid">
                 <div class="grid-inner">
                   <div class="card-header">
-                    <div class="card-icon">🧊</div>
-                    <div class="card-title">Data assimilation</div>
+                    <div class="card-icon">📊 </div>
+                    <div class="card-title">Data Assimilation</div>
                   </div>
                   <p class="card-description">
-                    Automated Python pipeline for managing 3D hydrodynamic
-                    simulations (Delft3D-Flow, MITgcm) - handles data
-                    preprocessing, simulation execution, and results
-                    postprocessing.
+                    Integrate in situ and satellite observations into lake
+                    models to improve forecast accuracy and model performance.
                   </p>
+                  <div className="status">
+                    <div
+                      className="status-dot"
+                      style={{ backgroundColor: "orange" }}
+                    ></div>
+                    Proposal submitted
+                  </div>
                 </div>
                 <div class="grid-inner">
                   <div class="card-header">
-                    <div class="card-icon">📏</div>
-                    <div class="card-title">1D Models</div>
+                    <div class="card-icon">🌊</div>
+                    <div class="card-title">Wave Models</div>
                   </div>
                   <p class="card-description">
-                    Automated Python pipeline for managing 1D hydrodynamic
-                    simulations (Simstrat) - handles data preprocessing,
-                    simulation execution, and results postprocessing.
+                    Integrate and calibrate wave models (e.g., SWAN) to provide 5-day
+                    forecasts of wave height and period for large lakes.
                   </p>
+                  <div className="status">
+                    <div
+                      className="status-dot"
+                      style={{ backgroundColor: "purple" }}
+                    ></div>
+                    Looking for funding
+                  </div>
                 </div>
                 <div class="grid-inner">
                   <div class="card-header">
-                    <div class="card-icon">🛰️</div>
-                    <div class="card-title">Satellite Products</div>
+                    <div class="card-icon">💧</div>
+                    <div class="card-title">Particle Tracking</div>
                   </div>
                   <p class="card-description">
-                    Sencast: Satellite data processing pipeline for water
-                    quality monitoring. Processes Sentinel-2/3 and Landsat
-                    imagery to derive various lake parameters.
+                    Enhance particle tracking capabilities through on-demand
+                    modeling and online functionality for real-time analysis.
                   </p>
+                  <div className="status">
+                    <div
+                      className="status-dot"
+                      style={{ backgroundColor: "lightBlue" }}
+                    ></div>
+                    Concept development
+                  </div>
+                </div>
+                <div class="grid-inner">
+                  <div class="card-header">
+                    <div class="card-icon">🤖</div>
+                    <div class="card-title">AI Model Emulators</div>
+                  </div>
+                  <p class="card-description">
+                    Emulate computationally intensive 3D simulations using AI to
+                    enable rapid scenario testing and model calibration.
+                  </p>
+                  <div className="status">
+                    <div
+                      className="status-dot"
+                      style={{ backgroundColor: "red" }}
+                    ></div>
+                    Waiting for POC
+                  </div>
+                </div>
+                <div class="grid-inner">
+                  <div class="card-header">
+                    <div class="card-icon">💧</div>
+                    <div class="card-title">Water Quality</div>
+                  </div>
+                  <p class="card-description">
+                    Expand modeling capabilities to include water quality
+                    parameters such as oxygen, nutrients, and algae
+                    concentrations.
+                  </p>
+                  <div className="status">
+                    <div
+                      className="status-dot"
+                      style={{ backgroundColor: "lightBlue" }}
+                    ></div>
+                    Concept development
+                  </div>
+                </div>
+                <div class="grid-inner">
+                  <div class="card-header">
+                    <div class="card-icon">🔔</div>
+                    <div class="card-title">Event Notifications</div>
+                  </div>
+                  <p class="card-description">
+                    Implement automatic notification system to alert users of
+                    significant lake events and threshold exceedances.
+                  </p>
+                  <div className="status">
+                    <div
+                      className="status-dot"
+                      style={{ backgroundColor: "green" }}
+                    ></div>
+                    In progress
+                  </div>
                 </div>
               </div>
-
-              <h4>Expansion plans</h4>
-              <ul>
-                <li>Include additional Alpine lakes</li>
-                <li>Expand remote sensing coverage to entire Alpine region</li>
-                <li>
-                  Integration of additional model types (MITgcm and Delft3D-FM
-                  in testing)
-                </li>
-                <li>Implementation of on-demand high-resolution modeling</li>
-              </ul>
-              <h4>Enhanced features</h4>
-              <ul>
-                <li>
-                  Development of physically-guided machine learning models
-                </li>
-                <li>Integration of specialized product solutions</li>
-                <li>Advanced particle tracking capabilities</li>
-                <li>Implementation of early warning systems</li>
-                <li>Water quality module development</li>
-              </ul>
             </div>
             <div id="contact" ref={this.divRefs["contact"]} className="section">
               <h2>Contact us</h2>

@@ -204,6 +204,25 @@
     margin-bottom: 15px;
 }
 
+.main .about .content .status {
+    text-align: left;
+    background-color: var(--background-color);
+    position: relative;
+    padding: 8px 20px;
+    border-radius: 12px;
+    width: fit-content;
+}
+
+.main .about .content .status-dot {
+    background-color: var(--highlight-color);
+    width: 8px;
+    height: 8px;
+    border-radius: 100%;
+    display: inline-block;
+    margin: 2px;
+    margin-right: 12px;
+}
+
 .main .about .content .between-grid {
     margin-top: var(--padding);
 }
