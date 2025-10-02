@@ -197,12 +197,6 @@
   border: 1px solid var(--border-color);
 }
 
-@media screen and (max-width: 1000px) {
-  .main .text-width {
-    min-height: calc(100vh - var(--footer-height) - var(--top-margin));
-  }
-}
-
 @media screen and (max-width: 500px) {
 
   .main .text-width {
@@ -268,11 +262,6 @@ p {
     margin-bottom: 4px;
     font-size: 22px;
     font-weight: 500;
-  }
-
-  h3 {
-    margin-bottom: 10px;
-    font-size: 16px;
   }
 
   p {

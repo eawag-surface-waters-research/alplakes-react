@@ -7,7 +7,6 @@ import CONFIG from "../../config.json";
 import Footer from "../../components/footer/footer";
 import Translations from "../../translations.json";
 import unpluggedIcon from "../../img/unplugged.png";
-import sortIcon from "../../img/sort.png";
 import axios from "axios";
 import "./downloads.css";
 import ScrollUp from "../../components/scrollup/scrollup";

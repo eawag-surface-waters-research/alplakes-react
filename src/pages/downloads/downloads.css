@@ -258,21 +258,17 @@
     padding-top: 30px;
   }
 
-  .main .downloads .selector {
-    text-align: center;
-  }
-
   .main .downloads .selector select {
     width: 100%;
     background-color: var(--select-color);
     margin-right: 0;
+    font-size: 18px;
   }
 
   .main .downloads button.download {
     display: block;
-    width: 220px;
-    margin: auto;
     margin-bottom: 12px;
+    font-size: 18px;
   }
 
   .main .downloads .text-width-downloads {
