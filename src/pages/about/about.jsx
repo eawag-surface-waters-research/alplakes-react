@@ -145,7 +145,7 @@ class About extends Component {
                 <div class="grid-inner">
                   <div class="card-header">
                     <div class="card-icon">🧊</div>
-                    <div class="card-title">3D Models</div>
+                    <div class="card-title">Data assimilation</div>
                   </div>
                   <p class="card-description">
                     Automated Python pipeline for managing 3D hydrodynamic
@@ -177,8 +177,6 @@ class About extends Component {
                   </p>
                 </div>
               </div>
-
-
 
               <h4>Expansion plans</h4>
               <ul>
@@ -301,7 +299,7 @@ class About extends Component {
                 development of the Alplakes platform and/or the models and
                 products it offers.
               </p>
-              <div className="nonclickbox">
+              <div className="nonclickbox space">
                 <h3>DiMark</h3>
                 <p>
                   The rise in water temperatures combined with pollution will
@@ -322,6 +320,8 @@ class About extends Component {
                     alt="DiMark Icon"
                   />
                 </div>
+              </div>
+              <div className="nonclickbox space">
                 <h3>Alplakes</h3>
                 <p>
                   Alplakes is an open-source ESA funded research project aimed
@@ -347,6 +347,8 @@ class About extends Component {
                     <div className="text">Damien Bouffard</div>
                   </div>
                 </div>
+              </div>
+              <div className="nonclickbox space">
                 <h3>Simstrat</h3>
                 <p>
                   Simstrat is a one-dimensional physical lake model for the
@@ -373,6 +375,8 @@ class About extends Component {
                     <div className="text">Martin Schmid</div>
                   </div>
                 </div>
+              </div>
+              <div className="nonclickbox space">
                 <h3>Sencast</h3>
                 <p>
                   Sencast is a toolbox to download and derive water quality
@@ -399,6 +403,8 @@ class About extends Component {
                     <div className="text">Daniel Odermatt</div>
                   </div>
                 </div>
+              </div>
+              <div className="nonclickbox space">
                 <h3>Meteolakes</h3>
                 <p>
                   Meteolakes is a web application that shares some results of 3D
@@ -431,7 +437,7 @@ class About extends Component {
             </div>
             <div id="people" ref={this.divRefs["people"]} className="section">
               <h2>Contributing people</h2>
-              <div className="nonclickbox">
+              <div className="">
                 <h3>2024</h3>
                 <p>
                   Amadori Marina, Bärenbold Fabian, Bouffard Damien, Brescani
@@ -606,7 +612,7 @@ class About extends Component {
 
             <div id="privacy" ref={this.divRefs["privacy"]} className="section">
               <h2>Privacy Policy</h2>
-              <div className="nonclickbox">
+              <div className="">
                 <p>
                   <strong>Effective Date:</strong> August 19, 2025
                 </p>

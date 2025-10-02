@@ -148,7 +148,6 @@
   box-sizing: border-box;
   margin-top: var(--top-margin);
   max-width: calc(var(--text-width) + 4 * var(--padding));
-  min-height: calc(100vh - var(--header-height) - var(--footer-height) - var(--top-margin));
   padding: 0 var(--padding);
   width: 100%;
 }
@@ -214,12 +213,6 @@
   .main .content-width {
     padding: 0 var(--padding);
     margin-top: var(--header-height);
-  }
-
-  .main .content-width .header {
-    background-color: var(--highlight-color-fill);
-    padding: 0 20px;
-    border-radius: 0 0 12px 12px;
   }
 
   .main .nonclickbox {

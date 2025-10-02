@@ -78,6 +78,7 @@ const SortableTable = ({ data, language, label }) => {
     <div
       className={`table-outer-container ${isFullscreen ? "fullscreen" : ""}`}
     >
+      <div className="table-background" onClick={toggleFullscreen} />
       <div className="table-inner-container">
         <table className="table-styling">
           <thead>

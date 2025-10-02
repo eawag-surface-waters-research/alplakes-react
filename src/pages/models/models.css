@@ -34,7 +34,24 @@
     height: 100%;
     display: inline-block;
     text-align: left;
-    max-width: 100%;
+    width: 100%;
+}
+
+.main .models .content .text-width.inner {
+    margin-top: 12px;
+}
+
+.main .models ul {
+    padding-left: 40px;
+    margin-bottom: 24px;
+}
+
+.main .models li {
+    padding-bottom: 8px;
+}
+
+.main .models h2 {
+    padding-top: 60px;
 }
 
 .main .models .content a {
@@ -42,7 +59,6 @@
 }
 
 .main .models .content .intro {
-    margin-bottom: 40px;
     font-size: 20px;
     margin-top: var(--padding);
 }
@@ -103,10 +119,6 @@
 }
 
 @media screen and (max-width: 500px) {
-    .main .models .content .intro {
-        margin-bottom: 20px;
-    }
-
     .main .models .content .section {
         margin-bottom: 20px;
         padding-top: 30px;

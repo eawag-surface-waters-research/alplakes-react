@@ -54,13 +54,13 @@ class ModelInputs extends Component {
     }
   }
   render() {
-    const { full } = this.props;
+    const { full, middle } = this.props;
     const { model_list, model, lake_list, lake, example } = this.state;
     const link = `${
       CONFIG.alplakes_bucket
     }/simulations/${model.toLowerCase()}/${example}/${lake.toLowerCase()}.zip`;
     return (
-      <div className="selector">
+      <div className={middle ? "selector middle" : "selector"}>
         <select value={model} onChange={this.setModel}>
           {model_list.map((m) => (
             <option key={m} value={m}>
@@ -328,13 +328,39 @@ class Downloads extends Component {
     swagger_error: false,
     one_dimensional: [],
     three_dimensional: [],
+    visibleKey: "inputs",
   };
 
   constructor(props) {
     super(props);
-    this.divRef = React.createRef();
+    this.divRefs = {
+      inputs: React.createRef(),
+      outputs: React.createRef(),
+      api: React.createRef(),
+    };
   }
-
+  handleScroll = () => {
+    let closestDiv = null;
+    let closestDistance = Infinity;
+    Object.keys(this.divRefs).forEach((key) => {
+      const div = this.divRefs[key].current;
+      if (div) {
+        const rect = div.getBoundingClientRect();
+        const top = rect.top;
+        const bottom = rect.bottom;
+        if (top < window.innerHeight && bottom > 0) {
+          const distanceFromTop = Math.abs(top);
+          if (distanceFromTop < closestDistance) {
+            closestDistance = distanceFromTop;
+            closestDiv = key;
+          }
+        }
+      }
+    });
+    if (closestDiv) {
+      this.setState({ visibleKey: closestDiv });
+    }
+  };
   scrollToSection = (sectionRef) => {
     if (sectionRef.current) {
       window.scrollTo({
@@ -364,11 +390,17 @@ class Downloads extends Component {
     } catch (e) {
       swagger_error = true;
     }
+    window.addEventListener("scroll", this.handleScroll);
+    this.handleScroll();
     this.setState({ one_dimensional, three_dimensional, swagger_error });
+  }
+  componentWillUnmount() {
+    window.removeEventListener("scroll", this.handleScroll);
   }
   render() {
     const language = "EN";
-    var { one_dimensional, three_dimensional, swagger_error } = this.state;
+    var { one_dimensional, three_dimensional, swagger_error, visibleKey } =
+      this.state;
     return (
       <React.Fragment>
         <Helmet>
@@ -380,62 +412,73 @@ class Downloads extends Component {
         </Helmet>
         <NavBar {...this.props} relative={true} />
         <div className="content-width downloads">
-          <div className="text-width">
-            <div className="header">
-              <h1> {Translations.downloads[language]}</h1>
-              <div
-                className="link"
-                onClick={() => this.scrollToSection(this.divRef)}
-              >
-                API Documentation
-                <img src={sortIcon} alt="Down" />
+          <div className="text-width-downloads">
+            <h1> {Translations.downloads[language]}</h1>
+
+            <div className="intro">
+              Alplakes provides complete model inputs and outputs for users who
+              want to run the models independently or extract information not
+              available through our API. For specific slices of model data, use
+              the API below. All in-situ data must be downloaded directly from
+              the original data providers.
+            </div>
+            <div ref={this.divRefs["inputs"]} id="inputs" className="section">
+              <h2>Model Inputs</h2>
+              <p>
+                A set of example input files are provided for users that want to
+                adapt the models to their own purposes. For more information on
+                how to generate these files please see the <b>Models</b> page.
+              </p>
+              <div className="nonclickbox">
+                <h3>3D Models</h3>
+                <ModelInputs list={three_dimensional} middle={true} />
+                <h3>1D Models</h3>
+                <ModelInputs list={one_dimensional} full={true} />
               </div>
             </div>
-            <h2>Model Input Files</h2>
-            <p>
-              A set of example input files are provided for users that want to
-              adapt the models to their own purposes. For more information on
-              how to generate these files please see the <b>Models</b> page.
-            </p>
-            <h4>3D Models</h4>
-            <ModelInputs list={three_dimensional} />
-            <h4>1D Models</h4>
-            <ModelInputs list={one_dimensional} full={true} />
-            <h2>Model Output Files</h2>
-            <p>
-              Raw model results can be accessed using the forms below. For
-              formatted subsets of the output files please use the API.
-            </p>
-            <h4>3D Models</h4>
-            <p>
-              Available per week in NetCDF format. The dimensions and variables
-              are not self explanatory, you can refer to the notebook{" "}
-              <a
-                href="https://github.com/eawag-surface-waters-research/alplakes-simulations/blob/master/notebooks/process_results.ipynb"
-                target="_blank"
-                rel="noreferrer"
-              >
-                here
-              </a>{" "}
-              for more information.
-            </p>
-            <ThreeDimensionalResults list={three_dimensional} />
-            <h4>1D Models</h4>
-            <p>
-              Available in text format. The results are formatted in a CSV where
-              the column headers refer to the depth and the first column is the
-              number of days after the reference date (01.01.1981). The notebook{" "}
-              <a
-                href="https://github.com/Eawag-AppliedSystemAnalysis/operational-simstrat/blob/master/notebooks/process_results.ipynb"
-                target="_blank"
-                rel="noreferrer"
-              >
-                here
-              </a>{" "}
-              provides an example of processing the raw data.
-            </p>
-            <OneDimensionalResults list={one_dimensional} />
-            <h2 ref={this.divRef}>API Documentation</h2>
+            <div ref={this.divRefs["outputs"]} id="outputs" className="section">
+              <h2>Model Outputs</h2>
+              <p>
+                Raw model results can be accessed using the forms below. For
+                formatted subsets of the output files please use the API.
+              </p>
+              <div className="nonclickbox">
+                <h3>3D Models</h3>
+                <ThreeDimensionalResults list={three_dimensional} />
+                <div className="comment space">
+                  Available per week in NetCDF format. The dimensions and
+                  variables are not self explanatory, you can refer to the
+                  notebook{" "}
+                  <a
+                    href="https://github.com/eawag-surface-waters-research/alplakes-simulations/blob/master/notebooks/process_results.ipynb"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    here
+                  </a>{" "}
+                  for more information.
+                </div>
+                <h3>1D Models</h3>
+                <OneDimensionalResults list={one_dimensional} />
+                <div className="comment">
+                  Available in text format. The results are formatted in a CSV
+                  where the column headers refer to the depth and the first
+                  column is the number of days after the reference date
+                  (01.01.1981). The notebook{" "}
+                  <a
+                    href="https://github.com/Eawag-AppliedSystemAnalysis/operational-simstrat/blob/master/notebooks/process_results.ipynb"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    here
+                  </a>{" "}
+                  provides an example of processing the raw data.
+                </div>
+              </div>
+            </div>
+            <h2 ref={this.divRefs["api"]} id="api" className="api">
+              API Documentation
+            </h2>
             <p>
               The Alplakes API provides direct access to terabytes of simulation
               data. The API supports geospatial and temporal queries, allowing
@@ -479,6 +522,29 @@ class Downloads extends Component {
               }}
             />
           )}
+          <div className="sidebar">
+            <div className="sidebar-inner">
+              <h3>Contents</h3>
+              <div
+                className={visibleKey === "inputs" ? "link active" : "link"}
+                onClick={() => this.scrollToSection(this.divRefs["inputs"])}
+              >
+                Model Inputs
+              </div>
+              <div
+                className={visibleKey === "outputs" ? "link active" : "link"}
+                onClick={() => this.scrollToSection(this.divRefs["outputs"])}
+              >
+                Model Outputs
+              </div>
+              <div
+                className={visibleKey === "api" ? "link active" : "link"}
+                onClick={() => this.scrollToSection(this.divRefs["api"])}
+              >
+                API Documentation
+              </div>
+            </div>
+          </div>
         </div>
         <ScrollUp />
         <Footer {...this.props} />
