@@ -1,11 +1,25 @@
 .main .blog .post {
-    margin: var(--padding) 0;
+    margin: var(--padding) 0 calc(var(--padding) * 2) 0;
 }
 
 .main .blog .post a {
-    color: var(--link-color);
+    color: white;
+    background-color: var(--highlight-color);
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 12px;
+    box-shadow: var(--box-shadow);
+    position: relative;
+    display: inline-block;
+}
+
+.main .blog .post a:hover {
+    transform: translateY(-2px);
 }
 
 .main .blog .post .date {
-    margin-top: 12px;
+    font-size: 14px;
+    margin-bottom: 20px;
+    font-weight: bold;
+    color: var(--background-subtle-font-color);
 }

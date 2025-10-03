@@ -3,15 +3,16 @@
     vertical-align: top;
     text-align: left;
     margin-top: 66px;
-    position: sticky;
+    position: fixed;
     top: var(--padding);
     padding-left: var(--padding);
+    right: 0;
 }
 
 .main .models .sidebar .sidebar-inner {
     background-color: var(--box-color);
     padding: 16px 24px;
-    border-radius: 16px;
+    border-radius: 16px 0 0 16px;
     width: 200px;
 }
 
@@ -32,9 +33,25 @@
 .main .models .content {
     height: 100%;
     display: inline-block;
-    width: var(--text-width);
     text-align: left;
-    max-width: 100%;
+    width: 100%;
+}
+
+.main .models .content .text-width.inner {
+    margin-top: 12px;
+}
+
+.main .models ul {
+    padding-left: 40px;
+    margin-bottom: 24px;
+}
+
+.main .models li {
+    padding-bottom: 8px;
+}
+
+.main .models h2 {
+    padding-top: 60px;
 }
 
 .main .models .content a {
@@ -42,12 +59,12 @@
 }
 
 .main .models .content .intro {
-    margin-bottom: 40px;
+    font-size: 20px;
+    margin-top: var(--padding);
 }
 
 .main .models .content .section {
     margin-bottom: 40px;
-    border-top: 3px solid var(--border-color);
     padding-top: 60px;
 }
 
@@ -89,7 +106,7 @@
     transition: 0.2s ease-in-out all;
 }
 
-@media screen and (max-width: 1280px) {
+@media screen and (max-width: 1380px) {
     .main .models .sidebar {
         display: none;
     }
@@ -102,15 +119,9 @@
 }
 
 @media screen and (max-width: 500px) {
-    .main .models .content .intro {
-        margin-bottom: 20px;
-    }
-
     .main .models .content .section {
         margin-bottom: 20px;
-        border-top: 3px solid var(--border-color);
         padding-top: 30px;
-        border-top: 2px solid var(--border-color);
     }
 
     .main .models .content .section ul {

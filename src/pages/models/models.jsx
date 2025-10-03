@@ -94,28 +94,20 @@ class Models extends Component {
           />
         </Helmet>
         <NavBar {...this.props} relative={true} />
-        <div className="content-width models">
+        <div className="models">
           <div className="content">
-            <div className="header">
+            <div className="text-width">
               <h1>{Translations.models[language]}</h1>
-            </div>
-            <div className="intro">
-              <p>
+              <div className="intro">
                 Alplakes uses calibrated hydrodynamic models and remote sensing
                 products, developed by the research community, to provide lake
-                condition forecasts for the Alpine region. This page gives
-                access to these models, along with their input data, performance
-                metrics, and raw output.
-              </p>
-              <p>
-                We welcome collaboration opportunities with researchers and
-                institutions interested in advancing lake modeling and
-                monitoring. Please see the <NavLink to="/about">About</NavLink>{" "}
-                page for contact information.
-              </p>
-            </div>
-            <div ref={this.divRefs["threed"]} id="threed" className="section">
-              <h2>3D Hydrodynamic Modelling</h2>
+                condition forecasts for the Alpine region. This page provides
+                details on the models used, their performance, calibration
+                procedures, and how to interact with the outputs.
+              </div>
+              <h2 ref={this.divRefs["threed"]} id="threed">
+                3D Hydrodynamic Modelling
+              </h2>
               <p>
                 3D hydrodynamic lake models simulate lake dynamics through
                 numerical computations. The lake volume is divided into a
@@ -134,11 +126,13 @@ class Models extends Component {
                 Below is a list of all the 3D models available on the Alplakes
                 platform.
               </p>
-              <SortableTable
-                data={three_dimensional}
-                language={language}
-                label="three_dimentional_models"
-              />
+            </div>
+            <SortableTable
+              data={three_dimensional}
+              language={language}
+              label="three_dimentional_models"
+            />
+            <div className="text-width inner">
               <h3>Calibration</h3>
               <h4>Delft3D-flow</h4>
               <p>
@@ -167,6 +161,18 @@ class Models extends Component {
                 calibration please contact Marina Amadori (
                 <a href="mailto:marina.amadori@unitn.it">
                   marina.amadori@unitn.it
+                </a>
+                ).
+              </p>
+              <h4>MITgcm</h4>
+              <p>
+                The MITgcm models have been manually calibrated by Eawag
+                Scientists. For more information on the Zug model please
+                contance Jemima Rama (
+                <a href="mailto:jemima.rama@eawag.ch">jemima.rama@eawag.ch</a>)
+                and for Zürich contact Anne Leroquais (
+                <a href="mailto:anne.leroquais@eawag.ch">
+                  anne.leroquais@eawag.ch
                 </a>
                 ).
               </p>
@@ -209,9 +215,33 @@ class Models extends Component {
                 </a>
                 .
               </p>
+              <h4>MITgcm</h4>
+              <p>
+                Please refer to the official documentation provided by MITgcm{" "}
+                <a
+                  href="https://mitgcm.readthedocs.io/en/latest/"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  here
+                </a>
+                . For users familiar with docker you can access documentation on
+                using custom Eawag compilations of MITgcm{" "}
+                <a
+                  href="https://github.com/eawag-surface-waters-research/docker"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  here
+                </a>
+                .
+              </p>
             </div>
-            <div ref={this.divRefs["oned"]} id="oned" className="section">
-              <h2>1D Hydrodynamic Modelling</h2>
+
+            <div className="text-width inner">
+              <h2 ref={this.divRefs["oned"]} id="oned">
+                1D Hydrodynamic Modelling
+              </h2>
               <p>
                 1D lake models simplify lake processes by representing the lake
                 as a single vertical column, divided into layers from the
@@ -229,11 +259,13 @@ class Models extends Component {
                 Below is a list of all the 1D models available on the Alplakes
                 platform.
               </p>
-              <SortableTable
-                data={one_dimensional}
-                language={language}
-                label="one_dimentional_models"
-              />
+            </div>
+            <SortableTable
+              data={one_dimensional}
+              language={language}
+              label="one_dimentional_models"
+            />
+            <div className="text-width inner">
               <h3>Calibration</h3>
               <h4>Simstrat</h4>
               <p>
@@ -306,17 +338,15 @@ class Models extends Component {
                   target="_blank"
                   rel="noreferrer"
                 >
-                  here
+                  here.
                 </a>
-                .
               </p>
             </div>
-            <div
-              ref={this.divRefs["remotesensing"]}
-              id="remotesensing"
-              className="section"
-            >
-              <h2>Remote Sensing Products</h2>
+            <div className="text-width inner">
+              <h2 ref={this.divRefs["remotesensing"]} id="remotesensing">
+                Remote Sensing Products
+              </h2>
+
               <p>
                 Remote sensing products are processed to provide a snapshot of
                 given parameters in the upper layers of the lake. The products
@@ -336,11 +366,13 @@ class Models extends Component {
                 Below is a list of all the remote sensing products available on
                 the Alplakes platform.
               </p>
-              <SortableTable
-                data={remote_sensing}
-                language={language}
-                label="remote_sensing_products"
-              />
+            </div>
+            <SortableTable
+              data={remote_sensing}
+              language={language}
+              label="remote_sensing_products"
+            />
+            <div className="text-width inner">
               <p>
                 A number of algorithms were evaluated in order to select the
                 best performing products above. For more information about the
@@ -358,7 +390,7 @@ class Models extends Component {
                 </a>
                 . Earth Resources Observation and Science (EROS) Center. (2020).
                 Landsat 8-9 Operational Land Imager / Thermal Infrared Sensor
-                Level-2, Collection 2 [dataset]. U.S. Geological Survey. {" "}
+                Level-2, Collection 2 [dataset]. U.S. Geological Survey.{" "}
                 <a href="https://doi.org/10.5066/P9OGBGM6">
                   https://doi.org/10.5066/P9OGBGM6
                 </a>
