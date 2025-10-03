@@ -1,5 +1,6 @@
 .main .downloads a {
   color: var(--link-color);
+  text-decoration: none;
 }
 
 .main .downloads .text-width-downloads {
