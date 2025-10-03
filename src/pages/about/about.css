@@ -247,6 +247,10 @@
     font-weight: 600;
 }
 
+.main .about .content .card-title.space {
+    margin-bottom: 12px;
+}
+
 .main .about .content .card-description {
     color: var(--background-subtle-font-color);
     line-height: 1.6;
@@ -330,7 +334,7 @@
 
 .main .about a.link {
     display: block;
-    padding: 4px 0;
+    padding: 15px 0;
 }
 
 .main .about a.repo {
@@ -414,5 +418,14 @@
 
     .main .about .content .grid-inner {
         background-color: var(--select-color);
+    }
+
+    .main .about .paper {
+        padding: 0;
+        margin-bottom: 20px;
+    }
+
+    .main .about a.link {
+        padding: 5px 0;
     }
 }

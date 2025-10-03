@@ -348,7 +348,7 @@ class About extends Component {
                 products it offers.
               </p>
               <div className="nonclickbox space">
-                <h3>DiMark</h3>
+              <div class="card-title space">DiMark</div>
                 <p>
                   The rise in water temperatures combined with pollution will
                   alter habitat conditions for many Alpine species. DiMark
@@ -370,7 +370,7 @@ class About extends Component {
                 </div>
               </div>
               <div className="nonclickbox space">
-                <h3>Alplakes</h3>
+              <div class="card-title space">Alplakes</div>
                 <p>
                   Alplakes is an open-source ESA funded research project aimed
                   at providing operational products based on a combination of
@@ -397,7 +397,7 @@ class About extends Component {
                 </div>
               </div>
               <div className="nonclickbox space">
-                <h3>Simstrat</h3>
+              <div class="card-title space">Simstrat</div>
                 <p>
                   Simstrat is a one-dimensional physical lake model for the
                   simulation of stratification and mixing in deep stratified
@@ -425,7 +425,7 @@ class About extends Component {
                 </div>
               </div>
               <div className="nonclickbox space">
-                <h3>Sencast</h3>
+              <div class="card-title space">Sencast</div>
                 <p>
                   Sencast is a toolbox to download and derive water quality
                   parameters from satellite images. It acts as a framework for
@@ -453,7 +453,7 @@ class About extends Component {
                 </div>
               </div>
               <div className="nonclickbox space">
-                <h3>Meteolakes</h3>
+              <div class="card-title space">Meteolakes</div>
                 <p>
                   Meteolakes is a web application that shares some results of 3D
                   coupled hydrodynamic-biological simulations performed daily
