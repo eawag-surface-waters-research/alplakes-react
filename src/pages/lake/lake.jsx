@@ -27,6 +27,7 @@ import ScrollUp from "../../components/scrollup/scrollup";
 import ModelPerformance from "../../components/modelperformance/modelperformance";
 import back from "../../img/back.png";
 import AiSummary from "./components/aisummary";
+import Phosphorus from "./components/phosphorus";
 
 class Lake extends Component {
   state = {
@@ -223,6 +224,11 @@ class Lake extends Component {
                     language={language}
                   />
                 )}
+                <Phosphorus
+                    dark={dark}
+                    lake={id}
+                    language={language}
+                  />
                 {"climate" in metadata["trends"] && (
                   <Climate
                     dark={dark}
