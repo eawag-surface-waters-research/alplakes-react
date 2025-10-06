@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
-import { NavLink } from "react-router-dom";
 import NavBar from "../../components/navbar/navbar";
 import HomeMap from "../../components/leaflet/homemap";
-import SummaryTable from "../../components/summarytable/summarytable";
+import List from "./list";
 import Footer from "../../components/footer/footer";
 import Translations from "../../translations.json";
 import searchIcon from "../../img/search.png";
@@ -16,45 +15,10 @@ import insituIcon from "../../img/insituicon.png";
 import dropdownIcon from "../../img/sort.png";
 import sortIcon from "../../img/sortdesc.png";
 import back from "../../img/back.png";
-import {
-  onMouseOver,
-  onMouseOut,
-  searchList,
-  inBounds,
-  fetchDataParallel,
-} from "./functions";
+import { searchList, inBounds, fetchDataParallel } from "./functions";
 import { hour, summariseData } from "../../global";
 import CONFIG from "../../config.json";
 import "./home.css";
-
-class ListSkeleton extends Component {
-  render() {
-    return (
-      <React.Fragment>
-        {[...Array(15).keys()].map((a) => (
-          <div className="list-item-skeleton" key={a}>
-            <div className="text-skeleton">
-              <div className="name-skeleton pulse" />
-            </div>
-            <div className="logos-skeleton">
-              <div className="logo-skeleton" />
-              <div className="logo-skeleton" />
-              <div className="logo-skeleton" />
-            </div>
-            <div className="sketelon-graph">
-              <div className="skeleton-block pulse-border" />
-              <div className="skeleton-block pulse-border" />
-              <div className="skeleton-block pulse-border" />
-              <div className="skeleton-block pulse-border" />
-              <div className="skeleton-block pulse-border right" />
-            </div>
-            <div className="skeleton-data" />
-          </div>
-        ))}
-      </React.Fragment>
-    );
-  }
-}
 
 class Search extends Component {
   compareDicts = (values) => {
@@ -176,131 +140,6 @@ const withNavigate = (Component) => {
 };
 
 const SearchWithNavigate = withNavigate(Search);
-
-class List extends Component {
-  render() {
-    var {
-      language,
-      sortedList,
-      results,
-      search,
-      filterTypes,
-      filters,
-      setFavorties,
-      favorites,
-      sort,
-    } = this.props;
-    return (
-      <div className="list">
-        <div className="product-wrapper">
-          <div className="product-list">
-            {results === 0 &&
-              (search.length > 0 ? (
-                <div className="empty">{Translations.noresults[language]}</div>
-              ) : (
-                <ListSkeleton />
-              ))}
-            {sortedList
-              .filter((lake) => lake.display && !lake.filter)
-              .map((lake) => (
-                <ListItem
-                  lake={lake}
-                  language={language}
-                  key={lake.key}
-                  filterTypes={filterTypes}
-                  filters={filters}
-                  setFavorties={setFavorties}
-                  favorites={favorites}
-                  sort={sort}
-                />
-              ))}
-          </div>
-        </div>
-      </div>
-    );
-  }
-}
-
-class ListItem extends Component {
-  render() {
-    var {
-      lake,
-      language,
-      filterTypes,
-      filters,
-      setFavorties,
-      favorites,
-      sort,
-    } = this.props;
-    var selected = favorites.includes(lake.key);
-    var units = {
-      elevation: Translations.elevationUnit[language],
-      max_depth: "m",
-      area: "km²",
-    };
-    return (
-      <NavLink to={`/${lake.key}`}>
-        <div
-          className="list-item"
-          id={"list-" + lake.key}
-          onMouseOver={onMouseOver}
-          onMouseOut={onMouseOut}
-          title={Translations.click[language]}
-        >
-          <div className="properties">
-            <div className="left">
-              {lake.name[language]}
-              <div
-                className={selected ? "favorite full" : "favorite"}
-                title={selected ? "Remove" : "Save"}
-                onClick={(event) => {
-                  event.preventDefault();
-                  setFavorties(lake.key);
-                }}
-              >
-                &#9733;
-              </div>
-              {sort in lake && (
-                <div className="filter-property">
-                  {lake[sort]} {units[sort]}
-                </div>
-              )}
-            </div>
-            <div className="right">
-              <div className="view">
-                {filterTypes
-                  .filter((f) => lake.filters.includes(f.id))
-                  .map((f) => (
-                    <img
-                      className={filters.includes(f.id) ? "select" : ""}
-                      key={f.id}
-                      src={f.icon}
-                      alt={f.description}
-                    />
-                  ))}
-              </div>
-            </div>
-          </div>
-          <div className="summary">
-            {lake.summary && (
-              <div className="summary-table">
-                <SummaryTable
-                  start={lake.start}
-                  end={lake.end}
-                  dt={lake.time}
-                  value={lake.values}
-                  summary={lake.summary}
-                  unit={"°"}
-                  language={language}
-                />
-              </div>
-            )}
-          </div>
-        </div>
-      </NavLink>
-    );
-  }
-}
 
 class Home extends Component {
   state = {

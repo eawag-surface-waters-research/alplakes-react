@@ -350,16 +350,16 @@ p {
   border-radius: 16px;
   box-sizing: border-box;
   margin-bottom: calc(var(--padding) / 2);
-  padding: 0 calc(var(--padding) / 4);
   position: relative;
   width: 100%;
   height: 110px;
   background-color: var(--box-color);
+  overflow: hidden;
 }
 
 .text-skeleton {
   display: inline-block;
-  margin-left: 6px;
+  margin-left: 15px;
   vertical-align: top;
   margin-bottom: 11px;
   margin-top: 5px;
@@ -378,6 +378,7 @@ p {
   border-radius: 8px;
   margin-left: 8px;
   display: inline-block;
+  opacity: 0.4;
 }
 
 .text-skeleton .name-skeleton {
@@ -408,7 +409,6 @@ p {
   border-top: 2px solid var(--border-color);
   left: 0;
   background: linear-gradient(179deg, #6b636133, #ffffff1f);
-  border-radius: 0 0 16px 16px;
 }
 
 .skeleton-block.right {
