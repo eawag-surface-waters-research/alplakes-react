@@ -1447,6 +1447,12 @@
     "FR": "Bathymétrie",
     "IT": "Batimetria"
   },
+  "latest": {
+    "EN": "Latest",
+    "DE": "Neueste",
+    "FR": "Dernier",
+    "IT": "Ultimo"
+  },
   "latestEvents": {
     "EN": "Latest Events",
     "DE": "Letzte Veranstaltungen",

@@ -93,10 +93,38 @@ class Phosphorus extends Component {
     var { language, dark } = this.props;
     var { display, fontSize, info } = this.state;
     const description = {
-      EN: <div className="description">Some text here</div>,
-      DE: <div className="description">Some text here</div>,
-      FR: <div className="description">Some text here</div>,
-      IT: <div className="description">Some text here</div>,
+      EN: (
+        <div className="description">
+          Elevated phosphorus levels can cause eutrophication, leading to
+          excessive algal growth and oxygen depletion in lakes. This time series
+          monitors phosphorus concentrations and compares them against target
+          thresholds.
+        </div>
+      ),
+      DE: (
+        <div className="description">
+          Erhöhte Phosphorwerte können zu Eutrophierung führen, was zu
+          übermäßigem Algenwachstum und Sauerstoffmangel in Seen führt. Diese
+          Zeitreihe überwacht die Phosphorkonzentrationen und vergleicht sie mit
+          den Zielwerten.
+        </div>
+      ),
+      FR: (
+        <div className="description">
+          Des niveaux élevés de phosphore peuvent provoquer l'eutrophisation,
+          entraînant une croissance excessive des algues et un appauvrissement
+          en oxygène dans les lacs. Cette série chronologique surveille les
+          concentrations de phosphore et les compare aux seuils cibles.
+        </div>
+      ),
+      IT: (
+        <div className="description">
+          Livelli elevati di fosforo possono causare eutrofizzazione, portando a
+          un'eccessiva crescita algale e alla carenza di ossigeno nei laghi.
+          Questa serie temporale monitora le concentrazioni di fosforo e le
+          confronta con le soglie obiettivo.
+        </div>
+      ),
     };
     return (
       <div className="phosphorus subsection" ref={this.ref}>
@@ -129,7 +157,46 @@ class Phosphorus extends Component {
           </div>
           <div className="map-sidebar-right">
             {info && (
-              <div className="graph-properties">{description[language]}</div>
+              <div className="graph-properties">
+                {description[language]}
+                <div className="indicators">
+                  <div className="indicator-outer">
+                    <div className="indicator-value">
+                      {info["targetString"]}
+                      <div className="indicator-unit">µg/l</div>
+                    </div>
+                    <div className="indicator-type">
+                      {Translations.target[language]}
+                    </div>
+                  </div>
+                  <div className="indicator-outer">
+                    <div
+                      className="indicator-value"
+                      style={{ color: info["color"] }}
+                    >
+                      {info.current["value"]}
+                      <div className="indicator-unit">µg/l</div>
+                    </div>
+                    <div className="indicator-type">
+                      {Translations.latest[language]} ({info.current["year"]})
+                    </div>
+                  </div>
+                </div>
+                <div className="setting">
+                  <div className="label">{Translations.source[language]}</div>
+                  <div>
+                    <a
+                      href="https://www.bafu.admin.ch/bafu/en/home/topics/water/state-of-lakes/water-quality-in-lakes/_jcr_content/par/accordion/items/indikator_phosphorge/accordionpar/externalcontent.bitexternalcontent.exturl.xlsx/aHR0cHM6Ly93d3cuaW5kaWthdG9yZW4uYWRtaW4uY2gvUHVibG/ljL0V4cG9ydD9jaGFydENvbmZpZ3VyYXRpb25JZD0xNTY1NA==/.xlsx"
+                      alt="Bafu phosphorus data"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Kantonale Gewässerschutzfachstellen und internationalen
+                      Gewässerkommissionen
+                    </a>
+                  </div>
+                </div>
+              </div>
             )}
           </div>
         </div>

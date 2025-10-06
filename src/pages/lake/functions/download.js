@@ -643,6 +643,7 @@ export const downloadPhosphorus = async (lake, dark, language) => {
   var xMin = new Date(1950, 0, 1);
   var xMax = new Date();
   var info = false;
+  var color = false;
   const band = {
     x: dates,
     y: Array(dates.length).fill(null),
@@ -660,14 +661,25 @@ export const downloadPhosphorus = async (lake, dark, language) => {
       lineColor: dark ? "#434343" : "#ddd",
       rank: 1,
       tooltip: out.lakes[key].name[language],
-      hoverColor: dark ? "white" : "black",
+      hoverColor: dark ? "#ddd" : "#434343",
     };
+
     if (lake === key) {
       info = out.lakes[key];
       dict["lineWeight"] = 2;
       dict["lineColor"] = "red";
       dict["hoverColor"] = "red";
       dict["rank"] = 3;
+      const lastIndex = out.lakes[key]["data"].reduce(
+        (lastIdx, item, idx) =>
+          item !== null && item !== undefined ? idx : lastIdx,
+        -1
+      );
+      info["current"] = {
+        value: out.lakes[key]["data"][lastIndex],
+        year: out.year[lastIndex],
+      };
+
       yMax = Math.max(...out.lakes[key]["data"]);
       const filtered = dates.filter(
         (v, i) => out.lakes[key]["data"][i] !== null
@@ -682,10 +694,31 @@ export const downloadPhosphorus = async (lake, dark, language) => {
           out.lakes[lake].target.range[0]
         );
         data.push(band);
+        if (out.lakes[lake].target.range[0] === 0) {
+          info["targetString"] = "< " + out.lakes[lake].target.range[1];
+          if (info.current.value < out.lakes[lake].target.range[1]) {
+            color = "green";
+          } else {
+            color = "red";
+          }
+        } else {
+          info["targetString"] = out.lakes[lake].target.range.join(" - ");
+          if (
+            info.current.value <= out.lakes[lake].target.range[1] &&
+            info.current.value >= out.lakes[lake].target.range[0]
+          ) {
+            color = "green";
+          } else {
+            color = "red";
+          }
+        }
+      } else {
+        info["targetString"] = "NA";
       }
     }
     data.push(dict);
   }
+  info["color"] = color;
   data.sort((a, b) => a.rank - b.rank);
   return { data, yMax, xMin, xMax, info };
 };
