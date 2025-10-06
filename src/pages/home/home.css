@@ -850,10 +850,6 @@
     padding: 0;
   }
 
-  .main .home .content .list .product-list .list-item-skeleton {
-    padding: calc(var(--padding)/4) 0;
-  }
-
   .main .home .content .list .product-list .skeleton-click {
     display: none;
   }
