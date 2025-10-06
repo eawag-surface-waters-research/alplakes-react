@@ -40,6 +40,10 @@ simstrat = response.json()
 response = requests.get("https://alplakes-eawag.s3.eu-central-1.amazonaws.com/simulations/simstrat/ch2018/summary.json")
 climate = response.json()
 
+# Load Phosphorus data
+response = requests.get("https://alplakes-eawag.s3.eu-central-1.amazonaws.com/static/website/phosphorus.json")
+phosphorus = response.json()
+
 # Load water level data
 response = requests.get("https://alplakes-eawag.s3.eu-central-1.amazonaws.com/insitu/summary/water_level.geojson")
 wl = response.json()
@@ -98,6 +102,12 @@ for lake in metadata:
                 "key": model["key"],
                 "name": model["name"]
               }
+
+    if key in phosphorus["lakes"]:
+        if "trends" not in data:
+            data["trends"] = {"phosphorus": True}
+        else:
+            data["trends"]["phosphorus"] = True
 
     # Three Dimensional Model
     if '3D' in lake:

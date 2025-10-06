@@ -15,7 +15,10 @@ export const collectMetadata = async (layers, graphSelection) => {
       layer["sources"][layer["source"]]["metadata"] = await functions[
         layer.type
       ](layer["sources"][layer["source"]], layer.unit);
-      if ("metadata" in layer["sources"][layer["source"]] && "graph" in layer["sources"][layer["source"]]["metadata"]) {
+      if (
+        "metadata" in layer["sources"][layer["source"]] &&
+        "graph" in layer["sources"][layer["source"]]["metadata"]
+      ) {
         layer.graph = layer["sources"][layer["source"]]["metadata"]["graph"];
         graphSelection = { id: layer.id, type: Object.keys(layer.graph)[0] };
       }
@@ -499,6 +502,7 @@ export const downloadDoy = async (
       y: general.removeLeap(data["variables"].min["data"]),
       name: false,
       lineColor: "lightgrey",
+      tooltip: "Min",
     });
   if (data && "max" in data["variables"])
     display.push({
@@ -506,6 +510,7 @@ export const downloadDoy = async (
       y: general.removeLeap(data["variables"].max["data"]),
       name: false,
       lineColor: "lightgrey",
+      tooltip: "Max",
     });
   if (data && "perc5" in data["variables"] && "perc95" in data["variables"]) {
     display.push({
@@ -535,6 +540,7 @@ export const downloadDoy = async (
       y: general.removeLeap(data["variables"].lastyear["data"]),
       name: false,
       lineColor: "#ffc045",
+      tooltip: new Date().getFullYear() - 1,
     });
   }
   if (current) {
@@ -546,6 +552,7 @@ export const downloadDoy = async (
       name: false,
       lineColor: "#ff7d45",
       lineWeight: 2,
+      tooltip: new Date().getFullYear(),
     });
   }
   return {
@@ -568,6 +575,7 @@ export const downloadClimate = async (lake) => {
       lower: data["yearly"]["surface"]["RCP26"]["y_min"],
       name: false,
       lineColor: "green",
+      tooltip: "RCP26",
     },
     {
       x: data["yearly"]["surface"]["RCP45"]["x"],
@@ -577,6 +585,7 @@ export const downloadClimate = async (lake) => {
       lower: data["yearly"]["surface"]["RCP45"]["y_min"],
       name: false,
       lineColor: "orange",
+      tooltip: "RCP45",
     },
     {
       x: data["yearly"]["surface"]["RCP85"]["x"],
@@ -586,6 +595,7 @@ export const downloadClimate = async (lake) => {
       lower: data["yearly"]["surface"]["RCP85"]["y_min"],
       name: false,
       lineColor: "red",
+      tooltip: "RCP85",
     },
   ];
   const bottom = [
@@ -597,6 +607,7 @@ export const downloadClimate = async (lake) => {
       lower: data["yearly"]["bottom"]["RCP26"]["y_min"],
       name: false,
       lineColor: "green",
+      tooltip: "RCP26",
     },
     {
       x: data["yearly"]["bottom"]["RCP45"]["x"],
@@ -606,6 +617,7 @@ export const downloadClimate = async (lake) => {
       lower: data["yearly"]["bottom"]["RCP45"]["y_min"],
       name: false,
       lineColor: "orange",
+      tooltip: "RCP45",
     },
     {
       x: data["yearly"]["bottom"]["RCP85"]["x"],
@@ -615,9 +627,100 @@ export const downloadClimate = async (lake) => {
       lower: data["yearly"]["bottom"]["RCP85"]["y_min"],
       name: false,
       lineColor: "red",
+      tooltip: "RCP85",
     },
   ];
   return { surface, bottom };
+};
+
+export const downloadPhosphorus = async (lake, dark, language) => {
+  const url = `${CONFIG.alplakes_bucket}/static/website/phosphorus.json`;
+  const response = await fetchDataParallel([[url]]);
+  const out = response[0];
+  const data = [];
+  const dates = out.year.map((y) => new Date(y, 0, 1));
+  var yMax = 600;
+  var xMin = new Date(1950, 0, 1);
+  var xMax = new Date();
+  var info = false;
+  var color = false;
+  const band = {
+    x: dates,
+    y: Array(dates.length).fill(null),
+    name: false,
+    lineColor: "green",
+    confidenceAxis: "y",
+    rank: 2,
+  };
+  for (const key in out.lakes) {
+    let dict = {
+      x: dates,
+      y: out.lakes[key]["data"],
+      name: false,
+      lineWeight: 1,
+      lineColor: dark ? "#434343" : "#ddd",
+      rank: 1,
+      tooltip: out.lakes[key].name[language],
+      hoverColor: dark ? "#ddd" : "#434343",
+    };
+
+    if (lake === key) {
+      info = out.lakes[key];
+      dict["lineWeight"] = 2;
+      dict["lineColor"] = "red";
+      dict["hoverColor"] = "red";
+      dict["rank"] = 3;
+      const lastIndex = out.lakes[key]["data"].reduce(
+        (lastIdx, item, idx) =>
+          item !== null && item !== undefined ? idx : lastIdx,
+        -1
+      );
+      info["current"] = {
+        value: out.lakes[key]["data"][lastIndex],
+        year: out.year[lastIndex],
+      };
+
+      yMax = Math.max(...out.lakes[key]["data"]);
+      const filtered = dates.filter(
+        (v, i) => out.lakes[key]["data"][i] !== null
+      );
+      xMin = new Date(Math.min(...filtered));
+      xMax = new Date(Math.max(...filtered));
+      if (out.lakes[lake].target.range !== null) {
+        band["upper"] = Array(dates.length).fill(
+          out.lakes[lake].target.range[1]
+        );
+        band["lower"] = Array(dates.length).fill(
+          out.lakes[lake].target.range[0]
+        );
+        data.push(band);
+        if (out.lakes[lake].target.range[0] === 0) {
+          info["targetString"] = "< " + out.lakes[lake].target.range[1];
+          if (info.current.value < out.lakes[lake].target.range[1]) {
+            color = "green";
+          } else {
+            color = "red";
+          }
+        } else {
+          info["targetString"] = out.lakes[lake].target.range.join(" - ");
+          if (
+            info.current.value <= out.lakes[lake].target.range[1] &&
+            info.current.value >= out.lakes[lake].target.range[0]
+          ) {
+            color = "green";
+          } else {
+            color = "red";
+          }
+        }
+      } else {
+        info["targetString"] = "NA";
+      }
+    }
+    data.push(dict);
+  }
+  info["color"] = color;
+  data.sort((a, b) => a.rank - b.rank);
+  return { data, yMax, xMin, xMax, info };
 };
 
 export const downloadModelMetadata = async (model, lake) => {

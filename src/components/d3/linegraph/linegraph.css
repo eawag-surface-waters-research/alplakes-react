@@ -45,6 +45,10 @@
   border-radius: 8px;
 }
 
+.linegraph-graph .line-path {
+  transition: stroke 0.2s ease;
+}
+
 .main.dark .linegraph-graph .tooltip {
   background-color: rgba(0, 0, 0, 0.8);
 }

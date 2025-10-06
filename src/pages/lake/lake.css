@@ -682,6 +682,35 @@
     filter: invert(1);
 }
 
+/** Phosphorus **/
+
+.main .lake .phosphorus .indicators {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.main .lake .phosphorus .indicators .indicator-outer {
+    display: inline-block;
+}
+
+.main .lake .phosphorus .indicators .indicator-outer .indicator-value {
+    font-size: 50px;
+}
+
+.main .lake .phosphorus .indicators .indicator-outer .indicator-value .indicator-unit {
+    display: inline-block;
+    font-size: 16px;
+}
+
+.main .lake .phosphorus .indicators .indicator-outer .indicator-type {
+    text-align: center;
+    color: var(--background-subtle-font-color);
+}
+
+/** Webcams **/
+
 .main .lake .webcams .webcams-outer .webcams-skeleton {
     position: relative;
     background-color: var(--box-color);
@@ -1036,6 +1065,10 @@
 
     .main .lake .past-year .map-sidebar .map-sidebar-left .graph-container {
         padding: 0;
+    }
+
+    .main .lake .phosphorus .indicators .indicator-outer .indicator-value {
+        font-size: 32px;
     }
 
 

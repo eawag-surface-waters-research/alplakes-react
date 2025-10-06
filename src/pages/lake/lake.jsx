@@ -27,6 +27,7 @@ import ScrollUp from "../../components/scrollup/scrollup";
 import ModelPerformance from "../../components/modelperformance/modelperformance";
 import back from "../../img/back.png";
 import AiSummary from "./components/aisummary";
+import Phosphorus from "./components/phosphorus";
 
 class Lake extends Component {
   state = {
@@ -78,7 +79,7 @@ class Lake extends Component {
   render() {
     var { metadata, error, id, performance } = this.state;
     var { language, dark } = this.props;
-    const title = "name" in metadata ? metadata.name[language] : ""
+    const title = "name" in metadata ? metadata.name[language] : "";
     return (
       <div className="main">
         {"name" in metadata && (
@@ -144,10 +145,7 @@ class Lake extends Component {
                   />
                 )}
                 {"ai_summary" in metadata["forecast"] && (
-                  <AiSummary
-                    lake={id}
-                    language={language}
-                  />
+                  <AiSummary lake={id} language={language} />
                 )}
               </div>
             )}
@@ -222,6 +220,9 @@ class Lake extends Component {
                     parameters={metadata.trends["year"]}
                     language={language}
                   />
+                )}
+                {"phosphorus" in metadata["trends"] && (
+                  <Phosphorus dark={dark} lake={id} language={language} />
                 )}
                 {"climate" in metadata["trends"] && (
                   <Climate

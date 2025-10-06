@@ -723,6 +723,7 @@ const addTooltip = (data, div, xAxis, yAxis, options) => {
     .attr("class", "tooltip");
 
   var lang = languageOptions(options.language);
+  var currentHoveredLine = null; // Track which line is currently highlighted
 
   zoombox.on("mousemove", (event) => {
     try {
@@ -733,6 +734,20 @@ const addTooltip = (data, div, xAxis, yAxis, options) => {
       var { idx, idy, distance } = closest(data, hoverX, hoverY, xAxis, yAxis);
 
       if (distance < max_distance) {
+        if ("hoverColor" in data[idx] && currentHoveredLine !== idx) {
+          if (
+            currentHoveredLine !== null &&
+            "hoverColor" in data[currentHoveredLine]
+          ) {
+            select(`#line_${currentHoveredLine}_${div}`).attr(
+              "stroke",
+              data[currentHoveredLine].lineColor
+            );
+          }
+          select(`#line_${idx}_${div}`).attr("stroke", data[idx].hoverColor);
+          currentHoveredLine = idx;
+        }
+
         var xval, yval;
         var xu = "",
           yu = "";
@@ -754,18 +769,26 @@ const addTooltip = (data, div, xAxis, yAxis, options) => {
             yu = data[idx].yaxis === "y2" ? options.y2Unit : options.yUnit;
           }
         }
-
-        var html = `
-                <table style="color:${data[idx].lineColor};">
-                    <tbody>
+        var label = "";
+        if ("tooltip" in data[idx]) {
+          if (Array.isArray(data[idx].tooltip)) {
+            label = data[idx].tooltip[idy];
+          } else {
+            label = data[idx].tooltip;
+          }
+        }
+        const lineColor =
+          "hoverColor" in data[idx]
+            ? data[idx].hoverColor
+            : data[idx].lineColor;
+        var html = `<div>
+        ${label}
+                <table style="border-bottom: 1px solid ${lineColor};padding-bottom:5px;margin-bottom:5px;">
+                    <tbody >
                         <tr><td>x:</td><td>${xval} ${xu}</td></tr>
                         <tr><td>y:</td><td>${yval} ${yu}</td></tr>
                     </tbody>
-                </table>`;
-
-        if ("tooltip" in data[idx]) {
-          html = data[idx].tooltip[idy] + html;
-        }
+                </table></div`;
 
         if (hoverX > options.width / 2) {
           tooltip
@@ -815,16 +838,49 @@ const addTooltip = (data, div, xAxis, yAxis, options) => {
         if (options.hover) options.hover({ idx, idy });
       } else {
         tooltip.style("opacity", 0);
+        // Reset line color when tooltip disappears
+        if (
+          currentHoveredLine !== null &&
+          "hoverColor" in data[currentHoveredLine]
+        ) {
+          select(`#line_${currentHoveredLine}_${div}`).attr(
+            "stroke",
+            data[currentHoveredLine].lineColor
+          );
+          currentHoveredLine = null;
+        }
         if (options.hover) options.hover({ mousex: false, mousey: false });
       }
     } catch (e) {
       tooltip.style("opacity", 0);
+      // Reset line color on error
+      if (
+        currentHoveredLine !== null &&
+        "hoverColor" in data[currentHoveredLine]
+      ) {
+        select(`#line_${currentHoveredLine}_${div}`).attr(
+          "stroke",
+          data[currentHoveredLine].lineColor
+        );
+        currentHoveredLine = null;
+      }
       if (options.hover) options.hover({ mousex: false, mousey: false });
     }
   });
 
   zoombox.on("mouseout", () => {
     tooltip.style("opacity", 0);
+    // Reset line color when mouse leaves
+    if (
+      currentHoveredLine !== null &&
+      "hoverColor" in data[currentHoveredLine]
+    ) {
+      select(`#line_${currentHoveredLine}_${div}`).attr(
+        "stroke",
+        data[currentHoveredLine].lineColor
+      );
+      currentHoveredLine = null;
+    }
     if (options.hover) options.hover({ mousex: false, mousey: false });
   });
 
@@ -906,6 +962,7 @@ const plotLines = (div, g, data, xAxis, yAxis, curve) => {
         .datum(data[j].x)
         .attr("id", `line_${j}_${div}`)
         .attr("fill", "none")
+        .attr("class", "line-path")
         .attr("stroke", data[j].lineColor)
         .attr("stroke-width", data[j].lineWeight)
         .attr(
@@ -934,6 +991,7 @@ const plotLines = (div, g, data, xAxis, yAxis, curve) => {
         .datum(data[j].x)
         .attr("id", `line_${j}_${div}`)
         .attr("fill", "none")
+        .attr("class", "line-path")
         .attr("stroke", data[j].lineColor)
         .attr("stroke-width", data[j].lineWeight)
         .attr(

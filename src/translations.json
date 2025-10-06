@@ -755,6 +755,18 @@
     "FR": "Carte thermique temporelle de profondeur pour la dernière année de données pour un paramètre donné.",
     "IT": "Mappa termica temporale della profondità per l'ultimo anno di dati per un dato parametro."
   },
+  "phosphorus": {
+    "EN": "Phosphorus",
+    "DE": "Phosphor",
+    "FR": "Phosphore",
+    "IT": "Fosforo"
+  },
+  "phosphorusText": {
+    "EN": "Concentration of phosphorus in the lake.",
+    "DE": "Phosphorkonzentration im See.",
+    "FR": "Concentration de phosphore dans le lac.",
+    "IT": "Concentrazione di fosforo nel lago."
+  },
   "climate": {
     "EN": "Climate scenarios",
     "DE": "Klimaszenarien",
@@ -1105,6 +1117,12 @@
     "FR": "Des mesures",
     "IT": "Misure"
   },
+  "target": {
+    "EN": "Target",
+    "DE": "Ziel",
+    "FR": "Objectif",
+    "IT": "Obiettivo"
+  },
   "linegraph": {
     "EN": "Linegraph",
     "DE": "Liniendiagramm",
@@ -1428,6 +1446,12 @@
     "DE": "Bathymetrie",
     "FR": "Bathymétrie",
     "IT": "Batimetria"
+  },
+  "latest": {
+    "EN": "Latest",
+    "DE": "Neueste",
+    "FR": "Dernier",
+    "IT": "Ultimo"
   },
   "latestEvents": {
     "EN": "Latest Events",

@@ -20,6 +20,10 @@ class DatasetLinegraph extends Component {
       noData,
       fontSize,
       setFontSize,
+      yMin,
+      yMax,
+      xMin,
+      xMax
     } = this.props;
     var inputData = [];
     if (data !== undefined) {
@@ -43,6 +47,10 @@ class DatasetLinegraph extends Component {
             ylabel={ylabel}
             xunits={xunits}
             yunits={yunits}
+            ymin={yMin}
+            ymax={yMax}
+            xmin={xMin}
+            xmax={xMax}
             dark={dark}
             marginTop={1}
             marginRight={1}
