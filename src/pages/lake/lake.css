@@ -1067,6 +1067,10 @@
         padding: 0;
     }
 
+    .main .lake .phosphorus .indicators .indicator-outer .indicator-value {
+        font-size: 32px;
+    }
+
 
     .main .lake .map-sidebar .map-sidebar-left .popup {
         max-width: calc(100% - 82px);
