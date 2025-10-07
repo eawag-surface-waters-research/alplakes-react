@@ -1615,6 +1615,18 @@
     "FR": "Source",
     "IT": "Fonte"
   },
+  "dataSource": {
+    "EN": "Data source",
+    "DE": "Datenquelle",
+    "FR": "Source de données",
+    "IT": "Fonte dei dati"
+  },
+  "targetSource": {
+    "EN": "Target source",
+    "DE": "Quelle des Zielwerts",
+    "FR": "Source de la valeur cible",
+    "IT": "Fonte del valore target"
+  },
   "coordinates": {
     "EN": "Coordinates",
     "DE": "Koordinaten",

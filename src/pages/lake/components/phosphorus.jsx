@@ -183,7 +183,7 @@ class Phosphorus extends Component {
                   </div>
                 </div>
                 <div className="setting">
-                  <div className="label">{Translations.source[language]}</div>
+                  <div className="label">{Translations.dataSource[language]}</div>
                   <div>
                     <a
                       href="https://www.bafu.admin.ch/bafu/en/home/topics/water/state-of-lakes/water-quality-in-lakes/_jcr_content/par/accordion/items/indikator_phosphorge/accordionpar/externalcontent.bitexternalcontent.exturl.xlsx/aHR0cHM6Ly93d3cuaW5kaWthdG9yZW4uYWRtaW4uY2gvUHVibG/ljL0V4cG9ydD9jaGFydENvbmZpZ3VyYXRpb25JZD0xNTY1NA==/.xlsx"
@@ -196,6 +196,12 @@ class Phosphorus extends Component {
                     </a>
                   </div>
                 </div>
+                {info.target.ref !== "" && (
+                  <div className="setting">
+                    <div className="label">{Translations.targetSource[language]}</div>
+                    <div>{info.target.ref}</div>
+                  </div>
+                )}
               </div>
             )}
           </div>
