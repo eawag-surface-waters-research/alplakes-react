@@ -6,9 +6,9 @@ export const DateCEST = (input) => {
     dt = DateTime.now().setZone("Europe/Paris");
   } else if (input instanceof Date) {
     dt = DateTime.fromJSDate(input).setZone("Europe/Paris");
-  } else if (typeof input === 'string') {
+  } else if (typeof input === "string") {
     dt = DateTime.fromISO(input, { zone: "Europe/Paris" });
-  } else if (typeof input === 'number') {
+  } else if (typeof input === "number") {
     dt = DateTime.fromMillis(input, { zone: "Europe/Paris" });
   }
   return dt.toJSDate();
@@ -21,12 +21,14 @@ export const hour = () => {
 };
 
 export const summariseData = (timestamps, values) => {
-  const ONE_DAY_MS = 86400000;
   const start = DateCEST().setHours(0, 0, 0, 0);
 
-  const out = Array.from({ length: 5 }, (_, i) =>
-    formatDateYYYYMMDD(start + i * ONE_DAY_MS)
-  ).reduce((acc, key) => ({ ...acc, [key]: [] }), {});
+  const out = {};
+  const d = new Date(start);
+  for (let i = 0; i < 5; i++) {
+    out[formatDateYYYYMMDD(d)] = [];
+    d.setDate(d.getDate() + 1);
+  }
 
   timestamps.forEach((ts, i) => {
     const key = formatDateYYYYMMDD(DateCEST(ts));
