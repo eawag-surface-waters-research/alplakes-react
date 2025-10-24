@@ -5960,5 +5960,25 @@
             1202207770,
             1622826531
         ]
-    }
+    },
+    {
+          "key": "arendsee",
+          "name": {
+              "EN": "Arendsee",
+              "DE": "Arendsee",
+              "FR": "Arendsee",
+              "IT": "Arendsee"
+          },
+          "area": 5.11,
+          "ave_depth": 28,
+          "max_depth": 48,
+          "elevation": 23.0,
+          "latitude": 52.889,
+          "longitude": 11.474,
+          "simstrat_oxygen": false,
+          "type": "Natural",
+          "volume": "NA",
+          "datalakes_id": 245,
+          "mapHide": true
+      }
 ]

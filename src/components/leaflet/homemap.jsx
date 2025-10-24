@@ -126,7 +126,7 @@ class HomeMap extends Component {
     var { list } = this.props;
     this.polygons.clearLayers();
     for (let lake of list) {
-      if (lake.geometry !== false) {
+      if (lake.geometry !== false && !lake.mapHide) {
         L.geoJSON(
           {
             type: "Polygon",
@@ -153,39 +153,44 @@ class HomeMap extends Component {
     var { list, language } = this.props;
     var zoom = this.map.getZoom();
     for (let lake of list) {
-      let value =
-        lake.summary &&
-        typeof lake.summary[day] === "number" &&
-        !isNaN(lake.summary[day]);
-      this.labels[lake.key].marker = L.marker([lake.latitude, lake.longitude], {
-        icon: L.divIcon({
-          className: "leaflet-mouse-marker",
-          iconAnchor: [0, 0],
-          iconSize: [0, 0],
-        }),
-      })
-        .bindTooltip(
-          `<a class="temperature-label${value ? "" : " empty"}" href="/${
-            lake.key
-          }" title='${Translations.click[language]}'><div class="name">${
-            lake.name[language]
-          }</div>${
-            value ? `<div class="value">${lake.summary[day]}°</div>` : ""
-          }</a>`,
+      if (!lake.mapHide) {
+        let value =
+          lake.summary &&
+          typeof lake.summary[day] === "number" &&
+          !isNaN(lake.summary[day]);
+        this.labels[lake.key].marker = L.marker(
+          [lake.latitude, lake.longitude],
           {
-            id: lake.key,
-            permanent: true,
-            direction: "top",
-            offset: L.point(0, 0),
-            opacity: 1,
+            icon: L.divIcon({
+              className: "leaflet-mouse-marker",
+              iconAnchor: [0, 0],
+              iconSize: [0, 0],
+            }),
           }
         )
-        .on("click", function () {
-          window.location.href = "/" + lake.key;
-        });
+          .bindTooltip(
+            `<a class="temperature-label${value ? "" : " empty"}" href="/${
+              lake.key
+            }" title='${Translations.click[language]}'><div class="name">${
+              lake.name[language]
+            }</div>${
+              value ? `<div class="value">${lake.summary[day]}°</div>` : ""
+            }</a>`,
+            {
+              id: lake.key,
+              permanent: true,
+              direction: "top",
+              offset: L.point(0, 0),
+              opacity: 1,
+            }
+          )
+          .on("click", function () {
+            window.location.href = "/" + lake.key;
+          });
 
-      if (zoom >= this.labels[lake.key].zoom) {
-        this.labels[lake.key].marker.addTo(this.map);
+        if (zoom >= this.labels[lake.key].zoom) {
+          this.labels[lake.key].marker.addTo(this.map);
+        }
       }
     }
   };

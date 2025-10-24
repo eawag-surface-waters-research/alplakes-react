@@ -109,6 +109,10 @@ for lake in metadata:
         else:
             data["trends"]["phosphorus"] = True
 
+    # Hide from map
+    if 'mapHide' in lake and lake['mapHide']:
+        home['mapHide'] = True
+
     # Three Dimensional Model
     if '3D' in lake:
         add = True
