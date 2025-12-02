@@ -1344,7 +1344,60 @@
             1238787692,
             1510953922,
             1146478867
-        ]
+        ],
+        "3D": {
+            "default": "alplakes_mitgcm",
+            "models": {
+                "alplakes_mitgcm": {
+                    "model": "mitgcm",
+                    "name": "MITgcm",
+                    "key": "lucerne",
+                    "performance": {
+                        "rmse": {
+                            "overall": "NA"
+                        }
+                    }
+                }
+            },
+            "3D_temperature": [
+                {
+                    "name": "Kastanienbaum",
+                    "latlng": [
+                        47.002,
+                        8.3346
+                    ]
+                },
+                {
+                    "name": "Lucerne",
+                    "latlng": [
+                        47.0526,
+                        8.314
+                    ]
+                },
+                {
+                    "name": "Brunnen",
+                    "latlng": [
+                        46.9944,
+                        8.598
+                    ]
+                },
+                {
+                    "name": "Vitznau",
+                    "latlng": [
+                        47.009,
+                        8.4821
+                    ]
+                },
+                {
+                    "name": "Flüelen",
+                    "latlng": [
+                        46.9035,
+                        8.6197
+                    ]
+                }
+            ],
+            "3D_thermocline": []
+        }
     },
     {
         "key": "walensee",

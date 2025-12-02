@@ -279,6 +279,7 @@
       "lng": 8.33,
       "depth": [{"name": "0.5 m", "depth": 0.5}],
       "models": [
+        {"type": "mitgcm", "id": "lucerne"},
         {"type": "simstrat", "id": "lucernekreuztrichterandvitznauerbecken"}
       ]
     }
