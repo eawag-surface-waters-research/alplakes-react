@@ -110,6 +110,13 @@ class About extends Component {
                 products developed by the research community to provide the most
                 up-to-date and accurate information possible.
               </div>
+              <div class="award">
+                <div class="award-icon">🏆</div>
+                <div class="award-content">
+                  <div class="award-title">Winner of the 2025 Swiss National Prize for Open Research Data</div>
+                  <div class="award-description">Recognized for excellence in Open Research Data practices</div>
+                </div>
+              </div>
 
               <div className="app-icon">
                 <a href="https://apps.apple.com/us/app/alplakes/id6749540359?itscg=30200&itsct=apps_box_link&mttnsubad=6749540359">
@@ -348,7 +355,7 @@ class About extends Component {
                 products it offers.
               </p>
               <div className="nonclickbox space">
-              <div class="card-title space">DiMark</div>
+                <div class="card-title space">DiMark</div>
                 <p>
                   The rise in water temperatures combined with pollution will
                   alter habitat conditions for many Alpine species. DiMark
@@ -370,7 +377,7 @@ class About extends Component {
                 </div>
               </div>
               <div className="nonclickbox space">
-              <div class="card-title space">Alplakes</div>
+                <div class="card-title space">Alplakes</div>
                 <p>
                   Alplakes is an open-source ESA funded research project aimed
                   at providing operational products based on a combination of
@@ -397,7 +404,7 @@ class About extends Component {
                 </div>
               </div>
               <div className="nonclickbox space">
-              <div class="card-title space">Simstrat</div>
+                <div class="card-title space">Simstrat</div>
                 <p>
                   Simstrat is a one-dimensional physical lake model for the
                   simulation of stratification and mixing in deep stratified
@@ -425,7 +432,7 @@ class About extends Component {
                 </div>
               </div>
               <div className="nonclickbox space">
-              <div class="card-title space">Sencast</div>
+                <div class="card-title space">Sencast</div>
                 <p>
                   Sencast is a toolbox to download and derive water quality
                   parameters from satellite images. It acts as a framework for
@@ -453,7 +460,7 @@ class About extends Component {
                 </div>
               </div>
               <div className="nonclickbox space">
-              <div class="card-title space">Meteolakes</div>
+                <div class="card-title space">Meteolakes</div>
                 <p>
                   Meteolakes is a web application that shares some results of 3D
                   coupled hydrodynamic-biological simulations performed daily

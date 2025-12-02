@@ -1,8 +1,16 @@
 .main .blog .post {
-    margin: var(--padding) 0 calc(var(--padding) * 2) 0;
+    margin: var(--padding) 0 0 0;
 }
 
-.main .blog .post a {
+.main .blog .post p {
+    color: var(--background-subtle-font-color);
+}
+
+.main .blog .post h2 {
+    color: var(--background-font-color);
+}
+
+.main .blog .post .button {
     color: white;
     background-color: var(--highlight-color);
     text-decoration: none;
@@ -11,15 +19,42 @@
     box-shadow: var(--box-shadow);
     position: relative;
     display: inline-block;
+    transition: transform 0.2s ease;
 }
 
-.main .blog .post a:hover {
+.main .blog .post .button:hover {
     transform: translateY(-2px);
 }
 
 .main .blog .post .date {
     font-size: 14px;
-    margin-bottom: 20px;
-    font-weight: bold;
+    margin-bottom: 14px;
     color: var(--background-subtle-font-color);
+}
+
+.main .blog .post.clickable-box {
+    background-color: var(--box-color);
+    border-radius: 20px;
+    box-shadow: var(--box-shadow);
+    display: inline-block;
+    position: relative;
+    text-decoration: none;
+    border: 1px solid var(--box-color);
+    transition: border 0.33s 0s ease, box-shadow 0.33s 0s ease;
+    cursor: pointer;
+    box-sizing: border-box;
+    max-width: 100%;
+    padding: var(--padding);
+}
+
+.main .blog .post.clickable-box:hover {
+    border-color: var(--border-color);
+    box-shadow: none;
+}
+
+@media screen and (max-width: 500px) {
+    .main .blog .post.clickable-box {
+        box-shadow: none;
+        padding: 0;
+    }
 }

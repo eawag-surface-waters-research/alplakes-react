@@ -35,14 +35,16 @@ class Blog extends Component {
           <div className="content">
             <h1>Blog</h1>
             {posts.map((p) => (
-              <div className="post nonclickbox" key={p.title}>
-                <h2>{p.title}</h2>
-                <div className="date">{p.date}</div>
-                <p>{p.description}</p>
-                <a href={p.link} target="_blank" rel="noopener noreferrer">
-                  {"link_text" in p ? p.link_text : "Read more"}
-                </a>
-              </div>
+              <a href={p.link} target="_blank" rel="noopener noreferrer">
+                <div className="post clickable-box" key={p.title}>
+                  <div className="date">{p.date}</div>
+                  <h2>{p.title}</h2>
+                  <p>{p.description}</p>
+                  <div className="button">
+                    {"link_text" in p ? p.link_text : "Read more"}
+                  </div>
+                </div>
+              </a>
             ))}
           </div>
         </div>
