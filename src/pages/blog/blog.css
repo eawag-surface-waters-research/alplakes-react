@@ -57,4 +57,7 @@
         box-shadow: none;
         padding: 0;
     }
+    .main .blog .post.clickable-box:hover {
+        border-color: transparent;
+    }
 }

@@ -493,23 +493,29 @@ class About extends Component {
             <div id="people" ref={this.divRefs["people"]} className="section">
               <h2>Contributing people</h2>
               <div className="">
+                <h3>2025</h3>
+                <p>
+                  Bärenbold Fabian, Bouffard Damien, Krivograd Aleksandra, Kurmayer Rainer,
+                  Leroquais Anne, Odermatt Daniel, Rama Jemima, Rasmussen Soren, Runnalls James, 
+                  Schmid Martin, Schwefel Robert, Straile Dietmar, Valerio Giulia
+                </p>
                 <h3>2024</h3>
                 <p>
                   Amadori Marina, Bärenbold Fabian, Bouffard Damien, Brescani
-                  Mariano , Giardino Claudia, Irani Rahaghi Abolfazl, Odermatt,
+                  Mariano , Giardino Claudia, Irani Rahaghi Abolfazl, Odermatt
                   Daniel, Runnalls James, Schmid Martin, Toffolon Marco, Werther
                   Mortimer
                 </p>
                 <h3>2020 - 2023</h3>
                 <p>
                   Amadori Marina, Bärenbold Fabian, Bouffard Damien, Cruz Hugo,
-                  Irani Rahaghi Abolfazl, Odermatt, Daniel, Runnalls James,
+                  Irani Rahaghi Abolfazl, Odermatt Daniel, Runnalls James,
                   Schmid Martin, Šukys Jonas, Toffolon Marco, Werther Mortimer
                 </p>
                 <h3>2016 - 2019</h3>
                 <p>
                   Anneville Orlane, Baracchini Theo, Bouffard Damien, Gaudard
-                  Adrien, Schmid Martin, Soulignac Frédéric, Odermatt, Daniel
+                  Adrien, Schmid Martin, Soulignac Frédéric, Odermatt Daniel
                 </p>
               </div>
             </div>
