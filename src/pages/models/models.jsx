@@ -60,15 +60,15 @@ class Models extends Component {
     try {
       var { data: one_dimensional } = await axios.get(
         CONFIG.alplakes_bucket +
-          `/static/website/metadata/${CONFIG.branch}/one_dimensional.json`
+        `/static/website/metadata/${CONFIG.branch}/one_dimensional.json`
       );
       var { data: three_dimensional } = await axios.get(
         CONFIG.alplakes_bucket +
-          `/static/website/metadata/${CONFIG.branch}/three_dimensional.json`
+        `/static/website/metadata/${CONFIG.branch}/three_dimensional.json`
       );
       var { data: remote_sensing } = await axios.get(
         CONFIG.alplakes_bucket +
-          `/static/website/metadata/${CONFIG.branch}/remote_sensing.json`
+        `/static/website/metadata/${CONFIG.branch}/remote_sensing.json`
       );
       this.setState({ one_dimensional, three_dimensional, remote_sensing });
     } catch (error) {
@@ -193,6 +193,13 @@ class Models extends Component {
                 weather data collection functions as we are not permitted to
                 distribute weather data.
               </p>
+              <p>
+                The meteorological forcing data is produced from the MeteoSwiss{" "}
+                <a href="https://www.meteoswiss.admin.ch/weather/warning-and-forecasting-systems/icon-forecasting-systems/ensemble-data-assimilation.html" target="_blank" rel="noreferrer">KENDA-CH1</a> 
+                {" "}reanalysis product and the MeteoSwiss{" "}
+                <a href="https://opendatadocs.meteoswiss.ch/e-forecast-data/e2-e3-numerical-weather-forecasting-model" target="_blank" rel="noreferrer">ICON-CH2-EPS</a> 
+                {" "}forecast product. Hydrological data is sourced from BAFU.
+              </p>
               <h3>Running the model</h3>
               <h4>Delft3D-flow</h4>
               <p>
@@ -312,7 +319,7 @@ class Models extends Component {
               </p>
               <h3>Input files</h3>
               <p>
-                A set of example input files are provided on the{" "}
+                Input files are provided on the{" "}
                 <NavLink to="/downloads">Downloads</NavLink> page for users that
                 want to adapt the models to their own purposes. These files can
                 also be generated using the code available{" "}
@@ -323,11 +330,13 @@ class Models extends Component {
                 >
                   here
                 </a>
-                . Please note users outside of Eawag will need to update the
-                weather data collection functions as we are not permitted to
-                distribute weather data. Full files are currently only availble
-                to project members but will become public after April 2025 when
-                MeteoSwiss moves to an Open Data model.
+                .
+              </p>
+              <p>
+                The meteorological forcing data is produced from a combination of insitu data and forecasts from 
+                either the MeteoSwiss (
+                <a href="https://opendatadocs.meteoswiss.ch/e-forecast-data/e2-e3-numerical-weather-forecasting-model" target="_blank" rel="noreferrer">ICON-CH2-EPS</a> 
+                ) or <a href="https://www.visualcrossing.com/" target="_blank" rel="noreferrer">Visual Crossing</a> for lakes outside of Switzerland. Hydrological data is sourced from BAFU.
               </p>
               <h3>Running the model</h3>
               <h4>Simstrat</h4>
