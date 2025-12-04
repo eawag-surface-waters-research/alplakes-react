@@ -6029,6 +6029,7 @@
           "latitude": 52.889,
           "longitude": 11.474,
           "simstrat_oxygen": false,
+          "current_temperature": true,
           "type": "Natural",
           "volume": "NA",
           "datalakes_id": 245,

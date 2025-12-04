@@ -314,6 +314,21 @@
       ]
     }
   ],
+  "arendsee": [
+    {
+      "name": "Arendsee",
+      "type": "lake-scrape",
+      "id": "igb_arendsee",
+      "source": "IGB Berlin",
+      "url": "https://emon.igb-berlin.de/arendsee.html",
+      "lat": 52.888901,
+      "lng": 11.459153,
+      "depth": [{"name": "Surface", "depth": 1.0}],
+      "models": [
+        {"type": "simstrat", "id": "arendsee"}
+      ]
+    }
+  ],
   "starnberger": [
     {
       "name": "Starnberg, Starnbergersee",
