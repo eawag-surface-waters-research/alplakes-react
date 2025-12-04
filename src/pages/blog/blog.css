@@ -53,6 +53,9 @@
 }
 
 @media screen and (max-width: 500px) {
+    .main .blog .post {
+        margin-bottom: 40px;
+    }
     .main .blog .post.clickable-box {
         box-shadow: none;
         padding: 0;
