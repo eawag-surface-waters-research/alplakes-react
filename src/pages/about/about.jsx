@@ -113,8 +113,13 @@ class About extends Component {
               <div class="award">
                 <div class="award-icon">🏆</div>
                 <div class="award-content">
-                  <div class="award-title">Winner of the 2025 Swiss National Prize for Open Research Data</div>
-                  <div class="award-description">Recognized for excellence in Open Research Data practices</div>
+                  <div class="award-title">
+                    Winner of the 2025 Swiss National Prize for Open Research
+                    Data
+                  </div>
+                  <div class="award-description">
+                    Recognized for excellence in Open Research Data practices
+                  </div>
                 </div>
               </div>
 
@@ -172,8 +177,8 @@ class About extends Component {
                     <div class="card-title">Wave Models</div>
                   </div>
                   <p class="card-description">
-                    Integrate and calibrate wave models (e.g., SWAN) to provide 5-day
-                    forecasts of wave height and period for large lakes.
+                    Integrate and calibrate wave models (e.g., SWAN) to provide
+                    5-day forecasts of wave height and period for large lakes.
                   </p>
                   <div className="status">
                     <div
@@ -495,9 +500,10 @@ class About extends Component {
               <div className="">
                 <h3>2025</h3>
                 <p>
-                  Bärenbold Fabian, Bouffard Damien, Krivograd Aleksandra, Kurmayer Rainer,
-                  Leroquais Anne, Odermatt Daniel, Rama Jemima, Rasmussen Soren, Runnalls James, 
-                  Schmid Martin, Schwefel Robert, Straile Dietmar, Valerio Giulia
+                  Bärenbold Fabian, Bouffard Damien, Krivograd Aleksandra,
+                  Kurmayer Rainer, Leroquais Anne, Odermatt Daniel, Rama Jemima,
+                  Rasmussen Soren, Runnalls James, Schmid Martin, Schwefel
+                  Robert, Straile Dietmar, Valerio Giulia
                 </p>
                 <h3>2024</h3>
                 <p>
@@ -845,6 +851,14 @@ class About extends Component {
             >
               <h2>Related publications</h2>
               <h3>Model development</h3>
+              <div className="paper nonclickbox">
+                Amadori, M., Irani Rahaghi, A., Bouffard, D., and Toffolon, M.:
+                Using automatic calibration to improve the physics behind
+                complex numerical models: an example from a 3D lake model using
+                Delft3D (v6.02.10) and DYNO-PODS (v1.0), Geosci. Model Dev., 18,
+                3473–3486, 2025.
+                {Link("https://doi.org/10.5194/gmd-18-3473-2025")}
+              </div>
               <div className="paper nonclickbox">
                 Irani Rahaghi, A., Odermatt, D., Anneville, O., Sepúlveda
                 Steiner, O., Reiss, R. S., Amadori, M., ... & Bouffard, D.
