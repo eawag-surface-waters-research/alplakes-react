@@ -299,7 +299,7 @@ class Home extends Component {
     var days = [];
     list.map((l) => {
       l.display = true;
-      if (l.key in forecast) {
+      if (l.key in forecast && "time" in forecast[l.key]) {
         l.time = forecast[l.key]["time"];
         l.values = forecast[l.key]["temperature"];
         let { summary, start, end } = summariseData(l.time, l.values);
