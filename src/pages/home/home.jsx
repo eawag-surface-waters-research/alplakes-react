@@ -299,15 +299,20 @@ class Home extends Component {
     var days = [];
     list.map((l) => {
       l.display = true;
-      if (l.key in forecast && "time" in forecast[l.key]) {
-        l.time = forecast[l.key]["time"];
-        l.values = forecast[l.key]["temperature"];
-        let { summary, start, end } = summariseData(l.time, l.values);
-        if (Object.keys(summary).length > days.length)
-          days = Object.keys(summary);
-        l.summary = summary;
-        l.start = start;
-        l.end = end;
+      if (l.key in forecast) {
+        try {
+          l.time = forecast[l.key]["time"];
+          l.values = forecast[l.key]["temperature"];
+          let { summary, start, end } = summariseData(l.time, l.values);
+          if (Object.keys(summary).length > days.length)
+            days = Object.keys(summary);
+          l.summary = summary;
+          l.start = start;
+          l.end = end;
+        } catch (e) {
+          console.error(`Failed to process forecast for ${l.key}`)
+          l.summary = false;
+        }
       } else {
         l.summary = false;
       }
