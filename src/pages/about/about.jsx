@@ -166,9 +166,9 @@ class About extends Component {
                   <div className="status">
                     <div
                       className="status-dot"
-                      style={{ backgroundColor: "orange" }}
+                      style={{ backgroundColor: "green" }}
                     ></div>
-                    Proposal submitted
+                    Funded and hiring
                   </div>
                 </div>
                 <div class="grid-inner">
@@ -359,6 +359,38 @@ class About extends Component {
                 development of the Alplakes platform and/or the models and
                 products it offers.
               </p>
+              <div className="nonclickbox space">
+                <div class="card-title space">AlplakesDA</div>
+                <p>
+                  This project will develop a data assimilation framework to
+                  enhance the accuracy and reliability of operational
+                  one-dimensional (1D) lake models in Canton Ticino. This
+                  framework will integrate real-time observations with numerical
+                  models to improve predictions of lake thermal structure,
+                  providing water managers with more precise forecasting
+                  capabilities. Through its flexible, open-source architecture
+                  and scalable design, the framework will establish a
+                  standardized foundation for operational lake forecasting that
+                  can be deployed across Switzerland.
+                </p>
+                <div className="project-info">
+                  {Link(
+                    "https://github.com/eawag-surface-waters-research/alplakes-da"
+                  )}
+                  <div className="parameter">
+                    <div className="circle">
+                      <span className="circle-text">$</span>
+                    </div>
+                    <div className="text">Canton Ticino & Eawag</div>
+                  </div>
+                  <div className="parameter">
+                    <div className="circle">
+                      <span className="circle-text">PI</span>
+                    </div>
+                    <div className="text">James Runnalls</div>
+                  </div>
+                </div>
+              </div>
               <div className="nonclickbox space">
                 <div class="card-title space">DiMark</div>
                 <p>
