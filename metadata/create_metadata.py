@@ -168,7 +168,7 @@ for lake in metadata:
                 "https://alplakes-api.eawag.ch/simulations/1d/metadata/simstrat/{}".format(k))
             model_metadata = response.json()
             one_dimensional_list.append(
-                {"link": simstrat_metadata["key"],
+                {"link": key,
                  "name": simstrat_metadata["name"],
                  "model": "Simstrat",
                  "LatLng": "{}, {}".format(simstrat_metadata["latitude"], simstrat_metadata["longitude"]),
