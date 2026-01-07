@@ -1,15 +1,8 @@
 import React, { useState } from "react";
-import Translations from "../../translations.json";
 import "./table.css";
 
-const SortableTable = ({ data, language, label }) => {
+const SortableTable = ({ data, columns, language, label }) => {
   const rows = Object.entries(data).map(([key, value]) => ({ key, ...value }));
-
-  var columns = [
-    ...new Set(
-      rows.flatMap((row) => Object.keys(row).filter((k) => k !== "link"))
-    ),
-  ];
 
   // State for sorting
   const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
@@ -20,8 +13,8 @@ const SortableTable = ({ data, language, label }) => {
   // Sorting function
   const sortedRows = [...rows].sort((a, b) => {
     if (!sortConfig.key) return 0;
-    const aValue = a[sortConfig.key] ?? "NaN";
-    const bValue = b[sortConfig.key] ?? "NaN";
+    const aValue = a[sortConfig.key]["value"] ?? "NaN";
+    const bValue = b[sortConfig.key]["value"] ?? "NaN";
 
     if (aValue < bValue) return sortConfig.direction === "asc" ? -1 : 1;
     if (aValue > bValue) return sortConfig.direction === "asc" ? 1 : -1;
@@ -37,31 +30,13 @@ const SortableTable = ({ data, language, label }) => {
     setSortConfig({ key, direction });
   };
 
-  columns = columns.filter((c) => c !== "key");
-
   // Toggle fullscreen mode
   const toggleFullscreen = () => setIsFullscreen((prev) => !prev);
 
-  const unitDict = {
-    elevation: " (m)",
-    depth: " (m)",
-    area: " (km²)",
-    overallrmse: " (°C)",
-    surfacermse: " (°C)",
-    bottomrmse: " (°C)",
-    MdSA: " (%)",
-  };
-
-  const titleDict = {
-    RMSE: "Root mean squared error",
-    MAD: "Median absolute deviation",
-    MdSA: "Median symmetric accuracy",
-  };
-
   const downloadCSV = () => {
-    const header = columns.join(",");
+    const header = columns.map((col) => col.value).join(",");
     const rowsData = sortedRows.map((row) =>
-      columns.map((col) => `"${row[col] ?? ""}"`).join(",")
+      columns.map((col) => `"${row[col.key].value ?? ""}"`).join(",")
     );
     const csvContent = [header, ...rowsData].join("\n");
 
@@ -85,22 +60,13 @@ const SortableTable = ({ data, language, label }) => {
             <tr>
               {columns.map((column) => (
                 <th
-                  key={column}
-                  onClick={() => handleSort(column)}
-                  style={{ textAlign: column === "name" ? "left" : "center" }}
-                  title={
-                    column in titleDict
-                      ? titleDict[column]
-                      : column in Translations
-                      ? Translations[column][language]
-                      : column
-                  }
+                  key={column.key}
+                  onClick={() => handleSort(column.key)}
+                  style={{ textAlign: column.key === "name" ? "left" : "center" }}
+                  title={ "title" in column ? column.title : column.value}
                 >
-                  {column in Translations
-                    ? Translations[column][language]
-                    : column}{" "}
-                  {column in unitDict ? unitDict[column] : ""}
-                  {sortConfig.key === column ? (
+                  {column.value}
+                  {sortConfig.key === column.key ? (
                     sortConfig.direction === "asc" ? (
                       <div>&#x25b4;</div>
                     ) : (
@@ -117,16 +83,16 @@ const SortableTable = ({ data, language, label }) => {
             {sortedRows.map((row, index) => (
               <tr
                 key={index}
-                onClick={() => row.link && window.open(row.link, "_blank")}
-                style={{ cursor: row.link ? "pointer" : "default" }}
+                onClick={() => row.function && row.function()}
+                style={{ cursor: row.function ? "pointer" : "default" }}
               >
                 {columns.map((column) => (
                   <td
-                    key={column}
-                    style={{ textAlign: column === "name" ? "left" : "center" }}
-                    title={row[column] !== undefined ? row[column] : "NaN"}
+                    key={column.key}
+                    style={{ textAlign: column.key === "name" ? "left" : "center" }}
+                    title={row[column.key]["value"] !== undefined ? row[column.key]["value"] : "NaN"}
                   >
-                    {row[column] !== undefined ? row[column] : "NaN"}
+                    {row[column.key]["value"] !== undefined ? row[column.key]["value"] : "NaN"}
                   </td>
                 ))}
               </tr>
