@@ -8,6 +8,7 @@ import About from "./pages/about/about";
 import Models from "./pages/models/models";
 import Blog from "./pages/blog/blog";
 import Map from "./pages/lake/map/map";
+import Performance from "./pages/performance/performance";
 import "./App.css";
 
 class App extends Component {
@@ -90,6 +91,19 @@ class App extends Component {
                 element={
                   <ErrorBoundary {...this.props} {...this.state}>
                     <Models
+                      {...this.state}
+                      setLanguage={this.setLanguage}
+                      toggleDark={this.toggleDark}
+                    />
+                  </ErrorBoundary>
+                }
+                exact
+              />
+              <Route
+                path="/performance"
+                element={
+                  <ErrorBoundary {...this.props} {...this.state}>
+                    <Performance
                       {...this.state}
                       setLanguage={this.setLanguage}
                       toggleDark={this.toggleDark}

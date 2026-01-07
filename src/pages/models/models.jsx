@@ -12,9 +12,9 @@ import ScrollUp from "../../components/scrollup/scrollup";
 
 class Models extends Component {
   state = {
-    one_dimensional: [],
-    three_dimensional: [],
-    remote_sensing: [],
+    one_dimensional: {data: [], columns: []},
+    three_dimensional: {data: [], columns: []},
+    remote_sensing: {data: [], columns: []},
     visibleKey: "threed",
   };
   constructor(props) {
@@ -55,21 +55,75 @@ class Models extends Component {
       });
     }
   };
+  deriveColumns = (data, language) => {
+    const rows = Object.entries(data).map(([key, value]) => ({
+      key,
+      ...value,
+    }));
+    var column_ids = [
+      ...new Set(
+        rows.flatMap((row) => Object.keys(row).filter((k) => !["link", "key"].includes(k)))
+      ),
+    ];
+
+    const unitDict = {
+      elevation: " (m)",
+      depth: " (m)",
+      area: " (km²)",
+      overallrmse: " (°C)",
+      surfacermse: " (°C)",
+      bottomrmse: " (°C)",
+      MdSA: " (%)",
+    };
+
+    const titleDict = {
+      RMSE: "Root mean squared error",
+      MAD: "Median absolute deviation",
+      MdSA: "Median symmetric accuracy",
+    };
+
+    data = data.map((d) => {
+      d.function = "link" in d ? () => window.open(String(d.link), "_blank") : false;
+      for (let key in d) {
+        if (!["link", "function"].includes(key)) {
+          d[key] = { value: d[key] };
+        }
+      }
+      return d;
+    });
+
+    const columns = column_ids.map((c) => {
+      let column = { key: c };
+      if (c in titleDict) {
+        column.title = titleDict[c];
+      }
+      column.value = c in Translations ? Translations[c][language] : c;
+      if (c in unitDict) {
+        column.value = column.value + " " + unitDict[c];
+      }
+      return column;
+    });
+
+    return { columns, data };
+  };
   async componentDidMount() {
     window.scrollTo(0, 0);
     try {
-      var { data: one_dimensional } = await axios.get(
+      var { data: data_1d } = await axios.get(
         CONFIG.alplakes_bucket +
-        `/static/website/metadata/${CONFIG.branch}/one_dimensional.json`
+          `/static/website/metadata/${CONFIG.branch}/one_dimensional.json`
       );
-      var { data: three_dimensional } = await axios.get(
+      const one_dimensional = this.deriveColumns(data_1d, "EN");
+      var { data: data_3d } = await axios.get(
         CONFIG.alplakes_bucket +
-        `/static/website/metadata/${CONFIG.branch}/three_dimensional.json`
+          `/static/website/metadata/${CONFIG.branch}/three_dimensional.json`
       );
-      var { data: remote_sensing } = await axios.get(
+      const three_dimensional = this.deriveColumns(data_3d, "EN");
+      var { data: data_rs } = await axios.get(
         CONFIG.alplakes_bucket +
-        `/static/website/metadata/${CONFIG.branch}/remote_sensing.json`
+          `/static/website/metadata/${CONFIG.branch}/remote_sensing.json`
       );
+      const remote_sensing = this.deriveColumns(data_rs, "EN");
       this.setState({ one_dimensional, three_dimensional, remote_sensing });
     } catch (error) {
       console.error("Failed to collect metadata from bucket");
@@ -128,7 +182,8 @@ class Models extends Component {
               </p>
             </div>
             <SortableTable
-              data={three_dimensional}
+              data={three_dimensional.data}
+              columns={three_dimensional.columns}
               language={language}
               label="three_dimentional_models"
             />
@@ -195,10 +250,22 @@ class Models extends Component {
               </p>
               <p>
                 The meteorological forcing data is produced from the MeteoSwiss{" "}
-                <a href="https://www.meteoswiss.admin.ch/weather/warning-and-forecasting-systems/icon-forecasting-systems/ensemble-data-assimilation.html" target="_blank" rel="noreferrer">KENDA-CH1</a> 
-                {" "}reanalysis product and the MeteoSwiss{" "}
-                <a href="https://opendatadocs.meteoswiss.ch/e-forecast-data/e2-e3-numerical-weather-forecasting-model" target="_blank" rel="noreferrer">ICON-CH2-EPS</a> 
-                {" "}forecast product. Hydrological data is sourced from BAFU.
+                <a
+                  href="https://www.meteoswiss.admin.ch/weather/warning-and-forecasting-systems/icon-forecasting-systems/ensemble-data-assimilation.html"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  KENDA-CH1
+                </a>{" "}
+                reanalysis product and the MeteoSwiss{" "}
+                <a
+                  href="https://opendatadocs.meteoswiss.ch/e-forecast-data/e2-e3-numerical-weather-forecasting-model"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  ICON-CH2-EPS
+                </a>{" "}
+                forecast product. Hydrological data is sourced from BAFU.
               </p>
               <h3>Running the model</h3>
               <h4>Delft3D-flow</h4>
@@ -268,7 +335,8 @@ class Models extends Component {
               </p>
             </div>
             <SortableTable
-              data={one_dimensional}
+              data={one_dimensional.data}
+              columns={one_dimensional.columns}
               language={language}
               label="one_dimentional_models"
             />
@@ -333,10 +401,25 @@ class Models extends Component {
                 .
               </p>
               <p>
-                The meteorological forcing data is produced from a combination of insitu data and forecasts from 
-                either the MeteoSwiss (
-                <a href="https://opendatadocs.meteoswiss.ch/e-forecast-data/e2-e3-numerical-weather-forecasting-model" target="_blank" rel="noreferrer">ICON-CH2-EPS</a> 
-                ) or <a href="https://www.visualcrossing.com/" target="_blank" rel="noreferrer">Visual Crossing</a> for lakes outside of Switzerland. Hydrological data is sourced from BAFU.
+                The meteorological forcing data is produced from a combination
+                of insitu data and forecasts from either the MeteoSwiss (
+                <a
+                  href="https://opendatadocs.meteoswiss.ch/e-forecast-data/e2-e3-numerical-weather-forecasting-model"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  ICON-CH2-EPS
+                </a>
+                ) or{" "}
+                <a
+                  href="https://www.visualcrossing.com/"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Visual Crossing
+                </a>{" "}
+                for lakes outside of Switzerland. Hydrological data is sourced
+                from BAFU.
               </p>
               <h3>Running the model</h3>
               <h4>Simstrat</h4>
@@ -377,7 +460,8 @@ class Models extends Component {
               </p>
             </div>
             <SortableTable
-              data={remote_sensing}
+              data={remote_sensing.data}
+              columns={remote_sensing.columns}
               language={language}
               label="remote_sensing_products"
             />
