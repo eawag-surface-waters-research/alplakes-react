@@ -518,7 +518,16 @@ def satellite_layers(key, sd):
     return layers
 
 def simstrat_forcing_source(forcing, forecast):
-    meteo_type = forcing[0]["type"]
+    out = forcing_lookup(forcing[0]["type"]) + " (Station ID: {})".format(forcing[0]["id"])
+    forecast_type = forecast["source"]
+    if "meteoswiss" in forecast_type.lower():
+        out = out + ". Forecast from MeteoSwiss ICON."
+    elif "visualcrossing" in forecast_type.lower():
+        out = out + ". Forecast from VisualCrossing."
+    return out
+
+
+def forcing_lookup(meteo_type):
     out = ""
     if "meteoswiss" in meteo_type.lower():
         out = "SwissMetNet, MeteoSwiss"
@@ -532,9 +541,4 @@ def simstrat_forcing_source(forcing, forecast):
         out = "Deutscher Wetterdienst"
     elif "geosphere" in meteo_type.lower():
         out = "GeoSphere Austria"
-    forecast_type = forecast["source"]
-    if "meteoswiss" in forecast_type.lower():
-        out = out + ". Forecast from MeteoSwiss ICON."
-    elif "visualcrossing" in forecast_type.lower():
-        out = out + ". Forecast from VisualCrossing."
     return out

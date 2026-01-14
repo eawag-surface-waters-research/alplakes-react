@@ -180,7 +180,9 @@ for lake in metadata:
                  "timeframe": "{}-{}".format(model_metadata["start_date"][0:4], model_metadata["end_date"][0:4]),
                  "overallrmse": round(simstrat_metadata["performance"]["rmse"]["overall"], 2),
                  "surfacermse": round(simstrat_metadata["performance"]["rmse"]["surface"], 2),
-                 "bottomrmse": round(simstrat_metadata["performance"]["rmse"]["bottom"], 2)
+                 "bottomrmse": round(simstrat_metadata["performance"]["rmse"]["bottom"], 2),
+                 "meteosource": func.forcing_lookup(simstrat_metadata["forcing"][0]["type"]),
+                 "meteoid": simstrat_metadata["forcing"][0]["id"]
                  })
             simstrat_parameters = {
                 "key": k,

@@ -197,6 +197,18 @@
     "FR": "RMSE inférieur",
     "IT": "RMSE inferiore"
   },
+  "meteosource": {
+    "EN": "Meteostation Source",
+    "DE": "Quelle der Wetterstation",
+    "FR": "Source de la station météorologique",
+    "IT": "Fonte della stazione meteo"
+  },
+  "meteoid": {
+    "EN": "Meteostation ID",
+    "DE": "Wetterstations-ID",
+    "FR": "Identifiant de la station météo",
+    "IT": "ID della stazione meteo"
+  },
   "parameter": {
     "EN": "Parameter",
     "DE": "Parameter",

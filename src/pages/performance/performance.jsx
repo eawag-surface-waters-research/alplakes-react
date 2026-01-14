@@ -104,7 +104,7 @@ class Performance extends Component {
           />
         </Helmet>
         <NavBar {...this.props} relative={true} />
-        <div className="performance">
+        <div className="performance minheight">
           <div className="content">
             <div className="text-width">
               <h1>{Translations.performance[language]}</h1>

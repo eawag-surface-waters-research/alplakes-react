@@ -1,8 +1,8 @@
-.main .performance {
+.main .performance.minheight {
   min-height: calc(100vh - var(--header-height) - 130px);
 }
 
-.main .performance .content .intro {
+.main .performance.minheight .content .intro {
   font-size: 20px;
   margin-top: var(--padding);
   margin-bottom: var(--padding);
