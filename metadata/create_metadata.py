@@ -1,4 +1,5 @@
 import json
+import time
 import boto3
 import requests
 import functions as func
@@ -166,6 +167,7 @@ for lake in metadata:
             simstrat_metadata = [s for s in simstrat if s["key"] == k][0]
             response = requests.get(
                 "https://alplakes-api.eawag.ch/simulations/1d/metadata/simstrat/{}".format(k))
+            time.sleep(0.1)
             model_metadata = response.json()
             one_dimensional_list.append(
                 {"link": key,
