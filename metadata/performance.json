@@ -180,20 +180,6 @@
   ],
   "constance": [
     {
-      "name": "Lindau, Bodensee",
-      "type": "lake-scrape",
-      "id": "gkd_lindau-20001001",
-      "source": "Gewässerkundlicher Dienst Bayern",
-      "url": "https://www.gkd.bayern.de/en/lakes/watertemperature/iller_lech/lindau-20001001/current-values",
-      "lat": 47.5446,
-      "lng": 9.6849,
-      "depth": [{"name": "Surface", "depth": 1.0}],
-      "models": [
-        {"type": "simstrat", "id": "upperconstance"}
-
-      ]
-    },
-    {
       "name": "Altnau Steg Meteomedia",
       "type": "lake-scrape",
       "id": "thurgau_M1090",

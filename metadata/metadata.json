@@ -2970,6 +2970,131 @@
         ]
     },
     {
+        "key": "pernisko",
+        "name": {
+            "EN": "Lake Pernica",
+            "DE": "Perniško See",
+            "FR": "Lac de Pernica",
+            "IT": "Lago di Pernica"
+        },
+        "area": 0.99,
+        "ave_depth": "NA",
+        "max_depth": "NA",
+        "elevation": 244,
+        "latitude": 46.5932,
+        "longitude": 15.7254,
+        "flags": [
+            "slovenian"
+        ],
+        "type": "Artificial",
+        "simstrat": false,
+        "volume": "NA",
+        "residence_time": "NA",
+        "mixing_regime": "NA",
+        "geothermal_flux": "NA",
+        "trophic_state": "NA"
+    },
+    {
+        "key": "gajsevsko",
+        "name": {
+            "EN": "Lake Gajševsko",
+            "DE": "Gajševsko See",
+            "FR": "Lac de Gajševsko",
+            "IT": "Lago di Gajševsko"
+        },
+        "area": 0.65,
+        "ave_depth": "NA",
+        "max_depth": "NA",
+        "elevation": 183,
+        "latitude": 46.5355,
+        "longitude": 16.115,
+        "flags": [
+            "slovenian"
+        ],
+        "type": "Natural",
+        "simstrat": false,
+        "volume": "NA",
+        "residence_time": "NA",
+        "mixing_regime": "NA",
+        "geothermal_flux": "NA",
+        "trophic_state": "NA"
+    },
+    {
+        "key": "slivnisko",
+        "name": {
+            "EN": "Lake Slivnica",
+            "DE": "Slivniško See",
+            "FR": "Lac de Slivniško",
+            "IT": "Lago di Slivniško"
+        },
+        "area": 0.58,
+        "ave_depth": "NA",
+        "max_depth": "NA",
+        "elevation": 293,
+        "latitude": 46.189,
+        "longitude": 15.4437,
+        "flags": [
+            "slovenian"
+        ],
+        "type": "Artificial",
+        "simstrat": false,
+        "volume": "NA",
+        "residence_time": "NA",
+        "mixing_regime": "NA",
+        "geothermal_flux": "NA",
+        "trophic_state": "NA"
+    },
+    {
+        "key": "ledavsko",
+        "name": {
+            "EN": "Lake Ledava",
+            "DE": "Ledavsko See",
+            "FR": "Lac de Ledavsko",
+            "IT": "Lago di Ledavsko"
+        },
+        "area": 0.78,
+        "ave_depth": "NA",
+        "max_depth": "NA",
+        "elevation": 217,
+        "latitude": 46.7508,
+        "longitude": 16.0403,
+        "flags": [
+            "slovenian"
+        ],
+        "type": "Artificial",
+        "simstrat": false,
+        "volume": "NA",
+        "residence_time": "NA",
+        "mixing_regime": "NA",
+        "geothermal_flux": "NA",
+        "trophic_state": "NA"
+    },
+    {
+        "key": "smartinsko",
+        "name": {
+            "EN": "Lake Šmartno",
+            "DE": "Šmartinsko See",
+            "FR": "Lac de Šmartinsko",
+            "IT": "Lago di Šmartinsko"
+        },
+        "area": 0.82,
+        "ave_depth": "NA",
+        "max_depth": "NA",
+        "elevation": 273,
+        "latitude": 46.2806,
+        "longitude": 15.2683,
+        "flags": [
+            "slovenian"
+        ],
+        "type": "Artificial",
+        "simstrat": false,
+        "volume": "NA",
+        "residence_time": "NA",
+        "mixing_regime": "NA",
+        "geothermal_flux": "NA",
+        "trophic_state": "NA"
+    },
+    {
         "key": "mondsee",
         "name": {
             "EN": "Mondsee",
