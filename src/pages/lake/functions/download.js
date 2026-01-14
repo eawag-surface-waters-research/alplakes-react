@@ -11,10 +11,12 @@ export const collectMetadata = async (layers, graphSelection) => {
     measurements: measurementsMetadata,
   };
   for (let layer of layers) {
-    if (layer.active && !("metadata" in layer["sources"][layer["source"]])) {
-      layer["sources"][layer["source"]]["metadata"] = await functions[
-        layer.type
-      ](layer["sources"][layer["source"]], layer.unit);
+    if (layer.active) {
+      if (!("metadata" in layer["sources"][layer["source"]])) {
+        layer["sources"][layer["source"]]["metadata"] = await functions[
+          layer.type
+        ](layer["sources"][layer["source"]], layer.unit);
+      }
       if (
         "metadata" in layer["sources"][layer["source"]] &&
         "graph" in layer["sources"][layer["source"]]["metadata"]

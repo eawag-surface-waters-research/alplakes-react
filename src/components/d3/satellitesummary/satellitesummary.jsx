@@ -13,6 +13,7 @@ class SatelliteSummary extends Component {
     satellites: {},
     latitude: "",
     longitude: "",
+    parameter: "",
   };
   setImage = (event) => {
     this.props.setImage(event.x);
@@ -36,10 +37,11 @@ class SatelliteSummary extends Component {
   };
 
   setData = () => {
-    var { xmin, xmax, satellites, latitude, longitude } = this.state;
-    var { input, options } = this.props;
+    var { xmin, xmax, latitude, longitude } = this.state;
+    var { input, options, parameter } = this.props;
     var { available, reference } = input;
     var data = {};
+    var satellites = {};
     var ymin = Infinity;
     var ymax = -Infinity;
     for (let date of Object.values(available)) {
@@ -83,6 +85,7 @@ class SatelliteSummary extends Component {
         satellites[key] = true;
       }
     }
+
     this.setState({
       data,
       ymin,
@@ -91,6 +94,7 @@ class SatelliteSummary extends Component {
       satellites,
       latitude,
       longitude,
+      parameter,
     });
   };
 
@@ -99,7 +103,10 @@ class SatelliteSummary extends Component {
   }
 
   componentDidUpdate() {
-    if (this.props.options.coverage !== this.state.coverage) {
+    if (
+      this.props.options.coverage !== this.state.coverage ||
+      this.props.parameter !== this.state.parameter
+    ) {
       this.setData();
     }
   }
