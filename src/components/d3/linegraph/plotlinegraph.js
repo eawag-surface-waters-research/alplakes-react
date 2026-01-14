@@ -1092,13 +1092,18 @@ const plotConfidenceInterval = (g, data, xAxis, yAxis) => {
 const plotScatter = (context, data, xAxis, yAxis, options) => {
   context.clearRect(0, 0, options.canvasWidth, options.canvasHeight);
   for (var i = 0; i < data.length; i++) {
+    if ("lineWeight" in data[i]) {
+      context.lineWidth = data[i].lineWeight;
+    } else {
+      context.lineWidth = 1;
+    }
     if ("symbol" in data[i] && data[i].symbol === "x") {
       for (let j = 0; j < data[i].x.length; j++) {
         context.beginPath();
         context.strokeStyle = data[i].lineColor;
         const px = xAxis[data[i].xaxis].ax(data[i].x[j]);
         const py = yAxis[data[i].yaxis].ax(data[i].y[j]);
-        const crossSize = 3;
+        const crossSize = 4;
         context.moveTo(px - crossSize, py - crossSize);
         context.lineTo(px + crossSize, py + crossSize);
         context.moveTo(px + crossSize, py - crossSize);
@@ -1111,7 +1116,7 @@ const plotScatter = (context, data, xAxis, yAxis, options) => {
         context.strokeStyle = data[i].lineColor;
         const px = xAxis[data[i].xaxis].ax(data[i].x[j]);
         const py = yAxis[data[i].yaxis].ax(data[i].y[j]);
-        context.arc(px, py, 2.5, 0, 2 * Math.PI, true);
+        context.arc(px, py, 3.5, 0, 2 * Math.PI, true);
         context.stroke();
       }
     }

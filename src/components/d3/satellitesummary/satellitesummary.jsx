@@ -76,7 +76,9 @@ class SatelliteSummary extends Component {
         x: reference.datetime,
         y: reference.value,
         tooltip: reference.value.map((r) => "Insitu value"),
-        lineColor: "red",
+        lineColor: "#44bca7",
+        lineWeight: 2,
+        symbol: "x"
       };
     }
 
@@ -143,7 +145,7 @@ class SatelliteSummary extends Component {
         label: `Landsat 9 [o] (${Translations.lakeAverage[language]})`,
         class: "",
       },
-      insitu: { label: `Insitu [o] (${latitude}, ${longitude})`, class: "red" },
+      insitu: { label: `Insitu [x] (${latitude}, ${longitude})`, class: "highlight" },
     };
     const no_data = graph_data.length === 1 && graph_data[0].x.length === 0;
     return (
