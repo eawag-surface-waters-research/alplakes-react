@@ -1097,7 +1097,7 @@ const plotScatter = (context, data, xAxis, yAxis, options) => {
     } else {
       context.lineWidth = 1;
     }
-    if ("symbol" in data[i] && data[i].symbol === "x") {
+    if ("symbol" in data[i] && data[i].symbol === "cross") {
       for (let j = 0; j < data[i].x.length; j++) {
         context.beginPath();
         context.strokeStyle = data[i].lineColor;
@@ -1110,14 +1110,39 @@ const plotScatter = (context, data, xAxis, yAxis, options) => {
         context.lineTo(px - crossSize, py + crossSize);
         context.stroke();
       }
+    } else if ("symbol" in data[i] && data[i].symbol === "triangle") {
+      for (let j = 0; j < data[i].x.length; j++) {
+        context.beginPath();
+        context.fillStyle = data[i].lineColor;
+        const px = xAxis[data[i].xaxis].ax(data[i].x[j]);
+        const py = yAxis[data[i].yaxis].ax(data[i].y[j]);
+        const size = 4.5;
+        // Draw equilateral triangle pointing up
+        context.moveTo(px, py - size);
+        context.lineTo(px - size, py + size);
+        context.lineTo(px + size, py + size);
+        context.closePath();
+        context.fill();
+      }
+    } else if ("symbol" in data[i] && data[i].symbol === "square") {
+      for (let j = 0; j < data[i].x.length; j++) {
+        context.beginPath();
+        context.fillStyle = data[i].lineColor;
+        const px = xAxis[data[i].xaxis].ax(data[i].x[j]);
+        const py = yAxis[data[i].yaxis].ax(data[i].y[j]);
+        const size = 4.5;
+        // Draw square centered at (px, py)
+        context.rect(px - size / 2, py - size / 2, size, size);
+        context.fill();
+      }
     } else {
       for (let j = 0; j < data[i].x.length; j++) {
         context.beginPath();
-        context.strokeStyle = data[i].lineColor;
+        context.fillStyle = data[i].lineColor;
         const px = xAxis[data[i].xaxis].ax(data[i].x[j]);
         const py = yAxis[data[i].yaxis].ax(data[i].y[j]);
-        context.arc(px, py, 3.5, 0, 2 * Math.PI, true);
-        context.stroke();
+        context.arc(px, py, 4, 0, 2 * Math.PI, true);
+        context.fill();
       }
     }
   }

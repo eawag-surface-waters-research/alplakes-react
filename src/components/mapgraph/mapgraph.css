@@ -1,9 +1,15 @@
 .map-graph {
   width: 100%;
-  height: 300px;
+  height: 400px;
   max-height: 33vh;
   pointer-events: all;
   position: relative;
+}
+
+.map-graph.full {
+  height: 100%;
+  max-height: none;
+  z-index: 9999;
 }
 
 .map-graph .map-graph-header {
@@ -13,7 +19,7 @@
 
 .map-graph .map-graph-header .map-graph-close {
   position: absolute;
-  right: 0;
+  right: 40px;
   top: 0;
   font-size: 22px;
   border-radius: 12px 12px 0 0;
@@ -32,9 +38,45 @@
   font-size: 23px;
 }
 
+.map-graph .map-graph-header .map-graph-maximise {
+  position: absolute;
+  right: 0;
+  top: 0;
+  font-size: 22px;
+  border-radius: 12px 12px 0 0;
+  font-weight: bold;
+  padding: 5px 0;
+  cursor: pointer;
+  transition: all 0.1s 0s ease;
+  background-color: var(--box-color);
+  width: 45px;
+  height: 40px;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.map-graph .map-graph-header .map-graph-maximise img {
+  height: 20px;
+  padding-top: 5px;
+  transition: all 0.1s 0s ease;
+}
+
+.main.dark .map-graph .map-graph-header .map-graph-maximise img {
+  filter: invert(1);
+}
+
+.map-graph .map-graph-header .map-graph-maximise:hover img {
+  transform: scale(1.1);
+}
+
 .map-graph .map-graph-header .map-graph-title {
   height: 100%;
   overflow: hidden;
+  white-space: nowrap;
+}
+
+.map-graph.full .map-graph-header .map-graph-title {
+  background-color: var(--background-color);
 }
 
 .map-graph .map-graph-header .map-graph-title .map-graph-label {
@@ -72,7 +114,7 @@
 .map-graph .map-graph-content {
   height: calc(100% - 40px);
   width: 100%;
-  padding: 16px 20px 0 20px;
+  padding: 20px 20px 0 20px;
   box-sizing: border-box;
   background-color: var(--box-color);
   border-radius: 0 0 12px 12px;
@@ -140,7 +182,7 @@
 
 .map-graph .map-graph-content .graph-title {
   position: absolute;
-  bottom: 9px;
+  bottom: 20px;
   font-size: 14px;
   text-align: center;
   width: 100%;
@@ -170,22 +212,34 @@
 .map-graph .map-graph-content .download-metadata {
   position: absolute;
   right: 0;
-  bottom: 9px;
+  bottom: 20px;
   z-index: 1000;
   border-radius: 8px;
   margin-right: 16px;
-  border: 1px solid var(--border-color);
   background-color: var(--background-color);
   color: var(--background-font-color);
   cursor: pointer;
-  padding: 3px 6px;
-  font-size: 11px;
+  padding: 5px 14px;
+  font-size: 14px;
 }
 
 .map-graph .map-graph-content .download-metadata:hover {
   background-color: var(--highlight-color);
   color: white;
   border-color: var(--highlight-color);
+}
+
+.main.dark .map-graph .map-graph-content .download-metadata img {
+  filter: invert(1);
+}
+
+.map-graph .map-graph-content .download-metadata img {
+  height: 15px;
+  margin-right: 8px;
+}
+
+.map-graph .map-graph-content .satellite-graph {
+  height: calc(100% - 20px);
 }
 
 .map-graph-icon {
@@ -221,12 +275,16 @@
     background-color: var(--select-color);
   }
 
+  .map-graph .map-graph-content .download-metadata {
+    display: none;
+  }
+
   .map-graph
     .map-graph-header
     .map-graph-title
     .map-graph-label
     .map-graph-label-text {
-    max-width: 25px;
+    max-width: 10px;
     overflow: hidden;
     white-space: nowrap;
   }

@@ -55,6 +55,7 @@ class GraphHeader extends Component {
       display,
       fontSize,
       fullscreen,
+      removeFullscreen,
       clearPlot,
       toggleXgraph,
       toggleFullscreen,
@@ -152,15 +153,16 @@ class GraphHeader extends Component {
               title="Download"
             />
           </div>
-          <div className="icon">
-            <img
-              src={fullicon}
-              alt="Toggle fullscreen"
-              onClick={toggleFullscreen}
-              title={fulllabel}
-            />
-          </div>
-
+          {!removeFullscreen && (
+            <div className="icon">
+              <img
+                src={fullicon}
+                alt="Toggle fullscreen"
+                onClick={toggleFullscreen}
+                title={fulllabel}
+              />
+            </div>
+          )}
           <div
             className={download ? "downloadbar" : "downloadbar hide"}
             onClick={this.toggleDownload}

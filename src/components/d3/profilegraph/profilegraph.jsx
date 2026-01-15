@@ -31,6 +31,7 @@ class ProfileGraph extends Component {
         yReverse={true}
         xReverse={false}
         display={"contour"}
+        removeFullscreen={true}
         dark={dark}
       />
     );

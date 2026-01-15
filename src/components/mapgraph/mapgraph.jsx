@@ -8,6 +8,8 @@ import TransectGraph from "../d3/transectgraph/transectgraph";
 import satelliteIcon from "../../img/satelliteicon.png";
 import profileIcon from "../../img/profile.png";
 import transectIcon from "../../img/transect.png";
+import fullscreenIcon from "../../img/full.png";
+import shrinkIcon from "../../img/shrink.png";
 
 const formatSencastDay = (datetime) => {
   var a = new Date(datetime);
@@ -157,6 +159,8 @@ class MapGraph extends Component {
       selectMapGraph,
       graphHide,
       toggleGraphHide,
+      graphFull,
+      toggleGraphFull,
       updateOptions,
       customProfileLocation,
     } = this.props;
@@ -185,10 +189,16 @@ class MapGraph extends Component {
           <img src={icon} alt="Graph icon" />
         </div>
       ) : (
-        <div className="map-graph">
+        <div className={graphFull ? "map-graph full" : "map-graph"}>
           <div className="map-graph-header">
             <div className="map-graph-close" onClick={toggleGraphHide}>
-              &#10005;
+              &#8213;
+            </div>
+            <div className="map-graph-maximise" onClick={toggleGraphFull}>
+              <img
+                src={graphFull ? shrinkIcon : fullscreenIcon}
+                alt="Full screen"
+              />
             </div>
             <div className="map-graph-title">
               {labels.map((label) => (

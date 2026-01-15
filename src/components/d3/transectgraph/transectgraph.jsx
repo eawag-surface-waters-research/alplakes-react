@@ -54,6 +54,7 @@ class TransectGraph extends Component {
         minvalue={bounds[0]}
         bcolor={false}
         dark={dark}
+        removeFullscreen={true}
       />
     );
   }

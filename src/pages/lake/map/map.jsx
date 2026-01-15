@@ -33,6 +33,7 @@ class Map extends Component {
     sidebar: false,
     graphSelection: false,
     graphHide: window.innerWidth > 500 ? false : true,
+    graphFull: false,
     mapId: "map_" + Math.round(Math.random() * 100000),
     disable_measurements: true,
     measurements: false,
@@ -66,7 +67,11 @@ class Map extends Component {
   };
 
   toggleGraphHide = () => {
-    this.setState({ graphHide: !this.state.graphHide });
+    this.setState({ graphHide: !this.state.graphHide, graphFull: false });
+  };
+
+  toggleGraphFull = () => {
+    this.setState({ graphFull: !this.state.graphFull });
   };
 
   toggleSidebar = () => {
@@ -372,6 +377,7 @@ class Map extends Component {
       sidebar,
       graphSelection,
       graphHide,
+      graphFull,
     } = this.state;
     var { language, dark } = this.props;
     var title = "";
@@ -448,6 +454,8 @@ class Map extends Component {
               selectMapGraph={this.selectMapGraph}
               graphHide={graphHide}
               toggleGraphHide={this.toggleGraphHide}
+              graphFull={graphFull}
+              toggleGraphFull={this.toggleGraphFull}
               updateOptions={this.updateOptions}
             />
             <div className="map-loading" id={`map_loading_${mapId}`}>

@@ -207,7 +207,9 @@ class Basemap extends Component {
       dark,
       selectMapGraph,
       graphHide,
+      graphFull,
       toggleGraphHide,
+      toggleGraphFull,
       updateOptions,
     } = this.props;
     const { controls, play, period, datetime, timestep } = this.state;
@@ -243,7 +245,7 @@ class Basemap extends Component {
               </div>
             </div>
           )}
-          {graph && (
+          {graph && !graphFull && (
             <MapGraph
               layers={layers}
               language={language}
@@ -253,11 +255,29 @@ class Basemap extends Component {
               dark={dark}
               graphHide={graphHide}
               toggleGraphHide={toggleGraphHide}
+              graphFull={graphFull}
+              toggleGraphFull={toggleGraphFull}
               updateOptions={updateOptions}
               customProfileLocation={this.customProfileLocation}
             />
           )}
         </div>
+        {graph && graphFull && (
+          <MapGraph
+            layers={layers}
+            language={language}
+            graphSelection={graphSelection}
+            datetime={datetime}
+            selectMapGraph={selectMapGraph}
+            dark={dark}
+            graphHide={graphHide}
+            toggleGraphHide={toggleGraphHide}
+            graphFull={graphFull}
+            toggleGraphFull={toggleGraphFull}
+            updateOptions={updateOptions}
+            customProfileLocation={this.customProfileLocation}
+          />
+        )}
         <div id={mapId} className="leaflet-map"></div>
       </React.Fragment>
     );

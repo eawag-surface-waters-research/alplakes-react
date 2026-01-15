@@ -363,6 +363,7 @@ class D3HeatMap extends Component {
       maxvalue,
       minvalue,
       dark,
+      removeFullscreen
     } = this.props;
 
     const TimeLabels = ["Time", "time", "datetime", "Datetime", "Date", "date"];
@@ -456,6 +457,7 @@ class D3HeatMap extends Component {
                 display={display}
                 fontSize={fontSize}
                 fullscreen={fullscreen}
+                removeFullscreen={removeFullscreen}
                 toggleDownload={this.toggleDownload}
                 editFontSize={this.editFontSize}
                 toggleDisplay={this.toggleDisplay}
