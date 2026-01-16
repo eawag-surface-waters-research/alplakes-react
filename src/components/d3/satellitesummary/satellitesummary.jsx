@@ -195,8 +195,7 @@ class SatelliteSummary extends Component {
                   <div className="question-hover">
                     {Translations.satelliteInsitu[language]}
                     <div className="space">
-                      <b>{Translations.source[language]}</b>: {source}Cantonal
-                      CTD monitoring
+                      <b>{Translations.source[language]}</b>: {source}
                     </div>
                     <div className="space">
                       <b>{Translations.location[language]}</b>: {latitude},{" "}
