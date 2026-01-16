@@ -269,7 +269,7 @@ def temperature_layers(key):
         }
     ]
 
-def satellite_layers(key, sd):
+def satellite_layers(key, sd, srd):
     layers = []
     if "sentinel3" in sd and "chla" in sd["sentinel3"]:
         layer = {
@@ -307,6 +307,8 @@ def satellite_layers(key, sd):
                     }
                 }
             }
+        if key in srd and "chla" in srd[key]:
+            layer["sources"][layer["source"]]["reference"] = "/insitu/reference/{}/chla.json".format(key)
         layer["sources"][layer["source"]]["models"].append(
             {
                 "model": "Sentinel3",
@@ -350,7 +352,7 @@ def satellite_layers(key, sd):
             }
           }
         }
-        if key in ["thun", "brienz"]:
+        if key in srd and "secchi" in srd[key]:
             layer["sources"][layer["source"]]["reference"] = "/insitu/reference/{}/secchi.json".format(key)
         if "sentinel3" in sd and "Zsd_lee" in sd["sentinel3"]:
             layer["sources"][layer["source"]]["models"].append(
@@ -404,6 +406,8 @@ def satellite_layers(key, sd):
             }
           }
         }
+        if key in srd and "turbidity" in srd[key]:
+            layer["sources"][layer["source"]]["reference"] = "/insitu/reference/{}/turbidity.json".format(key)
         if "sentinel3" in sd and "tsm_binding754" in sd["sentinel3"]:
             layer["sources"][layer["source"]]["models"].append(
                 {
@@ -456,6 +460,8 @@ def satellite_layers(key, sd):
             }
           }
         }
+        if key in srd and "forel_ule" in srd[key]:
+            layer["sources"][layer["source"]]["reference"] = "/insitu/reference/{}/forel_ule.json".format(key)
         if "sentinel3" in sd and "forel_ule" in sd["sentinel3"]:
             layer["sources"][layer["source"]]["models"].append(
                 {
@@ -508,6 +514,8 @@ def satellite_layers(key, sd):
             }
           }
         }
+        if key in srd and "temperature" in srd[key]:
+            layer["sources"][layer["source"]]["reference"] = "/insitu/reference/{}/temperature.json".format(key)
         layer["sources"][layer["source"]]["models"].append(
             {
                 "model": "Collection",

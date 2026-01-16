@@ -105,8 +105,8 @@ class SatelliteSummary extends Component {
       }
     }
     if (reference) {
-      latitude = reference.latitude.toFixed(2);
-      longitude = reference.longitude.toFixed(2);
+      latitude = reference.latitude;
+      longitude = reference.longitude;
       source = reference.source;
       data["insitu"] = {
         x: reference.datetime,

@@ -50,6 +50,10 @@ response = requests.get("https://alplakes-eawag.s3.eu-central-1.amazonaws.com/in
 wl = response.json()
 water_levels = list(set([f["properties"]["lake"] for f in wl["features"]]))
 
+# Load satellite reference data
+response = requests.get("https://eawagrs.s3.eu-central-1.amazonaws.com/insitu/reference/metadata.json")
+srd = response.json()
+
 s3 = boto3.client('s3')
 
 # Create files
@@ -267,7 +271,7 @@ for lake in metadata:
         if key in satellite:
             add = True
             satellite_data = []
-            layers["layers"].extend(func.satellite_layers(lake["key"], satellite[key]))
+            layers["layers"].extend(func.satellite_layers(lake["key"], satellite[key], srd))
             for sat in satellite_metadata:
                 sm = []
                 for source in sat["sources"]:
