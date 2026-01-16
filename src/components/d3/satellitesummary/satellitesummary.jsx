@@ -12,6 +12,7 @@ class SatelliteSummary extends Component {
     satellites: {},
     latitude: "",
     longitude: "",
+    source: "",
     parameter: "",
   };
   setImage = (event) => {
@@ -48,12 +49,33 @@ class SatelliteSummary extends Component {
     return "#c13c2f";
   };
 
-  capitalizeFirst = (str) => {
-    return str.charAt(0).toUpperCase() + str.slice(1);
+  getLabel = (label) => {
+    var options;
+    if (window.innerWidth > 500) {
+      options = {
+        S2: "Sentinel 2",
+        S3: "Sentinel 3",
+        L8: "Landsat 8",
+        L9: "Landsat 9",
+        insitu: "In-Situ",
+      };
+    } else {
+      options = {
+        S2: "S2",
+        S3: "S3",
+        L8: "L8",
+        L9: "L9",
+        insitu: "In-Situ",
+      };
+    }
+    if (label in options) {
+      return options[label];
+    }
+    return label;
   };
 
   setData = () => {
-    var { latitude, longitude } = this.state;
+    var { latitude, longitude, source } = this.state;
     var { input, options, parameter } = this.props;
     var { available, reference } = input;
     var data = {};
@@ -62,7 +84,7 @@ class SatelliteSummary extends Component {
     var ymax = -Infinity;
     for (let date of Object.values(available)) {
       for (let image of date.images) {
-        if (image.percent > options.coverage) {
+        if (image.percent > options.coverage && image.percent > 10) {
           let tooltip = `<div><div>${image.satellite} ${image.percent}% coverage</div><div></div>Click to view</div>`;
           ymin = Math.min(ymin, image.ave);
           ymax = Math.max(ymax, image.ave);
@@ -85,6 +107,7 @@ class SatelliteSummary extends Component {
     if (reference) {
       latitude = reference.latitude.toFixed(2);
       longitude = reference.longitude.toFixed(2);
+      source = reference.source;
       data["insitu"] = {
         x: reference.datetime,
         y: reference.value,
@@ -108,6 +131,7 @@ class SatelliteSummary extends Component {
       satellites,
       latitude,
       longitude,
+      source,
       parameter,
     });
   };
@@ -127,7 +151,8 @@ class SatelliteSummary extends Component {
 
   render() {
     var { label, unit, dark, language } = this.props;
-    var { data, ymin, ymax, satellites } = this.state;
+    var { data, ymin, ymax, satellites, latitude, longitude, source } =
+      this.state;
     const graph_data = Object.entries(data)
       .filter(([key, value]) =>
         Object.entries(satellites)
@@ -146,20 +171,47 @@ class SatelliteSummary extends Component {
           {Object.keys(satellites).map((s) => (
             <div
               key={s}
-              className="graph-title-selection"
-              style={{ color: this.getColor(s) }}
+              className={
+                satellites[s]
+                  ? "graph-title-selection"
+                  : "graph-title-selection unselect"
+              }
+              onClick={() => this.setSatellites(s)}
             >
-              <input
-                type="checkbox"
-                checked={satellites[s]}
-                onChange={() => this.setSatellites(s)}
-              ></input>
-              {this.capitalizeFirst(s)}
+              {s === "insitu" ? (
+                <div
+                  className="triangle"
+                  style={{ borderBottomColor: this.getColor(s) }}
+                />
+              ) : (
+                <div
+                  className="circle"
+                  style={{ backgroundColor: this.getColor(s) }}
+                />
+              )}
+              {this.getLabel(s)}
+              {s === "insitu" && (
+                <div className="question">
+                  <div className="question-hover">
+                    {Translations.satelliteInsitu[language]}
+                    <div className="space">
+                      <b>{Translations.source[language]}</b>: {source}Cantonal
+                      CTD monitoring
+                    </div>
+                    <div className="space">
+                      <b>{Translations.location[language]}</b>: {latitude},{" "}
+                      {longitude}
+                    </div>
+                  </div>
+                  ?
+                </div>
+              )}
             </div>
           ))}
         </div>
         <div className="download-metadata" onClick={this.downloadMetadata}>
-          <img src={downloadIcon} alt="Download"/> Export CSV
+          <img src={downloadIcon} alt="Download" />{" "}
+          {Translations.export[language]} CSV
         </div>
         <div className="satellite-graph">
           <D3LineGraph

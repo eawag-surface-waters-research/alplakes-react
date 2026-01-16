@@ -195,18 +195,78 @@
   max-width: 25%;
   overflow: hidden;
   white-space: nowrap;
+  border-radius: 8px;
+  cursor: pointer;
 }
 
-.map-graph .map-graph-content .graph-title .graph-title-selection input {
+.map-graph .map-graph-content .graph-title .graph-title-selection.unselect {
+  opacity: 0.3;
+}
+
+.map-graph .map-graph-content .graph-title .graph-title-selection .triangle {
+  width: 0;
+  height: 0;
+  border-left: 8.08px solid transparent;
+  border-right: 8.08px solid transparent;
+  border-bottom: 14px solid;
+  border-bottom-color: inherit;
+  background-color: transparent !important;
+  display: inline-block;
   margin-right: 6px;
 }
 
-.map-graph .map-graph-content .graph-title .graph-title-selection.red {
-  color: red;
+.map-graph .map-graph-content .graph-title .graph-title-selection .circle {
+  height: 14px;
+  width: 14px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 6px;
 }
 
-.map-graph .map-graph-content .graph-title .graph-title-selection.highlight {
-  color: var(--highlight-color);
+.map-graph .map-graph-content .graph-title .graph-title-selection .question {
+  background-color: var(--background-color);
+  padding: 2px 8px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-left: 6px;
+}
+
+.map-graph
+  .map-graph-content
+  .graph-title
+  .graph-title-selection
+  .question:hover
+  .question-hover {
+  display: block;
+}
+
+.map-graph
+  .map-graph-content
+  .graph-title
+  .graph-title-selection
+  .question
+  .question-hover {
+  display: none;
+  position: absolute;
+  bottom: 36px;
+  background-color: var(--background-color);
+  border: 1px solid var(--border-color);
+  padding: 12px;
+  border-radius: 8px;
+  width: 300px;
+  white-space: normal;
+  text-align: left;
+  left: calc(50% - 150px);
+}
+
+.map-graph
+  .map-graph-content
+  .graph-title
+  .graph-title-selection
+  .question
+  .question-hover
+  .space {
+  padding-top: 5px;
 }
 
 .map-graph .map-graph-content .download-metadata {
@@ -218,15 +278,14 @@
   margin-right: 16px;
   background-color: var(--background-color);
   color: var(--background-font-color);
+  border: 1px solid var(--background-color);
   cursor: pointer;
   padding: 5px 14px;
   font-size: 14px;
 }
 
-.map-graph .map-graph-content .download-metadata:hover {
-  background-color: var(--highlight-color);
-  color: white;
-  border-color: var(--highlight-color);
+.map-graph .map-graph-content .download-metadata:hover img {
+  transform: scale(1.1);
 }
 
 .main.dark .map-graph .map-graph-content .download-metadata img {
@@ -236,6 +295,7 @@
 .map-graph .map-graph-content .download-metadata img {
   height: 15px;
   margin-right: 8px;
+  transition: all 0.1s 0s ease;
 }
 
 .map-graph .map-graph-content .satellite-graph {
@@ -276,6 +336,10 @@
   }
 
   .map-graph .map-graph-content .download-metadata {
+    display: none;
+  }
+
+  .map-graph .map-graph-content .graph-title .graph-title-selection .question {
     display: none;
   }
 

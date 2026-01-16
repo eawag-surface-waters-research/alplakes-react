@@ -455,6 +455,12 @@
     "FR": "Emplacement",
     "IT": "Posizione"
   },
+  "export": {
+    "EN": "Export",
+    "DE": "Export",
+    "FR": "Exporter",
+    "IT": "Esporta"
+  },
   "showLocations": {
     "EN": "Show all locations",
     "DE": "Alle Standorte anzeigen",
@@ -882,10 +888,16 @@
     "IT": "A schermo intero"
   },
   "noSatelliteData": {
-    "EN": "No data to plot. Please try reducing the minimum coverage filter.",
-    "DE": "Keine Daten zum Plotten. Bitte versuchen Sie, den Mindestabdeckungsfilter zu reduzieren.",
-    "FR": "Aucune donnée à tracer. Veuillez essayer de réduire le filtre de couverture minimale.",
-    "IT": "Nessun dato da tracciare. Prova a ridurre il filtro di copertura minima."
+    "EN": "No data to plot.",
+    "DE": "Keine Daten zum Plotten.",
+    "FR": "Aucune donnée à tracer.",
+    "IT": "Nessun dato da tracciare."
+  },
+  "satelliteInsitu": {
+    "EN": "In-situ data represents point measurements at a specific location, while satellite data shows the spatial average across the lake. These in-situ values should be used as a reference rather than direct validation.",
+    "DE": "In-situ-Daten stellen Punktmessungen an einem bestimmten Ort dar, während Satellitendaten den räumlichen Mittelwert über den See zeigen. Diese In-situ-Werte sollten eher als Referenz denn zur direkten Validierung verwendet werden.",
+    "FR": "Les données in situ représentent des mesures ponctuelles à un emplacement précis, tandis que les données satellitaires indiquent la moyenne spatiale sur l'ensemble du lac. Ces valeurs in situ doivent être utilisées comme référence plutôt que pour une validation directe.",
+    "IT": "I dati in situ rappresentano misurazioni puntuali in una posizione specifica, mentre i dati satellitari mostrano la media spaziale del lago. Questi valori in situ dovrebbero essere utilizzati come riferimento piuttosto che come validazione diretta."
   },
   "collapse": {
     "EN": "Collapse",
