@@ -128,6 +128,7 @@ for lake in metadata:
             three_dimensional_list.append({
                 "link": lake["key"],
                 "name": lake["name"]["EN"],
+                "model_key": lake["3D"]["models"][model_id]["key"],
                 "model": lake["3D"]["models"][model_id]["name"],
                 "LatLng": "{}, {}".format(lake["latitude"], lake["longitude"]),
                 "area": lake["area"],
@@ -176,6 +177,7 @@ for lake in metadata:
             one_dimensional_list.append(
                 {"link": key,
                  "name": simstrat_metadata["name"],
+                 "model_key": simstrat_metadata["key"],
                  "model": "Simstrat",
                  "LatLng": "{}, {}".format(simstrat_metadata["latitude"], simstrat_metadata["longitude"]),
                  "area": simstrat_metadata["surface_area"],

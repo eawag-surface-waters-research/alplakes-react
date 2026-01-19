@@ -11,6 +11,12 @@ import axios from "axios";
 import "./downloads.css";
 import ScrollUp from "../../components/scrollup/scrollup";
 
+export const hour = () => {
+  return `?timestamp=${
+    Math.round((new Date().getTime() + 1800000) / 3600000) * 3600 - 3600
+  }`;
+};
+
 class ModelInputs extends Component {
   state = {
     model_list: [],
@@ -25,9 +31,9 @@ class ModelInputs extends Component {
     var lake_list = list
       .filter((l) => l.model === model)
       .map((l) => {
-        return { name: l.name, link: l.link };
+        return { name: l.name, model_key: l.model_key };
       });
-    var lake = lake_list[0].link;
+    var lake = lake_list[0].model_key;
     this.setState({ model, lake_list, lake });
   };
   setLake = (event) => {
@@ -46,9 +52,9 @@ class ModelInputs extends Component {
       var lake_list = list
         .filter((l) => l.model === model)
         .map((l) => {
-          return { name: l.name, link: l.link };
+          return { name: l.name, model_key: l.model_key };
         });
-      var lake = lake_list[0].link;
+      var lake = lake_list[0].model_key;
       this.setState({ model_list, model, lake_list, lake });
     }
   }
@@ -69,7 +75,7 @@ class ModelInputs extends Component {
         </select>
         <select value={lake} onChange={this.setLake}>
           {lake_list.map((m) => (
-            <option key={m.link} value={m.link}>
+            <option key={m.model_key} value={m.model_key}>
               {m.name}
             </option>
           ))}
@@ -101,9 +107,9 @@ class ThreeDimensionalResults extends Component {
     var lake_list = list
       .filter((l) => l.model === model)
       .map((l) => {
-        return { name: l.name, link: l.link };
+        return { name: l.name, model_key: l.model_key };
       });
-    var lake = lake_list[0].link;
+    var lake = lake_list[0].model_key;
     var data = await this.getMetadata(model.toLowerCase(), lake.toLowerCase());
     var week_list = this.getWeeks(data.start_date, data.end_date);
     var week = week_list[0];
@@ -127,9 +133,7 @@ class ThreeDimensionalResults extends Component {
       ({ data } = await axios.get(
         `${
           CONFIG.alplakes_bucket
-        }/simulations/${model}/cache/${lake}/metadata.json?timestamp=${
-          Math.round((new Date().getTime() + 1800000) / 3600000) * 3600 - 3600
-        }`
+        }/simulations/${model}/cache/${lake}/metadata.json?timestamp=${hour()}`
       ));
     } catch (e) {
       ({ data } = await axios.get(
@@ -168,9 +172,9 @@ class ThreeDimensionalResults extends Component {
       var lake_list = list
         .filter((l) => l.model === model)
         .map((l) => {
-          return { name: l.name, link: l.link };
+          return { name: l.name, model_key: l.model_key };
         });
-      var lake = lake_list[0].link;
+      var lake = lake_list[0].model_key;
       var data = await this.getMetadata(
         model.toLowerCase(),
         lake.toLowerCase()
@@ -194,7 +198,7 @@ class ThreeDimensionalResults extends Component {
         </select>
         <select value={lake} onChange={this.setLake}>
           {lake_list.map((m) => (
-            <option key={m.link} value={m.link}>
+            <option key={m.model_key} value={m.model_key}>
               {m.name}
             </option>
           ))}
@@ -233,9 +237,9 @@ class OneDimensionalResults extends Component {
     var lake_list = list
       .filter((l) => l.model === model)
       .map((l) => {
-        return { name: l.name, link: l.link };
+        return { name: l.name, model_key: l.model_key };
       });
-    var lake = lake_list[0].link;
+    var lake = lake_list[0].model_key;
     this.setState({ model, lake_list, lake });
   };
   setLake = async (event) => {
@@ -254,9 +258,9 @@ class OneDimensionalResults extends Component {
       var lake_list = list
         .filter((l) => l.model === model)
         .map((l) => {
-          return { name: l.name, link: l.link };
+          return { name: l.name, model_key: l.model_key };
         });
-      var lake = lake_list[0].link;
+      var lake = lake_list[0].model_key;
       var variable_list = [
         "T_out.dat",
         "S_out.dat",
@@ -298,7 +302,7 @@ class OneDimensionalResults extends Component {
         </select>
         <select value={lake} onChange={this.setLake}>
           {lake_list.map((m) => (
-            <option key={m.link} value={m.link}>
+            <option key={m.model_key} value={m.model_key}>
               {m.name}
             </option>
           ))}
@@ -375,13 +379,13 @@ class Downloads extends Component {
     try {
       ({ data: one_dimensional } = await axios.get(
         CONFIG.alplakes_bucket +
-          `/static/website/metadata/${CONFIG.branch}/one_dimensional.json`
+          `/static/website/metadata/${CONFIG.branch}/one_dimensional.json${hour()}`
       ));
     } catch (e) {}
     try {
       ({ data: three_dimensional } = await axios.get(
         CONFIG.alplakes_bucket +
-          `/static/website/metadata/${CONFIG.branch}/three_dimensional.json`
+          `/static/website/metadata/${CONFIG.branch}/three_dimensional.json${hour()}`
       ));
     } catch (e) {}
     try {
@@ -525,19 +529,19 @@ class Downloads extends Component {
             <div className="sidebar-inner">
               <h3>Contents</h3>
               <div
-                className={visibleKey === "inputs" ? "link active" : "link"}
+                className={visibleKey === "inputs" ? "model_key active" : "model_key"}
                 onClick={() => this.scrollToSection(this.divRefs["inputs"])}
               >
                 Model Inputs
               </div>
               <div
-                className={visibleKey === "outputs" ? "link active" : "link"}
+                className={visibleKey === "outputs" ? "model_key active" : "model_key"}
                 onClick={() => this.scrollToSection(this.divRefs["outputs"])}
               >
                 Model Outputs
               </div>
               <div
-                className={visibleKey === "api" ? "link active" : "link"}
+                className={visibleKey === "api" ? "model_key active" : "model_key"}
                 onClick={() => this.scrollToSection(this.divRefs["api"])}
               >
                 API Documentation
