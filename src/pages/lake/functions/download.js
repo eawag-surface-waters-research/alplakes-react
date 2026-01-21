@@ -64,7 +64,7 @@ const satelliteMetadata = async (parameters, unit) => {
       let date = general.formatSencastDay(time);
       let { lake, satellite, group } = general.componentsFromFilename(file.k);
       overallLake = lake;
-      let url = `${CONFIG.sencast_bucket}/alplakes/cropped/${group}/${lake}/${file.k}`;
+      let url = `${CONFIG.sencast_bucket}/alplakes/cropped/${group}/${lake}/${file.k.replace("_lowres", "")}`;
       let split = file.k.split("_");
       let tile = split[split.length - 1].split(".")[0];
       let percent = Math.ceil((parseFloat(file.vp) / max_pixels) * 100);
