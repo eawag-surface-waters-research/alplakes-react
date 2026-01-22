@@ -44,14 +44,14 @@ L.Control.ParticleTracking = L.Control.extend({
     this._interpolated_times = interpolated_times;
     this._time_index = this._findClosestIndex(
       this._interpolated_times,
-      this._datetime
+      this._datetime,
     );
   },
   onAdd: function (map) {
     this._map = map;
     this._container = L.DomUtil.create(
       "div",
-      "leaflet-bar leaflet-draw-toolbar"
+      "leaflet-bar leaflet-draw-toolbar",
     );
 
     var button = L.DomUtil.create("a", "leaflet-draw", this._container);
@@ -98,7 +98,7 @@ L.Control.ParticleTracking = L.Control.extend({
   _initCanvas: function () {
     var canvas = (this._canvas = L.DomUtil.create(
       "canvas",
-      "leaflet-particles-layer leaflet-layer"
+      "leaflet-particles-layer leaflet-layer",
     ));
 
     var originProp = L.DomUtil.testProp([
@@ -117,7 +117,7 @@ L.Control.ParticleTracking = L.Control.extend({
     var animated = this._map.options.zoomAnimation && L.Browser.any3d;
     L.DomUtil.addClass(
       canvas,
-      "leaflet-zoom-" + (animated ? "animated" : "hide")
+      "leaflet-zoom-" + (animated ? "animated" : "hide"),
     );
 
     this._canvas = canvas;
@@ -148,7 +148,7 @@ L.Control.ParticleTracking = L.Control.extend({
       this._datetime = parseFloat(datetime);
       this._time_index = this._findClosestIndex(
         this._interpolated_times,
-        this._datetime
+        this._datetime,
       );
     }
     this._reset();
@@ -231,7 +231,7 @@ L.Control.ParticleTracking = L.Control.extend({
   },
   _createAndFillTwoDArray: function ({ rows, columns, defaultValue }) {
     return Array.from({ length: rows }, () =>
-      Array.from({ length: columns }, () => defaultValue)
+      Array.from({ length: columns }, () => defaultValue),
     );
   },
   _findClosestIndex(arr, target) {
@@ -321,7 +321,7 @@ L.Control.ParticleTracking = L.Control.extend({
         var dy = randomRadius * Math.sin(angle);
         var pointLatLng = L.latLng(
           latlng.lat + dy / 111320,
-          latlng.lng + dx / (111320 * Math.cos((latlng.lat * Math.PI) / 180))
+          latlng.lng + dx / (111320 * Math.cos((latlng.lat * Math.PI) / 180)),
         );
         if (
           this._getIndexAtPoint(pointLatLng.lng, pointLatLng.lat) !== null &&
@@ -342,39 +342,39 @@ L.Control.ParticleTracking = L.Control.extend({
     }
   },
   _calculatePath: function (latlng) {
-  var path = new Array(this._interpolated_times.length).fill(null);
-  path[this._time_index] = {
-    latlng,
-    velocity: this._getVelocity(latlng, this._time_index),
-  };
-  // Go backwards in time instead of forwards
-  for (let i = this._time_index - 1; i >= 0; i--) {
-    let timestep =
-      (this._interpolated_times[i + 1] - this._interpolated_times[i]) / 1000;
-    // Move in the opposite direction (negative velocity)
-    let prev_velocity = this._getVelocity(path[i + 1].latlng, i + 1);
-    if (prev_velocity === null) prev_velocity = path[i + 1].velocity;
-    let new_latlng = this._moveLocation(
-      path[i + 1].latlng,
-      { x: -prev_velocity.x, y: -prev_velocity.y },
-      timestep
-    );
-    let new_velocity = this._getVelocity(new_latlng, i);
+    var path = new Array(this._interpolated_times.length).fill(null);
+    path[this._time_index] = {
+      latlng,
+      velocity: this._getVelocity(latlng, this._time_index),
+    };
+    // Go backwards in time instead of forwards
+    for (let i = this._time_index - 1; i >= 0; i--) {
+      let timestep =
+        (this._interpolated_times[i + 1] - this._interpolated_times[i]) / 1000;
+      // Move in the opposite direction (negative velocity)
+      let prev_velocity = this._getVelocity(path[i + 1].latlng, i + 1);
+      if (prev_velocity === null) prev_velocity = path[i + 1].velocity;
+      let new_latlng = this._moveLocation(
+        path[i + 1].latlng,
+        { x: -prev_velocity.x, y: -prev_velocity.y },
+        timestep,
+      );
+      let new_velocity = this._getVelocity(new_latlng, i);
 
-    if (new_velocity !== null) {
-      path[i] = {
-        latlng: new_latlng,
-        velocity: new_velocity,
-      };
-    } else {
-      path[i] = {
-        latlng: path[i + 1].latlng,
-        velocity: path[i + 1].velocity,
-      };
+      if (new_velocity !== null) {
+        path[i] = {
+          latlng: new_latlng,
+          velocity: new_velocity,
+        };
+      } else {
+        path[i] = {
+          latlng: path[i + 1].latlng,
+          velocity: path[i + 1].velocity,
+        };
+      }
     }
-  }
-  return path;
-},
+    return path;
+  },
 
   _getVelocity: function (latlng, time_index) {
     var i =
@@ -387,7 +387,7 @@ L.Control.ParticleTracking = L.Control.extend({
       }
       let ti = Math.floor(
         (time_index / (this._interpolated_times.length - 1)) *
-          (this._times.length - 1)
+          (this._times.length - 1),
       );
       var x = this._data[ti][t[0]][t[1]];
       var y = this._data[ti][t[0]][t[1] + this._dataWidth];
@@ -410,35 +410,35 @@ L.Control.ParticleTracking = L.Control.extend({
     return L.latLng(new_lat, new_lng);
   },
   _plotPoints: function () {
-  this._ctx.clearRect(0, 0, this._width, this._height);
-  this._ctx.lineWidth = 2;
-  this._points.forEach(function (point) {
-    if (point.path[this._time_index] !== null) {
-      var idx = point.seed.index;
-      var arc = this._map.latLngToContainerPoint(
-        point.path[this._time_index].latlng
-      );
-      var start = this._map.latLngToContainerPoint(point.path[idx].latlng);
-      var rgb = `${point.color[0]}, ${point.color[1]}, ${point.color[2]}`;
-      this._ctx.beginPath();
-      this._ctx.moveTo(start.x, start.y);
-      // Draw path from current time backwards to where it came from
-      for (let i = idx; i > this._time_index; i--) {
-        let p = this._map.latLngToContainerPoint(point.path[i].latlng);
-        this._ctx.strokeStyle = `rgba(${rgb}, ${0.4})`;
-        this._ctx.lineTo(p.x, p.y);
-      }
-      this._ctx.lineTo(arc.x, arc.y);
-      this._ctx.stroke();
+    this._ctx.clearRect(0, 0, this._width, this._height);
+    this._ctx.lineWidth = 2;
+    this._points.forEach(function (point) {
+      if (point.path[this._time_index] !== null) {
+        var idx = point.seed.index;
+        var arc = this._map.latLngToContainerPoint(
+          point.path[this._time_index].latlng,
+        );
+        var start = this._map.latLngToContainerPoint(point.path[idx].latlng);
+        var rgb = `${point.color[0]}, ${point.color[1]}, ${point.color[2]}`;
+        this._ctx.beginPath();
+        this._ctx.moveTo(start.x, start.y);
+        // Draw path from current time backwards to where it came from
+        for (let i = idx; i > this._time_index; i--) {
+          let p = this._map.latLngToContainerPoint(point.path[i].latlng);
+          this._ctx.strokeStyle = `rgba(${rgb}, ${0.4})`;
+          this._ctx.lineTo(p.x, p.y);
+        }
+        this._ctx.lineTo(arc.x, arc.y);
+        this._ctx.stroke();
 
-      this._ctx.fillStyle = `rgb(${rgb})`;
-      this._ctx.beginPath();
-      this._ctx.arc(arc.x, arc.y, 4, 0, Math.PI * 2);
-      this._ctx.fill();
-      this._ctx.closePath();
-    }
-  }, this);
-},
+        this._ctx.fillStyle = `rgb(${rgb})`;
+        this._ctx.beginPath();
+        this._ctx.arc(arc.x, arc.y, 4, 0, Math.PI * 2);
+        this._ctx.fill();
+        this._ctx.closePath();
+      }
+    }, this);
+  },
 });
 
 L.control.particleTracking = function (
@@ -446,13 +446,13 @@ L.control.particleTracking = function (
   data,
   datetime,
   times,
-  options
+  options,
 ) {
   return new L.Control.ParticleTracking(
     geometry,
     data,
     datetime,
     times,
-    options
+    options,
   );
 };
