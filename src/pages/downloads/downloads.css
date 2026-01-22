@@ -139,6 +139,10 @@
   margin-top: 32px;
 }
 
+.main .downloads .swagger-ui p {
+  max-width: none;
+}
+
 .main .downloads .swagger-ui .info {
   display: none;
 }
