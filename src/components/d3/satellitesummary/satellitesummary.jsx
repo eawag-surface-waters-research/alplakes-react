@@ -3,11 +3,39 @@ import D3LineGraph from "../linegraph/linegraph";
 import Translations from "../../../translations.json";
 import downloadIcon from "../../../img/download.png";
 
+class TimeSelector extends Component {
+  state = {
+    open: false,
+  };
+  toggleOpen = () => {
+    this.setState({ open: !this.state.open });
+  };
+  render() {
+    const { open } = this.state;
+    const { xmin, xmax, xbounds } = this.props;
+    const start = new Date(xmin);
+    const end = new Date(xmax);
+    return (
+      <div className="satellite-button" onClick={this.toggleOpen}>
+        {start.getFullYear()} - {end.getFullYear()}
+        <div
+          className={
+            open ? "satellite-time-selector" : "satellite-time-selector hide"
+          }
+        ></div>
+      </div>
+    );
+  }
+}
+
 class SatelliteSummary extends Component {
   state = {
     data: {},
     ymin: 0,
     ymax: 0,
+    xmin: 0,
+    xmax: 0,
+    xbounds: [0, 0],
     coverage: 10,
     satellites: {},
     latitude: "",
@@ -82,12 +110,16 @@ class SatelliteSummary extends Component {
     var satellites = {};
     var ymin = Infinity;
     var ymax = -Infinity;
+    var xmin = Infinity;
+    var xmax = -Infinity;
     for (let date of Object.values(available)) {
       for (let image of date.images) {
         if (image.percent > options.coverage && image.percent > 10) {
           let tooltip = `<div><div>${image.satellite} ${image.percent}% coverage</div><div></div>Click to view</div>`;
           ymin = Math.min(ymin, image.ave);
           ymax = Math.max(ymax, image.ave);
+          xmin = Math.min(xmin, image.time);
+          xmax = Math.max(xmax, image.time);
           if (image.satellite in data) {
             data[image.satellite].x.push(image.time);
             data[image.satellite].y.push(Math.round(image.ave * 10) / 10);
@@ -123,10 +155,17 @@ class SatelliteSummary extends Component {
       }
     }
 
+    const fiveYears = 5 * 365.25 * 24 * 60 * 60 * 1000;
+    var xbounds = [xmin, xmax];
+    if (xmax - xmin > fiveYears) xmin = xmax - fiveYears;
+
     this.setState({
       data,
       ymin,
       ymax,
+      xmin,
+      xmax,
+      xbounds,
       coverage: options.coverage,
       satellites,
       latitude,
@@ -151,23 +190,72 @@ class SatelliteSummary extends Component {
 
   render() {
     var { label, unit, dark, language } = this.props;
-    var { data, ymin, ymax, satellites, latitude, longitude, source } =
-      this.state;
+    var {
+      data,
+      ymin,
+      ymax,
+      xmin,
+      xmax,
+      xbounds,
+      satellites,
+      latitude,
+      longitude,
+      source,
+    } = this.state;
     const graph_data = Object.entries(data)
       .filter(([key, value]) =>
         Object.entries(satellites)
           .filter(([key, value]) => value === true)
           .map(([key]) => key)
-          .some((sub) => key.includes(sub))
+          .some((sub) => key.includes(sub)),
       )
       .map((g) => g[1]);
     if (graph_data.length === 0) {
       graph_data.push({ x: [], y: [] });
     }
+
     const no_data = graph_data.length === 1 && graph_data[0].x.length === 0;
     return (
-      <React.Fragment>
-        <div className="graph-title">
+      <div className="satellite-summary">
+        <div className="satellite-settings">
+          <TimeSelector xmin={xmin} xmax={xmax} xbounds={xbounds} />
+          <div className="satellite-button" onClick={this.downloadMetadata}>
+            <img src={downloadIcon} alt="Download" />{" "}
+            {Translations.export[language]} CSV
+          </div>
+        </div>
+        <div className="satellite-graph">
+          <D3LineGraph
+            data={graph_data}
+            ylabel={label}
+            yunits={unit}
+            lcolor={new Array(10).fill(dark ? "white" : "black")}
+            lweight={[1]}
+            bcolor={["white"]}
+            simple={false}
+            lines={false}
+            scatter={true}
+            plotdots={true}
+            ymax={ymax}
+            ymin={ymin}
+            xmax={xmax}
+            xmin={xmin}
+            marginTop={5}
+            marginRight={1}
+            marginBottom={25}
+            xscale={"Time"}
+            yscale={""}
+            legend={false}
+            header={false}
+            language={language}
+            onClick={this.setImage}
+            removeDownload={true}
+          />
+          <div className={no_data ? "no-data" : "no-data hide"}>
+            {Translations.noSatelliteData[language]}
+          </div>
+        </div>
+        <div className="satellite-legend">
           {Object.keys(satellites).map((s) => (
             <div
               key={s}
@@ -208,40 +296,7 @@ class SatelliteSummary extends Component {
             </div>
           ))}
         </div>
-        <div className="download-metadata" onClick={this.downloadMetadata}>
-          <img src={downloadIcon} alt="Download" />{" "}
-          {Translations.export[language]} CSV
-        </div>
-        <div className="satellite-graph">
-          <D3LineGraph
-            data={graph_data}
-            ylabel={label}
-            yunits={unit}
-            lcolor={new Array(10).fill(dark ? "white" : "black")}
-            lweight={[1]}
-            bcolor={["white"]}
-            simple={false}
-            lines={false}
-            scatter={true}
-            plotdots={true}
-            ymax={ymax}
-            ymin={ymin}
-            marginTop={5}
-            marginRight={1}
-            marginBottom={50}
-            xscale={"Time"}
-            yscale={""}
-            legend={false}
-            header={false}
-            language={language}
-            onClick={this.setImage}
-            removeDownload={true}
-          />
-        </div>
-        <div className={no_data ? "no-data" : "no-data hide"}>
-          {Translations.noSatelliteData[language]}
-        </div>
-      </React.Fragment>
+      </div>
     );
   }
 }
