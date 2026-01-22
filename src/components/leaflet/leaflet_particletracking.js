@@ -342,39 +342,40 @@ L.Control.ParticleTracking = L.Control.extend({
     }
   },
   _calculatePath: function (latlng) {
-    var path = new Array(this._interpolated_times.length).fill(null);
-    path[this._time_index] = {
-      latlng,
-      velocity: this._getVelocity(latlng, this._time_index),
-    };
-    for (
-      let i = this._time_index + 1;
-      i < this._interpolated_times.length;
-      i++
-    ) {
-      let timestep =
-        (this._interpolated_times[i] - this._interpolated_times[i - 1]) / 1000;
-      let new_latlng = this._moveLocation(
-        path[i - 1].latlng,
-        path[i - 1].velocity,
-        timestep
-      );
-      let new_velocity = this._getVelocity(new_latlng, i);
+  var path = new Array(this._interpolated_times.length).fill(null);
+  path[this._time_index] = {
+    latlng,
+    velocity: this._getVelocity(latlng, this._time_index),
+  };
+  // Go backwards in time instead of forwards
+  for (let i = this._time_index - 1; i >= 0; i--) {
+    let timestep =
+      (this._interpolated_times[i + 1] - this._interpolated_times[i]) / 1000;
+    // Move in the opposite direction (negative velocity)
+    let prev_velocity = this._getVelocity(path[i + 1].latlng, i + 1);
+    if (prev_velocity === null) prev_velocity = path[i + 1].velocity;
+    let new_latlng = this._moveLocation(
+      path[i + 1].latlng,
+      { x: -prev_velocity.x, y: -prev_velocity.y },
+      timestep
+    );
+    let new_velocity = this._getVelocity(new_latlng, i);
 
-      if (new_velocity !== null) {
-        path[i] = {
-          latlng: new_latlng,
-          velocity: new_velocity,
-        };
-      } else {
-        path[i] = {
-          latlng: path[i - 1].latlng,
-          velocity: path[i - 1].velocity,
-        };
-      }
+    if (new_velocity !== null) {
+      path[i] = {
+        latlng: new_latlng,
+        velocity: new_velocity,
+      };
+    } else {
+      path[i] = {
+        latlng: path[i + 1].latlng,
+        velocity: path[i + 1].velocity,
+      };
     }
-    return path;
-  },
+  }
+  return path;
+},
+
   _getVelocity: function (latlng, time_index) {
     var i =
       this.options.nRows - Math.round((latlng.lat - this._yMin) / this._ySize);
@@ -409,39 +410,35 @@ L.Control.ParticleTracking = L.Control.extend({
     return L.latLng(new_lat, new_lng);
   },
   _plotPoints: function () {
-    this._ctx.clearRect(0, 0, this._width, this._height);
-    this._ctx.lineWidth = 2;
-    this._points.forEach(function (point) {
-      if (point.path[this._time_index] !== null) {
-        var idx = point.seed.index;
-        var arc = this._map.latLngToContainerPoint(
-          point.path[this._time_index].latlng
-        );
-        var start = this._map.latLngToContainerPoint(point.path[idx].latlng);
-        var rgb = `${point.color[0]}, ${point.color[1]}, ${point.color[2]}`;
-        this._ctx.beginPath();
-        this._ctx.moveTo(start.x, start.y);
-        //let path_length = this._time_index - idx;
-        for (let i = idx; i < this._time_index; i++) {
-          let p = this._map.latLngToContainerPoint(point.path[i].latlng);
-          this._ctx.strokeStyle = `rgba(${rgb}, ${0.4})`;
-          /*this._ctx.strokeStyle = `rgba(${rgb}, ${(
-            (i - idx) /
-            path_length
-          ).toFixed(2)})`;*/
-          this._ctx.lineTo(p.x, p.y);
-        }
-        this._ctx.lineTo(arc.x, arc.y);
-        this._ctx.stroke();
-
-        this._ctx.fillStyle = `rgb(${rgb})`;
-        this._ctx.beginPath();
-        this._ctx.arc(arc.x, arc.y, 4, 0, Math.PI * 2);
-        this._ctx.fill();
-        this._ctx.closePath();
+  this._ctx.clearRect(0, 0, this._width, this._height);
+  this._ctx.lineWidth = 2;
+  this._points.forEach(function (point) {
+    if (point.path[this._time_index] !== null) {
+      var idx = point.seed.index;
+      var arc = this._map.latLngToContainerPoint(
+        point.path[this._time_index].latlng
+      );
+      var start = this._map.latLngToContainerPoint(point.path[idx].latlng);
+      var rgb = `${point.color[0]}, ${point.color[1]}, ${point.color[2]}`;
+      this._ctx.beginPath();
+      this._ctx.moveTo(start.x, start.y);
+      // Draw path from current time backwards to where it came from
+      for (let i = idx; i > this._time_index; i--) {
+        let p = this._map.latLngToContainerPoint(point.path[i].latlng);
+        this._ctx.strokeStyle = `rgba(${rgb}, ${0.4})`;
+        this._ctx.lineTo(p.x, p.y);
       }
-    }, this);
-  },
+      this._ctx.lineTo(arc.x, arc.y);
+      this._ctx.stroke();
+
+      this._ctx.fillStyle = `rgb(${rgb})`;
+      this._ctx.beginPath();
+      this._ctx.arc(arc.x, arc.y, 4, 0, Math.PI * 2);
+      this._ctx.fill();
+      this._ctx.closePath();
+    }
+  }, this);
+},
 });
 
 L.control.particleTracking = function (
