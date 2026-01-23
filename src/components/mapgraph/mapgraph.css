@@ -231,6 +231,13 @@
   margin-right: 6px;
 }
 
+.map-graph .map-graph-content .satellite-legend .graph-title-selection .square {
+  height: 14px;
+  width: 14px;
+  display: inline-block;
+  margin-right: 6px;
+}
+
 .map-graph
   .map-graph-content
   .satellite-legend

@@ -1,1142 +1,1362 @@
 .main .not-found {
-    min-height: calc(100vh - var(--header-height) - var(--footer-height) - var(--top-margin));
-    width: 100%;
-    max-width: var(--text-width);
-    margin: auto;
-    margin-top: var(--top-margin);
-    padding: 0 calc(var(--padding)*1.5);
-    text-align: center;
-    box-sizing: border-box;
+  min-height: calc(
+    100vh - var(--header-height) - var(--footer-height) - var(--top-margin)
+  );
+  width: 100%;
+  max-width: var(--text-width);
+  margin: auto;
+  margin-top: var(--top-margin);
+  padding: 0 calc(var(--padding) * 1.5);
+  text-align: center;
+  box-sizing: border-box;
 }
 
 .main .not-found .fourzerofour {
-    font-size: clamp(16px, 32vw, 350px);
+  font-size: clamp(16px, 32vw, 350px);
 }
 
 .main .not-found .inner {
-    font-size: 30px;
+  font-size: 30px;
 }
 
 .main .not-found .inner .title {
-    display: inline-block;
-    font-weight: 600;
+  display: inline-block;
+  font-weight: 600;
 }
 
 .main .lake .section {
-    margin-bottom: calc(var(--padding)*2);
+  margin-bottom: calc(var(--padding) * 2);
 }
 
 .main .lake .section .subsection {
-    margin-bottom: var(--padding);
+  margin-bottom: var(--padding);
 }
 
 .main .lake .section .subsection a {
-    color: var(--link-color);
+  color: var(--link-color);
 }
 
 .main .lake .map-sidebar {
-    width: 100%;
-    position: relative;
+  width: 100%;
+  position: relative;
 }
 
 .main .lake .map-sidebar .map-sidebar-left {
-    display: inline-block;
-    width: calc(100% - var(--padding) - 400px);
-    height: 500px;
-    border-radius: 12px;
-    border: 1px solid var(--border-color);
-    overflow: hidden;
-    margin-right: var(--padding);
-    box-sizing: border-box;
-    background-color: var(--box-color);
-    position: relative;
+  display: inline-block;
+  width: calc(100% - var(--padding) - 400px);
+  height: 500px;
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  overflow: hidden;
+  margin-right: var(--padding);
+  box-sizing: border-box;
+  background-color: var(--box-color);
+  position: relative;
 }
 
 .main .lake .map-sidebar .map-sidebar-left.fullscreen {
-    position: fixed;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 99999999999;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 99999999999;
 }
 
 .main .lake .map-sidebar .map-sidebar-left:hover .vis-header {
-    opacity: 1;
+  opacity: 1;
 }
 
 .main .lake .map-sidebar .map-sidebar-left .vis-header {
-    opacity: 0;
-    transition: all .33s 0s ease;
+  opacity: 0;
+  transition: all 0.33s 0s ease;
 }
 
 .main .lake .map-sidebar .map-sidebar-left .loading-graph {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    z-index: 999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  z-index: 999;
 }
 
-.main .lake .threedmodel .map-sidebar .map-sidebar-left .model-performance-button {
-    top: 90px;
+.main
+  .lake
+  .threedmodel
+  .map-sidebar
+  .map-sidebar-left
+  .model-performance-button {
+  top: 90px;
 }
 
-.main .lake .onedmodel .map-sidebar .map-sidebar-left .model-performance-button {
-    box-shadow: var(--box-shadow);
-    left: unset;
-    top: unset;
-    right: 40px;
-    bottom: 40px;
+.main
+  .lake
+  .onedmodel
+  .map-sidebar
+  .map-sidebar-left
+  .model-performance-button {
+  box-shadow: var(--box-shadow);
+  left: unset;
+  top: unset;
+  right: 40px;
+  bottom: 40px;
 }
 
 .main .lake .map-sidebar .map-sidebar-left .popup {
-    position: absolute;
-    z-index: 9999;
-    right: 12px;
-    bottom: 90px;
-    cursor: pointer;
-    flex-direction: column;
-    align-items: flex-end;
-    max-width: calc(100% - 24px);
+  position: absolute;
+  z-index: 9999;
+  right: 12px;
+  bottom: 90px;
+  cursor: pointer;
+  flex-direction: column;
+  align-items: flex-end;
+  max-width: calc(100% - 24px);
 }
 
 .main .lake .map-sidebar .map-sidebar-left .popup .warning-popup {
-    background-color: var(--box-color);
-    padding: 12px 32px 12px 12px;
-    border-radius: 12px;
-    max-width: 100%;
-    box-sizing: border-box;
-    position: relative;
-    margin-top: 12px;
+  background-color: var(--box-color);
+  padding: 12px 32px 12px 12px;
+  border-radius: 12px;
+  max-width: 100%;
+  box-sizing: border-box;
+  position: relative;
+  margin-top: 12px;
 }
 
-.main .lake .map-sidebar .map-sidebar-left .popup .warning-popup .warning-popup-inner {
-    max-width: calc(100% - 36px);
-    box-sizing: border-box;
-    display: inline-block;
+.main
+  .lake
+  .map-sidebar
+  .map-sidebar-left
+  .popup
+  .warning-popup
+  .warning-popup-inner {
+  max-width: calc(100% - 36px);
+  box-sizing: border-box;
+  display: inline-block;
 }
 
 .main .lake .map-sidebar .map-sidebar-left .popup .warning-popup img {
-    display: inline-block;
-    width: 24px;
-    margin-right: 12px;
-    margin-bottom: -4px;
-    vertical-align: top;
+  display: inline-block;
+  width: 24px;
+  margin-right: 12px;
+  margin-bottom: -4px;
+  vertical-align: top;
 }
 
 .main .lake .map-sidebar .map-sidebar-left .popup .warning-popup .close {
-    position: absolute;
-    top: 6px;
-    right: 6px;
-    background-color: var(--background-color);
-    border-radius: 50%;
-    padding: 0px 4px;
-    font-size: 14px;
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  background-color: var(--background-color);
+  border-radius: 50%;
+  padding: 0px 4px;
+  font-size: 14px;
 }
 
 .main .lake .map-sidebar .map-sidebar-right {
-    display: inline-block;
-    width: 400px;
-    max-height: 500px;
-    overflow-y: auto;
-    box-sizing: border-box;
-    vertical-align: top;
-    padding: 5px 10px 5px 5px;
-    z-index: 2;
+  display: inline-block;
+  width: 400px;
+  max-height: 500px;
+  overflow-y: auto;
+  box-sizing: border-box;
+  vertical-align: top;
+  padding: 5px 10px 5px 5px;
+  z-index: 2;
 }
 
 .main .lake .map-sidebar .map-sidebar-right::-webkit-scrollbar {
-    width: 5px;
+  width: 5px;
 }
 
 .main .lake .map-sidebar .map-sidebar-right::-webkit-scrollbar-thumb {
-    background: var(--border-color);
-    border-radius: 10px;
+  background: var(--border-color);
+  border-radius: 10px;
 }
 
 .main .lake .map-sidebar .map-sidebar-right::-webkit-scrollbar-track {
-    background: var(--box-color);
-    margin-left: 5px;
-    border-radius: 8px;
+  background: var(--box-color);
+  margin-left: 5px;
+  border-radius: 8px;
 }
 
 .main .lake .map-sidebar .map-sidebar-right .clickable-box {
-    width: 100%;
+  width: 100%;
 }
 
 .main .lake .map-sidebar .map-sidebar-right .clickable-box-parent a {
-    flex: 1 1 100%;
+  flex: 1 1 100%;
 }
 
 .main .lake .map-sidebar .map-sidebar-right .description {
-    margin-bottom: 12px;
+  margin-bottom: 12px;
 }
 
 .main .lake .map-sidebar .map-sidebar-right .description a {
-    color: var(--link-color);
+  color: var(--link-color);
 }
 
 .main .lake .map-sidebar .map-sidebar-right .sidebar-expand {
-    width: 100%;
+  width: 100%;
 }
 
 .main .lake .map-sidebar .map-sidebar-header {
-    margin-bottom: 12px;
+  margin-bottom: 12px;
 }
 
 .main .lake .map-sidebar .title {
-    display: inline-block;
-    font-size: 22px;
-    margin-right: 20px;
+  display: inline-block;
+  font-size: 22px;
+  margin-right: 20px;
 }
 
 .main .lake .map-sidebar .minimise {
-    cursor: pointer;
-    background-color: var(--select-color);
-    margin-bottom: 12px;
-    padding: 6px 12px;
-    border-radius: 20px;
-    box-shadow: var(--box-shadow);
-    width: max-content;
-    border: 1px solid transparent;
-    display: inline-block;
-    position: absolute;
-    right: 0;
+  cursor: pointer;
+  background-color: var(--select-color);
+  margin-bottom: 12px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  box-shadow: var(--box-shadow);
+  width: max-content;
+  border: 1px solid transparent;
+  display: inline-block;
+  position: absolute;
+  right: 0;
 }
 
 .main .lake .map-sidebar .minimise:hover {
-    border: 1px solid var(--border-color);
-    box-shadow: none;
+  border: 1px solid var(--border-color);
+  box-shadow: none;
 }
 
 .main .lake .mobile-fade-out {
-    display: none;
-    position: fixed;
-    pointer-events: none;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    z-index: 1000;
-    height: calc(var(--padding) * 5 + 48px);
-    background: var(--mobile-fade-out);
+  display: none;
+  position: fixed;
+  pointer-events: none;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  height: calc(var(--padding) * 5 + 48px);
+  background: var(--mobile-fade-out);
 }
 
 .main .lake .back-button {
-    display: none;
-    box-sizing: border-box;
-    cursor: pointer;
-    height: 48px;
-    width: 48px;
-    border-radius: 50%;
-    position: fixed;
-    z-index: 1001;
-    left: var(--padding);
-    transition: right 0.4s ease;
-    background-color: var(--link-button-color);
-    bottom: var(--padding);
-    box-shadow: var(--box-shadow);
-    padding: 12px;
+  display: none;
+  box-sizing: border-box;
+  cursor: pointer;
+  height: 48px;
+  width: 48px;
+  border-radius: 50%;
+  position: fixed;
+  z-index: 1001;
+  left: var(--padding);
+  transition: right 0.4s ease;
+  background-color: var(--link-button-color);
+  bottom: var(--padding);
+  box-shadow: var(--box-shadow);
+  padding: 12px;
 }
 
 .main .lake .back-button img {
-    height: 22px;
-    padding-left: 2px;
+  height: 22px;
+  padding-left: 2px;
 }
 
 .main .lake .clickable-box-parent {
-    display: flex;
-    flex-wrap: wrap;
-    gap: calc(var(--padding)/2);
+  display: flex;
+  flex-wrap: wrap;
+  gap: calc(var(--padding) / 2);
 }
 
 .main .lake .clickable-box {
-    background-color: var(--box-color);
-    border-radius: 20px;
-    box-shadow: var(--box-shadow);
-    display: inline-block;
-    position: relative;
-    text-decoration: none;
-    border: 1px solid var(--box-color);
-    transition: border 0.33s 0s ease, box-shadow 0.33s 0s ease;
-    cursor: pointer;
-    box-sizing: border-box;
-    max-width: 100%;
-    padding: 20px;
+  background-color: var(--box-color);
+  border-radius: 20px;
+  box-shadow: var(--box-shadow);
+  display: inline-block;
+  position: relative;
+  text-decoration: none;
+  border: 1px solid var(--box-color);
+  transition:
+    border 0.33s 0s ease,
+    box-shadow 0.33s 0s ease;
+  cursor: pointer;
+  box-sizing: border-box;
+  max-width: 100%;
+  padding: 20px;
 }
 
 .main .lake .clickable-box:hover {
-    border-color: var(--border-color);
-    box-shadow: none;
+  border-color: var(--border-color);
+  box-shadow: none;
 }
 
 .main .lake .clickable-box .title {
-    font-size: 18px;
-    color: var(--background-font-color);
-    padding: 0 0 5px 0;
-    max-width: 70%;
+  font-size: 18px;
+  color: var(--background-font-color);
+  padding: 0 0 5px 0;
+  max-width: 70%;
 }
 
 .main .lake .clickable-box .subtitle {
-    font-size: 16px;
-    font-weight: 400;
-    color: var(--background-subtle-font-color);
-    margin-bottom: 5px;
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--background-subtle-font-color);
+  margin-bottom: 5px;
 }
 
 .main .lake .clickable-box .suptitle {
-    color: var(--background-font-color);
+  color: var(--background-font-color);
 }
 
 .main .lake .clickable-box .link {
-    font-size: 16px;
-    color: var(--link-color);
-    text-decoration: underline;
-    max-width: 215px;
+  font-size: 16px;
+  color: var(--link-color);
+  text-decoration: underline;
+  max-width: 215px;
 }
 
 .main .lake .clickable-box .right {
-    position: absolute;
-    font-size: 16px;
-    text-align: right;
-    color: var(--background-subtle-font-color);
-    padding: 22px 25px 5px 0;
-    right: 0;
-    top: 0;
+  position: absolute;
+  font-size: 16px;
+  text-align: right;
+  color: var(--background-subtle-font-color);
+  padding: 22px 25px 5px 0;
+  right: 0;
+  top: 0;
 }
 
 .main .lake .clickable-box .summary-table {
-    width: calc(100% + 40px);
-    margin-left: -20px;
-    margin-bottom: -20px;
-    margin-top: 8px;
+  width: calc(100% + 40px);
+  margin-left: -20px;
+  margin-bottom: -20px;
+  margin-top: 8px;
 }
 
 .main .lake .clickable-box .right .time {
-    color: var(--background-subtle-font-color);
-    font-size: 16px;
-    margin-top: 6px;
+  color: var(--background-subtle-font-color);
+  font-size: 16px;
+  margin-top: 6px;
 }
 
 .main .lake .clickable-box .skeleton-outer {
-    width: calc(100% + 40px);
-    margin-left: -20px;
-    margin-bottom: -20px;
-    margin-top: 8px;
-    position: relative;
+  width: calc(100% + 40px);
+  margin-left: -20px;
+  margin-bottom: -20px;
+  margin-top: 8px;
+  position: relative;
 }
 
 .main .lake .loading {
-    position: absolute;
-    z-index: 999;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-    transition: all 0.3s ease-out;
-    pointer-events: none;
+  position: absolute;
+  z-index: 999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  transition: all 0.3s ease-out;
+  pointer-events: none;
 }
 
 .main .lake .leaflet-control-attribution {
-    display: none;
+  display: none;
 }
 
 .main .lake .map-sidebar .map-sidebar-left .lake-map-button {
-    opacity: 0;
-    transition: all 0.8s ease;
+  opacity: 0;
+  transition: all 0.8s ease;
 }
 
 .main .lake .map-sidebar .map-sidebar-left:hover .lake-map-button {
-    opacity: 1;
+  opacity: 1;
 }
 
 /** 3D Model **/
 
 .main .lake .forecast .threedmodel .map-sidebar .map-sidebar-left .current {
-    position: absolute;
-    z-index: 999;
-    top: calc(var(--padding) / 4);
-    left: calc(var(--padding) / 4);
-    padding: 12px;
-    background-color: var(--box-color);
-    color: var(--background-font-color);
-    text-align: center;
-    border-radius: 8px;
-    min-width: 80px;
-    box-sizing: border-box;
+  position: absolute;
+  z-index: 999;
+  top: calc(var(--padding) / 4);
+  left: calc(var(--padding) / 4);
+  padding: 12px;
+  background-color: var(--box-color);
+  color: var(--background-font-color);
+  text-align: center;
+  border-radius: 8px;
+  min-width: 80px;
+  box-sizing: border-box;
 }
 
-.main .lake .forecast .threedmodel .map-sidebar .map-sidebar-left .model-source {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    z-index: 999;
-    position: absolute;
-    right: 12px;
-    bottom: 6px;
-    z-index: 1001;
-    font-size: 14px;
-    color: var(--background-subtle-font-color);
+.main
+  .lake
+  .forecast
+  .threedmodel
+  .map-sidebar
+  .map-sidebar-left
+  .model-source {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  z-index: 999;
+  position: absolute;
+  right: 12px;
+  bottom: 6px;
+  z-index: 1001;
+  font-size: 14px;
+  color: var(--background-subtle-font-color);
 }
 
-.main .lake .forecast .threedmodel .map-sidebar .map-sidebar-left .model-source a {
-    color: var(--link-color);
+.main
+  .lake
+  .forecast
+  .threedmodel
+  .map-sidebar
+  .map-sidebar-left
+  .model-source
+  a {
+  color: var(--link-color);
 }
-
 
 .main .lake .clickable-box .summary-table .inner .ave {
-    font-size: 18px;
+  font-size: 18px;
 }
 
 .main .lake .clickable-box .summary-table .inner .ave .unit.full {
-    font-size: 18px;
+  font-size: 18px;
 }
-
 
 /** 1D Model **/
 
 .main .lake .forecast .onedmodel .clickable-box {
-    width: 500px;
+  width: 500px;
 }
 
 /** AI Summary **/
 
 .main .lake .forecast .ai-summary .ai-beta {
-    font-size: 14px;
-    font-weight: bold;
-    display: inline-block;
-    background-color: var(--highlight-color);
-    padding: 2px 10px;
-    border-radius: 8px;
-    color: white;
-    margin-left: 5px;
+  font-size: 14px;
+  font-weight: bold;
+  display: inline-block;
+  background-color: var(--highlight-color);
+  padding: 2px 10px;
+  border-radius: 8px;
+  color: white;
+  margin-left: 5px;
 }
 
 .main .lake .forecast .ai-summary .ai-content {
-    position: relative;
-    max-width: 716px;
-    box-sizing: border-box;
-    background-color: var(--background-color);
-    border-radius: 20px;
-    padding: 20px;
-    background: linear-gradient(var(--box-color), var(--box-color)) padding-box,
-        linear-gradient(to right, #44bca7, darkorchid) border-box;
-    border: 2px solid transparent;
+  position: relative;
+  max-width: 716px;
+  box-sizing: border-box;
+  background-color: var(--background-color);
+  border-radius: 20px;
+  padding: 20px;
+  background:
+    linear-gradient(var(--box-color), var(--box-color)) padding-box,
+    linear-gradient(to right, #44bca7, darkorchid) border-box;
+  border: 2px solid transparent;
 }
 
-
 .main .lake .forecast .ai-summary .ai-content .ai-source {
-    color: var(--background-subtle-font-color);
-    font-size: 14px;
-    margin-top: 8px;
+  color: var(--background-subtle-font-color);
+  font-size: 14px;
+  margin-top: 8px;
 }
 
 .main .lake .forecast .ai-summary .ai-content .ai-source .ai-model {
-    display: inline-block;
-    font-weight: bold;
+  display: inline-block;
+  font-weight: bold;
 }
 
 .main .lake .forecast .ai-summary .ai-content .ai-source a {
-    color: var(--link-color);
+  color: var(--link-color);
 }
 
 .main .lake .forecast .ai-summary .ai-content .ai-prompt {
-    background-color: var(--box-color);
-    position: absolute;
-    right: 12px;
-    bottom: 12px;
-    border-radius: 50%;
-    cursor: pointer;
-    transition: transform 0.2s ease;
+  background-color: var(--box-color);
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform 0.2s ease;
 }
 
 .main .lake .forecast .ai-summary .ai-content .ai-prompt:hover {
-    transform: scale(1.1);
+  transform: scale(1.1);
 }
 
 .main .lake .forecast .ai-summary .ai-content .ai-prompt img {
-    height: 18px;
-    padding: 6px 8px 5px 8px;
+  height: 18px;
+  padding: 6px 8px 5px 8px;
 }
 
 .main.dark .lake .forecast .ai-summary .ai-content .ai-prompt img {
-    filter: invert(1);
+  filter: invert(1);
 }
-
 
 /** Scientific **/
 
 .main .lake .measurements .scientific .clickable-box {
-    width: 500px
+  width: 500px;
 }
 
 .main .lake .measurements .scientific .right.live {
-    color: var(--live-color);
+  color: var(--live-color);
 }
 
 .main .lake .measurements .scientific .right.live .live-button {
-    background: var(--live-color);
-    border-radius: 50%;
-    height: 8px;
-    width: 8px;
-    position: relative;
-    box-shadow: 0 0 0 4px #44bca74d;
-    display: inline-block;
-    margin-right: 12px;
-    margin-bottom: 3px;
+  background: var(--live-color);
+  border-radius: 50%;
+  height: 8px;
+  width: 8px;
+  position: relative;
+  box-shadow: 0 0 0 4px #44bca74d;
+  display: inline-block;
+  margin-right: 12px;
+  margin-bottom: 3px;
 }
 
 /** Properties **/
 
 .main .lake .parameters .parameters-box {
-    background-color: var(--box-color);
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
-    padding: var(--padding) 0;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
+  background-color: var(--box-color);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: var(--padding) 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
 }
 
 .main .lake .parameters .parameters-box .parameter {
-    display: inline-block;
-    margin: 0;
-    text-align: center;
-    width: 215px;
-    max-width: 50%;
-    box-sizing: border-box;
-    padding: calc(var(--padding) / 2);
+  display: inline-block;
+  margin: 0;
+  text-align: center;
+  width: 215px;
+  max-width: 50%;
+  box-sizing: border-box;
+  padding: calc(var(--padding) / 2);
 }
 
 .main .lake .parameters .parameters-box .parameter img.icon {
-    height: 30px;
-    opacity: 0.7;
-    margin-bottom: 3px;
+  height: 30px;
+  opacity: 0.7;
+  margin-bottom: 3px;
 }
 
 .main .lake .parameters .parameters-box .parameter img.link {
-    height: 14px;
-    margin-left: 8px;
-    transition: transform .33s 0s ease;
+  height: 14px;
+  margin-left: 8px;
+  transition: transform 0.33s 0s ease;
 }
 
 .main .lake .parameters .parameters-box .parameter img.link:hover {
-    transform: scale(1.1);
+  transform: scale(1.1);
 }
 
 .main.dark .lake .parameters .parameters-box .parameter img {
-    filter: invert(1);
+  filter: invert(1);
 }
 
-
 .main .lake .parameters .parameters-box .parameter .value {
-    font-size: 18px;
-    color: var(--background-font-color);
-    margin-bottom: 5px;
+  font-size: 18px;
+  color: var(--background-font-color);
+  margin-bottom: 5px;
 }
 
 .main .lake .parameters .parameters-box .parameter .label {
-    font-size: 16px;
-    color: var(--background-subtle-font-color);
-    display: inline-block;
+  font-size: 16px;
+  color: var(--background-subtle-font-color);
+  display: inline-block;
 }
 
-.main .lake .parameters .parameters-box .parameter .information .information-symbol {
-    background-color: var(--background-color);
+.main
+  .lake
+  .parameters
+  .parameters-box
+  .parameter
+  .information
+  .information-symbol {
+  background-color: var(--background-color);
 }
 
 /** Catchment Properties **/
 
-.main .lake .catchment .landcover .map-sidebar .map-sidebar-right .landcover-table {
-    width: 100%;
-    overflow: auto;
+.main
+  .lake
+  .catchment
+  .landcover
+  .map-sidebar
+  .map-sidebar-right
+  .landcover-table {
+  width: 100%;
+  overflow: auto;
 }
 
-.main .lake .catchment .landcover .map-sidebar .map-sidebar-right .landcover-table table {
-    width: 100%;
-    border-spacing: 10px;
-    border-collapse: separate;
+.main
+  .lake
+  .catchment
+  .landcover
+  .map-sidebar
+  .map-sidebar-right
+  .landcover-table
+  table {
+  width: 100%;
+  border-spacing: 10px;
+  border-collapse: separate;
 }
 
-.main .lake .catchment .landcover .map-sidebar .map-sidebar-right .landcover-table table th {
-    text-align: left;
+.main
+  .lake
+  .catchment
+  .landcover
+  .map-sidebar
+  .map-sidebar-right
+  .landcover-table
+  table
+  th {
+  text-align: left;
 }
 
-.main .lake .catchment .nutrients .map-sidebar .map-sidebar-left .nutrient-legend {
-    position: absolute;
-    right: 6px;
-    bottom: 6px;
-    background-color: var(--box-color);
-    padding: 6px 12px;
-    z-index: 999;
-    border-radius: 8px;
-    max-width: 32%;
+.main
+  .lake
+  .catchment
+  .nutrients
+  .map-sidebar
+  .map-sidebar-left
+  .nutrient-legend {
+  position: absolute;
+  right: 6px;
+  bottom: 6px;
+  background-color: var(--box-color);
+  padding: 6px 12px;
+  z-index: 999;
+  border-radius: 8px;
+  max-width: 32%;
 }
 
-.main .lake .catchment .nutrients .map-sidebar .map-sidebar-left .nutrient-legend .circle {
-    background-color: rgba(0, 0, 0, 0.5);
-    width: 12px;
-    height: 12px;
-    border-radius: 100%;
-    border: 1px solid black;
-    display: inline-block;
-    margin-right: 8px;
+.main
+  .lake
+  .catchment
+  .nutrients
+  .map-sidebar
+  .map-sidebar-left
+  .nutrient-legend
+  .circle {
+  background-color: rgba(0, 0, 0, 0.5);
+  width: 12px;
+  height: 12px;
+  border-radius: 100%;
+  border: 1px solid black;
+  display: inline-block;
+  margin-right: 8px;
 }
 
-.main .lake .catchment .nutrients .map-sidebar .map-sidebar-left .nutrient-legend a {
-    color: var(--background-font-color);
+.main
+  .lake
+  .catchment
+  .nutrients
+  .map-sidebar
+  .map-sidebar-left
+  .nutrient-legend
+  a {
+  color: var(--background-font-color);
 }
 
-.main .lake .catchment .nutrients .map-sidebar .map-sidebar-left .layer-selection {
-    position: absolute;
-    top: 6px;
-    left: 6px;
-    z-index: 999;
-    max-width: calc(100% - 70px);
+.main
+  .lake
+  .catchment
+  .nutrients
+  .map-sidebar
+  .map-sidebar-left
+  .layer-selection {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  z-index: 999;
+  max-width: calc(100% - 70px);
 }
 
-.main .lake .catchment .nutrients .map-sidebar .map-sidebar-left .layer-selection .layer-option {
-    cursor: pointer;
-    color: var(--background-subtle-font-color);
-    background-color: var(--box-color);
-    padding: 6px 12px;
-    border-radius: 8px;
-    margin-right: 12px;
-    margin-bottom: 6px;
-    display: inline-block;
+.main
+  .lake
+  .catchment
+  .nutrients
+  .map-sidebar
+  .map-sidebar-left
+  .layer-selection
+  .layer-option {
+  cursor: pointer;
+  color: var(--background-subtle-font-color);
+  background-color: var(--box-color);
+  padding: 6px 12px;
+  border-radius: 8px;
+  margin-right: 12px;
+  margin-bottom: 6px;
+  display: inline-block;
 }
 
-.main .lake .catchment .nutrients .map-sidebar .map-sidebar-left .layer-selection .layer-option:hover {
-    color: var(--background-font-color);
+.main
+  .lake
+  .catchment
+  .nutrients
+  .map-sidebar
+  .map-sidebar-left
+  .layer-selection
+  .layer-option:hover {
+  color: var(--background-font-color);
 }
 
-.main .lake .catchment .nutrients .map-sidebar .map-sidebar-left .layer-selection .layer-option.selected {
-    color: var(--highlight-color);
-    font-weight: bold;
-    cursor: auto;
+.main
+  .lake
+  .catchment
+  .nutrients
+  .map-sidebar
+  .map-sidebar-left
+  .layer-selection
+  .layer-option.selected {
+  color: var(--highlight-color);
+  font-weight: bold;
+  cursor: auto;
 }
 
-.main .lake .catchment .nutrients .map-sidebar .map-sidebar-right .nutrient-values .nutrient-value {
-    display: inline-block;
-    vertical-align: top;
-    margin-right: 22px;
-    text-align: center;
-    margin-top: 12px;
+.main
+  .lake
+  .catchment
+  .nutrients
+  .map-sidebar
+  .map-sidebar-right
+  .nutrient-values
+  .nutrient-value {
+  display: inline-block;
+  vertical-align: top;
+  margin-right: 22px;
+  text-align: center;
+  margin-top: 12px;
 }
 
-.main .lake .catchment .nutrients .map-sidebar .map-sidebar-right .nutrient-values .nutrient-value .value {
-    display: inline-block;
-    font-size: 45px;
+.main
+  .lake
+  .catchment
+  .nutrients
+  .map-sidebar
+  .map-sidebar-right
+  .nutrient-values
+  .nutrient-value
+  .value {
+  display: inline-block;
+  font-size: 45px;
 }
 
-.main .lake .catchment .nutrients .map-sidebar .map-sidebar-right .nutrient-values .nutrient-value .value.selected {
-    color: var(--highlight-color);
+.main
+  .lake
+  .catchment
+  .nutrients
+  .map-sidebar
+  .map-sidebar-right
+  .nutrient-values
+  .nutrient-value
+  .value.selected {
+  color: var(--highlight-color);
 }
 
-.main .lake .catchment .nutrients .map-sidebar .map-sidebar-right .nutrient-values .nutrient-value .unit {
-    display: inline-block;
-    color: var(--background-subtle-font-color);
-    margin-left: 8px;
+.main
+  .lake
+  .catchment
+  .nutrients
+  .map-sidebar
+  .map-sidebar-right
+  .nutrient-values
+  .nutrient-value
+  .unit {
+  display: inline-block;
+  color: var(--background-subtle-font-color);
+  margin-left: 8px;
 }
 
 .main .lake .catchment .nutrients .map-sidebar .map-sidebar-right .coverage {
-    margin-top: 18px;
-    color: var(--background-subtle-font-color);
+  margin-top: 18px;
+  color: var(--background-subtle-font-color);
 }
 
 .main .lake .catchment .nutrients .map-sidebar .map-sidebar-right a {
-    display: block;
-    color: var(--link-color);
-    margin-top: 8px;
-    margin-bottom: 12px;
+  display: block;
+  color: var(--link-color);
+  margin-top: 8px;
+  margin-bottom: 12px;
 }
 
 .main .lake .catchment .map-sidebar .map-sidebar-left .toggle-fullscreen {
-    position: absolute;
-    top: 6px;
-    right: 6px;
-    background-color: var(--box-color);
-    z-index: 999;
-    cursor: pointer;
-    padding: 12px;
-    border-radius: 12px;
-    height: 20px;
-    width: 20px;
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  background-color: var(--box-color);
+  z-index: 999;
+  cursor: pointer;
+  padding: 12px;
+  border-radius: 12px;
+  height: 20px;
+  width: 20px;
 }
 
 .main .lake .catchment .map-sidebar .map-sidebar-left .toggle-fullscreen img {
-    height: 20px;
-    transition: transform .33s 0s ease;
+  height: 20px;
+  transition: transform 0.33s 0s ease;
 }
 
-.main .lake .catchment .map-sidebar .map-sidebar-left .toggle-fullscreen img:hover {
-    transform: scale(1.1);
+.main
+  .lake
+  .catchment
+  .map-sidebar
+  .map-sidebar-left
+  .toggle-fullscreen
+  img:hover {
+  transform: scale(1.1);
 }
 
-.main.dark .lake .catchment .map-sidebar .map-sidebar-left .toggle-fullscreen img {
-    filter: invert(1);
+.main.dark
+  .lake
+  .catchment
+  .map-sidebar
+  .map-sidebar-left
+  .toggle-fullscreen
+  img {
+  filter: invert(1);
 }
 
 /** Phosphorus **/
 
 .main .lake .phosphorus .indicators {
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    margin-bottom: 20px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  margin-bottom: 20px;
 }
 
 .main .lake .phosphorus .indicators .indicator-outer {
-    display: inline-block;
+  display: inline-block;
 }
 
 .main .lake .phosphorus .indicators .indicator-outer .indicator-value {
-    font-size: 50px;
+  font-size: 50px;
 }
 
-.main .lake .phosphorus .indicators .indicator-outer .indicator-value .indicator-unit {
-    display: inline-block;
-    font-size: 16px;
+.main
+  .lake
+  .phosphorus
+  .indicators
+  .indicator-outer
+  .indicator-value
+  .indicator-unit {
+  display: inline-block;
+  font-size: 16px;
 }
 
 .main .lake .phosphorus .indicators .indicator-outer .indicator-type {
-    text-align: center;
-    color: var(--background-subtle-font-color);
+  text-align: center;
+  color: var(--background-subtle-font-color);
 }
 
 /** Webcams **/
 
 .main .lake .webcams .webcams-outer .webcams-skeleton {
-    position: relative;
-    background-color: var(--box-color);
-    border-radius: 20px;
-    box-shadow: var(--box-shadow);
-    margin-right: var(--padding);
-    margin-bottom: calc(var(--padding)/2);
-    width: 400px;
-    height: 210px;
-    max-width: 100%;
-    display: inline-block;
+  position: relative;
+  background-color: var(--box-color);
+  border-radius: 20px;
+  box-shadow: var(--box-shadow);
+  margin-right: var(--padding);
+  margin-bottom: calc(var(--padding) / 2);
+  width: 400px;
+  height: 210px;
+  max-width: 100%;
+  display: inline-block;
 }
 
 .main .lake .webcams .webcams-outer .webcams-inner {
-    position: relative;
-    background-color: var(--box-color);
-    border-radius: 20px;
-    box-shadow: var(--box-shadow);
-    overflow: hidden;
-    margin-right: var(--padding);
-    margin-bottom: calc(var(--padding)/2);
-    width: 400px;
-    height: 210px;
-    max-width: 100%;
-    display: inline-block;
-    transition: border 0.33s 0s ease, box-shadow 0.33s 0s ease;
-    cursor: pointer;
-    text-decoration: none;
-    color: var(--background-font-color);
+  position: relative;
+  background-color: var(--box-color);
+  border-radius: 20px;
+  box-shadow: var(--box-shadow);
+  overflow: hidden;
+  margin-right: var(--padding);
+  margin-bottom: calc(var(--padding) / 2);
+  width: 400px;
+  height: 210px;
+  max-width: 100%;
+  display: inline-block;
+  transition:
+    border 0.33s 0s ease,
+    box-shadow 0.33s 0s ease;
+  cursor: pointer;
+  text-decoration: none;
+  color: var(--background-font-color);
 }
 
 .main .lake .webcams .webcams-outer .webcams-inner:hover {
-    box-shadow: none;
+  box-shadow: none;
 }
 
 .main .lake .webcams .webcams-outer .webcams-inner .webcam-loading {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 1;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
 }
 
 .main .lake .webcams .webcams-outer .webcams-inner .webcam-image {
-    height: 100%;
-    width: 100%;
-    position: relative;
-    z-index: 2;
+  height: 100%;
+  width: 100%;
+  position: relative;
+  z-index: 2;
 }
 
 .main .lake .webcams .webcams-outer .webcams-inner .label {
-    position: absolute;
-    z-index: 999;
-    background-color: var(--box-color);
-    bottom: calc(var(--padding) / 2);
-    right: calc(var(--padding) / 2);
-    padding: 12px;
-    border-radius: 12px;
-    max-width: 200px;
-    text-align: center;
+  position: absolute;
+  z-index: 999;
+  background-color: var(--box-color);
+  bottom: calc(var(--padding) / 2);
+  right: calc(var(--padding) / 2);
+  padding: 12px;
+  border-radius: 12px;
+  max-width: 200px;
+  text-align: center;
 }
 
 .main .lake .webcams .webcams-outer .webcams-inner .label .value {
-    font-weight: 600;
-    font-family: DM_Sans, Frutiger Neue LT Pro, Arial, sans-serif;
-    padding-bottom: 5px;
+  font-weight: 600;
+  font-family:
+    DM_Sans,
+    Frutiger Neue LT Pro,
+    Arial,
+    sans-serif;
+  padding-bottom: 5px;
 }
 
 .main .lake .webcams .webcams-outer .webcams-inner .label .time {
-    color: var(--background-subtle-font-color);
+  color: var(--background-subtle-font-color);
 }
 
 .main .lake .webcams .windy {
-    font-size: 16px;
-    font-weight: 400;
-    color: var(--background-subtle-font-color);
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--background-subtle-font-color);
 }
 
 .main .lake .webcams .windy a {
-    color: var(--link-color);
+  color: var(--link-color);
 }
 
 /** Satellite **/
 
 .main .lake .satellite .satellite-maps {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--padding);
-    justify-content: space-between;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--padding);
+  justify-content: space-between;
 }
 
 .main .lake .satellite .satellite-maps .satellite-inner {
-    width: calc(50% - var(--padding)/2);
-    display: inline-block;
+  width: calc(50% - var(--padding) / 2);
+  display: inline-block;
 }
 
 .main .lake .satellite .satellite-maps .satellite-inner .map {
-    width: 100%;
-    height: 350px;
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
-    overflow: hidden;
-    position: relative;
+  width: 100%;
+  height: 350px;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+}
+
+.main .lake .satellite .satellite-maps .satellite-inner .map .leaflet-control {
+  display: none;
 }
 
 .main .lake .satellite .satellite-maps .satellite-inner .map .lake-map-button {
-    opacity: 0;
-    transition: all 0.8s ease;
+  opacity: 0;
+  transition: all 0.8s ease;
 }
 
-.main .lake .satellite .satellite-maps .satellite-inner .map:hover .lake-map-button {
-    opacity: 1;
+.main
+  .lake
+  .satellite
+  .satellite-maps
+  .satellite-inner
+  .map:hover
+  .lake-map-button {
+  opacity: 1;
 }
 
 .main .lake .satellite .satellite-maps .satellite-inner .map .label {
-    position: absolute;
-    z-index: 999;
-    background-color: var(--box-color);
-    bottom: calc(var(--padding) / 2);
-    right: calc(var(--padding) / 2);
-    padding: 12px;
-    border-radius: 12px;
-    max-width: 150px;
-    text-align: center;
+  position: absolute;
+  z-index: 999;
+  background-color: var(--box-color);
+  bottom: calc(var(--padding) / 2);
+  right: calc(var(--padding) / 2);
+  padding: 12px;
+  border-radius: 12px;
+  max-width: 150px;
+  text-align: center;
 }
 
 .main .lake .satellite .satellite-maps .satellite-inner .map .label .value {
-    font-weight: 600;
-    font-family: DM_Sans, Frutiger Neue LT Pro, Arial, sans-serif;
-    padding-bottom: 5px;
+  font-weight: 600;
+  font-family:
+    DM_Sans,
+    Frutiger Neue LT Pro,
+    Arial,
+    sans-serif;
+  padding-bottom: 5px;
 }
 
 .main .lake .satellite .satellite-maps .satellite-inner .map .label .time {
-    color: var(--background-subtle-font-color);
+  color: var(--background-subtle-font-color);
 }
 
 /** Water Temperature **/
 
 .main .lake .water-temperature .clickable-box .right {
-    color: var(--highlight-color);
-    font-size: 20px;
-    font-family: DM_Sans, Frutiger Neue LT Pro, Arial, sans-serif;
+  color: var(--highlight-color);
+  font-size: 20px;
+  font-family:
+    DM_Sans,
+    Frutiger Neue LT Pro,
+    Arial,
+    sans-serif;
 }
 
 /** Water Level **/
 
 .main .lake .measurements .water-levels .clickable-box {
-    width: 500px;
+  width: 500px;
 }
 
 .main .lake .water-levels .clickable-box .right {
-    color: var(--highlight-color);
-    font-size: 20px;
-    font-family: DM_Sans, Frutiger Neue LT Pro, Arial, sans-serif;
+  color: var(--highlight-color);
+  font-size: 20px;
+  font-family:
+    DM_Sans,
+    Frutiger Neue LT Pro,
+    Arial,
+    sans-serif;
 }
 
 /** Trends **/
 
 .main .lake .map-sidebar .map-sidebar-left .line-graph-container {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }
 
-.main .lake .map-sidebar .map-sidebar-left .line-graph-container .dataset-linegraph {
-    width: 100%;
-    flex-grow: 1;
-    padding: 30px 30px 10px 20px;
-    box-sizing: border-box;
+.main
+  .lake
+  .map-sidebar
+  .map-sidebar-left
+  .line-graph-container
+  .dataset-linegraph {
+  width: 100%;
+  flex-grow: 1;
+  padding: 30px 30px 10px 20px;
+  box-sizing: border-box;
 }
 
-.main .lake .map-sidebar .map-sidebar-left .line-graph-container .dataset-linegraph .dataset-linegraph-label {
-    position: absolute;
-    background-color: var(--box-color);
-    max-width: 180px;
-    z-index: 9;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    padding: 12px;
-    border-radius: 12px;
+.main
+  .lake
+  .map-sidebar
+  .map-sidebar-left
+  .line-graph-container
+  .dataset-linegraph
+  .dataset-linegraph-label {
+  position: absolute;
+  background-color: var(--box-color);
+  max-width: 180px;
+  z-index: 9;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 12px;
+  border-radius: 12px;
 }
 
 .main .lake .map-sidebar .map-sidebar-left .line-graph-container .graph-legend {
-    height: auto;
-    text-align: center;
-    font-size: 12px;
-    padding-bottom: 16px;
+  height: auto;
+  text-align: center;
+  font-size: 12px;
+  padding-bottom: 16px;
 }
 
-.main .lake .map-sidebar .map-sidebar-left .line-graph-container .graph-legend .item {
-    display: inline-block;
-    margin: 0 12px;
+.main
+  .lake
+  .map-sidebar
+  .map-sidebar-left
+  .line-graph-container
+  .graph-legend
+  .item {
+  display: inline-block;
+  margin: 0 12px;
 }
 
-.main .lake .map-sidebar .map-sidebar-left .line-graph-container .graph-legend .item .box {
-    display: inline-block;
-    width: 30px;
-    height: 10px;
-    background-color: grey;
-    opacity: 0.15;
-    margin-right: 8px;
+.main
+  .lake
+  .map-sidebar
+  .map-sidebar-left
+  .line-graph-container
+  .graph-legend
+  .item
+  .box {
+  display: inline-block;
+  width: 30px;
+  height: 10px;
+  background-color: grey;
+  opacity: 0.15;
+  margin-right: 8px;
 }
 
-.main .lake .map-sidebar .map-sidebar-left .line-graph-container .graph-legend .item .line {
-    display: inline-block;
-    width: 30px;
-    height: 5px;
-    margin-bottom: 5px;
-    margin-right: 6px;
-    border-bottom: 1px solid grey;
+.main
+  .lake
+  .map-sidebar
+  .map-sidebar-left
+  .line-graph-container
+  .graph-legend
+  .item
+  .line {
+  display: inline-block;
+  width: 30px;
+  height: 5px;
+  margin-bottom: 5px;
+  margin-right: 6px;
+  border-bottom: 1px solid grey;
 }
 
-.main .lake .map-sidebar .map-sidebar-left .line-graph-container .graph-legend .item .text {
-    display: inline-block;
+.main
+  .lake
+  .map-sidebar
+  .map-sidebar-left
+  .line-graph-container
+  .graph-legend
+  .item
+  .text {
+  display: inline-block;
 }
 
 .main .lake .past-year .map-sidebar .map-sidebar-left .graph-container {
-    width: 100%;
-    height: 100%;
-    padding: 15px 15px 0 20px;
-    box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  padding: 15px 15px 0 20px;
+  box-sizing: border-box;
 }
 
 /** Mobile **/
 
 @media screen and (max-width: 1000px) {
-    .main .lake .vis-main.full {
-        top: var(--header-height);
-        height: calc(100% - var(--header-height));
-    }
+  .main .lake .vis-main.full {
+    top: var(--header-height);
+    height: calc(100% - var(--header-height));
+  }
 
-    .main .not-found {
-        min-height: calc(100vh - var(--footer-height) - var(--top-margin));
-    }
+  .main .not-found {
+    min-height: calc(100vh - var(--footer-height) - var(--top-margin));
+  }
 }
 
 @media screen and (max-width: 850px) {
-    .main .lake .map-sidebar .map-sidebar-left {
-        width: 100%;
-        height: 350px;
-        margin-bottom: var(--padding);
-        border: none;
-    }
+  .main .lake .map-sidebar .map-sidebar-left {
+    width: 100%;
+    height: 350px;
+    margin-bottom: var(--padding);
+    border: none;
+  }
 
-    .main .lake .map-sidebar .map-sidebar-right {
-        width: 100%;
-        max-height: unset;
-        border: none;
-        padding: 0;
-    }
+  .main .lake .map-sidebar .map-sidebar-right {
+    width: 100%;
+    max-height: unset;
+    border: none;
+    padding: 0;
+  }
 
-    .main .lake .clickable-box-parent {
-        gap: var(--padding);
-    }
+  .main .lake .clickable-box-parent {
+    gap: var(--padding);
+  }
 
-    .main .lake .clickable-box-parent a {
-        flex: 1 1 100%;
-    }
+  .main .lake .clickable-box-parent a {
+    flex: 1 1 100%;
+  }
 
-    .main .lake .clickable-box {
-        width: 100% !important;
-    }
+  .main .lake .clickable-box {
+    width: 100% !important;
+  }
 
-    .main .lake .satellite .satellite-maps .satellite-inner {
-        width: 100%;
-    }
+  .main .lake .satellite .satellite-maps .satellite-inner {
+    width: 100%;
+  }
 
-    .main .lake .satellite .satellite-maps .satellite-inner .map {
-        border: none;
-    }
+  .main .lake .satellite .satellite-maps .satellite-inner .map {
+    border: none;
+  }
 
-    .main .lake .map-sidebar .map-sidebar-left .vis-header {
-        opacity: 1;
-    }
+  .main .lake .map-sidebar .map-sidebar-left .vis-header {
+    opacity: 1;
+  }
 }
 
 @media screen and (max-width: 500px) {
+  .main .lake h1 {
+    font-size: 30px;
+    color: var(--background-font-color);
+    display: inline-block;
+    vertical-align: super;
+    margin: 10px 0;
+    width: 100%;
+  }
 
-    .main .lake h1 {
-        font-size: 30px;
-        color: var(--background-font-color);
-        display: inline-block;
-        vertical-align: super;
-        margin: 10px 0;
-        width: 100%;
-    }
+  .main .lake h2 {
+    margin-bottom: 4px;
+    font-size: 22px;
+    font-weight: 500;
+  }
 
-    .main .lake h2 {
-        margin-bottom: 4px;
-        font-size: 22px;
-        font-weight: 500;
-    }
+  .main .lake h3 {
+    margin-bottom: 10px;
+    font-size: 16px;
+  }
 
-    .main .lake h3 {
-        margin-bottom: 10px;
-        font-size: 16px;
-    }
+  .main .lake .map-sidebar {
+    margin-bottom: calc(var(--padding) * 2);
+  }
 
-    .main .lake .map-sidebar {
-        margin-bottom: calc(var(--padding)*2);
-    }
+  .main .lake .map-sidebar .map-sidebar-left {
+    height: 300px;
+    margin: 0;
+    margin-bottom: -5px;
+  }
 
-    .main .lake .map-sidebar .map-sidebar-left {
-        height: 300px;
-        margin: 0;
-        margin-bottom: -5px;
-    }
+  .main .lake .clickable-box {
+    border: none;
+    border-bottom: 1px solid var(--border-color);
+    background-color: transparent;
+    border-radius: 0;
+    padding: 15px 0 25px 0;
+    margin: 0;
+    box-shadow: none;
+  }
 
-    .main .lake .clickable-box {
-        border: none;
-        border-bottom: 1px solid var(--border-color);
-        background-color: transparent;
-        border-radius: 0;
-        padding: 15px 0 25px 0;
-        margin: 0;
-        box-shadow: none;
-    }
+  .main .lake .clickable-box-parent {
+    gap: 0;
+  }
 
-    .main .lake .clickable-box-parent {
-        gap: 0;
-    }
+  .main .lake .header {
+    background-color: var(--highlight-color-fill);
+    padding: 0 20px;
+    margin-bottom: var(--padding);
+    border-radius: 0 0 12px 12px;
+  }
 
-    .main .lake .header {
-        background-color: var(--highlight-color-fill);
-        padding: 0 20px;
-        margin-bottom: var(--padding);
-        border-radius: 0 0 12px 12px;
-    }
+  .main .lake .header .properties-link {
+    font-size: 14px;
+  }
 
-    .main .lake .header .properties-link {
-        font-size: 14px;
-    }
+  .main .lake .threedmodel .clickable-box {
+    border: none;
+  }
 
-    .main .lake .threedmodel .clickable-box {
-        border: none;
-    }
+  .main .lake .onedmodel .clickable-box {
+    border: none;
+    margin-top: -10px;
+  }
 
-    .main .lake .onedmodel .clickable-box {
-        border: none;
-        margin-top: -10px;
-    }
+  .main .lake .clickable-box .skeleton-data {
+    border-radius: 0;
+  }
 
-    .main .lake .clickable-box .skeleton-data {
-        border-radius: 0;
-    }
+  .main
+    .lake
+    .map-sidebar
+    .map-sidebar-left
+    .line-graph-container
+    .dataset-linegraph {
+    padding: 0;
+  }
 
-    .main .lake .map-sidebar .map-sidebar-left .line-graph-container .dataset-linegraph {
-        padding: 0;
-    }
+  .main .lake .past-year .map-sidebar .map-sidebar-left .graph-container {
+    padding: 0;
+  }
 
-    .main .lake .past-year .map-sidebar .map-sidebar-left .graph-container {
-        padding: 0;
-    }
+  .main .lake .phosphorus .indicators .indicator-outer .indicator-value {
+    font-size: 32px;
+  }
 
-    .main .lake .phosphorus .indicators .indicator-outer .indicator-value {
-        font-size: 32px;
-    }
+  .main .lake .map-sidebar .map-sidebar-left .popup {
+    max-width: calc(100% - 82px);
+    bottom: 70px;
+  }
 
+  .main .lake .measurements .water-levels {
+    margin-bottom: calc(var(--padding) * 2);
+  }
 
-    .main .lake .map-sidebar .map-sidebar-left .popup {
-        max-width: calc(100% - 82px);
-        bottom: 70px;
-    }
+  .main .lake .measurements .water-levels h3 {
+    margin-bottom: 0;
+  }
 
-    .main .lake .measurements .water-levels {
-        margin-bottom: calc(var(--padding)*2);
-    }
+  .main .lake .measurements .scientific h3 {
+    margin-bottom: 0;
+  }
 
-    .main .lake .measurements .water-levels h3 {
-        margin-bottom: 0;
-    }
+  .main .lake .clickable-box .right {
+    padding: 18px 0 5px 0;
+  }
 
-    .main .lake .measurements .scientific h3 {
-        margin-bottom: 0;
-    }
+  .main .lake .map-sidebar .map-sidebar-right {
+    padding: 0;
+    overflow: visible;
+  }
 
-    .main .lake .clickable-box .right {
-        padding: 18px 0 5px 0;
-    }
+  .main .lake .catchment .map-sidebar .map-sidebar-right {
+    margin-top: 12px;
+  }
 
-    .main .lake .map-sidebar .map-sidebar-right {
-        padding: 0;
-        overflow: visible;
-    }
+  .main .lake .satellite .satellite-maps .satellite-inner .map {
+    height: 300px;
+  }
 
-    .main .lake .catchment .map-sidebar .map-sidebar-right {
-        margin-top: 12px;
-    }
+  .main .lake .parameters .parameters-box {
+    border: none;
+  }
 
-    .main .lake .satellite .satellite-maps .satellite-inner .map {
-        height: 300px;
-    }
+  .main .lake .click-block {
+    display: block;
+  }
 
-    .main .lake .parameters .parameters-box {
-        border: none;
-    }
+  .main .lake .map-sidebar .map-sidebar-left .line-graph-container {
+    padding: 10px;
+    box-sizing: border-box;
+  }
 
-    .main .lake .click-block {
-        display: block;
-    }
+  .main .lake .map-sidebar .minimise {
+    box-shadow: none;
+    font-size: 14px;
+    margin-bottom: 8px;
+    float: right;
+  }
 
-    .main .lake .map-sidebar .map-sidebar-left .line-graph-container {
-        padding: 10px;
-        box-sizing: border-box;
-    }
+  .main .lake .map-sidebar .title {
+    font-size: 18px;
+    padding-top: 4px;
+  }
 
-    .main .lake .map-sidebar .minimise {
-        box-shadow: none;
-        font-size: 14px;
-        margin-bottom: 8px;
-        float: right;
-    }
+  .main .lake .back-button {
+    display: block;
+  }
 
-    .main .lake .map-sidebar .title {
-        font-size: 18px;
-        padding-top: 4px;
-    }
-
-    .main .lake .back-button {
-        display: block;
-    }
-
-    .main .lake .mobile-fade-out {
-        display: block;
-    }
-
+  .main .lake .mobile-fade-out {
+    display: block;
+  }
 }

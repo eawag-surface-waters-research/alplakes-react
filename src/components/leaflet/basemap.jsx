@@ -10,6 +10,7 @@ import Legend from "../legend/legend";
 import Loading from "../loading/loading";
 import Slider from "../sliders/slider";
 import MapGraph from "../mapgraph/mapgraph";
+import SatelliteTimeseriesModal from "../satellitetimeseriesmodal/satellitetimeseriesmodal";
 
 class Basemap extends Component {
   state = {
@@ -53,7 +54,7 @@ class Basemap extends Component {
         if (play) {
           this.intervalId = setTimeout(
             () => scheduleNextIteration(timestep),
-            timeout
+            timeout,
           );
         }
       };
@@ -114,12 +115,21 @@ class Basemap extends Component {
     }
   };
   async componentDidUpdate(prevProps) {
-    const { dark, updates, updated, mapId, language, getTransect, getProfile } =
-      this.props;
+    const {
+      dark,
+      updates,
+      updated,
+      mapId,
+      language,
+      getTransect,
+      getProfile,
+      getSatelliteTimeseries,
+    } = this.props;
     var { basemap } = this.props;
     const server = {
       getTransect,
       getProfile,
+      getSatelliteTimeseries,
       disableControls: this.disableControls,
     };
     if (updates.length > 0) {
@@ -135,7 +145,7 @@ class Basemap extends Component {
         this.removeControls,
         server,
         this.state.play,
-        this.togglePlay
+        this.togglePlay,
       );
       loading_div.style.opacity = 0;
     }
@@ -211,6 +221,9 @@ class Basemap extends Component {
       toggleGraphHide,
       toggleGraphFull,
       updateOptions,
+      satelliteTimeseriesModal,
+      downloadSatelliteTimeseries,
+      closeSatelliteTimeseriesModel,
     } = this.props;
     const { controls, play, period, datetime, timestep } = this.state;
     return (
@@ -278,7 +291,16 @@ class Basemap extends Component {
             customProfileLocation={this.customProfileLocation}
           />
         )}
-        <div id={mapId} className="leaflet-map"></div>
+        <div id={mapId} className="leaflet-map" />
+        {satelliteTimeseriesModal && (
+          <SatelliteTimeseriesModal
+            latlng={satelliteTimeseriesModal}
+            downloadSatelliteTimeseries={downloadSatelliteTimeseries}
+            closeSatelliteTimeseriesModel={closeSatelliteTimeseriesModel}
+            layers={layers}
+            language={language}
+          />
+        )}
       </React.Fragment>
     );
   }

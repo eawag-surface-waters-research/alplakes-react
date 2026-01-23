@@ -37,20 +37,21 @@ class SatelliteSummary extends Component {
     xmax: 0,
     xbounds: [0, 0],
     coverage: 10,
-    satellites: {},
+    legend: {},
     latitude: "",
     longitude: "",
     source: "",
     parameter: "",
+    custom_len: 0,
   };
   setImage = (event) => {
     this.props.setImage(event.x);
   };
 
-  setSatellites = (satellite) => {
-    var { satellites } = this.state;
-    satellites[satellite] = !satellites[satellite];
-    this.setState({ satellites });
+  setLegend = (id) => {
+    var { legend } = this.state;
+    legend[id]["hidden"] = !legend[id]["hidden"];
+    this.setState({ legend });
   };
 
   downloadMetadata = () => {
@@ -86,6 +87,9 @@ class SatelliteSummary extends Component {
         L8: "Landsat 8",
         L9: "Landsat 9",
         insitu: "In-Situ",
+        collection: "Landsat 8&9",
+        sentinel2: "Sentinel 2",
+        sentinel3: "Sentinel 3",
       };
     } else {
       options = {
@@ -94,6 +98,9 @@ class SatelliteSummary extends Component {
         L8: "L8",
         L9: "L9",
         insitu: "In-Situ",
+        collection: "L",
+        sentinel2: "S2",
+        sentinel3: "S3",
       };
     }
     if (label in options) {
@@ -103,17 +110,20 @@ class SatelliteSummary extends Component {
   };
 
   setData = () => {
-    var { latitude, longitude, source } = this.state;
+    var { latitude, longitude, source, custom_len } = this.state;
     var { input, options, parameter } = this.props;
-    var { available, reference } = input;
+    var { available, reference, custom } = input;
     var data = {};
-    var satellites = {};
+    var legend = {};
     var ymin = Infinity;
     var ymax = -Infinity;
     var xmin = Infinity;
     var xmax = -Infinity;
+    var satellites = [];
     for (let date of Object.values(available)) {
       for (let image of date.images) {
+        if (!satellites.includes(image.satellite.slice(0, 2)))
+          satellites.push(image.satellite.slice(0, 2));
         if (image.percent > options.coverage && image.percent > 10) {
           let tooltip = `<div><div>${image.satellite} ${image.percent}% coverage</div><div></div>Click to view</div>`;
           ymin = Math.min(ymin, image.ave);
@@ -136,6 +146,14 @@ class SatelliteSummary extends Component {
         }
       }
     }
+    for (let satellite of satellites) {
+      legend[satellite] = {
+        hidden: false,
+        text: this.getLabel(satellite.slice(0, 2)),
+        color: this.getColor(satellite.slice(0, 2)),
+        shape: "circle",
+      };
+    }
     if (reference) {
       latitude = reference.latitude;
       longitude = reference.longitude;
@@ -147,11 +165,33 @@ class SatelliteSummary extends Component {
         lineColor: "#c13c2f",
         symbol: "triangle",
       };
+      legend["insitu"] = {
+        hidden: false,
+        text: "Insitu",
+        color: "#c13c2f",
+        shape: "triangle",
+      };
     }
 
-    for (let key of ["S2", "S3", "L8", "L9", "insitu"]) {
-      if (Object.keys(data).some((str) => str.includes(key))) {
-        satellites[key] = true;
+    if (custom) {
+      custom_len = custom.length;
+      for (let c of custom) {
+        data[c["id"]] = {
+          x: c["dataset"].map((d) => new Date(d["time"])),
+          y: c["dataset"].map((d) => d["value"][c["statistic"]]),
+          tooltip: c["dataset"].map(
+            (d) => `${this.getLabel(c.satellite)} (${c.lat}, ${c.lng})`,
+          ),
+          lineColor: "green",
+          symbol: "square",
+        };
+        legend[c["id"]] = {
+          hidden: false,
+          text: `${this.getLabel(c.satellite)}`,
+          color: "green",
+          shape: "square",
+          extra: c,
+        };
       }
     }
 
@@ -167,11 +207,12 @@ class SatelliteSummary extends Component {
       xmax,
       xbounds,
       coverage: options.coverage,
-      satellites,
+      legend,
       latitude,
       longitude,
       source,
       parameter,
+      custom_len,
     });
   };
 
@@ -182,7 +223,9 @@ class SatelliteSummary extends Component {
   componentDidUpdate() {
     if (
       this.props.options.coverage !== this.state.coverage ||
-      this.props.parameter !== this.state.parameter
+      this.props.parameter !== this.state.parameter ||
+      (this.props.input.custom &&
+        this.state.custom_len !== this.props.input.custom.length)
     ) {
       this.setData();
     }
@@ -197,15 +240,15 @@ class SatelliteSummary extends Component {
       xmin,
       xmax,
       xbounds,
-      satellites,
+      legend,
       latitude,
       longitude,
       source,
     } = this.state;
     const graph_data = Object.entries(data)
       .filter(([key, value]) =>
-        Object.entries(satellites)
-          .filter(([key, value]) => value === true)
+        Object.entries(legend)
+          .filter(([key, value]) => value["hidden"] === false)
           .map(([key]) => key)
           .some((sub) => key.includes(sub)),
       )
@@ -215,6 +258,7 @@ class SatelliteSummary extends Component {
     }
 
     const no_data = graph_data.length === 1 && graph_data[0].x.length === 0;
+
     return (
       <div className="satellite-summary">
         <div className="satellite-settings">
@@ -256,28 +300,35 @@ class SatelliteSummary extends Component {
           </div>
         </div>
         <div className="satellite-legend">
-          {Object.keys(satellites).map((s) => (
+          {Object.keys(legend).map((s) => (
             <div
               key={s}
               className={
-                satellites[s]
-                  ? "graph-title-selection"
-                  : "graph-title-selection unselect"
+                legend[s]["hidden"]
+                  ? "graph-title-selection unselect"
+                  : "graph-title-selection"
               }
-              onClick={() => this.setSatellites(s)}
+              onClick={() => this.setLegend(s)}
             >
-              {s === "insitu" ? (
+              {legend[s].shape === "triangle" && (
                 <div
                   className="triangle"
-                  style={{ borderBottomColor: this.getColor(s) }}
-                />
-              ) : (
-                <div
-                  className="circle"
-                  style={{ backgroundColor: this.getColor(s) }}
+                  style={{ borderBottomColor: legend[s]["color"] }}
                 />
               )}
-              {this.getLabel(s)}
+              {legend[s].shape === "circle" && (
+                <div
+                  className="circle"
+                  style={{ backgroundColor: legend[s]["color"] }}
+                />
+              )}
+              {legend[s].shape === "square" && (
+                <div
+                  className="square"
+                  style={{ backgroundColor: legend[s]["color"] }}
+                />
+              )}
+              {legend[s]["text"]}
               {s === "insitu" && (
                 <div className="question">
                   <div className="question-hover">
