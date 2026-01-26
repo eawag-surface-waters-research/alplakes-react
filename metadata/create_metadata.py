@@ -269,12 +269,13 @@ for lake in metadata:
 
 
     # Satellite data
-    if "flags" not in lake or lake["flags"][0] != "austrian":
-        if key in satellite:
-            add = True
-            satellite_data = []
-            layers["layers"].extend(func.satellite_layers(lake["key"], satellite[key], srd))
-            for sat in satellite_metadata:
+    prevent_water_quality = "flags" in lake and lake["flags"][0] == "austrian"
+    if key in satellite:
+        add = True
+        satellite_data = []
+        layers["layers"].extend(func.satellite_layers(lake["key"], satellite[key], srd, prevent_water_quality))
+        for sat in satellite_metadata:
+            if not prevent_water_quality or sat["parameter"] == "temperature":
                 sm = []
                 for source in sat["sources"]:
                     if source["satellite"] in satellite[key] and source["parameter"] in satellite[key][source["satellite"]]:
@@ -284,11 +285,11 @@ for lake in metadata:
                     temp["key"] = key
                     temp["metadata"] = sm
                     satellite_data.append(temp)
-            if len(satellite_data) > 0:
-                home["filters"].append("satellite")
-                data["satellite"] = satellite_data
-    else:
-        print("Not adding satellite data for ", key)
+        if len(satellite_data) > 0:
+            home["filters"].append("satellite")
+            data["satellite"] = satellite_data
+
+
     if add:
         with open('files/{}.json'.format(key), 'w') as json_file:
             json_file.write(json.dumps(data, separators=(',', ':'), ensure_ascii=False))

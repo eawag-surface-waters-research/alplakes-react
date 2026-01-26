@@ -269,9 +269,9 @@ def temperature_layers(key):
         }
     ]
 
-def satellite_layers(key, sd, srd):
+def satellite_layers(key, sd, srd, prevent_water_quality):
     layers = []
-    if "sentinel3" in sd and "chla" in sd["sentinel3"]:
+    if "sentinel3" in sd and "chla" in sd["sentinel3"] and not prevent_water_quality:
         layer = {
                 "id": "satellite_chlorophyll",
                 "type": "satellite",
@@ -316,7 +316,7 @@ def satellite_layers(key, sd, srd):
             }
         )
         layers.append(layer)
-    if ("sentinel3" in sd and "Zsd_lee" in sd["sentinel3"]) or ("sentinel2" in sd and "Z490" in sd["sentinel2"]):
+    if (("sentinel3" in sd and "Zsd_lee" in sd["sentinel3"]) or ("sentinel2" in sd and "Z490" in sd["sentinel2"])) and not prevent_water_quality:
         layer = {
           "id": "satellite_secchi",
           "type": "satellite",
@@ -370,7 +370,7 @@ def satellite_layers(key, sd, srd):
             )
         layers.append(layer)
 
-    if ("sentinel3" in sd and "tsm_binding754" in sd["sentinel3"]) or ("sentinel2" in sd and "tsm_dogliotti665" in sd["sentinel2"]):
+    if (("sentinel3" in sd and "tsm_binding754" in sd["sentinel3"]) or ("sentinel2" in sd and "tsm_dogliotti665" in sd["sentinel2"])) and not prevent_water_quality:
         layer = {
           "id": "satellite_turbidity",
           "type": "satellite",
@@ -424,7 +424,7 @@ def satellite_layers(key, sd, srd):
             )
         layers.append(layer)
 
-    if ("sentinel3" in sd and "forel_ule" in sd["sentinel3"]) or ("sentinel2" in sd and "forel_ule" in sd["sentinel2"]):
+    if (("sentinel3" in sd and "forel_ule" in sd["sentinel3"]) or ("sentinel2" in sd and "forel_ule" in sd["sentinel2"])) and not prevent_water_quality:
         layer = {
           "id": "satellite_forelule",
           "type": "satellite",
