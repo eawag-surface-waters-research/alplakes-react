@@ -572,6 +572,17 @@ p {
   width: 100%;
 }
 
+.main .setting input[type=text] {
+  background-color: var(--box-color);
+  border: none;
+  border-radius: 6px;
+  box-sizing: border-box;
+  color: var(--background-font-color);
+  font-size: 16px;
+  padding: 4px 10px;
+  width: 100%;
+}
+
 .main .setting input[type=number] {
   background-color: var(--box-color);
   border: none;

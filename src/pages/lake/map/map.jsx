@@ -38,6 +38,7 @@ class Map extends Component {
     disable_measurements: true,
     measurements: false,
     satelliteTimeseriesModal: false,
+    satelliteTimeseriesCount: 1,
   };
 
   loading = (text) => {
@@ -130,11 +131,13 @@ class Map extends Component {
     }
   };
 
-  getSatelliteTimeseries = (latlng) => {
-    this.setState({ satelliteTimeseriesModal: latlng });
+  getSatelliteTimeseries = (properties) => {
+    this.setState({ satelliteTimeseriesModal: properties });
   };
 
-  closeSatelliteTimeseriesModel = () => {
+  closeSatelliteTimeseriesModel = (markerID) => {
+    var { updates } = this.state;
+    updates.push({ event: "deleteMarker", id: markerID });
     this.setState({ satelliteTimeseriesModal: false });
   };
 
@@ -147,18 +150,27 @@ class Map extends Component {
     window_radius,
     valid_pixels,
     statistic,
+    name,
+    color,
+    markerID,
   ) => {
     var { language } = this.props;
-    this.loading(`${Translations.downloadingData[language]} 0%`);
-    var { id, layers } = this.state;
+    this.loading(`Extracting timeseries  0%`);
+    var { id, layers, satelliteTimeseriesCount, updates } = this.state;
+    const options = { label: name, color, markerID, lat, lng };
+    updates.push({ event: "updateMarker", options });
+    this.setState({ updates });
     const period = 50;
-    const dates = this.getDates(
-      new Date("2026-01-23"),
-      new Date("2025-01-01"),
-      period,
-    );
     var dataset = [];
     var layer = layers.find((l) => l.id === layer_id);
+    const datelist = Object.keys(
+      layer["graph"]["satellite_timeseries"]["available"],
+    ).sort();
+    const dates = this.getDates(
+      new Date(datelist[datelist.length - 1].replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3')),
+      new Date(datelist[0].replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3')),
+      period,
+    );
     for (let i = 0; i < dates.length; i++) {
       const endDate = new Date(dates[i]);
       endDate.setDate(endDate.getDate() - (period - 1));
@@ -166,23 +178,26 @@ class Map extends Component {
       var { data } = await axios.get(url);
       dataset = dataset.concat(data);
       this.loading(
-        `${Translations.downloadingData[language]} ${Math.round(((i + 1) / dates.length) * 100)}%`,
+        `Extracting timeseries... ${Math.round(((i + 1) / dates.length) * 100)}%`,
       );
     }
     if (!("custom" in layer["graph"]["satellite_timeseries"]))
       layer["graph"]["satellite_timeseries"]["custom"] = [];
     layer["graph"]["satellite_timeseries"]["custom"].push({
-      id: Date.now().toString(),
+      id: markerID,
+      name,
       satellite,
       lat,
       lng,
       window_radius,
       valid_pixels,
       statistic,
+      color,
       dataset,
     });
+    satelliteTimeseriesCount = satelliteTimeseriesCount + 1;
     this.loaded();
-    this.setState({ layers });
+    this.setState({ layers, satelliteTimeseriesCount });
   };
 
   getDates = (startDate, endDate, daysApart = 30) => {
@@ -455,6 +470,7 @@ class Map extends Component {
       graphHide,
       graphFull,
       satelliteTimeseriesModal,
+      satelliteTimeseriesCount,
     } = this.state;
     var { language, dark } = this.props;
     var title = "";
@@ -527,6 +543,7 @@ class Map extends Component {
               graph={true}
               graphSelection={graphSelection}
               satelliteTimeseriesModal={satelliteTimeseriesModal}
+              satelliteTimeseriesCount={satelliteTimeseriesCount}
               getTransect={this.getTransect}
               getProfile={this.getProfile}
               getSatelliteTimeseries={this.getSatelliteTimeseries}

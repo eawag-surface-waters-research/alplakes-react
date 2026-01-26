@@ -182,13 +182,13 @@ class SatelliteSummary extends Component {
           tooltip: c["dataset"].map(
             (d) => `${this.getLabel(c.satellite)} (${c.lat}, ${c.lng})`,
           ),
-          lineColor: "green",
+          lineColor: c["color"],
           symbol: "square",
         };
         legend[c["id"]] = {
           hidden: false,
-          text: `${this.getLabel(c.satellite)}`,
-          color: "green",
+          text: c["name"],
+          color: c["color"],
           shape: "square",
           extra: c,
         };
@@ -339,6 +339,32 @@ class SatelliteSummary extends Component {
                     <div className="space">
                       <b>{Translations.location[language]}</b>: {latitude},{" "}
                       {longitude}
+                    </div>
+                  </div>
+                  ?
+                </div>
+              )}
+              {"extra" in legend[s] && (
+                <div className="question">
+                  <div className="question-hover">
+                    Custom timeseries data extraction.
+                    <div className="space">
+                      <b>{Translations.satellite[language]}</b>:{" "}
+                      {legend[s]["extra"]["satellite"]}
+                    </div>
+                    <div className="space">
+                      <b>{Translations.location[language]}</b>:{" "}
+                      {legend[s]["extra"]["lat"]}, {legend[s]["extra"]["lng"]}
+                    </div>
+                    <div className="space">
+                      <b>Statistic</b>: {legend[s]["extra"]["statistic"]}
+                    </div>
+                    <div className="space">
+                      <b>Window radius</b>:{" "}
+                      {legend[s]["extra"]["window_radius"]}
+                    </div>
+                    <div className="space">
+                      <b>Valid Pixels</b>: {legend[s]["extra"]["valid_pixels"]}
                     </div>
                   </div>
                   ?

@@ -39,23 +39,43 @@
 }
 
 .satellite-timeseries-modal .modal-warning {
-    width: 300px;
-    padding-top: 12px;
-    text-align: center;
+  width: 300px;
+  padding-top: 12px;
+  text-align: center;
 }
 
 .satellite-timeseries-modal .confirm {
-    background-color: var(--highlight-color);
-    padding: 6px 0px;
-    border-radius: 12px;
-    text-align: center;
-    margin-top: 15px;
-    color: white;
-    width: 100%;
-    cursor: pointer;
-    transition: all 0.1s 0s ease;
+  background-color: var(--highlight-color);
+  padding: 6px 0px;
+  border-radius: 12px;
+  text-align: center;
+  margin-top: 15px;
+  color: white;
+  width: 100%;
+  cursor: pointer;
+  transition: all 0.1s 0s ease;
 }
 
 .satellite-timeseries-modal .confirm:hover {
   transform: scale(1.01);
+}
+
+@media screen and (max-width: 500px) {
+  .satellite-timeseries-modal .settings-modal {
+    background-color: var(--select-color);
+  }
+  .satellite-timeseries-modal {
+    position: absolute;
+    top: unset;
+    left: 50%;
+    transform: translate(-50%, 0);
+    background-color: var(--box-color);
+    z-index: 999999;
+    border-radius: 16px;
+    padding: 15px;
+    bottom: 17px;
+  }
+  .satellite-timeseries-modal .close-modal {
+    background-color: var(--select-color);
+  }
 }

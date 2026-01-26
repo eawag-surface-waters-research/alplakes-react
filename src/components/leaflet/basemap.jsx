@@ -222,6 +222,7 @@ class Basemap extends Component {
       toggleGraphFull,
       updateOptions,
       satelliteTimeseriesModal,
+      satelliteTimeseriesCount,
       downloadSatelliteTimeseries,
       closeSatelliteTimeseriesModel,
     } = this.props;
@@ -294,7 +295,8 @@ class Basemap extends Component {
         <div id={mapId} className="leaflet-map" />
         {satelliteTimeseriesModal && (
           <SatelliteTimeseriesModal
-            latlng={satelliteTimeseriesModal}
+            properties={satelliteTimeseriesModal}
+            satelliteTimeseriesCount={satelliteTimeseriesCount}
             downloadSatelliteTimeseries={downloadSatelliteTimeseries}
             closeSatelliteTimeseriesModel={closeSatelliteTimeseriesModel}
             layers={layers}

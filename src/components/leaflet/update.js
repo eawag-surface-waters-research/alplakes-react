@@ -2,7 +2,6 @@ import L from "leaflet";
 import axios from "axios";
 import COLORS from "../colors/colors.json";
 import CONFIG from "../../config.json";
-import leaflet_marker from "../../img/leaflet_marker.png";
 import Translate from "../../translations.json";
 import {
   getColor,
@@ -73,6 +72,10 @@ export const update = async (
       removeControls();
     } else if (updates[i].event === "bounds") {
       setBounds(map, updates[i].options);
+    } else if (updates[i].event === "updateMarker") {
+      updateMarker(map, updates[i].options);
+    } else if (updates[i].event === "deleteMarker") {
+      deleteMarker(map, updates[i].id);
     } else {
       console.error(
         `Event ${updates[i].event} has no function ${updates[i].type}`,
@@ -100,13 +103,9 @@ const addRaster = async (map, layers, id, options, language, server) => {
   ).addTo(map);
 
   if ("profile" in options.displayOptions && options.displayOptions.profile) {
-    layers[id]["profile_layer"] = L.layerGroup([]).addTo(map);
-    layers[id]["profile_layer"].setZIndex(999);
     layers[id]["profile_control"] = L.control
       .markerDraw({
         fire: (event) => server.getProfile(event, id),
-        layer: layers[id]["profile_layer"],
-        markerIconUrl: leaflet_marker,
         id: map.getContainer().id,
         enabledFunction: server.disableControls,
         svgIcon: icons["profile"],
@@ -322,8 +321,8 @@ const addTiff = async (map, layers, id, options, language, server) => {
     map["satelliteTimeseriesControl"] = L.control
       .markerDraw({
         fire: (event) => server.getSatelliteTimeseries(event),
-        markerIconUrl: leaflet_marker,
         id: map.getContainer().id,
+        onlyOne: false,
         enabledFunction: server.disableControls,
         svgIcon: icons["satelliteTimeseries"],
         title: "Satellite timeseries",
@@ -382,6 +381,14 @@ const updateWms = async (map, layers, id, options, language) => {
       })
       .addTo(map);
   }
+};
+
+const updateMarker = (map, options) => {
+  map["satelliteTimeseriesControl"].updateMarker(options.markerID, options);
+};
+
+const deleteMarker = (map, id) => {
+  map["satelliteTimeseriesControl"].deleteMarker(id);
 };
 
 const addPoints = async (map, layers, id, options, language, server) => {

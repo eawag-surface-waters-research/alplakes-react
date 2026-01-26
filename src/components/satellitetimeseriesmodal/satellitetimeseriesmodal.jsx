@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Translations from "../../translations.json";
+import Color from "../../components/customselect/color";
 import "./satellitetimeseriesmodal.css";
 
 class SatelliteTimeseriesModal extends Component {
@@ -14,6 +15,9 @@ class SatelliteTimeseriesModal extends Component {
     pixels: 10,
     window_radius: 0,
     statistic: "mean",
+    name: "",
+    color: "#dd164c",
+    markerID: false,
   };
 
   updateParameter = (event) => {
@@ -52,6 +56,14 @@ class SatelliteTimeseriesModal extends Component {
     this.setState({ statistic: event.target.value });
   };
 
+  updateColor = (event) => {
+    this.setState({ color: event.target.value });
+  };
+
+  updateName = (event) => {
+    this.setState({ name: event.target.value });
+  };
+
   sendResult = () => {
     const { downloadSatelliteTimeseries, closeSatelliteTimeseriesModel } =
       this.props;
@@ -64,8 +76,11 @@ class SatelliteTimeseriesModal extends Component {
       window_radius,
       pixels,
       statistic,
+      name,
+      color,
+      markerID,
     } = this.state;
-    closeSatelliteTimeseriesModel();
+    closeSatelliteTimeseriesModel(false);
     downloadSatelliteTimeseries(
       options[parameter][satellite]["layer_id"],
       satellite.toLowerCase(),
@@ -75,11 +90,14 @@ class SatelliteTimeseriesModal extends Component {
       window_radius,
       pixels,
       statistic,
+      name,
+      color,
+      markerID,
     );
   };
 
   componentDidMount() {
-    var { layers, latlng } = this.props;
+    var { layers, properties, satelliteTimeseriesCount } = this.props;
     var parameters = [];
     var options = {};
     for (let layer of layers) {
@@ -97,6 +115,7 @@ class SatelliteTimeseriesModal extends Component {
         }
       }
     }
+    const name = "Series " + satelliteTimeseriesCount;
     var parameter = parameters[0];
     var satellites = Object.keys(options[parameter]);
     var satellite = satellites[0];
@@ -106,8 +125,10 @@ class SatelliteTimeseriesModal extends Component {
       parameters,
       satellites,
       options,
-      lat: Math.round(latlng.lat * 10000) / 10000,
-      lng: Math.round(latlng.lng * 10000) / 10000,
+      lat: Math.round(properties.lat * 10000) / 10000,
+      lng: Math.round(properties.lng * 10000) / 10000,
+      name,
+      markerID: properties.id,
     });
   }
 
@@ -122,12 +143,18 @@ class SatelliteTimeseriesModal extends Component {
       pixels,
       window_radius,
       statistic,
+      color,
+      name,
+      markerID,
     } = this.state;
     const { language, closeSatelliteTimeseriesModel } = this.props;
     return (
       <div className="satellite-timeseries-modal">
         <div className="title-modal">Satellite Timeseries</div>
-        <div className="close-modal" onClick={closeSatelliteTimeseriesModel}>
+        <div
+          className="close-modal"
+          onClick={() => closeSatelliteTimeseriesModel(markerID)}
+        >
           &#10005;
         </div>
 
@@ -200,6 +227,16 @@ class SatelliteTimeseriesModal extends Component {
               <option value="min">Min</option>
               <option value="max">Max</option>
             </select>
+          </div>
+
+          <div className="setting half">
+            <div className="label">{Translations.color[language]}</div>
+            <Color value={color} onChange={this.updateColor} />
+          </div>
+
+          <div className="setting">
+            <div className="label">Name</div>
+            <input type="text" value={name} onChange={this.updateName} />
           </div>
         </div>
 

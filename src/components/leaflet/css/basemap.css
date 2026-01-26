@@ -90,3 +90,9 @@
   z-index: 999;
   display: none;
 }
+
+.drawn-marker-label {
+  background-color: var(--box-color);
+  padding: 3px 6px;
+  border-radius: 8px;
+}

@@ -5,16 +5,19 @@ L.Control.MarkerDraw = L.Control.extend({
     position: "topleft",
     markerIconUrl: "marker-icon.png",
     fire: false,
-    layer: false,
     id: "map",
+    onlyOne: true,
     enabledFunction: false,
     svgIcon: "",
     title: "",
     hover: "",
+    markerColor: "#ff0000",
   },
 
   onAdd: function (map) {
     this._map = map;
+    this._markers = {};
+    this._markerLayer = L.layerGroup().addTo(map);
     this._container = L.DomUtil.create(
       "div",
       "leaflet-bar leaflet-draw-toolbar",
@@ -33,6 +36,11 @@ L.Control.MarkerDraw = L.Control.extend({
     L.DomUtil.removeClass(this._container, "leaflet-draw-enabled");
     this._map.off("keydown", this._finishDrawingOnKeyPress, this);
     document.getElementById(this.options.id).style.removeProperty("cursor");
+    if (this._markerLayer) {
+      this._markerLayer.clearLayers();
+      this._map.removeLayer(this._markerLayer);
+      this._markerLayer = null;
+    }
   },
 
   _toggleAdding: function (e) {
@@ -93,52 +101,84 @@ L.Control.MarkerDraw = L.Control.extend({
   },
 
   _addMarker: async function (e) {
+    const { lat, lng } = e.latlng;
+    this.addMarker(lat, lng);
+  },
+
+  addMarker: async function (lat, lng, color) {
+    const markerID = Date.now().toString();
     this._disableDrawing();
-    var markerIcon = L.icon({
-      iconUrl: this.options.markerIconUrl,
-      iconSize: [25, 36],
-      iconAnchor: [12, 41],
-      popupAnchor: [1, -34],
-    });
-    this._marker = L.marker(e.latlng, { icon: markerIcon });
-    if (this.options.layer) {
-      this.options.layer.addLayer(this._marker);
-    } else {
-      this._marker.addTo(this._map);
+
+    if (this.options.onlyOne) {
+      if (this._markerLayer) {
+        this._markerLayer.clearLayers();
+      }
+      this._markers = {};
     }
 
+    var markerIcon = this._createMarkerIcon(color);
+
+    var marker = L.marker({ lat, lng }, { icon: markerIcon });
+
+    this._markers[markerID] = marker;
+    this._markerLayer.addLayer(marker);
+
     if (typeof this.options.fire === "function") {
-      let latlng = await this.options.fire(e.latlng);
-      if (latlng) this._marker.setLatLng(latlng);
+      let latlng = await this.options.fire({ lat, lng, id: markerID });
+      if (latlng) marker.setLatLng(latlng);
     }
   },
-  addMarker: async function (lat, lng) {
-    if (this._marker) {
-      this._marker.remove();
+  updateMarker: function (id, properties) {
+    if (id in this._markers) {
+      if ("lat" in properties && "lng" in properties) {
+        this._markers[id].setLatLng({
+          lat: properties["lat"],
+          lng: properties["lng"],
+        });
+      }
+      if ("color" in properties) {
+        const newIcon = this._createMarkerIcon(properties["color"]);
+        this._markers[id].setIcon(newIcon);
+      }
+      if ("label" in properties) {
+        this._markers[id]
+          .bindTooltip(properties["label"], {
+            permanent: true,
+            direction: "top",
+            className: "drawn-marker-label",
+            offset: [3, -44],
+          })
+          .openTooltip();
+      }
     }
-    this._disableDrawing();
-    var markerIcon = L.icon({
-      iconUrl: this.options.markerIconUrl,
-      iconSize: [25, 36],
-      iconAnchor: [12, 41],
-      popupAnchor: [1, -34],
-    });
-    this._marker = L.marker({ lat, lng }, { icon: markerIcon });
-    if (this.options.layer) {
-      this.options.layer.addLayer(this._marker);
-    } else {
-      this._marker.addTo(this._map);
-    }
-
-    if (typeof this.options.fire === "function") {
-      let latlng = await this.options.fire({ lat, lng });
-      this._marker.setLatLng(latlng);
+  },
+  deleteMarker: function (id) {
+    if (this._markers[id]) {
+      this._markerLayer.removeLayer(this._markers[id]);
+      delete this._markers[id];
     }
   },
   _finishDrawingOnKeyPress: function (e) {
     if (this._isAdding && e.originalEvent.key === "Escape") {
       this._disableDrawing();
     }
+  },
+  _createMarkerIcon: function (color) {
+    color = color || this.options.markerColor;
+    const svgIcon = `
+    <svg width="25" height="41" viewBox="0 0 25 41" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12.5 0C5.596 0 0 5.596 0 12.5c0 8.437 12.5 28.5 12.5 28.5S25 20.937 25 12.5C25 5.596 19.404 0 12.5 0z" 
+            fill="${color}"/>
+      <circle cx="12.5" cy="12.5" r="4" fill="#fff"/>
+    </svg>
+  `;
+    return L.divIcon({
+      html: svgIcon,
+      className: "custom-marker-icon",
+      iconSize: [25, 41],
+      iconAnchor: [12, 41],
+      popupAnchor: [1, -34],
+    });
   },
 });
 
