@@ -150,7 +150,9 @@ class SatelliteTimeseriesModal extends Component {
     const { language, closeSatelliteTimeseriesModel } = this.props;
     return (
       <div className="satellite-timeseries-modal">
-        <div className="title-modal">Satellite Timeseries</div>
+        <div className="title-modal">
+          {Translations.satelliteTimeseries[language]}
+        </div>
         <div
           className="close-modal"
           onClick={() => closeSatelliteTimeseriesModel(markerID)}
@@ -160,7 +162,7 @@ class SatelliteTimeseriesModal extends Component {
 
         <div className="settings-modal">
           <div className="setting half">
-            <div className="label">Parameter</div>
+            <div className="label">{Translations.parameter[language]}</div>
             <select value={parameter} onChange={this.updateParameter}>
               {parameters.map((p) => (
                 <option value={p} key={p}>
@@ -171,7 +173,7 @@ class SatelliteTimeseriesModal extends Component {
           </div>
 
           <div className="setting half">
-            <div className="label">Satellite</div>
+            <div className="label">{Translations.satellite[language]}</div>
             <select value={satellite} onChange={this.updateSatellite}>
               {satellites.map((s) => (
                 <option value={s} key={s}>
@@ -196,7 +198,9 @@ class SatelliteTimeseriesModal extends Component {
           </div>
 
           <div className="setting half">
-            <div className="label">Extraction window</div>
+            <div className="label">
+              {Translations.extractionWindow[language]}
+            </div>
             <select value={window_radius} onChange={this.updateWindowRadius}>
               <option value={0}>1x1</option>
               <option value={1}>3x3</option>
@@ -206,7 +210,7 @@ class SatelliteTimeseriesModal extends Component {
           </div>
 
           <div className="setting half">
-            <div className="label">Valid Pixels</div>
+            <div className="label">{Translations.validPixels[language]}</div>
             <div className="minmax">
               <input
                 type="number"
@@ -220,7 +224,7 @@ class SatelliteTimeseriesModal extends Component {
           </div>
 
           <div className="setting half">
-            <div className="label">Statistic</div>
+            <div className="label">{Translations.statistic[language]}</div>
             <select value={statistic} onChange={this.updateStatistic}>
               <option value="mean">Mean</option>
               <option value="median">Median</option>
@@ -235,17 +239,17 @@ class SatelliteTimeseriesModal extends Component {
           </div>
 
           <div className="setting">
-            <div className="label">Name</div>
+            <div className="label">{Translations.name[language]}</div>
             <input type="text" value={name} onChange={this.updateName} />
           </div>
         </div>
 
         <div className="modal-warning">
-          ⚠️ Extracting the time series may take several minutes.
+          ⚠️ {Translations.extractionWarning[language]}
         </div>
 
         <div className="confirm" onClick={this.sendResult}>
-          Confirm
+          {Translations.confirm[language]}
         </div>
       </div>
     );

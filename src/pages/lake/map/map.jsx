@@ -155,8 +155,10 @@ class Map extends Component {
     markerID,
   ) => {
     var { language } = this.props;
-    this.loading(`Extracting timeseries  0%`);
     var { id, layers, satelliteTimeseriesCount, updates } = this.state;
+    this.loading(
+      `<div>${Translations.extractingTimeseries[language]}</div><div class="sub">${Translations.calculatingTime[language]}</div>`,
+    );
     const options = { label: name, color, markerID, lat, lng };
     updates.push({ event: "updateMarker", options });
     this.setState({ updates });
@@ -167,19 +169,31 @@ class Map extends Component {
       layer["graph"]["satellite_timeseries"]["available"],
     ).sort();
     const dates = this.getDates(
-      new Date(datelist[datelist.length - 1].replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3')),
-      new Date(datelist[0].replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3')),
+      new Date(
+        datelist[datelist.length - 1].replace(
+          /(\d{4})(\d{2})(\d{2})/,
+          "$1-$2-$3",
+        ),
+      ),
+      new Date(datelist[0].replace(/(\d{4})(\d{2})(\d{2})/, "$1-$2-$3")),
       period,
     );
+    const startTime = Date.now();
     for (let i = 0; i < dates.length; i++) {
       const endDate = new Date(dates[i]);
       endDate.setDate(endDate.getDate() - (period - 1));
       const url = `${CONFIG.alplakes_api}/remotesensing/timeseries/${id}/${satellite}/${parameter}/${lat}/${lng}/${this.formatToYYYYMMDD(endDate)}/${this.formatToYYYYMMDD(dates[i])}?window=${window_radius}&valid_pixels=${valid_pixels}`;
       var { data } = await axios.get(url);
       dataset = dataset.concat(data);
-      this.loading(
-        `Extracting timeseries... ${Math.round(((i + 1) / dates.length) * 100)}%`,
-      );
+      const elapsed = Date.now() - startTime;
+      const estimatedTotal = (elapsed / (i + 1)) * dates.length;
+      const remaining = estimatedTotal - elapsed;
+      const seconds = Math.ceil(remaining / 1000 / 5) * 5;
+      if (i > 2) {
+        this.loading(
+          `<div>${Translations.extractingTimeseries[language]}</div><div class="sub">${seconds} ${Translations.secondsRemaining[language]}</div>`,
+        );
+      }
     }
     if (!("custom" in layer["graph"]["satellite_timeseries"]))
       layer["graph"]["satellite_timeseries"]["custom"] = [];

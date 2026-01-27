@@ -12,7 +12,7 @@ class TimeSelector extends Component {
   };
   render() {
     const { open } = this.state;
-    const { xmin, xmax, xbounds } = this.props;
+    const { xmin, xmax } = this.props;
     const start = new Date(xmin);
     const end = new Date(xmax);
     return (
@@ -347,24 +347,23 @@ class SatelliteSummary extends Component {
               {"extra" in legend[s] && (
                 <div className="question">
                   <div className="question-hover">
-                    Custom timeseries data extraction.
                     <div className="space">
                       <b>{Translations.satellite[language]}</b>:{" "}
-                      {legend[s]["extra"]["satellite"]}
+                      {this.getLabel(legend[s]["extra"]["satellite"])}
                     </div>
                     <div className="space">
                       <b>{Translations.location[language]}</b>:{" "}
                       {legend[s]["extra"]["lat"]}, {legend[s]["extra"]["lng"]}
                     </div>
                     <div className="space">
-                      <b>Statistic</b>: {legend[s]["extra"]["statistic"]}
+                      <b>{Translations.statistic[language]}</b>: {legend[s]["extra"]["statistic"]}
                     </div>
                     <div className="space">
-                      <b>Window radius</b>:{" "}
+                      <b>{Translations.extractionWindow[language]}</b>:{" "}
                       {legend[s]["extra"]["window_radius"]}
                     </div>
                     <div className="space">
-                      <b>Valid Pixels</b>: {legend[s]["extra"]["valid_pixels"]}
+                      <b>{Translations.validPixels[language]}</b>: {legend[s]["extra"]["valid_pixels"]}
                     </div>
                   </div>
                   ?

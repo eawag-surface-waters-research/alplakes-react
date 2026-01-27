@@ -109,8 +109,8 @@ const addRaster = async (map, layers, id, options, language, server) => {
         id: map.getContainer().id,
         enabledFunction: server.disableControls,
         svgIcon: icons["profile"],
-        title: "Profile",
-        hover: "Add profile",
+        title: Translate.profile[language],
+        hover: Translate.addProfile[language],
       })
       .addTo(map);
   }
@@ -325,8 +325,8 @@ const addTiff = async (map, layers, id, options, language, server) => {
         onlyOne: false,
         enabledFunction: server.disableControls,
         svgIcon: icons["satelliteTimeseries"],
-        title: "Satellite timeseries",
-        hover: "Add timeseries",
+        title: Translate.satelliteTimeseries[language],
+        hover: Translate.addTimeseries[language],
       })
       .addTo(map);
   }

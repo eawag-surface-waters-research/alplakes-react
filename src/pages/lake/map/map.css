@@ -50,16 +50,21 @@
 
 .main .map .layer-map .map-loading .map-loading-inner {
     background-color: var(--box-color);
-    padding: 12px;
+    padding: 12px 20px;
     box-shadow: var(--box-shadow);
     border-radius: 50px;
+    max-width: 300px;
 }
 
 .main .map .layer-map .map-loading .map-loading-inner .loading-text {
     display: inline-block;
     margin-left: 20px;
     vertical-align: super;
-    width: 200px;
+}
+
+.main .map .layer-map .map-loading .map-loading-inner .loading-text .sub {
+    color: var(--background-subtle-font-color);
+    font-size: 13px;
 }
 
 .main .map .layer-map .back-button {

@@ -248,6 +248,7 @@
   border-radius: 50%;
   display: inline-block;
   margin-left: 6px;
+  position: relative;
 }
 
 .map-graph
@@ -267,15 +268,16 @@
   .question-hover {
   display: none;
   position: absolute;
-  bottom: 73px;
+  bottom: calc(100% + 8px); /* Position above the question mark with 8px gap */
+  left: 50%; /* Start at the center */
+  transform: translateX(-50%);
   background-color: var(--background-color);
   border: 1px solid var(--border-color);
   padding: 12px;
   border-radius: 8px;
-  width: 300px;
+  width: 200px;
   white-space: normal;
   text-align: left;
-  left: calc(50% - 150px);
   z-index: 9;
 }
 
