@@ -1,0 +1,81 @@
+.satellite-timeseries-modal {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: var(--box-color);
+  z-index: 999999;
+  border-radius: 16px;
+  padding: 15px;
+}
+
+.satellite-timeseries-modal .title-modal {
+  font-size: 20px;
+  padding: 0 6px 16px 6px;
+}
+
+.satellite-timeseries-modal .close-modal {
+  position: absolute;
+  right: 18px;
+  top: 15px;
+  background-color: var(--background-color);
+  font-size: 16px;
+  border-radius: 50%;
+  font-weight: bold;
+  padding: 4px 8px;
+  cursor: pointer;
+  transition: all 0.1s 0s ease;
+}
+
+.satellite-timeseries-modal .close-modal:hover {
+  transform: scale(1.1);
+}
+
+.satellite-timeseries-modal .settings-modal {
+  background-color: var(--background-color);
+  padding: 12px 12px 0 12px;
+  border-radius: 12px;
+  width: 300px;
+}
+
+.satellite-timeseries-modal .modal-warning {
+  width: 300px;
+  padding-top: 12px;
+  text-align: center;
+}
+
+.satellite-timeseries-modal .confirm {
+  background-color: var(--highlight-color);
+  padding: 6px 0px;
+  border-radius: 12px;
+  text-align: center;
+  margin-top: 15px;
+  color: white;
+  width: 100%;
+  cursor: pointer;
+  transition: all 0.1s 0s ease;
+}
+
+.satellite-timeseries-modal .confirm:hover {
+  transform: scale(1.01);
+}
+
+@media screen and (max-width: 500px) {
+  .satellite-timeseries-modal .settings-modal {
+    background-color: var(--select-color);
+  }
+  .satellite-timeseries-modal {
+    position: absolute;
+    top: unset;
+    left: 50%;
+    transform: translate(-50%, 0);
+    background-color: var(--box-color);
+    z-index: 999999;
+    border-radius: 16px;
+    padding: 15px;
+    bottom: 17px;
+  }
+  .satellite-timeseries-modal .close-modal {
+    background-color: var(--select-color);
+  }
+}

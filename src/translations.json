@@ -143,6 +143,36 @@
     "FR": "Télécharger l’image en GeoTIFF",
     "IT": "Scarica immagine come GeoTIFF"
   },
+  "statistic": {
+    "EN": "Statistic",
+    "DE": "Statistik",
+    "FR": "Statistique",
+    "IT": "Statistica"
+  },
+  "validPixels": {
+    "EN": "Valid pixels",
+    "DE": "Gültige Pixel",
+    "FR": "Pixels valides",
+    "IT": "Pixel validi"
+  },
+  "extractionWindow": {
+    "EN": "Extraction window",
+    "DE": "Extraktionsfenster",
+    "FR": "Fenêtre d'extraction",
+    "IT": "Finestra di estrazione"
+  },
+  "extractionWarning": {
+    "EN": "Extracting the time series may take several minutes.",
+    "DE": "Das Extrahieren der Zeitreihe kann mehrere Minuten dauern.",
+    "FR": "L'extraction de la série temporelle peut prendre plusieurs minutes.",
+    "IT": "L'estrazione delle serie temporali potrebbe richiedere diversi minuti."
+  },
+  "confirm": {
+    "EN": "Confirm",
+    "DE": "Bestätigen",
+    "FR": "Confirmer",
+    "IT": "Conferma"
+  },
   "depth": {
     "EN": "Depth",
     "DE": "Tiefe",
@@ -395,6 +425,12 @@
     "FR": "Profil",
     "IT": "Profilo"
   },
+  "addProfile": {
+    "EN": "Add profile",
+    "DE": "Profil hinzufügen",
+    "FR": "Ajouter profil",
+    "IT": "Aggiungi profilo"
+  },
   "thermocline": {
     "EN": "Thermocline",
     "DE": "Thermokline",
@@ -455,11 +491,17 @@
     "FR": "Emplacement",
     "IT": "Posizione"
   },
-  "export": {
-    "EN": "Export",
-    "DE": "Export",
-    "FR": "Exporter",
-    "IT": "Esporta"
+  "exportData": {
+    "EN": "Export data",
+    "DE": "Daten exportieren",
+    "FR": "Exporter les données",
+    "IT": "Esportare i dati"
+  },
+  "calculatingTime": {
+    "EN": "Calculating remaining time",
+    "DE": "Berechnung der verbleibenden Zeit",
+    "FR": "Calcul du temps restant",
+    "IT": "Calcolo del tempo rimanente"
   },
   "showLocations": {
     "EN": "Show all locations",
@@ -1596,6 +1638,30 @@
     "DE": "Wir ermutigen Sie, unsere Produkte zu verwenden. Bitte zögern Sie nicht, uns zu kontaktieren, wenn Sie Feedback haben oder an einer Zusammenarbeit interessiert sind.",
     "FR": "Nous encourageons l'utilisation de nos produits. N'hésitez pas à nous contacter si vous avez des commentaires ou si vous êtes intéressé à collaborer.",
     "IT": "Incoraggiamo l'uso dei nostri prodotti. Non esitate a contattarci nel caso abbiate feedback o siate interessati a collaborare."
+  },
+  "extractingTimeseries": {
+    "EN": "Extracting timeseries",
+    "DE": "Extraktion von Zeitreihen",
+    "FR": "Extraction de séries temporelles",
+    "IT": "Estrazione di serie temporali"
+  },
+  "secondsRemaining": {
+    "EN": "seconds remaining",
+    "DE": "verbleibende Sekunden",
+    "FR": "secondes restantes",
+    "IT": "secondi rimanenti"
+  },
+  "satelliteTimeseries": {
+    "EN": "Satellite timeseries",
+    "DE": "Satellitenzeitreihen",
+    "FR": "Séries temporelles satellites",
+    "IT": "Serie temporali satellitari"
+  },
+  "addTimeseries": {
+    "EN": "Add timeseries",
+    "DE": "Zeitreihen hinzufügen",
+    "FR": "Ajouter des séries chronologiques",
+    "IT": "Aggiungi serie temporali"
   },
   "projects": {
     "EN": "Projects",

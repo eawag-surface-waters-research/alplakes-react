@@ -1,5 +1,6 @@
 .loading-symbol-x10 {
     display: inline-block;
+    vertical-align: super;
 }
 
 .loading-symbol-x10 .loader-x10 {

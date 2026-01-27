@@ -32,23 +32,33 @@ export const collectMetadata = async (layers, graphSelection) => {
 const threedMetadata = async (parameters, unit) => {
   const metadata = await downloadModelMetadata(
     parameters.model.toLowerCase(),
-    parameters.key
+    parameters.key,
   );
   return metadata;
 };
 
 const satelliteMetadata = async (parameters, unit) => {
   var available = {};
+  var csv = {};
   var reference = false;
-  var csv = `data:text/csv;charset=utf-8,Datetime,Satellite,Mean (${unit}),Min (${unit}),Max (${unit}),Pixel Coverage (%),URL\n`;
+  var csvSat = `Datetime,Satellite,Mean (${unit}),Min (${unit}),Max (${unit}),Pixel Coverage (%),URL\n`;
   if ("reference" in parameters) {
     try {
       ({ data: reference } = await axios.get(
-        CONFIG.sencast_bucket + parameters.reference
+        CONFIG.sencast_bucket + parameters.reference,
       ));
       reference.datetime = reference.datetime.map((t) =>
-        general.satelliteStringToDate(t)
+        general.satelliteStringToDate(t),
       );
+      var csvRef = `Datetime,Value (${unit})\n`;
+      for (let i = 0; i < reference.datetime.length; i++) {
+        csvRef =
+          csvRef +
+          `${general.formatDateWithUTC(
+            reference.datetime[i],
+          )},${reference.value[i]}\n`;
+      }
+      csv["insitu"] = csvRef;
     } catch (e) {
       console.error("Cannot find reference dataset");
     }
@@ -56,7 +66,7 @@ const satelliteMetadata = async (parameters, unit) => {
   var overallLake = "";
   for (let model of parameters.models) {
     let { data: files } = await axios.get(
-      CONFIG.sencast_bucket + model.metadata
+      CONFIG.sencast_bucket + model.metadata,
     );
     let max_pixels = d3.max(files.map((m) => parseFloat(m.p)));
     for (let file of files) {
@@ -69,10 +79,10 @@ const satelliteMetadata = async (parameters, unit) => {
       let tile = split[split.length - 1].split(".")[0];
       let percent = Math.ceil((parseFloat(file.vp) / max_pixels) * 100);
       let { min, max, mean: ave } = file;
-      csv =
-        csv +
+      csvSat =
+        csvSat +
         `${general.formatDateWithUTC(
-          time
+          time,
         )},${satellite},${ave},${min},${max},${percent},${url}\n`;
       let image = {
         url,
@@ -90,7 +100,7 @@ const satelliteMetadata = async (parameters, unit) => {
         available[date].images.push(image);
         available[date].max_percent = Math.max(
           available[date].max_percent,
-          percent
+          percent,
         );
         available[date].max = Math.max(available[date].max, max);
         let total_percent = available[date].images
@@ -98,7 +108,7 @@ const satelliteMetadata = async (parameters, unit) => {
           .reduce((acc, currentValue) => acc + currentValue, 0);
         available[date].ave = general.weightedAverage(
           available[date].images.map((i) => i.ave),
-          available[date].images.map((i) => i.percent / total_percent)
+          available[date].images.map((i) => i.percent / total_percent),
         );
       } else {
         available[date] = {
@@ -112,6 +122,7 @@ const satelliteMetadata = async (parameters, unit) => {
       }
     }
   }
+  csv["satellite_summary"] = csvSat;
   var images = general.filterImages(available, 10, []);
   var includeDates = Object.values(images).map((m) => m.time);
   if (includeDates.length === 0) {
@@ -144,7 +155,7 @@ export const downloadData = async (
   datetime,
   depth,
   mapId,
-  initial
+  initial,
 ) => {
   const functions = {
     threed: threedDownload,
@@ -161,7 +172,7 @@ export const downloadData = async (
         datetime,
         depth,
         mapId,
-        initial
+        initial,
       );
       if (out) {
         ({ data, updates, period, datetime, depth } = out);
@@ -199,7 +210,7 @@ const threedDownload = async (
   datetime,
   depth,
   mapId,
-  initial
+  initial,
 ) => {
   const source = layer.sources[layer.source];
   if (period === false) {
@@ -219,7 +230,7 @@ const threedDownload = async (
     depth,
     ["geometry", layer.parameter],
     source.metadata.height,
-    initial
+    initial,
   );
   if (data) {
     layer.displayOptions.unit = layer.unit;
@@ -238,14 +249,14 @@ const threedDownload = async (
       if (data[layer.parameter].end > now) {
         index = Math.ceil((now - data[layer.parameter].start) / timestep);
         datetime = new Date(
-          data[layer.parameter].start.getTime() + index * timestep
+          data[layer.parameter].start.getTime() + index * timestep,
         );
       }
     } else {
       index = Math.ceil((datetime - data[layer.parameter].start) / timestep);
     }
     const plotTypes = ["raster", "streamlines", "vector"].filter(
-      (p) => p in layer.displayOptions && layer.displayOptions[p]
+      (p) => p in layer.displayOptions && layer.displayOptions[p],
     );
     for (let plotType of plotTypes) {
       updates.push({
@@ -287,7 +298,7 @@ const satelliteDownload = async (
   datetime,
   depth,
   mapId,
-  initial
+  initial,
 ) => {
   layer.displayOptions["unit"] = layer.unit;
   updates.push({
@@ -310,10 +321,10 @@ const measurementsDownload = async (
   datetime,
   depth,
   mapId,
-  initial
+  initial,
 ) => {
   var { data } = await axios.get(
-    layer.sources[layer.source].url + general.hour()
+    layer.sources[layer.source].url + general.hour(),
   );
   const now = new Date();
   const minDate = new Date(now.getTime() - 48 * 60 * 60 * 1000);
@@ -352,10 +363,10 @@ export const getProfileAlplakesHydrodynamic = async (
   model,
   lake,
   period,
-  latlng
+  latlng,
 ) => {
   const url = `${api}/simulations/depthtime/${model}/${lake}/${general.formatAPIDate(
-    period[0]
+    period[0],
   )}0000/${general.formatAPIDate(period[1])}2359/${latlng.lat}/${latlng.lng}`;
   try {
     const { data } = await axios.get(url);
@@ -374,11 +385,11 @@ export const getTransectAlplakesHydrodynamic = async (
   model,
   lake,
   period,
-  latlng
+  latlng,
 ) => {
   latlng.pop();
   const url = `${api}/simulations/transect/${model}/${lake}/${general.formatAPIDatetime(
-    period[0]
+    period[0],
   )}/${general.formatAPIDatetime(period[1])}/${latlng
     .map((l) => l.lat)
     .join(",")}/${latlng.map((l) => l.lng).join(",")}?variables=temperature`;
@@ -398,12 +409,12 @@ export const download1DLinegraph = async (
   end,
   depth,
   parameter,
-  bucket = false
+  bucket = false,
 ) => {
   const apiUrl = `${
     CONFIG.alplakes_api
   }/simulations/1d/point/${model}/${lake}/${general.formatAPIDatetime(
-    start
+    start,
   )}/${general.formatAPIDatetime(end)}/${depth}?variables=${parameter}`;
   const bucketUrl = `${
     CONFIG.alplakes_bucket
@@ -417,14 +428,14 @@ export const downloadPastYear = async (
   model,
   lake,
   parameter,
-  bucket = false
+  bucket = false,
 ) => {
   var { start_date, end_date } = await downloadModelMetadata(model, lake);
   var start = new Date(end_date.getTime() - 365 * 24 * 60 * 60 * 1000);
   const apiUrl = `${
     CONFIG.alplakes_api
   }/simulations/1d/depthtime/${model}/${lake}/${general.formatAPIDatetime(
-    start
+    start,
   )}/${general.formatAPIDatetime(end_date)}?variables=${parameter}`;
   const bucketUrl = `${
     CONFIG.alplakes_bucket
@@ -442,7 +453,7 @@ export const download1DHeatmap = async (model, lake, parameter, start, end) => {
   const apiUrl = `${
     CONFIG.alplakes_api
   }/simulations/1d/depthtime/${model}/${lake}/${general.formatAPIDatetime(
-    start
+    start,
   )}/${general.formatAPIDatetime(end)}?variables=${parameter}`;
   const response = await fetchDataParallel([[apiUrl]]);
   const data = response[0];
@@ -461,7 +472,7 @@ export const downloadDoy = async (
   lake,
   depth,
   parameter,
-  bucket = false
+  bucket = false,
 ) => {
   const start = new Date(new Date().getFullYear(), 0, 1, 0, 0);
   const end = new Date();
@@ -471,9 +482,9 @@ export const downloadDoy = async (
   const apiCurrent = `${
     CONFIG.alplakes_api
   }/simulations/1d/point/${model}/${lake}/${general.formatAPIDatetime(
-    start
+    start,
   )}/${general.formatAPIDatetime(
-    end
+    end,
   )}/${depth}?variables=${parameter}&resample=daily`;
   const bucketCurrent = `${
     CONFIG.alplakes_bucket
@@ -675,7 +686,7 @@ export const downloadPhosphorus = async (lake, dark, language) => {
       const lastIndex = out.lakes[key]["data"].reduce(
         (lastIdx, item, idx) =>
           item !== null && item !== undefined ? idx : lastIdx,
-        -1
+        -1,
       );
       info["current"] = {
         value: out.lakes[key]["data"][lastIndex],
@@ -684,16 +695,16 @@ export const downloadPhosphorus = async (lake, dark, language) => {
 
       yMax = Math.max(...out.lakes[key]["data"]);
       const filtered = dates.filter(
-        (v, i) => out.lakes[key]["data"][i] !== null
+        (v, i) => out.lakes[key]["data"][i] !== null,
       );
       xMin = new Date(Math.min(...filtered));
       xMax = new Date(Math.max(...filtered));
       if (out.lakes[lake].target.range !== null) {
         band["upper"] = Array(dates.length).fill(
-          out.lakes[lake].target.range[1]
+          out.lakes[lake].target.range[1],
         );
         band["lower"] = Array(dates.length).fill(
-          out.lakes[lake].target.range[0]
+          out.lakes[lake].target.range[0],
         );
         data.push(band);
         if (out.lakes[lake].target.range[0] === 0) {
@@ -764,14 +775,14 @@ export const download3DMap = async (
   depth,
   parameters,
   height,
-  bucket = false
+  bucket = false,
 ) => {
   var response = false;
   var urls = parameters.map((p) => {
     let api_url = `${
       CONFIG.alplakes_api
     }/simulations/layer_alplakes/${model}/${lake}/${p}/${general.formatAPIDatetime(
-      start
+      start,
     )}/${general.formatAPIDatetime(end)}/${depth}`;
     let bucket_url = `${
       CONFIG.alplakes_bucket
@@ -803,7 +814,7 @@ const process3dData = (data, parameter, height) => {
     var bounds = { min: [], max: [] };
     for (let i = 0; i < Math.floor(data.length / (height + 1)); i++) {
       timeArr.push(
-        general.parseAlplakesDate(String(data[i * (height + 1)][0]))
+        general.parseAlplakesDate(String(data[i * (height + 1)][0])),
       );
       var slice = data.slice(i * (height + 1) + 1, (i + 1) * (height + 1));
       dataArr.push(slice);
@@ -840,7 +851,7 @@ const fetchDataParallel = async (urls) => {
             ? {
                 responseType: "arraybuffer",
               }
-            : {}
+            : {},
         );
         response["url"] = url[i];
         return response;

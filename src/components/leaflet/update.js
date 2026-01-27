@@ -2,7 +2,6 @@ import L from "leaflet";
 import axios from "axios";
 import COLORS from "../colors/colors.json";
 import CONFIG from "../../config.json";
-import leaflet_marker from "../../img/leaflet_marker.png";
 import Translate from "../../translations.json";
 import {
   getColor,
@@ -19,6 +18,7 @@ import "./leaflet_particletracking";
 import "./leaflet_polylinedraw";
 import "./leaflet_vectorfield";
 import "./leaflet_markerdraw";
+import icons from "./icons.json";
 
 export const update = async (
   map,
@@ -29,7 +29,7 @@ export const update = async (
   removeControls,
   server,
   play,
-  togglePlay
+  togglePlay,
 ) => {
   const functions = {
     addLayer: {
@@ -61,7 +61,7 @@ export const update = async (
         updates[i].id,
         updates[i].options,
         language,
-        server
+        server,
       );
     } else if (updates[i].event === "loaded") {
     } else if (updates[i].event === "removeLayer") {
@@ -72,9 +72,13 @@ export const update = async (
       removeControls();
     } else if (updates[i].event === "bounds") {
       setBounds(map, updates[i].options);
+    } else if (updates[i].event === "updateMarker") {
+      updateMarker(map, updates[i].options);
+    } else if (updates[i].event === "deleteMarker") {
+      deleteMarker(map, updates[i].id);
     } else {
       console.error(
-        `Event ${updates[i].event} has no function ${updates[i].type}`
+        `Event ${updates[i].event} has no function ${updates[i].type}`,
       );
     }
   }
@@ -95,19 +99,18 @@ const addRaster = async (map, layers, id, options, language, server) => {
   layers[id]["raster"] = new L.Raster(
     options.geometry,
     options.data,
-    displayOptions
+    displayOptions,
   ).addTo(map);
 
   if ("profile" in options.displayOptions && options.displayOptions.profile) {
-    layers[id]["profile_layer"] = L.layerGroup([]).addTo(map);
-    layers[id]["profile_layer"].setZIndex(999);
     layers[id]["profile_control"] = L.control
       .markerDraw({
         fire: (event) => server.getProfile(event, id),
-        layer: layers[id]["profile_layer"],
-        markerIconUrl: leaflet_marker,
         id: map.getContainer().id,
         enabledFunction: server.disableControls,
+        svgIcon: icons["profile"],
+        title: Translate.profile[language],
+        hover: Translate.addProfile[language],
       })
       .addTo(map);
   }
@@ -162,7 +165,7 @@ const addRaster = async (map, layers, id, options, language, server) => {
             : "top",
           offset: L.point(0, 0),
           interactive: true,
-        }
+        },
       );
     }
     layers[id]["labels"] = labelLayer;
@@ -192,7 +195,7 @@ const updateRaster = (map, layers, id, options, language) => {
       layers[id]["raster"] = new L.Raster(
         layers[id].data.geometry,
         layers[id].data.data,
-        displayOptions
+        displayOptions,
       ).addTo(map);
     }
   }
@@ -209,7 +212,7 @@ const updateLabels = (labels_layer, raster_layer) => {
         typeof value === "number"
           ? Math.round(value * 10) / 10 + tooltip.options.unit
           : ""
-      }</div></div>`
+      }</div></div>`,
     );
   });
 };
@@ -224,7 +227,7 @@ const addVectorField = async (map, layers, id, options, language, server) => {
   layers[id]["vector"] = new L.vectorfield(
     options.geometry,
     options.data,
-    displayOptions
+    displayOptions,
   ).addTo(map);
 };
 
@@ -246,7 +249,7 @@ const updateVectorField = (map, layers, id, options, language) => {
       layers[id]["vector"] = new L.vectorfield(
         layers[id].data.geometry,
         layers[id].data.data,
-        displayOptions
+        displayOptions,
       ).addTo(map);
     }
   }
@@ -265,7 +268,7 @@ const updateStreamlines = (map, layers, id, options, language) => {
       layers[id]["streamlines"] = L.streamlines(
         layers[id].data.geometry,
         layers[id].data.data,
-        options
+        options,
       ).addTo(map);
     }
   }
@@ -287,7 +290,7 @@ const addParticles = async (map, layers, id, options, language, server) => {
       options.data,
       options.datetime,
       options.times,
-      displayOptions
+      displayOptions,
     )
     .addTo(map);
 };
@@ -314,6 +317,19 @@ const addTiff = async (map, layers, id, options, language, server) => {
     responseType: "arraybuffer",
   });
   layers[id]["tiff"] = await L.floatgeotiff(data, displayOptions).addTo(map);
+  if (!map["satelliteTimeseriesControl"]) {
+    map["satelliteTimeseriesControl"] = L.control
+      .markerDraw({
+        fire: (event) => server.getSatelliteTimeseries(event),
+        id: map.getContainer().id,
+        onlyOne: false,
+        enabledFunction: server.disableControls,
+        svgIcon: icons["satelliteTimeseries"],
+        title: Translate.satelliteTimeseries[language],
+        hover: Translate.addTimeseries[language],
+      })
+      .addTo(map);
+  }
 };
 
 const updateTiff = async (map, layers, id, options, language) => {
@@ -367,6 +383,14 @@ const updateWms = async (map, layers, id, options, language) => {
   }
 };
 
+const updateMarker = (map, options) => {
+  map["satelliteTimeseriesControl"].updateMarker(options.markerID, options);
+};
+
+const deleteMarker = (map, id) => {
+  map["satelliteTimeseriesControl"].deleteMarker(id);
+};
+
 const addPoints = async (map, layers, id, options, language, server) => {
   let palette = COLORS[options.displayOptions.paletteName].map((c) => {
     return { color: [c[0], c[1], c[2]], point: c[3] };
@@ -382,7 +406,7 @@ const addPoints = async (map, layers, id, options, language, server) => {
       station.properties.last_value,
       options.displayOptions.min,
       options.displayOptions.max,
-      palette
+      palette,
     );
     if (station.properties.icon === "river") {
       marker = L.marker(
@@ -397,7 +421,7 @@ const addPoints = async (map, layers, id, options, language, server) => {
             iconAnchor: [5, 5],
           }),
           value: station.properties.last_value,
-        }
+        },
       ).addTo(layer);
     } else {
       marker = L.marker(
@@ -412,7 +436,7 @@ const addPoints = async (map, layers, id, options, language, server) => {
             iconAnchor: [7, 7],
           }),
           value: station.properties.latest_value,
-        }
+        },
       ).addTo(layer);
     }
     marker.bindTooltip(
@@ -430,7 +454,7 @@ const addPoints = async (map, layers, id, options, language, server) => {
         permanent: station.properties.permenant,
         className: "current_temperature_tooltip",
         offset: [0, -2],
-      }
+      },
     );
     var { label, source: dataSource, url, icon } = station.properties;
     marker.bindPopup(
@@ -439,14 +463,14 @@ const addPoints = async (map, layers, id, options, language, server) => {
       }</td><td>${
         round(station.properties.last_value, 2) + options.unit
       }</td></tr><tr><td>Time</td><td>${formatDatetime(
-        time
+        time,
       )}</td></tr><tr><td>${Translate.type[language]}</td><td>${capitalize(
-        icon
+        icon,
       )} station</td></tr><tr><td>${
         Translate.source[language]
       }</td><td>${dataSource}</td></tr></table><a class="external-link" href="${url}" target="_blank">${
         Translate.viewdataset[language]
-      }</a>`
+      }</a>`,
     );
   }
   layers[id]["points"] = layer;
@@ -473,6 +497,19 @@ const genericRemoveLayer = (map, layers, id) => {
     }
   }
   layers[id] = {};
+
+  if (map["satelliteTimeseriesControl"]) {
+    let remove = true;
+    for (let key of Object.keys(layers)) {
+      if (key.includes("satellite") && "tiff" in layers[key]) {
+        remove = false;
+      }
+    }
+    if (remove) {
+      map.removeControl(map["satelliteTimeseriesControl"]);
+      map["satelliteTimeseriesControl"] = null;
+    }
+  }
 };
 
 const setBounds = (map, bounds) => {
@@ -487,9 +524,9 @@ export const setPlayDatetime = (layers, datetime, period, data) => {
     var i0 = Math.max(
       Math.min(
         Math.floor((datetime - period[0]) / timestep),
-        data[key].length - 1
+        data[key].length - 1,
       ),
-      0
+      0,
     );
     for (let plot_type of Object.keys(layers[key])) {
       if (plot_type === "data") {

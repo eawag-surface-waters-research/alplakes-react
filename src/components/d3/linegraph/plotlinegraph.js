@@ -1130,7 +1130,7 @@ const plotScatter = (context, data, xAxis, yAxis, options) => {
         context.fillStyle = data[i].lineColor;
         const px = xAxis[data[i].xaxis].ax(data[i].x[j]);
         const py = yAxis[data[i].yaxis].ax(data[i].y[j]);
-        const size = 4.5;
+        const size = 6.5;
         // Draw square centered at (px, py)
         context.rect(px - size / 2, py - size / 2, size, size);
         context.fill();

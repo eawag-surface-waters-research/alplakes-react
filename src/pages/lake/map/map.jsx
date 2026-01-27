@@ -37,6 +37,8 @@ class Map extends Component {
     mapId: "map_" + Math.round(Math.random() * 100000),
     disable_measurements: true,
     measurements: false,
+    satelliteTimeseriesModal: false,
+    satelliteTimeseriesCount: 1,
   };
 
   loading = (text) => {
@@ -93,7 +95,7 @@ class Map extends Component {
       source.model,
       source.key,
       period,
-      latlng
+      latlng,
     );
     if (data) {
       layer.graph = { ...layer.graph, transect_plot: data };
@@ -116,7 +118,7 @@ class Map extends Component {
       source.model,
       source.key,
       period,
-      latlng
+      latlng,
     );
     this.loaded();
     if (data) {
@@ -127,6 +129,116 @@ class Map extends Component {
     } else {
       window.alert(Translations.serverAlert[this.props.language]);
     }
+  };
+
+  getSatelliteTimeseries = (properties) => {
+    this.setState({ satelliteTimeseriesModal: properties });
+  };
+
+  closeSatelliteTimeseriesModel = (markerID) => {
+    var { updates } = this.state;
+    updates.push({ event: "deleteMarker", id: markerID });
+    this.setState({ satelliteTimeseriesModal: false });
+  };
+
+  downloadSatelliteTimeseries = async (
+    layer_id,
+    satellite,
+    parameter,
+    lat,
+    lng,
+    window_radius,
+    valid_pixels,
+    statistic,
+    name,
+    color,
+    markerID,
+  ) => {
+    var { language } = this.props;
+    var { id, layers, satelliteTimeseriesCount, updates } = this.state;
+    this.loading(
+      `<div>${Translations.extractingTimeseries[language]}</div><div class="sub">${Translations.calculatingTime[language]}</div>`,
+    );
+    const options = { label: name, color, markerID, lat, lng };
+    updates.push({ event: "updateMarker", options });
+    this.setState({ updates });
+    const period = 50;
+    var dataset = [];
+    var layer = layers.find((l) => l.id === layer_id);
+    const datelist = Object.keys(
+      layer["graph"]["satellite_timeseries"]["available"],
+    ).sort();
+    const dates = this.getDates(
+      new Date(
+        datelist[datelist.length - 1].replace(
+          /(\d{4})(\d{2})(\d{2})/,
+          "$1-$2-$3",
+        ),
+      ),
+      new Date(datelist[0].replace(/(\d{4})(\d{2})(\d{2})/, "$1-$2-$3")),
+      period,
+    );
+    const startTime = Date.now();
+    for (let i = 0; i < dates.length; i++) {
+      const endDate = new Date(dates[i]);
+      endDate.setDate(endDate.getDate() - (period - 1));
+      const url = `${CONFIG.alplakes_api}/remotesensing/timeseries/${id}/${satellite}/${parameter}/${lat}/${lng}/${this.formatToYYYYMMDD(endDate)}/${this.formatToYYYYMMDD(dates[i])}?window=${window_radius}&valid_pixels=${valid_pixels}`;
+      var { data } = await axios.get(url);
+      dataset = dataset.concat(data);
+      const elapsed = Date.now() - startTime;
+      const estimatedTotal = (elapsed / (i + 1)) * dates.length;
+      const remaining = estimatedTotal - elapsed;
+      const seconds = Math.ceil(remaining / 1000 / 5) * 5;
+      if (i > 2) {
+        this.loading(
+          `<div>${Translations.extractingTimeseries[language]}</div><div class="sub">${seconds} ${Translations.secondsRemaining[language]}</div>`,
+        );
+      }
+    }
+    if (!("custom" in layer["graph"]["satellite_timeseries"]))
+      layer["graph"]["satellite_timeseries"]["custom"] = [];
+    layer["graph"]["satellite_timeseries"]["custom"].push({
+      id: markerID,
+      name,
+      satellite,
+      lat,
+      lng,
+      window_radius,
+      valid_pixels,
+      statistic,
+      color,
+      dataset,
+    });
+    var csv = `Datetime,Mean (${layer.unit}),Median (${layer.unit}),Min (${layer.unit}),Max (${layer.unit}),Count,Std\n`;
+    for (let i = 0; i < dataset.length; i++) {
+      csv =
+        csv +
+        `${dataset[i].time},${dataset[i].value.mean},${dataset[i].value.median},${dataset[i].value.min},${dataset[i].value.max},${dataset[i].value.count},${dataset[i].value.std}\n`;
+    }
+    layer["graph"]["satellite_timeseries"]["csv"][`${satellite}_${name.replace(" ", "_")}`] = csv;
+    satelliteTimeseriesCount = satelliteTimeseriesCount + 1;
+    this.loaded();
+    this.setState({ layers, satelliteTimeseriesCount });
+  };
+
+  getDates = (startDate, endDate, daysApart = 30) => {
+    const dates = [];
+    const current = new Date(startDate);
+    const end = new Date(endDate);
+    while (current >= end) {
+      dates.push(new Date(current));
+      current.setDate(current.getDate() - daysApart);
+    }
+    return dates;
+  };
+
+  formatToYYYYMMDD = (date) => {
+    const d = new Date(date);
+    return (
+      d.getFullYear() +
+      String(d.getMonth() + 1).padStart(2, "0") +
+      String(d.getDate()).padStart(2, "0")
+    );
   };
 
   addLayers = async (add, initial) => {
@@ -147,7 +259,7 @@ class Map extends Component {
     this.loading(Translations.collectingMetadata[language]);
     ({ layers, graphSelection } = await collectMetadata(
       layers,
-      graphSelection
+      graphSelection,
     ));
     this.loading(Translations.downloadingData[language]);
     let download = await downloadData(
@@ -158,7 +270,7 @@ class Map extends Component {
       datetime,
       depth,
       mapId,
-      initial
+      initial,
     );
     if (download) {
       ({ updates, layers, period, datetime, depth } = download);
@@ -232,7 +344,7 @@ class Map extends Component {
       ({ layer, graphSelection } = this.removeGraph(
         layer,
         layers,
-        graphSelection
+        graphSelection,
       ));
       this.setState({ layers, updates, selection, graphSelection });
     }
@@ -270,12 +382,12 @@ class Map extends Component {
           ({ layer, graphSelection } = this.removeGraph(
             layer,
             layers,
-            graphSelection
+            graphSelection,
           ));
         }
       }
       this.setState({ updates, depth, graphSelection }, () =>
-        this.addLayers(ids, false)
+        this.addLayers(ids, false),
       );
     }
   };
@@ -293,12 +405,12 @@ class Map extends Component {
           ({ layer, graphSelection } = this.removeGraph(
             layer,
             layers,
-            graphSelection
+            graphSelection,
           ));
         }
       }
       this.setState({ updates, datetime, period, graphSelection }, () =>
-        this.addLayers(ids, false)
+        this.addLayers(ids, false),
       );
     }
   };
@@ -311,10 +423,10 @@ class Map extends Component {
     ({ layer, graphSelection } = this.removeGraph(
       layer,
       layers,
-      graphSelection
+      graphSelection,
     ));
     this.setState({ updates, graphSelection }, () =>
-      this.addLayers([id], false)
+      this.addLayers([id], false),
     );
   };
 
@@ -342,7 +454,7 @@ class Map extends Component {
             CONFIG.branch
           }/${id}_layers.json?timestamp=${
             Math.round((new Date().getTime() + 1800000) / 3600000) * 3600 - 3600
-          }`
+          }`,
       );
       var layers = data.layers;
       updates.push({ event: "bounds", options: data.bounds });
@@ -355,7 +467,7 @@ class Map extends Component {
           iframe,
           sidebar,
         },
-        () => this.addLayers(active_layers, true)
+        () => this.addLayers(active_layers, true),
       );
     } catch (e) {
       console.error(e);
@@ -378,6 +490,8 @@ class Map extends Component {
       graphSelection,
       graphHide,
       graphFull,
+      satelliteTimeseriesModal,
+      satelliteTimeseriesCount,
     } = this.state;
     var { language, dark } = this.props;
     var title = "";
@@ -449,8 +563,13 @@ class Map extends Component {
               legend={true}
               graph={true}
               graphSelection={graphSelection}
+              satelliteTimeseriesModal={satelliteTimeseriesModal}
+              satelliteTimeseriesCount={satelliteTimeseriesCount}
               getTransect={this.getTransect}
               getProfile={this.getProfile}
+              getSatelliteTimeseries={this.getSatelliteTimeseries}
+              downloadSatelliteTimeseries={this.downloadSatelliteTimeseries}
+              closeSatelliteTimeseriesModel={this.closeSatelliteTimeseriesModel}
               selectMapGraph={this.selectMapGraph}
               graphHide={graphHide}
               toggleGraphHide={this.toggleGraphHide}

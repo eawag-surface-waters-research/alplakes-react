@@ -180,30 +180,38 @@
   border-radius: 12px;
 }
 
-.map-graph .map-graph-content .graph-title {
-  position: absolute;
-  bottom: 20px;
+.map-graph .map-graph-content .satellite-summary {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.map-graph .map-graph-content .satellite-legend {
   font-size: 14px;
   text-align: center;
   width: 100%;
-  z-index: 999;
+  padding-bottom: 20px;
 }
 
-.map-graph .map-graph-content .graph-title .graph-title-selection {
+.map-graph .map-graph-content .satellite-legend .graph-title-selection {
   display: inline-block;
   margin-right: 20px;
-  max-width: 25%;
-  overflow: hidden;
-  white-space: nowrap;
   border-radius: 8px;
   cursor: pointer;
 }
 
-.map-graph .map-graph-content .graph-title .graph-title-selection.unselect {
+.map-graph
+  .map-graph-content
+  .satellite-legend
+  .graph-title-selection.unselect {
   opacity: 0.3;
 }
 
-.map-graph .map-graph-content .graph-title .graph-title-selection .triangle {
+.map-graph
+  .map-graph-content
+  .satellite-legend
+  .graph-title-selection
+  .triangle {
   width: 0;
   height: 0;
   border-left: 8.08px solid transparent;
@@ -215,7 +223,7 @@
   margin-right: 6px;
 }
 
-.map-graph .map-graph-content .graph-title .graph-title-selection .circle {
+.map-graph .map-graph-content .satellite-legend .graph-title-selection .circle {
   height: 14px;
   width: 14px;
   border-radius: 50%;
@@ -223,17 +231,29 @@
   margin-right: 6px;
 }
 
-.map-graph .map-graph-content .graph-title .graph-title-selection .question {
+.map-graph .map-graph-content .satellite-legend .graph-title-selection .square {
+  height: 14px;
+  width: 14px;
+  display: inline-block;
+  margin-right: 6px;
+}
+
+.map-graph
+  .map-graph-content
+  .satellite-legend
+  .graph-title-selection
+  .question {
   background-color: var(--background-color);
   padding: 2px 8px;
   border-radius: 50%;
   display: inline-block;
   margin-left: 6px;
+  position: relative;
 }
 
 .map-graph
   .map-graph-content
-  .graph-title
+  .satellite-legend
   .graph-title-selection
   .question:hover
   .question-hover {
@@ -242,26 +262,28 @@
 
 .map-graph
   .map-graph-content
-  .graph-title
+  .satellite-legend
   .graph-title-selection
   .question
   .question-hover {
   display: none;
   position: absolute;
-  bottom: 36px;
+  bottom: calc(100% + 8px); /* Position above the question mark with 8px gap */
+  left: 50%; /* Start at the center */
+  transform: translateX(-50%);
   background-color: var(--background-color);
   border: 1px solid var(--border-color);
   padding: 12px;
   border-radius: 8px;
-  width: 300px;
+  width: 200px;
   white-space: normal;
   text-align: left;
-  left: calc(50% - 150px);
+  z-index: 9;
 }
 
 .map-graph
   .map-graph-content
-  .graph-title
+  .satellite-legend
   .graph-title-selection
   .question
   .question-hover
@@ -269,37 +291,95 @@
   padding-top: 5px;
 }
 
-.map-graph .map-graph-content .download-metadata {
-  position: absolute;
-  right: 0;
-  bottom: 20px;
-  z-index: 1000;
+.map-graph .map-graph-content .satellite-summary .satellite-settings {
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.map-graph
+  .map-graph-content
+  .satellite-summary
+  .satellite-settings
+  .satellite-button {
   border-radius: 8px;
-  margin-right: 16px;
+  margin-left: 16px;
   background-color: var(--background-color);
   color: var(--background-font-color);
   border: 1px solid var(--background-color);
   cursor: pointer;
-  padding: 5px 14px;
+  padding: 3px 10px;
   font-size: 14px;
+  display: inline-block;
+  transition: transform 0.1s 0s ease;
 }
 
-.map-graph .map-graph-content .download-metadata:hover img {
-  transform: scale(1.1);
+.map-graph
+  .map-graph-content
+  .satellite-summary
+  .satellite-settings
+  .satellite-button.wide {
+  flex: 1;
+  display: flex;
 }
 
-.main.dark .map-graph .map-graph-content .download-metadata img {
+.map-graph
+  .map-graph-content
+  .satellite-summary
+  .satellite-settings
+  .satellite-button.wide
+  .date-label {
+  display: inline-block;
+}
+
+.map-graph
+  .map-graph-content
+  .satellite-summary
+  .satellite-settings
+  .satellite-button.wide
+  .range-slider {
+  flex: 1;
+  padding: 0 20px;
+}
+
+.map-graph
+  .map-graph-content
+  .satellite-summary
+  .satellite-settings
+  .satellite-button:hover {
+  transform: scale(1.05);
+}
+
+.map-graph
+  .map-graph-content
+  .satellite-summary
+  .satellite-settings
+  .satellite-button.wide:hover {
+  transform: none;
+}
+
+.main.dark
+  .map-graph
+  .map-graph-content
+  .satellite-summary
+  .satellite-settings
+  .satellite-button
+  img {
   filter: invert(1);
 }
 
-.map-graph .map-graph-content .download-metadata img {
+.map-graph
+  .map-graph-content
+  .satellite-summary
+  .satellite-settings
+  .satellite-button
+  img {
   height: 15px;
   margin-right: 8px;
-  transition: all 0.1s 0s ease;
 }
 
 .map-graph .map-graph-content .satellite-graph {
-  height: calc(100% - 20px);
+  flex: 1;
 }
 
 .map-graph-icon {
@@ -335,11 +415,15 @@
     background-color: var(--select-color);
   }
 
-  .map-graph .map-graph-content .download-metadata {
+  .map-graph .map-graph-content .satellite-summary .satellite-settings {
     display: none;
   }
 
-  .map-graph .map-graph-content .graph-title .graph-title-selection .question {
+  .map-graph
+    .map-graph-content
+    .satellite-legend
+    .graph-title-selection
+    .question {
     display: none;
   }
 
