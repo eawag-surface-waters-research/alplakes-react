@@ -209,6 +209,13 @@ class Map extends Component {
       color,
       dataset,
     });
+    var csv = `Datetime,Mean (${layer.unit}),Median (${layer.unit}),Min (${layer.unit}),Max (${layer.unit}),Count,Std\n`;
+    for (let i = 0; i < dataset.length; i++) {
+      csv =
+        csv +
+        `${dataset[i].time},${dataset[i].value.mean},${dataset[i].value.median},${dataset[i].value.min},${dataset[i].value.max},${dataset[i].value.count},${dataset[i].value.std}\n`;
+    }
+    layer["graph"]["satellite_timeseries"]["csv"][`${satellite}_${name.replace(" ", "_")}`] = csv;
     satelliteTimeseriesCount = satelliteTimeseriesCount + 1;
     this.loaded();
     this.setState({ layers, satelliteTimeseriesCount });

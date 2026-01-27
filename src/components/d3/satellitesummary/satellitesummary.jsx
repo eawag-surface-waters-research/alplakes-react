@@ -1,7 +1,9 @@
 import React, { Component } from "react";
+import JSZip from "jszip";
 import D3LineGraph from "../linegraph/linegraph";
 import Translations from "../../../translations.json";
 import downloadIcon from "../../../img/download.png";
+import RangeSlider from "../../sliders/rangeslider";
 
 class TimeSelector extends Component {
   state = {
@@ -10,12 +12,39 @@ class TimeSelector extends Component {
   toggleOpen = () => {
     this.setState({ open: !this.state.open });
   };
+  formatDateYYYYMMDD = (d) => {
+    const date = new Date(d);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  };
   render() {
     const { open } = this.state;
-    const { xmin, xmax } = this.props;
+    const { xmin, xmax, xbounds, language, setSelectedPeriod } = this.props;
     const start = new Date(xmin);
     const end = new Date(xmax);
-    return (
+    const timestep = 24 * 60 * 60;
+    const period = [xbounds[0], Math.max(timestep, xbounds[1])];
+    return open ? (
+      <div className="satellite-button wide">
+        <div className="date-label" onClick={this.toggleOpen}>
+          {this.formatDateYYYYMMDD(xbounds[0])}
+        </div>
+        <div className="range-slider">
+          <RangeSlider
+            period={period}
+            timestep={timestep}
+            selectedPeriod={[xmin, xmax]}
+            setSelectedPeriod={setSelectedPeriod}
+            language={language}
+          />
+        </div>
+        <div className="date-label" onClick={this.toggleOpen}>
+          {this.formatDateYYYYMMDD(xbounds[1])}
+        </div>
+      </div>
+    ) : (
       <div className="satellite-button" onClick={this.toggleOpen}>
         {start.getFullYear()} - {end.getFullYear()}
         <div
@@ -54,15 +83,25 @@ class SatelliteSummary extends Component {
     this.setState({ legend });
   };
 
-  downloadMetadata = () => {
+  setSelectedPeriod = (period) => {
+    this.setState({ xmin: period[0], xmax: period[1] });
+  };
+
+  downloadMetadata = async () => {
     const { csv, lake } = this.props.input;
-    var name = `${lake}_${this.props.parameter}_satellite_summary.csv`;
-    var encodedUri = encodeURI(csv);
-    var link = document.createElement("a");
-    link.setAttribute("href", encodedUri);
-    link.setAttribute("download", name);
+    const zip = new JSZip();
+    Object.entries(csv).forEach(([key, data]) => {
+      const fileName = `${lake}_${this.props.parameter}_${key}.csv`;
+      zip.file(fileName, data);
+    });
+    const content = await zip.generateAsync({ type: "blob" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(content);
+    link.download = `${lake}_${this.props.parameter}_satellite_data.zip`;
     document.body.appendChild(link);
     link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(link.href);
   };
 
   getColor = (satellite) => {
@@ -107,6 +146,12 @@ class SatelliteSummary extends Component {
       return options[label];
     }
     return label;
+  };
+
+  roundToNearestDay = (timestamp) => {
+    const date = new Date(timestamp);
+    date.setHours(0, 0, 0, 0);
+    return date.getTime();
   };
 
   setData = () => {
@@ -196,6 +241,8 @@ class SatelliteSummary extends Component {
     }
 
     const fiveYears = 5 * 365.25 * 24 * 60 * 60 * 1000;
+    xmin = this.roundToNearestDay(xmin);
+    xmax = this.roundToNearestDay(xmax);
     var xbounds = [xmin, xmax];
     if (xmax - xmin > fiveYears) xmin = xmax - fiveYears;
 
@@ -262,10 +309,16 @@ class SatelliteSummary extends Component {
     return (
       <div className="satellite-summary">
         <div className="satellite-settings">
-          <TimeSelector xmin={xmin} xmax={xmax} xbounds={xbounds} />
+          <TimeSelector
+            xmin={xmin}
+            xmax={xmax}
+            xbounds={xbounds}
+            language={language}
+            setSelectedPeriod={this.setSelectedPeriod}
+          />
           <div className="satellite-button" onClick={this.downloadMetadata}>
             <img src={downloadIcon} alt="Download" />{" "}
-            {Translations.export[language]} CSV
+            {Translations.exportData[language]}
           </div>
         </div>
         <div className="satellite-graph">
@@ -356,14 +409,16 @@ class SatelliteSummary extends Component {
                       {legend[s]["extra"]["lat"]}, {legend[s]["extra"]["lng"]}
                     </div>
                     <div className="space">
-                      <b>{Translations.statistic[language]}</b>: {legend[s]["extra"]["statistic"]}
+                      <b>{Translations.statistic[language]}</b>:{" "}
+                      {legend[s]["extra"]["statistic"]}
                     </div>
                     <div className="space">
                       <b>{Translations.extractionWindow[language]}</b>:{" "}
                       {legend[s]["extra"]["window_radius"]}
                     </div>
                     <div className="space">
-                      <b>{Translations.validPixels[language]}</b>: {legend[s]["extra"]["valid_pixels"]}
+                      <b>{Translations.validPixels[language]}</b>:{" "}
+                      {legend[s]["extra"]["valid_pixels"]}
                     </div>
                   </div>
                   ?

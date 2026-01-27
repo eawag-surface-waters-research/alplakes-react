@@ -293,7 +293,8 @@
 
 .map-graph .map-graph-content .satellite-summary .satellite-settings {
   margin-bottom: 10px;
-  text-align: right;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .map-graph
@@ -310,7 +311,35 @@
   padding: 3px 10px;
   font-size: 14px;
   display: inline-block;
-  transition: all 0.1s 0s ease;
+  transition: transform 0.1s 0s ease;
+}
+
+.map-graph
+  .map-graph-content
+  .satellite-summary
+  .satellite-settings
+  .satellite-button.wide {
+  flex: 1;
+  display: flex;
+}
+
+.map-graph
+  .map-graph-content
+  .satellite-summary
+  .satellite-settings
+  .satellite-button.wide
+  .date-label {
+  display: inline-block;
+}
+
+.map-graph
+  .map-graph-content
+  .satellite-summary
+  .satellite-settings
+  .satellite-button.wide
+  .range-slider {
+  flex: 1;
+  padding: 0 20px;
 }
 
 .map-graph
@@ -319,6 +348,14 @@
   .satellite-settings
   .satellite-button:hover {
   transform: scale(1.05);
+}
+
+.map-graph
+  .map-graph-content
+  .satellite-summary
+  .satellite-settings
+  .satellite-button.wide:hover {
+  transform: none;
 }
 
 .main.dark

@@ -3,21 +3,20 @@ import { Range, getTrackBackground } from "react-range";
 import Translations from "../../translations.json";
 import "./slider.css";
 
-class Slider extends Component {
+class RangeSlider extends Component {
   state = {
     hoverValue: null,
+    draggingIndex: null,
   };
-  formatDateTime = (datetime, months) => {
+
+  formatDate = (datetime, months) => {
     var a = new Date(datetime);
-    var hour = a.getHours();
-    var minute = a.getMinutes();
     var year = a.getFullYear();
     var month = months[a.getMonth()];
     var date = a.getDate();
-    return `${hour < 10 ? "0" + hour : hour}:${
-      minute < 10 ? "0" + minute : minute
-    } ${date} ${month} ${String(year).slice(-2)}`;
+    return `${date} ${month} ${String(year)}`;
   };
+
   calculateValueFromPosition = (event) => {
     var trackRef = document.getElementById("slider-track");
     const trackRect = trackRef.getBoundingClientRect();
@@ -44,19 +43,26 @@ class Slider extends Component {
   componentDidUpdate() {}
 
   render() {
-    var { period, timestep, datetime, setDatetime, language, permanentLabel } =
-      this.props;
-    var { hoverValue } = this.state;
-    const values = [datetime];
+    var {
+      period,
+      timestep,
+      selectedPeriod,
+      setSelectedPeriod,
+      language,
+      permanentLabel,
+    } = this.props;
+
+    const values = selectedPeriod || [period[0], period[1]];
+
     return (
       <div className="slider-container">
         <Range
-          label="Select your value"
+          label="Select your period"
           step={timestep}
           min={period[0]}
           max={period[1]}
           values={values}
-          onChange={(event) => setDatetime(event)}
+          onChange={(newValues) => setSelectedPeriod(newValues)}
           renderTrack={({ props, children }) => (
             <div
               {...props}
@@ -71,25 +77,17 @@ class Slider extends Component {
                 ...props.style,
                 background: getTrackBackground({
                   values,
-                  colors: ["#44bca77a", "#d3d3d36e"],
+                  colors: ["#d3d3d36e", "#44bca77a", "#d3d3d36e"],
                   min: period[0],
                   max: period[1],
                   rtl: false,
                 }),
               }}
             >
-              {(hoverValue !== null || permanentLabel) && (
-                <div className="slider-label">
-                  {this.formatDateTime(
-                    hoverValue !== null ? hoverValue : datetime,
-                    Translations.axis[language].months,
-                  )}
-                </div>
-              )}
               {children}
             </div>
           )}
-          renderThumb={({ props }) => (
+          renderThumb={({ props, index, isDragged }) => (
             <div
               {...props}
               key={props.key}
@@ -97,8 +95,20 @@ class Slider extends Component {
               style={{
                 ...props.style,
               }}
+              onMouseDown={() => this.setState({ draggingIndex: index })}
+              onMouseUp={() => this.setState({ draggingIndex: null })}
+              onTouchStart={() => this.setState({ draggingIndex: index })}
+              onTouchEnd={() => this.setState({ draggingIndex: null })}
             >
               <div className="slider-thumb-inner" />
+              {(isDragged || permanentLabel) && (
+                <div className="slider-thumb-label">
+                  {this.formatDate(
+                    values[index],
+                    Translations.axis[language].months,
+                  )}
+                </div>
+              )}
             </div>
           )}
         />
@@ -107,4 +117,4 @@ class Slider extends Component {
   }
 }
 
-export default Slider;
+export default RangeSlider;

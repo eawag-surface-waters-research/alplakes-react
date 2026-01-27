@@ -491,11 +491,11 @@
     "FR": "Emplacement",
     "IT": "Posizione"
   },
-  "export": {
-    "EN": "Export",
-    "DE": "Export",
-    "FR": "Exporter",
-    "IT": "Esporta"
+  "exportData": {
+    "EN": "Export data",
+    "DE": "Daten exportieren",
+    "FR": "Exporter les données",
+    "IT": "Esportare i dati"
   },
   "calculatingTime": {
     "EN": "Calculating remaining time",
