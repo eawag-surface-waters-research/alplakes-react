@@ -21,7 +21,7 @@ const formatSencastDay = (datetime) => {
   }`;
 };
 
-const findClosest = (array, key, value) => {
+const findClosest = (array, key, value, tieBreaker) => {
   let closest = null;
   let minDiff = Infinity;
   for (let i = 0; i < array.length; i++) {
@@ -29,8 +29,13 @@ const findClosest = (array, key, value) => {
     if (diff < minDiff) {
       minDiff = diff;
       closest = array[i];
+    } else if (diff === minDiff && tieBreaker) {
+      if (array[i][tieBreaker] > closest[tieBreaker]) {
+        closest = array[i];
+      }
     }
   }
+
   return closest;
 };
 
@@ -85,7 +90,7 @@ class Graph extends Component {
     var { layer, updateOptions } = this.props;
     var { available } = layer.sources[layer.source].metadata;
     var date = available[formatSencastDay(event)];
-    var image = findClosest(date.images, "time", event);
+    var image = findClosest(date.images, "time", event, "percent");
     layer.sources[layer.source].metadata.image = image;
     layer.displayOptions.url = image.url;
     layer.displayOptions.time = image.time;
