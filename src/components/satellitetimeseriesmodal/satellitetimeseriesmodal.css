@@ -2,7 +2,7 @@
   position: absolute;
   top: 30%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -30%);
   background-color: var(--box-color);
   z-index: 999999;
   border-radius: 16px;
