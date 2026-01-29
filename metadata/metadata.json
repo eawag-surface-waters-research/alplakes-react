@@ -3513,6 +3513,197 @@
         ]
     },
     {
+        "key": "allensteig",
+        "name": {
+            "EN": "Allentsteig",
+            "DE": "Stadtsee Allentsteig",
+            "FR": "Allentsteig",
+            "IT": "Allentsteig"
+        },
+        "area": 0.12,
+        "ave_depth": 4,
+        "max_depth": 8,
+        "elevation": 532,
+        "latitude": 48.69,
+        "longitude": 15.327,
+        "current_temperature": false,
+        "flags": [
+            "austrian"
+        ],
+        "simstrat": false,
+        "type": "Artificial",
+        "volume": "NA",
+        "residence_time": "NA",
+        "mixing_regime": "NA",
+        "geothermal_flux": "NA",
+        "trophic_state": "NA"
+    },
+    {
+        "key": "poysdorf",
+        "name": {
+            "EN": "Poysdorf",
+            "DE": "Badeteich Poysdorf",
+            "FR": "Poysdorf",
+            "IT": "Poysdorf"
+        },
+        "area": 0.024,
+        "ave_depth": "NA",
+        "max_depth": 9.0,
+        "elevation": 200.0,
+        "latitude": 48.666,
+        "longitude": 16.61,
+        "current_temperature": false,
+        "flags": [
+            "austrian"
+        ],
+        "simstrat": false,
+        "type": "Natural",
+        "volume": "NA",
+        "residence_time": "NA",
+        "mixing_regime": "NA",
+        "geothermal_flux": "NA",
+        "trophic_state": "NA"
+    },
+    {
+        "key": "edlerseeteich",
+        "name": {
+            "EN": "Edlerseeteich",
+            "DE": "Edlerseeteich",
+            "FR": "Edlerseeteich",
+            "IT": "Edlerseeteich"
+        },
+        "area": 0.09,
+        "ave_depth": "NA",
+        "max_depth": 3.0,
+        "elevation": 475,
+        "latitude": 48.75,
+        "longitude": 15.66,
+        "current_temperature": false,
+        "flags": [
+            "austrian"
+        ],
+        "simstrat": false,
+        "type": "Natural",
+        "volume": "NA",
+        "residence_time": "NA",
+        "mixing_regime": "NA",
+        "geothermal_flux": "NA",
+        "trophic_state": "NA",
+        "webcams": [
+
+        ]
+    },
+    {
+        "key": "frauenwieserteich",
+        "name": {
+            "EN": "Frauenwieserteich",
+            "DE": "Frauenwieserteich",
+            "FR": "Frauenwieserteich",
+            "IT": "Frauenwieserteich"
+        },
+        "area": 0.12,
+        "ave_depth": "NA",
+        "max_depth": "NA",
+        "elevation": 840,
+        "latitude": 48.577,
+        "longitude": 14.834,
+        "current_temperature": false,
+        "flags": [
+            "austrian"
+        ],
+        "simstrat": false,
+        "type": "Natural",
+        "volume": "NA",
+        "residence_time": "NA",
+        "mixing_regime": "NA",
+        "geothermal_flux": "NA",
+        "trophic_state": "NA",
+        "webcams": [
+          1751633079
+        ]
+    },
+    {
+        "key": "herrensee",
+        "name": {
+            "EN": "Herrensee",
+            "DE": "Herrensee",
+            "FR": "Herrensee",
+            "IT": "Herrensee"
+        },
+        "area": 0.23,
+        "ave_depth": 2,
+        "max_depth": 4,
+        "elevation": 250,
+        "latitude": 48.953,
+        "longitude": 15.044,
+        "current_temperature": false,
+        "flags": [
+            "austrian"
+        ],
+        "simstrat": false,
+        "type": "Artificial",
+        "volume": "NA",
+        "residence_time": "NA",
+        "mixing_regime": "NA",
+        "geothermal_flux": "NA",
+        "trophic_state": "NA"
+    },
+    {
+        "key": "ottenstein",
+        "name": {
+            "EN": "Ottenstein Reservoir",
+            "DE": "Ottensteiner Stausee",
+            "FR": "Réservoir d'Ottenstein",
+            "IT": "Bacino idrico di Ottenstein"
+        },
+        "area": 4.3,
+        "ave_depth": "NA",
+        "max_depth": 69.0,
+        "elevation": 490,
+        "latitude": 48.593,
+        "longitude": 15.323,
+        "current_temperature": false,
+        "flags": [
+            "austrian"
+        ],
+        "simstrat": false,
+        "type": "Artificial",
+        "volume": 0.073,
+        "residence_time": "NA",
+        "mixing_regime": "NA",
+        "geothermal_flux": "NA",
+        "trophic_state": "NA"
+    },
+     {
+        "key": "hallstatter",
+        "name": {
+            "EN": "Lake Hallstätter",
+            "DE": "Hallstätter See",
+            "FR": "Hallstätter See",
+            "IT": "Hallstätter See"
+        },
+        "area": 8.55,
+        "ave_depth": "NA",
+        "max_depth": 125.0,
+        "elevation": 508,
+        "latitude": 47.575,
+        "longitude": 13.662,
+        "current_temperature": false,
+        "flags": [
+            "austrian"
+        ],
+        "simstrat": false,
+        "type": "Natural",
+        "volume": 0.558,
+        "residence_time": "NA",
+        "mixing_regime": "NA",
+        "geothermal_flux": "NA",
+        "trophic_state": "NA",
+        "webcams": [
+          1181928047
+        ]
+    },
+    {
         "key": "como",
         "name": {
             "EN": "Lake Como",
@@ -3568,6 +3759,63 @@
         "webcams": [
             1248885715,
             1665442424
+        ]
+    },
+    {
+        "key": "idro",
+        "name": {
+            "EN": "Lake Idro",
+            "DE": "Idrosee",
+            "FR": "Lac d’Idro",
+            "IT": "Lake Idro"
+        },
+        "area": 11.4,
+        "ave_depth": "NA",
+        "max_depth": 122.0,
+        "elevation": 368,
+        "latitude": 45.78,
+        "longitude": 10.513,
+        "flags": [
+            "italian"
+        ],
+        "simstrat": false,
+        "type": "Natural",
+        "volume": 0.075,
+        "residence_time": "NA",
+        "mixing_regime": "NA",
+        "geothermal_flux": "NA",
+        "trophic_state": "NA",
+        "webcams": [
+            1462102731,
+            1660927155
+        ]
+    },
+    {
+        "key": "caldaro",
+        "name": {
+            "EN": "Lake Caldaro",
+            "DE": "Kalterer See",
+            "FR": "Lac de Caldaro",
+            "IT": "Lago di Caldaro"
+        },
+        "area": 1.4,
+        "ave_depth": "NA",
+        "max_depth": 5.6,
+        "elevation": 216,
+        "latitude": 46.38,
+        "longitude": 11.264,
+        "flags": [
+            "italian"
+        ],
+        "simstrat": false,
+        "type": "Natural",
+        "volume": 0.006,
+        "residence_time": "NA",
+        "mixing_regime": "NA",
+        "geothermal_flux": "NA",
+        "trophic_state": "NA",
+        "webcams": [
+            1593677429
         ]
     },
     {
