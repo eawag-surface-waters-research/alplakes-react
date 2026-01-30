@@ -5,8 +5,8 @@ import * as GeoTIFF from "geotiff";
 L.FloatGeotiff = L.ImageOverlay.extend({
   options: {
     opacity: 1,
-    min: false,
-    max: false,
+    min: undefined,
+    max: undefined,
     unit: "",
     decimal: 1,
     colorRampSteps: 2,
@@ -90,23 +90,9 @@ L.FloatGeotiff = L.ImageOverlay.extend({
     this.raster.height = image.getHeight();
     if (this.options.min === undefined)
       this.options.min = min(this.raster.data[0]);
-    if (this.options.min === undefined)
+    if (this.options.max === undefined)
       this.options.max = max(this.raster.data[0]);
     this.plotData = this.raster.data[0].slice(0);
-  },
-  _createConvolutionMatrix: function (n) {
-    var center = Math.floor(n / 2);
-    var matrix = new Array(n);
-    for (var i = 0; i < n; i++) {
-      matrix[i] = new Array(n);
-      for (var j = 0; j < n; j++) {
-        var diffX = j - center;
-        var diffY = i - center;
-        matrix[i][j] = [diffX, diffY];
-      }
-    }
-
-    return matrix;
   },
   _convolve: function () {
     if (this.options.convolve !== this.convolve) {
@@ -167,17 +153,17 @@ L.FloatGeotiff = L.ImageOverlay.extend({
       var x = Math.floor(
         (this.raster.width * (lng - this._rasterBounds._southWest.lng)) /
           (this._rasterBounds._northEast.lng -
-            this._rasterBounds._southWest.lng)
+            this._rasterBounds._southWest.lng),
       );
       var y =
         this.raster.height -
         Math.ceil(
           (this.raster.height * (lat - this._rasterBounds._southWest.lat)) /
             (this._rasterBounds._northEast.lat -
-              this._rasterBounds._southWest.lat)
+              this._rasterBounds._southWest.lat),
         );
       var i = y * this.raster.width + x;
-      return this.raster.data[0][i];
+      return this.plotData[i];
     } catch (err) {
       return undefined;
     }
@@ -187,7 +173,7 @@ L.FloatGeotiff = L.ImageOverlay.extend({
       offset = this._map._latLngBoundsToNewLayerBounds(
         this._map.getBounds(),
         e.zoom,
-        e.center
+        e.center,
       ).min;
     L.DomUtil.setTransform(this._image, offset, scale);
   },
@@ -195,7 +181,7 @@ L.FloatGeotiff = L.ImageOverlay.extend({
     if (this.hasOwnProperty("_map")) {
       if (this._rasterBounds) {
         var topLeft = this._map.latLngToLayerPoint(
-            this._map.getBounds().getNorthWest()
+            this._map.getBounds().getNorthWest(),
           ),
           size = this._map
             .latLngToLayerPoint(this._map.getBounds().getSouthEast())
@@ -212,25 +198,25 @@ L.FloatGeotiff = L.ImageOverlay.extend({
     if (this.raster.hasOwnProperty("data")) {
       var args = {};
       this.topLeft = this._map.latLngToLayerPoint(
-        this._map.getBounds().getNorthWest()
+        this._map.getBounds().getNorthWest(),
       );
       this.size = this._map
         .latLngToLayerPoint(this._map.getBounds().getSouthEast())
         ._subtract(this.topLeft);
       args.rasterPixelBounds = L.bounds(
         this._map.latLngToContainerPoint(this._rasterBounds.getNorthWest()),
-        this._map.latLngToContainerPoint(this._rasterBounds.getSouthEast())
+        this._map.latLngToContainerPoint(this._rasterBounds.getSouthEast()),
       );
 
       args.xStart = Math.max(0, Math.round(args.rasterPixelBounds.min.x));
       args.xFinish = Math.min(
         Math.round(args.rasterPixelBounds.max.x),
-        Math.round(this.size.x)
+        Math.round(this.size.x),
       );
       args.yStart = Math.max(0, Math.round(args.rasterPixelBounds.min.y));
       args.yFinish = Math.min(
         Math.round(args.rasterPixelBounds.max.y),
-        Math.round(this.size.y)
+        Math.round(this.size.y),
       );
 
       args.plotWidth = args.xFinish - args.xStart;
@@ -319,9 +305,9 @@ L.FloatGeotiff = L.ImageOverlay.extend({
       return this.options.palette[0].color;
     }
 
-    var index = Math.round(
+    var index = Math.floor(
       ((value - this.options.min) / (this.options.max - this.options.min)) *
-        10 ** this.options.colorRampSteps
+        10 ** this.options.colorRampSteps,
     );
 
     return this._colorRamp[index];
@@ -358,7 +344,7 @@ L.FloatGeotiff = L.ImageOverlay.extend({
 
       for (let x = 0; x < args.plotWidth; x++) {
         const xx = Math.floor(
-          (rasterWidth * (curLng - boundsSW.lng)) / lngDiff
+          (rasterWidth * (curLng - boundsSW.lng)) / lngDiff,
         );
         const yy =
           rasterHeight -
@@ -396,60 +382,6 @@ L.FloatGeotiff = L.ImageOverlay.extend({
       }
     }
     ctx.putImageData(imgData, args.xStart, args.yStart);
-  },
-  transform: function (rasterImageData, args) {
-    //Create image data and Uint32 views of data to speed up copying
-    var imageData = new ImageData(args.plotWidth, args.plotHeight);
-    var outData = imageData.data;
-    var outPixelsU32 = new Uint32Array(outData.buffer);
-    var inData = rasterImageData.data;
-    var inPixelsU32 = new Uint32Array(inData.buffer);
-
-    var zoom = this._map.getZoom();
-    var scale = this._map.options.crs.scale(zoom);
-    var d = 57.29577951308232; //L.LatLng.RAD_TO_DEG;
-
-    var transformationA = this._map.options.crs.transformation._a;
-    var transformationB = this._map.options.crs.transformation._b;
-    var transformationC = this._map.options.crs.transformation._c;
-    var transformationD = this._map.options.crs.transformation._d;
-    if (L.version >= "1.0") {
-      transformationA = transformationA * this._map.options.crs.projection.R;
-      transformationC = transformationC * this._map.options.crs.projection.R;
-    }
-
-    for (var y = 0; y < args.plotHeight; y++) {
-      var yUntransformed =
-        ((args.yOrigin + y) / scale - transformationD) / transformationC;
-      var currentLat =
-        (2 * Math.atan(Math.exp(yUntransformed)) - Math.PI / 2) * d;
-      var rasterY =
-        this.raster.height -
-        Math.ceil(
-          (currentLat - this._rasterBounds._southWest.lat) / args.latSpan
-        );
-
-      for (var x = 0; x < args.plotWidth; x++) {
-        //Location to draw to
-        var index = y * args.plotWidth + x;
-
-        //Calculate lat-lng of (x,y)
-        //This code is based on leaflet code, unpacked to run as fast as possible
-        //Used to deal with TIF being EPSG:4326 (lat,lon) and map being EPSG:3857 (m E,m N)
-        var xUntransformed =
-          ((args.xOrigin + x) / scale - transformationB) / transformationA;
-        var currentLng = xUntransformed * d;
-        var rasterX = Math.floor(
-          (currentLng - this._rasterBounds._southWest.lng) / args.lngSpan
-        );
-
-        var rasterIndex = rasterY * this.raster.width + rasterX;
-
-        //Copy pixel value
-        outPixelsU32[index] = inPixelsU32[rasterIndex];
-      }
-    }
-    return imageData;
   },
   _onMousemove: function (t) {
     var e = this._queryValue(t);

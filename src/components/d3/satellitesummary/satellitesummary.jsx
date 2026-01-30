@@ -230,6 +230,14 @@ class SatelliteSummary extends Component {
           lineColor: c["color"],
           symbol: "square",
         };
+        ymin = Math.min(
+          ymin,
+          Math.min(...data[c["id"]]["y"].filter((n) => !isNaN(n))),
+        );
+        ymax = Math.max(
+          ymax,
+          Math.max(...data[c["id"]]["y"].filter((n) => !isNaN(n))),
+        );
         legend[c["id"]] = {
           hidden: false,
           text: c["name"],
