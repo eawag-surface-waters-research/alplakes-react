@@ -106,10 +106,10 @@ class SatelliteSummary extends Component {
 
   getColor = (satellite) => {
     const options = {
-      S2: "#eb8630",
-      S3: "#559c3d",
-      L8: "#61bbcd",
-      L9: "#8d6bb8",
+      S2: "#eb8730c4",
+      S3: "#559c3dc4",
+      L8: "#61bbcdc4",
+      L9: "#8d6bb8c4",
     };
     if (satellite in options) {
       return options[satellite];
@@ -207,13 +207,13 @@ class SatelliteSummary extends Component {
         x: reference.datetime,
         y: reference.value,
         tooltip: reference.value.map((r) => "Insitu value"),
-        lineColor: "#c13c2f",
+        lineColor: "#c13c2fc4",
         symbol: "triangle",
       };
       legend["insitu"] = {
         hidden: false,
         text: "Insitu",
-        color: "#c13c2f",
+        color: "#c13c2fc4",
         shape: "triangle",
       };
     }

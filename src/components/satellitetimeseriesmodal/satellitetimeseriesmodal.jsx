@@ -16,7 +16,7 @@ class SatelliteTimeseriesModal extends Component {
     window_radius: 0,
     statistic: "mean",
     name: "",
-    color: "#dd164c",
+    color: "#dd164bc4",
     markerID: false,
   };
 
