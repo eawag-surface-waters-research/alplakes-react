@@ -1141,7 +1141,7 @@ const plotScatter = (context, data, xAxis, yAxis, options) => {
         context.fillStyle = data[i].lineColor;
         const px = xAxis[data[i].xaxis].ax(data[i].x[j]);
         const py = yAxis[data[i].yaxis].ax(data[i].y[j]);
-        context.arc(px, py, 4, 0, 2 * Math.PI, true);
+        context.arc(px, py, 3, 0, 2 * Math.PI, true);
         context.fill();
       }
     }
