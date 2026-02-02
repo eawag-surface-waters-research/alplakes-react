@@ -12,6 +12,7 @@ L.Control.MarkerDraw = L.Control.extend({
     title: "",
     hover: "",
     markerColor: "#ff0000",
+    labelDisplayDuration: 2000,
   },
 
   onAdd: function (map) {
@@ -25,10 +26,18 @@ L.Control.MarkerDraw = L.Control.extend({
 
     var button = L.DomUtil.create("a", "leaflet-draw", this._container);
     button.href = "#";
-    button.title = this.options.title;
     button.innerHTML = this.options.svgIcon;
 
+    this._label = L.DomUtil.create("span", "leaflet-draw-label", this._container);
+    this._label.innerHTML = this.options.title;
+    this._label.style.display = "none";
+
     L.DomEvent.on(button, "click", this._toggleAdding, this);
+    L.DomEvent.on(button, "mouseenter", this._showLabel, this);
+    L.DomEvent.on(button, "mouseleave", this._hideLabel, this);
+
+    this._showLabelTemporarily();
+
     return this._container;
   },
 
@@ -40,6 +49,31 @@ L.Control.MarkerDraw = L.Control.extend({
       this._markerLayer.clearLayers();
       this._map.removeLayer(this._markerLayer);
       this._markerLayer = null;
+    }
+    if (this._labelTimeout) {
+      clearTimeout(this._labelTimeout);
+    }
+  },
+
+  _showLabel: function () {
+    if (this._label && !this._labelTimeout) {
+      this._label.style.display = "inline-block";
+    }
+  },
+
+  _hideLabel: function () {
+    if (this._label && !this._labelTimeout) {
+      this._label.style.display = "none";
+    }
+  },
+
+  _showLabelTemporarily: function () {
+    if (this._label) {
+      this._label.style.display = "inline-block";
+      this._labelTimeout = setTimeout(() => {
+        this._label.style.display = "none";
+        this._labelTimeout = null;
+      }, this.options.labelDisplayDuration);
     }
   },
 

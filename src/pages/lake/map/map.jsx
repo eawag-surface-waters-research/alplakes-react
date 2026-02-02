@@ -141,6 +141,29 @@ class Map extends Component {
     this.setState({ satelliteTimeseriesModal: false });
   };
 
+  fetchWithRetry = async (url, maxRetries = 3) => {
+    let lastError;
+    const delays = [2000, 5000, 10000, 20000];
+
+    for (let attempt = 0; attempt < maxRetries; attempt++) {
+      try {
+        const { data } = await axios.get(url);
+        return data;
+      } catch (error) {
+        lastError = error;
+        if (attempt < maxRetries - 1) {
+          const waitTime = delays[attempt];
+          const waitSeconds = waitTime / 1000;
+          this.loading(
+            `<div>Failed to access data, retrying in ${waitSeconds} seconds...</div>`,
+          );
+          await new Promise((resolve) => setTimeout(resolve, waitTime));
+        }
+      }
+    }
+    throw lastError;
+  };
+
   downloadSatelliteTimeseries = async (
     layer_id,
     satellite,
@@ -179,46 +202,55 @@ class Map extends Component {
       period,
     );
     const startTime = Date.now();
-    for (let i = 0; i < dates.length; i++) {
-      const endDate = new Date(dates[i]);
-      endDate.setDate(endDate.getDate() - (period - 1));
-      const url = `${CONFIG.alplakes_api}/remotesensing/timeseries/${id}/${satellite}/${parameter}/${lat}/${lng}/${this.formatToYYYYMMDD(endDate)}/${this.formatToYYYYMMDD(dates[i])}?window=${window_radius}&valid_pixels=${valid_pixels}`;
-      var { data } = await axios.get(url);
-      dataset = dataset.concat(data);
-      const elapsed = Date.now() - startTime;
-      const estimatedTotal = (elapsed / (i + 1)) * dates.length;
-      const remaining = estimatedTotal - elapsed;
-      const seconds = Math.ceil(remaining / 1000 / 5) * 5;
-      if (i > 2) {
-        this.loading(
-          `<div>${Translations.extractingTimeseries[language]}</div><div class="sub">${seconds} ${Translations.secondsRemaining[language]}</div>`,
-        );
+    try {
+      for (let i = 0; i < dates.length; i++) {
+        const endDate = new Date(dates[i]);
+        endDate.setDate(endDate.getDate() - (period - 1));
+        const url = `${CONFIG.alplakes_api}/remotesensing/timeseries/${id}/${satellite}/${parameter}/${lat}/${lng}/${this.formatToYYYYMMDD(endDate)}/${this.formatToYYYYMMDD(dates[i])}?window=${window_radius}&valid_pixels=${valid_pixels}`;
+        var data = await this.fetchWithRetry(url);
+        dataset = dataset.concat(data);
+        const elapsed = Date.now() - startTime;
+        const estimatedTotal = (elapsed / (i + 1)) * dates.length;
+        const remaining = estimatedTotal - elapsed;
+        const seconds = Math.ceil(remaining / 1000 / 5) * 5;
+        if (i > 2) {
+          this.loading(
+            `<div>${Translations.extractingTimeseries[language]}</div><div class="sub">${seconds} ${Translations.secondsRemaining[language]}</div>`,
+          );
+        }
       }
+      if (!("custom" in layer["graph"]["satellite_timeseries"]))
+        layer["graph"]["satellite_timeseries"]["custom"] = [];
+      layer["graph"]["satellite_timeseries"]["custom"].push({
+        id: markerID,
+        name,
+        satellite,
+        lat,
+        lng,
+        window_radius,
+        valid_pixels,
+        statistic,
+        color,
+        dataset,
+      });
+      var csv = `Datetime,Mean (${layer.unit}),Median (${layer.unit}),Min (${layer.unit}),Max (${layer.unit}),Count,Std\n`;
+      for (let i = 0; i < dataset.length; i++) {
+        csv =
+          csv +
+          `${dataset[i].time},${dataset[i].value.mean},${dataset[i].value.median},${dataset[i].value.min},${dataset[i].value.max},${dataset[i].value.count},${dataset[i].value.std}\n`;
+      }
+      layer["graph"]["satellite_timeseries"]["csv"][
+        `${satellite}_${name.replace(" ", "_")}`
+      ] = csv;
+      satelliteTimeseriesCount = satelliteTimeseriesCount + 1;
+      this.loaded();
+      this.setState({ layers, satelliteTimeseriesCount });
+    } catch (error) {
+      console.error(error);
+      this.loaded();
+      updates.push({ event: "deleteMarker", id: markerID });
+      this.setState({ updates });
     }
-    if (!("custom" in layer["graph"]["satellite_timeseries"]))
-      layer["graph"]["satellite_timeseries"]["custom"] = [];
-    layer["graph"]["satellite_timeseries"]["custom"].push({
-      id: markerID,
-      name,
-      satellite,
-      lat,
-      lng,
-      window_radius,
-      valid_pixels,
-      statistic,
-      color,
-      dataset,
-    });
-    var csv = `Datetime,Mean (${layer.unit}),Median (${layer.unit}),Min (${layer.unit}),Max (${layer.unit}),Count,Std\n`;
-    for (let i = 0; i < dataset.length; i++) {
-      csv =
-        csv +
-        `${dataset[i].time},${dataset[i].value.mean},${dataset[i].value.median},${dataset[i].value.min},${dataset[i].value.max},${dataset[i].value.count},${dataset[i].value.std}\n`;
-    }
-    layer["graph"]["satellite_timeseries"]["csv"][`${satellite}_${name.replace(" ", "_")}`] = csv;
-    satelliteTimeseriesCount = satelliteTimeseriesCount + 1;
-    this.loaded();
-    this.setState({ layers, satelliteTimeseriesCount });
   };
 
   getDates = (startDate, endDate, daysApart = 30) => {

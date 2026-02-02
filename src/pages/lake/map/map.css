@@ -60,6 +60,7 @@
     display: inline-block;
     margin-left: 20px;
     vertical-align: super;
+    max-width: 240px;
 }
 
 .main .map .layer-map .map-loading .map-loading-inner .loading-text .sub {

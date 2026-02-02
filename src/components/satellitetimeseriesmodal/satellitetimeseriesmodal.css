@@ -7,6 +7,8 @@
   z-index: 999999;
   border-radius: 16px;
   padding: 15px;
+  box-shadow: var(--box-shadow);
+  border: 1px solid var(--border-color);
 }
 
 .satellite-timeseries-modal .title-modal {

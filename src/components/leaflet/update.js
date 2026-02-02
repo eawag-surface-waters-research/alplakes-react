@@ -109,7 +109,7 @@ const addRaster = async (map, layers, id, options, language, server) => {
         id: map.getContainer().id,
         enabledFunction: server.disableControls,
         svgIcon: icons["profile"],
-        title: Translate.profile[language],
+        title: Translate.threedModelProfile[language],
         hover: Translate.addProfile[language],
       })
       .addTo(map);
@@ -123,6 +123,7 @@ const addRaster = async (map, layers, id, options, language, server) => {
         fire: (event) => server.getTransect(event, id),
         layer: layers[id]["transect_layer"],
         id: map.getContainer().id,
+        title: Translate.threedModelTransect[language],
         enabledFunction: server.disableControls,
       })
       .addTo(map);

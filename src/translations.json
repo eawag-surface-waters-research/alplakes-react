@@ -419,11 +419,23 @@
     "FR": "Transect",
     "IT": "Transetto"
   },
+  "threedModelTransect": {
+    "EN": "Transect (3D Model)",
+    "DE": "Transekt (3D-Modell)",
+    "FR": "Transect (Modèle 3D)",
+    "IT": "Transetto (Modello 3D)"
+  },
   "profile": {
     "EN": "Profile",
     "DE": "Profil",
     "FR": "Profil",
     "IT": "Profilo"
+  },
+  "threedModelProfile": {
+    "EN": "Profile (3D Model)",
+    "DE": "Profil (3D-Modell)",
+    "FR": "Profil (Modèle 3D)",
+    "IT": "Profilo (Modello 3D)"
   },
   "addProfile": {
     "EN": "Add profile",
