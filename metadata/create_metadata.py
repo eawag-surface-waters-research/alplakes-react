@@ -88,8 +88,8 @@ for lake in metadata:
         data["properties"]["bathymetry"] = bathymetry
     data["properties"]["latitude"] = lake["latitude"]
     data["properties"]["longitude"] = lake["longitude"]
-    if "default_depth" in lake:
-        data["properties"]["default_depth"] = lake["default_depth"]
+    default_depth = lake.get("default_depth", 1)
+    data["properties"]["default_depth"] = default_depth
 
     # Catchment
     if key in catchment:
@@ -143,9 +143,10 @@ for lake in metadata:
                     "model": lake["3D"]["models"][lake["3D"]["default"]]["model"],
                     "parameters": ["temperature", "velocity"],
                     "labels": lake["3D"]["3D_temperature"],
+                    "default_depth": default_depth,
                     "performance": lake["3D"]["models"][lake["3D"]["default"]]["performance"]
                 }}
-        layers["layers"].extend(func.model_layers(lake["3D"]["default"], lake["3D"]["models"]))
+        layers["layers"].extend(func.model_layers(lake["3D"]["default"], lake["3D"]["models"], default_depth))
 
 
     # One Dimensional Model

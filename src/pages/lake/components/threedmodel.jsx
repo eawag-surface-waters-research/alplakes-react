@@ -66,20 +66,22 @@ class ThreeDModel extends Component {
     var { updates, labels, warning } = this.state;
     let metadata = await downloadModelMetadata(
       parameters.model.toLowerCase(),
-      parameters.key
+      parameters.key,
     );
     if ("warning" in metadata) {
       warning = metadata.warning;
     }
+    const depth =
+      "default_depth" in parameters ? parameters["default_depth"] : 1;
     const data = await download3DMap(
       parameters.model.toLowerCase(),
       parameters.key,
       new Date(metadata.end_date.getTime() - 5 * 24 * 60 * 60 * 1000),
       metadata.end_date,
-      0,
+      depth,
       ["geometry", "temperature", "velocity"],
       metadata.height,
-      true
+      true,
     );
     const now = new Date();
     var index = data.temperature.data.length - 1;
@@ -103,7 +105,7 @@ class ThreeDModel extends Component {
         parameters.labels,
         data.geometry,
         data.temperature,
-        parameters.key
+        parameters.key,
       );
     } else {
       warning = {

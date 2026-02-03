@@ -98,7 +98,7 @@ def make_bathymetry(data, datalakes_lakes):
         })
     return bathymetry
 
-def model_layers(default, sources):
+def model_layers(default, sources, default_depth):
     temperature = {}
     current = {}
     thermocline = {}
@@ -160,6 +160,7 @@ def model_layers(default, sources):
       "display": "raster",
       "source": default,
       "summaryGraph": "threed_linegraph",
+      "default_depth": default_depth,
       "displayOptions": {
         "raster": True,
         "profile": True,
@@ -180,6 +181,7 @@ def model_layers(default, sources):
       "unit": "m/s",
       "display": "current",
       "source": default,
+      "default_depth": default_depth,
       "displayOptions": {
         "raster": False,
         "streamlines": False,
@@ -208,6 +210,7 @@ def model_layers(default, sources):
       "unit": "m",
       "display": "raster",
       "source": default,
+      "default_depth": default_depth,
       "displayOptions": {
         "raster": True,
         "paletteName": "navia",
@@ -226,6 +229,7 @@ def model_layers(default, sources):
       "unit": "m/s",
       "display": "particles",
       "source": default,
+      "default_depth": default_depth,
       "displayOptions": {
         "paths": 10,
         "spread": 1500,

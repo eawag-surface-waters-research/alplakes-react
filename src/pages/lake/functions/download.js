@@ -220,7 +220,16 @@ const threedDownload = async (
     ];
   }
   if (depth === false) {
-    depth = 0;
+    try {
+      const default_depth = "default_depth" in layer ? layer.default_depth : 1;
+      depth = general.closestValue(
+        default_depth,
+        layer.sources[layer.source].metadata.depth,
+      );
+    } catch (e) {
+      console.error(e);
+      depth = 0;
+    }
   }
   const data = await download3DMap(
     source.model.toLowerCase(),
