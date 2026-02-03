@@ -101,7 +101,7 @@ class SatelliteTimeseriesModal extends Component {
     var parameters = [];
     var options = {};
     for (let layer of layers) {
-      if (layer.active) {
+      if (layer.active && layer.type === "satellite") {
         parameters.push(layer["parameter"]);
         options[layer["parameter"]] = {};
         for (let satellite of layer["sources"]["sencast"]["models"]) {
