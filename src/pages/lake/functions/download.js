@@ -251,6 +251,8 @@ const threedDownload = async (
     const timestep =
       (data[layer.parameter].end - data[layer.parameter].start) /
       (data[layer.parameter].data.length - 1);
+    period[0] = data[layer.parameter].start;
+    period[1] = data[layer.parameter].end;
     if (datetime === false) {
       index = data[layer.parameter].data.length - 1;
       datetime = data[layer.parameter].end;
