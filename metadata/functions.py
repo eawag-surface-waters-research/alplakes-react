@@ -98,7 +98,7 @@ def make_bathymetry(data, datalakes_lakes):
         })
     return bathymetry
 
-def model_layers(default, sources, default_depth):
+def model_layers(default, sources, default_depth, spread):
     temperature = {}
     current = {}
     thermocline = {}
@@ -232,7 +232,7 @@ def model_layers(default, sources, default_depth):
       "default_depth": default_depth,
       "displayOptions": {
         "paths": 10,
-        "spread": 1500,
+        "spread": spread,
         "zIndex": 4,
         "particles": True
       },

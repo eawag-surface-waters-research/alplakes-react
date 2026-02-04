@@ -122,6 +122,7 @@ for lake in metadata:
     if '3D' in lake:
         add = True
         home["filters"].append("3D")
+        spread = lake["3D"].get("spread", 500)
         for model_id in lake["3D"]["models"].keys():
             response = requests.get("https://alplakes-api.eawag.ch/simulations/metadata/{}/{}".format(lake["3D"]["models"][model_id]["model"],lake["key"]))
             model_metadata = response.json()
@@ -146,7 +147,7 @@ for lake in metadata:
                     "default_depth": default_depth,
                     "performance": lake["3D"]["models"][lake["3D"]["default"]]["performance"]
                 }}
-        layers["layers"].extend(func.model_layers(lake["3D"]["default"], lake["3D"]["models"], default_depth))
+        layers["layers"].extend(func.model_layers(lake["3D"]["default"], lake["3D"]["models"], default_depth, spread))
 
 
     # One Dimensional Model
