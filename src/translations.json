@@ -443,6 +443,12 @@
     "FR": "Ajouter profil",
     "IT": "Aggiungi profilo"
   },
+  "addParticles": {
+    "EN": "Add particles",
+    "DE": "Partikel hinzufügen",
+    "FR": "Ajouter des particules",
+    "IT": "Aggiungi particelle"
+  },
   "thermocline": {
     "EN": "Thermocline",
     "DE": "Thermokline",

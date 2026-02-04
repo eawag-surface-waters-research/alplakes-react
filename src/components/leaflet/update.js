@@ -283,6 +283,8 @@ const addParticles = async (map, layers, id, options, language, server) => {
     ...defaultOptions,
     ...options.displayOptions,
     enabledFunction: server.disableControls,
+    title: Translate.addParticles[language],
+    hover: Translate.addParticles[language],
   };
   displayOptions.id = options.id;
   layers[id]["particles_control"] = L.control
