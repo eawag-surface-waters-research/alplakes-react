@@ -97,7 +97,7 @@ class Raster extends Component {
     while (targetDate <= endDate) {
       dates.push({
         url: `${url}/${formatAPIDate(
-          targetDate
+          targetDate,
         )}?${model}_${lake}_${formatAPIDate(targetDate)}.nc`,
         date: formatDateLong(targetDate, months),
       });
@@ -108,13 +108,13 @@ class Raster extends Component {
 
   resetMin = () => {
     this.setState({ _min: this.props.options.dataMin }, () =>
-      this.updateMinMax()
+      this.updateMinMax(),
     );
   };
 
   resetMax = () => {
     this.setState({ _max: this.props.options.dataMax }, () =>
-      this.updateMinMax()
+      this.updateMinMax(),
     );
   };
 
@@ -160,7 +160,7 @@ class Raster extends Component {
       key,
       start_date,
       end_date,
-      Translations.axis[language].months
+      Translations.axis[language].months,
     );
     return (
       <div className="layer-settings">
@@ -362,7 +362,7 @@ class Current extends Component {
     while (targetDate <= endDate) {
       dates.push({
         url: `${url}/${formatAPIDate(
-          targetDate
+          targetDate,
         )}?${model}_${lake}_${formatAPIDate(targetDate)}.nc`,
         date: formatDateLong(targetDate, months),
       });
@@ -447,7 +447,7 @@ class Current extends Component {
       key,
       start_date,
       end_date,
-      Translations.axis[language].months
+      Translations.axis[language].months,
     );
     return (
       <div className="layer-settings">
@@ -696,13 +696,13 @@ class Tiff extends Component {
 
   resetMin = () => {
     this.setState({ _min: this.props.options.dataMin }, () =>
-      this.updateMinMax()
+      this.updateMinMax(),
     );
   };
 
   resetMax = () => {
     this.setState({ _max: this.props.options.dataMax }, () =>
-      this.updateMinMax()
+      this.updateMinMax(),
     );
   };
 
@@ -750,7 +750,7 @@ class Tiff extends Component {
     var preStart = this.addDays(start, -7);
     var postEnd = this.addDays(end, 7);
     var numberOfDays = Math.ceil(
-      Math.abs(postEnd.getTime() - preStart.getTime()) / (1000 * 3600 * 24)
+      Math.abs(postEnd.getTime() - preStart.getTime()) / (1000 * 3600 * 24),
     );
     for (var i = 0; i <= numberOfDays; i++) {
       let time = this.addDays(preStart, i);
@@ -1033,6 +1033,24 @@ class Particles extends Component {
     updateOptions(id, "particles", options);
   };
 
+  setIntegrator = (event) => {
+    var { id, updateOptions, options } = this.props;
+    options["integrator"] = event.target.value;
+    updateOptions(id, "particles", options);
+  };
+
+  toggleHeatmap = () => {
+    var { id, updateOptions, options } = this.props;
+    options["heatmap"] = !options["heatmap"];
+    updateOptions(id, "particles", options);
+  };
+
+  toggleReverse = () => {
+    var { id, updateOptions, options } = this.props;
+    options["reverse"] = !options["reverse"];
+    updateOptions(id, "particles", options);
+  };
+
   removeParticles = () => {
     var { id, updateOptions, options } = this.props;
     options["remove"] = true;
@@ -1042,7 +1060,7 @@ class Particles extends Component {
   render() {
     var { language, depth, setDepth, layer, period, setPeriod, setModel } =
       this.props;
-    var { paths, spread, opacity } = this.props.options;
+    var { paths, spread, opacity, heatmap, reverse, integrator } = this.props.options;
     var depths = [];
     var missingDates = [];
     var start_date = new Date();
@@ -1091,6 +1109,28 @@ class Particles extends Component {
           onChange={setDepth}
           language={language}
         />
+        <div className="setting">
+          <label className="switch">
+            <input
+              type="checkbox"
+              checked={!!heatmap}
+              onChange={this.toggleHeatmap}
+            />
+            <span className="slider round"></span>
+          </label>
+          <div className="title">{Translations.heatmap[language]}</div>
+        </div>
+        <div className="setting">
+          <label className="switch">
+            <input
+              type="checkbox"
+              checked={!!reverse}
+              onChange={this.toggleReverse}
+            />
+            <span className="slider round"></span>
+          </label>
+          <div className="title">{Translations.reverse[language]}</div>
+        </div>
         <div className="setting half">
           <div className="label">{Translations.particles[language]}</div>
           <div className="value">{paths}</div>
@@ -1116,16 +1156,11 @@ class Particles extends Component {
           ></input>
         </div>
         <div className="setting half">
-          <div className="label">{Translations.opacity[language]}</div>
-          <div className="value">{opacity}</div>
-          <input
-            type="range"
-            min="0"
-            max="1"
-            step="0.1"
-            value={opacity}
-            onChange={this.setOpacity}
-          ></input>
+          <div className="label">{Translations.integrator[language]}</div>
+          <select value={integrator || "rk4"} onChange={this.setIntegrator}>
+            <option value="rk4">Runge-Kutta 4</option>
+            <option value="euler">Euler</option>
+          </select>
         </div>
         <div className="setting">
           <button className="remove" onClick={this.removeParticles}>

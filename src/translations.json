@@ -1357,6 +1357,24 @@
     "FR": "Dispersion",
     "IT": "Dispersione"
   },
+  "integrator": {
+    "EN": "Integrator",
+    "DE": "Integrator",
+    "FR": "Intégrateur",
+    "IT": "Integratore"
+  },
+  "radius": {
+    "EN": "Radius",
+    "DE": "Radius",
+    "FR": "Rayon",
+    "IT": "Raggio"
+  },
+  "reverse": {
+    "EN": "Reverse",
+    "DE": "Rückwärts",
+    "FR": "Inverser",
+    "IT": "Invertire"
+  },
   "removeParticles": {
     "EN": "Remove particles",
     "DE": "Partikel entfernen",
