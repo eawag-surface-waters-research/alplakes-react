@@ -1,5 +1,5 @@
 import L from "leaflet";
-import "leaflet.heat";
+import HeatmapOverlay from "leaflet-heatmap";
 import * as d3 from "d3";
 
 L.Control.ParticleTracking = L.Control.extend({
@@ -16,7 +16,7 @@ L.Control.ParticleTracking = L.Control.extend({
     enabledFunction: false, // add a custom function
     useTemporalInterpolation: true, // enable temporal interpolation
     useBilinearInterpolation: true, // enable bilinear spatial interpolation
-    trailOpacityMin: 0.05, // minimum trail opacity at the tail
+    trailOpacityMin: 0.15, // minimum trail opacity at the tail
     trailOpacityMax: 0.6, // maximum trail opacity near the particle
     trailFadeLength: 50, // number of steps over which the trail fades near the particle
     labelDisplayDuration: 2000, // display label on load
@@ -25,10 +25,9 @@ L.Control.ParticleTracking = L.Control.extend({
     reverse: false, // track particles backward in time
     integrator: "rk4", // integration method: "euler" or "rk4"
     heatmap: false, // show particles as heatmap
-    heatmapRadius: 20, // heatmap point radius
-    heatmapBlur: 25, // heatmap blur radius
-    heatmapMaxZoom: 18, // heatmap max zoom
-    heatmapMax: 0.7, // heatmap max intensity
+    heatmapRadius: 10, // heatmap point radius
+    heatmapBlur: 0.85, // heatmap blur factor (0-1)
+    heatmapMaxOpacity: 0.8, // heatmap max opacity
   },
   initialize: function (geometry, data, datetime, times, options) {
     L.Util.setOptions(this, options);
@@ -102,11 +101,15 @@ L.Control.ParticleTracking = L.Control.extend({
     if (map.options.zoomAnimation && L.Browser.any3d) {
       map.on("zoomanim", this._animateZoom, this);
     }
-    this._heatLayer = L.heatLayer([], {
+    this._heatLayer = new HeatmapOverlay({
       radius: this.options.heatmapRadius,
       blur: this.options.heatmapBlur,
-      maxZoom: this.options.heatmapMaxZoom,
-      max: this.options.heatmapMax,
+      maxOpacity: this.options.heatmapMaxOpacity,
+      scaleRadius: false,
+      useLocalExtrema: false,
+      latField: "lat",
+      lngField: "lng",
+      valueField: "value",
     });
     if (this.options.heatmap) {
       this._heatLayer.addTo(map);
@@ -205,21 +208,23 @@ L.Control.ParticleTracking = L.Control.extend({
       this._canvas.style.opacity = this.options.opacity;
       this._canvas.style.zIndex = this.options.zIndex + 100;
       if (this._heatLayer) {
-        this._heatLayer.setOptions({
+        if (this._map.hasLayer(this._heatLayer)) {
+          this._map.removeLayer(this._heatLayer);
+        }
+        this._heatLayer = new HeatmapOverlay({
           radius: this.options.heatmapRadius,
           blur: this.options.heatmapBlur,
-          maxZoom: this.options.heatmapMaxZoom,
-          max: this.options.heatmapMax,
+          maxOpacity: this.options.heatmapMaxOpacity,
+          scaleRadius: false,
+          useLocalExtrema: false,
+          latField: "lat",
+          lngField: "lng",
+          valueField: "value",
         });
         if (this.options.heatmap) {
-          if (!this._map.hasLayer(this._heatLayer)) {
-            this._heatLayer.addTo(this._map);
-          }
+          this._heatLayer.addTo(this._map);
           this._canvas.style.display = "none";
         } else {
-          if (this._map.hasLayer(this._heatLayer)) {
-            this._map.removeLayer(this._heatLayer);
-          }
           this._canvas.style.display = "";
         }
       }
@@ -239,7 +244,7 @@ L.Control.ParticleTracking = L.Control.extend({
   clear: function () {
     this._points = [];
     if (this._heatLayer) {
-      this._heatLayer.setLatLngs([]);
+      this._heatLayer.setData({ max: 1, data: [] });
     }
     this._reset();
   },
@@ -247,9 +252,7 @@ L.Control.ParticleTracking = L.Control.extend({
     var currentTimeIndex = this._time_index;
     for (let p = 0; p < this._points.length; p++) {
       this._time_index = this._points[p].seed.index;
-      this._points[p].path = this._calculatePath(
-        this._points[p].seed.latlng,
-      );
+      this._points[p].path = this._calculatePath(this._points[p].seed.latlng);
     }
     this._time_index = currentTimeIndex;
   },
@@ -450,47 +453,37 @@ L.Control.ParticleTracking = L.Control.extend({
       latlng,
       velocity: this._getVelocity(latlng, this._time_index),
     };
+
     if (this.options.reverse) {
       for (let i = this._time_index - 1; i >= 0; i--) {
         let timestep =
-          (this._interpolated_times[i + 1] - this._interpolated_times[i]) /
+          -(this._interpolated_times[i + 1] - this._interpolated_times[i]) /
           1000;
+
         let advected = this._advectParticle(
           path[i + 1].latlng,
-          {
-            x: -path[i + 1].velocity.x,
-            y: -path[i + 1].velocity.y,
-          },
+          path[i + 1].velocity,
           timestep,
           i + 1,
           i,
         );
-        let new_latlng = advected.latlng;
-        let new_velocity = advected.velocity;
 
-        if (new_velocity !== null) {
+        if (advected.velocity !== null) {
           path[i] = {
-            latlng: new_latlng,
-            velocity: new_velocity,
+            latlng: advected.latlng,
+            velocity: advected.velocity,
           };
         } else {
           let slideResult = this._slideAlongBoundary(
             path[i + 1].latlng,
-            {
-              x: -path[i + 1].velocity.x,
-              y: -path[i + 1].velocity.y,
-            },
+            path[i + 1].velocity,
             timestep,
             i,
           );
-          if (slideResult !== null) {
-            path[i] = slideResult;
-          } else {
-            path[i] = {
-              latlng: path[i + 1].latlng,
-              velocity: { x: 0, y: 0 },
-            };
-          }
+          path[i] = slideResult || {
+            latlng: path[i + 1].latlng,
+            velocity: { x: 0, y: 0 },
+          };
         }
       }
     } else {
@@ -502,6 +495,7 @@ L.Control.ParticleTracking = L.Control.extend({
         let timestep =
           (this._interpolated_times[i] - this._interpolated_times[i - 1]) /
           1000;
+
         let advected = this._advectParticle(
           path[i - 1].latlng,
           path[i - 1].velocity,
@@ -509,13 +503,11 @@ L.Control.ParticleTracking = L.Control.extend({
           i - 1,
           i,
         );
-        let new_latlng = advected.latlng;
-        let new_velocity = advected.velocity;
 
-        if (new_velocity !== null) {
+        if (advected.velocity !== null) {
           path[i] = {
-            latlng: new_latlng,
-            velocity: new_velocity,
+            latlng: advected.latlng,
+            velocity: advected.velocity,
           };
         } else {
           let slideResult = this._slideAlongBoundary(
@@ -524,14 +516,10 @@ L.Control.ParticleTracking = L.Control.extend({
             timestep,
             i,
           );
-          if (slideResult !== null) {
-            path[i] = slideResult;
-          } else {
-            path[i] = {
-              latlng: path[i - 1].latlng,
-              velocity: { x: 0, y: 0 },
-            };
-          }
+          path[i] = slideResult || {
+            latlng: path[i - 1].latlng,
+            velocity: { x: 0, y: 0 },
+          };
         }
       }
     }
@@ -834,7 +822,13 @@ L.Control.ParticleTracking = L.Control.extend({
       return this._getRawVelocityAtCell(t[0], t[1], dataTimeIndex0);
     }
   },
-  _advectParticle: function (latlng, velocity, timestep, startTimeIndex, endTimeIndex) {
+  _advectParticle: function (
+    latlng,
+    velocity,
+    timestep,
+    startTimeIndex,
+    endTimeIndex,
+  ) {
     if (this.options.integrator === "rk4") {
       var midTimeIndex = (startTimeIndex + endTimeIndex) / 2;
       var k1 = velocity;
@@ -842,7 +836,10 @@ L.Control.ParticleTracking = L.Control.extend({
       var k2 = this._getVelocity(pos2, midTimeIndex);
       if (k2 === null) {
         var euler = this._moveLocation(latlng, k1, timestep);
-        return { latlng: euler, velocity: this._getVelocity(euler, endTimeIndex) };
+        return {
+          latlng: euler,
+          velocity: this._getVelocity(euler, endTimeIndex),
+        };
       }
       var pos3 = this._moveLocation(latlng, k2, timestep / 2);
       var k3 = this._getVelocity(pos3, midTimeIndex);
@@ -871,7 +868,10 @@ L.Control.ParticleTracking = L.Control.extend({
       return { latlng: newLatlng, velocity: newVelocity };
     }
     var newPos = this._moveLocation(latlng, velocity, timestep);
-    return { latlng: newPos, velocity: this._getVelocity(newPos, endTimeIndex) };
+    return {
+      latlng: newPos,
+      velocity: this._getVelocity(newPos, endTimeIndex),
+    };
   },
   _moveLocation: function (latlng, velocity, time) {
     var new_lat =
@@ -889,40 +889,78 @@ L.Control.ParticleTracking = L.Control.extend({
       this._points.forEach(function (point) {
         if (point.path[this._time_index] != null) {
           var latlng = point.path[this._time_index].latlng;
-          heatPoints.push([latlng.lat, latlng.lng]);
+          heatPoints.push({ lat: latlng.lat, lng: latlng.lng, value: 1 });
         }
       }, this);
-      this._heatLayer.setLatLngs(heatPoints);
+      this._heatLayer.setData({ max: 1, data: heatPoints });
     } else {
       this._ctx.clearRect(0, 0, this._width, this._height);
       this._ctx.lineWidth = 2;
       this._points.forEach(function (point) {
         if (point.path[this._time_index] != null) {
-          var idx = point.seed.index;
           var arc = this._map.latLngToContainerPoint(
             point.path[this._time_index].latlng,
           );
           var rgb = `${point.color[0]}, ${point.color[1]}, ${point.color[2]}`;
           var minA = this.options.trailOpacityMin;
           var maxA = this.options.trailOpacityMax;
-          var fadeLen = this.options.trailFadeLength;        
-          var fadeStart = Math.max(idx, this._time_index - fadeLen);
-          var prev = this._map.latLngToContainerPoint(point.path[idx].latlng);
-          for (let i = idx + 1; i <= this._time_index; i++) {
-            if (point.path[i] == null) break;
-            let p = this._map.latLngToContainerPoint(point.path[i].latlng);
-            let a;
-            if (i <= fadeStart) {
-              a = minA;
-            } else {
-              a = minA + (maxA - minA) * ((i - fadeStart) / (this._time_index - fadeStart));
+          var fadeLen = this.options.trailFadeLength;
+
+          if (this.options.reverse) {
+            // Find earliest non-null path entry for reverse trail
+            let trailStart = this._time_index;
+            for (let i = 0; i < this._time_index; i++) {
+              if (point.path[i] != null) {
+                trailStart = i;
+                break;
+              }
             }
-            this._ctx.beginPath();
-            this._ctx.moveTo(prev.x, prev.y);
-            this._ctx.lineTo(p.x, p.y);
-            this._ctx.strokeStyle = `rgba(${rgb}, ${a})`;
-            this._ctx.stroke();
-            prev = p;
+            let fadeStart = Math.max(trailStart, this._time_index - fadeLen);
+            let prev = this._map.latLngToContainerPoint(
+              point.path[trailStart].latlng,
+            );
+            for (let i = trailStart + 1; i <= this._time_index; i++) {
+              if (point.path[i] == null) break;
+              let p = this._map.latLngToContainerPoint(point.path[i].latlng);
+              let a;
+              if (i <= fadeStart) {
+                a = minA;
+              } else {
+                a =
+                  minA +
+                  (maxA - minA) *
+                    ((i - fadeStart) / (this._time_index - fadeStart));
+              }
+              this._ctx.beginPath();
+              this._ctx.moveTo(prev.x, prev.y);
+              this._ctx.lineTo(p.x, p.y);
+              this._ctx.strokeStyle = `rgba(${rgb}, ${a})`;
+              this._ctx.stroke();
+              prev = p;
+            }
+          } else {
+            let idx = point.seed.index;
+            let fadeStart = Math.max(idx, this._time_index - fadeLen);
+            let prev = this._map.latLngToContainerPoint(point.path[idx].latlng);
+            for (let i = idx + 1; i <= this._time_index; i++) {
+              if (point.path[i] == null) break;
+              let p = this._map.latLngToContainerPoint(point.path[i].latlng);
+              let a;
+              if (i <= fadeStart) {
+                a = minA;
+              } else {
+                a =
+                  minA +
+                  (maxA - minA) *
+                    ((i - fadeStart) / (this._time_index - fadeStart));
+              }
+              this._ctx.beginPath();
+              this._ctx.moveTo(prev.x, prev.y);
+              this._ctx.lineTo(p.x, p.y);
+              this._ctx.strokeStyle = `rgba(${rgb}, ${a})`;
+              this._ctx.stroke();
+              prev = p;
+            }
           }
 
           this._ctx.fillStyle = `rgb(${rgb})`;

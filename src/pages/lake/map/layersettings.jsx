@@ -1060,7 +1060,7 @@ class Particles extends Component {
   render() {
     var { language, depth, setDepth, layer, period, setPeriod, setModel } =
       this.props;
-    var { paths, spread, opacity, heatmap, reverse, integrator } = this.props.options;
+    var { paths, spread, heatmap, reverse, integrator } = this.props.options;
     var depths = [];
     var missingDates = [];
     var start_date = new Date();
@@ -1074,7 +1074,6 @@ class Particles extends Component {
         end_date,
       } = layer.sources[layer.source].metadata);
     }
-    opacity = opacity ? opacity : 1;
     return (
       <div className="layer-settings">
         <div className="setting">
