@@ -5,9 +5,8 @@ import * as d3 from "d3";
 L.Control.ParticleTracking = L.Control.extend({
   options: {
     position: "topleft", // location of control button
-    paths: 10, // number of paths to add with each click
-    spread: 100, // spread of the added paths
-    opacity: 1, // opacity of the canvas
+    particles: 10, // number of particles to add with each click
+    spread: 100, // spread of the added particles
     zIndex: 300, // z-index of the canvas
     nCols: 200, // number of columns in interpolated velocity grid
     nRows: 200, // number of rows in interpolated velocity grid
@@ -170,7 +169,6 @@ L.Control.ParticleTracking = L.Control.extend({
       "msTransformOrigin",
     ]);
     canvas.style[originProp] = "50% 50%";
-    canvas.style.opacity = this.options.opacity;
     canvas.style.zIndex = this.options.zIndex + 100;
 
     var size = this._map.getSize();
@@ -205,7 +203,6 @@ L.Control.ParticleTracking = L.Control.extend({
     if (options) {
       var prevIntegrator = this.options.integrator;
       L.Util.setOptions(this, options);
-      this._canvas.style.opacity = this.options.opacity;
       this._canvas.style.zIndex = this.options.zIndex + 100;
       if (this._heatLayer) {
         if (this._map.hasLayer(this._heatLayer)) {
@@ -420,7 +417,7 @@ L.Control.ParticleTracking = L.Control.extend({
     var latlng = e.latlng;
     if (this._getIndexAtPoint(e.latlng.lng, e.latlng.lat) !== null) {
       var color = this._getRandomColor();
-      for (var i = 0; i < this.options.paths; i++) {
+      for (var i = 0; i < this.options.particles; i++) {
         var angle = Math.random() * Math.PI * 2;
         var randomRadius = Math.random() * this.options.spread;
         var dx = randomRadius * Math.cos(angle);

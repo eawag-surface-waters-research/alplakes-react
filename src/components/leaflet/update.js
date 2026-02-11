@@ -37,7 +37,6 @@ export const update = async (
       points: addPoints,
       raster: addRaster,
       vector: addVectorField,
-      particles: addParticles,
     },
     updateLayer: {
       tiff: updateTiff,
@@ -223,13 +222,30 @@ const addVectorField = async (map, layers, id, options, language, server) => {
     opacity: 1,
     interpolate: false,
   };
-  var displayOptions = { ...defaultOptions, ...options.displayOptions };
+  var displayOptions = {
+    ...defaultOptions,
+    ...options.displayOptions,
+    enabledFunction: server.disableControls,
+    title: Translate.addParticles[language],
+    hover: Translate.addParticles[language],
+  };
+  displayOptions.id = options.id;
   layers[id]["data"] = { geometry: options.geometry, data: options.data };
   layers[id]["vector"] = new L.vectorfield(
     options.geometry,
     options.data,
     displayOptions,
   ).addTo(map);
+
+  layers[id]["particles_control"] = L.control
+    .particleTracking(
+      options.geometry,
+      options.fullData,
+      options.datetime,
+      options.times,
+      displayOptions,
+    )
+    .addTo(map);
 };
 
 const updateVectorField = (map, layers, id, options, language) => {
@@ -273,29 +289,6 @@ const updateStreamlines = (map, layers, id, options, language) => {
       ).addTo(map);
     }
   }
-};
-
-const addParticles = async (map, layers, id, options, language, server) => {
-  var defaultOptions = {
-    opacity: 1,
-  };
-  var displayOptions = {
-    ...defaultOptions,
-    ...options.displayOptions,
-    enabledFunction: server.disableControls,
-    title: Translate.addParticles[language],
-    hover: Translate.addParticles[language],
-  };
-  displayOptions.id = options.id;
-  layers[id]["particles_control"] = L.control
-    .particleTracking(
-      options.geometry,
-      options.data,
-      options.datetime,
-      options.times,
-      displayOptions,
-    )
-    .addTo(map);
 };
 
 const updateParticles = (map, layers, id, options, language) => {

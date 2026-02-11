@@ -9,7 +9,6 @@ import profile_icon from "../../../img/profile.png";
 import secchi_icon from "../../../img/secchi.png";
 import turbidity_icon from "../../../img/turbidity.png";
 import rgb_icon from "../../../img/rgb.png";
-import particles_icon from "../../../img/particles.png";
 import thermocline_icon from "../../../img/thermocline.png";
 import oxygen_icon from "../../../img/oxygen.png";
 import forel_icon from "../../../img/forel.png";
@@ -56,7 +55,6 @@ class Sidebar extends Component {
       realcolor: rgb_icon,
       transect: transect_icon,
       profile: profile_icon,
-      particles: particles_icon,
       thermocline: thermocline_icon,
       oxygensat: oxygen_icon,
       forelule: forel_icon,
@@ -116,9 +114,6 @@ class Sidebar extends Component {
                       maxLength={120}
                       toggle={true}
                     />
-                  </div>
-                  <div className="sidebar-content-settings">
-                    {Translations.settings[language]}
                   </div>
                   <LayerSettings
                     layer={layer}

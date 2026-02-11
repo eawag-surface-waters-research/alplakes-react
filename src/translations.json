@@ -29,11 +29,35 @@
     "FR": "À propos",
     "IT": "Sopra"
   },
+  "layers": {
+    "EN": "Layers",
+    "DE": "Ebenen",
+    "FR": "Calques",
+    "IT": "Livelli"
+  },
   "addlayers": {
     "EN": "Add Layers",
     "DE": "Ebenen hinzufügen",
     "FR": "Ajouter des calques",
     "IT": "Aggiungi strati"
+  },
+  "imageSelection": {
+    "EN": "Image Selection",
+    "DE": "Bildauswahl",
+    "FR": "Sélection d'image",
+    "IT": "Selezione immagine"
+  },
+  "displaySettings": {
+    "EN": "Display Settings",
+    "DE": "Anzeigeeinstellungen",
+    "FR": "Paramètres d'affichage",
+    "IT": "Impostazioni di visualizzazione"
+  },
+  "particleTracking": {
+    "EN": "Particle Tracking",
+    "DE": "Partikelverfolgung",
+    "FR": "Suivi de particules",
+    "IT": "Tracciamento particelle"
   },
   "surfacetemperature": {
     "EN": "Water temperature",
