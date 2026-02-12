@@ -29,11 +29,53 @@
     "FR": "À propos",
     "IT": "Sopra"
   },
+  "layers": {
+    "EN": "Layers",
+    "DE": "Ebenen",
+    "FR": "Calques",
+    "IT": "Livelli"
+  },
   "addlayers": {
     "EN": "Add Layers",
     "DE": "Ebenen hinzufügen",
     "FR": "Ajouter des calques",
     "IT": "Aggiungi strati"
+  },
+  "removeLayer": {
+    "EN": "Remove layer",
+    "DE": "Ebene entfernen",
+    "FR": "Supprimer le calque",
+    "IT": "Rimuovi livello"
+  },
+  "imageSelection": {
+    "EN": "Image Selection",
+    "DE": "Bildauswahl",
+    "FR": "Sélection d'image",
+    "IT": "Selezione immagine"
+  },
+  "displaySettings": {
+    "EN": "Display Settings",
+    "DE": "Anzeigeeinstellungen",
+    "FR": "Paramètres d'affichage",
+    "IT": "Impostazioni di visualizzazione"
+  },
+  "modelSettings": {
+    "EN": "Model Settings",
+    "DE": "Modelleinstellungen",
+    "FR": "Paramètres du modèle",
+    "IT": "Impostazioni del modello"
+  },
+  "rawModelOutput": {
+    "EN": "Raw model output",
+    "DE": "Rohe Modellausgabe",
+    "FR": "Sortie brute du modèle",
+    "IT": "Output grezzo del modello"
+  },
+  "particleTracking": {
+    "EN": "Particle Tracking",
+    "DE": "Partikelverfolgung",
+    "FR": "Suivi de particules",
+    "IT": "Tracciamento particelle"
   },
   "surfacetemperature": {
     "EN": "Water temperature",
@@ -1356,6 +1398,24 @@
     "DE": "Streuung",
     "FR": "Dispersion",
     "IT": "Dispersione"
+  },
+  "integrator": {
+    "EN": "Integrator",
+    "DE": "Integrator",
+    "FR": "Intégrateur",
+    "IT": "Integratore"
+  },
+  "radius": {
+    "EN": "Radius",
+    "DE": "Radius",
+    "FR": "Rayon",
+    "IT": "Raggio"
+  },
+  "reverse": {
+    "EN": "Reverse",
+    "DE": "Rückwärts",
+    "FR": "Inverser",
+    "IT": "Invertire"
   },
   "removeParticles": {
     "EN": "Remove particles",

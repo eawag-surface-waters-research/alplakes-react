@@ -266,7 +266,7 @@ const threedDownload = async (
     } else {
       index = Math.ceil((datetime - data[layer.parameter].start) / timestep);
     }
-    const plotTypes = ["raster", "streamlines", "vector"].filter(
+    const plotTypes = ["raster", "streamlines"].filter(
       (p) => p in layer.displayOptions && layer.displayOptions[p],
     );
     for (let plotType of plotTypes) {
@@ -281,14 +281,15 @@ const threedDownload = async (
         },
       });
     }
-    if (layer.display === "particles") {
+    if (layer.display === "current") {
       updates.push({
         event: "addLayer",
-        type: "particles",
+        type: "vector",
         id: layer.id,
         options: {
           id: mapId,
-          data: data[layer.parameter].data,
+          data: data[layer.parameter].data[index],
+          fullData: data[layer.parameter].data,
           datetime: datetime.getTime(),
           times: data[layer.parameter].time.map((t) => t.getTime()),
           geometry: data.geometry,
