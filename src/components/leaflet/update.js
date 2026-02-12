@@ -299,6 +299,10 @@ const updateParticles = (map, layers, id, options, language) => {
     layers[id]["particles_control"].clear();
     options.remove = false;
   }
+  if ("applyDiffusion" in options && options.applyDiffusion) {
+    layers[id]["particles_control"].applyDiffusion();
+    options.applyDiffusion = false;
+  }
   layers[id]["particles_control"].update(false, options);
 };
 

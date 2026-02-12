@@ -5,7 +5,8 @@ import * as d3 from "d3";
 L.Control.ParticleTracking = L.Control.extend({
   options: {
     position: "topleft", // location of control button
-    particles: 10, // number of particles to add with each click
+    particles: 50, // number of particles to add with each click
+    particlesWarning: 2000,
     spread: 100, // spread of the added particles
     zIndex: 300, // z-index of the canvas
     nCols: 200, // number of columns in interpolated velocity grid
@@ -23,6 +24,7 @@ L.Control.ParticleTracking = L.Control.extend({
     hover: "", // tooltip hover text
     reverse: false, // track particles backward in time
     integrator: "rk4", // integration method: "euler" or "rk4"
+    diffusion: 0, // eddy diffusivity K in m²/s (0 = off), cloud variance grows as 4Kt
     heatmap: false, // show particles as heatmap
     heatmapRadius: 10, // heatmap point radius
     heatmapBlur: 0.85, // heatmap blur factor (0-1)
@@ -414,6 +416,14 @@ L.Control.ParticleTracking = L.Control.extend({
     return [r, g, b];
   },
   _addPoints: function (e) {
+    if (
+      this._points.length >= this.options.particlesWarning &&
+      this._points.length - this.options.particles < this.options.particlesWarning
+    ) {
+      window.alert(
+        "You have " + this._points.length + " particles. Adding more may make the browser laggy."
+      );
+    }
     var latlng = e.latlng;
     if (this._getIndexAtPoint(e.latlng.lng, e.latlng.lat) !== null) {
       var color = this._getRandomColor();
@@ -879,6 +889,132 @@ L.Control.ParticleTracking = L.Control.extend({
         Math.cos((latlng.lat * Math.PI) / 180);
     return L.latLng(new_lat, new_lng);
   },
+  applyDiffusion: function () {
+    if (this.options.diffusion === 0 || this._points.length === 0) return;
+    for (let p = 0; p < this._points.length; p++) {
+      var point = this._points[p];
+      if (this.options.reverse) {
+        var earliestPos = null;
+        var earliestIdx = 0;
+        for (let i = 0; i < point.path.length; i++) {
+          if (point.path[i] != null) {
+            earliestPos = point.path[i];
+            earliestIdx = i;
+            break;
+          }
+        }
+        var path = new Array(this._interpolated_times.length).fill(null);
+        path[earliestIdx] = earliestPos;
+        point.path = path;
+        point.seed.index = earliestIdx;
+      } else {
+        path = new Array(this._interpolated_times.length).fill(null);
+        var seedIndex = point.seed.index;
+        path[seedIndex] = {
+          latlng: point.seed.latlng,
+          velocity: this._getVelocity(point.seed.latlng, seedIndex),
+        };
+        point.path = path;
+      }
+    }
+
+    var earliestSeed = this._interpolated_times.length;
+    for (let p = 0; p < this._points.length; p++) {
+      earliestSeed = Math.min(earliestSeed, this._points[p].seed.index);
+    }
+    for (let i = earliestSeed + 1; i < this._interpolated_times.length; i++) {
+      this._stepWithDiffusion(i, i - 1);
+    }
+
+    this._plotPoints();
+  },
+  removeDiffusion: function () {
+    if (this._points.length === 0) return;
+    var currentTimeIndex = this._time_index;
+    for (let p = 0; p < this._points.length; p++) {
+      var point = this._points[p];
+      this._time_index = point.seed.index;
+      point.path = this._calculatePath(point.seed.latlng);
+    }
+    this._time_index = currentTimeIndex;
+    this._plotPoints();
+  },
+  _stepWithDiffusion: function (targetIndex, sourceIndex) {
+    var activePositions = [];
+    var activeIndices = [];
+    for (let p = 0; p < this._points.length; p++) {
+      if (
+        this._points[p].path[sourceIndex] != null &&
+        sourceIndex >= this._points[p].seed.index
+      ) {
+        activePositions.push(this._points[p].path[sourceIndex].latlng);
+        activeIndices.push(p);
+      }
+    }
+    if (activePositions.length === 0) return;
+
+    var timestep =
+      (this._interpolated_times[targetIndex] -
+        this._interpolated_times[sourceIndex]) /
+      1000;
+
+    for (let k = 0; k < activeIndices.length; k++) {
+      var point = this._points[activeIndices[k]];
+      var latlng = point.path[sourceIndex].latlng;
+      var velocity = point.path[sourceIndex].velocity;
+      if (velocity == null) continue;
+
+      var diffVel = this._computeDiffusionVelocity(latlng, activePositions);
+      var totalVelocity = {
+        x: velocity.x + diffVel.x,
+        y: velocity.y + diffVel.y,
+      };
+
+      var newLatlng = this._moveLocation(latlng, totalVelocity, timestep);
+      var newVelocity = this._getVelocity(newLatlng, targetIndex);
+
+      if (newVelocity !== null) {
+        point.path[targetIndex] = {
+          latlng: newLatlng,
+          velocity: newVelocity,
+        };
+      } else {
+        var slideResult = this._slideAlongBoundary(
+          latlng,
+          totalVelocity,
+          timestep,
+          targetIndex,
+        );
+        point.path[targetIndex] = slideResult || {
+          latlng: latlng,
+          velocity: { x: 0, y: 0 },
+        };
+      }
+    }
+  },
+  _computeDiffusionVelocity: function (latlng, allPositions) {
+    var K = this.options.diffusion;
+    var N = allPositions.length - 1;
+    if (N <= 0) return { x: 0, y: 0 };
+    var D = (4 * K) / N;
+    var mPerDegLat = 111320;
+    var mPerDegLng = 111320 * Math.cos((latlng.lat * Math.PI) / 180);
+    var vx = 0;
+    var vy = 0;
+
+    for (let k = 0; k < allPositions.length; k++) {
+      var other = allPositions[k];
+      var dx = (latlng.lng - other.lng) * mPerDegLng;
+      var dy = (latlng.lat - other.lat) * mPerDegLat;
+      var distSq = dx * dx + dy * dy;
+      if (distSq < 1) continue;
+      var dist = Math.sqrt(distSq);
+      vx += (D * dx) / (dist * dist);
+      vy += (D * dy) / (dist * dist);
+    }
+
+    return { x: vx, y: vy };
+  },
   _plotPoints: function () {
     if (this.options.heatmap && this._heatLayer) {
       this._ctx.clearRect(0, 0, this._width, this._height);
@@ -904,7 +1040,6 @@ L.Control.ParticleTracking = L.Control.extend({
           var fadeLen = this.options.trailFadeLength;
 
           if (this.options.reverse) {
-            // Find earliest non-null path entry for reverse trail
             let trailStart = this._time_index;
             for (let i = 0; i < this._time_index; i++) {
               if (point.path[i] != null) {

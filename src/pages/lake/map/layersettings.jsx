@@ -426,6 +426,12 @@ class Current extends Component {
     updateOptions(id, "particles", options);
   };
 
+  setDiffusion = (event) => {
+    var { id, updateOptions, options } = this.props;
+    options["diffusion"] = event.target.value;
+    updateOptions(id, "particles", options);
+  };
+
   setIntegrator = (event) => {
     var { id, updateOptions, options } = this.props;
     options["integrator"] = event.target.value;
@@ -441,6 +447,12 @@ class Current extends Component {
   toggleReverse = () => {
     var { id, updateOptions, options } = this.props;
     options["reverse"] = !options["reverse"];
+    updateOptions(id, "particles", options);
+  };
+
+  applyDiffusion = () => {
+    var { id, updateOptions, options } = this.props;
+    options["applyDiffusion"] = true;
     updateOptions(id, "particles", options);
   };
 
@@ -484,6 +496,7 @@ class Current extends Component {
       heatmap,
       spread,
       integrator,
+      diffusion,
     } = this.props.options;
     var depths = [];
     var missingDates = [];
@@ -500,6 +513,7 @@ class Current extends Component {
     }
     spread = spread ? spread : 500;
     particles = particles ? particles : 50;
+    diffusion = diffusion ? diffusion : 0;
     var { model, key } = layer.sources[layer.source];
     var downloadDates = this.downloadDates(
       model,
@@ -694,6 +708,23 @@ class Current extends Component {
               value={Math.log10(spread)}
               onChange={this.setSpread}
             ></input>
+          </div>
+          <div className="setting half">
+            <div className="label">{Translations.diffusion[language]}</div>
+            <div className="value">{diffusion}</div>
+            <input
+              type="range"
+              min="0"
+              max="2"
+              step="0.01"
+              value={diffusion}
+              onChange={this.setDiffusion}
+            ></input>
+          </div>
+          <div className="setting half">
+            <button className="update" onClick={this.applyDiffusion}>
+              {Translations.computeDiffusion[language]}
+            </button>
           </div>
           <div className="setting half">
             <div className="label">{Translations.integrator[language]}</div>
@@ -1175,9 +1206,7 @@ class LayerSettings extends Component {
         <Tiff id={layer.id} options={layer.displayOptions} {...this.props} />
       );
     } else {
-      return (
-        <React.Fragment />
-      );
+      return <React.Fragment />;
     }
   }
 }

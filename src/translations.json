@@ -35,6 +35,18 @@
     "FR": "Calques",
     "IT": "Livelli"
   },
+  "diffusion": {
+    "EN": "Diffusion",
+    "DE": "Diffusion",
+    "FR": "Diffusion",
+    "IT": "Diffusione"
+  },
+  "computeDiffusion": {
+    "EN": "Compute diffusion",
+    "DE": "Diffusion berechnen",
+    "FR": "Calculer la diffusion",
+    "IT": "Calcola diffusione"
+  },
   "addlayers": {
     "EN": "Add Layers",
     "DE": "Ebenen hinzufügen",
@@ -1421,7 +1433,7 @@
     "EN": "Remove particles",
     "DE": "Partikel entfernen",
     "FR": "Supprimer les particules",
-    "IT": "RetiRimuovi particellecolo"
+    "IT": "Rimuovi particelle"
   },
   "smoothing": {
     "EN": "Smoothing",
