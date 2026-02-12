@@ -138,6 +138,7 @@ class ThreeDModel extends Component {
       type: "vector",
       id: "3D_currents",
       options: {
+        hideParticles: true,
         data: data.velocity.data[index],
         geometry: data.geometry,
         displayOptions: {

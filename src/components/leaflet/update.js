@@ -237,15 +237,18 @@ const addVectorField = async (map, layers, id, options, language, server) => {
     displayOptions,
   ).addTo(map);
 
-  layers[id]["particles_control"] = L.control
-    .particleTracking(
-      options.geometry,
-      options.fullData,
-      options.datetime,
-      options.times,
-      displayOptions,
-    )
-    .addTo(map);
+  if (options.hideParticles) {
+  } else {
+    layers[id]["particles_control"] = L.control
+      .particleTracking(
+        options.geometry,
+        options.fullData,
+        options.datetime,
+        options.times,
+        displayOptions,
+      )
+      .addTo(map);
+  }
 };
 
 const updateVectorField = (map, layers, id, options, language) => {

@@ -970,6 +970,7 @@
         left: 18px;
         top: 15px;
         right: unset;
+        background-color: var(--select-color);
     }
 
     .main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .sidebar-content-description {
@@ -981,16 +982,16 @@
     }
 
     .main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .layer-settings {
-        height: calc(100% - 33px);
+        height: calc(100% - 43px);
         overflow: auto;
         border-bottom: 1px solid var(--border-color);
+        margin-top: 10px;
     }
 
     .main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .layer-settings .layer-settings-section {
         padding: 13px;
         background-color: var(--select-color);
         margin-bottom: 10px;
-        margin-top: 16px;
     }
 
     .main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .layer-settings .custom-css-datepicker .react-datepicker {
