@@ -77,6 +77,7 @@ class Sidebar extends Component {
                 layers={layers}
                 language={language}
                 images={images}
+                selection={selection}
                 setSelection={setSelection}
                 removeLayer={removeLayer}
                 toggleAddLayersModal={this.toggleAddLayersModal}
@@ -97,6 +98,7 @@ class Sidebar extends Component {
                   </div>
                   <div
                     className="sidebar-content-remove"
+                    title={Translations.removeLayer[language]}
                     onClick={() => removeLayer(layer.id)}
                   >
                     <img src={trash_icon} alt="Trash" />

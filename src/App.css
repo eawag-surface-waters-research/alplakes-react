@@ -667,6 +667,7 @@ p {
   font-size: 14px;
   padding: 5px 12px;
   transition: all .33s ease;
+  margin-top: 20px;
 }
 
 .main .setting button.remove:hover {

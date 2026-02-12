@@ -41,6 +41,12 @@
     "FR": "Ajouter des calques",
     "IT": "Aggiungi strati"
   },
+  "removeLayer": {
+    "EN": "Remove layer",
+    "DE": "Ebene entfernen",
+    "FR": "Supprimer le calque",
+    "IT": "Rimuovi livello"
+  },
   "imageSelection": {
     "EN": "Image Selection",
     "DE": "Bildauswahl",
@@ -52,6 +58,18 @@
     "DE": "Anzeigeeinstellungen",
     "FR": "Paramètres d'affichage",
     "IT": "Impostazioni di visualizzazione"
+  },
+  "modelSettings": {
+    "EN": "Model Settings",
+    "DE": "Modelleinstellungen",
+    "FR": "Paramètres du modèle",
+    "IT": "Impostazioni del modello"
+  },
+  "rawModelOutput": {
+    "EN": "Raw model output",
+    "DE": "Rohe Modellausgabe",
+    "FR": "Sortie brute du modèle",
+    "IT": "Output grezzo del modello"
   },
   "particleTracking": {
     "EN": "Particle Tracking",

@@ -468,7 +468,9 @@ class Map extends Component {
     sidebar = true;
     const url = new URL(window.location.href);
     const id = url.pathname.replace("map", "").replace(/[^a-zA-Z ]/g, "");
-    const queryParams = new URLSearchParams(window.location.search);
+    const queryParams = new URLSearchParams(
+      window.location.search.replace("3D_particles", "3D_currents"),
+    );
     if (queryParams.get("iframe")) {
       sidebar = false;
     }

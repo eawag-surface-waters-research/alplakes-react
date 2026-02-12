@@ -164,124 +164,139 @@ class Raster extends Component {
     );
     return (
       <div className="layer-settings">
-        <div className="setting half">
-          <div className="label">{Translations.model[language]}</div>
-          <select
-            value={layer["source"]}
-            onChange={(event) => setModel(event, layer.id)}
-          >
-            {Object.entries(layer["sources"]).map(([key, value]) => (
-              <option key={key} value={key}>
-                {value.name}
-              </option>
-            ))}
-          </select>
+        <div className="sidebar-content-settings">
+          {Translations.modelSettings[language]}
         </div>
-        <div className="setting half">
-          <div className="label">{Translations.source[language]}</div>
-          <div>
-            <a
-              href="https://www.eawag.ch"
-              alt="Eawag"
-              target="_blank"
-              rel="noopener noreferrer"
+        <div className="layer-settings-section">
+          <div className="setting half">
+            <div className="label">{Translations.model[language]}</div>
+            <select
+              value={layer["source"]}
+              onChange={(event) => setModel(event, layer.id)}
             >
-              Eawag
-            </a>
+              {Object.entries(layer["sources"]).map(([key, value]) => (
+                <option key={key} value={key}>
+                  {value.name}
+                </option>
+              ))}
+            </select>
           </div>
-        </div>
-        <div className="setting">
-          <div className="label">{Translations.period[language]}</div>
-          <div className="period-selector">
-            <Period
-              period={period}
-              setPeriod={setPeriod}
-              language={language}
-              minDate={start_date}
-              maxDate={end_date}
-              missingDates={missingDates}
-            />
+          <div className="setting half">
+            <div className="label">{Translations.source[language]}</div>
+            <div>
+              <a
+                href="https://www.eawag.ch"
+                alt="Eawag"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Eawag
+              </a>
+            </div>
           </div>
+          <div className="setting">
+            <div className="label">{Translations.period[language]}</div>
+            <div className="period-selector">
+              <Period
+                period={period}
+                setPeriod={setPeriod}
+                language={language}
+                minDate={start_date}
+                maxDate={end_date}
+                missingDates={missingDates}
+              />
+            </div>
+          </div>
+          <Depth
+            depth={depth}
+            depths={depths}
+            onChange={setDepth}
+            language={language}
+          />
         </div>
-        <Depth
-          depth={depth}
-          depths={depths}
-          onChange={setDepth}
-          language={language}
-        />
-        <div className="setting half">
-          <div className="label">Min</div>
-          <div className="minmax">
+        <div className="sidebar-content-settings">
+          {Translations.displaySettings[language]}
+        </div>
+        <div className="layer-settings-section">
+          <div className="setting half">
+            <div className="label">Min</div>
+            <div className="minmax">
+              <input
+                type="number"
+                className="with-button"
+                value={_min}
+                step="0.1"
+                onChange={this.setMin}
+                onBlur={this.updateMinMax}
+                onKeyDown={this.enterMinMax}
+                id={"raster_min_" + id}
+              />
+              <img
+                src={refreshIcon}
+                alt="Reset"
+                onClick={this.resetMin}
+                className="reset"
+                title="Reset"
+              />
+            </div>
+          </div>
+          <div className="setting half">
+            <div className="label">Max</div>
+            <div className="minmax">
+              <input
+                type="number"
+                className="with-button"
+                value={_max}
+                step="0.1"
+                onChange={this.setMax}
+                onBlur={this.updateMinMax}
+                onKeyDown={this.enterMinMax}
+                id={"raster_max_" + id}
+              />
+              <img
+                src={refreshIcon}
+                alt="Reset"
+                onClick={this.resetMax}
+                className="reset"
+                title="Reset"
+              />
+            </div>
+          </div>
+          <div className="setting">
+            <div className="label">{Translations.opacity[language]}</div>
+            <div className="value">{opacity}</div>
             <input
-              type="number"
-              className="with-button"
-              value={_min}
+              type="range"
+              min="0"
+              max="1"
               step="0.1"
-              onChange={this.setMin}
-              onBlur={this.updateMinMax}
-              onKeyDown={this.enterMinMax}
-              id={"raster_min_" + id}
-            />
-            <img
-              src={refreshIcon}
-              alt="Reset"
-              onClick={this.resetMin}
-              className="reset"
-              title="Reset"
-            />
+              value={opacity}
+              onChange={this.setOpacity}
+            ></input>
+          </div>
+          <div className="setting">
+            <div className="label">Palette</div>
+            <div className="value">{paletteName}</div>
+            <ColorRamp onChange={this.setPalette} value={paletteName} />
           </div>
         </div>
-        <div className="setting half">
-          <div className="label">Max</div>
-          <div className="minmax">
-            <input
-              type="number"
-              className="with-button"
-              value={_max}
-              step="0.1"
-              onChange={this.setMax}
-              onBlur={this.updateMinMax}
-              onKeyDown={this.enterMinMax}
-              id={"raster_max_" + id}
-            />
-            <img
-              src={refreshIcon}
-              alt="Reset"
-              onClick={this.resetMax}
-              className="reset"
-              title="Reset"
-            />
-          </div>
+        <div className="sidebar-content-settings">
+          {Translations.download[language]}
         </div>
-        <div className="setting">
-          <div className="label">{Translations.opacity[language]}</div>
-          <div className="value">{opacity}</div>
-          <input
-            type="range"
-            min="0"
-            max="1"
-            step="0.1"
-            value={opacity}
-            onChange={this.setOpacity}
-          ></input>
-        </div>
-        <div className="setting">
-          <div className="label">Palette</div>
-          <div className="value">{paletteName}</div>
-          <ColorRamp onChange={this.setPalette} value={paletteName} />
-        </div>
-        <div className="setting">
-          <div className="label">{Translations.download[language]}</div>
-          <select defaultValue="" onChange={this.downloadFile}>
-            <option disabled value="">
-              {Translations.selectWeek[language]}
-            </option>
-            {downloadDates.reverse().map((d) => (
-              <option key={d.url} value={d.url}>
-                {d.date}
+        <div className="layer-settings-section">
+          <div className="setting">
+            <div className="label">{Translations.rawModelOutput[language]}</div>
+            <select defaultValue="" onChange={this.downloadFile}>
+              <option disabled value="">
+                {Translations.selectWeek[language]}
               </option>
-            ))}
-          </select>
+              {downloadDates.reverse().map((d) => (
+                <option key={d.url} value={d.url}>
+                  {d.date}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
       </div>
     );
@@ -470,7 +485,6 @@ class Current extends Component {
       spread,
       integrator,
     } = this.props.options;
-    var { model, key } = layer.sources[layer.source];
     var depths = [];
     var missingDates = [];
     var start_date = new Date();
@@ -484,7 +498,9 @@ class Current extends Component {
         end_date,
       } = layer.sources[layer.source].metadata);
     }
-
+    spread = spread ? spread : 500;
+    particles = particles ? particles : 50;
+    var { model, key } = layer.sources[layer.source];
     var downloadDates = this.downloadDates(
       model,
       key,
@@ -492,196 +508,223 @@ class Current extends Component {
       end_date,
       Translations.axis[language].months,
     );
-    spread = spread ? spread : 500;
-    particles = particles ? particles : 10;
     return (
       <div className="layer-settings">
-        <div className="setting half">
-          <div className="label">{Translations.model[language]}</div>
-          <select
-            value={layer["source"]}
-            onChange={(event) => setModel(event, layer.id)}
-          >
-            {Object.entries(layer["sources"]).map(([key, value]) => (
-              <option key={key} value={key}>
-                {value.name}
-              </option>
-            ))}
-          </select>
+        <div className="sidebar-content-settings">
+          {Translations.modelSettings[language]}
         </div>
-        <div className="setting half">
-          <div className="label">{Translations.source[language]}</div>
-          <div>
-            <a
-              href="https://www.eawag.ch"
-              alt="Eawag"
-              target="_blank"
-              rel="noopener noreferrer"
+        <div className="layer-settings-section">
+          <div className="setting half">
+            <div className="label">{Translations.model[language]}</div>
+            <select
+              value={layer["source"]}
+              onChange={(event) => setModel(event, layer.id)}
             >
-              Eawag
-            </a>
+              {Object.entries(layer["sources"]).map(([key, value]) => (
+                <option key={key} value={key}>
+                  {value.name}
+                </option>
+              ))}
+            </select>
           </div>
-        </div>
-        <div className="setting">
-          <div className="label">{Translations.period[language]}</div>
-          <div className="period-selector">
-            <Period
-              period={period}
-              setPeriod={setPeriod}
-              language={language}
-              minDate={start_date}
-              maxDate={end_date}
-              missingDates={missingDates}
-            />
-          </div>
-        </div>
-        <Depth
-          depth={depth}
-          depths={depths}
-          onChange={setDepth}
-          language={language}
-        />
-        <div className="setting-section">{Translations.layers[language]}</div>
-        <ToggleBox
-          open={vector}
-          title={Translations.arrows[language]}
-          set="vector"
-          toggleDisplay={this.toggleDisplay}
-          content={
-            <div className="setting half">
-              <div className="label">{Translations.color[language]}</div>
-              <Color value={arrowsColor} onChange={this.setArrowsColor} />
+          <div className="setting half">
+            <div className="label">{Translations.source[language]}</div>
+            <div>
+              <a
+                href="https://www.eawag.ch"
+                alt="Eawag"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Eawag
+              </a>
             </div>
-          }
-        />
-        <ToggleBox
-          open={streamlines}
-          title={Translations.streamlines[language]}
-          set="streamlines"
-          toggleDisplay={this.toggleDisplay}
-          content={
-            <React.Fragment>
-              <div className="setting half">
-                <div className="label">{Translations.paths[language]}</div>
-                <input
-                  type="number"
-                  value={_paths}
-                  onChange={this.setPaths}
-                  step="100"
-                  id={"streamlines_paths_" + id}
-                />
-              </div>
+          </div>
+          <div className="setting">
+            <div className="label">{Translations.period[language]}</div>
+            <div className="period-selector">
+              <Period
+                period={period}
+                setPeriod={setPeriod}
+                language={language}
+                minDate={start_date}
+                maxDate={end_date}
+                missingDates={missingDates}
+              />
+            </div>
+          </div>
+          <Depth
+            depth={depth}
+            depths={depths}
+            onChange={setDepth}
+            language={language}
+          />
+        </div>
+        <div className="sidebar-content-settings">
+          {Translations.layers[language]}
+        </div>
+        <div className="layer-settings-section">
+          <ToggleBox
+            open={vector}
+            title={Translations.arrows[language]}
+            set="vector"
+            toggleDisplay={this.toggleDisplay}
+            content={
               <div className="setting half">
                 <div className="label">{Translations.color[language]}</div>
-                <Color
-                  value={streamlinesColor}
-                  onChange={this.setStreamlinesColor}
-                />
+                <Color value={arrowsColor} onChange={this.setArrowsColor} />
               </div>
-              <div className="setting">
-                <div className="label">{Translations.speed[language]}</div>
-                <div className="value">
-                  x {parseInt(Math.round(velocityScale * 10 ** 4) * 1000)}
+            }
+          />
+          <ToggleBox
+            open={streamlines}
+            title={Translations.streamlines[language]}
+            set="streamlines"
+            toggleDisplay={this.toggleDisplay}
+            content={
+              <React.Fragment>
+                <div className="setting half">
+                  <div className="label">{Translations.paths[language]}</div>
+                  <input
+                    type="number"
+                    value={_paths}
+                    onChange={this.setPaths}
+                    step="100"
+                    id={"streamlines_paths_" + id}
+                  />
                 </div>
-                <input
-                  type="range"
-                  min="0"
-                  step="0.01"
-                  max="1"
-                  value={this.convertSpeed(velocityScale)}
-                  onChange={this.setSpeed}
-                />
-              </div>
-            </React.Fragment>
-          }
-        />
-        <ToggleBox
-          open={raster}
-          title={Translations.raster[language]}
-          set="raster"
-          toggleDisplay={this.toggleDisplay}
-          content={
-            <React.Fragment>
-              <div className="setting">
-                <div className="label">Palette</div>
-                <div className="value">{paletteName}</div>
-                <ColorRamp onChange={this.setPalette} value={paletteName} />
-              </div>
-              <div className="setting">
-                <div className="label">{Translations.opacity[language]}</div>
-                <div className="value">{opacity}</div>
-                <input
-                  type="range"
-                  min="0"
-                  max="1"
-                  step="0.1"
-                  value={opacity}
-                  onChange={this.setOpacity}
-                ></input>
-              </div>
-            </React.Fragment>
-          }
-        />
-        <div className="setting-section">
+                <div className="setting half">
+                  <div className="label">{Translations.color[language]}</div>
+                  <Color
+                    value={streamlinesColor}
+                    onChange={this.setStreamlinesColor}
+                  />
+                </div>
+                <div className="setting">
+                  <div className="label">{Translations.speed[language]}</div>
+                  <div className="value">
+                    x {parseInt(Math.round(velocityScale * 10 ** 4) * 1000)}
+                  </div>
+                  <input
+                    type="range"
+                    min="0"
+                    step="0.01"
+                    max="1"
+                    value={this.convertSpeed(velocityScale)}
+                    onChange={this.setSpeed}
+                  />
+                </div>
+              </React.Fragment>
+            }
+          />
+          <ToggleBox
+            open={raster}
+            title={Translations.raster[language]}
+            set="raster"
+            toggleDisplay={this.toggleDisplay}
+            content={
+              <React.Fragment>
+                <div className="setting">
+                  <div className="label">Palette</div>
+                  <div className="value">{paletteName}</div>
+                  <ColorRamp onChange={this.setPalette} value={paletteName} />
+                </div>
+                <div className="setting">
+                  <div className="label">{Translations.opacity[language]}</div>
+                  <div className="value">{opacity}</div>
+                  <input
+                    type="range"
+                    min="0"
+                    max="1"
+                    step="0.1"
+                    value={opacity}
+                    onChange={this.setOpacity}
+                  ></input>
+                </div>
+              </React.Fragment>
+            }
+          />
+        </div>
+        <div className="sidebar-content-settings">
           {Translations.particleTracking[language]}
         </div>
-        <div className="setting">
-          <label className="switch">
+        <div className="layer-settings-section">
+          <div className="setting">
+            <label className="switch">
+              <input
+                type="checkbox"
+                checked={!!heatmap}
+                onChange={this.toggleHeatmap}
+              />
+              <span className="slider round"></span>
+            </label>
+            <div className="title">{Translations.heatmap[language]}</div>
+          </div>
+          <div className="setting">
+            <label className="switch">
+              <input
+                type="checkbox"
+                checked={!!reverse}
+                onChange={this.toggleReverse}
+              />
+              <span className="slider round"></span>
+            </label>
+            <div className="title">{Translations.reverse[language]}</div>
+          </div>
+          <div className="setting half">
+            <div className="label">{Translations.particles[language]}</div>
+            <div className="value">{particles}</div>
             <input
-              type="checkbox"
-              checked={!!heatmap}
-              onChange={this.toggleHeatmap}
-            />
-            <span className="slider round"></span>
-          </label>
-          <div className="title">{Translations.heatmap[language]}</div>
-        </div>
-        <div className="setting">
-          <label className="switch">
+              type="range"
+              min="0"
+              max="100"
+              step="5"
+              value={particles}
+              onChange={this.setParticles}
+            ></input>
+          </div>
+          <div className="setting half">
+            <div className="label">{Translations.spread[language]}</div>
+            <div className="value">{Math.ceil(spread)}</div>
             <input
-              type="checkbox"
-              checked={!!reverse}
-              onChange={this.toggleReverse}
-            />
-            <span className="slider round"></span>
-          </label>
-          <div className="title">{Translations.reverse[language]}</div>
+              type="range"
+              min="0"
+              max="4"
+              step="0.1"
+              value={Math.log10(spread)}
+              onChange={this.setSpread}
+            ></input>
+          </div>
+          <div className="setting half">
+            <div className="label">{Translations.integrator[language]}</div>
+            <select value={integrator || "rk4"} onChange={this.setIntegrator}>
+              <option value="rk4">Runge-Kutta 4</option>
+              <option value="euler">Euler</option>
+            </select>
+          </div>
+          <div className="setting half">
+            <button className="remove" onClick={this.removeParticles}>
+              {Translations.removeParticles[language]}
+            </button>
+          </div>
         </div>
-        <div className="setting half">
-          <div className="label">{Translations.particles[language]}</div>
-          <div className="value">{particles}</div>
-          <input
-            type="range"
-            min="0"
-            max="50"
-            step="5"
-            value={particles}
-            onChange={this.setParticles}
-          ></input>
+        <div className="sidebar-content-settings">
+          {Translations.download[language]}
         </div>
-        <div className="setting half">
-          <div className="label">{Translations.spread[language]}</div>
-          <div className="value">{Math.ceil(spread)}</div>
-          <input
-            type="range"
-            min="0"
-            max="4"
-            step="0.1"
-            value={Math.log10(spread)}
-            onChange={this.setSpread}
-          ></input>
-        </div>
-        <div className="setting half">
-          <div className="label">{Translations.integrator[language]}</div>
-          <select value={integrator || "rk4"} onChange={this.setIntegrator}>
-            <option value="rk4">Runge-Kutta 4</option>
-            <option value="euler">Euler</option>
-          </select>
-        </div>
-        <div className="setting">
-          <button className="remove" onClick={this.removeParticles}>
-            {Translations.removeParticles[language]}
-          </button>
+        <div className="layer-settings-section">
+          <div className="setting">
+            <div className="label">{Translations.rawModelOutput[language]}</div>
+            <select defaultValue="" onChange={this.downloadFile}>
+              <option disabled value="">
+                {Translations.selectWeek[language]}
+              </option>
+              {downloadDates.reverse().map((d) => (
+                <option key={d.url} value={d.url}>
+                  {d.date}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
       </div>
     );
@@ -934,11 +977,11 @@ class Tiff extends Component {
       if (day in available) images = available[day].images;
     }
     return (
-      <React.Fragment>
+      <div className="layer-settings">
         <div className="sidebar-content-settings">
           {Translations.imageSelection[language]}
         </div>
-        <div className="layer-settings">
+        <div className="layer-settings-section">
           <div className={"setting " + id}>
             <div className="custom-css-datepicker">
               <DatePicker
@@ -1000,7 +1043,7 @@ class Tiff extends Component {
         <div className="sidebar-content-settings">
           {Translations.displaySettings[language]}
         </div>
-        <div className="layer-settings">
+        <div className="layer-settings-section">
           <div className="setting half">
             <div className="label">Min</div>
             <div className="minmax">
@@ -1110,14 +1153,14 @@ class Tiff extends Component {
             />
           </div>
         </div>
-      </React.Fragment>
+      </div>
     );
   }
 }
 
 class LayerSettings extends Component {
   render() {
-    var { layer, language } = this.props;
+    var { layer } = this.props;
     var type = layer.display;
     if (type === "raster") {
       return (
@@ -1133,9 +1176,7 @@ class LayerSettings extends Component {
       );
     } else {
       return (
-        <div className="layer-settings subtle">
-          {Translations.noSettings[language]}
-        </div>
+        <React.Fragment />
       );
     }
   }
