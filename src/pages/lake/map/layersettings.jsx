@@ -709,7 +709,7 @@ class Current extends Component {
               onChange={this.setSpread}
             ></input>
           </div>
-          <div className="setting half">
+          <div className="setting">
             <div className="label">{Translations.diffusion[language]}</div>
             <div className="value">{diffusion}</div>
             <input
@@ -719,12 +719,9 @@ class Current extends Component {
               step="0.01"
               value={diffusion}
               onChange={this.setDiffusion}
+              onMouseUp={this.applyDiffusion}
+              onTouchEnd={this.applyDiffusion}
             ></input>
-          </div>
-          <div className="setting half">
-            <button className="update" onClick={this.applyDiffusion}>
-              {Translations.computeDiffusion[language]}
-            </button>
           </div>
           <div className="setting half">
             <div className="label">{Translations.integrator[language]}</div>

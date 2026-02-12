@@ -8,7 +8,7 @@ L.Control.ParticleTracking = L.Control.extend({
     particles: 50, // number of particles to add with each click
     particlesWarning: 2000,
     spread: 100, // spread of the added particles
-    zIndex: 300, // z-index of the canvas
+    zIndex: 1000, // z-index of the canvas
     nCols: 200, // number of columns in interpolated velocity grid
     nRows: 200, // number of rows in interpolated velocity grid
     radiusFactor: 2, // search radius for quadtree search
