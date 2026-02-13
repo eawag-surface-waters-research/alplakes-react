@@ -710,7 +710,7 @@ class Current extends Component {
             ></input>
           </div>
           <div className="setting">
-            <div className="label">{Translations.diffusion[language]}</div>
+            <div className="label">{Translations.spreadingRate[language]}</div>
             <div className="value">{diffusion}</div>
             <input
               type="range"

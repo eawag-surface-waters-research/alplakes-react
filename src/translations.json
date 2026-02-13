@@ -1429,6 +1429,12 @@
     "FR": "Dispersion",
     "IT": "Dispersione"
   },
+  "spreadingRate": {
+    "EN": "Spreading rate",
+    "DE": "Ausbreitungsrate",
+    "FR": "Taux de dispersion",
+    "IT": "Tasso di dispersione"
+  },
   "integrator": {
     "EN": "Integrator",
     "DE": "Integrator",
