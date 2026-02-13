@@ -18,6 +18,7 @@ class SatelliteTimeseriesModal extends Component {
     name: "",
     color: "#dd164bc4",
     markerID: false,
+    location: "custom",
   };
 
   updateParameter = (event) => {
@@ -29,6 +30,7 @@ class SatelliteTimeseriesModal extends Component {
       parameter,
       satellites,
       satellite,
+      location: "custom",
     });
   };
 
@@ -96,6 +98,17 @@ class SatelliteTimeseriesModal extends Component {
     );
   };
 
+  updateLocation = (event) => {
+    var { lat, lng, options, parameter, satellite } = this.state;
+    const location = event.target.value;
+    if (location === "insitu") {
+      let reference = options[parameter][satellite].reference;
+      lat = reference.latitude;
+      lng = reference.longitude;
+    }
+    this.setState({ lat, lng, location });
+  };
+
   componentDidMount() {
     var { layers, properties, satelliteTimeseriesCount } = this.props;
     var parameters = [];
@@ -104,6 +117,13 @@ class SatelliteTimeseriesModal extends Component {
       if (layer.active && layer.type === "satellite") {
         parameters.push(layer["parameter"]);
         options[layer["parameter"]] = {};
+        let reference = false;
+        if (layer.graph.satellite_timeseries.reference) {
+          reference = {
+            latitude: layer.graph.satellite_timeseries.reference.latitude,
+            longitude: layer.graph.satellite_timeseries.reference.longitude,
+          };
+        }
         for (let satellite of layer["sources"]["sencast"]["models"]) {
           options[layer["parameter"]][satellite["model"]] = {
             parameter: satellite["metadata"]
@@ -111,6 +131,7 @@ class SatelliteTimeseriesModal extends Component {
               .pop()
               .replace(".json", ""),
             layer_id: layer.id,
+            reference,
           };
         }
       }
@@ -146,8 +167,14 @@ class SatelliteTimeseriesModal extends Component {
       color,
       name,
       markerID,
+      options,
+      location,
     } = this.state;
     const { language, closeSatelliteTimeseriesModel } = this.props;
+    var reference = false;
+    if (parameter in options) {
+      reference = options[parameter][satellite].reference;
+    }
     return (
       <div className="satellite-timeseries-modal">
         <div className="title-modal">
@@ -180,6 +207,38 @@ class SatelliteTimeseriesModal extends Component {
                   {s}
                 </option>
               ))}
+            </select>
+          </div>
+
+          <div className="setting">
+            <div className="label">{Translations.location[language]}</div>
+            {reference ? (
+              <div className="value highlight">
+                {Translations.presetsAvailable[language]}
+              </div>
+            ) : (
+              <div className="value red">
+                {Translations.presetsNotAvailable[language]}
+              </div>
+            )}
+
+            <select
+              value={location}
+              onChange={this.updateLocation}
+              className="wide"
+              disabled={reference === false}
+            >
+              <option value="custom" selected>
+                {Translations.customCoordinates[language]}
+              </option>
+              <option value="" disabled>
+                ──────────
+              </option>
+              {reference && (
+                <option value="insitu">
+                  Insitu [{reference.latitude}, {reference.longitude}]
+                </option>
+              )}
             </select>
           </div>
 

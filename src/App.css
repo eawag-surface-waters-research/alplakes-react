@@ -657,6 +657,14 @@ p {
   float: right;
 }
 
+.main .setting .value.highlight {
+  color: var(--highlight-color-subtle)
+}
+
+.main .setting .value.red {
+  color: #a13145
+}
+
 .main .setting button.remove {
   background-color: var(--highlight-color);
   border: none;
@@ -750,6 +758,10 @@ p {
   border: none;
   border-radius: 6px;
   max-width: 100%;
+}
+
+.main .setting select.wide {
+  width: 100%;
 }
 
 .main .setting .period-selector input {
