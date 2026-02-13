@@ -563,6 +563,24 @@
     "FR": "Emplacement",
     "IT": "Posizione"
   },
+  "presetsAvailable": {
+    "EN": "Presets available",
+    "DE": "Voreinstellungen verfügbar",
+    "FR": "Préréglages disponibles",
+    "IT": "Preset disponibili"
+  },
+  "presetsNotAvailable": {
+    "EN": "Presets not available",
+    "DE": "Voreinstellungen nicht verfügbar",
+    "FR": "Préréglages non disponibles",
+    "IT": "Preset non disponibili"
+  },
+  "customCoordinates": {
+    "EN": "Custom coordinates",
+    "DE": "Benutzerdefinierte Koordinaten",
+    "FR": "Coordonnées personnalisées",
+    "IT": "Coordinate personalizzate"
+  },
   "exportData": {
     "EN": "Export data",
     "DE": "Daten exportieren",
