@@ -114,6 +114,7 @@ L.Control.ParticleTracking = L.Control.extend({
     });
     if (this.options.heatmap) {
       this._heatLayer.addTo(map);
+      this._heatLayer._el.style.zIndex = this.options.zIndex + 100;
       this._canvas.style.display = "none";
     }
     map.setView(map.unproject(map.project(map.getCenter()).subtract([1, 0])));
@@ -222,6 +223,7 @@ L.Control.ParticleTracking = L.Control.extend({
         });
         if (this.options.heatmap) {
           this._heatLayer.addTo(this._map);
+          this._heatLayer._el.style.zIndex = this.options.zIndex + 100;
           this._canvas.style.display = "none";
         } else {
           this._canvas.style.display = "";
