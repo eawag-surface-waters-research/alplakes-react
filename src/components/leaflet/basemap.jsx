@@ -24,8 +24,10 @@ class Basemap extends Component {
   };
   togglePlay = () => {
     const play = !this.state.play;
+    this._playing = play;
     if (play) {
       this.disableControls();
+      cancelAnimationFrame(this._rafId);
       var { datetime, timestep, period, data, duration } = this.state;
       const range = period[1] - period[0];
       const speed = range / duration;
@@ -35,7 +37,7 @@ class Basemap extends Component {
       const callbackInterval = 500;
 
       const tick = (now) => {
-        if (!this.state.play) return;
+        if (!this._playing) return;
 
         const elapsed = now - startTime;
         let newDatetime = startDatetime + elapsed * speed;
@@ -124,6 +126,7 @@ class Basemap extends Component {
     }
   };
   componentWillUnmount() {
+    this._playing = false;
     cancelAnimationFrame(this._rafId);
   }
   async componentDidUpdate(prevProps) {
