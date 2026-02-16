@@ -699,7 +699,7 @@ p {
 }
 
 .main .setting .value.highlight {
-  color: var(--highlight-color-subtle);
+  color: var(--highlight-color);
 }
 
 .main .setting .value.red {
