@@ -197,7 +197,7 @@ def model_layers(default, sources, default_depth, spread):
         "opacity": 0.8,
         "zIndex": 3,
         "paletteName": "Thermal",
-        "particles": 10,
+        "particles": 50,
         "spread": spread,
       },
       "sources": current
