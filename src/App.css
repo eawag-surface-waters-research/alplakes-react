@@ -569,6 +569,7 @@ p {
 /* Setting */
 
 .main .setting {
+  position: relative;
   padding: 0px 0px 18px 0px;
   display: inline-block;
   width: 100%;
@@ -585,6 +586,25 @@ p {
   padding: 0px 0px 4px 0px;
   display: inline-block;
   color: var(--background-subtle-font-color);
+}
+
+.main .setting-warning {
+  font-size: 14px;
+  margin-bottom: 14px;
+}
+
+.main .setting-warning button {
+  margin-top: 6px;
+  margin-right: 10px;
+  padding: 3px 8px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: scale 0.33s ease;
+}
+
+.main .setting-warning button:hover {
+  transform: scale(1.05);
 }
 
 .main .setting input[type="range"] {
@@ -679,11 +699,11 @@ p {
 }
 
 .main .setting .value.highlight {
-  color: var(--highlight-color-subtle)
+  color: var(--highlight-color-subtle);
 }
 
 .main .setting .value.red {
-  color: #a13145
+  color: #a13145;
 }
 
 .main .setting button.remove {

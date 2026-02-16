@@ -17,6 +17,8 @@ import Period from "../../../components/customselect/period";
 import Depth from "../../../components/customselect/depth";
 import Color from "../../../components/customselect/color";
 import ToggleBox from "../../../components/togglebox/togglebox";
+import ShowMoreText from "../../../components/showmore/showmore";
+import Information from "../../../components/information/information";
 
 class Raster extends Component {
   state = {
@@ -683,7 +685,14 @@ class Current extends Component {
               />
               <span className="slider round"></span>
             </label>
-            <div className="title">{Translations.reverse[language]}</div>
+            <div className="title">
+              {Translations.reverse[language]}
+              <Information
+                information={Translations.reverseInformation[language]}
+                above={true}
+                small={true}
+              />
+            </div>
           </div>
           <div className="setting half">
             <div className="label">{Translations.particles[language]}</div>
@@ -710,13 +719,20 @@ class Current extends Component {
             ></input>
           </div>
           <div className="setting">
-            <div className="label">{Translations.spreadingRate[language]}</div>
+            <div className="label">
+              {Translations.spreadingRate[language]}{" "}
+              <Information
+                information={Translations.spreadingRateInformation[language]}
+                above={true}
+                small={true}
+              />
+            </div>
             <div className="value">{diffusion}</div>
             <input
               type="range"
               min="0"
-              max="2"
-              step="0.01"
+              max="3"
+              step="0.1"
               value={diffusion}
               onChange={this.setDiffusion}
               onMouseUp={this.applyDiffusion}
@@ -734,6 +750,24 @@ class Current extends Component {
             <button className="remove" onClick={this.removeParticles}>
               {Translations.removeParticles[language]}
             </button>
+          </div>
+          <div className="setting-warning">
+            ⚠️ {Translations.particleWarning[language]}
+            <br />
+            <a
+              target="_blank"
+              rel="noreferrer"
+              href="https://github.com/eawag-surface-waters-research/alplakes-parcels"
+            >
+              <button>Parcels</button>
+            </a>
+            <a
+              target="_blank"
+              rel="noreferrer"
+              href="https://github.com/eawag-surface-waters-research/alplakes-particletracking"
+            >
+              <button>ctracker</button>
+            </a>
           </div>
         </div>
         <div className="sidebar-content-settings">

@@ -1,59 +1,100 @@
 .information {
-    display: inline-block;
-    position: relative;
+  display: inline-block;
+  position: relative;
+  font-weight: 400;
+}
+
+.information.above {
+  position: unset;
 }
 
 .information .information-symbol {
-    padding: 0px 11px;
-    border-radius: 100%;
-    background-color: var(--select-color);
-    line-height: 30px;
-    color: var(--background-subtle-font-color);
-    font-size: 16px;
-    font-weight: bold;
-    margin-left: 8px;
-    cursor: pointer;
+  padding: 0px 11px;
+  border-radius: 100%;
+  background-color: var(--select-color);
+  line-height: 30px;
+  color: var(--background-subtle-font-color);
+  font-size: 16px;
+  font-weight: bold;
+  margin-left: 8px;
+  cursor: pointer;
+}
+
+.information.box .information-symbol {
+  background-color: var(--background-color);
+}
+
+.information.small .information-symbol {
+  font-size: 14px;
+  padding: 0 8px;
+  line-height: 24px;
 }
 
 .information .information-box {
-    display: none;
-    position: absolute;
-    background-color: var(--select-color);
-    top: 0;
-    z-index: 99999;
-    padding: 16px;
-    border-radius: 12px;
-    left: 50px;
-    width: 282px;
-    color: var(--background-font-color);
-    font-size: 18px;
-    border: 1px solid var(--border-color);
+  display: none;
+  position: absolute;
+  background-color: var(--select-color);
+  top: 0;
+  z-index: 99999;
+  padding: 16px;
+  border-radius: 12px;
+  left: 50px;
+  width: 282px;
+  color: var(--background-font-color);
+  font-size: 18px;
+  border: 1px solid var(--border-color);
+}
+
+.information.above .information-box {
+  left: 0;
+  top: unset;
+  bottom: calc(100% + 10px);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.information.small .information-box {
+  font-size: 14px;
 }
 
 .information:hover .information-symbol {
-    color: var(--background-font-color);
+  color: var(--background-font-color);
 }
 
 .information:hover .information-box {
-    display: block;
+  display: block;
 }
 
 @media screen and (max-width: 500px) {
-    .information .information-box {
-        position: fixed;
-        top: unset;
-        width: 100%;
-        left: 0;
-        box-sizing: border-box;
-        bottom: 0;
-        border: none;
-        padding: 50px;
-        border-radius: 0;
-        opacity: 0.95;
-    }
+  .information .information-box {
+    position: fixed;
+    top: unset;
+    width: 100%;
+    left: 0;
+    box-sizing: border-box;
+    bottom: 0;
+    border: none;
+    padding: 50px;
+    border-radius: 0;
+    opacity: 0.95;
+  }
 
-    .information .information-symbol {
-        padding: 0px 9px;
-        line-height: 26px;
-    }
+  .information.small .information-symbol {
+    background-color: var(--background-color);
+  }
+
+  .information.box .information-symbol {
+    background-color: var(--select-color);
+  }
+
+  .information .information-symbol {
+    padding: 0px 9px;
+    line-height: 26px;
+  }
+
+  .information.above .information-box {
+    top: unset;
+    bottom: 100px;
+    padding: 20px;
+  }
 }

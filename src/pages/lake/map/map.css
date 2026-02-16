@@ -200,8 +200,9 @@
 
 .main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .sidebar-content-settings {
     font-size: 16px;
-    padding: 0 6px;
-    margin-top: 12px;
+    padding: 0 6px 3px 6px;
+    margin-top: 14px;
+    position: relative;
 }
 
 .main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .layer-settings .layer-settings-section {
@@ -978,7 +979,7 @@
     }
 
     .main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .sidebar-content-settings {
-        display: none;
+        text-align: left;
     }
 
     .main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .layer-settings {
