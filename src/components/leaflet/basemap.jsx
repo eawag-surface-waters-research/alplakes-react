@@ -20,47 +20,58 @@ class Basemap extends Component {
     datetime: false,
     timestep: false,
     data: false,
-    duration: 8000,
+    duration: 12000,
   };
   togglePlay = () => {
     const play = !this.state.play;
+    this._playing = play;
     if (play) {
       this.disableControls();
+      cancelAnimationFrame(this._rafId);
       var { datetime, timestep, period, data, duration } = this.state;
-      const animate = (timestep) => {
-        if (datetime >= period[1]) {
-          datetime = period[0];
-        } else {
-          datetime = datetime + timestep;
+      const range = period[1] - period[0];
+      const speed = range / duration;
+      let startTime = performance.now();
+      let startDatetime = datetime;
+      let lastCallbackUpdate = 0;
+      const callbackInterval = 500;
+
+      const tick = (now) => {
+        if (!this._playing) return;
+
+        const elapsed = now - startTime;
+        let newDatetime = startDatetime + elapsed * speed;
+        if (newDatetime >= period[1]) {
+          startTime = now;
+          startDatetime = period[0];
+          newDatetime = period[0];
         }
-        setPlayDatetime(this.layers, datetime, period, data);
-        this.map.triggerLayersUpdate();
-        if (this.props.setDatetime) {
-          this.props.setDatetime(datetime);
+        newDatetime =
+          Math.round((newDatetime - period[0]) / timestep) * timestep +
+          period[0];
+
+        if (newDatetime !== datetime) {
+          datetime = newDatetime;
+          setPlayDatetime(this.layers, datetime, period, data);
+          this.map.triggerLayersUpdate();
+          this._playDatetime = datetime;
+
+          if (this.props.setDatetime && now - lastCallbackUpdate >= callbackInterval) {
+            lastCallbackUpdate = now;
+            this.props.setDatetime(datetime, true);
+          }
         }
-        this.setState({ datetime });
+
+        this._rafId = requestAnimationFrame(tick);
       };
-      const scheduleNextIteration = (timestep) => {
-        let targetFrame = duration / ((period[1] - period[0]) / timestep);
-        let start = performance.now();
-        animate(timestep);
-        let frame = performance.now() - start;
-        let timeout = 0;
-        if (frame >= targetFrame) {
-          timestep = timestep * 2;
-        } else {
-          timeout = targetFrame - frame;
-        }
-        if (play) {
-          this.intervalId = setTimeout(
-            () => scheduleNextIteration(timestep),
-            timeout,
-          );
-        }
-      };
-      scheduleNextIteration(timestep);
+
+      this._rafId = requestAnimationFrame(tick);
     } else {
-      clearTimeout(this.intervalId);
+      cancelAnimationFrame(this._rafId);
+      if (this._playDatetime !== undefined) {
+        if (this.props.setDatetime) this.props.setDatetime(this._playDatetime);
+        this.setState({ datetime: this._playDatetime });
+      }
     }
 
     this.setState({ play });
@@ -114,6 +125,10 @@ class Basemap extends Component {
       }
     }
   };
+  componentWillUnmount() {
+    this._playing = false;
+    cancelAnimationFrame(this._rafId);
+  }
   async componentDidUpdate(prevProps) {
     const {
       dark,
@@ -255,6 +270,8 @@ class Basemap extends Component {
                   setDatetime={this.setDatetime}
                   language={language}
                   permanentLabel={permanentLabel}
+                  play={play}
+                  duration={this.state.duration}
                 />
               </div>
             </div>

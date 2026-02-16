@@ -160,12 +160,16 @@
 
 .main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .sidebar-content-remove {
     position: absolute;
-    background-color: var(--select-color);
+    background-color: var(--background-color);
     padding: 4px 9px;
     border-radius: 50%;
-    left: 18px;
-    top: 15px;
-    display: none;
+    right: 18px;
+    top: 5px;
+    cursor: pointer;
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .sidebar-content-remove:hover {
+    transform: scale(1.1);
 }
 
 .main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .sidebar-content-remove img {
@@ -191,18 +195,19 @@
 .main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .sidebar-content-description {
     padding: 0 6px;
     margin-top: 10px;
+    font-size: 13px;
 }
 
 .main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .sidebar-content-settings {
-    font-size: 18px;
-    padding: 0 6px;
-    margin-top: 12px;
-    color: var(--background-subtle-font-color);
+    font-size: 16px;
+    padding: 0 6px 3px 6px;
+    margin-top: 14px;
+    position: relative;
 }
 
-.main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .layer-settings {
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .layer-settings .layer-settings-section {
     background-color: var(--background-color);
-    padding: 18px;
+    padding: 18px 18px 3px 18px;
     border-radius: 12px;
     margin-top: 6px;
     text-align: left;
@@ -545,10 +550,6 @@
     transition: all 0.2s ease-out;
 }
 
-.main .map .layer-map .map-sidebar .sidebar-body .sidebar-layers .active-apps .app:hover {
-    transform: scale(1.05);
-}
-
 .main .map .layer-map .map-sidebar .sidebar-body .sidebar-layers .active-apps .app.filled {
     border: none;
     box-shadow: var(--box-shadow);
@@ -556,6 +557,26 @@
     text-align: center;
     vertical-align: top;
     width: 62px;
+    opacity: 0.7;
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-layers .active-apps .app.filled:hover {
+    opacity: 1;
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-layers .active-apps .app.filled.active {
+    opacity: 1;
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-layers .active-apps .app.filled.active::after {
+    content: '';
+    position: absolute;
+    bottom: -40px;
+    left: 50%;
+    transform: translate(-50%, 100%);
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid var(--background-color);
 }
 
 .main .map .layer-map .map-sidebar .sidebar-body .sidebar-layers .active-apps .app img {
@@ -594,10 +615,17 @@
     -webkit-user-select: none;
     user-select: none;
     width: 20px;
+    opacity: 0;
+    transition: all .2s ease-in-out;
+    transition: opacity .4s ease-in-out;
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-layers .active-apps .app:hover .remove {
+    opacity: 1;
 }
 
 .main .map .layer-map .map-sidebar .sidebar-body .sidebar-layers .active-apps .app .remove:hover {
-    color: red;
+    color: var(--background-font-color);
 }
 
 .main .map .layer-map .map-sidebar .sidebar-body .sidebar-layers .active-apps .app .label {
@@ -668,7 +696,7 @@
     font-size: 26px;
     color: var(--background-font-color);
     cursor: pointer;
-    transition: all .2sease-in-out;
+    transition: all .2s ease-in-out;
     line-height: 22px;
     float: right;
     background-color: var(--box-color);
@@ -940,7 +968,10 @@
     }
 
     .main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .sidebar-content-remove {
-        display: block;
+        left: 18px;
+        top: 15px;
+        right: unset;
+        background-color: var(--select-color);
     }
 
     .main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .sidebar-content-description {
@@ -948,17 +979,20 @@
     }
 
     .main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .sidebar-content-settings {
-        display: none;
+        text-align: left;
     }
 
     .main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .layer-settings {
-        padding: 13px;
-        margin-top: 16px;
-        height: calc(100% - 69px);
+        height: calc(100% - 43px);
         overflow: auto;
         border-bottom: 1px solid var(--border-color);
-        border-radius: 12px 12px 0 0;
+        margin-top: 10px;
+    }
+
+    .main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .layer-settings .layer-settings-section {
+        padding: 13px;
         background-color: var(--select-color);
+        margin-bottom: 10px;
     }
 
     .main .map .layer-map .map-sidebar .sidebar-body .sidebar-content .layer-settings .custom-css-datepicker .react-datepicker {

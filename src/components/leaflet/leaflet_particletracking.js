@@ -1,13 +1,14 @@
 import L from "leaflet";
+import HeatmapOverlay from "leaflet-heatmap";
 import * as d3 from "d3";
 
 L.Control.ParticleTracking = L.Control.extend({
   options: {
     position: "topleft", // location of control button
-    paths: 10, // number of paths to add with each click
-    spread: 100, // spread of the added paths
-    opacity: 1, // opacity of the canvas
-    zIndex: 300, // z-index of the canvas
+    particles: 50, // number of particles to add with each click
+    particlesWarning: 2000,
+    spread: 100, // spread of the added particles
+    zIndex: 1000, // z-index of the canvas
     nCols: 200, // number of columns in interpolated velocity grid
     nRows: 200, // number of rows in interpolated velocity grid
     radiusFactor: 2, // search radius for quadtree search
@@ -15,9 +16,19 @@ L.Control.ParticleTracking = L.Control.extend({
     enabledFunction: false, // add a custom function
     useTemporalInterpolation: true, // enable temporal interpolation
     useBilinearInterpolation: true, // enable bilinear spatial interpolation
+    trailOpacityMin: 0.15, // minimum trail opacity at the tail
+    trailOpacityMax: 0.6, // maximum trail opacity near the particle
+    trailFadeLength: 50, // number of steps over which the trail fades near the particle
     labelDisplayDuration: 2000, // display label on load
     title: "", // label text
     hover: "", // tooltip hover text
+    reverse: false, // track particles backward in time
+    integrator: "rk4", // integration method: "euler" or "rk4"
+    diffusion: 0, // eddy diffusivity K in m²/s (0 = off), cloud variance grows as 4Kt
+    heatmap: false, // show particles as heatmap
+    heatmapRadius: 10, // heatmap point radius
+    heatmapBlur: 0.85, // heatmap blur factor (0-1)
+    heatmapMaxOpacity: 0.8, // heatmap max opacity
   },
   initialize: function (geometry, data, datetime, times, options) {
     L.Util.setOptions(this, options);
@@ -91,6 +102,21 @@ L.Control.ParticleTracking = L.Control.extend({
     if (map.options.zoomAnimation && L.Browser.any3d) {
       map.on("zoomanim", this._animateZoom, this);
     }
+    this._heatLayer = new HeatmapOverlay({
+      radius: this.options.heatmapRadius,
+      blur: this.options.heatmapBlur,
+      maxOpacity: this.options.heatmapMaxOpacity,
+      scaleRadius: false,
+      useLocalExtrema: false,
+      latField: "lat",
+      lngField: "lng",
+      valueField: "value",
+    });
+    if (this.options.heatmap) {
+      this._heatLayer.addTo(map);
+      this._heatLayer._el.style.zIndex = this.options.zIndex + 100;
+      this._canvas.style.display = "none";
+    }
     map.setView(map.unproject(map.project(map.getCenter()).subtract([1, 0])));
     return this._container;
   },
@@ -108,6 +134,9 @@ L.Control.ParticleTracking = L.Control.extend({
       map.off("zoomanim", this._animateZoom, this);
     }
     this._map.off("click", this._addPoints, this);
+    if (this._heatLayer && this._map.hasLayer(this._heatLayer)) {
+      this._map.removeLayer(this._heatLayer);
+    }
     if (this._labelTimeout) {
       clearTimeout(this._labelTimeout);
     }
@@ -143,7 +172,6 @@ L.Control.ParticleTracking = L.Control.extend({
       "msTransformOrigin",
     ]);
     canvas.style[originProp] = "50% 50%";
-    canvas.style.opacity = this.options.opacity;
     canvas.style.zIndex = this.options.zIndex + 100;
 
     var size = this._map.getSize();
@@ -176,9 +204,34 @@ L.Control.ParticleTracking = L.Control.extend({
   },
   update: function (datetime, options) {
     if (options) {
+      var prevIntegrator = this.options.integrator;
       L.Util.setOptions(this, options);
-      this._canvas.style.opacity = this.options.opacity;
       this._canvas.style.zIndex = this.options.zIndex + 100;
+      if (this._heatLayer) {
+        if (this._map.hasLayer(this._heatLayer)) {
+          this._map.removeLayer(this._heatLayer);
+        }
+        this._heatLayer = new HeatmapOverlay({
+          radius: this.options.heatmapRadius,
+          blur: this.options.heatmapBlur,
+          maxOpacity: this.options.heatmapMaxOpacity,
+          scaleRadius: false,
+          useLocalExtrema: false,
+          latField: "lat",
+          lngField: "lng",
+          valueField: "value",
+        });
+        if (this.options.heatmap) {
+          this._heatLayer.addTo(this._map);
+          this._heatLayer._el.style.zIndex = this.options.zIndex + 100;
+          this._canvas.style.display = "none";
+        } else {
+          this._canvas.style.display = "";
+        }
+      }
+      if (prevIntegrator !== this.options.integrator) {
+        this._recalculatePaths();
+      }
     }
     if (datetime) {
       this._datetime = parseFloat(datetime);
@@ -191,7 +244,18 @@ L.Control.ParticleTracking = L.Control.extend({
   },
   clear: function () {
     this._points = [];
+    if (this._heatLayer) {
+      this._heatLayer.setData({ max: 1, data: [] });
+    }
     this._reset();
+  },
+  _recalculatePaths: function () {
+    var currentTimeIndex = this._time_index;
+    for (let p = 0; p < this._points.length; p++) {
+      this._time_index = this._points[p].seed.index;
+      this._points[p].path = this._calculatePath(this._points[p].seed.latlng);
+    }
+    this._time_index = currentTimeIndex;
   },
   _reset: function () {
     var topLeft = this._map.containerPointToLayerPoint([0, 0]);
@@ -354,10 +418,18 @@ L.Control.ParticleTracking = L.Control.extend({
     return [r, g, b];
   },
   _addPoints: function (e) {
+    if (
+      this._points.length >= this.options.particlesWarning &&
+      this._points.length - this.options.particles < this.options.particlesWarning
+    ) {
+      window.alert(
+        "You have " + this._points.length + " particles. Adding more may make the browser laggy."
+      );
+    }
     var latlng = e.latlng;
     if (this._getIndexAtPoint(e.latlng.lng, e.latlng.lat) !== null) {
       var color = this._getRandomColor();
-      for (var i = 0; i < this.options.paths; i++) {
+      for (var i = 0; i < this.options.particles; i++) {
         var angle = Math.random() * Math.PI * 2;
         var randomRadius = Math.random() * this.options.spread;
         var dx = randomRadius * Math.cos(angle);
@@ -390,36 +462,70 @@ L.Control.ParticleTracking = L.Control.extend({
       latlng,
       velocity: this._getVelocity(latlng, this._time_index),
     };
-    for (
-      let i = this._time_index + 1;
-      i < this._interpolated_times.length;
-      i++
-    ) {
-      let timestep =
-        (this._interpolated_times[i] - this._interpolated_times[i - 1]) / 1000;
-      let new_latlng = this._moveLocation(
-        path[i - 1].latlng,
-        path[i - 1].velocity,
-        timestep,
-      );
-      let new_velocity = this._getVelocity(new_latlng, i);
 
-      if (new_velocity !== null) {
-        path[i] = {
-          latlng: new_latlng,
-          velocity: new_velocity,
-        };
-      } else {
-        let slideResult = this._slideAlongBoundary(
+    if (this.options.reverse) {
+      for (let i = this._time_index - 1; i >= 0; i--) {
+        let timestep =
+          -(this._interpolated_times[i + 1] - this._interpolated_times[i]) /
+          1000;
+
+        let advected = this._advectParticle(
+          path[i + 1].latlng,
+          path[i + 1].velocity,
+          timestep,
+          i + 1,
+          i,
+        );
+
+        if (advected.velocity !== null) {
+          path[i] = {
+            latlng: advected.latlng,
+            velocity: advected.velocity,
+          };
+        } else {
+          let slideResult = this._slideAlongBoundary(
+            path[i + 1].latlng,
+            path[i + 1].velocity,
+            timestep,
+            i,
+          );
+          path[i] = slideResult || {
+            latlng: path[i + 1].latlng,
+            velocity: { x: 0, y: 0 },
+          };
+        }
+      }
+    } else {
+      for (
+        let i = this._time_index + 1;
+        i < this._interpolated_times.length;
+        i++
+      ) {
+        let timestep =
+          (this._interpolated_times[i] - this._interpolated_times[i - 1]) /
+          1000;
+
+        let advected = this._advectParticle(
           path[i - 1].latlng,
           path[i - 1].velocity,
           timestep,
+          i - 1,
           i,
         );
-        if (slideResult !== null) {
-          path[i] = slideResult;
-        } else {
+
+        if (advected.velocity !== null) {
           path[i] = {
+            latlng: advected.latlng,
+            velocity: advected.velocity,
+          };
+        } else {
+          let slideResult = this._slideAlongBoundary(
+            path[i - 1].latlng,
+            path[i - 1].velocity,
+            timestep,
+            i,
+          );
+          path[i] = slideResult || {
             latlng: path[i - 1].latlng,
             velocity: { x: 0, y: 0 },
           };
@@ -699,11 +805,11 @@ L.Control.ParticleTracking = L.Control.extend({
       return null;
     }
 
+    var doTemporalInterp =
+      dataTimeIndex0 !== dataTimeIndex1 && temporalFraction > 0;
+
     if (this.options.useBilinearInterpolation) {
-      if (
-        this.options.useTemporalInterpolation &&
-        dataTimeIndex0 !== dataTimeIndex1
-      ) {
+      if (doTemporalInterp) {
         var v0 = this._bilinearInterpolate(latlng, dataTimeIndex0);
         var v1 = this._bilinearInterpolate(latlng, dataTimeIndex1);
         return this._temporalInterpolate(v0, v1, temporalFraction);
@@ -717,16 +823,64 @@ L.Control.ParticleTracking = L.Control.extend({
       return null;
     }
 
-    if (
-      this.options.useTemporalInterpolation &&
-      dataTimeIndex0 !== dataTimeIndex1
-    ) {
+    if (doTemporalInterp) {
       var v0_nn = this._getRawVelocityAtCell(t[0], t[1], dataTimeIndex0);
       var v1_nn = this._getRawVelocityAtCell(t[0], t[1], dataTimeIndex1);
       return this._temporalInterpolate(v0_nn, v1_nn, temporalFraction);
     } else {
       return this._getRawVelocityAtCell(t[0], t[1], dataTimeIndex0);
     }
+  },
+  _advectParticle: function (
+    latlng,
+    velocity,
+    timestep,
+    startTimeIndex,
+    endTimeIndex,
+  ) {
+    if (this.options.integrator === "rk4") {
+      var midTimeIndex = (startTimeIndex + endTimeIndex) / 2;
+      var k1 = velocity;
+      var pos2 = this._moveLocation(latlng, k1, timestep / 2);
+      var k2 = this._getVelocity(pos2, midTimeIndex);
+      if (k2 === null) {
+        var euler = this._moveLocation(latlng, k1, timestep);
+        return {
+          latlng: euler,
+          velocity: this._getVelocity(euler, endTimeIndex),
+        };
+      }
+      var pos3 = this._moveLocation(latlng, k2, timestep / 2);
+      var k3 = this._getVelocity(pos3, midTimeIndex);
+      if (k3 === null) {
+        var euler2 = this._moveLocation(latlng, k1, timestep);
+        return {
+          latlng: euler2,
+          velocity: this._getVelocity(euler2, endTimeIndex),
+        };
+      }
+      var pos4 = this._moveLocation(latlng, k3, timestep);
+      var k4 = this._getVelocity(pos4, endTimeIndex);
+      if (k4 === null) {
+        var euler3 = this._moveLocation(latlng, k1, timestep);
+        return {
+          latlng: euler3,
+          velocity: this._getVelocity(euler3, endTimeIndex),
+        };
+      }
+      var avgVelocity = {
+        x: (k1.x + 2 * k2.x + 2 * k3.x + k4.x) / 6,
+        y: (k1.y + 2 * k2.y + 2 * k3.y + k4.y) / 6,
+      };
+      var newLatlng = this._moveLocation(latlng, avgVelocity, timestep);
+      var newVelocity = this._getVelocity(newLatlng, endTimeIndex);
+      return { latlng: newLatlng, velocity: newVelocity };
+    }
+    var newPos = this._moveLocation(latlng, velocity, timestep);
+    return {
+      latlng: newPos,
+      velocity: this._getVelocity(newPos, endTimeIndex),
+    };
   },
   _moveLocation: function (latlng, velocity, time) {
     var new_lat =
@@ -737,34 +891,220 @@ L.Control.ParticleTracking = L.Control.extend({
         Math.cos((latlng.lat * Math.PI) / 180);
     return L.latLng(new_lat, new_lng);
   },
-  _plotPoints: function () {
-    this._ctx.clearRect(0, 0, this._width, this._height);
-    this._ctx.lineWidth = 2;
-    this._points.forEach(function (point) {
-      if (point.path[this._time_index] !== null) {
-        var idx = point.seed.index;
-        var arc = this._map.latLngToContainerPoint(
-          point.path[this._time_index].latlng,
-        );
-        var start = this._map.latLngToContainerPoint(point.path[idx].latlng);
-        var rgb = `${point.color[0]}, ${point.color[1]}, ${point.color[2]}`;
-        this._ctx.beginPath();
-        this._ctx.moveTo(start.x, start.y);
-        for (let i = idx; i < this._time_index; i++) {
-          let p = this._map.latLngToContainerPoint(point.path[i].latlng);
-          this._ctx.strokeStyle = `rgba(${rgb}, ${0.4})`;
-          this._ctx.lineTo(p.x, p.y);
+  applyDiffusion: function () {
+    if (this.options.diffusion === 0 || this._points.length === 0) return;
+    for (let p = 0; p < this._points.length; p++) {
+      var point = this._points[p];
+      if (this.options.reverse) {
+        var earliestPos = null;
+        var earliestIdx = 0;
+        for (let i = 0; i < point.path.length; i++) {
+          if (point.path[i] != null) {
+            earliestPos = point.path[i];
+            earliestIdx = i;
+            break;
+          }
         }
-        this._ctx.lineTo(arc.x, arc.y);
-        this._ctx.stroke();
-
-        this._ctx.fillStyle = `rgb(${rgb})`;
-        this._ctx.beginPath();
-        this._ctx.arc(arc.x, arc.y, 4, 0, Math.PI * 2);
-        this._ctx.fill();
-        this._ctx.closePath();
+        var path = new Array(this._interpolated_times.length).fill(null);
+        path[earliestIdx] = earliestPos;
+        point.path = path;
+        point.seed.index = earliestIdx;
+      } else {
+        path = new Array(this._interpolated_times.length).fill(null);
+        var seedIndex = point.seed.index;
+        path[seedIndex] = {
+          latlng: point.seed.latlng,
+          velocity: this._getVelocity(point.seed.latlng, seedIndex),
+        };
+        point.path = path;
       }
-    }, this);
+    }
+
+    var earliestSeed = this._interpolated_times.length;
+    for (let p = 0; p < this._points.length; p++) {
+      earliestSeed = Math.min(earliestSeed, this._points[p].seed.index);
+    }
+    for (let i = earliestSeed + 1; i < this._interpolated_times.length; i++) {
+      this._stepWithDiffusion(i, i - 1);
+    }
+
+    this._plotPoints();
+  },
+  removeDiffusion: function () {
+    if (this._points.length === 0) return;
+    var currentTimeIndex = this._time_index;
+    for (let p = 0; p < this._points.length; p++) {
+      var point = this._points[p];
+      this._time_index = point.seed.index;
+      point.path = this._calculatePath(point.seed.latlng);
+    }
+    this._time_index = currentTimeIndex;
+    this._plotPoints();
+  },
+  _stepWithDiffusion: function (targetIndex, sourceIndex) {
+    var activePositions = [];
+    var activeIndices = [];
+    for (let p = 0; p < this._points.length; p++) {
+      if (
+        this._points[p].path[sourceIndex] != null &&
+        sourceIndex >= this._points[p].seed.index
+      ) {
+        activePositions.push(this._points[p].path[sourceIndex].latlng);
+        activeIndices.push(p);
+      }
+    }
+    if (activePositions.length === 0) return;
+
+    var timestep =
+      (this._interpolated_times[targetIndex] -
+        this._interpolated_times[sourceIndex]) /
+      1000;
+
+    for (let k = 0; k < activeIndices.length; k++) {
+      var point = this._points[activeIndices[k]];
+      var latlng = point.path[sourceIndex].latlng;
+      var velocity = point.path[sourceIndex].velocity;
+      if (velocity == null) continue;
+
+      var diffVel = this._computeDiffusionVelocity(latlng, activePositions);
+      var totalVelocity = {
+        x: velocity.x + diffVel.x,
+        y: velocity.y + diffVel.y,
+      };
+
+      var newLatlng = this._moveLocation(latlng, totalVelocity, timestep);
+      var newVelocity = this._getVelocity(newLatlng, targetIndex);
+
+      if (newVelocity !== null) {
+        point.path[targetIndex] = {
+          latlng: newLatlng,
+          velocity: newVelocity,
+        };
+      } else {
+        var slideResult = this._slideAlongBoundary(
+          latlng,
+          totalVelocity,
+          timestep,
+          targetIndex,
+        );
+        point.path[targetIndex] = slideResult || {
+          latlng: latlng,
+          velocity: { x: 0, y: 0 },
+        };
+      }
+    }
+  },
+  _computeDiffusionVelocity: function (latlng, allPositions) {
+    var K = this.options.diffusion;
+    var N = allPositions.length - 1;
+    if (N <= 0) return { x: 0, y: 0 };
+    var D = (4 * K) / N;
+    var mPerDegLat = 111320;
+    var mPerDegLng = 111320 * Math.cos((latlng.lat * Math.PI) / 180);
+    var vx = 0;
+    var vy = 0;
+
+    for (let k = 0; k < allPositions.length; k++) {
+      var other = allPositions[k];
+      var dx = (latlng.lng - other.lng) * mPerDegLng;
+      var dy = (latlng.lat - other.lat) * mPerDegLat;
+      var distSq = dx * dx + dy * dy;
+      if (distSq < 1) continue;
+      var dist = Math.sqrt(distSq);
+      vx += (D * dx) / (dist * dist);
+      vy += (D * dy) / (dist * dist);
+    }
+
+    return { x: vx, y: vy };
+  },
+  _plotPoints: function () {
+    if (this.options.heatmap && this._heatLayer) {
+      this._ctx.clearRect(0, 0, this._width, this._height);
+      var heatPoints = [];
+      this._points.forEach(function (point) {
+        if (point.path[this._time_index] != null) {
+          var latlng = point.path[this._time_index].latlng;
+          heatPoints.push({ lat: latlng.lat, lng: latlng.lng, value: 1 });
+        }
+      }, this);
+      this._heatLayer.setData({ max: 1, data: heatPoints });
+    } else {
+      this._ctx.clearRect(0, 0, this._width, this._height);
+      this._ctx.lineWidth = 2;
+      this._points.forEach(function (point) {
+        if (point.path[this._time_index] != null) {
+          var arc = this._map.latLngToContainerPoint(
+            point.path[this._time_index].latlng,
+          );
+          var rgb = `${point.color[0]}, ${point.color[1]}, ${point.color[2]}`;
+          var minA = this.options.trailOpacityMin;
+          var maxA = this.options.trailOpacityMax;
+          var fadeLen = this.options.trailFadeLength;
+
+          if (this.options.reverse) {
+            let trailStart = this._time_index;
+            for (let i = 0; i < this._time_index; i++) {
+              if (point.path[i] != null) {
+                trailStart = i;
+                break;
+              }
+            }
+            let fadeStart = Math.max(trailStart, this._time_index - fadeLen);
+            let prev = this._map.latLngToContainerPoint(
+              point.path[trailStart].latlng,
+            );
+            for (let i = trailStart + 1; i <= this._time_index; i++) {
+              if (point.path[i] == null) break;
+              let p = this._map.latLngToContainerPoint(point.path[i].latlng);
+              let a;
+              if (i <= fadeStart) {
+                a = minA;
+              } else {
+                a =
+                  minA +
+                  (maxA - minA) *
+                    ((i - fadeStart) / (this._time_index - fadeStart));
+              }
+              this._ctx.beginPath();
+              this._ctx.moveTo(prev.x, prev.y);
+              this._ctx.lineTo(p.x, p.y);
+              this._ctx.strokeStyle = `rgba(${rgb}, ${a})`;
+              this._ctx.stroke();
+              prev = p;
+            }
+          } else {
+            let idx = point.seed.index;
+            let fadeStart = Math.max(idx, this._time_index - fadeLen);
+            let prev = this._map.latLngToContainerPoint(point.path[idx].latlng);
+            for (let i = idx + 1; i <= this._time_index; i++) {
+              if (point.path[i] == null) break;
+              let p = this._map.latLngToContainerPoint(point.path[i].latlng);
+              let a;
+              if (i <= fadeStart) {
+                a = minA;
+              } else {
+                a =
+                  minA +
+                  (maxA - minA) *
+                    ((i - fadeStart) / (this._time_index - fadeStart));
+              }
+              this._ctx.beginPath();
+              this._ctx.moveTo(prev.x, prev.y);
+              this._ctx.lineTo(p.x, p.y);
+              this._ctx.strokeStyle = `rgba(${rgb}, ${a})`;
+              this._ctx.stroke();
+              prev = p;
+            }
+          }
+
+          this._ctx.fillStyle = `rgb(${rgb})`;
+          this._ctx.beginPath();
+          this._ctx.arc(arc.x, arc.y, 4, 0, Math.PI * 2);
+          this._ctx.fill();
+          this._ctx.closePath();
+        }
+      }, this);
+    }
   },
 });
 

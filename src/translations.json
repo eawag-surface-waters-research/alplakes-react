@@ -29,11 +29,65 @@
     "FR": "À propos",
     "IT": "Sopra"
   },
+  "layers": {
+    "EN": "Layers",
+    "DE": "Ebenen",
+    "FR": "Calques",
+    "IT": "Livelli"
+  },
+  "diffusion": {
+    "EN": "Diffusion",
+    "DE": "Diffusion",
+    "FR": "Diffusion",
+    "IT": "Diffusione"
+  },
+  "computeDiffusion": {
+    "EN": "Compute diffusion",
+    "DE": "Diffusion berechnen",
+    "FR": "Calculer la diffusion",
+    "IT": "Calcola diffusione"
+  },
   "addlayers": {
     "EN": "Add Layers",
     "DE": "Ebenen hinzufügen",
     "FR": "Ajouter des calques",
     "IT": "Aggiungi strati"
+  },
+  "removeLayer": {
+    "EN": "Remove layer",
+    "DE": "Ebene entfernen",
+    "FR": "Supprimer le calque",
+    "IT": "Rimuovi livello"
+  },
+  "imageSelection": {
+    "EN": "Image Selection",
+    "DE": "Bildauswahl",
+    "FR": "Sélection d'image",
+    "IT": "Selezione immagine"
+  },
+  "displaySettings": {
+    "EN": "Display Settings",
+    "DE": "Anzeigeeinstellungen",
+    "FR": "Paramètres d'affichage",
+    "IT": "Impostazioni di visualizzazione"
+  },
+  "modelSettings": {
+    "EN": "Model Settings",
+    "DE": "Modelleinstellungen",
+    "FR": "Paramètres du modèle",
+    "IT": "Impostazioni del modello"
+  },
+  "rawModelOutput": {
+    "EN": "Raw model output",
+    "DE": "Rohe Modellausgabe",
+    "FR": "Sortie brute du modèle",
+    "IT": "Output grezzo del modello"
+  },
+  "particleTracking": {
+    "EN": "Particle Tracking",
+    "DE": "Partikelverfolgung",
+    "FR": "Suivi de particules",
+    "IT": "Tracciamento particelle"
   },
   "surfacetemperature": {
     "EN": "Water temperature",
@@ -1375,11 +1429,53 @@
     "FR": "Dispersion",
     "IT": "Dispersione"
   },
+  "spreadingRate": {
+    "EN": "Spreading rate",
+    "DE": "Ausbreitungsrate",
+    "FR": "Taux de dispersion",
+    "IT": "Tasso di dispersione"
+  },
+  "spreadingRateInformation": {
+    "EN": "This parameter induces diffusion-like dispersion through repulsive particle interactions rather than modeling turbulence directly.",
+    "DE": "Dieser Parameter induziert diffusionsähnliche Dispersion durch abstoßende Partikelwechselwirkungen, anstatt Turbulenz direkt zu modellieren.",
+    "FR": "Ce paramètre induit une dispersion de type diffusion par des interactions répulsives entre particules plutôt que de modéliser directement la turbulence.",
+    "IT": "Questo parametro induce una dispersione simile alla diffusione attraverso interazioni repulsive tra particelle piuttosto che modellare direttamente la turbolenza."
+  },
+  "integrator": {
+    "EN": "Integrator",
+    "DE": "Integrator",
+    "FR": "Intégrateur",
+    "IT": "Integratore"
+  },
+  "radius": {
+    "EN": "Radius",
+    "DE": "Radius",
+    "FR": "Rayon",
+    "IT": "Raggio"
+  },
+  "reverse": {
+    "EN": "Reverse",
+    "DE": "Rückwärts",
+    "FR": "Inverser",
+    "IT": "Invertire"
+  },
+  "reverseInformation": {
+    "EN": "This reverses the tracking direction to locate the origin of added particles.",
+    "DE": "Dies kehrt die Tracking-Richtung um, um den Ursprung der hinzugefügten Partikel zu lokalisieren.",
+    "FR": "Ceci inverse la direction du suivi pour localiser l'origine des particules ajoutées.",
+    "IT": "Questo inverte la direzione del tracciamento per localizzare l'origine delle particelle aggiunte."
+  },
   "removeParticles": {
     "EN": "Remove particles",
     "DE": "Partikel entfernen",
     "FR": "Supprimer les particules",
-    "IT": "RetiRimuovi particellecolo"
+    "IT": "Rimuovi particelle"
+  },
+  "particleWarning": {
+    "EN": "Online particle tracking uses simplified physics and neglects vertical transport. Results are qualitative, verify with one of the offline models below for critical applications:",
+    "DE": "Online-Partikel-Tracking verwendet vereinfachte Physik und vernachlässigt den vertikalen Transport. Die Ergebnisse sind qualitativ; überprüfen Sie diese mit einem der Offline-Modelle unten für kritische Anwendungen:",
+    "FR": "Le suivi de particules en ligne utilise une physique simplifiée et néglige le transport vertical. Les résultats sont qualitatifs, vérifiez avec l'un des modèles hors ligne ci-dessous pour les applications critiques:",
+    "IT": "Il tracciamento delle particelle online utilizza fisica semplificata e trascura il trasporto verticale. I risultati sono qualitativi, verificare con uno dei modelli offline qui sotto per applicazioni critiche:"
   },
   "smoothing": {
     "EN": "Smoothing",

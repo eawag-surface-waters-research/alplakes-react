@@ -3,12 +3,16 @@ import "./information.css";
 
 class Information extends Component {
   render() {
-    const { information } = this.props;
+    const { information, above, small, box } = this.props;
+    var className = "information";
+    if (above) className += " above";
+    if (small) className += " small";
+    if (box) className += " box";
     return (
-        <div className="information">
-          <div className="information-symbol">?</div>
-          <div className="information-box">{information}</div>
-        </div>
+      <div className={className}>
+        <div className="information-symbol">?</div>
+        <div className="information-box">{information}</div>
+      </div>
     );
   }
 }

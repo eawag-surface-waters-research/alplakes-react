@@ -196,7 +196,9 @@ def model_layers(default, sources, default_depth, spread):
         "velocityScale": 0.01,
         "opacity": 0.8,
         "zIndex": 3,
-        "paletteName": "Thermal"
+        "paletteName": "Thermal",
+        "particles": 10,
+        "spread": spread,
       },
       "sources": current
     },
@@ -218,25 +220,6 @@ def model_layers(default, sources, default_depth, spread):
         "interpolate": True
       },
       "sources": thermocline
-    },
-    {
-      "id": "3D_particles",
-      "type": "threed",
-      "playControls": True,
-      "depth": True,
-      "name": "particles",
-      "parameter": "velocity",
-      "unit": "m/s",
-      "display": "particles",
-      "source": default,
-      "default_depth": default_depth,
-      "displayOptions": {
-        "paths": 10,
-        "spread": spread,
-        "zIndex": 4,
-        "particles": True
-      },
-      "sources": particles
     }]
 
 def temperature_layers(key):

@@ -98,7 +98,7 @@ L.Raster = L.ImageOverlay.extend({
     L.Util.setOptions(this, options);
     this._canvas.style.opacity = this.options.opacity;
     this._canvas.style.zIndex = this.options.zIndex + 100;
-    this._reset();
+    this._drawLayer();
   },
   _interpolateGeometryBoundary: function (g) {
     var geometry = g.map((row) => row.slice());
@@ -158,7 +158,32 @@ L.Raster = L.ImageOverlay.extend({
     this._width = size.x;
     this._height = size.y;
     L.DomUtil.setPosition(this._canvas, topLeft);
+    this._projectVertices();
     this._drawLayer();
+  },
+  _projectVertices: function () {
+    var projected = new Array(this._vertices.length);
+    var bounds = this._map.getBounds();
+    for (var c = 0; c < this._vertices.length; c++) {
+      var coords = this._vertices[c];
+      if (!coords) {
+        projected[c] = false;
+        continue;
+      }
+      // Skip cells entirely outside the viewport
+      var centerLat = (coords[0].lat + coords[2].lat) / 2;
+      var centerLng = (coords[0].lng + coords[2].lng) / 2;
+      if (!bounds.contains([centerLat, centerLng])) {
+        projected[c] = false;
+        continue;
+      }
+      var pts = new Array(coords.length);
+      for (var k = 0; k < coords.length; k++) {
+        pts[k] = this._map.latLngToContainerPoint(coords[k]);
+      }
+      projected[c] = pts;
+    }
+    this._projectedVertices = projected;
   },
   _animateZoom: function (e) {
     var scale = this._map.getZoomScale(e.zoom),
@@ -174,71 +199,61 @@ L.Raster = L.ImageOverlay.extend({
     }
   },
   _drawLayer: function () {
-    this._ctx.clearRect(0, 0, this._width, this._height);
+    var ctx = this._ctx;
+    ctx.clearRect(0, 0, this._width, this._height);
+    var projected = this._projectedVertices;
+    if (!projected) return;
     var cell = 0;
     var points = [];
-    var i, j, value;
+    var i, j, value, pts;
+    var optMin = this.options.min;
+    var optMax = this.options.max;
+    var palette = this.options.palette;
+    var isVector = this.options.vector;
+    var dw = this._dataWidth;
     if (this.options.interpolate !== false && this._data.length === 2) {
       var start = this._data[0];
       var end = this._data[1];
+      var interp = this.options.interpolate;
       for (i = 1; i < this._dataHeight - 1; i++) {
-        for (j = 1; j < this._dataWidth - 1; j++) {
-          if (!isNaN(start[i][j]) && !isNaN(end[i][j])) {
-            value =
-              start[i][j] +
-              (end[i][j] - start[i][j]) * this.options.interpolate;
-            if ("vector" in this.options && this.options.vector) {
+        for (j = 1; j < dw - 1; j++) {
+          pts = projected[cell];
+          if (pts && !isNaN(start[i][j]) && !isNaN(end[i][j])) {
+            value = start[i][j] + (end[i][j] - start[i][j]) * interp;
+            if (isVector) {
               let value2 =
-                start[i][j + this._dataWidth] +
-                (end[i][j + this._dataWidth] - start[i][j + this._dataWidth]) *
-                  this.options.interpolate;
+                start[i][j + dw] +
+                (end[i][j + dw] - start[i][j + dw]) * interp;
               value = Math.sqrt(value ** 2 + value2 ** 2);
             }
-            let color = this._getColor(
-              value,
-              this.options.min,
-              this.options.max,
-              this.options.palette
-            );
+            let color = this._getColor(value, optMin, optMax, palette);
             points.push({
-              latLng: L.latLng([
-                this._geometry[i][j],
-                this._geometry[i][j + this._dataWidth],
-              ]),
+              latLng: L.latLng([this._geometry[i][j], this._geometry[i][j + dw]]),
               value,
               index: [i, j],
             });
-            let coords = this._vertices[cell];
-            this._drawCell(this._ctx, coords, `rgb(${color.join(",")})`);
+            this._drawCell(ctx, pts, color);
           }
           cell++;
         }
       }
     } else {
       for (i = 1; i < this._dataHeight - 1; i++) {
-        for (j = 1; j < this._dataWidth - 1; j++) {
-          if (!isNaN(this._data[i][j])) {
+        for (j = 1; j < dw - 1; j++) {
+          pts = projected[cell];
+          if (pts && !isNaN(this._data[i][j])) {
             value = this._data[i][j];
-            if ("vector" in this.options && this.options.vector) {
-              let value2 = this._data[i][j + this._dataWidth];
+            if (isVector) {
+              let value2 = this._data[i][j + dw];
               value = Math.sqrt(value ** 2 + value2 ** 2);
             }
-            let color = this._getColor(
-              value,
-              this.options.min,
-              this.options.max,
-              this.options.palette
-            );
+            let color = this._getColor(value, optMin, optMax, palette);
             points.push({
-              latLng: L.latLng([
-                this._geometry[i][j],
-                this._geometry[i][j + this._dataWidth],
-              ]),
+              latLng: L.latLng([this._geometry[i][j], this._geometry[i][j + dw]]),
               value,
               index: [i, j],
             });
-            let coords = this._vertices[cell];
-            this._drawCell(this._ctx, coords, `rgb(${color.join(",")})`);
+            this._drawCell(ctx, pts, color);
           }
           cell++;
         }
@@ -246,20 +261,16 @@ L.Raster = L.ImageOverlay.extend({
     }
     this._points = points;
   },
-  _drawCell: function (ctx, coords, color) {
-    ctx.strokeStyle = color;
-    ctx.fillStyle = color;
+  _drawCell: function (ctx, pts, color) {
+    ctx.fillStyle = ctx.strokeStyle = "rgb(" + color[0] + "," + color[1] + "," + color[2] + ")";
     ctx.beginPath();
-    let p = this._map.latLngToContainerPoint(coords[0]);
-    ctx.moveTo(p.x, p.y);
-    ctx.lineTo(p.x, p.y);
-    for (var i = 1; i < coords.length; i++) {
-      let p = this._map.latLngToContainerPoint(coords[i]);
-      ctx.lineTo(p.x, p.y);
+    ctx.moveTo(pts[0].x, pts[0].y);
+    for (var i = 1; i < pts.length; i++) {
+      ctx.lineTo(pts[i].x, pts[i].y);
     }
     ctx.closePath();
-    ctx.stroke();
     ctx.fill();
+    ctx.stroke();
   },
   _getCellCorners: function (data, i, j, x) {
     function cellCorner(center, opposite, left, right) {

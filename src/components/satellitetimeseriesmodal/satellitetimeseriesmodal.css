@@ -9,6 +9,8 @@
   padding: 15px;
   box-shadow: var(--box-shadow);
   border: 1px solid var(--border-color);
+  max-height: calc(100% - 65px);
+  overflow: auto;
 }
 
 .satellite-timeseries-modal .title-modal {

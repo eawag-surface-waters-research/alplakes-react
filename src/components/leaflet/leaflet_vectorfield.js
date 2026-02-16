@@ -11,6 +11,7 @@ L.VectorField = L.ImageOverlay.extend({
     min: "null",
     max: "null",
     unit: "m/s",
+    zIndex: 2,
     palette: [
       { color: [68, 1, 84], point: 0 },
       { color: [59, 82, 139], point: 0.25 },

@@ -1,36 +1,39 @@
 /* Alplakes Master CSS */
 
-
 /* Fonts */
 
 @font-face {
   font-family: "DM_Sans";
-  src: url("fonts/DM_Sans/DMSans-VariableFont_opsz\,wght.ttf") format("truetype-variations");
+  src: url("fonts/DM_Sans/DMSans-VariableFont_opsz\,wght.ttf")
+    format("truetype-variations");
   font-weight: 1 999;
 }
 
 @font-face {
   font-family: "DM_Sans_Italic";
-  src: url("fonts/DM_Sans/DMSans-Italic-VariableFont_opsz\,wght.ttf") format("truetype-variations");
+  src: url("fonts/DM_Sans/DMSans-Italic-VariableFont_opsz\,wght.ttf")
+    format("truetype-variations");
   font-weight: 1 999;
 }
 
 @font-face {
   font-family: "Mona_Sans";
-  src: url("fonts/Mona_Sans/MonaSans-VariableFont_wdth\,wght.ttf") format("truetype-variations");
+  src: url("fonts/Mona_Sans/MonaSans-VariableFont_wdth\,wght.ttf")
+    format("truetype-variations");
   font-weight: 1 999;
 }
 
 @font-face {
   font-family: "Mona_Sans_Italic";
-  src: url("fonts/Mona_Sans/MonaSans-Italic-VariableFont_wdth\,wght.ttf") format("truetype-variations");
+  src: url("fonts/Mona_Sans/MonaSans-Italic-VariableFont_wdth\,wght.ttf")
+    format("truetype-variations");
   font-weight: 1 999;
 }
 
 /* Variables */
 
 :root {
-  --background-color: #F3F4F6;
+  --background-color: #f3f4f6;
   --background-font-color: rgb(50, 50, 50);
   --background-subtle-font-color: rgb(88 88 88);
   --box-color: rgb(255, 255, 255);
@@ -42,9 +45,11 @@
   --box-shadow: rgba(0, 0, 0, 0.14) 0px 1px 5px;
   --box-shadow-hover: rgba(0, 0, 0, 0.24) 0px 1px 6px;
   --bottom-shadow: 0px 3px 5px 0px rgba(214, 214, 214, 0.6);
-  --search-shadow: rgba(50, 50, 93, 0.25) 0px 1px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
-  --star-color: #E9C00A;
-  --live-color: #44BCA7;
+  --search-shadow:
+    rgba(50, 50, 93, 0.25) 0px 1px 12px -2px,
+    rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+  --star-color: #e9c00a;
+  --live-color: #44bca7;
   --content-width: 1280px;
   --text-width: 700px;
   --max-width: 1920px;
@@ -57,16 +62,17 @@
   --sidebar-width: 450px;
   --settings-width: 400px;
   --selector-height: 50px;
-  --input-shadow: inset 0 1px 2px rgba(0, 0, 0, .39), 0 0 1px #FFF, 0 1px 0 #FFF;
+  --input-shadow:
+    inset 0 1px 2px rgba(0, 0, 0, 0.39), 0 0 1px #fff, 0 1px 0 #fff;
   --info-height: 36px;
   --map-border-color: rgb(204, 204, 204);
   --button-fill-color: black;
   --button-text-color: white;
   --highlight-color: rgba(68, 188, 167, 1);
-  --link-color: #5594CC;
-  --link-button-color: #F3F4F6;
+  --link-color: #5594cc;
+  --link-button-color: #f3f4f6;
   --highlight-color-fill: rgba(68, 188, 167, 0.2);
-  --highlight-color-subtle: #EEF9F7;
+  --highlight-color-subtle: #eef9f7;
   --header-text-color: rgb(59, 59, 59);
   --pulse-color: rgb(160, 160, 160);
   --map-color: rgb(236, 236, 236);
@@ -75,7 +81,11 @@
   --legend-color: rgb(236 236 236 / 47%);
   --app-area-height: 127px;
   --day-selector-height: 64px;
-  --mobile-fade-out: linear-gradient(0deg, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0) 100%);
+  --mobile-fade-out: linear-gradient(
+    0deg,
+    rgba(255, 255, 255, 0.7) 0%,
+    rgba(255, 255, 255, 0) 100%
+  );
   color-scheme: light;
 }
 
@@ -93,7 +103,8 @@
   --select-color: hsl(233, 8%, 19%);
   --box-font-color: #e5e5e5;
   --box-inner-color: #282828;
-  --input-shadow: inset 0 1px 2px rgb(44 44 44), 0 0 1px #bdbdbd, 0 1px 0 #464646;
+  --input-shadow:
+    inset 0 1px 2px rgb(44 44 44), 0 0 1px #bdbdbd, 0 1px 0 #464646;
   --border-color: #434343;
   --button-fill-color: white;
   --button-text-color: black;
@@ -101,13 +112,20 @@
   --highlight-color-subtle: #336f69;
   --pulse-color: rgb(136 136 136);
   --map-color: rgb(41, 41, 41);
-  --box-shadow: 0 0 0 1px hsla(230, 13%, 9%, 0.075), 0 0.3px 0.4px hsla(230, 13%, 9%, 0.02), 0 0.9px 1.5px hsla(230, 13%, 9%, 0.045), 0 3.5px 6px hsla(230, 13%, 9%, 0.09);
+  --box-shadow:
+    0 0 0 1px hsla(230, 13%, 9%, 0.075), 0 0.3px 0.4px hsla(230, 13%, 9%, 0.02),
+    0 0.9px 1.5px hsla(230, 13%, 9%, 0.045),
+    0 3.5px 6px hsla(230, 13%, 9%, 0.09);
   --search-shadow: rgb(14 14 17 / 81%) 0px 3px 8px;
   --bottom-shadow: 0px 3px 5px 0px rgb(16 16 16 / 26%);
   --box-shadow-hover: rgb(255 255 255 / 16%) 0px 1px 8px;
   --legend-color: rgb(41 41 41 / 65%);
   --link-button-color: #2d2d34;
-  --mobile-fade-out: linear-gradient(0deg, rgba(34, 35, 42, 1) 0%, rgba(34, 35, 42, 0.0) 100%)
+  --mobile-fade-out: linear-gradient(
+    0deg,
+    rgba(34, 35, 42, 1) 0%,
+    rgba(34, 35, 42, 0) 100%
+  );
 }
 
 @media screen and (max-width: 1000px) {
@@ -125,7 +143,7 @@
   :root {
     --background-color: white;
     --search-height: 138px;
-    --select-color: #F3F4F6;
+    --select-color: #f3f4f6;
   }
 
   .dark {
@@ -133,7 +151,6 @@
     --box-color-translucent: rgb(34, 35, 42, 0.9);
   }
 }
-
 
 /* Whole site settings */
 
@@ -157,8 +174,10 @@
   margin: auto;
   margin-top: var(--top-margin);
   max-width: var(--content-width);
-  min-height: calc(100vh - var(--header-height) - var(--footer-height) - var(--top-margin));
-  padding: 0 calc(var(--padding)* 1.5);
+  min-height: calc(
+    100vh - var(--header-height) - var(--footer-height) - var(--top-margin)
+  );
+  padding: 0 calc(var(--padding) * 1.5);
   width: 100%;
 }
 
@@ -175,7 +194,7 @@
   display: inline-block;
   margin-bottom: 20px;
   cursor: pointer;
-  transition: all .33s 0s ease;
+  transition: all 0.33s 0s ease;
 }
 
 .main .content-width .header .link:hover {
@@ -198,7 +217,6 @@
 }
 
 @media screen and (max-width: 500px) {
-
   .main .text-width {
     padding: 0 var(--padding);
     margin-top: var(--header-height);
@@ -296,7 +314,7 @@ p {
 }
 
 .tooltip-hover::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: -15px;
   left: 50%;
@@ -341,7 +359,6 @@ p {
 .current_temperature_tooltip_subtle.tooltip-hidden {
   visibility: hidden;
 }
-
 
 /* Skeletons */
 
@@ -449,7 +466,7 @@ p {
 
 .main .temperature-label {
   font-size: 14px;
-  transition: transform .33s 0s ease;
+  transition: transform 0.33s 0s ease;
 }
 
 .main .temperature-label:hover {
@@ -476,7 +493,11 @@ p {
   padding: 4px;
   border-radius: 0 8px 8px 0;
   font-weight: 600;
-  font-family: DM_Sans, Frutiger Neue LT Pro, Arial, sans-serif;
+  font-family:
+    DM_Sans,
+    Frutiger Neue LT Pro,
+    Arial,
+    sans-serif;
 }
 
 /* Slider */
@@ -495,7 +516,7 @@ p {
   width: 0;
 }
 
-.main input[type=checkbox] {
+.main input[type="checkbox"] {
   margin-left: 12px;
 }
 
@@ -507,8 +528,8 @@ p {
   right: 0;
   bottom: 0;
   background-color: #ccc;
-  -webkit-transition: .4s;
-  transition: .4s;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
 }
 
 .main .slider:before {
@@ -519,19 +540,19 @@ p {
   left: 4px;
   bottom: 3px;
   background-color: white;
-  -webkit-transition: .4s;
-  transition: .4s;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
 }
 
-.main input:checked+.slider {
+.main input:checked + .slider {
   background-color: var(--highlight-color);
 }
 
-.main input:focus+.slider {
+.main input:focus + .slider {
   box-shadow: 0 0 1px var(--highlight-color);
 }
 
-.main input:checked+.slider:before {
+.main input:checked + .slider:before {
   -webkit-transform: translateX(16px);
   -ms-transform: translateX(16px);
   transform: translateX(16px);
@@ -548,6 +569,7 @@ p {
 /* Setting */
 
 .main .setting {
+  position: relative;
   padding: 0px 0px 18px 0px;
   display: inline-block;
   width: 100%;
@@ -566,13 +588,32 @@ p {
   color: var(--background-subtle-font-color);
 }
 
-.main .setting input[type=range] {
+.main .setting-warning {
+  font-size: 14px;
+  margin-bottom: 14px;
+}
+
+.main .setting-warning button {
+  margin-top: 6px;
+  margin-right: 10px;
+  padding: 3px 8px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: scale 0.33s ease;
+}
+
+.main .setting-warning button:hover {
+  transform: scale(1.05);
+}
+
+.main .setting input[type="range"] {
   box-sizing: border-box;
   padding: 2px 0;
   width: 100%;
 }
 
-.main .setting input[type=text] {
+.main .setting input[type="text"] {
   background-color: var(--box-color);
   border: none;
   border-radius: 6px;
@@ -583,7 +624,7 @@ p {
   width: 100%;
 }
 
-.main .setting input[type=number] {
+.main .setting input[type="number"] {
   background-color: var(--box-color);
   border: none;
   border-radius: 6px;
@@ -594,11 +635,11 @@ p {
   width: 100%;
 }
 
-.main .setting input[type=number].with-button {
+.main .setting input[type="number"].with-button {
   padding-right: 25px;
 }
 
-.main .setting input[type=color] {
+.main .setting input[type="color"] {
   background-color: #e3e3e3;
   border: none;
   box-sizing: border-box;
@@ -658,11 +699,11 @@ p {
 }
 
 .main .setting .value.highlight {
-  color: var(--highlight-color-subtle)
+  color: var(--highlight-color-subtle);
 }
 
 .main .setting .value.red {
-  color: #a13145
+  color: #a13145;
 }
 
 .main .setting button.remove {
@@ -674,10 +715,28 @@ p {
   display: inline-block;
   font-size: 14px;
   padding: 5px 12px;
-  transition: all .33s ease;
+  transition: all 0.33s ease;
+  margin-top: 20px;
 }
 
 .main .setting button.remove:hover {
+  transform: scale(1.05);
+}
+
+.main .setting button.update {
+  background-color: var(--border-color);
+  border: none;
+  border-radius: 8px;
+  color: var(--background-font-color);
+  cursor: pointer;
+  display: inline-block;
+  font-size: 14px;
+  padding: 5px 12px;
+  transition: all 0.33s ease;
+  margin-top: 20px;
+}
+
+.main .setting button.update:hover {
   transform: scale(1.05);
 }
 
@@ -691,11 +750,11 @@ p {
   display: inline-block;
   height: 16px;
   margin-left: 8px;
-  opacity: .5;
+  opacity: 0.5;
   position: absolute;
   right: 5px;
   top: 5px;
-  transition: all .33s ease-in-out;
+  transition: all 0.33s ease-in-out;
   vertical-align: middle;
 }
 
@@ -858,5 +917,4 @@ p {
   .setting .period-selector .react-datepicker-popper {
     display: none;
   }
-
 }
