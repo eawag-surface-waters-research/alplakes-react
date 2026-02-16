@@ -17,7 +17,6 @@ import Period from "../../../components/customselect/period";
 import Depth from "../../../components/customselect/depth";
 import Color from "../../../components/customselect/color";
 import ToggleBox from "../../../components/togglebox/togglebox";
-import ShowMoreText from "../../../components/showmore/showmore";
 import Information from "../../../components/information/information";
 
 class Raster extends Component {
