@@ -257,6 +257,7 @@ def meteo_layers(b):
             "model": "meteoswiss_icon",
             "name": "MeteoSwiss ICON",
             "forecast": 4,
+            "start_date": "2024-08-01",
             "bounds": expanded,
             "description": {
                 "EN": "Air temperature at 2m is produced using the ICON model from MeteoSwiss. Hindcasts use the ICON 1-day deterministic product and forecasts use the ICON 5-day ensemble forecast.",
@@ -299,6 +300,7 @@ def meteo_layers(b):
             "model": "meteoswiss_icon",
             "name": "MeteoSwiss ICON",
             "forecast": 4,
+            "start_date": "2024-08-01",
             "bounds": expanded,
             "description": {
                 "EN": "Wind speed and direction at 10 m is produced using the ICON model from MeteoSwiss. Hindcasts use the ICON 1-day deterministic product and forecasts use the ICON 5-day ensemble forecast.",

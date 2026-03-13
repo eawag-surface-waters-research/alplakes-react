@@ -147,16 +147,20 @@ class Raster extends Component {
     var end_date = new Date();
     const noDepth = "depth" in layer && layer.depth === false;
     const meteo = layer.type === "meteo";
-    end_date.setDate(start_date.getDate() - 7);
-    if ("metadata" in layer.sources[layer.source]) {
+    const forecast = "forecast" in layer.sources[layer.source] ? layer.sources[layer.source].forecast : 0;
+    end_date.setDate(start_date.getDate() + forecast);
+    if ("metadata" in layer.sources[layer.source] && Object.keys(layer.sources[layer.source].metadata).length > 0) {
       ({
         depth: depths,
         missingDates,
         start_date,
         end_date,
       } = layer.sources[layer.source].metadata);
+    } else if ("start_date" in layer.sources[layer.source]) {
+      start_date = new Date(layer.sources[layer.source].start_date);
     }
-
+    console.log(layer.sources[layer.source])
+    console.log(start_date, end_date);
     if (opacity === undefined) opacity = 1;
     var downloadDates = this.downloadDates(
       model,
@@ -517,7 +521,8 @@ class Current extends Component {
     var missingDates = [];
     var start_date = new Date();
     var end_date = new Date();
-    end_date.setDate(start_date.getDate() - 7);
+    const forecast = "forecast" in layer.sources[layer.source] ? layer.sources[layer.source].forecast : -7;
+    end_date.setDate(start_date.getDate() + forecast);
     if ("metadata" in layer.sources[layer.source]) {
       ({
         depth: depths,
@@ -525,6 +530,8 @@ class Current extends Component {
         start_date,
         end_date,
       } = layer.sources[layer.source].metadata);
+    } else if ("start_date" in layer.sources[layer.source]) {
+      start_date = new Date(layer.sources[layer.source].start_date);
     }
     spread = spread ? spread : 500;
     particles = particles ? particles : 50;
