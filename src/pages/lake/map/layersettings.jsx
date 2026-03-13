@@ -145,6 +145,8 @@ class Raster extends Component {
     var missingDates = [];
     var start_date = new Date();
     var end_date = new Date();
+    const noDepth = "depth" in layer && layer.depth === false;
+    const meteo = layer.type === "meteo";
     end_date.setDate(start_date.getDate() - 7);
     if ("metadata" in layer.sources[layer.source]) {
       ({
@@ -186,12 +188,16 @@ class Raster extends Component {
             <div className="label">{Translations.source[language]}</div>
             <div>
               <a
-                href="https://www.eawag.ch"
-                alt="Eawag"
+                href={
+                  meteo
+                    ? "https://www.meteoswiss.admin.ch"
+                    : "https://www.eawag.ch"
+                }
+                alt={meteo ? "MeteoSwiss" : "Eawag"}
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Eawag
+                {meteo ? "MeteoSwiss" : "Eawag"}
               </a>
             </div>
           </div>
@@ -208,12 +214,14 @@ class Raster extends Component {
               />
             </div>
           </div>
-          <Depth
-            depth={depth}
-            depths={depths}
-            onChange={setDepth}
-            language={language}
-          />
+          {!noDepth && (
+            <Depth
+              depth={depth}
+              depths={depths}
+              onChange={setDepth}
+              language={language}
+            />
+          )}
         </div>
         <div className="sidebar-content-settings">
           {Translations.displaySettings[language]}
@@ -281,24 +289,30 @@ class Raster extends Component {
             <ColorRamp onChange={this.setPalette} value={paletteName} />
           </div>
         </div>
-        <div className="sidebar-content-settings">
-          {Translations.download[language]}
-        </div>
-        <div className="layer-settings-section">
-          <div className="setting">
-            <div className="label">{Translations.rawModelOutput[language]}</div>
-            <select defaultValue="" onChange={this.downloadFile}>
-              <option disabled value="">
-                {Translations.selectWeek[language]}
-              </option>
-              {downloadDates.reverse().map((d) => (
-                <option key={d.url} value={d.url}>
-                  {d.date}
-                </option>
-              ))}
-            </select>
-          </div>
-        </div>
+        {!meteo && (
+          <React.Fragment>
+            <div className="sidebar-content-settings">
+              {Translations.download[language]}
+            </div>
+            <div className="layer-settings-section">
+              <div className="setting">
+                <div className="label">
+                  {Translations.rawModelOutput[language]}
+                </div>
+                <select defaultValue="" onChange={this.downloadFile}>
+                  <option disabled value="">
+                    {Translations.selectWeek[language]}
+                  </option>
+                  {downloadDates.reverse().map((d) => (
+                    <option key={d.url} value={d.url}>
+                      {d.date}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+          </React.Fragment>
+        )}
       </div>
     );
   }
@@ -307,7 +321,7 @@ class Raster extends Component {
 class Current extends Component {
   state = {
     id: Math.round(Math.random() * 100000),
-    minVelocityScale: 0.0001,
+    minVelocityScale: 0.00005,
     maxVelocityScale: 0.2,
     _paths: this.props.options.paths,
   };
@@ -516,6 +530,7 @@ class Current extends Component {
     particles = particles ? particles : 50;
     diffusion = diffusion ? diffusion : 0;
     var { model, key } = layer.sources[layer.source];
+    const meteo = layer.type === "meteo";
     var downloadDates = this.downloadDates(
       model,
       key,
@@ -546,12 +561,16 @@ class Current extends Component {
             <div className="label">{Translations.source[language]}</div>
             <div>
               <a
-                href="https://www.eawag.ch"
-                alt="Eawag"
+                href={
+                  meteo
+                    ? "https://www.meteoswiss.admin.ch"
+                    : "https://www.eawag.ch"
+                }
+                alt={meteo ? "MeteoSwiss" : "Eawag"}
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Eawag
+                {meteo ? "MeteoSwiss" : "Eawag"}
               </a>
             </div>
           </div>
@@ -568,12 +587,14 @@ class Current extends Component {
               />
             </div>
           </div>
-          <Depth
-            depth={depth}
-            depths={depths}
-            onChange={setDepth}
-            language={language}
-          />
+          {!meteo && (
+            <Depth
+              depth={depth}
+              depths={depths}
+              onChange={setDepth}
+              language={language}
+            />
+          )}
         </div>
         <div className="sidebar-content-settings">
           {Translations.layers[language]}
@@ -660,133 +681,148 @@ class Current extends Component {
             }
           />
         </div>
-        <div className="sidebar-content-settings">
-          {Translations.particleTracking[language]}
-        </div>
-        <div className="layer-settings-section">
-          <div className="setting">
-            <label className="switch">
-              <input
-                type="checkbox"
-                checked={!!heatmap}
-                onChange={this.toggleHeatmap}
-              />
-              <span className="slider round"></span>
-            </label>
-            <div className="title">{Translations.heatmap[language]}</div>
-          </div>
-          <div className="setting">
-            <label className="switch">
-              <input
-                type="checkbox"
-                checked={!!reverse}
-                onChange={this.toggleReverse}
-              />
-              <span className="slider round"></span>
-            </label>
-            <div className="title">
-              {Translations.reverse[language]}
-              <Information
-                information={Translations.reverseInformation[language]}
-                above={true}
-                small={true}
-              />
+        {!meteo && (
+          <React.Fragment>
+            <div className="sidebar-content-settings">
+              {Translations.particleTracking[language]}
             </div>
-          </div>
-          <div className="setting half">
-            <div className="label">{Translations.particles[language]}</div>
-            <div className="value">{particles}</div>
-            <input
-              type="range"
-              min="0"
-              max="100"
-              step="5"
-              value={particles}
-              onChange={this.setParticles}
-            ></input>
-          </div>
-          <div className="setting half">
-            <div className="label">{Translations.spread[language]}</div>
-            <div className="value">{Math.ceil(spread)}</div>
-            <input
-              type="range"
-              min="0"
-              max="4"
-              step="0.1"
-              value={Math.log10(spread)}
-              onChange={this.setSpread}
-            ></input>
-          </div>
-          <div className="setting">
-            <div className="label">
-              {Translations.spreadingRate[language]}{" "}
-              <Information
-                information={Translations.spreadingRateInformation[language]}
-                above={true}
-                small={true}
-              />
+            <div className="layer-settings-section">
+              <div className="setting">
+                <label className="switch">
+                  <input
+                    type="checkbox"
+                    checked={!!heatmap}
+                    onChange={this.toggleHeatmap}
+                  />
+                  <span className="slider round"></span>
+                </label>
+                <div className="title">{Translations.heatmap[language]}</div>
+              </div>
+              <div className="setting">
+                <label className="switch">
+                  <input
+                    type="checkbox"
+                    checked={!!reverse}
+                    onChange={this.toggleReverse}
+                  />
+                  <span className="slider round"></span>
+                </label>
+                <div className="title">
+                  {Translations.reverse[language]}
+                  <Information
+                    information={Translations.reverseInformation[language]}
+                    above={true}
+                    small={true}
+                  />
+                </div>
+              </div>
+              <div className="setting half">
+                <div className="label">{Translations.particles[language]}</div>
+                <div className="value">{particles}</div>
+                <input
+                  type="range"
+                  min="0"
+                  max="100"
+                  step="5"
+                  value={particles}
+                  onChange={this.setParticles}
+                ></input>
+              </div>
+              <div className="setting half">
+                <div className="label">{Translations.spread[language]}</div>
+                <div className="value">{Math.ceil(spread)}</div>
+                <input
+                  type="range"
+                  min="0"
+                  max="4"
+                  step="0.1"
+                  value={Math.log10(spread)}
+                  onChange={this.setSpread}
+                ></input>
+              </div>
+              <div className="setting">
+                <div className="label">
+                  {Translations.spreadingRate[language]}{" "}
+                  <Information
+                    information={
+                      Translations.spreadingRateInformation[language]
+                    }
+                    above={true}
+                    small={true}
+                  />
+                </div>
+                <div className="value">{diffusion}</div>
+                <input
+                  type="range"
+                  min="0"
+                  max="3"
+                  step="0.1"
+                  value={diffusion}
+                  onChange={this.setDiffusion}
+                  onMouseUp={this.applyDiffusion}
+                  onTouchEnd={this.applyDiffusion}
+                ></input>
+              </div>
+              <div className="setting half">
+                <div className="label">{Translations.integrator[language]}</div>
+                <select
+                  value={integrator || "rk4"}
+                  onChange={this.setIntegrator}
+                >
+                  <option value="rk4">Runge-Kutta 4</option>
+                  <option value="euler">Euler</option>
+                </select>
+              </div>
+              <div className="setting half">
+                <button className="remove" onClick={this.removeParticles}>
+                  {Translations.removeParticles[language]}
+                </button>
+              </div>
+              <div className="setting-warning">
+                ⚠️ {Translations.particleWarning[language]}
+                <br />
+                <a
+                  target="_blank"
+                  rel="noreferrer"
+                  href="https://github.com/eawag-surface-waters-research/alplakes-parcels"
+                >
+                  <button>Parcels</button>
+                </a>
+                <a
+                  target="_blank"
+                  rel="noreferrer"
+                  href="https://github.com/eawag-surface-waters-research/alplakes-particletracking"
+                >
+                  <button>ctracker</button>
+                </a>
+              </div>
             </div>
-            <div className="value">{diffusion}</div>
-            <input
-              type="range"
-              min="0"
-              max="3"
-              step="0.1"
-              value={diffusion}
-              onChange={this.setDiffusion}
-              onMouseUp={this.applyDiffusion}
-              onTouchEnd={this.applyDiffusion}
-            ></input>
-          </div>
-          <div className="setting half">
-            <div className="label">{Translations.integrator[language]}</div>
-            <select value={integrator || "rk4"} onChange={this.setIntegrator}>
-              <option value="rk4">Runge-Kutta 4</option>
-              <option value="euler">Euler</option>
-            </select>
-          </div>
-          <div className="setting half">
-            <button className="remove" onClick={this.removeParticles}>
-              {Translations.removeParticles[language]}
-            </button>
-          </div>
-          <div className="setting-warning">
-            ⚠️ {Translations.particleWarning[language]}
-            <br />
-            <a
-              target="_blank"
-              rel="noreferrer"
-              href="https://github.com/eawag-surface-waters-research/alplakes-parcels"
-            >
-              <button>Parcels</button>
-            </a>
-            <a
-              target="_blank"
-              rel="noreferrer"
-              href="https://github.com/eawag-surface-waters-research/alplakes-particletracking"
-            >
-              <button>ctracker</button>
-            </a>
-          </div>
-        </div>
-        <div className="sidebar-content-settings">
-          {Translations.download[language]}
-        </div>
-        <div className="layer-settings-section">
-          <div className="setting">
-            <div className="label">{Translations.rawModelOutput[language]}</div>
-            <select defaultValue="" onChange={this.downloadFile}>
-              <option disabled value="">
-                {Translations.selectWeek[language]}
-              </option>
-              {downloadDates.reverse().map((d) => (
-                <option key={d.url} value={d.url}>
-                  {d.date}
-                </option>
-              ))}
-            </select>
-          </div>
-        </div>
+          </React.Fragment>
+        )}
+        {!meteo && (
+          <React.Fragment>
+            <div className="sidebar-content-settings">
+              {Translations.download[language]}
+            </div>
+            <div className="layer-settings-section">
+              <div className="setting">
+                <div className="label">
+                  {Translations.rawModelOutput[language]}
+                </div>
+                <select defaultValue="" onChange={this.downloadFile}>
+                  <option disabled value="">
+                    {Translations.selectWeek[language]}
+                  </option>
+                  {downloadDates.reverse().map((d) => (
+                    <option key={d.url} value={d.url}>
+                      {d.date}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+          </React.Fragment>
+        )}
       </div>
     );
   }

@@ -395,6 +395,18 @@
     "FR": "Température",
     "IT": "Temperatura"
   },
+  "airtemperature": {
+    "EN": "Air temperature",
+    "DE": "Lufttemperatur",
+    "FR": "Température de l'air",
+    "IT": "Temperatura dell'aria"
+  },
+  "wind": {
+    "EN": "Wind",
+    "DE": "Wind",
+    "FR": "Vent",
+    "IT": "Vento"
+  },
   "velocity": {
     "EN": "Current",
     "DE": "Strömung",
@@ -1248,6 +1260,12 @@
     "DE": "3D-Modell",
     "FR": "Modèle 3D",
     "IT": "Modello 3D"
+  },
+  "meteo": {
+    "EN": "Meteo",
+    "DE": "Meteo",
+    "FR": "Météo",
+    "IT": "Meteo"
   },
   "oned": {
     "EN": "1D Model",

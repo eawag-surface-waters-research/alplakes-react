@@ -237,7 +237,7 @@ const addVectorField = async (map, layers, id, options, language, server) => {
     displayOptions,
   ).addTo(map);
 
-  if (options.hideParticles) {
+  if (options.noParticles) {
   } else {
     layers[id]["particles_control"] = L.control
       .particleTracking(

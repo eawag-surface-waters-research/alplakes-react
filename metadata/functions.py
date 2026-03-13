@@ -1,4 +1,5 @@
 import re
+import math
 import requests
 
 def make_bounds(shape, shape2, key):
@@ -221,6 +222,95 @@ def model_layers(default, sources, default_depth, spread):
       },
       "sources": thermocline
     }]
+
+
+def meteo_layers(b):
+    pad_lat = 3 / 111.0
+    mid_lat = (b[0][0] + b[1][0]) / 2
+    pad_lon = 3 / (111.0 * math.cos(math.radians(mid_lat)))
+    expanded = [[b[0][0] - pad_lat, b[0][1] - pad_lon], [b[1][0] + pad_lat, b[1][1] + pad_lon]]
+
+    if expanded[1][0] < 45.04 or expanded[0][0] > 47.98 or expanded[1][1] < 4.16 or expanded[0][1] > 11.31:
+        return []
+
+    return [
+        {
+        "id": "2D_airtemperature",
+        "type": "meteo",
+        "playControls": True,
+        "depth": False,
+        "name": "airtemperature",
+        "parameter": "T_2M",
+        "unit": "°C",
+        "display": "raster",
+        "source": "meteoswiss_icon",
+        "default_depth": 0.7,
+        "displayOptions": {
+            "raster": True,
+            "opacity": 0.6,
+            "paletteName": "Thermal",
+            "zIndex": 2,
+            "interpolate": True
+        },
+        "sources": {
+            "meteoswiss_icon": {
+            "model": "meteoswiss_icon",
+            "name": "MeteoSwiss ICON",
+            "forecast": 4,
+            "bounds": expanded,
+            "description": {
+                "EN": "Air temperature at 2m is produced using the ICON model from MeteoSwiss. Hindcasts use the ICON 1-day deterministic product and forecasts use the ICON 5-day ensemble forecast.",
+                "DE": "Die Lufttemperatur in 2 m Höhe wird mit dem ICON-Modell von MeteoSwiss erzeugt. Rückprognosen verwenden das deterministische 1-Tages-Produkt von ICON und Prognosen verwenden die 5-Tages-Ensembleprognose von ICON.",
+                "FR": "La température de l'air à 2 m est produite à l'aide du modèle ICON de MeteoSwiss. Les prévisions rétrospectives utilisent le produit déterministe ICON à 1 jour et les prévisions utilisent la prévision d'ensemble ICON à 5 jours.",
+                "IT": "La temperatura dell'aria a 2 m è prodotta utilizzando il modello ICON di MeteoSwiss. Gli hindcast utilizzano il prodotto deterministico ICON a 1 giorno e le previsioni utilizzano la previsione ensemble ICON a 5 giorni."
+            }
+            }
+        }
+        },
+        {
+        "id": "2D_wind",
+        "type": "meteo",
+        "playControls": True,
+        "depth": False,
+        "name": "wind",
+        "parameter": "UV",
+        "unit": "m/s",
+        "display": "current",
+        "source": "meteoswiss_icon",
+        "default_depth": 0.7,
+        "displayOptions": {
+            "raster": False,
+            "streamlines": False,
+            "vector": True,
+            "paths": 5000,
+            "streamlinesColor": "#ffffff",
+            "arrowsColor": "#19104c",
+            "width": 0.5,
+            "fade": 0.97,
+            "duration": 10,
+            "maxAge": 80,
+            "velocityScale": 0.0001,
+            "opacity": 0.8,
+            "zIndex": 3,
+            "paletteName": "Thermal"
+        },
+        "sources": {
+            "meteoswiss_icon": {
+            "model": "meteoswiss_icon",
+            "name": "MeteoSwiss ICON",
+            "forecast": 4,
+            "bounds": expanded,
+            "description": {
+                "EN": "Wind speed and direction at 10 m is produced using the ICON model from MeteoSwiss. Hindcasts use the ICON 1-day deterministic product and forecasts use the ICON 5-day ensemble forecast.",
+                "DE": "Die Windgeschwindigkeit und -richtung in 10 m Höhe wird mit dem ICON-Modell von MeteoSwiss erzeugt. Rückprognosen verwenden das deterministische 1-Tages-Produkt von ICON und Prognosen verwenden die 5-Tages-Ensembleprognose von ICON.",
+                "FR": "La vitesse et la direction du vent à 10 m est produite à l'aide du modèle ICON de MeteoSwiss. Les prévisions rétrospectives utilisent le produit déterministe ICON à 1 jour et les prévisions utilisent la prévision d'ensemble ICON à 5 jours.",
+                "IT": "La velocità e la direzione del vento a 10 m è prodotta utilizzando il modello ICON di MeteoSwiss. Gli hindcast utilizzano il prodotto deterministico ICON a 1 giorno e le previsioni utilizzano la previsione ensemble ICON a 5 giorni."
+            }
+            }
+        }
+        }
+    ]
+
 
 def temperature_layers(key):
     return [

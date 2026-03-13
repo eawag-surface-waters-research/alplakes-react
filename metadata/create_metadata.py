@@ -291,6 +291,8 @@ for lake in metadata:
             home["filters"].append("satellite")
             data["satellite"] = satellite_data
 
+    # Meteo data
+    layers["layers"].extend(func.meteo_layers(layers["bounds"]))
 
     if add:
         with open('files/{}.json'.format(key), 'w') as json_file:

@@ -9,6 +9,7 @@ export const collectMetadata = async (layers, graphSelection) => {
     threed: threedMetadata,
     satellite: satelliteMetadata,
     measurements: measurementsMetadata,
+    meteo: meteoMetadata,
   };
   for (let layer of layers) {
     if (layer.active) {
@@ -147,6 +148,10 @@ const measurementsMetadata = (parameters, unit) => {
   return {};
 };
 
+const meteoMetadata = (parameters, unit) => {
+  return {};
+};
+
 export const downloadData = async (
   add,
   layers,
@@ -161,6 +166,7 @@ export const downloadData = async (
     threed: threedDownload,
     satellite: satelliteDownload,
     measurements: measurementsDownload,
+    meteo: meteoDownload,
   };
   var data;
   for (let layer of layers) {
@@ -292,6 +298,94 @@ const threedDownload = async (
           fullData: data[layer.parameter].data,
           datetime: datetime.getTime(),
           times: data[layer.parameter].time.map((t) => t.getTime()),
+          geometry: data.geometry,
+          displayOptions: layer.displayOptions,
+        },
+      });
+    }
+    return { data, updates, period, datetime, depth };
+  } else {
+    return false;
+  }
+};
+
+const meteoDownload = async (
+  layer,
+  updates,
+  period,
+  datetime,
+  depth,
+  mapId,
+  initial,
+) => {
+  const source = layer.sources[layer.source];
+  if (period === false) {
+    period = [
+      new Date(Date.now() - 1 * 24 * 60 * 60 * 1000),
+      new Date(Date.now() + source.forecast * 24 * 60 * 60 * 1000),
+    ];
+  }
+  const data = await downloadMeteo(
+    source.model.toLowerCase(),
+    source.bounds,
+    period[0],
+    period[1],
+    ["geometry", layer.parameter],
+  );
+  if (data) {
+    layer.displayOptions.unit = layer.unit;
+    layer.displayOptions.min = data[layer.parameter].min;
+    layer.displayOptions.max = data[layer.parameter].max;
+    layer.displayOptions.dataMin = data[layer.parameter].min;
+    layer.displayOptions.dataMax = data[layer.parameter].max;
+    var index;
+    const timestep =
+      (data[layer.parameter].end - data[layer.parameter].start) /
+      (data[layer.parameter].data.length - 1);
+    period[0] = data[layer.parameter].start;
+    period[1] = data[layer.parameter].end;
+    if (datetime === false) {
+      index = data[layer.parameter].data.length - 1;
+      datetime = data[layer.parameter].end;
+      const now = new Date();
+      if (data[layer.parameter].end > now) {
+        index = Math.ceil((now - data[layer.parameter].start) / timestep);
+        datetime = new Date(
+          data[layer.parameter].start.getTime() + index * timestep,
+        );
+      }
+    } else {
+      index = Math.max(
+        0,
+        Math.min(
+          Math.ceil((datetime - data[layer.parameter].start) / timestep),
+          data[layer.parameter].data.length - 1,
+        ),
+      );
+    }
+    const plotTypes = ["raster", "streamlines"].filter(
+      (p) => p in layer.displayOptions && layer.displayOptions[p],
+    );
+    for (let plotType of plotTypes) {
+      updates.push({
+        event: "addLayer",
+        type: plotType,
+        id: layer.id,
+        options: {
+          data: data[layer.parameter].data[index],
+          geometry: data.geometry,
+          displayOptions: layer.displayOptions,
+        },
+      });
+    }
+    if (layer.display === "current") {
+      updates.push({
+        event: "addLayer",
+        type: "vector",
+        id: layer.id,
+        options: {
+          noParticles: true,
+          data: data[layer.parameter].data[index],
           geometry: data.geometry,
           displayOptions: layer.displayOptions,
         },
@@ -824,6 +918,63 @@ const process3dData = (data, parameter, height) => {
     var dataArr = [];
     data = data.split("\n").map((g) => g.split(",").map((s) => parseFloat(s)));
     var bounds = { min: [], max: [] };
+    for (let i = 0; i < Math.floor(data.length / (height + 1)); i++) {
+      timeArr.push(
+        general.parseAlplakesDate(String(data[i * (height + 1)][0])),
+      );
+      var slice = data.slice(i * (height + 1) + 1, (i + 1) * (height + 1));
+      dataArr.push(slice);
+      var slice_flat = slice.flat();
+      if (parameter === "velocity") {
+        slice_flat = slice_flat.map((d) => Math.abs(d));
+      }
+      bounds.min.push(d3.min(slice_flat));
+      bounds.max.push(d3.max(slice_flat));
+    }
+    return {
+      min: d3.min(bounds.min),
+      max: d3.max(bounds.max),
+      start: d3.min(timeArr),
+      end: d3.max(timeArr),
+      time: timeArr,
+      data: dataArr,
+    };
+  }
+};
+
+const downloadMeteo = async (model, bounds, start, end, parameters) => {
+  var response = false;
+  const model_type = model.split("_");
+  var urls = parameters.map((p) => {
+    "/meteoswiss/icon/layer/alplakes/{variable}/{start}/{end}/{ll_lat}/{ll_lng}/{ur_lat}/{ur_lng}";
+    let api_url = `${
+      CONFIG.alplakes_api
+    }/${model_type[0]}/${model_type[1]}/layer/alplakes/${p}/${general.formatAPIDate(
+      start,
+    )}/${general.formatAPIDate(end)}/${bounds[0][0]}/${bounds[0][1]}/${bounds[1][0]}/${bounds[1][1]}`;
+    return [api_url];
+  });
+  response = await fetchDataParallel(urls);
+  const data = {};
+  for (let i = 0; i < parameters.length; i++) {
+    try {
+      data[parameters[i]] = processMeteoData(response[i], parameters[i]);
+    } catch (e) {
+      return false;
+    }
+  }
+  return data;
+};
+
+const processMeteoData = (data, parameter) => {
+  if (parameter === "geometry") {
+    return data.split("\n").map((g) => g.split(",").map((s) => parseFloat(s)));
+  } else {
+    var timeArr = [];
+    var dataArr = [];
+    data = data.split("\n").map((g) => g.split(",").map((s) => parseFloat(s)));
+    var bounds = { min: [], max: [] };
+    const height = data.slice(1).findIndex(row => row.length === 1);
     for (let i = 0; i < Math.floor(data.length / (height + 1)); i++) {
       timeArr.push(
         general.parseAlplakesDate(String(data[i * (height + 1)][0])),

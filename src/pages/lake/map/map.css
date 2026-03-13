@@ -639,6 +639,13 @@
     line-height: normal;
 }
 
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-layers .active-apps .app .label .over {
+    white-space: nowrap;
+    max-width: 75px;
+    margin: auto;
+    overflow: hidden;
+}
+
 .main .map .layer-map .map-sidebar .sidebar-body .sidebar-layers .active-apps .app .label .under {
     color: var(--background-subtle-font-color);
     font-size: 10px;
@@ -651,6 +658,18 @@
     background-image: linear-gradient(30deg, #4aa091 12%, transparent 12.5%, transparent 87%, #4aa091 87.5%, #4aa091), linear-gradient(150deg, #4aa091 12%, transparent 12.5%, transparent 87%, #4aa091 87.5%, #4aa091), linear-gradient(30deg, #4aa091 12%, transparent 12.5%, transparent 87%, #4aa091 87.5%, #4aa091), linear-gradient(150deg, #4aa091 12%, transparent 12.5%, transparent 87%, #4aa091 87.5%, #4aa091), linear-gradient(60deg, #4aa09177 25%, transparent 25.5%, transparent 75%, #4aa09177 0, #4aa09177), linear-gradient(60deg, #4aa09177 25%, transparent 25.5%, transparent 75%, #4aa09177 0, #4aa09177);
     background-position: 0 0, 0 0, 14px 25px, 14px 25px, 0 0, 14px 25px;
     background-size: 28px 49px;
+}
+
+.main .map .layer-map .app.meteo,
+.icon.meteo {
+    background-color: #26423d !important;
+    background-image: repeating-linear-gradient(
+        45deg,
+        #4aa091 0px,
+        #4aa091 4px,
+        transparent 4px,
+        transparent 14px
+    );
 }
 
 .main .map .layer-map .app.satellite,

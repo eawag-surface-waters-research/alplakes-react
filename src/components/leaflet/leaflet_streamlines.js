@@ -435,6 +435,6 @@ L.Streamlines = L.ImageOverlay.extend({
   },
 });
 
-L.streamlines = function (data, options) {
-  return new L.Streamlines(data, options);
+L.streamlines = function (geometry, data, options) {
+  return new L.Streamlines(geometry, data, options);
 };

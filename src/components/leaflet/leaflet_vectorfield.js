@@ -27,10 +27,18 @@ L.VectorField = L.ImageOverlay.extend({
     this._geometry = geometry;
     this._data = data;
     this._points = this._pointsList();
-    if (isNaN(this.options.min))
-      this.options.min = min(data.flat().map((d) => Math.abs(d)));
-    if (isNaN(this.options.max))
-      this.options.max = max(data.flat().map((d) => Math.abs(d)));
+    const magnitudes = [];
+    for (let i = 0; i < this._dataHeight; i++) {
+      for (let j = 0; j < this._dataWidth; j++) {
+        const u = this._data[i][j];
+        const v = this._data[i][j + this._dataWidth];
+        if (!isNaN(u) && !isNaN(v)) {
+          magnitudes.push(Math.sqrt(u * u + v * v));
+        }
+      }
+    }
+    this.options.min = min(magnitudes);
+    this.options.max = max(magnitudes);
   },
   onAdd: function (map) {
     this._map = map;
@@ -186,11 +194,14 @@ L.VectorField = L.ImageOverlay.extend({
   },
   _drawArrow: function (cell, ctx, size) {
     var { center, value, rotation } = cell;
-    var scaledArrow =
-      size * 0.2 +
-      size *
-        2 *
-        ((value - this.options.min) / (this.options.max - this.options.min));
+    var norm = Math.min(
+      1,
+      Math.max(
+        0,
+        (value - this.options.min) / (this.options.max - this.options.min)
+      )
+    );
+    var scaledArrow = size * 0.2 + size * 2 * norm;
 
     // Arrow Center
     ctx.save();

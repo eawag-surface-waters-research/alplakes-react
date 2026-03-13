@@ -12,6 +12,7 @@ import rgb_icon from "../../../img/rgb.png";
 import thermocline_icon from "../../../img/thermocline.png";
 import oxygen_icon from "../../../img/oxygen.png";
 import forel_icon from "../../../img/forel.png";
+import wind_icon from "../../../img/wind.png";
 import trash_icon from "../../../img/trash.png";
 import LayerSelection from "./layerselection";
 import LayerSettings from "./layersettings";
@@ -48,6 +49,8 @@ class Sidebar extends Component {
     const { addLayersModal } = this.state;
     const images = {
       temperature: temperature_icon,
+      airtemperature: temperature_icon,
+      wind: wind_icon,
       velocity: velocity_icon,
       chlorophyll: chla_icon,
       secchi: secchi_icon,
