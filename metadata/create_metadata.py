@@ -230,11 +230,12 @@ for lake in metadata:
         home["filters"].append("1D")
 
     # AI summary
-    if "ai_summary" in lake and lake["ai_summary"]:
+    # Remove AI summary due to Eawag legal concerns - to be added back when resolved
+    """if "ai_summary" in lake and lake["ai_summary"]:
         if "forecast" not in data:
             data["forecast"] = {"ai_summary": True}
         else:
-            data["forecast"]["ai_summary"] = True
+            data["forecast"]["ai_summary"] = True"""
 
 
     # Measurement Data
