@@ -64,16 +64,17 @@ const addMinutes = (date, minutes) => {
 };
 
 const formatDateIso = (datetime) => {
-  var year = datetime.getFullYear();
-  var month = datetime.getMonth() + 1;
-  var date = datetime.getDate();
-  var hour = datetime.getHours();
-  var minute = datetime.getMinutes();
+  var year = datetime.getUTCFullYear();
+  var month = datetime.getUTCMonth() + 1;
+  var date = datetime.getUTCDate();
+  var hour = datetime.getUTCHours();
+  var minute = datetime.getUTCMinutes();
+  var seconds = datetime.getUTCSeconds();
   return `${String(year)}-${month < 10 ? "0" + month : month}-${
     date < 10 ? "0" + date : date
   }T${hour < 10 ? "0" + hour : hour}:${
     minute < 10 ? "0" + minute : minute
-  }:00Z`;
+  }:${seconds < 10 ? "0" + seconds : seconds}Z`;
 };
 
 export const formatDateYYYYMMDD = (d) => {
