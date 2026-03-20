@@ -165,8 +165,6 @@ class Raster extends Component {
     } else if ("start_date" in layer.sources[layer.source]) {
       start_date = new Date(layer.sources[layer.source].start_date);
     }
-    console.log(layer.sources[layer.source]);
-    console.log(start_date, end_date);
     if (opacity === undefined) opacity = 1;
     var downloadDates = this.downloadDates(
       model,

@@ -367,7 +367,6 @@ const updateWms = async (map, layers, id, options, language) => {
     ) {
       url = CONFIG.landsat89_wms;
       type = "TRUE-COLOR-L1";
-      time = formatWmsDate(options.time, 240);
     }
     layers[id]["wms"] = L.tileLayer
       .wms(url, {
@@ -381,6 +380,7 @@ const updateWms = async (map, layers, id, options, language) => {
         time: time,
         gain: 1,
         gamma: 1,
+        maxcc: 100,
       })
       .addTo(map);
   }
