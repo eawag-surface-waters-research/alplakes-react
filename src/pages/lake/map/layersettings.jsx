@@ -147,9 +147,15 @@ class Raster extends Component {
     var end_date = new Date();
     const noDepth = "depth" in layer && layer.depth === false;
     const meteo = layer.type === "meteo";
-    const forecast = "forecast" in layer.sources[layer.source] ? layer.sources[layer.source].forecast : 0;
+    const forecast =
+      "forecast" in layer.sources[layer.source]
+        ? layer.sources[layer.source].forecast
+        : 0;
     end_date.setDate(start_date.getDate() + forecast);
-    if ("metadata" in layer.sources[layer.source] && Object.keys(layer.sources[layer.source].metadata).length > 0) {
+    if (
+      "metadata" in layer.sources[layer.source] &&
+      Object.keys(layer.sources[layer.source].metadata).length > 0
+    ) {
       ({
         depth: depths,
         missingDates,
@@ -159,7 +165,7 @@ class Raster extends Component {
     } else if ("start_date" in layer.sources[layer.source]) {
       start_date = new Date(layer.sources[layer.source].start_date);
     }
-    console.log(layer.sources[layer.source])
+    console.log(layer.sources[layer.source]);
     console.log(start_date, end_date);
     if (opacity === undefined) opacity = 1;
     var downloadDates = this.downloadDates(
@@ -521,7 +527,10 @@ class Current extends Component {
     var missingDates = [];
     var start_date = new Date();
     var end_date = new Date();
-    const forecast = "forecast" in layer.sources[layer.source] ? layer.sources[layer.source].forecast : -7;
+    const forecast =
+      "forecast" in layer.sources[layer.source]
+        ? layer.sources[layer.source].forecast
+        : -7;
     end_date.setDate(start_date.getDate() + forecast);
     if ("metadata" in layer.sources[layer.source]) {
       ({
@@ -1116,7 +1125,12 @@ class Tiff extends Component {
                     <div className="left">
                       <div className="sat">{i.satellite}</div>
                       <div className="res">
-                        {i.satellite.includes("S3") ? 300 : 20}m
+                        {i.satellite.includes("S3")
+                          ? 300
+                          : i.satellite.includes("S2")
+                            ? 20
+                            : 30}
+                        m
                       </div>
                     </div>
                     <div className="right">
@@ -1228,19 +1242,17 @@ class Tiff extends Component {
               onChange={this.setCoverage}
             ></input>
           </div>
-          {layer.id !== "satellite_temperature" && (
-            <div className="setting half">
-              <div className="label">{Translations.imagery[language]}</div>
-              <label className="switch">
-                <input
-                  type="checkbox"
-                  checked={wms}
-                  onChange={this.setWms}
-                ></input>
-                <span className="slider round"></span>
-              </label>
-            </div>
-          )}
+          <div className="setting half">
+            <div className="label">{Translations.imagery[language]}</div>
+            <label className="switch">
+              <input
+                type="checkbox"
+                checked={wms}
+                onChange={this.setWms}
+              ></input>
+              <span className="slider round"></span>
+            </label>
+          </div>
           <div className="setting">
             <div className="label">Palette</div>
             <div className="value">{paletteName}</div>
