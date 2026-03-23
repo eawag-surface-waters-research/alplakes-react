@@ -3602,10 +3602,7 @@
         "residence_time": "NA",
         "mixing_regime": "NA",
         "geothermal_flux": "NA",
-        "trophic_state": "NA",
-        "webcams": [
-
-        ]
+        "trophic_state": "NA"
     },
     {
         "key": "frauenwieserteich",
@@ -3688,7 +3685,7 @@
         "geothermal_flux": "NA",
         "trophic_state": "NA"
     },
-     {
+    {
         "key": "hallstatter",
         "name": {
             "EN": "Lake Hallstätter",
@@ -3716,6 +3713,32 @@
         "webcams": [
           1181928047
         ]
+    },
+    {
+        "key": "lunzer",
+        "name": {
+            "EN": "Lunzer See",
+            "DE": "Lunzer See",
+            "FR": "Lunzer See",
+            "IT": "Lunzer See"
+        },
+        "area": 0.68,
+        "ave_depth": 20,
+        "max_depth": 34.0,
+        "elevation": 608,
+        "latitude": 47.854,
+        "longitude": 15.053,
+        "current_temperature": false,
+        "flags": [
+            "austrian"
+        ],
+        "simstrat": false,
+        "type": "Natural",
+        "volume": 0.0136,
+        "residence_time": 120,
+        "mixing_regime": "NA",
+        "geothermal_flux": "NA",
+        "trophic_state": "NA"
     },
     {
         "key": "como",
