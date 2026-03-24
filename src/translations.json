@@ -1974,5 +1974,65 @@
     "DE": "",
     "FR": "",
     "IT": ""
+  },
+  "reportAnIssue": {
+    "EN": "Report an Issue",
+    "DE": "Problem melden",
+    "FR": "Signaler un problème",
+    "IT": "Segnala un problema"
+  },
+  "reportDescription": {
+    "EN": "Describe the issue you encountered and we'll look into it.",
+    "DE": "Beschreiben Sie das aufgetretene Problem und wir werden es untersuchen.",
+    "FR": "Décrivez le problème rencontré et nous l'examinerons.",
+    "IT": "Descrivi il problema riscontrato e lo esamineremo."
+  },
+  "reportName": {
+    "EN": "Name",
+    "DE": "Name",
+    "FR": "Nom",
+    "IT": "Nome"
+  },
+  "reportEmail": {
+    "EN": "Email",
+    "DE": "E-Mail",
+    "FR": "E-mail",
+    "IT": "Email"
+  },
+  "reportMessage": {
+    "EN": "Description",
+    "DE": "Beschreibung",
+    "FR": "Description",
+    "IT": "Descrizione"
+  },
+  "reportMessagePlaceholder": {
+    "EN": "What went wrong?",
+    "DE": "Was ist schiefgelaufen?",
+    "FR": "Qu'est-ce qui s'est mal passé ?",
+    "IT": "Cosa è andato storto?"
+  },
+  "reportSubmit": {
+    "EN": "Send Report",
+    "DE": "Bericht senden",
+    "FR": "Envoyer le rapport",
+    "IT": "Invia segnalazione"
+  },
+  "reportSubmitted": {
+    "EN": "Thank you for your feedback!",
+    "DE": "Vielen Dank für Ihr Feedback!",
+    "FR": "Merci pour votre retour !",
+    "IT": "Grazie per il tuo feedback!"
+  },
+  "cancel": {
+    "EN": "Cancel",
+    "DE": "Abbrechen",
+    "FR": "Annuler",
+    "IT": "Annulla"
+  },
+  "close": {
+    "EN": "Close",
+    "DE": "Schließen",
+    "FR": "Fermer",
+    "IT": "Chiudi"
   }
 }

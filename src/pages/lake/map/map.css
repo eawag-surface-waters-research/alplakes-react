@@ -97,6 +97,194 @@
     transform: scale(1.1);
 }
 
+.main .map .layer-map .report-button {
+    position: absolute;
+    bottom: 20px; /* overridden by inline style when graph is open */
+    left: 12px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0 8px;
+    background-color: var(--box-color);
+    color: var(--background-font-color);
+    border: none;
+    border-radius: 22px;
+    z-index: 999;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.main .map .layer-map .report-button svg {
+    width: 28px;
+    height: 28px;
+    color: var(--highlight-color);
+    flex-shrink: 0;
+}
+
+.main .map .layer-map .report-button:hover {
+    transform: translateY(-1px);
+}
+
+.main .map .layer-map .report-modal-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    z-index: 99999;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-start;
+    padding: 12px;
+}
+
+.main .map .layer-map .report-modal {
+    background: var(--box-color);
+    color: var(--background-font-color);
+    border-radius: 16px;
+    padding: 20px;
+    width: 320px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+}
+
+.main .map .layer-map .report-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.main .map .layer-map .report-modal-header h3 {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.main .map .layer-map .report-modal-x {
+    background: none;
+    border: none;
+    font-size: 22px;
+    line-height: 1;
+    cursor: pointer;
+    color: var(--background-subtle-font-color);
+    padding: 0 4px;
+}
+
+.main .map .layer-map .report-modal-x:hover {
+    color: var(--background-font-color);
+}
+
+.main .map .layer-map .report-modal-desc {
+    font-size: 13px;
+    color: var(--background-subtle-font-color);
+    margin: 0 0 14px;
+}
+
+.main .map .layer-map .report-modal label {
+    display: block;
+    font-size: 12px;
+    font-weight: 500;
+    margin-bottom: 4px;
+    margin-top: 10px;
+    color: var(--background-subtle-font-color);
+}
+
+.main .map .layer-map .report-modal input,
+.main .map .layer-map .report-modal textarea {
+    width: 100%;
+    box-sizing: border-box;
+    background: var(--background-color);
+    color: var(--background-font-color);
+    border: 1px solid rgba(128,128,128,0.2);
+    border-radius: 8px;
+    padding: 8px 10px;
+    font-size: 13px;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.15s;
+}
+
+.main .map .layer-map .report-modal input:focus,
+.main .map .layer-map .report-modal textarea:focus {
+    border-color: var(--highlight-color);
+}
+
+.main .map .layer-map .report-modal textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+.main .map .layer-map .report-modal-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 16px;
+    justify-content: flex-end;
+}
+
+.main .map .layer-map .report-cancel-btn {
+    background: none;
+    border: 1px solid rgba(128,128,128,0.3);
+    border-radius: 8px;
+    padding: 7px 14px;
+    font-size: 13px;
+    cursor: pointer;
+    color: var(--background-font-color);
+    font-family: inherit;
+}
+
+.main .map .layer-map .report-cancel-btn:hover {
+    background: var(--background-color);
+}
+
+.main .map .layer-map .report-submit-btn {
+    background: var(--highlight-color);
+    border: none;
+    border-radius: 8px;
+    padding: 7px 14px;
+    font-size: 13px;
+    cursor: pointer;
+    color: white;
+    font-weight: 500;
+    font-family: inherit;
+}
+
+.main .map .layer-map .report-submit-btn:hover {
+    opacity: 0.9;
+}
+
+.main .map .layer-map .report-modal-success {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 0;
+    text-align: center;
+}
+
+.main .map .layer-map .report-modal-success svg {
+    width: 40px;
+    height: 40px;
+    color: var(--highlight-color);
+}
+
+.main .map .layer-map .report-modal-success p {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.main .map .layer-map .report-close-btn {
+    background: var(--highlight-color);
+    border: none;
+    border-radius: 8px;
+    padding: 7px 20px;
+    font-size: 13px;
+    cursor: pointer;
+    color: white;
+    font-weight: 500;
+    font-family: inherit;
+}
+
 .main .map .layer-map .map-sidebar {
     position: absolute;
     top: 12px;
@@ -878,6 +1066,10 @@
 
     .main .map .layer-map .overlay-stack {
         bottom: 105px;
+    }
+
+    .main .map .layer-map .report-button {
+        bottom: 117px !important;
     }
 
     .main .map .layer-map .overlay-stack .legend {

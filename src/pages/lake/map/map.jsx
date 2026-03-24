@@ -18,6 +18,7 @@ import Sidebar from "./sidebar";
 import Loading from "../../../components/loading/loading";
 import NotFound from "../components/notfound";
 import Translations from "../../../translations.json";
+import ReportButton from "./reportbutton";
 
 class Map extends Component {
   state = {
@@ -610,6 +611,12 @@ class Map extends Component {
               graphFull={graphFull}
               toggleGraphFull={this.toggleGraphFull}
               updateOptions={this.updateOptions}
+            />
+            <ReportButton
+              language={language}
+              graphSelection={graphSelection}
+              graphHide={graphHide}
+              graphFull={graphFull}
             />
             <div className="map-loading" id={`map_loading_${mapId}`}>
               <div className="map-loading-inner">
