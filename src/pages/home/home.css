@@ -524,6 +524,47 @@
   border-radius: 22px;
 }
 
+.main .home .content .home-map.map-fullscreen {
+  left: 0;
+  width: 100%;
+  max-width: 100%;
+  top: var(--header-height);
+  height: calc(100% - var(--header-height));
+  z-index: 9999;
+  border-radius: 0;
+}
+
+.main .home .content .home-map.map-fullscreen #map {
+  border-radius: 0;
+  border: none;
+  height: 100%;
+}
+
+.main .home .content .home-map #map .fullscreen-btn {
+  width: 30px;
+  height: 30px;
+  background-color: var(--box-color);
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.main .home .content .home-map #map .fullscreen-btn svg {
+  width: 16px;
+  height: 16px;
+  fill: var(--background-font-color);
+  transition: transform 0.2s ease;
+  pointer-events: none;
+}
+
+.main .home .content .home-map #map .fullscreen-btn:hover svg {
+  transform: scale(1.1);
+}
+
 .main .home .content .home-map .fullscreen {
   display: none;
 }
@@ -546,31 +587,6 @@
 .main .home .content .home-map #map {
   border-radius: 12px;
   border: 1px solid var(--border-color);
-}
-
-.main .home .content .home-map #map:after {
-  opacity: 0;
-  content: "beta";
-  position: absolute;
-  width: 250px;
-  height: 30px;
-  background: var(--highlight-color);
-  top: 61px;
-  right: -49px;
-  text-align: center;
-  font-size: 18px;
-  font-family: sans-serif;
-  text-transform: uppercase;
-  font-weight: bold;
-  color: #fff;
-  line-height: 32px;
-  transform: rotate(45deg);
-  z-index: 998;
-  transition: opacity 0.33s ease-in;
-}
-
-.main .home .content.beta .home-map #map:after {
-  opacity: 1;
 }
 
 .main .home .content .home-map #map .leaflet-tile-pane {
@@ -726,6 +742,40 @@
   .main .home .content .search {
     left: calc(100% / 2 - var(--max-width) / 2);
   }
+
+}
+
+@media screen and (min-width: 1001px) and (max-height: 700px), screen and (min-width: 1001px) and (max-width: 1200px) {
+
+  .main .home .content .home-map .legend {
+    top: 1px;
+    left: 1px;
+  }
+  
+  .main .home .content .home-map .legend .label {
+    padding: 6px 8px;
+    font-size: 11px;
+    border-radius: 12px 0 8px 0;
+  }
+
+  .main .home .content .home-map .legend .label table {
+    font-size: 11px;
+    margin-top: 4px;
+  }
+
+  .main .home .content .home-map .legend .label .legendIcon {
+    width: 8px;
+    height: 8px;
+    margin: 2px 4px;
+  }
+
+  .main .home .content .home-map .legend .measurements {
+    margin-top: 6px;
+    padding: 6px 8px;
+    font-size: 11px;
+    border-radius: 0 8px 8px 0;
+  }
+
 
 }
 

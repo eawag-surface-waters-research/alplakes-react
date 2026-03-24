@@ -283,6 +283,12 @@ class Home extends Component {
   };
   async componentDidMount() {
     window.addEventListener("keydown", this.focusSearchBar);
+    this.handleKeyDown = (e) => {
+      if (e.key === "Escape" && this.state.fullscreen) {
+        this.toggleFullscreen();
+      }
+    };
+    document.addEventListener("keydown", this.handleKeyDown);
     var urls = {
       list: `${CONFIG.alplakes_bucket}/static/website/metadata/${CONFIG.branch}/list.json`,
       forecast: `${CONFIG.alplakes_bucket}/simulations/forecast.json${hour()}`,
@@ -328,6 +334,7 @@ class Home extends Component {
   }
   componentWillUnmount() {
     window.removeEventListener("keydown", this.focusSearchBar);
+    document.removeEventListener("keydown", this.handleKeyDown);
   }
   render() {
     var { language, dark } = this.props;
@@ -410,7 +417,7 @@ class Home extends Component {
               setFavorties={this.setFavorties}
               favorites={favorites}
             />
-            <div className={fullscreen ? "home-map" : "home-map hide"}>
+            <div className={`home-map${fullscreen ? " map-fullscreen" : " hide"}`}>
               <HomeMap
                 list={list}
                 insitu={insitu}
@@ -418,6 +425,8 @@ class Home extends Component {
                 dark={dark}
                 language={language}
                 setBounds={this.setBounds}
+                toggleFullscreen={this.toggleFullscreen}
+                fullscreen={fullscreen}
               />
               <div
                 className={fullscreen ? "back-button" : "back-button hide"}
