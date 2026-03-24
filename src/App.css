@@ -350,6 +350,15 @@ p {
   box-sizing: border-box;
 }
 
+.lake-dot-marker div {
+  width: 4px;
+  height: 4px;
+  background: var(--highlight-color);
+  opacity: 0.7;
+  clip-path: polygon(0% 0%, 100% 0%, 50% 100%);
+  cursor: pointer;
+}
+
 .custom-circle-marker.tooltip-small div {
   width: 8px;
   height: 8px;

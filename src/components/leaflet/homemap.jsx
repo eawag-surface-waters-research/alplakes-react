@@ -79,6 +79,7 @@ class HomeMap extends Component {
     maxZoom: 13,
     measurements: false,
     today: true,
+    hasZoomed: false,
   };
   setDay = (event) => {
     const { days, measurements } = this.state;
@@ -191,6 +192,20 @@ class HomeMap extends Component {
           .on("click", function () {
             window.location.href = "/" + lake.key;
           });
+
+        if (lake.geometry === false) {
+          this.labels[lake.key].dotTooltipHTML = `<a class="temperature-label${value ? "" : " empty"}" href="/${lake.key}" title='${Translations.click[language]}'><div class="name">${lake.name[language]}</div>${value ? `<div class="value">${lake.summary[day]}°</div>` : ""}</a>`;
+          this.labels[lake.key].dot = L.marker([lake.latitude, lake.longitude], {
+            icon: L.divIcon({
+              className: "lake-dot-marker",
+              html: "<div></div>",
+              iconSize: [14, 14],
+              iconAnchor: [7, 7],
+            }),
+          }).on("click", function () {
+            window.location.href = "/" + lake.key;
+          });
+        }
 
         if (zoom >= this.labels[lake.key].zoom) {
           this.labels[lake.key].marker.addTo(this.map);
@@ -338,13 +353,48 @@ class HomeMap extends Component {
     return labels;
   };
   displayLabels = () => {
+    if (!this.state.hasZoomed) {
+      this.setState({ hasZoomed: true });
+    }
     var zoom = this.map.getZoom();
+    var dotSize = Math.round(6 + (zoom - 6) * (10 - 4) / (13 - 6));
+    var showDots = zoom >= 9;
     Object.values(this.labels).map((m) => {
       if (m.marker) {
         if (zoom < m.zoom) {
           m.marker.remove();
+          if (m.dot) {
+            if (showDots) {
+              m.dot.setIcon(L.divIcon({
+                className: "lake-dot-marker",
+                html: `<div style="width:${dotSize}px;height:${dotSize}px"></div>`,
+                iconSize: [dotSize, dotSize],
+                iconAnchor: [dotSize / 2, dotSize / 2],
+              }));
+              if (!m.dot.getTooltip()) {
+                m.dot.bindTooltip(m.dotTooltipHTML, { direction: "top", offset: L.point(0, 0), opacity: 1 });
+              }
+              m.dot.addTo(this.map);
+            } else {
+              m.dot.remove();
+            }
+          }
         } else {
           m.marker.addTo(this.map);
+          if (m.dot) {
+            if (m.dot.getTooltip()) m.dot.unbindTooltip();
+            if (showDots) {
+              m.dot.setIcon(L.divIcon({
+                className: "lake-dot-marker",
+                html: `<div style="width:${dotSize}px;height:${dotSize}px"></div>`,
+                iconSize: [dotSize, dotSize],
+                iconAnchor: [dotSize / 2, dotSize / 2],
+              }));
+              m.dot.addTo(this.map);
+            } else {
+              m.dot.remove();
+            }
+          }
         }
       }
       return m;
@@ -355,6 +405,10 @@ class HomeMap extends Component {
       if (m.marker) {
         m.marker.remove();
         m.marker = false;
+      }
+      if (m.dot) {
+        m.dot.remove();
+        m.dot = false;
       }
       return m;
     });
