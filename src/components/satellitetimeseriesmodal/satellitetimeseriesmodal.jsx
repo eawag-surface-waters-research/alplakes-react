@@ -269,7 +269,7 @@ class SatelliteTimeseriesModal extends Component {
           </div>
 
           <div className="setting half">
-            <div className="label">{Translations.validPixels[language]}</div>
+            <div className="label">{Translations.minCoverage[language]} (%)</div>
             <div className="minmax">
               <input
                 type="number"
