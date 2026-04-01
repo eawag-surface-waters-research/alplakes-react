@@ -1062,7 +1062,6 @@ class Tiff extends Component {
       paletteName,
       opacity,
       convolve,
-      validpixelexpression,
       coverage,
       wms,
     } = this.props.options;
@@ -1255,16 +1254,6 @@ class Tiff extends Component {
             <div className="label">Palette</div>
             <div className="value">{paletteName}</div>
             <ColorRamp onChange={this.setPalette} value={paletteName} />
-          </div>
-          <div className="setting">
-            {Translations.validPixelExpression[language]}
-            <input
-              type="checkbox"
-              checked={
-                validpixelexpression === undefined ? true : validpixelexpression
-              }
-              onChange={this.setValidpixelexpression}
-            />
           </div>
         </div>
       </div>
