@@ -168,7 +168,7 @@ class About extends Component {
                       className="status-dot"
                       style={{ backgroundColor: "green" }}
                     ></div>
-                    Funded and hiring
+                    In progress
                   </div>
                 </div>
                 <div class="grid-inner">
