@@ -22,8 +22,8 @@ class Satellite extends Component {
     return new Date(
       `${date.slice(0, 4)}-${date.slice(4, 6)}-${date.slice(6, 8)}T${date.slice(
         9,
-        11
-      )}:${date.slice(11, 13)}:00.000+00:00`
+        11,
+      )}:${date.slice(11, 13)}:00.000+00:00`,
     );
   };
 
@@ -41,7 +41,7 @@ class Satellite extends Component {
     var { updates, image, available } = this.state;
     for (let i = 0; i < parameters.metadata.length; i++) {
       var { data } = await axios.get(
-        CONFIG.sencast_bucket + parameters.metadata[i]
+        CONFIG.sencast_bucket + parameters.metadata[i],
       );
       if ("dt" in data) {
         data.dt = this.satelliteStringToDate(data.dt);
@@ -60,7 +60,11 @@ class Satellite extends Component {
       available = false;
     } else {
       const { satellite, lake } = this.imageProperties(image.k);
-      const url = `${CONFIG.sencast_bucket}/alplakes/cropped/${satellite}/${lake}/${image.k}`;
+      var folder = satellite;
+      if (satellite === "sentinel3") {
+        folder = "sentinel3_dimark";
+      }
+      const url = `${CONFIG.sencast_bucket}/alplakes/cropped/${folder}/${lake}/${image.k}`;
       parameters.displayOptions["unit"] = parameters.unit;
       updates.push({
         event: "addLayer",
@@ -84,7 +88,7 @@ class Satellite extends Component {
           this.observer.disconnect();
         }
       },
-      { threshold: 0.0 }
+      { threshold: 0.0 },
     );
 
     if (this.ref.current) {
