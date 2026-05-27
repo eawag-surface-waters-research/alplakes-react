@@ -273,6 +273,7 @@ for lake in metadata:
 
     # Satellite data
     prevent_water_quality = "flags" in lake and lake["flags"][0] == "austrian"
+    prevent_water_quality = False
     if key in satellite:
         add = True
         satellite_data = []
