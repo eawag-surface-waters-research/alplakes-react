@@ -9,6 +9,11 @@ import schmidma from "../../img/schmidma.jpg";
 import dimark_icon from "../../img/dimark.png";
 import iosIcon from "../../img/ios.png";
 import googleIcon from "../../img/googleplay.png";
+import lakeLindtIcon from "../../img/lake-lindt.png";
+import torpilleIcon from "../../img/torpille.png";
+import gardaseeIcon from "../../img/gardasee.png";
+import badiportalIcon from "../../img/badiportal.png";
+import badiInfoIcon from "../../img/badi-info.png";
 import Translations from "../../translations.json";
 import "./about.css";
 import ScrollUp from "../../components/scrollup/scrollup";
@@ -31,6 +36,7 @@ class About extends Component {
       vision: React.createRef(),
       contact: React.createRef(),
       projects: React.createRef(),
+      integrations: React.createRef(),
       people: React.createRef(),
       opensource: React.createRef(),
       publications: React.createRef(),
@@ -523,6 +529,134 @@ class About extends Component {
                       <span className="circle-text">PI</span>
                     </div>
                     <div className="text">Damien Bouffard</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              id="integrations"
+              ref={this.divRefs["integrations"]}
+              className="section"
+            >
+              <h2>Featured integrations</h2>
+              <p className="subtitle">
+                A selection of third-party websites that use Alplakes simulation 
+                data to serve lake information to their audiences.
+              </p>
+              <div className="grid">
+                <div class="grid-inner">
+                  <div class="card-header">
+                    <div class="card-icon">
+                      <img src={lakeLindtIcon} alt="Lake Lindt favicon" />
+                    </div>
+                    <div class="card-title">Lake Lindt</div>
+                  </div>
+                  <p class="card-description">
+                    Real-time lake temperatures for Alpine swimming spots
+                    across Switzerland and France, with a beach directory and
+                    personalised favourites.
+                  </p>
+                  <div class="card-actions">
+                    <a
+                      href="https://lake.lindt.one/tous-les-lacs/"
+                      class="btn btn-primary"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Visit site
+                    </a>
+                  </div>
+                </div>
+                <div class="grid-inner">
+                  <div class="card-header">
+                    <div class="card-icon">
+                      <img src={torpilleIcon} alt="La Torpille favicon" />
+                    </div>
+                    <div class="card-title">La Torpille</div>
+                  </div>
+                  <p class="card-description">
+                    Activity guide for French-speaking Switzerland, surfacing
+                    live lake temperatures and beach listings for families
+                    planning a day out on the major Romandy lakes.
+                  </p>
+                  <div class="card-actions">
+                    <a
+                      href="https://torpille.ch/"
+                      class="btn btn-primary"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Visit site
+                    </a>
+                  </div>
+                </div>
+                <div class="grid-inner">
+                  <div class="card-header">
+                    <div class="card-icon">
+                      <img src={gardaseeIcon} alt="Gardasee.de favicon" />
+                    </div>
+                    <div class="card-title">Gardasee.de</div>
+                  </div>
+                  <p class="card-description">
+                    German-language travel guide for Lake Garda with current
+                    water temperatures, multi-day forecasts and historical
+                    comparisons for visitors and water-sports enthusiasts.
+                  </p>
+                  <div class="card-actions">
+                    <a
+                      href="https://www.gardasee.de/wassertemperatur"
+                      class="btn btn-primary"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Visit site
+                    </a>
+                  </div>
+                </div>
+                <div class="grid-inner">
+                  <div class="card-header">
+                    <div class="card-icon">
+                      <img src={badiportalIcon} alt="BadiPortal favicon" />
+                    </div>
+                    <div class="card-title">BadiPortal</div>
+                  </div>
+                  <p class="card-description">
+                    Swiss platform connecting swimmers with public pools and
+                    lake bathing spots, using live water temperatures to help
+                    visitors pick a venue.
+                  </p>
+                  <div class="card-actions">
+                    <a
+                      href="https://badiportal.ch/"
+                      class="btn btn-primary"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Visit site
+                    </a>
+                  </div>
+                </div>
+                <div class="grid-inner">
+                  <div class="card-header">
+                    <div class="card-icon">
+                      <img src={badiInfoIcon} alt="Badi-Info favicon" />
+                    </div>
+                    <div class="card-title">Badi-Info</div>
+                  </div>
+                  <p class="card-description">
+                    Directory of around a thousand Swiss public swimming
+                    facilities, pairing live water temperatures with opening
+                    hours, ratings and facility details.
+                  </p>
+                  <div class="card-actions">
+                    <a
+                      href="https://www.badi-info.ch/"
+                      class="btn btn-primary"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Visit site
+                    </a>
                   </div>
                 </div>
               </div>
@@ -1037,6 +1171,16 @@ class About extends Component {
                 onClick={() => this.scrollToSection(this.divRefs["projects"])}
               >
                 Contributing projects
+              </div>
+              <div
+                className={
+                  visibleKey === "integrations" ? "link active" : "link"
+                }
+                onClick={() =>
+                  this.scrollToSection(this.divRefs["integrations"])
+                }
+              >
+                Featured integrations
               </div>
               <div
                 className={visibleKey === "people" ? "link active" : "link"}
