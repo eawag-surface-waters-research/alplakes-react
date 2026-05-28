@@ -1202,7 +1202,44 @@
         "webcams": [
             1697040234,
             1697035721
-        ]
+        ],
+        "3D": {
+            "default": "alplakes_mitgcm",
+            "spread": 350,
+            "models": {
+                "alplakes_mitgcm": {
+                    "model": "mitgcm",
+                    "name": "MITgcm",
+                    "key": "neuchatel",
+                    "performance": {
+                        "rmse": {
+                            "overall": "NA"
+                        }
+                    }
+                }
+            },
+            "3D_temperature": [
+                {
+                    "name": "Neuchâtel",
+                    "latlng": [
+                        46.988856, 6.925471
+                    ]
+                },
+                {
+                    "name": "Yverdon-les-Bains",
+                    "latlng": [
+                        46.787707, 6.650706
+                    ]
+                },
+                {
+                    "name": "Estavayer",
+                    "latlng": [
+                        46.849, 6.836
+                    ]
+                }
+            ],
+            "3D_thermocline": []
+        }
     },
     {
         "key": "pfaffikon",
