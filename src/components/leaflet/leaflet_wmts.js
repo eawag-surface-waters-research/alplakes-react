@@ -17,8 +17,9 @@ L.TileLayer.ClippedWMTS = L.TileLayer.extend({
   initialize: function (url, options) {
     this._url = url;
     var wmtsParams = L.extend({}, this.defaultWmtsParams);
+    var nonWmtsKeys = ["clipPolygon", "lookup", "opacity", "attribution"];
     for (var i in options) {
-      if (!this.options.hasOwnProperty(i) && i !== "clipPolygon") {
+      if (!this.options.hasOwnProperty(i) && nonWmtsKeys.indexOf(i) === -1) {
         wmtsParams[i] = options[i];
       }
     }

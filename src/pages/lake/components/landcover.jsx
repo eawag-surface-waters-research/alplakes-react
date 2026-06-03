@@ -88,11 +88,8 @@ class LandCover extends Component {
     var { mapId, polygon, fullscreen } = this.state;
     var { dark, language, parameters } = this.props;
     const wmts = {
-      url: "https://services.terrascope.be/wmts/v2",
+      url: "https://mapproxy.terrascope.be/mapproxy/wmts/esa-worldcover-map-10m-2021-v2_map/webmercator/{z}/{x}/{y}.png",
       options: {
-        layer: "WORLDCOVER_2021_MAP",
-        tilematrixset: "EPSG:3857",
-        format: "image/png",
         attribution: "© ESA WorldCover 2021, produced by VITO",
       },
     };
