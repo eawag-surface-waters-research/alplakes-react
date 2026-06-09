@@ -3023,10 +3023,10 @@
     {
         "key": "pernisko",
         "name": {
-            "EN": "Lake Pernica",
+            "EN": "Lake Perniško",
             "DE": "Perniško See",
-            "FR": "Lac de Pernica",
-            "IT": "Lago di Pernica"
+            "FR": "Lac de Perniško",
+            "IT": "Lago di Perniško"
         },
         "area": 0.99,
         "ave_depth": "NA",
@@ -3073,7 +3073,7 @@
     {
         "key": "slivnisko",
         "name": {
-            "EN": "Lake Slivnica",
+            "EN": "Lake Slivniško",
             "DE": "Slivniško See",
             "FR": "Lac de Slivniško",
             "IT": "Lago di Slivniško"
@@ -3098,7 +3098,7 @@
     {
         "key": "ledavsko",
         "name": {
-            "EN": "Lake Ledava",
+            "EN": "Lake Ladavsko",
             "DE": "Ledavsko See",
             "FR": "Lac de Ledavsko",
             "IT": "Lago di Ledavsko"
@@ -3123,7 +3123,7 @@
     {
         "key": "smartinsko",
         "name": {
-            "EN": "Lake Šmartno",
+            "EN": "Lake Šmartinsko",
             "DE": "Šmartinsko See",
             "FR": "Lac de Šmartinsko",
             "IT": "Lago di Šmartinsko"
