@@ -88,9 +88,11 @@ class Raster extends Component {
     link.parentNode.removeChild(link);
   };
 
-  downloadDates = (model, lake, minDate, maxDate, months) => {
+  downloadDates = (model, lake, minDate, maxDate, months, twod) => {
     var dates = [];
-    var url = `${CONFIG.alplakes_api}/simulations/file/${model}/${lake}`;
+    var url = `${CONFIG.alplakes_api}/simulations/${
+      twod ? "2d/file" : "file"
+    }/${model}/${lake}`;
     const targetDate = new Date(minDate);
     const endDate = new Date(maxDate);
     const daysToSubtract = (targetDate.getDay() + 7) % 7;
@@ -172,6 +174,7 @@ class Raster extends Component {
       start_date,
       end_date,
       Translations.axis[language].months,
+      layer.type === "twod",
     );
     return (
       <div className="layer-settings">
@@ -390,9 +393,11 @@ class Current extends Component {
     link.parentNode.removeChild(link);
   };
 
-  downloadDates = (model, lake, minDate, maxDate, months) => {
+  downloadDates = (model, lake, minDate, maxDate, months, twod) => {
     var dates = [];
-    var url = `${CONFIG.alplakes_api}/simulations/file/${model}/${lake}`;
+    var url = `${CONFIG.alplakes_api}/simulations/${
+      twod ? "2d/file" : "file"
+    }/${model}/${lake}`;
     const targetDate = new Date(minDate);
     const endDate = new Date(maxDate);
     const daysToSubtract = (targetDate.getDay() + 7) % 7;
@@ -551,6 +556,7 @@ class Current extends Component {
       start_date,
       end_date,
       Translations.axis[language].months,
+      layer.type === "twod",
     );
     return (
       <div className="layer-settings">

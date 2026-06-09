@@ -5,7 +5,7 @@ import requests
 import functions as func
 
 upload = True
-bucket_folder = "static/website/metadata/master"
+bucket_folder = "static/website/metadata/swan"
 
 # Load Metadata
 with open("metadata.json") as f:
@@ -59,6 +59,7 @@ s3 = boto3.client('s3')
 # Create files
 home_list = []
 one_dimensional_list = []
+two_dimensional_list = []
 three_dimensional_list = []
 
 for lake in metadata:
@@ -149,6 +150,31 @@ for lake in metadata:
                 }}
         layers["layers"].extend(func.model_layers(lake["3D"]["default"], lake["3D"]["models"], default_depth, spread))
 
+    if '2D' in lake:
+        add = True
+        for model_id in lake["2D"]["models"].keys():
+            response = requests.get("https://alplakes-api.eawag.ch/simulations/2d/metadata/{}/{}".format(lake["2D"]["models"][model_id]["model"],lake["key"]))
+            model_metadata = response.json()
+            two_dimensional_list.append({
+                "link": lake["key"],
+                "name": lake["name"]["EN"],
+                "model_key": lake["2D"]["models"][model_id]["key"],
+                "model": lake["2D"]["models"][model_id]["name"],
+                "LatLng": "{}, {}".format(lake["latitude"], lake["longitude"]),
+                "area": lake["area"],
+                "elevation": lake["elevation"],
+                "depth": lake["max_depth"],
+                "timeframe": "{}-{}".format(model_metadata["start_date"][0:4], model_metadata["end_date"][0:4]),
+                "overallrmse": lake["2D"]["models"][model_id]["performance"]["rmse"]["overall"]
+                })
+            if model_id == lake["2D"]["default"]:
+                data["forecast"]["2d_model"] = {
+                    "key": key,
+                    "model": lake["2D"]["models"][lake["2D"]["default"]]["model"],
+                    "parameters": ["significant_wave_height", "wave_direction"],
+                    "performance": lake["2D"]["models"][lake["2D"]["default"]]["performance"]
+                }
+        layers["layers"].extend(func.model_layers_2d(lake["2D"]["default"], lake["2D"]["models"]))
 
     # One Dimensional Model
     if "simstrat" not in lake:
@@ -325,6 +351,8 @@ with open('files/one_dimensional.json', 'w') as json_file:
     json_file.write(json.dumps(one_dimensional_list, separators=(',', ':'), ensure_ascii=False))
 with open('files/three_dimensional.json', 'w') as json_file:
     json_file.write(json.dumps(three_dimensional_list, separators=(',', ':'), ensure_ascii=False))
+with open('files/two_dimensional.json', 'w') as json_file:
+    json_file.write(json.dumps(two_dimensional_list, separators=(',', ':'), ensure_ascii=False))
 if upload:
     s3.upload_file(
         'files/list.json',
@@ -338,6 +366,14 @@ if upload:
         'files/one_dimensional.json',
         'alplakes-eawag',
         '{}/one_dimensional.json'.format(bucket_folder),
+        ExtraArgs={
+            'ContentType': 'application/json',
+        },
+    )
+    s3.upload_file(
+        'files/two_dimensional.json',
+        'alplakes-eawag',
+        '{}/two_dimensional.json'.format(bucket_folder),
         ExtraArgs={
             'ContentType': 'application/json',
         },

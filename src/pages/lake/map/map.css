@@ -660,6 +660,14 @@
     background-size: 28px 49px;
 }
 
+.main .map .layer-map .app.twod,
+.icon.twod {
+    background-color: #26423d !important;
+    background-image: linear-gradient(45deg, #4aa091 25%, transparent 25%, transparent 75%, #4aa091 75%, #4aa091), linear-gradient(45deg, #4aa091 25%, transparent 25%, transparent 75%, #4aa091 75%, #4aa091);
+    background-position: 0 0, 14px 14px;
+    background-size: 28px 28px;
+}
+
 .main .map .layer-map .app.meteo,
 .icon.meteo {
     background-color: #26423d !important;

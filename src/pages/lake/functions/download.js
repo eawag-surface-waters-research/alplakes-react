@@ -7,6 +7,7 @@ import * as general from "./general";
 export const collectMetadata = async (layers, graphSelection) => {
   const functions = {
     threed: threedMetadata,
+    twod: twodMetadata,
     satellite: satelliteMetadata,
     measurements: measurementsMetadata,
     meteo: meteoMetadata,
@@ -32,6 +33,14 @@ export const collectMetadata = async (layers, graphSelection) => {
 
 const threedMetadata = async (parameters, unit) => {
   const metadata = await downloadModelMetadata(
+    parameters.model.toLowerCase(),
+    parameters.key,
+  );
+  return metadata;
+};
+
+const twodMetadata = async (parameters, unit) => {
+  const metadata = await download2DMetadata(
     parameters.model.toLowerCase(),
     parameters.key,
   );
@@ -164,6 +173,7 @@ export const downloadData = async (
 ) => {
   const functions = {
     threed: threedDownload,
+    twod: twodDownload,
     satellite: satelliteDownload,
     measurements: measurementsDownload,
     meteo: meteoDownload,
@@ -298,6 +308,77 @@ const threedDownload = async (
           fullData: data[layer.parameter].data,
           datetime: datetime.getTime(),
           times: data[layer.parameter].time.map((t) => t.getTime()),
+          geometry: data.geometry,
+          displayOptions: layer.displayOptions,
+        },
+      });
+    }
+    return { data, updates, period, datetime, depth };
+  } else {
+    return false;
+  }
+};
+
+const twodDownload = async (
+  layer,
+  updates,
+  period,
+  datetime,
+  depth,
+  mapId,
+  initial,
+) => {
+  const source = layer.sources[layer.source];
+  if (period === false) {
+    period = [
+      new Date(source.metadata.end_date.getTime() - 5 * 24 * 60 * 60 * 1000),
+      source.metadata.end_date,
+    ];
+  }
+  const data = await download2DMap(
+    source.model.toLowerCase(),
+    source.key,
+    period[0],
+    period[1],
+    ["geometry", layer.parameter],
+    source.metadata.height,
+    initial,
+  );
+  if (data) {
+    layer.displayOptions.unit = layer.unit;
+    layer.displayOptions.min = data[layer.parameter].min;
+    layer.displayOptions.max = data[layer.parameter].max;
+    layer.displayOptions.dataMin = data[layer.parameter].min;
+    layer.displayOptions.dataMax = data[layer.parameter].max;
+    var index;
+    const timestep =
+      (data[layer.parameter].end - data[layer.parameter].start) /
+      (data[layer.parameter].data.length - 1);
+    period[0] = data[layer.parameter].start;
+    period[1] = data[layer.parameter].end;
+    if (datetime === false) {
+      index = data[layer.parameter].data.length - 1;
+      datetime = data[layer.parameter].end;
+      const now = new Date();
+      if (data[layer.parameter].end > now) {
+        index = Math.ceil((now - data[layer.parameter].start) / timestep);
+        datetime = new Date(
+          data[layer.parameter].start.getTime() + index * timestep,
+        );
+      }
+    } else {
+      index = Math.ceil((datetime - data[layer.parameter].start) / timestep);
+    }
+    const plotTypes = ["raster", "streamlines"].filter(
+      (p) => p in layer.displayOptions && layer.displayOptions[p],
+    );
+    for (let plotType of plotTypes) {
+      updates.push({
+        event: "addLayer",
+        type: plotType,
+        id: layer.id,
+        options: {
+          data: data[layer.parameter].data[index],
           geometry: data.geometry,
           displayOptions: layer.displayOptions,
         },
@@ -873,6 +954,28 @@ export const downloadModelMetadata = async (model, lake) => {
   return metadata;
 };
 
+export const download2DMetadata = async (model, lake) => {
+  const urls = [
+    [
+      `${
+        CONFIG.alplakes_bucket
+      }/simulations/${model}/cache/${lake}/metadata.json${general.hour()}`,
+      `${CONFIG.alplakes_api}/simulations/2d/metadata/${model}/${lake}`,
+    ],
+  ];
+  const response = await fetchDataParallel(urls);
+  const metadata = response[0];
+  metadata.start_date = general.stringToDate(metadata.start_date + " 00:00");
+  // The 2D end_date is the exclusive week boundary (the Sunday starting the
+  // first week with no data file), so step back one hourly timestep to the
+  // last requestable datetime.
+  metadata.end_date = new Date(
+    general.stringToDate(metadata.end_date + " 00:00").getTime() -
+      60 * 60 * 1000,
+  );
+  return metadata;
+};
+
 export const download3DMap = async (
   model,
   lake,
@@ -899,6 +1002,41 @@ export const download3DMap = async (
     return [api_url];
   });
   response = await fetchDataParallel(urls);
+  const data = {};
+  for (let i = 0; i < parameters.length; i++) {
+    try {
+      data[parameters[i]] = process3dData(response[i], parameters[i], height);
+    } catch (e) {
+      return false;
+    }
+  }
+  return data;
+};
+
+export const download2DMap = async (
+  model,
+  lake,
+  start,
+  end,
+  parameters,
+  height,
+  bucket = false,
+) => {
+  var urls = parameters.map((p) => {
+    let api_url = `${
+      CONFIG.alplakes_api
+    }/simulations/2d/layer_alplakes/${model}/${lake}/${p}/${general.formatAPIDatetime(
+      start,
+    )}/${general.formatAPIDatetime(end)}`;
+    let bucket_url = `${
+      CONFIG.alplakes_bucket
+    }/simulations/${model}/cache/${lake}/${p}.txt.gz${general.hour()}`;
+    if (bucket) {
+      return [bucket_url, api_url];
+    }
+    return [api_url];
+  });
+  const response = await fetchDataParallel(urls);
   const data = {};
   for (let i = 0; i < parameters.length; i++) {
     try {

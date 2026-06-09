@@ -9,6 +9,9 @@ import profile_icon from "../../../img/profile.png";
 import secchi_icon from "../../../img/secchi.png";
 import turbidity_icon from "../../../img/turbidity.png";
 import rgb_icon from "../../../img/rgb.png";
+import direction_icon from "../../../img/direction.png";
+import wavelength_icon from "../../../img/wavelength.png";
+import wave_icon from "../../../img/wave.png";
 import thermocline_icon from "../../../img/thermocline.png";
 import oxygen_icon from "../../../img/oxygen.png";
 import forel_icon from "../../../img/forel.png";
@@ -52,6 +55,9 @@ class Sidebar extends Component {
       airtemperature: temperature_icon,
       wind: wind_icon,
       velocity: velocity_icon,
+      significant_wave_height: wave_icon,
+      mean_wave_period: wavelength_icon,
+      wave_direction: direction_icon,
       chlorophyll: chla_icon,
       secchi: secchi_icon,
       turbidity: turbidity_icon,
