@@ -39,6 +39,16 @@ L.VectorField = L.ImageOverlay.extend({
     }
     this.options.min = min(magnitudes);
     this.options.max = max(magnitudes);
+    if (this._points.length > 1) {
+      var spacing = Infinity;
+      for (let k = 1; k < Math.min(this._points.length, 100); k++) {
+        const a = this._points[k - 1];
+        const b = this._points[k];
+        const d = (a.lat - b.lat) ** 2 + (a.lng - b.lng) ** 2;
+        if (d > 0 && d < spacing) spacing = d;
+      }
+      if (spacing !== Infinity) this.options.tooltipSensitivity = spacing * 4;
+    }
   },
   onAdd: function (map) {
     this._map = map;
@@ -448,13 +458,18 @@ L.VectorField = L.ImageOverlay.extend({
       var u = this._data[index[0]][index[1]];
       var v = this._data[index[0]][index[1] + this._dataWidth];
       if (isNaN(u) || isNaN(v)) {
-        return `0${this.options.unit}`;
+        return this.options.directionOnly ? null : `0${this.options.unit}`;
       }
       var magnitude = Math.abs(Math.sqrt(Math.pow(u, 2) + Math.pow(v, 2)));
       let deg = Math.round(
         (Math.atan2(u / magnitude, v / magnitude) * 180) / Math.PI
       );
       if (deg < 0) deg = 360 + deg;
+      // The direction field has a constant, meaningless magnitude, so only the
+      // angle is informative.
+      if (this.options.directionOnly) {
+        return `${deg}°`;
+      }
       return `${this._round(magnitude, this.options.decimal)}${
         this.options.unit
       } ${deg}°`;

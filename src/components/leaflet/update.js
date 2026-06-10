@@ -37,11 +37,13 @@ export const update = async (
       points: addPoints,
       raster: addRaster,
       vector: addVectorField,
+      direction: addDirectionField,
     },
     updateLayer: {
       tiff: updateTiff,
       raster: updateRaster,
       vector: updateVectorField,
+      direction: updateDirectionField,
       streamlines: updateStreamlines,
       particles: updateParticles,
       wms: updateWms,
@@ -271,6 +273,66 @@ const updateVectorField = (map, layers, id, options, language) => {
         layers[id].data.data,
         displayOptions,
       ).addTo(map);
+    }
+  }
+};
+
+const directionToVectorData = (grid, magnitude = 1) =>
+  grid.map((row) => {
+    const u = row.map((d) =>
+      isNaN(d) ? NaN : magnitude * Math.sin(((d + 180) * Math.PI) / 180),
+    );
+    const v = row.map((d) =>
+      isNaN(d) ? NaN : magnitude * Math.cos(((d + 180) * Math.PI) / 180),
+    );
+    return u.concat(v);
+  });
+
+const addDirectionField = async (map, layers, id, options, language, server) => {
+  var defaultOptions = {
+    opacity: 1,
+    interpolate: false,
+    directionOnly: true,
+  };
+  var displayOptions = {
+    ...defaultOptions,
+    ...options.displayOptions,
+    enabledFunction: server.disableControls,
+  };
+  var data = directionToVectorData(options.data);
+  layers[id]["data"] = { geometry: options.geometry, data };
+  var field = L.vectorfield(options.geometry, data, displayOptions);
+  field.options.min = 0;
+  field.options.max = 3;
+  field.addTo(map);
+  layers[id]["direction"] = field;
+};
+
+const updateDirectionField = (map, layers, id, options, language) => {
+  if ("direction" in layers[id]) {
+    if (options.direction) {
+      layers[id]["direction"].update(false, { ...options, min: 0, max: 1 });
+    } else {
+      map.removeLayer(layers[id]["direction"]);
+      delete layers[id]["direction"];
+    }
+  } else if ("data" in layers[id]) {
+    if (options.direction) {
+      var defaultOptions = {
+        opacity: 1,
+        interpolate: false,
+        directionOnly: true,
+      };
+      var displayOptions = { ...defaultOptions, ...options };
+      var field = L.vectorfield(
+        layers[id].data.geometry,
+        layers[id].data.data,
+        displayOptions,
+      );
+      field.options.min = 0;
+      field.options.max = 1;
+      field.addTo(map);
+      layers[id]["direction"] = field;
     }
   }
 };
@@ -556,6 +618,12 @@ export const setPlayDatetime = (layers, datetime, period, data) => {
         plot_type.includes("transect") ||
         plot_type.includes("profile")
       ) {
+      } else if (plot_type === "direction") {
+        const converted = directionToVectorData(data[key][i0]);
+        if ("data" in layers[key]) {
+          layers[key]["data"]["data"] = converted;
+        }
+        layers[key]["direction"].update(converted, false);
       } else {
         if ("data" in layers[key]) {
           layers[key]["data"]["data"] = data[key][i0];

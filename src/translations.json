@@ -863,6 +863,18 @@
     "FR": "Température de l'eau et courants prévus à l'aide d'un modèle numérique 3D.",
     "IT": "Temperatura dell'acqua e correnti previste tramite un modello numerico 3D."
   },
+  "waves": {
+    "EN": "Waves",
+    "DE": "Wellen",
+    "FR": "Vagues",
+    "IT": "Onde"
+  },
+  "twodmodelText": {
+    "EN": "Significant wave height and direction forecasted using the SWAN 2D wave model.",
+    "DE": "Signifikante Wellenhöhe und -richtung, prognostiziert mit dem SWAN-2D-Wellenmodell.",
+    "FR": "Hauteur significative et direction des vagues prévues à l'aide du modèle de vagues 2D SWAN.",
+    "IT": "Altezza significativa e direzione delle onde previste utilizzando il modello d'onda 2D SWAN."
+  },
   "doyStats": {
     "EN": "Day of year statistics",
     "DE": "Tagesstatistiken",

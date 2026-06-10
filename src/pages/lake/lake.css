@@ -54,6 +54,11 @@
   position: relative;
 }
 
+.main .lake .twodmodel .map-sidebar .map-sidebar-left {
+  width: 100%;
+  margin-right: 0;
+}
+
 .main .lake .map-sidebar .map-sidebar-left.fullscreen {
   position: fixed;
   left: 0;
@@ -377,7 +382,7 @@
 
 /** 3D Model **/
 
-.main .lake .forecast .threedmodel .map-sidebar .map-sidebar-left .current {
+.main .lake .forecast .map-sidebar .map-sidebar-left .current {
   position: absolute;
   z-index: 999;
   top: calc(var(--padding) / 4);
@@ -391,10 +396,39 @@
   box-sizing: border-box;
 }
 
+.main .lake .forecast .map-sidebar .map-sidebar-left .forecast-boxes {
+  position: absolute;
+  z-index: 999;
+  top: calc(var(--padding) / 4);
+  left: calc(var(--padding) / 4);
+  display: flex;
+  align-items: flex-start;
+  gap: calc(var(--padding) / 4);
+}
+
+.main .lake .forecast .map-sidebar .map-sidebar-left .forecast-boxes .current {
+  position: static;
+}
+
+.main .lake .forecast .map-sidebar .map-sidebar-left .wave-range {
+  padding: 12px;
+  background-color: var(--box-color);
+  color: var(--background-font-color);
+  text-align: center;
+  border-radius: 8px;
+  min-width: 80px;
+  box-sizing: border-box;
+  font-size: 14px;
+}
+
+.main .lake .forecast .map-sidebar .map-sidebar-left .wave-range .label {
+  color: var(--background-subtle-font-color);
+  margin-bottom: 2px;
+}
+
 .main
   .lake
   .forecast
-  .threedmodel
   .map-sidebar
   .map-sidebar-left
   .model-source {
@@ -413,7 +447,6 @@
 .main
   .lake
   .forecast
-  .threedmodel
   .map-sidebar
   .map-sidebar-left
   .model-source

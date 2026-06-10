@@ -275,7 +275,7 @@ def model_layers_2d(default, sources):
         "default_depth": 0,
         "displayOptions": {
             "raster": True,
-            "paletteName": "navia",
+            "paletteName": "Thermal",
             "zIndex": 2,
             "interpolate": True
         },
@@ -307,11 +307,12 @@ def model_layers_2d(default, sources):
       "depth": False,
       "name": "wave_direction",
       "parameter": "wave_direction",
-      "unit": "degrees",
-      "display": "°",
+      "unit": "°",
+      "display": "direction",
       "source": default,
       "default_depth": 0,
       "displayOptions": {
+        "direction": True,
         "arrowsColor": "#000000",
         "opacity": 0.8,
         "zIndex": 3,

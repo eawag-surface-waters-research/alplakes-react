@@ -282,7 +282,7 @@ const threedDownload = async (
     } else {
       index = Math.ceil((datetime - data[layer.parameter].start) / timestep);
     }
-    const plotTypes = ["raster", "streamlines"].filter(
+    const plotTypes = ["raster", "streamlines", "direction"].filter(
       (p) => p in layer.displayOptions && layer.displayOptions[p],
     );
     for (let plotType of plotTypes) {
@@ -369,7 +369,7 @@ const twodDownload = async (
     } else {
       index = Math.ceil((datetime - data[layer.parameter].start) / timestep);
     }
-    const plotTypes = ["raster", "streamlines"].filter(
+    const plotTypes = ["raster", "streamlines", "direction"].filter(
       (p) => p in layer.displayOptions && layer.displayOptions[p],
     );
     for (let plotType of plotTypes) {
@@ -444,7 +444,7 @@ const meteoDownload = async (
         ),
       );
     }
-    const plotTypes = ["raster", "streamlines"].filter(
+    const plotTypes = ["raster", "streamlines", "direction"].filter(
       (p) => p in layer.displayOptions && layer.displayOptions[p],
     );
     for (let plotType of plotTypes) {

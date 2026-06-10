@@ -8,6 +8,7 @@ import CONFIG from "../../config.json";
 import Translations from "../../translations.json";
 import "./lake.css";
 import ThreeDModel from "./components/threedmodel";
+import TwoDModel from "./components/twodmodel";
 import OneDModel from "./components/onedmodel";
 import Satellite from "./components/satellite";
 import sortIcon from "../../img/sort.png";
@@ -141,6 +142,16 @@ class Lake extends Component {
                     language={language}
                     name={title}
                     dark={dark}
+                    togglePerformance={this.togglePerformance}
+                  />
+                )}
+                {"2d_model" in metadata["forecast"] && (
+                  <TwoDModel
+                    id={id}
+                    parameters={metadata.forecast["2d_model"]}
+                    language={language}
+                    dark={dark}
+                    bounds={metadata.properties.bounds}
                     togglePerformance={this.togglePerformance}
                   />
                 )}
