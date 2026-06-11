@@ -62,7 +62,7 @@ class Satellite extends Component {
       const { satellite, lake } = this.imageProperties(image.k);
       var folder = satellite;
       if (satellite === "sentinel3") {
-        folder = "sentinel3_dimark";
+        folder = "sentinel3_dimark2";
       }
       const url = `${CONFIG.sencast_bucket}/alplakes/cropped/${folder}/${lake}/${image.k}`;
       parameters.displayOptions["unit"] = parameters.unit;

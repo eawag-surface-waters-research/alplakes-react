@@ -77,7 +77,7 @@ const satelliteMetadata = async (parameters, unit) => {
       overallLake = lake;
       var folder = group;
       if (group === "sentinel3") {
-        folder = "sentinel3_dimark";
+        folder = "sentinel3_dimark2";
       }
       let url = `${CONFIG.sencast_bucket}/alplakes/cropped/${folder}/${lake}/${file.k.replace("_lowres", "")}`;
       let split = file.k.split("_");

@@ -18,7 +18,7 @@ with open("satellite_metadata.json") as f:
     satellite_metadata = json.load(f)
 
 # Load Satellite Data
-response = requests.get("https://eawagrs.s3.eu-central-1.amazonaws.com/alplakes/metadata/summary_dimark.json")
+response = requests.get("https://eawagrs.s3.eu-central-1.amazonaws.com/alplakes/metadata/summary_dimark2.json")
 satellite = response.json()
 
 response = requests.get("https://eawagrs.s3.eu-central-1.amazonaws.com/alplakes/metadata/lakes.geojson")
