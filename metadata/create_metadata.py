@@ -5,7 +5,7 @@ import requests
 import functions as func
 
 upload = True
-bucket_folder = "static/website/metadata/master"
+bucket_folder = "static/website/metadata/dimark"
 
 # Load Metadata
 with open("metadata.json") as f:
@@ -18,7 +18,7 @@ with open("satellite_metadata.json") as f:
     satellite_metadata = json.load(f)
 
 # Load Satellite Data
-response = requests.get("https://eawagrs.s3.eu-central-1.amazonaws.com/alplakes/metadata/summary.json")
+response = requests.get("https://eawagrs.s3.eu-central-1.amazonaws.com/alplakes/metadata/summary_dimark2.json")
 satellite = response.json()
 
 response = requests.get("https://eawagrs.s3.eu-central-1.amazonaws.com/alplakes/metadata/lakes.geojson")
@@ -273,6 +273,7 @@ for lake in metadata:
 
     # Satellite data
     prevent_water_quality = "flags" in lake and lake["flags"][0] == "austrian"
+    prevent_water_quality = False
     if key in satellite:
         add = True
         satellite_data = []

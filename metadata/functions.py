@@ -391,7 +391,7 @@ def satellite_layers(key, sd, srd, prevent_water_quality):
         layer["sources"][layer["source"]]["models"].append(
             {
                 "model": "Sentinel3",
-                "metadata": "/alplakes/metadata/sentinel3/{}/chla.json".format(key)
+                "metadata": "/alplakes/metadata/sentinel3_dimark2/{}/chla.json".format(key)
             }
         )
         layers.append(layer)
@@ -437,7 +437,7 @@ def satellite_layers(key, sd, srd, prevent_water_quality):
             layer["sources"][layer["source"]]["models"].append(
                 {
                     "model": "Sentinel3",
-                    "metadata": "/alplakes/metadata/sentinel3/{}/Zsd_lee.json".format(key)
+                    "metadata": "/alplakes/metadata/sentinel3_dimark2/{}/Zsd_lee.json".format(key)
                 }
             )
         if "sentinel2" in sd and "Z490" in sd["sentinel2"]:
@@ -491,7 +491,7 @@ def satellite_layers(key, sd, srd, prevent_water_quality):
             layer["sources"][layer["source"]]["models"].append(
                 {
                     "model": "Sentinel3",
-                    "metadata": "/alplakes/metadata/sentinel3/{}/tsm_binding754.json".format(key)
+                    "metadata": "/alplakes/metadata/sentinel3_dimark2/{}/tsm_binding754.json".format(key)
                 }
             )
         if "sentinel2" in sd and "tsm_dogliotti665" in sd["sentinel2"]:
@@ -545,7 +545,7 @@ def satellite_layers(key, sd, srd, prevent_water_quality):
             layer["sources"][layer["source"]]["models"].append(
                 {
                     "model": "Sentinel3",
-                    "metadata": "/alplakes/metadata/sentinel3/{}/forel_ule.json".format(key)
+                    "metadata": "/alplakes/metadata/sentinel3_dimark2/{}/forel_ule.json".format(key)
                 }
             )
         if "sentinel2" in sd and "forel_ule" in sd["sentinel2"]:
