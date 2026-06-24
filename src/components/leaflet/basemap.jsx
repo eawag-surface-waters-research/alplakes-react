@@ -20,6 +20,7 @@ class Basemap extends Component {
     datetime: false,
     timestep: false,
     data: false,
+    sparkline: false,
     duration: 12000,
   };
   togglePlay = () => {
@@ -87,7 +88,7 @@ class Basemap extends Component {
     if (this.props.setDatetime) this.props.setDatetime(datetime, false);
     this.setState({ datetime, play: false });
   };
-  addControls = (period, datetime, timestep, data) => {
+  addControls = (period, datetime, timestep, data, sparkline = false) => {
     this.setState({
       controls: true,
       play: false,
@@ -95,6 +96,7 @@ class Basemap extends Component {
       datetime,
       timestep,
       data,
+      sparkline,
     });
   };
   removeControls = () => {
@@ -105,6 +107,7 @@ class Basemap extends Component {
       datetime: false,
       timestep: false,
       data: false,
+      sparkline: false,
     });
   };
   disableControls = () => {
@@ -241,7 +244,8 @@ class Basemap extends Component {
       downloadSatelliteTimeseries,
       closeSatelliteTimeseriesModel,
     } = this.props;
-    const { controls, play, period, datetime, timestep } = this.state;
+    const { controls, play, period, datetime, timestep, sparkline } =
+      this.state;
     return (
       <React.Fragment>
         <div
@@ -272,6 +276,7 @@ class Basemap extends Component {
                   permanentLabel={permanentLabel}
                   play={play}
                   duration={this.state.duration}
+                  sparkline={sparkline}
                 />
               </div>
             </div>

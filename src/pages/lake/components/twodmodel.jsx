@@ -8,6 +8,77 @@ import { formatReadableDate, formatTime } from "../functions/general";
 import warningIcon from "../../../img/warning.png";
 import ModelPerformanceButton from "../../../components/modelperformance/modelperformancebutton";
 
+// Absolute ceiling (m) used to scale the slider waveform, so a calm period
+// reads as a flat ribbon and a storm fills the height rather than each window
+// being normalised to its own max.
+const WAVE_HEIGHT_FULL_SCALE = 1;
+
+// Number of bins for the small spatial wave-height distribution plot.
+const WAVE_HIST_BINS = 12;
+
+// Tiny bar plot of how the lake's cells are distributed across wave heights at
+// the current timestep: mass on the left = only a small area is rough, mass
+// shifting right = large waves over more of the lake.
+class WaveDistribution extends Component {
+  state = { hover: null };
+
+  render() {
+    const { counts, min, max } = this.props;
+    if (!counts) return null;
+    const maxCount = Math.max(...counts);
+    if (!(maxCount > 0)) return null;
+    const total = counts.reduce((a, b) => a + b, 0);
+    const n = counts.length;
+    const slot = 100 / n;
+    const gap = 0.18;
+    const { hover } = this.state;
+    const binLow = hover !== null ? min + (hover / n) * (max - min) : 0;
+    const binHigh = hover !== null ? min + ((hover + 1) / n) * (max - min) : 0;
+    return (
+      <div className="wave-distribution">
+        {hover !== null && (
+          <div
+            className="wave-distribution-tooltip"
+            style={{ left: `${(hover + 0.5) * slot}%` }}
+          >
+            {Math.round((counts[hover] / total) * 100)}%
+            <span className="height">
+              {Math.round(binLow * 100) / 100}&ndash;
+              {Math.round(binHigh * 100) / 100} m
+            </span>
+          </div>
+        )}
+        <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+          {counts.map((c, i) => {
+            const h = (c / maxCount) * 100;
+            return (
+              <rect
+                key={i}
+                x={i * slot + (slot * gap) / 2}
+                y={100 - h}
+                width={slot * (1 - gap)}
+                height={h}
+              />
+            );
+          })}
+          {counts.map((c, i) => (
+            <rect
+              key={"hit" + i}
+              className="hit"
+              x={i * slot}
+              y={0}
+              width={slot}
+              height={100}
+              onMouseEnter={() => this.setState({ hover: i })}
+              onMouseLeave={() => this.setState({ hover: null })}
+            />
+          ))}
+        </svg>
+      </div>
+    );
+  }
+}
+
 class TwoDModel extends Component {
   state = {
     updates: [],
@@ -16,6 +87,7 @@ class TwoDModel extends Component {
     datetime: false,
     warning: false,
     waveHeightRange: [],
+    waveHeightHist: [],
     period: false,
     mapId: "map_" + Math.round(Math.random() * 100000),
   };
@@ -23,15 +95,40 @@ class TwoDModel extends Component {
   gridRange = (grid) => {
     var min = Infinity;
     var max = -Infinity;
+    var sum = 0;
+    var count = 0;
     for (let row of grid) {
       for (let value of row) {
         if (!isNaN(value)) {
           if (value < min) min = value;
           if (value > max) max = value;
+          sum += value;
+          count++;
         }
       }
     }
-    return min === Infinity ? false : { min, max };
+    return min === Infinity ? false : { min, max, mean: sum / count };
+  };
+
+  // Bin a grid's cells into [min, max] across WAVE_HIST_BINS bins, so the
+  // distribution spans exactly the range shown on the axis: mass on the left =
+  // only a small area reaches the higher end, mass on the right = most of the
+  // lake is near the maximum.
+  gridHistogram = (grid, min, max) => {
+    const counts = new Array(WAVE_HIST_BINS).fill(0);
+    const span = max - min;
+    if (!(span > 0)) return counts;
+    for (let row of grid) {
+      for (let value of row) {
+        if (!isNaN(value)) {
+          let b = Math.floor(((value - min) / span) * WAVE_HIST_BINS);
+          if (b >= WAVE_HIST_BINS) b = WAVE_HIST_BINS - 1;
+          if (b < 0) b = 0;
+          counts[b]++;
+        }
+      }
+    }
+    return counts;
   };
 
   updated = () => {
@@ -84,6 +181,12 @@ class TwoDModel extends Component {
       };
     }
     const datetime = new Date(reference.start.getTime() + index * timestep);
+    const waveHeightRange = reference.data.map((grid) => this.gridRange(grid));
+    const sparkline = {
+      max: waveHeightRange.map((r) => (r ? r.max : 0)),
+      mean: waveHeightRange.map((r) => (r ? r.mean : 0)),
+      scaleMax: WAVE_HEIGHT_FULL_SCALE,
+    };
     updates.push({
       event: "addLayer",
       type: "raster",
@@ -125,7 +228,14 @@ class TwoDModel extends Component {
         period: [reference.start.getTime(), reference.end.getTime()],
         datetime: datetime.getTime(),
         timestep,
+        sparkline,
       },
+    });
+    const waveHeightHist = reference.data.map((grid, i) => {
+      const r = waveHeightRange[i];
+      return r
+        ? this.gridHistogram(grid, r.min, r.max)
+        : new Array(WAVE_HIST_BINS).fill(0);
     });
     this.setState({
       metadata,
@@ -133,24 +243,34 @@ class TwoDModel extends Component {
       updates,
       datetime,
       warning,
-      waveHeightRange: reference.data.map((grid) => this.gridRange(grid)),
+      waveHeightRange,
+      waveHeightHist,
       period: [reference.start.getTime(), reference.end.getTime()],
     });
   }
 
-  currentRange = () => {
+  currentIndex = () => {
     var { datetime, waveHeightRange, period } = this.state;
-    if (!datetime || !period || waveHeightRange.length === 0) return false;
+    if (!datetime || !period || waveHeightRange.length === 0) return -1;
     const dt = new Date(datetime).getTime();
     const timestep = (period[1] - period[0]) / waveHeightRange.length;
-    const index = Math.max(
+    return Math.max(
       Math.min(
         Math.floor((dt - period[0]) / timestep),
         waveHeightRange.length - 1,
       ),
       0,
     );
-    return waveHeightRange[index];
+  };
+
+  currentRange = () => {
+    const index = this.currentIndex();
+    return index < 0 ? false : this.state.waveHeightRange[index];
+  };
+
+  currentHist = () => {
+    const index = this.currentIndex();
+    return index < 0 ? false : this.state.waveHeightHist[index];
   };
 
   render() {
@@ -158,6 +278,7 @@ class TwoDModel extends Component {
     var { dark, bounds, language, id, parameters, togglePerformance } =
       this.props;
     var range = this.currentRange();
+    var hist = this.currentHist();
     return (
       <div className="twodmodel subsection">
         <h3>
@@ -175,13 +296,21 @@ class TwoDModel extends Component {
               )}
               {range && (
                 <div className="wave-range">
-                  <div className="label">
-                    {Translations.significant_wave_height[language]}
+                  <div className="summary">
+                    <span className="label">
+                      {Translations.max_wave_height[language]}
+                    </span>
+                    <span className="value">
+                      {Math.round(range.max * 100) / 100} m
+                    </span>
                   </div>
-                  <div className="value">
-                    {Math.round(range.min * 100) / 100} &ndash;{" "}
-                    {Math.round(range.max * 100) / 100} m
-                  </div>
+                  {hist && range.max >= 0.05 && (
+                    <WaveDistribution
+                      counts={hist}
+                      min={range.min}
+                      max={range.max}
+                    />
+                  )}
                 </div>
               )}
             </div>

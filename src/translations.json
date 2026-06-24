@@ -413,6 +413,12 @@
     "FR": "Hauteur",
     "IT": "Altezza onde"
   },
+  "max_wave_height": {
+    "EN": "Max wave height",
+    "DE": "Max. Wellenhöhe",
+    "FR": "Hauteur max",
+    "IT": "Altezza max onde"
+  },
   "mean_wave_period": {
     "EN": "Wave period",
     "DE": "Wellenperiode",

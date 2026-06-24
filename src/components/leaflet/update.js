@@ -542,7 +542,13 @@ const addPoints = async (map, layers, id, options, language, server) => {
 };
 
 const addPlay = (options, addControls) => {
-  addControls(options.period, options.datetime, options.timestep, options.data);
+  addControls(
+    options.period,
+    options.datetime,
+    options.timestep,
+    options.data,
+    options.sparkline,
+  );
 };
 
 const genericRemoveLayer = (map, layers, id) => {
