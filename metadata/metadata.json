@@ -2959,7 +2959,50 @@
             1226929566,
             1565375126,
             1308563875
-        ]
+        ],
+        "3D": {
+            "default": "alplakes_delft3d",
+            "spread": 100,
+            "models": {
+                "alplakes_delft3d": {
+                    "model": "delft3d-flow",
+                    "name": "Delft3D-FLOW",
+                    "key": "annecy",
+                    "institution": { "name": "Université Savoie-Mont-Blanc", "url": "https://www.univ-smb.fr/" },
+                    "performance": {
+                        "rmse": {
+                            "overall": "NA"
+                        }
+                    }
+                }
+            },
+            "3D_temperature": [
+                {
+                    "name": "Annecy",
+                    "latlng": [
+                        45.9,
+                        6.14
+                    ]
+                },
+                {
+                    "name": "Doussard",
+                    "latlng": [
+                        45.8,
+                        6.217
+                    ],
+                    "direction": "bottom"
+                },
+                {
+                    "name": "Menthon Saint Bernard",
+                    "latlng": [
+                        45.864,
+                        6.18
+                    ],
+                    "direction": "right"
+                }
+            ],
+            "3D_thermocline": []
+        }
     },
     {
         "key": "bourget",

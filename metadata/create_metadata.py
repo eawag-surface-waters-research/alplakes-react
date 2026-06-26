@@ -5,7 +5,7 @@ import requests
 import functions as func
 
 upload = True
-bucket_folder = "static/website/metadata/master"
+bucket_folder = "static/website/metadata/french"
 
 # Load Metadata
 with open("metadata.json") as f:
@@ -142,6 +142,7 @@ for lake in metadata:
                 data["forecast"] = { "3d_model": {
                     "key": key,
                     "model": lake["3D"]["models"][lake["3D"]["default"]]["model"],
+                    "institution": lake["3D"]["models"][lake["3D"]["default"]].get("institution", {"name": "Eawag", "url": "https://www.eawag.ch"}),
                     "parameters": ["temperature", "velocity"],
                     "labels": lake["3D"]["3D_temperature"],
                     "default_depth": default_depth,
