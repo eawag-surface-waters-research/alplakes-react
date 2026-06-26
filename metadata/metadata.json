@@ -2959,7 +2959,49 @@
             1226929566,
             1565375126,
             1308563875
-        ]
+        ],
+        "3D": {
+            "default": "alplakes_delft3d",
+            "spread": 100,
+            "models": {
+                "alplakes_delft3d": {
+                    "model": "delft3d-flow",
+                    "name": "Delft3D-FLOW",
+                    "key": "annecy",
+                    "performance": {
+                        "rmse": {
+                            "overall": "NA"
+                        }
+                    }
+                }
+            },
+            "3D_temperature": [
+                {
+                    "name": "Annecy",
+                    "latlng": [
+                        45.9,
+                        6.14
+                    ]
+                },
+                {
+                    "name": "Doussard",
+                    "latlng": [
+                        45.8,
+                        6.217
+                    ],
+                    "direction": "bottom"
+                },
+                {
+                    "name": "Menthon Saint Bernard",
+                    "latlng": [
+                        45.864,
+                        6.18
+                    ],
+                    "direction": "right"
+                }
+            ],
+            "3D_thermocline": []
+        }
     },
     {
         "key": "bourget",
@@ -2989,7 +3031,47 @@
             1580739694,
             1544611563,
             1544611447
-        ]
+        ],
+        "3D": {
+            "default": "alplakes_delft3d",
+            "spread": 100,
+            "models": {
+                "alplakes_delft3d": {
+                    "model": "delft3d-flow",
+                    "name": "Delft3D-FLOW",
+                    "key": "bourget",
+                    "performance": {
+                        "rmse": {
+                            "overall": "NA"
+                        }
+                    }
+                }
+            },
+            "3D_temperature": [
+                {
+                    "name": "Aix-les-Bains",
+                    "latlng": [
+                        45.69,
+                        5.89
+                    ]
+                },
+                {
+                    "name": "Conjux",
+                    "latlng": [
+                        45.792,
+                        5.824
+                    ]
+                },
+                {
+                    "name": "Bourget-du-Lac",
+                    "latlng": [
+                        45.657,
+                        5.861
+                    ]
+                }
+            ],
+            "3D_thermocline": []
+        }
     },
     {
         "key": "bled",
