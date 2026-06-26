@@ -142,6 +142,7 @@ for lake in metadata:
                 data["forecast"] = { "3d_model": {
                     "key": key,
                     "model": lake["3D"]["models"][lake["3D"]["default"]]["model"],
+                    "institution": lake["3D"]["models"][lake["3D"]["default"]].get("institution", {"name": "Eawag", "url": "https://www.eawag.ch"}),
                     "parameters": ["temperature", "velocity"],
                     "labels": lake["3D"]["3D_temperature"],
                     "default_depth": default_depth,

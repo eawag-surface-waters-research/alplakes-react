@@ -193,12 +193,12 @@ class ThreeDModel extends Component {
             <div className="model-source">
               <b>{parameters.model}</b> {Translations.developedAt[language]}{" "}
               <a
-                href="https://www.eawag.ch"
-                alt="Eawag"
+                href={parameters.institution?.url ?? "https://www.eawag.ch"}
+                alt={parameters.institution?.name ?? "Eawag"}
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Eawag
+                {parameters.institution?.name ?? "Eawag"}
               </a>
             </div>
             <MapButton

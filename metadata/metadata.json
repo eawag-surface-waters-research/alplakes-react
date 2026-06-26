@@ -2968,6 +2968,7 @@
                     "model": "delft3d-flow",
                     "name": "Delft3D-FLOW",
                     "key": "annecy",
+                    "institution": { "name": "Université Savoie-Mont-Blanc", "url": "https://www.univ-smb.fr/" },
                     "performance": {
                         "rmse": {
                             "overall": "NA"
