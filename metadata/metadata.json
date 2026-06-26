@@ -3031,47 +3031,7 @@
             1580739694,
             1544611563,
             1544611447
-        ],
-        "3D": {
-            "default": "alplakes_delft3d",
-            "spread": 100,
-            "models": {
-                "alplakes_delft3d": {
-                    "model": "delft3d-flow",
-                    "name": "Delft3D-FLOW",
-                    "key": "bourget",
-                    "performance": {
-                        "rmse": {
-                            "overall": "NA"
-                        }
-                    }
-                }
-            },
-            "3D_temperature": [
-                {
-                    "name": "Aix-les-Bains",
-                    "latlng": [
-                        45.69,
-                        5.89
-                    ]
-                },
-                {
-                    "name": "Conjux",
-                    "latlng": [
-                        45.792,
-                        5.824
-                    ]
-                },
-                {
-                    "name": "Bourget-du-Lac",
-                    "latlng": [
-                        45.657,
-                        5.861
-                    ]
-                }
-            ],
-            "3D_thermocline": []
-        }
+        ]
     },
     {
         "key": "bled",
