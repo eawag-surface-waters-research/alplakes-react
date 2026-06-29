@@ -220,6 +220,7 @@
       "lng": 6.135,
       "depth": [{"name": "Surface", "depth": 1.0}],
       "models": [
+        {"type": "delft3d-flow", "id": "annecy"},
         {"type": "simstrat", "id": "annecy"}
       ]
     }
