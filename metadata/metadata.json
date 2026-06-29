@@ -316,7 +316,7 @@
     {
         "key": "greifensee",
         "name": {
-            "EN": "Lake Greifen",
+            "EN": "Greifensee",
             "DE": "Greifensee",
             "FR": "Lac de Greifen",
             "IT": "Lago di Greifen"
@@ -1085,7 +1085,7 @@
     {
         "key": "klontalersee",
         "name": {
-            "EN": "Lake Klöntal",
+            "EN": "Klöntalersee",
             "DE": "Klöntalersee",
             "FR": "Lac du Klöntal",
             "IT": "Lago di Klöntal"
@@ -1452,7 +1452,7 @@
     {
         "key": "walensee",
         "name": {
-            "EN": "Lake Walen",
+            "EN": "Walensee",
             "DE": "Walensee",
             "FR": "Lac de Walenstadt",
             "IT": "Lago di Walenstadt"
@@ -3261,7 +3261,7 @@
     {
         "key": "fuschlsee",
         "name": {
-            "EN": "Fuschlsee",
+            "EN": "Lake Fuschl",
             "DE": "Fuschlsee",
             "FR": "Fuschlsee",
             "IT": "Fuschlsee"
@@ -3289,7 +3289,7 @@
     {
         "key": "wolfgangsee",
         "name": {
-            "EN": "Wolfgangsee",
+            "EN": "Lake Wolfgang",
             "DE": "Wolfgangsee",
             "FR": "Wolfgangsee",
             "IT": "Wolfgangsee"
@@ -3398,7 +3398,7 @@
     {
         "key": "millstaetter",
         "name": {
-            "EN": "Millstätter See",
+            "EN": "Lake Millstatt",
             "DE": "Millstätter See",
             "FR": "Millstätter See",
             "IT": "Millstätter See"
@@ -3426,7 +3426,7 @@
     {
         "key": "obertrumer",
         "name": {
-            "EN": "Obertrumer",
+            "EN": "Lake Obertrum",
             "DE": "Obertrumer",
             "FR": "Obertrumer",
             "IT": "Obertrumer"
@@ -3454,7 +3454,7 @@
     {
         "key": "ossiacher",
         "name": {
-            "EN": "Ossiacher See",
+            "EN": "Lake Ossiach",
             "DE": "Ossiacher See",
             "FR": "Ossiacher See",
             "IT": "Ossiacher See"
@@ -3538,7 +3538,7 @@
     {
         "key": "zeller",
         "name": {
-            "EN": "Zeller",
+            "EN": "Lake Zell",
             "DE": "Zeller",
             "FR": "Zeller",
             "IT": "Zeller"
@@ -3725,7 +3725,7 @@
     {
         "key": "hallstatter",
         "name": {
-            "EN": "Lake Hallstätter",
+            "EN": "Lake Hallstatt",
             "DE": "Hallstätter See",
             "FR": "Hallstätter See",
             "IT": "Hallstätter See"
@@ -6146,7 +6146,7 @@
     {
         "key": "starnberger",
         "name": {
-            "EN": "Starnberger See",
+            "EN": "Lake Starnberg",
             "DE": "Starnberger See",
             "FR": "Starnberger See",
             "IT": "Starnberger See"
@@ -6293,7 +6293,7 @@
     {
         "key": "kochelsee",
         "name": {
-            "EN": "Kochelsee",
+            "EN": "Lake Kochel",
             "DE": "Kochelsee",
             "FR": "Kochelsee",
             "IT": "Kochelsee"
