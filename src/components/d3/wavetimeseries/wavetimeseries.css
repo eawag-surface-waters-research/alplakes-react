@@ -3,6 +3,11 @@
   width: 100%;
   height: 100%;
   color: var(--background-font-color);
+  cursor: grab;
+}
+
+.wave-timeseries:active {
+  cursor: grabbing;
 }
 
 /* Transparent layer above the line graph for the direction arrows, the period
