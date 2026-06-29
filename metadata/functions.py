@@ -275,7 +275,7 @@ def model_layers_2d(default, sources):
         "default_depth": 0,
         "displayOptions": {
             "raster": True,
-            "paletteName": "Thermal",
+            "paletteName": "Surfline",
             "zIndex": 2,
             "interpolate": True
         },

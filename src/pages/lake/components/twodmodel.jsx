@@ -195,10 +195,10 @@ class TwoDModel extends Component {
         data: reference.data[index],
         geometry: data.geometry,
         displayOptions: {
-          min: reference.min,
-          max: reference.max,
+          min: 0,
+          max: Math.max(0.7, reference.max),
           unit: "m",
-          paletteName: "Thermal",
+          paletteName: "Surfline",
         },
       },
     });
