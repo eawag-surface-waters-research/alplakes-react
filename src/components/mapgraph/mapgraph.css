@@ -101,6 +101,7 @@
 .map-graph .map-graph-header .map-graph-title .map-graph-label img {
   height: 16px;
   margin-right: 8px;
+  filter: invert(1);
 }
 
 .map-graph

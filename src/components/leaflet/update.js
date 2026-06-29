@@ -116,6 +116,22 @@ const addRaster = async (map, layers, id, options, language, server) => {
       .addTo(map);
   }
 
+  if (
+    "timeseries" in options.displayOptions &&
+    options.displayOptions.timeseries
+  ) {
+    layers[id]["wave_timeseries_control"] = L.control
+      .markerDraw({
+        fire: (event) => server.getWaveTimeseries(event, id),
+        id: map.getContainer().id,
+        enabledFunction: server.disableControls,
+        svgIcon: icons["waveTimeseries"],
+        title: Translate.waveTimeseries[language],
+        hover: Translate.addWaveTimeseries[language],
+      })
+      .addTo(map);
+  }
+
   if ("transect" in options.displayOptions && options.displayOptions.transect) {
     layers[id]["transect_layer"] = L.layerGroup([]).addTo(map);
     layers[id]["transect_layer"].setZIndex(999);
@@ -622,7 +638,8 @@ export const setPlayDatetime = (layers, datetime, period, data) => {
         layers[key][plot_type].update(datetime, false);
       } else if (
         plot_type.includes("transect") ||
-        plot_type.includes("profile")
+        plot_type.includes("profile") ||
+        plot_type.includes("wave_timeseries")
       ) {
       } else if (plot_type === "direction") {
         const converted = directionToVectorData(data[key][i0]);

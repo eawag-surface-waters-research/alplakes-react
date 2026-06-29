@@ -142,12 +142,14 @@ class Basemap extends Component {
       getTransect,
       getProfile,
       getSatelliteTimeseries,
+      getWaveTimeseries,
     } = this.props;
     var { basemap } = this.props;
     const server = {
       getTransect,
       getProfile,
       getSatelliteTimeseries,
+      getWaveTimeseries,
       disableControls: this.disableControls,
     };
     if (updates.length > 0) {

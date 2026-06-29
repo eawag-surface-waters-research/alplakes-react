@@ -533,6 +533,18 @@
     "FR": "Ajouter profil",
     "IT": "Aggiungi profilo"
   },
+  "waveTimeseries": {
+    "EN": "Wave time series",
+    "DE": "Wellen-Zeitreihe",
+    "FR": "Série temporelle des vagues",
+    "IT": "Serie temporale delle onde"
+  },
+  "addWaveTimeseries": {
+    "EN": "Add wave time series",
+    "DE": "Wellen-Zeitreihe hinzufügen",
+    "FR": "Ajouter série temporelle des vagues",
+    "IT": "Aggiungi serie temporale delle onde"
+  },
   "addParticles": {
     "EN": "Add particles",
     "DE": "Partikel hinzufügen",

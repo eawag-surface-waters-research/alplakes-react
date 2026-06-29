@@ -9,6 +9,7 @@ import {
   collectMetadata,
   getProfileAlplakesHydrodynamic,
   getTransectAlplakesHydrodynamic,
+  getWaveTimeseriesAlplakes,
 } from "../functions/download";
 import "./map.css";
 import Basemap from "../../../components/leaflet/basemap";
@@ -124,6 +125,30 @@ class Map extends Component {
     if (data) {
       layer.graph = { ...layer.graph, profile_plot: data };
       var graphSelection = { id: layer.id, type: "profile_plot" };
+      this.setState({ layers, graphSelection, graphHide: false });
+      return { lat: data.lat, lng: data.lng };
+    } else {
+      window.alert(Translations.serverAlert[this.props.language]);
+    }
+  };
+
+  getWaveTimeseries = async (latlng, id) => {
+    var { language } = this.props;
+    var { period, layers } = this.state;
+    var layer = layers.find((l) => l.id === id);
+    var source = layer.sources[layer.source];
+    this.loading(Translations.downloadingData[language]);
+    var data = await getWaveTimeseriesAlplakes(
+      CONFIG.alplakes_api,
+      source.model,
+      source.key,
+      period,
+      latlng,
+    );
+    this.loaded();
+    if (data) {
+      layer.graph = { ...layer.graph, wave_timeseries: data };
+      var graphSelection = { id: layer.id, type: "wave_timeseries" };
       this.setState({ layers, graphSelection, graphHide: false });
       return { lat: data.lat, lng: data.lng };
     } else {
@@ -601,6 +626,7 @@ class Map extends Component {
               satelliteTimeseriesCount={satelliteTimeseriesCount}
               getTransect={this.getTransect}
               getProfile={this.getProfile}
+              getWaveTimeseries={this.getWaveTimeseries}
               getSatelliteTimeseries={this.getSatelliteTimeseries}
               downloadSatelliteTimeseries={this.downloadSatelliteTimeseries}
               closeSatelliteTimeseriesModel={this.closeSatelliteTimeseriesModel}

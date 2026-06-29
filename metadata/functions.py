@@ -277,7 +277,8 @@ def model_layers_2d(default, sources):
             "raster": True,
             "paletteName": "Surfline",
             "zIndex": 2,
-            "interpolate": True
+            "interpolate": True,
+            "timeseries": True
         },
         "sources": significant_wave_height
     },
@@ -296,7 +297,8 @@ def model_layers_2d(default, sources):
             "raster": True,
             "paletteName": "navia",
             "zIndex": 2,
-            "interpolate": True
+            "interpolate": True,
+            "timeseries": True
         },
         "sources": mean_wave_period
     },
@@ -316,6 +318,7 @@ def model_layers_2d(default, sources):
         "arrowsColor": "#000000",
         "opacity": 0.8,
         "zIndex": 3,
+        "timeseries": True
       },
       "sources": wave_direction
     }]

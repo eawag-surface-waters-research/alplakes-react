@@ -567,6 +567,27 @@ export const getProfileAlplakesHydrodynamic = async (
   }
 };
 
+export const getWaveTimeseriesAlplakes = async (
+  api,
+  model,
+  lake,
+  period,
+  latlng,
+) => {
+  const url = `${api}/simulations/2d/point/${model}/${lake}/${general.formatAPIDatetime(
+    period[0],
+  )}/${general.formatAPIDatetime(
+    period[1],
+  )}/${latlng.lat}/${latlng.lng}?variables=significant_wave_height&variables=mean_wave_period&variables=wave_direction`;
+  try {
+    const { data } = await axios.get(url);
+    return data;
+  } catch (e) {
+    console.error(e);
+    return false;
+  }
+};
+
 export const getTransectAlplakesHydrodynamic = async (
   api,
   model,
