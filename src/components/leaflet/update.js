@@ -67,6 +67,8 @@ export const update = async (
     } else if (updates[i].event === "loaded") {
     } else if (updates[i].event === "removeLayer") {
       genericRemoveLayer(map, layers, updates[i].id);
+    } else if (updates[i].event === "reorderLayer") {
+      reorderLayer(layers, updates[i].id, updates[i].options.zIndex);
     } else if (updates[i].event === "addPlay") {
       addPlay(updates[i].options, addControls);
     } else if (updates[i].event === "removePlay") {
@@ -565,6 +567,17 @@ const addPlay = (options, addControls) => {
     options.data,
     options.sparkline,
   );
+};
+
+const reorderLayer = (layers, id, zIndex) => {
+  if (!(id in layers)) return;
+  var renderKeys = ["raster", "vector", "direction", "streamlines", "tiff", "particles"];
+  for (let key of renderKeys) {
+    var instance = layers[id][key];
+    if (instance && typeof instance.setZIndex === "function") {
+      instance.setZIndex(zIndex);
+    }
+  }
 };
 
 const genericRemoveLayer = (map, layers, id) => {

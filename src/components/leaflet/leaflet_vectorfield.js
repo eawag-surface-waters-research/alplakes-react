@@ -141,6 +141,12 @@ L.VectorField = L.ImageOverlay.extend({
     }
     this._reset();
   },
+  setZIndex: function (zIndex) {
+    this.options.zIndex = zIndex;
+    if (this._canvas) {
+      this._canvas.style.zIndex = this.options.zIndex + 100;
+    }
+  },
   _pointsList: function () {
     var points = [];
     for (let i = 0; i < this._dataHeight; i++) {

@@ -257,6 +257,12 @@ L.FloatGeotiff = L.ImageOverlay.extend({
       this._image.style.zIndex = this.options.zIndex + 100;
     }
   },
+  setZIndex: function (zIndex) {
+    this.options.zIndex = zIndex;
+    if (this._image) {
+      this._image.style.zIndex = this.options.zIndex + 100;
+    }
+  },
   _createColorRamp: function () {
     var _colorRamp = [];
     var noSteps = 10 ** this.options.colorRampSteps;

@@ -564,6 +564,19 @@
     opacity: 1;
 }
 
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-layers .active-apps .app.filled {
+    cursor: grab;
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-layers .active-apps .app.filled.dragging {
+    opacity: 0.4;
+    cursor: grabbing;
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-layers .active-apps .app.filled.drag-over {
+    box-shadow: -4px 0 0 0 var(--border-color), var(--box-shadow);
+}
+
 .main .map .layer-map .map-sidebar .sidebar-body .sidebar-layers .active-apps .app.filled.active {
     opacity: 1;
 }

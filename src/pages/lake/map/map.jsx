@@ -370,6 +370,27 @@ class Map extends Component {
     this.setState({ layers, updates });
   };
 
+  reorderLayers = (orderedIds) => {
+    var { layers, updates } = this.state;
+    // orderedIds is left-to-right in the active-apps row = top-to-bottom of the
+    // map stack. Assign a strictly descending sequence so the first id gets the
+    // highest zIndex (drawn on top). Anchor at the current max and decrement,
+    // which keeps values sensible and stays unique even when layers share a
+    // zIndex (e.g. all satellite layers default to 2).
+    var top = Math.max(
+      ...orderedIds.map((id) => layers.find((l) => l.id === id).displayOptions.zIndex),
+    );
+    orderedIds.forEach((id, index) => {
+      var layer = layers.find((l) => l.id === id);
+      var zIndex = top - index;
+      if (layer.displayOptions.zIndex !== zIndex) {
+        layer.displayOptions.zIndex = zIndex;
+        updates.push({ event: "reorderLayer", id, options: { zIndex } });
+      }
+    });
+    this.setState({ layers, updates });
+  };
+
   updateLayersInUrl = (active_layers) => {
     const params = new URLSearchParams(window.location.search);
 
@@ -607,6 +628,7 @@ class Map extends Component {
               addLayers={this.addLayers}
               updateOptions={this.updateOptions}
               removeLayer={this.removeLayer}
+              reorderLayers={this.reorderLayers}
               setDepth={this.setDepth}
               setPeriod={this.setPeriod}
               setModel={this.setModel}

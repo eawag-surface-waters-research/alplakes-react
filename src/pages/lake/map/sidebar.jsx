@@ -39,6 +39,7 @@ class Sidebar extends Component {
       setSelection,
       closeSelection,
       removeLayer,
+      reorderLayers,
       addLayers,
       updateOptions,
       period,
@@ -89,6 +90,7 @@ class Sidebar extends Component {
                 selection={selection}
                 setSelection={setSelection}
                 removeLayer={removeLayer}
+                reorderLayers={reorderLayers}
                 toggleAddLayersModal={this.toggleAddLayersModal}
               />
             </div>
