@@ -37,11 +37,13 @@ export const update = async (
       points: addPoints,
       raster: addRaster,
       vector: addVectorField,
+      direction: addDirectionField,
     },
     updateLayer: {
       tiff: updateTiff,
       raster: updateRaster,
       vector: updateVectorField,
+      direction: updateDirectionField,
       streamlines: updateStreamlines,
       particles: updateParticles,
       wms: updateWms,
@@ -65,6 +67,8 @@ export const update = async (
     } else if (updates[i].event === "loaded") {
     } else if (updates[i].event === "removeLayer") {
       genericRemoveLayer(map, layers, updates[i].id);
+    } else if (updates[i].event === "reorderLayer") {
+      reorderLayer(layers, updates[i].id, updates[i].options.zIndex);
     } else if (updates[i].event === "addPlay") {
       addPlay(updates[i].options, addControls);
     } else if (updates[i].event === "removePlay") {
@@ -110,6 +114,22 @@ const addRaster = async (map, layers, id, options, language, server) => {
         svgIcon: icons["profile"],
         title: Translate.threedModelProfile[language],
         hover: Translate.addProfile[language],
+      })
+      .addTo(map);
+  }
+
+  if (
+    "timeseries" in options.displayOptions &&
+    options.displayOptions.timeseries
+  ) {
+    layers[id]["wave_timeseries_control"] = L.control
+      .markerDraw({
+        fire: (event) => server.getWaveTimeseries(event, id),
+        id: map.getContainer().id,
+        enabledFunction: server.disableControls,
+        svgIcon: icons["waveTimeseries"],
+        title: Translate.waveTimeseries[language],
+        hover: Translate.addWaveTimeseries[language],
       })
       .addTo(map);
   }
@@ -271,6 +291,66 @@ const updateVectorField = (map, layers, id, options, language) => {
         layers[id].data.data,
         displayOptions,
       ).addTo(map);
+    }
+  }
+};
+
+const directionToVectorData = (grid, magnitude = 1) =>
+  grid.map((row) => {
+    const u = row.map((d) =>
+      isNaN(d) ? NaN : magnitude * Math.sin(((d + 180) * Math.PI) / 180),
+    );
+    const v = row.map((d) =>
+      isNaN(d) ? NaN : magnitude * Math.cos(((d + 180) * Math.PI) / 180),
+    );
+    return u.concat(v);
+  });
+
+const addDirectionField = async (map, layers, id, options, language, server) => {
+  var defaultOptions = {
+    opacity: 1,
+    interpolate: false,
+    directionOnly: true,
+  };
+  var displayOptions = {
+    ...defaultOptions,
+    ...options.displayOptions,
+    enabledFunction: server.disableControls,
+  };
+  var data = directionToVectorData(options.data);
+  layers[id]["data"] = { geometry: options.geometry, data };
+  var field = L.vectorfield(options.geometry, data, displayOptions);
+  field.options.min = 0;
+  field.options.max = 3;
+  field.addTo(map);
+  layers[id]["direction"] = field;
+};
+
+const updateDirectionField = (map, layers, id, options, language) => {
+  if ("direction" in layers[id]) {
+    if (options.direction) {
+      layers[id]["direction"].update(false, { ...options, min: 0, max: 1 });
+    } else {
+      map.removeLayer(layers[id]["direction"]);
+      delete layers[id]["direction"];
+    }
+  } else if ("data" in layers[id]) {
+    if (options.direction) {
+      var defaultOptions = {
+        opacity: 1,
+        interpolate: false,
+        directionOnly: true,
+      };
+      var displayOptions = { ...defaultOptions, ...options };
+      var field = L.vectorfield(
+        layers[id].data.geometry,
+        layers[id].data.data,
+        displayOptions,
+      );
+      field.options.min = 0;
+      field.options.max = 1;
+      field.addTo(map);
+      layers[id]["direction"] = field;
     }
   }
 };
@@ -480,7 +560,24 @@ const addPoints = async (map, layers, id, options, language, server) => {
 };
 
 const addPlay = (options, addControls) => {
-  addControls(options.period, options.datetime, options.timestep, options.data);
+  addControls(
+    options.period,
+    options.datetime,
+    options.timestep,
+    options.data,
+    options.sparkline,
+  );
+};
+
+const reorderLayer = (layers, id, zIndex) => {
+  if (!(id in layers)) return;
+  var renderKeys = ["raster", "vector", "direction", "streamlines", "tiff", "particles"];
+  for (let key of renderKeys) {
+    var instance = layers[id][key];
+    if (instance && typeof instance.setZIndex === "function") {
+      instance.setZIndex(zIndex);
+    }
+  }
 };
 
 const genericRemoveLayer = (map, layers, id) => {
@@ -554,8 +651,15 @@ export const setPlayDatetime = (layers, datetime, period, data) => {
         layers[key][plot_type].update(datetime, false);
       } else if (
         plot_type.includes("transect") ||
-        plot_type.includes("profile")
+        plot_type.includes("profile") ||
+        plot_type.includes("wave_timeseries")
       ) {
+      } else if (plot_type === "direction") {
+        const converted = directionToVectorData(data[key][i0]);
+        if ("data" in layers[key]) {
+          layers[key]["data"]["data"] = converted;
+        }
+        layers[key]["direction"].update(converted, false);
       } else {
         if ("data" in layers[key]) {
           layers[key]["data"]["data"] = data[key][i0];

@@ -407,6 +407,30 @@
     "FR": "Vent",
     "IT": "Vento"
   },
+  "significant_wave_height": {
+    "EN": "Wave height",
+    "DE": "Wellenhöhe",
+    "FR": "Hauteur",
+    "IT": "Altezza onde"
+  },
+  "max_wave_height": {
+    "EN": "Max wave height",
+    "DE": "Max. Wellenhöhe",
+    "FR": "Hauteur max",
+    "IT": "Altezza max onde"
+  },
+  "mean_wave_period": {
+    "EN": "Wave period",
+    "DE": "Wellenperiode",
+    "FR": "Période",
+    "IT": "Periodo onde"
+  },
+  "wave_direction": {
+    "EN": "Wave direction",
+    "DE": "Wellenrichtung",
+    "FR": "Direction",
+    "IT": "Direzione"
+  },
   "velocity": {
     "EN": "Current",
     "DE": "Strömung",
@@ -508,6 +532,18 @@
     "DE": "Profil hinzufügen",
     "FR": "Ajouter profil",
     "IT": "Aggiungi profilo"
+  },
+  "waveTimeseries": {
+    "EN": "Wave time series",
+    "DE": "Wellen-Zeitreihe",
+    "FR": "Série temporelle des vagues",
+    "IT": "Serie temporale delle onde"
+  },
+  "addWaveTimeseries": {
+    "EN": "Add wave time series",
+    "DE": "Wellen-Zeitreihe hinzufügen",
+    "FR": "Ajouter série temporelle des vagues",
+    "IT": "Aggiungi serie temporale delle onde"
   },
   "addParticles": {
     "EN": "Add particles",
@@ -844,6 +880,18 @@
     "DE": "Mithilfe eines 3D-numerischen Modells werden Wassertemperatur und Strömungen vorhergesagt.",
     "FR": "Température de l'eau et courants prévus à l'aide d'un modèle numérique 3D.",
     "IT": "Temperatura dell'acqua e correnti previste tramite un modello numerico 3D."
+  },
+  "waves": {
+    "EN": "Waves",
+    "DE": "Wellen",
+    "FR": "Vagues",
+    "IT": "Onde"
+  },
+  "twodmodelText": {
+    "EN": "Significant wave height and direction forecasted using the SWAN 2D wave model.",
+    "DE": "Signifikante Wellenhöhe und -richtung, prognostiziert mit dem SWAN-2D-Wellenmodell.",
+    "FR": "Hauteur significative et direction des vagues prévues à l'aide du modèle de vagues 2D SWAN.",
+    "IT": "Altezza significativa e direzione delle onde previste utilizzando il modello d'onda 2D SWAN."
   },
   "doyStats": {
     "EN": "Day of year statistics",
@@ -1260,6 +1308,12 @@
     "DE": "3D-Modell",
     "FR": "Modèle 3D",
     "IT": "Modello 3D"
+  },
+  "twod": {
+    "EN": "2D Model",
+    "DE": "2D-Modell",
+    "FR": "Modèle 2D",
+    "IT": "Modello 2D"
   },
   "meteo": {
     "EN": "Meteo",

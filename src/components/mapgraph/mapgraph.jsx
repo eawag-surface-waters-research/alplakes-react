@@ -5,9 +5,11 @@ import "./mapgraph.css";
 import SatelliteSummary from "../d3/satellitesummary/satellitesummary";
 import ProfileGraph from "../d3/profilegraph/profilegraph";
 import TransectGraph from "../d3/transectgraph/transectgraph";
+import WaveTimeseriesGraph from "../d3/wavetimeseries/wavetimeseries";
 import satelliteIcon from "../../img/satelliteicon.png";
 import profileIcon from "../../img/profile.png";
 import transectIcon from "../../img/transect.png";
+import waveIconTimeseries from "../../img/wave_time.png";
 import fullscreenIcon from "../../img/full.png";
 import shrinkIcon from "../../img/shrink.png";
 
@@ -149,6 +151,14 @@ class Graph extends Component {
             dark={dark}
           />
         );
+      case "wave_timeseries":
+        return (
+          <WaveTimeseriesGraph
+            data={data}
+            language={language}
+            dark={dark}
+          />
+        );
     }
   }
 }
@@ -173,6 +183,7 @@ class MapGraph extends Component {
       satellite_timeseries: satelliteIcon,
       profile_plot: profileIcon,
       transect_plot: transectIcon,
+      wave_timeseries: waveIconTimeseries,
     };
     var labels = [];
     for (let l of layers.filter((l) => "graph" in l)) {
