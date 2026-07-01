@@ -3032,7 +3032,47 @@
             1580739694,
             1544611563,
             1544611447
-        ]
+        ],
+        "3D": {
+            "default": "alplakes_delft3d",
+            "spread": 100,
+            "models": {
+                "alplakes_delft3d": {
+                    "model": "delft3d-flow",
+                    "name": "Delft3D-FLOW",
+                    "key": "bourget",
+                    "institution": { "name": "Université Savoie-Mont-Blanc", "url": "https://www.univ-smb.fr/" },
+                    "performance": {
+                        "rmse": {
+                            "overall": "NA"
+                        }
+                    }
+                }
+            },
+            "3D_temperature": [
+                {
+                    "name": "Aix-les-Bains",
+                    "latlng": [
+                        45.69, 5.89
+                    ]
+                },
+                {
+                    "name": "Chatillon",
+                    "latlng": [
+                        45.799, 5.846
+                    ],
+                    "direction": "bottom"
+                },
+                {
+                    "name": "Bourget-du-Lac",
+                    "latlng": [
+                        45.66, 5.86
+                    ],
+                    "direction": "top"
+                }
+            ],
+            "3D_thermocline": []
+        }
     },
     {
         "key": "bled",
