@@ -298,10 +298,10 @@ const updateVectorField = (map, layers, id, options, language) => {
 const directionToVectorData = (grid, magnitude = 1) =>
   grid.map((row) => {
     const u = row.map((d) =>
-      isNaN(d) ? NaN : magnitude * Math.sin(((d + 180) * Math.PI) / 180),
+      isNaN(d) ? NaN : magnitude * Math.sin((d * Math.PI) / 180),
     );
     const v = row.map((d) =>
-      isNaN(d) ? NaN : magnitude * Math.cos(((d + 180) * Math.PI) / 180),
+      isNaN(d) ? NaN : magnitude * Math.cos((d * Math.PI) / 180),
     );
     return u.concat(v);
   });
