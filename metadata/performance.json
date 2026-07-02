@@ -125,7 +125,7 @@
       "models": [
         {"type": "delft3d-flow", "id": "lugano"},
         {"type": "simstrat", "id": "upperlugano"},
-        {"type": "simstrat ", "id": "upperlugano_python_enkf", "name": "simstrat da enkf"}
+        {"type": "simstrat", "id": "upperlugano_python_enkf", "name": "simstrat da enkf"}
       ]
     }
   ],
