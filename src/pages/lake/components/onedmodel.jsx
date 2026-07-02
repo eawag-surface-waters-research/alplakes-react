@@ -100,9 +100,11 @@ class Graph extends Component {
     const runs = getRuns(parameter);
     const defKey = defaultRunKey(parameter);
     const isT = variable.key === "T";
-    const targetRuns = isT
-      ? runs.filter((r) => activeRuns[r.key])
-      : runs.filter((r) => r.key === defKey);
+    const baseRun = runs.find((r) => r.key === parameter.key) || {
+      key: parameter.key,
+      name: parameter.name,
+    };
+    const targetRuns = isT ? runs.filter((r) => activeRuns[r.key]) : [baseRun];
     const colorMap = runColorMap(runs, defKey, dark);
     const results = await Promise.all(
       targetRuns.map((r) => this.fetchRun(r.key, variable.key, depth, start, end))

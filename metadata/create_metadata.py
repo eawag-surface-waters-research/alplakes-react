@@ -204,7 +204,13 @@ for lake in metadata:
                 simstrat_parameters["hydro_source"] = "Bundesamt für Umwelt BAFU"
             if "calibration_source" in simstrat_metadata:
                 simstrat_parameters["calibration_source"] = simstrat_metadata["calibration_source"]
-            data["forecast"]["1d_model"].append({**simstrat_parameters, "parameter": "T", "unit": "°", "simstrat_oxygen": simstrat_oxygen})
+            one_d_entry = {**simstrat_parameters, "parameter": "T", "unit": "°", "simstrat_oxygen": simstrat_oxygen}
+            da = lake.get("simstrat_da", {}).get(k)
+            if da:
+                one_d_entry["runs"] = da["runs"]
+                if da.get("default_run"):
+                    one_d_entry["default_run"] = da["default_run"]
+            data["forecast"]["1d_model"].append(one_d_entry)
             data["trends"]["doy"][k] = {
                 **simstrat_parameters,
                 "depths": [0],

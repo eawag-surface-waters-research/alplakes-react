@@ -66,7 +66,9 @@ class ModelPerformance extends Component {
         depth in selected_location.models[i].data &&
         "data" in selected_location.models[i].data[depth]
       ) {
-        let color = colorFor(selected_location.models[i].type);
+        let label =
+          selected_location.models[i].name || selected_location.models[i].type;
+        let color = colorFor(label);
         plot.push({
           x: selected_location.models[i].data[depth].data.time.map(
             (t) => new Date(t)
@@ -84,7 +86,7 @@ class ModelPerformance extends Component {
           rmse_color = "#fbd247";
         }
         table.push({
-          type: selected_location.models[i].type,
+          type: label,
           color: color,
           rmse: rmse,
           rmse_color,

@@ -124,8 +124,8 @@
       "depth": [{"name": "0.5 m", "depth": 0.5}],
       "models": [
         {"type": "delft3d-flow", "id": "lugano"},
-        {"type": "simstrat", "id": "upperlugano"}
-
+        {"type": "simstrat", "id": "upperlugano"},
+        {"type": "simstrat ", "id": "upperlugano_python_enkf", "name": "simstrat da enkf"}
       ]
     }
   ],

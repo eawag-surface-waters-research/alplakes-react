@@ -476,6 +476,22 @@
             "upperlugano",
             "lowerlugano"
         ],
+        "simstrat_da": {
+            "upperlugano": {
+                "default_run": "upperlugano",
+                "runs": [
+                    {
+                        "name": "Standard",
+                        "key": "upperlugano"
+                    },
+                    {
+                        "name": "Data assimilation",
+                        "key": "upperlugano_python_enkf",
+                        "beta": true
+                    }
+                ]
+            }
+        },
         "datalakes_id": [
             22,
             24
