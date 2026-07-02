@@ -34,18 +34,47 @@ class Blog extends Component {
         <div className="text-width blog">
           <div className="content">
             <h1>Blog</h1>
-            {posts.map((p) => (
-              <a href={p.link} target="_blank" rel="noopener noreferrer">
+            {posts.map((p) =>
+              Array.isArray(p.link) ? (
                 <div className="post clickable-box" key={p.title}>
                   <div className="date">{p.date}</div>
                   <h2>{p.title}</h2>
                   <p>{p.description}</p>
-                  <div className="button">
-                    {"link_text" in p ? p.link_text : "Read more"}
+                  <div className="buttons">
+                    {p.link.map((link, i) => (
+                      <a
+                        href={link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        key={link}
+                      >
+                        <div className="button">
+                          {Array.isArray(p.link_text)
+                            ? p.link_text[i]
+                            : "Read more"}
+                        </div>
+                      </a>
+                    ))}
                   </div>
                 </div>
-              </a>
-            ))}
+              ) : (
+                <a
+                  href={p.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  key={p.title}
+                >
+                  <div className="post clickable-box">
+                    <div className="date">{p.date}</div>
+                    <h2>{p.title}</h2>
+                    <p>{p.description}</p>
+                    <div className="button">
+                      {"link_text" in p ? p.link_text : "Read more"}
+                    </div>
+                  </div>
+                </a>
+              )
+            )}
           </div>
         </div>
         <ScrollUp />
