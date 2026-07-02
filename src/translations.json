@@ -251,6 +251,12 @@
     "FR": "Modèle",
     "IT": "Modello"
   },
+  "runs": {
+    "EN": "Runs",
+    "DE": "Läufe",
+    "FR": "Simulations",
+    "IT": "Simulazioni"
+  },
   "models": {
     "EN": "Models",
     "DE": "Modelle",
