@@ -291,19 +291,23 @@ class Graph extends Component {
                           {Translations.performance[language]}
                         </div>
                         <div>
-                          {Object.keys(parameter.performance.rmse).map((k) => (
-                            <div key={k} className="performance">
-                              <div className="performance-value">
-                                {Math.round(
-                                  parameter.performance.rmse[k] * 100
-                                ) / 100}
-                                <div className="performance-unit">°C</div>
+                          {Object.keys(parameter.performance.rmse)
+                            .filter((k) =>
+                              isFinite(parameter.performance.rmse[k])
+                            )
+                            .map((k) => (
+                              <div key={k} className="performance">
+                                <div className="performance-value">
+                                  {Math.round(
+                                    parameter.performance.rmse[k] * 100
+                                  ) / 100}
+                                  <div className="performance-unit">°C</div>
+                                </div>
+                                <div className="performance-name">
+                                  {capitalize(k)} RMSE
+                                </div>
                               </div>
-                              <div className="performance-name">
-                                {capitalize(k)} RMSE
-                              </div>
-                            </div>
-                          ))}
+                            ))}
                         </div>
                       </div>
                     )}

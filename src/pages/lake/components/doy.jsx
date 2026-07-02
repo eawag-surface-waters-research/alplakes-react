@@ -247,21 +247,23 @@ class Doy extends Component {
                             {Translations.performance[language]}
                           </div>
                           <div>
-                            {Object.keys(
-                              parameters[model].performance.rmse
-                            ).map((k) => (
-                              <div key={k} className="performance">
-                                <div className="performance-value">
-                                  {Math.round(
-                                    parameters[model].performance.rmse[k] * 100
-                                  ) / 100}
-                                  <div className="performance-unit">°C</div>
+                            {Object.keys(parameters[model].performance.rmse)
+                              .filter((k) =>
+                                isFinite(parameters[model].performance.rmse[k])
+                              )
+                              .map((k) => (
+                                <div key={k} className="performance">
+                                  <div className="performance-value">
+                                    {Math.round(
+                                      parameters[model].performance.rmse[k] * 100
+                                    ) / 100}
+                                    <div className="performance-unit">°C</div>
+                                  </div>
+                                  <div className="performance-name">
+                                    {capitalize(k)} RMSE
+                                  </div>
                                 </div>
-                                <div className="performance-name">
-                                  {capitalize(k)} RMSE
-                                </div>
-                              </div>
-                            ))}
+                              ))}
                           </div>
                         </div>
                       )}
