@@ -118,8 +118,8 @@ class WaveTimeseriesGraph extends Component {
   };
 
   directionAngle = (deg) => {
-    const u = Math.sin(((deg + 180) * Math.PI) / 180);
-    const v = Math.cos(((deg + 180) * Math.PI) / 180);
+    const u = Math.sin((deg * Math.PI) / 180);
+    const v = Math.cos((deg * Math.PI) / 180);
     return (Math.atan2(-v, u) * 180) / Math.PI;
   };
 
