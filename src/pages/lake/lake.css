@@ -59,6 +59,16 @@
   margin-right: 0;
 }
 
+.main .lake .twodmodel .further-information {
+  margin-top: 6px;
+  font-size: 14px;
+  color: var(--background-subtle-font-color);
+}
+
+.main .lake .twodmodel .further-information a {
+  color: var(--link-color);
+}
+
 .main .lake .map-sidebar .map-sidebar-left.fullscreen {
   position: fixed;
   left: 0;

@@ -358,6 +358,16 @@ class TwoDModel extends Component {
             />
           </div>
         </div>
+        <div className="further-information">
+          {Translations.waveScenarios[language]}{" "}
+          <a
+            href="https://swisslakes.net/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            swisslakes.net
+          </a>
+        </div>
       </div>
     );
   }

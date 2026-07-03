@@ -1621,6 +1621,12 @@
     "FR": "Plus d'informations",
     "IT": "Ulteriori informazioni"
   },
+  "waveScenarios": {
+    "EN": "An interactive atlas of wave characteristics (significant height, period, wavelength, direction) for prevailing winds and various return periods is available at",
+    "DE": "Ein interaktiver Atlas der Welleneigenschaften (signifikante Höhe, Periode, Wellenlänge, Richtung) für vorherrschende Winde und verschiedene Wiederkehrperioden ist verfügbar auf",
+    "FR": "Un atlas interactif des caractéristiques des vagues (hauteur significative, période, longueur d'onde, direction) pour les vents dominants et différentes périodes de retour est disponible sur",
+    "IT": "Un atlante interattivo delle caratteristiche delle onde (altezza significativa, periodo, lunghezza d'onda, direzione) per i venti dominanti e diversi periodi di ritorno è disponibile su"
+  },
   "parameters": {
     "EN": "Parameters",
     "DE": "Parameter",
