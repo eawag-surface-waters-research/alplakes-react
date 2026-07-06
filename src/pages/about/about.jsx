@@ -174,7 +174,7 @@ class About extends Component {
                       className="status-dot"
                       style={{ backgroundColor: "green" }}
                     ></div>
-                    In progress
+                    In BETA testing
                   </div>
                 </div>
                 <div class="grid-inner">
@@ -189,9 +189,9 @@ class About extends Component {
                   <div className="status">
                     <div
                       className="status-dot"
-                      style={{ backgroundColor: "purple" }}
+                      style={{ backgroundColor: "green" }}
                     ></div>
-                    Looking for funding
+                    In BETA testing
                   </div>
                 </div>
                 <div class="grid-inner">
@@ -243,7 +243,7 @@ class About extends Component {
                       className="status-dot"
                       style={{ backgroundColor: "lightBlue" }}
                     ></div>
-                    Concept development
+                    New project funded
                   </div>
                 </div>
                 <div class="grid-inner">
@@ -258,9 +258,9 @@ class About extends Component {
                   <div className="status">
                     <div
                       className="status-dot"
-                      style={{ backgroundColor: "green" }}
+                      style={{ backgroundColor: "purple" }}
                     ></div>
-                    In progress
+                    User feedback required
                   </div>
                 </div>
               </div>
@@ -381,7 +381,7 @@ class About extends Component {
                 </p>
                 <div className="project-info">
                   {Link(
-                    "https://github.com/eawag-surface-waters-research/alplakes-da"
+                    "https://github.com/eawag-surface-waters-research/alplakes-data-assimilation"
                   )}
                   <div className="parameter">
                     <div className="circle">
