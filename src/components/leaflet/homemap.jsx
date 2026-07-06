@@ -131,7 +131,7 @@ class HomeMap extends Component {
     var { list } = this.props;
     this.polygons.clearLayers();
     for (let lake of list) {
-      if (lake.geometry !== false && !lake.mapHide) {
+      if (lake.geometry !== false && !lake.mapHide && !lake.filter) {
         L.geoJSON(
           {
             type: "Polygon",
@@ -158,7 +158,7 @@ class HomeMap extends Component {
     var { list, language } = this.props;
     var zoom = this.map.getZoom();
     for (let lake of list) {
-      if (!lake.mapHide) {
+      if (!lake.mapHide && !lake.filter) {
         let value =
           lake.summary &&
           typeof lake.summary[day] === "number" &&
@@ -430,6 +430,11 @@ class HomeMap extends Component {
     } else if (prevProps.language !== this.props.language) {
       this.removeLabels();
       this.plotLabels(day);
+    } else if (prevProps.filterSignature !== this.props.filterSignature) {
+      this.removeLabels();
+      this.plotPolygons(day);
+      this.plotLabels(day);
+      this.displayLabels();
     } else if (prevProps.fullscreen !== this.props.fullscreen) {
       const btn = this.fullscreenControl
         .getContainer()

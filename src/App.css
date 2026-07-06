@@ -90,7 +90,7 @@
 }
 
 :root {
-  --search-height: calc(var(--padding) * 2 + 132px);
+  --search-height: calc(var(--padding) * 2 + 92px);
   --header-height: calc(var(--padding) + 20px);
 }
 
@@ -135,14 +135,14 @@
     --header-height: calc(var(--padding) * 2 + 22px);
     --footer-height: 58px;
     --top-margin: 87px;
-    --search-height: calc(var(--padding) * 2.5 + 125px);
+    --search-height: calc(var(--padding) * 2.5 + 95px);
   }
 }
 
 @media screen and (max-width: 500px) {
   :root {
     --background-color: white;
-    --search-height: 138px;
+    --search-height: 100px;
     --select-color: #f3f4f6;
   }
 

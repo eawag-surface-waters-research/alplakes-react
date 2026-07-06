@@ -12,34 +12,28 @@ import threedIcon from "../../img/3dicon.png";
 import onedIcon from "../../img/1dicon.png";
 import satelliteIcon from "../../img/satelliteicon.png";
 import insituIcon from "../../img/insituicon.png";
-import dropdownIcon from "../../img/sort.png";
-import sortIcon from "../../img/sortdesc.png";
 import back from "../../img/back.png";
-import { searchList, inBounds, fetchDataParallel } from "./functions";
+import {
+  SortFilterControls,
+  SortFilterSheet,
+} from "../../components/sortfilter/sortfilter";
+import {
+  searchList,
+  inBounds,
+  fetchDataParallel,
+  matchesSources,
+  matchesCountries,
+  satelliteTypes,
+} from "./functions";
 import { hour, summariseData } from "../../global";
 import CONFIG from "../../config.json";
 import "./home.css";
 
 class Search extends Component {
-  compareDicts = (values) => {
-    return function (a, b) {
-      let valueA = a.id;
-      let valueB = b.id;
-      if (values.includes(valueA) && values.includes(valueB)) {
-        return values.indexOf(valueA) - values.indexOf(valueB);
-      } else if (values.includes(valueA)) {
-        return -1;
-      } else if (values.includes(valueB)) {
-        return 1;
-      } else {
-        return 0;
-      }
-    };
-  };
   handleKeyDown = (event) => {
     if (event.key === "Enter") {
       var { sortedList } = this.props;
-      var visible = sortedList.filter((s) => s.display);
+      var visible = sortedList.filter((s) => s.display && !s.filter);
       if (visible.length === 1) {
         this.props.navigate(visible[0].key);
       }
@@ -47,19 +41,16 @@ class Search extends Component {
   };
   render() {
     var {
-      setFilter,
       setSearch,
       clearSearch,
       search,
       language,
-      filters,
-      filterTypes,
       results,
       loaded,
-      sort,
-      setSort,
-      ascending,
-      toggleAscending,
+      activeCount,
+      pills,
+      openSortFilter,
+      removePill,
     } = this.props;
     return (
       <div className="search">
@@ -85,48 +76,20 @@ class Search extends Component {
           <img src={searchIcon} alt="Search Icon" className="search-icon" />
           <div className="description">{Translations.tagline[language]}</div>
         </div>
-        <div className="filters">
-          {filterTypes.map((f) => (
-            <div
-              className={filters.includes(f.id) ? "filter selected" : "filter"}
-              key={f.id}
-              onClick={() => setFilter(f.id)}
-              title={f.description}
-            >
-              <div className="left-filter">
-                <img src={f.icon} alt={f.description} />
-              </div>
-              <div className="right-filter">{f.name}</div>
+        <SortFilterControls
+          language={language}
+          activeCount={activeCount}
+          pills={pills}
+          onOpen={openSortFilter}
+          onRemovePill={removePill}
+          right={
+            <div className="results">
+              {loaded
+                ? `${results} ${Translations.results[language]}`
+                : Translations.loadingLakes[language]}
             </div>
-          ))}
-        </div>
-        <div className="sort">
-          {sort !== "" ? (
-            <img
-              src={sortIcon}
-              alt="Sort"
-              onClick={toggleAscending}
-              className={ascending ? "sort-icon asc" : "sort-icon"}
-            />
-          ) : (
-            <img src={dropdownIcon} alt="Dropdown" className="dropdown-icon" />
-          )}
-          <select value={sort} onChange={setSort} id="sort-select">
-            <option value="" disabled>
-              {Translations.sort[language]}
-            </option>
-            <option value="elevation">
-              {Translations.elevation[language]}
-            </option>
-            <option value="max_depth">{Translations.depth[language]}</option>
-            <option value="area">{Translations.surfaceArea[language]}</option>
-          </select>
-        </div>
-        <div className="results">
-          {loaded
-            ? `${results} ${Translations.results[language]}`
-            : Translations.loadingLakes[language]}
-        </div>
+          }
+        />
       </div>
     );
   }
@@ -147,8 +110,9 @@ class Home extends Component {
     days: [],
     search: "",
     sort: "",
-    ascending: false,
     filters: [],
+    countries: [],
+    sortFilterOpen: false,
     boundingBox: false,
     fullscreen: false,
     insitu: false,
@@ -165,9 +129,6 @@ class Home extends Component {
       window.dispatchEvent(new Event("resize"));
     });
   };
-  toggleAscending = () => {
-    this.setState({ ascending: !this.state.ascending });
-  };
   setBounds = (boundingBox) => {
     this.setState({ boundingBox });
   };
@@ -178,9 +139,36 @@ class Home extends Component {
     } else if (filters.includes(filter)) {
       filters = filters.filter((f) => f !== filter);
     } else {
-      filters.push(filter);
+      filters = [...filters, filter];
     }
     this.setState({ filters });
+  };
+  setCountry = (country) => {
+    var { countries } = this.state;
+    if (countries.includes(country)) {
+      countries = countries.filter((c) => c !== country);
+    } else {
+      countries = [...countries, country];
+    }
+    this.setState({ countries });
+  };
+  openSortFilter = () => {
+    this.setState({ sortFilterOpen: true });
+  };
+  closeSortFilter = () => {
+    this.setState({ sortFilterOpen: false });
+  };
+  clearAll = () => {
+    this.setState({ filters: [], countries: [], sort: "" });
+  };
+  removePill = (pill) => {
+    if (pill.type === "sort") {
+      this.setSort("");
+    } else if (pill.type === "country") {
+      this.setCountry(pill.id);
+    } else {
+      this.setFilter(pill.id);
+    }
   };
   setSearch = (event) => {
     var { list } = this.state;
@@ -196,22 +184,42 @@ class Home extends Component {
     list = searchList(search, list);
     this.setState({ list });
   };
-  setSort = (event) => {
-    this.setState({ sort: event.target.value });
+  setSort = (sort) => {
+    this.setState({ sort });
   };
-  sortList = (list, filters, favorites, sort, ascending) => {
+  firstDayTemperature = (lake) => {
+    if (!lake.summary) {
+      return null;
+    }
+    const days = Object.keys(lake.summary).sort();
+    return days.length > 0 ? lake.summary[days[0]] : null;
+  };
+  sortList = (list, filters, countries, favorites, sort, language) => {
     var { boundingBox } = this.state;
     list.sort((a, b) => {
-      if (sort !== "") {
-        const valA =
-          a[sort] === "NA" ? (ascending ? Infinity : -Infinity) : a[sort];
-        const valB =
-          b[sort] === "NA" ? (ascending ? Infinity : -Infinity) : b[sort];
+      if (sort === "warmest" || sort === "coolest") {
+        const valA = this.firstDayTemperature(a);
+        const valB = this.firstDayTemperature(b);
+        if (valA === null && valB === null) {
+          return 0;
+        }
+        if (valA === null) {
+          return 1;
+        }
+        if (valB === null) {
+          return -1;
+        }
+        return sort === "warmest" ? valB - valA : valA - valB;
+      } else if (sort === "az") {
+        return a.name[language].localeCompare(b.name[language]);
+      } else if (sort !== "") {
+        const valA = a[sort] === "NA" ? -Infinity : a[sort];
+        const valB = b[sort] === "NA" ? -Infinity : b[sort];
         if (valA < valB) {
-          return ascending ? -1 : 1;
+          return 1;
         }
         if (valA > valB) {
-          return ascending ? 1 : -1;
+          return -1;
         }
         return 0;
       } else {
@@ -255,11 +263,7 @@ class Home extends Component {
       }
     });
     list = list.map((l) => {
-      if (filters.includes("all")) {
-        l.filter = false;
-      } else {
-        l.filter = !filters.every((str) => l.filters.includes(str));
-      }
+      l.filter = !(matchesSources(l, filters) && matchesCountries(l, countries));
       return l;
     });
     return list;
@@ -276,6 +280,9 @@ class Home extends Component {
   };
   focusSearchBar = (e) => {
     try {
+      if (this.state.sortFilterOpen) {
+        return;
+      }
       if (e.key.length === 1 && e.key.match(/[a-z]/i)) {
         document.getElementById("search").focus();
       }
@@ -284,8 +291,12 @@ class Home extends Component {
   async componentDidMount() {
     window.addEventListener("keydown", this.focusSearchBar);
     this.handleKeyDown = (e) => {
-      if (e.key === "Escape" && this.state.fullscreen) {
-        this.toggleFullscreen();
+      if (e.key === "Escape") {
+        if (this.state.sortFilterOpen) {
+          this.closeSortFilter();
+        } else if (this.state.fullscreen) {
+          this.toggleFullscreen();
+        }
       }
     };
     document.addEventListener("keydown", this.handleKeyDown);
@@ -343,24 +354,32 @@ class Home extends Component {
       insitu,
       search,
       filters,
+      countries,
+      sortFilterOpen,
       fullscreen,
       favorites,
       sort,
-      ascending,
       days,
     } = this.state;
-    var sortedList = this.sortList(list, filters, favorites, sort, ascending);
+    var sortedList = this.sortList(
+      list,
+      filters,
+      countries,
+      favorites,
+      sort,
+      language
+    );
     var results = sortedList.filter((l) => l.display && !l.filter).length;
     var filterTypes = [
       {
         id: "3D",
-        name: "3D Model",
+        name: Translations.threedModel[language],
         description: Translations.threedDescription[language],
         icon: threedIcon,
       },
       {
         id: "1D",
-        name: "1D Model",
+        name: Translations.onedModel[language],
         description: Translations.onedDescription[language],
         icon: onedIcon,
       },
@@ -377,6 +396,92 @@ class Home extends Component {
         icon: insituIcon,
       },
     ];
+    var sortOptions = [
+      { id: "warmest", label: Translations.warmest[language] },
+      { id: "coolest", label: Translations.coolest[language] },
+      { id: "az", label: Translations.az[language] },
+      { id: "elevation", label: Translations.elevation[language] },
+      { id: "max_depth", label: Translations.depth[language] },
+      { id: "area", label: Translations.surfaceArea[language] },
+    ];
+    const satelliteNames = {
+      sentinel2: "Sentinel-2",
+      sentinel3: "Sentinel-3",
+      collection: "Landsat",
+    };
+    var availableSatellites = satelliteTypes.filter((type) =>
+      list.some(
+        (l) => Array.isArray(l.satellites) && l.satellites.includes(type)
+      )
+    );
+    var sourceOptions = [filterTypes[0], filterTypes[1]];
+    if (availableSatellites.length > 0) {
+      availableSatellites.forEach((type) => {
+        sourceOptions.push({
+          id: type,
+          name: satelliteNames[type],
+          description: Translations.satelliteDescription[language],
+          icon: satelliteIcon,
+        });
+      });
+    } else {
+      sourceOptions.push(filterTypes[2]);
+    }
+    sourceOptions.push(filterTypes[3]);
+    const countryNames = {
+      CH: Translations.switzerland[language],
+      IT: Translations.italy[language],
+      FR: Translations.france[language],
+      AT: Translations.austria[language],
+      DE: Translations.germany[language],
+      SI: Translations.slovenia[language],
+    };
+    const countryOrder = ["CH", "IT", "FR", "AT", "DE", "SI"];
+    var countryOptions = [
+      ...new Set(
+        list.flatMap((l) => (Array.isArray(l.countries) ? l.countries : []))
+      ),
+    ]
+      .sort((a, b) => {
+        const indexA = countryOrder.indexOf(a);
+        const indexB = countryOrder.indexOf(b);
+        if (indexA === -1 && indexB === -1) return a.localeCompare(b);
+        if (indexA === -1) return 1;
+        if (indexB === -1) return -1;
+        return indexA - indexB;
+      })
+      .map((code) => ({ code, label: countryNames[code] || code }));
+    var pills = [];
+    if (sort !== "") {
+      pills.push({
+        type: "sort",
+        id: sort,
+        label: `${Translations.sort[language]}: ${
+          sortOptions.find((o) => o.id === sort).label
+        }`,
+      });
+    }
+    countries.forEach((code) => {
+      pills.push({
+        type: "country",
+        id: code,
+        label: countryNames[code] || code,
+      });
+    });
+    filters.forEach((id) => {
+      const option = sourceOptions.find((o) => o.id === id);
+      pills.push({
+        type: "source",
+        id,
+        label: option ? option.name : id,
+        icon: option ? option.icon : satelliteIcon,
+      });
+    });
+    var activeCount = filters.length + countries.length + (sort !== "" ? 1 : 0);
+    var highlightFilters = filters.map((f) =>
+      satelliteTypes.includes(f) ? "satellite" : f
+    );
+    var filterSignature = filters.join(",") + "|" + countries.join(",");
     return (
       <React.Fragment>
         <Helmet>
@@ -391,20 +496,34 @@ class Home extends Component {
           <div className="mobile-fade-out" />
           <div className="content">
             <SearchWithNavigate
-              setFilter={this.setFilter}
               setSearch={this.setSearch}
               clearSearch={this.clearSearch}
               search={search}
               language={language}
-              filters={filters}
-              filterTypes={filterTypes}
               results={results}
               loaded={list.length > 0}
               sortedList={sortedList}
+              activeCount={activeCount}
+              pills={pills}
+              openSortFilter={this.openSortFilter}
+              removePill={this.removePill}
+            />
+            <SortFilterSheet
+              open={sortFilterOpen}
+              language={language}
               sort={sort}
               setSort={this.setSort}
-              ascending={ascending}
-              toggleAscending={this.toggleAscending}
+              filters={filters}
+              setFilter={this.setFilter}
+              countries={countries}
+              setCountry={this.setCountry}
+              sortOptions={sortOptions}
+              countryOptions={countryOptions}
+              sourceOptions={sourceOptions}
+              results={results}
+              loaded={list.length > 0}
+              onClose={this.closeSortFilter}
+              onClearAll={this.clearAll}
             />
             <List
               language={language}
@@ -412,14 +531,17 @@ class Home extends Component {
               sort={sort}
               search={search}
               results={results}
+              loaded={list.length > 0}
               filterTypes={filterTypes}
-              filters={filters}
+              filters={highlightFilters}
               setFavorties={this.setFavorties}
               favorites={favorites}
+              pills={pills}
             />
             <div className={`home-map${fullscreen ? " map-fullscreen" : " hide"}`}>
               <HomeMap
                 list={list}
+                filterSignature={filterSignature}
                 insitu={insitu}
                 days={days}
                 dark={dark}
@@ -433,6 +555,15 @@ class Home extends Component {
                 onClick={this.toggleFullscreen}
               >
                 <img src={back} alt="Back" />
+              </div>
+              <div className="map-sort-filter">
+                <SortFilterControls
+                  language={language}
+                  activeCount={activeCount}
+                  pills={pills}
+                  onOpen={this.openSortFilter}
+                  onRemovePill={this.removePill}
+                />
               </div>
             </div>
             <div

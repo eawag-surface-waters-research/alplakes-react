@@ -1980,5 +1980,107 @@
     "DE": "",
     "FR": "",
     "IT": ""
+  },
+  "sortAndFilter": {
+    "EN": "Sort & filter",
+    "DE": "Sortieren & filtern",
+    "FR": "Trier et filtrer",
+    "IT": "Ordina e filtra"
+  },
+  "sortBy": {
+    "EN": "Sort by",
+    "DE": "Sortieren nach",
+    "FR": "Trier par",
+    "IT": "Ordina per"
+  },
+  "country": {
+    "EN": "Country",
+    "DE": "Land",
+    "FR": "Pays",
+    "IT": "Paese"
+  },
+  "warmest": {
+    "EN": "Warmest",
+    "DE": "Wärmste",
+    "FR": "Les plus chauds",
+    "IT": "Più caldi"
+  },
+  "coolest": {
+    "EN": "Coolest",
+    "DE": "Kälteste",
+    "FR": "Les plus froids",
+    "IT": "Più freddi"
+  },
+  "az": {
+    "EN": "A–Z",
+    "DE": "A–Z",
+    "FR": "A–Z",
+    "IT": "A–Z"
+  },
+  "showLakes": {
+    "EN": "Show # lakes",
+    "DE": "# Seen anzeigen",
+    "FR": "Afficher # lacs",
+    "IT": "Mostra # laghi"
+  },
+  "showLake": {
+    "EN": "Show 1 lake",
+    "DE": "1 See anzeigen",
+    "FR": "Afficher 1 lac",
+    "IT": "Mostra 1 lago"
+  },
+  "clearAll": {
+    "EN": "Clear all",
+    "DE": "Alle zurücksetzen",
+    "FR": "Tout effacer",
+    "IT": "Cancella tutto"
+  },
+  "threedModel": {
+    "EN": "3D Model",
+    "DE": "3D-Modell",
+    "FR": "Modèle 3D",
+    "IT": "Modello 3D"
+  },
+  "onedModel": {
+    "EN": "1D Model",
+    "DE": "1D-Modell",
+    "FR": "Modèle 1D",
+    "IT": "Modello 1D"
+  },
+  "switzerland": {
+    "EN": "Switzerland",
+    "DE": "Schweiz",
+    "FR": "Suisse",
+    "IT": "Svizzera"
+  },
+  "italy": {
+    "EN": "Italy",
+    "DE": "Italien",
+    "FR": "Italie",
+    "IT": "Italia"
+  },
+  "france": {
+    "EN": "France",
+    "DE": "Frankreich",
+    "FR": "France",
+    "IT": "Francia"
+  },
+  "austria": {
+    "EN": "Austria",
+    "DE": "Österreich",
+    "FR": "Autriche",
+    "IT": "Austria"
+  },
+  "germany": {
+    "EN": "Germany",
+    "DE": "Deutschland",
+    "FR": "Allemagne",
+    "IT": "Germania"
+  },
+  "slovenia": {
+    "EN": "Slovenia",
+    "DE": "Slowenien",
+    "FR": "Slovénie",
+    "IT": "Slovenia"
   }
 }

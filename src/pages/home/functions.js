@@ -37,6 +37,30 @@ export const searchList = (search, list) => {
   return list;
 };
 
+export const satelliteTypes = ["sentinel2", "sentinel3", "collection"];
+
+export const matchesSources = (lake, filters) => {
+  return filters.every((id) => {
+    if (satelliteTypes.includes(id)) {
+      if (Array.isArray(lake.satellites)) {
+        return lake.satellites.includes(id);
+      }
+      return lake.filters.includes("satellite");
+    }
+    return lake.filters.includes(id);
+  });
+};
+
+export const matchesCountries = (lake, countries) => {
+  if (countries.length === 0) {
+    return true;
+  }
+  return (
+    Array.isArray(lake.countries) &&
+    lake.countries.some((c) => countries.includes(c))
+  );
+};
+
 export const inBounds = (latitude, longitude, bounds) => {
   if (
     latitude >= bounds._southWest.lat &&

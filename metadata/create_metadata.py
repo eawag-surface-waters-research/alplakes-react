@@ -5,7 +5,17 @@ import requests
 import functions as func
 
 upload = True
-bucket_folder = "static/website/metadata/master"
+bucket_folder = "static/website/metadata/filter"
+
+flag_country = {
+    "swiss": "CH",
+    "italian": "IT",
+    "france": "FR",
+    "french": "FR",
+    "austrian": "AT",
+    "german": "DE",
+    "slovenian": "SI",
+}
 
 # Load Metadata
 with open("metadata.json") as f:
@@ -117,6 +127,16 @@ for lake in metadata:
     # Hide from map
     if 'mapHide' in lake and lake['mapHide']:
         home['mapHide'] = True
+
+    # Countries
+    if "flags" in lake:
+        countries = []
+        for flag in lake["flags"]:
+            code = flag_country.get(flag)
+            if code and code not in countries:
+                countries.append(code)
+        if len(countries) > 0:
+            home["countries"] = countries
 
     # Three Dimensional Model
     if '3D' in lake:
@@ -282,6 +302,7 @@ for lake in metadata:
     if key in satellite:
         add = True
         satellite_data = []
+        satellites = []
         layers["layers"].extend(func.satellite_layers(lake["key"], satellite[key], srd, prevent_water_quality))
         for sat in satellite_metadata:
             if not prevent_water_quality or sat["parameter"] == "temperature":
@@ -289,6 +310,8 @@ for lake in metadata:
                 for source in sat["sources"]:
                     if source["satellite"] in satellite[key] and source["parameter"] in satellite[key][source["satellite"]]:
                         sm.append(source["link"].replace("#key#", key))
+                        if source["satellite"] not in satellites:
+                            satellites.append(source["satellite"])
                 if len(sm) > 0:
                     temp = sat.copy()
                     temp["key"] = key
@@ -296,6 +319,7 @@ for lake in metadata:
                     satellite_data.append(temp)
         if len(satellite_data) > 0:
             home["filters"].append("satellite")
+            home["satellites"] = sorted(satellites)
             data["satellite"] = satellite_data
 
     # Meteo data
