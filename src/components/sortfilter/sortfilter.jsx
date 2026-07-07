@@ -1,18 +1,39 @@
 import React, { Component } from "react";
 import Translations from "../../translations.json";
-import sortFilterIcon from "../../img/sort.png";
+import sortIcon from "../../img/sortdesc.png";
 import Flag from "./flags";
 import "./sortfilter.css";
 
 export class SortFilterControls extends Component {
   render() {
-    const { language, activeCount, pills, onOpen, onRemovePill, right } =
-      this.props;
+    const {
+      language,
+      activeCount,
+      pills,
+      onOpen,
+      onRemovePill,
+      ascending,
+      onToggleAscending,
+      right,
+    } = this.props;
     return (
       <div className="sort-filter">
         <div className="sort-filter-row">
           <div className="sort-filter-button" onClick={onOpen}>
-            <img src={sortFilterIcon} alt="" />
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+            >
+              <line x1="3" y1="5" x2="21" y2="5" />
+              <circle cx="15" cy="5" r="2.6" fill="currentColor" />
+              <line x1="3" y1="12" x2="21" y2="12" />
+              <circle cx="8" cy="12" r="2.6" fill="currentColor" />
+              <line x1="3" y1="19" x2="21" y2="19" />
+              <circle cx="16" cy="19" r="2.6" fill="currentColor" />
+            </svg>
             {Translations.sortAndFilter[language]}
             {activeCount > 0 && <div className="badge">{activeCount}</div>}
           </div>
@@ -20,6 +41,14 @@ export class SortFilterControls extends Component {
         </div>
         {pills.length > 0 && (
           <div className="sort-filter-pills">
+            {pills.some((pill) => pill.type === "sort") && (
+              <div
+                className={ascending ? "sort-toggle asc" : "sort-toggle"}
+                onClick={onToggleAscending}
+              >
+                <img src={sortIcon} alt="Sort direction" />
+              </div>
+            )}
             {pills.map((pill) => (
               <div
                 className="pill"
@@ -63,9 +92,6 @@ export class SortFilterSheet extends Component {
       <React.Fragment>
         <div className="sort-filter-backdrop" onClick={onClose} />
         <div className="sort-filter-sheet">
-          <div className="sheet-title">
-            {Translations.sortAndFilter[language]}
-          </div>
           <div className="sheet-close" onClick={onClose}>
             &#10005;
           </div>

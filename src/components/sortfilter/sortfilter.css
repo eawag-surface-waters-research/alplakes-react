@@ -2,7 +2,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 16px;
+  margin-top: 12px;
+  padding-bottom: 12px;
 }
 
 .main .home .content .search .sort-filter .sort-filter-row .results {
@@ -17,11 +18,11 @@
 .main .home .content .sort-filter .sort-filter-button {
   position: relative;
   background-color: var(--box-color);
-  border: 1px solid var(--border-color);
+  border: 1px solid transparent;
   border-radius: 22px;
   padding: 8px 15px;
   cursor: pointer;
-  color: var(--background-subtle-font-color);
+  color: var(--background-font-color);
   transition: border-color 0.2s 0s ease;
   font-size: 14px;
   box-sizing: border-box;
@@ -31,14 +32,13 @@
   border-color: var(--highlight-color);
 }
 
-.main .home .content .sort-filter .sort-filter-button img {
-  max-height: 16px;
+.main .home .content .sort-filter .sort-filter-button svg {
+  width: 16px;
+  height: 16px;
   margin-right: 8px;
+  padding-top: 2px;
   vertical-align: text-top;
-}
-
-.main.dark .home .content .sort-filter .sort-filter-button img {
-  filter: invert(85%) hue-rotate(180deg);
+  color: var(--highlight-color);
 }
 
 .main .home .content .sort-filter .sort-filter-button .badge {
@@ -59,7 +59,7 @@
 
 .main .home .content .sort-filter .sort-filter-pills {
   width: 100%;
-  margin-top: 8px;
+  padding-bottom: 12px;
   display: flex;
   overflow-x: scroll;
   scroll-snap-type: x mandatory;
@@ -78,8 +78,8 @@
   display: flex;
   align-items: center;
   background-color: var(--box-color);
-  border: 1px solid var(--highlight-color);
-  color: var(--highlight-color);
+  border: 1px solid var(--border-color);
+  color: var(--background-font-color);
   border-radius: 22px;
   padding: 4px 12px;
   cursor: pointer;
@@ -96,6 +96,22 @@
 
 .main.dark .home .content .sort-filter .sort-filter-pills .pill img {
   filter: invert(85%) hue-rotate(180deg);
+}
+
+.main .home .content .sort-filter .sort-filter-pills .sort-toggle {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  margin-right: calc(var(--padding) / 4);
+}
+
+.main .home .content .sort-filter .sort-filter-pills .sort-toggle img {
+  height: 18px;
+}
+
+.main .home .content .sort-filter .sort-filter-pills .sort-toggle.asc img {
+  transform: scaleY(-1);
 }
 
 .main .home .content .sort-filter .sort-filter-pills .pill .pill-remove {
@@ -129,7 +145,7 @@
 
 .main .home .content .sort-filter-sheet {
   position: fixed;
-  top: calc(var(--header-height) + var(--padding));
+  top: calc(var(--header-height) + var(--padding) + 127px);
   left: calc(var(--padding) * 1.5 - 5px);
   width: calc(var(--list-width) + 10px);
   max-width: calc(100% - var(--padding) * 2 - 10px);
@@ -137,7 +153,6 @@
   background-color: var(--box-color);
   border: 1px solid var(--border-color);
   border-radius: 16px;
-  box-shadow: var(--box-shadow);
   z-index: 99999;
   box-sizing: border-box;
   color: var(--box-font-color);
@@ -163,6 +178,7 @@
   background-color: var(--select-color);
   cursor: pointer;
   font-size: 13px;
+  display: none;
 }
 
 .main .home .content .sort-filter-sheet .sheet-close:hover {
@@ -172,6 +188,7 @@
 .main .home .content .sort-filter-sheet .sheet-body {
   overflow-y: auto;
   padding: 0 var(--padding);
+  padding-top: calc(var(--padding) / 2);
   flex: 1 1 auto;
 }
 
@@ -181,7 +198,7 @@
 
 .main .home .content .sort-filter-sheet .sheet-section .section-title {
   font-size: 14px;
-  color: var(--background-subtle-font-color);
+  color: var(--background-font-color);
   margin-bottom: calc(var(--padding) / 4);
 }
 
@@ -199,7 +216,7 @@
   border-radius: 22px;
   padding: 6px 15px;
   cursor: pointer;
-  color: var(--background-subtle-font-color);
+  color: var(--background-font-color);
   transition: border-color 0.2s 0s ease;
   font-size: 14px;
   box-sizing: border-box;
@@ -230,12 +247,12 @@
   align-items: center;
   padding: calc(var(--padding) / 2) var(--padding);
   border-top: 1px solid var(--border-color);
-  margin-top: calc(var(--padding) / 2);
+  margin-top: var(--padding);
 }
 
 .main .home .content .sort-filter-sheet .sheet-footer .clear-all {
   cursor: pointer;
-  color: var(--background-subtle-font-color);
+  color: var(--background-font-color);
   text-decoration: underline;
   font-size: 14px;
 }
@@ -256,10 +273,6 @@
 
 .main .home .content .sort-filter-sheet .sheet-footer .show-lakes:hover {
   opacity: 0.9;
-}
-
-.main .home .content .home-map .map-sort-filter {
-  display: none;
 }
 
 @media screen and (min-width: 2000px) {
@@ -288,22 +301,6 @@
     border: none;
   }
 
-  .main .home .content .home-map .map-sort-filter {
-    display: block;
-    position: absolute;
-    top: 84px;
-    left: 12px;
-    max-width: calc(100% - 24px);
-    z-index: 9999;
-  }
-
-  .main .home .content .home-map .map-sort-filter .sort-filter-row {
-    margin-top: 0;
-  }
-
-  .main .home .content .home-map .map-sort-filter .sort-filter-button {
-    box-shadow: var(--box-shadow);
-  }
 }
 
 @media screen and (max-width: 500px) {
@@ -314,8 +311,9 @@
     font-size: 12px;
   }
 
-  .main .home .content .sort-filter .sort-filter-button img {
-    max-height: 14px;
+  .main .home .content .sort-filter .sort-filter-button svg {
+    width: 14px;
+    height: 14px;
   }
 
   .main .home .content .sort-filter .sort-filter-pills .pill {
@@ -323,8 +321,8 @@
     font-size: 12px;
   }
 
-  .main .home .content .home-map .map-sort-filter .sort-filter-button {
-    background-color: var(--box-color);
-    border: 1px solid var(--border-color);
+
+  .main .home .content .sort-filter-sheet .sheet-close {
+    display: block;
   }
 }

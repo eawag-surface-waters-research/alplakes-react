@@ -51,6 +51,8 @@ class Search extends Component {
       pills,
       openSortFilter,
       removePill,
+      ascending,
+      toggleAscending,
     } = this.props;
     return (
       <div className="search">
@@ -82,6 +84,8 @@ class Search extends Component {
           pills={pills}
           onOpen={openSortFilter}
           onRemovePill={removePill}
+          ascending={ascending}
+          onToggleAscending={toggleAscending}
           right={
             <div className="results">
               {loaded
@@ -110,6 +114,7 @@ class Home extends Component {
     days: [],
     search: "",
     sort: "",
+    ascending: false,
     filters: [],
     countries: [],
     sortFilterOpen: false,
@@ -159,7 +164,13 @@ class Home extends Component {
     this.setState({ sortFilterOpen: false });
   };
   clearAll = () => {
-    this.setState({ filters: [], countries: [], sort: "" });
+    this.setState({
+      filters: [],
+      countries: [],
+      sort: "",
+      ascending: false,
+      sortFilterOpen: false,
+    });
   };
   removePill = (pill) => {
     if (pill.type === "sort") {
@@ -185,7 +196,10 @@ class Home extends Component {
     this.setState({ list });
   };
   setSort = (sort) => {
-    this.setState({ sort });
+    this.setState({ sort, ascending: false });
+  };
+  toggleAscending = () => {
+    this.setState({ ascending: !this.state.ascending });
   };
   firstDayTemperature = (lake) => {
     if (!lake.summary) {
@@ -194,8 +208,9 @@ class Home extends Component {
     const days = Object.keys(lake.summary).sort();
     return days.length > 0 ? lake.summary[days[0]] : null;
   };
-  sortList = (list, filters, countries, favorites, sort, language) => {
+  sortList = (list, filters, countries, favorites, sort, ascending, language) => {
     var { boundingBox } = this.state;
+    const direction = ascending ? -1 : 1;
     list.sort((a, b) => {
       if (sort === "warmest" || sort === "coolest") {
         const valA = this.firstDayTemperature(a);
@@ -209,17 +224,19 @@ class Home extends Component {
         if (valB === null) {
           return -1;
         }
-        return sort === "warmest" ? valB - valA : valA - valB;
+        return (sort === "warmest" ? valB - valA : valA - valB) * direction;
       } else if (sort === "az") {
-        return a.name[language].localeCompare(b.name[language]);
+        return a.name[language].localeCompare(b.name[language]) * direction;
       } else if (sort !== "") {
-        const valA = a[sort] === "NA" ? -Infinity : a[sort];
-        const valB = b[sort] === "NA" ? -Infinity : b[sort];
+        const valA =
+          a[sort] === "NA" ? (ascending ? Infinity : -Infinity) : a[sort];
+        const valB =
+          b[sort] === "NA" ? (ascending ? Infinity : -Infinity) : b[sort];
         if (valA < valB) {
-          return 1;
+          return direction;
         }
         if (valA > valB) {
-          return -1;
+          return -direction;
         }
         return 0;
       } else {
@@ -359,6 +376,7 @@ class Home extends Component {
       fullscreen,
       favorites,
       sort,
+      ascending,
       days,
     } = this.state;
     var sortedList = this.sortList(
@@ -367,6 +385,7 @@ class Home extends Component {
       countries,
       favorites,
       sort,
+      ascending,
       language
     );
     var results = sortedList.filter((l) => l.display && !l.filter).length;
@@ -456,9 +475,7 @@ class Home extends Component {
       pills.push({
         type: "sort",
         id: sort,
-        label: `${Translations.sort[language]}: ${
-          sortOptions.find((o) => o.id === sort).label
-        }`,
+        label: sortOptions.find((o) => o.id === sort).label,
       });
     }
     countries.forEach((code) => {
@@ -507,6 +524,8 @@ class Home extends Component {
               pills={pills}
               openSortFilter={this.openSortFilter}
               removePill={this.removePill}
+              ascending={ascending}
+              toggleAscending={this.toggleAscending}
             />
             <SortFilterSheet
               open={sortFilterOpen}
@@ -555,15 +574,6 @@ class Home extends Component {
                 onClick={this.toggleFullscreen}
               >
                 <img src={back} alt="Back" />
-              </div>
-              <div className="map-sort-filter">
-                <SortFilterControls
-                  language={language}
-                  activeCount={activeCount}
-                  pills={pills}
-                  onOpen={this.openSortFilter}
-                  onRemovePill={this.removePill}
-                />
               </div>
             </div>
             <div
