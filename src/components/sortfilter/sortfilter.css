@@ -18,7 +18,7 @@
 .main .home .content .sort-filter .sort-filter-button {
   position: relative;
   background-color: var(--box-color);
-  border: 1px solid transparent;
+  border: 1px solid var(--border-color);
   border-radius: 22px;
   padding: 8px 15px;
   cursor: pointer;
