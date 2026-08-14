@@ -873,6 +873,13 @@ export const downloadModelMetadata = async (model, lake) => {
   return metadata;
 };
 
+export const downloadExternalForecast = async (path) => {
+  const response = await fetchDataParallel([
+    [`${CONFIG.alplakes_bucket}/${path}${general.hour()}`],
+  ]);
+  return response[0];
+};
+
 export const download3DMap = async (
   model,
   lake,

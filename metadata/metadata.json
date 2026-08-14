@@ -982,6 +982,19 @@
             "upperconstance",
             "lowerconstance"
         ],
+        "external_model": [
+            {
+                "key": "bodensee_online",
+                "name": "Lake Constance",
+                "model": "Bodensee-Online",
+                "url": "https://www.lubw.baden-wuerttemberg.de/wasser/bodenseeonline",
+                "institute": "LUBW",
+                "institute_url": "https://www.lubw.baden-wuerttemberg.de",
+                "data": "simulations/bodensee/cache/constance.json",
+                "parameter": "temperature",
+                "unit": "°"
+            }
+        ],
         "datalakes_id": [
             10,
             53

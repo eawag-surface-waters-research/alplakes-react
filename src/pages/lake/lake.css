@@ -435,6 +435,26 @@
   width: 500px;
 }
 
+/** External Model **/
+
+.main .lake .forecast .externalmodel .clickable-box {
+  width: 500px;
+}
+
+.main .lake .forecast .externalmodel a {
+  text-decoration: none;
+}
+
+.main .lake .forecast .externalmodel .model-source {
+  font-size: 14px;
+  color: var(--background-subtle-font-color);
+  margin-top: 6px;
+}
+
+.main .lake .forecast .externalmodel .model-source a {
+  color: var(--link-color);
+}
+
 /** AI Summary **/
 
 .main .lake .forecast .ai-summary .ai-beta {

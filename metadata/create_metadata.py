@@ -255,6 +255,12 @@ for lake in metadata:
             }
         home["filters"].append("1D")
 
+    # External Models
+    if "external_model" in lake:
+        if "forecast" not in data:
+            data["forecast"] = {}
+        data["forecast"]["external_model"] = lake["external_model"]
+
     # AI summary
     # Remove AI summary due to Eawag legal concerns - to be added back when resolved
     """if "ai_summary" in lake and lake["ai_summary"]:
