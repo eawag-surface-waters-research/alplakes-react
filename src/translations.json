@@ -725,6 +725,12 @@
     "FR": "modèle développé à",
     "IT": "modello sviluppato presso"
   },
+  "modelFrom": {
+    "EN": "model from",
+    "DE": "Modell von",
+    "FR": "modèle de",
+    "IT": "modello di"
+  },
   "overview": {
     "EN": "Overview",
     "DE": "Überblick",

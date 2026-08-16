@@ -445,6 +445,18 @@
   text-decoration: none;
 }
 
+.main .lake .forecast .externalmodel .clickable-box.static {
+  cursor: default;
+}
+
+.main .lake .forecast .externalmodel .clickable-box .title a {
+  color: var(--link-color);
+}
+
+.main .lake .forecast .externalmodel .clickable-box .title a:hover {
+  text-decoration: underline;
+}
+
 .main .lake .forecast .externalmodel .model-source {
   font-size: 14px;
   color: var(--background-subtle-font-color);
