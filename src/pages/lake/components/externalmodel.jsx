@@ -106,7 +106,19 @@ class ExternalModel extends Component {
                 </div>
                 {p.model && p.institute && (
                   <div className="model-source">
-                    <b>{p.model}</b> {Translations.modelFrom[language]}{" "}
+                    {p.model_url ? (
+                      <a
+                        href={p.model_url}
+                        alt={p.model}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {p.model}
+                      </a>
+                    ) : (
+                      <b>{p.model}</b>
+                    )}{" "}
+                    {Translations.modelFrom[language]}{" "}
                     {p.institute_url ? (
                       <a
                         href={p.institute_url}
