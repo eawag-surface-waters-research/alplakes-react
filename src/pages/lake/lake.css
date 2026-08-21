@@ -435,6 +435,39 @@
   width: 500px;
 }
 
+/** External Model **/
+
+.main .lake .forecast .externalmodel .clickable-box {
+  width: 500px;
+}
+
+.main .lake .forecast .externalmodel a {
+  text-decoration: none;
+}
+
+.main .lake .forecast .externalmodel .clickable-box.static {
+  cursor: default;
+}
+
+.main .lake .forecast .externalmodel .clickable-box .title a {
+  color: var(--link-color);
+  font-size: 14px;
+}
+
+.main .lake .forecast .externalmodel .clickable-box .title a:hover {
+  text-decoration: underline;
+}
+
+.main .lake .forecast .externalmodel .model-source {
+  font-size: 14px;
+  color: var(--background-subtle-font-color);
+  margin-top: 6px;
+}
+
+.main .lake .forecast .externalmodel .model-source a {
+  color: var(--link-color);
+}
+
 /** AI Summary **/
 
 .main .lake .forecast .ai-summary .ai-beta {
@@ -1268,6 +1301,11 @@
   }
 
   .main .lake .onedmodel .clickable-box {
+    border: none;
+    margin-top: -10px;
+  }
+
+  .main .lake .externalmodel .clickable-box {
     border: none;
     margin-top: -10px;
   }

@@ -725,6 +725,12 @@
     "FR": "modèle développé à",
     "IT": "modello sviluppato presso"
   },
+  "modelFrom": {
+    "EN": "model from",
+    "DE": "Modell von",
+    "FR": "modèle de",
+    "IT": "modello di"
+  },
   "overview": {
     "EN": "Overview",
     "DE": "Überblick",
@@ -844,6 +850,12 @@
     "DE": "Die Wassertemperatur wird mithilfe eines 1D-numerischen Modells vorhergesagt. 1D-Modelle gehen von horizontaler Gleichmäßigkeit aus.",
     "FR": "Température de l'eau prévue à l'aide d'un modèle numérique 1D, les modèles 1D supposent une uniformité horizontale.",
     "IT": "Temperatura dell'acqua prevista mediante un modello numerico 1D; i modelli 1D presuppongono uniformità orizzontale."
+  },
+  "externalmodelText": {
+    "EN": "Water temperature forecast at a single point in the lake, produced by an external 3D model operated by a partner institute.",
+    "DE": "Wassertemperaturvorhersage an einem einzelnen Punkt im See, erstellt von einem externen 3D-Modell eines Partnerinstituts.",
+    "FR": "Prévision de la température de l'eau en un point unique du lac, produite par un modèle 3D externe exploité par un institut partenaire.",
+    "IT": "Previsione della temperatura dell'acqua in un singolo punto del lago, prodotta da un modello 3D esterno gestito da un istituto partner."
   },
   "threedmodelText": {
     "EN": "Water temperature and currents forecasted using a 3D numerical model.",

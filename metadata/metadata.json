@@ -982,6 +982,23 @@
             "upperconstance",
             "lowerconstance"
         ],
+        "external_model": [
+            {
+                "key": "bodensee_online",
+                "name": "Lake Constance",
+                "model": "BodenseeOnline",
+                "model_type": "delft3d-flow",
+                "model_url": "https://www.bodenseeonline.de",
+                "latitude": 47.62,
+                "longitude": 9.37,
+                "url": "https://www.lubw.baden-wuerttemberg.de/wasser/bodenseeonline",
+                "institute": "Landesanstalt für Umwelt Baden-Württemberg (LUBW)",
+                "institute_url": "https://www.lubw.baden-wuerttemberg.de",
+                "data": "simulations/bodensee/cache/constance.json",
+                "parameter": "temperature",
+                "unit": "°"
+            }
+        ],
         "datalakes_id": [
             10,
             53
@@ -3114,7 +3131,7 @@
     {
         "key": "ledavsko",
         "name": {
-            "EN": "Lake Ladavsko",
+            "EN": "Lake Ledavsko",
             "DE": "Ledavsko See",
             "FR": "Lac de Ledavsko",
             "IT": "Lago di Ledavsko"

@@ -9,6 +9,7 @@ import Translations from "../../translations.json";
 import "./lake.css";
 import ThreeDModel from "./components/threedmodel";
 import OneDModel from "./components/onedmodel";
+import ExternalModel from "./components/externalmodel";
 import Satellite from "./components/satellite";
 import sortIcon from "../../img/sort.png";
 import WaterTemperature from "./components/watertemperature";
@@ -142,6 +143,12 @@ class Lake extends Component {
                     name={title}
                     dark={dark}
                     togglePerformance={this.togglePerformance}
+                  />
+                )}
+                {"external_model" in metadata["forecast"] && (
+                  <ExternalModel
+                    parameters={metadata.forecast["external_model"]}
+                    language={language}
                   />
                 )}
                 {"ai_summary" in metadata["forecast"] && (
