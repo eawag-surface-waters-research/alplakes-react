@@ -10,7 +10,7 @@
   "landsat89_wms": "https://services-uswest2.sentinel-hub.com/ogc/wms/782577a5-f48b-4986-9606-08f6c5cac6dd",
   "basemaps": {
     "default": {
-      "url": "https://{s}.basemaps.cartocdn.com/_bright_/{z}/{x}/{y}{r}.png",
+      "url": "https://{s}.basemaps.cartocdn.com/_bright_/{z}/{x}/{y}{r}.png?key=cb1_2ah7_1_30e25a1bc163bf7f25b056d8",
       "attribution": "&copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors &copy; <a href='https://carto.com/attributions'>CARTO</a>",
       "title": "Default",
       "lightMap": "light_all",
