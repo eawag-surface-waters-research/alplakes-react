@@ -5,6 +5,11 @@ import COLORS from "../../colors/colors.json";
 import { extent } from "d3";
 
 class TransectGraph extends Component {
+  heatmapRef = React.createRef();
+  index = null;
+  lastUpdate = 0;
+  updateInterval = 100;
+
   closestDate = (arr, target) => {
     let minDiff = Infinity;
     let closestIndex = null;
@@ -17,27 +22,62 @@ class TransectGraph extends Component {
     }
     return closestIndex;
   };
+
+  parse = (input) => {
+    if (this.parsed && this.parsedFrom === input) return this.parsed;
+    this.parsedFrom = input;
+    this.parsed = {
+      time: input.time.map((t) => new Date(t).getTime()),
+      z: input["variables"]["temperature"].data,
+      y: input.depth.data,
+      x: input.distance.data.map((t) => t / 1000),
+      bounds: extent(input["variables"]["temperature"].data.flat(2)),
+    };
+    return this.parsed;
+  };
+
+  setPlayDatetime = (datetime) => {
+    const now = performance.now();
+    if (now - this.lastUpdate < this.updateInterval) return;
+    const { time, x, y, z } = this.parse(this.props.data);
+    const index = this.closestDate(time, datetime);
+    if (index === this.index) return;
+    this.lastUpdate = now;
+    this.index = index;
+    if (this.heatmapRef.current)
+      this.heatmapRef.current.updateData({ x, y, z: z[index] });
+  };
+
+  componentDidMount() {
+    var { playUpdate } = this.props;
+    if (playUpdate) playUpdate.setDatetime = this.setPlayDatetime;
+  }
+
+  componentWillUnmount() {
+    var { playUpdate } = this.props;
+    if (playUpdate && playUpdate.setDatetime === this.setPlayDatetime)
+      playUpdate.setDatetime = null;
+  }
+
   render() {
     var { data: input, options, datetime, dark, language } = this.props;
     var { paletteName } = options;
     const palette = COLORS[paletteName].map((c) => {
       return { color: [c[0], c[1], c[2]], point: c[3] };
     });
-    let time = input.time.map((t) => new Date(t).getTime());
-    let z =
-      input["variables"]["temperature"].data[this.closestDate(time, datetime)];
+    let { time, x, y, z: zdata, bounds } = this.parse(input);
+    this.index = this.closestDate(time, datetime);
+    let z = zdata[this.index];
     let zlabel = Translations.temperature[language];
     let zunits = input["variables"]["temperature"].unit;
-    let y = input.depth.data;
     let ylabel = Translations.depth[language];
     let yunits = input.depth.unit;
-    let x = input.distance.data.map((t) => t / 1000);
     let xlabel = Translations.transectDistance[language];
     let xunits = "km";
     var data = { x, y, z };
-    let bounds = extent(input["variables"]["temperature"].data.flat(2));
     return (
       <D3HeatMap
+        ref={this.heatmapRef}
         data={data}
         ylabel={ylabel}
         xlabel={xlabel}
