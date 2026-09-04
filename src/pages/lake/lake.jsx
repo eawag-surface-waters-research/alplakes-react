@@ -29,6 +29,7 @@ import ModelPerformance from "../../components/modelperformance/modelperformance
 import back from "../../img/back.png";
 import AiSummary from "./components/aisummary";
 import Phosphorus from "./components/phosphorus";
+import Swot from "./components/swot";
 
 class Lake extends Component {
   state = {
@@ -36,6 +37,11 @@ class Lake extends Component {
     metadata: {},
     error: false,
     performance: false,
+    swot: false,
+  };
+
+  setSwot = (swot) => {
+    this.setState({ swot });
   };
 
   constructor(props) {
@@ -78,9 +84,11 @@ class Lake extends Component {
   }
 
   render() {
-    var { metadata, error, id, performance } = this.state;
+    var { metadata, error, id, performance, swot } = this.state;
     var { language, dark } = this.props;
     const title = "name" in metadata ? metadata.name[language] : "";
+    const insituWaterLevel =
+      "measurements" in metadata && "water_levels" in metadata["measurements"];
     return (
       <div className="main">
         {"name" in metadata && (
@@ -211,35 +219,53 @@ class Lake extends Component {
                 </div>
               </div>
             )}
-            {"trends" in metadata && (
-              <div className="section trends">
+            <div
+              className={
+                "trends" in metadata || swot
+                  ? "section trends"
+                  : "section trends hidden"
+              }
+            >
+              {("trends" in metadata || swot) && (
                 <h2>{Translations.trends[language]}</h2>
-                {"doy" in metadata["trends"] && (
-                  <Doy
-                    dark={dark}
-                    parameters={metadata.trends["doy"]}
-                    language={language}
-                  />
-                )}
-                {"year" in metadata["trends"] && (
-                  <PastYear
-                    dark={dark}
-                    parameters={metadata.trends["year"]}
-                    language={language}
-                  />
-                )}
-                {"phosphorus" in metadata["trends"] && (
-                  <Phosphorus dark={dark} lake={id} language={language} />
-                )}
-                {"climate" in metadata["trends"] && (
-                  <Climate
-                    dark={dark}
-                    parameters={metadata.trends["climate"]}
-                    language={language}
-                  />
-                )}
-              </div>
-            )}
+              )}
+              {"trends" in metadata && (
+                <React.Fragment>
+                  {"doy" in metadata["trends"] && (
+                    <Doy
+                      dark={dark}
+                      parameters={metadata.trends["doy"]}
+                      language={language}
+                    />
+                  )}
+                  {"year" in metadata["trends"] && (
+                    <PastYear
+                      dark={dark}
+                      parameters={metadata.trends["year"]}
+                      language={language}
+                    />
+                  )}
+                  {"phosphorus" in metadata["trends"] && (
+                    <Phosphorus dark={dark} lake={id} language={language} />
+                  )}
+                  {"climate" in metadata["trends"] && (
+                    <Climate
+                      dark={dark}
+                      parameters={metadata.trends["climate"]}
+                      language={language}
+                    />
+                  )}
+                </React.Fragment>
+              )}
+              {id !== "" && !insituWaterLevel && (
+                <Swot
+                  dark={dark}
+                  lake={id}
+                  language={language}
+                  setSwot={this.setSwot}
+                />
+              )}
+            </div>
             {"properties" in metadata && (
               <div className="section properties" ref={this.divRef}>
                 <h2>{Translations.lakeProperties[language]}</h2>

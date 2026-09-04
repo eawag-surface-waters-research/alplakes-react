@@ -4,7 +4,7 @@ import boto3
 import requests
 import functions as func
 
-upload = True
+upload = False
 bucket_folder = "static/website/metadata/master"
 
 flag_country = {
