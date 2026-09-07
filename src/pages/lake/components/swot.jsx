@@ -9,7 +9,6 @@ import { robustOutliers, segmentedFit } from "../functions/smoothing";
 const GOOD_COLOR = "#1878b9";
 const FLAG_COLOR = "#9d9d9d";
 const FIT_COLOR = "#c8442c";
-const MIN_OBSERVATIONS = 10;
 const MAX_UNCERTAINTY = 0.1;
 const MIN_FIT_OBSERVATIONS = 30;
 const MIN_FIT_SEGMENT = 10;
@@ -203,19 +202,14 @@ class Swot extends Component {
   };
 
   async componentDidMount() {
-    const { lake, setSwot } = this.props;
+    const { lake } = this.props;
     const data = await downloadSwot(lake);
     if (!data || !Array.isArray(data.data)) {
       this.setState({ error: true });
       return;
     }
-    if (data.data.filter(usable).length < MIN_OBSERVATIONS) {
-      this.setState({ error: true });
-      return;
-    }
     const datum = this.defaultDatum(data);
     this.setState({ data, datum });
-    setSwot(true);
   }
 
   render() {

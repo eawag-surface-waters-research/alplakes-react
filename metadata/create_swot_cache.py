@@ -329,7 +329,7 @@ def needs_resolving(entry, countries):
 
 def build(lakes, local_path="files/swot.json",
           published_url="https://alplakes-eawag.s3.eu-central-1.amazonaws.com/"
-                        "static/website/metadata/master/swot.json"):
+                        "swot/metadata.json"):
     """Update the SWOT lake cache for a list of Alplakes lakes.
 
     lakes: iterable of dicts with key, latitude, longitude, area and countries.
@@ -425,9 +425,9 @@ if __name__ == "__main__":
         s3.upload_file(
             'files/swot.json',
             'alplakes-eawag',
-            '{}/swot.json'.format(bucket_folder),
+            'swot/metadata.json',
             ExtraArgs={
                 'ContentType': 'application/json',
             },
         )
-        print("Uploaded to {}/{}/swot.json".format(bucket, bucket_folder))
+        print("Uploaded to {}/swot/metadata.json".format(bucket))

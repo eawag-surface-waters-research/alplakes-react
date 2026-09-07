@@ -427,6 +427,7 @@ class Home extends Component {
       sentinel2: "Sentinel-2",
       sentinel3: "Sentinel-3",
       collection: "Landsat",
+      swot: "SWOT",
     };
     var availableSatellites = satelliteTypes.filter((type) =>
       list.some(
@@ -439,7 +440,10 @@ class Home extends Component {
         sourceOptions.push({
           id: type,
           name: satelliteNames[type],
-          description: Translations.satelliteDescription[language],
+          description:
+            type === "swot"
+              ? Translations.swotDescription[language]
+              : Translations.satelliteDescription[language],
           icon: satelliteIcon,
         });
       });

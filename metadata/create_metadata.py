@@ -4,7 +4,7 @@ import boto3
 import requests
 import functions as func
 
-upload = False
+upload = True
 bucket_folder = "static/website/metadata/master"
 
 flag_country = {
@@ -66,6 +66,15 @@ srd = response.json()
 
 s3 = boto3.client('s3')
 
+# Load swot data
+swot = []
+paginator = s3.get_paginator('list_objects_v2')
+for page in paginator.paginate(Bucket='alplakes-eawag', Prefix='swot/'):
+    for obj in page.get('Contents', []):
+        swot_key = obj['Key'].split('/')[-1].replace('.json', '')
+        if swot_key != 'metadata':
+            swot.append(swot_key)
+
 # Create files
 home_list = []
 one_dimensional_list = []
@@ -73,6 +82,7 @@ three_dimensional_list = []
 
 for lake in metadata:
     add = False
+    satellites = []
     home = {"key": lake["key"],
             "name": lake["name"],
             "area": lake["area"],
@@ -308,7 +318,6 @@ for lake in metadata:
     if key in satellite:
         add = True
         satellite_data = []
-        satellites = []
         layers["layers"].extend(func.satellite_layers(lake["key"], satellite[key], srd, prevent_water_quality))
         for sat in satellite_metadata:
             if not prevent_water_quality or sat["parameter"] == "temperature":
@@ -325,8 +334,18 @@ for lake in metadata:
                     satellite_data.append(temp)
         if len(satellite_data) > 0:
             home["filters"].append("satellite")
-            home["satellites"] = sorted(satellites)
             data["satellite"] = satellite_data
+
+    # Swot data
+    if key in swot and key not in water_levels:
+        add = True
+        data["swot"] = True
+        satellites.append("swot")
+        if "satellite" not in home["filters"]:
+            home["filters"].append("satellite")
+
+    if len(satellites) > 0:
+        home["satellites"] = sorted(satellites)
 
     # Meteo data
     layers["layers"].extend(func.meteo_layers(layers["bounds"]))

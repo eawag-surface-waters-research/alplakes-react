@@ -647,6 +647,12 @@
     "FR": "Filtrer pour les lacs avec produits dérivés du satellite",
     "IT": "Filtra per laghi con prodotti di derivazione satellitare"
   },
+  "swotDescription": {
+    "EN": "Filter for lakes with satellite water level measurements",
+    "DE": "Filtern für Seen mit satellitengestützten Wasserstandsmessungen",
+    "FR": "Filtrer pour les lacs avec mesures satellitaires du niveau d'eau",
+    "IT": "Filtra per laghi con misurazioni satellitari del livello dell'acqua"
+  },
   "threedDescription": {
     "EN": "Filter for lakes with 3D hydrodynamic models",
     "DE": "Filtern für Seen mit hydrodynamischen 3D-Modellen",

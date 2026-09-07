@@ -37,11 +37,6 @@ class Lake extends Component {
     metadata: {},
     error: false,
     performance: false,
-    swot: false,
-  };
-
-  setSwot = (swot) => {
-    this.setState({ swot });
   };
 
   constructor(props) {
@@ -84,11 +79,9 @@ class Lake extends Component {
   }
 
   render() {
-    var { metadata, error, id, performance, swot } = this.state;
+    var { metadata, error, id, performance } = this.state;
     var { language, dark } = this.props;
     const title = "name" in metadata ? metadata.name[language] : "";
-    const insituWaterLevel =
-      "measurements" in metadata && "water_levels" in metadata["measurements"];
     return (
       <div className="main">
         {"name" in metadata && (
@@ -221,12 +214,12 @@ class Lake extends Component {
             )}
             <div
               className={
-                "trends" in metadata || swot
+                "trends" in metadata || metadata.swot
                   ? "section trends"
                   : "section trends hidden"
               }
             >
-              {("trends" in metadata || swot) && (
+              {("trends" in metadata || metadata.swot) && (
                 <h2>{Translations.trends[language]}</h2>
               )}
               {"trends" in metadata && (
@@ -257,13 +250,8 @@ class Lake extends Component {
                   )}
                 </React.Fragment>
               )}
-              {id !== "" && !insituWaterLevel && (
-                <Swot
-                  dark={dark}
-                  lake={id}
-                  language={language}
-                  setSwot={this.setSwot}
-                />
+              {id !== "" && metadata.swot && (
+                <Swot dark={dark} lake={id} language={language} />
               )}
             </div>
             {"properties" in metadata && (
