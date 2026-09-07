@@ -67,7 +67,11 @@ const satelliteMetadata = async (parameters, unit) => {
   var overallLake = "";
   for (let model of parameters.models) {
     let { data: files } = await axios.get(
-      CONFIG.sencast_bucket + model.metadata,
+      CONFIG.sencast_bucket +
+        model.metadata.replace(
+          /\/sentinel3(_dimark\d*)?\//,
+          "/sentinel3_dimark3/",
+        ),
     );
     let max_pixels = d3.max(files.map((m) => parseFloat(m.p)));
     for (let file of files) {

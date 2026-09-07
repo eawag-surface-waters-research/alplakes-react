@@ -41,7 +41,11 @@ class Satellite extends Component {
     var { updates, image, available } = this.state;
     for (let i = 0; i < parameters.metadata.length; i++) {
       var { data } = await axios.get(
-        CONFIG.sencast_bucket + parameters.metadata[i],
+        CONFIG.sencast_bucket +
+          parameters.metadata[i].replace(
+            /\/sentinel3(_dimark\d*)?\//,
+            "/sentinel3_dimark3/",
+          ),
       );
       if ("dt" in data) {
         data.dt = this.satelliteStringToDate(data.dt);
