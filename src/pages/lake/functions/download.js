@@ -1062,3 +1062,9 @@ const fetchDataParallel = async (urls) => {
     }
   });
 };
+
+export const downloadSwot = async (lake) => {
+  const url = `${CONFIG.alplakes_bucket}/swot/${lake}.json${general.hour()}`;
+  const response = await fetchDataParallel([[url]]);
+  return response[0];
+};

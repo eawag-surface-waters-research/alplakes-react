@@ -1082,6 +1082,10 @@
 
 /** Trends **/
 
+.main .lake .section.trends.hidden {
+  margin-bottom: 0;
+}
+
 .main .lake .map-sidebar .map-sidebar-left .line-graph-container {
   height: 100%;
   display: flex;
@@ -1167,6 +1171,35 @@
   margin-bottom: 5px;
   margin-right: 6px;
   border-bottom: 1px solid grey;
+}
+
+.main
+  .lake
+  .map-sidebar
+  .map-sidebar-left
+  .line-graph-container
+  .graph-legend
+  .item
+  .dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: grey;
+  margin-right: 8px;
+}
+
+.main
+  .lake
+  .map-sidebar
+  .map-sidebar-left
+  .line-graph-container
+  .graph-legend
+  .item
+  .cross {
+  display: inline-block;
+  margin-right: 8px;
+  color: grey;
 }
 
 .main

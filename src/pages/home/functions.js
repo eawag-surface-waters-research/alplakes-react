@@ -37,7 +37,7 @@ export const searchList = (search, list) => {
   return list;
 };
 
-export const satelliteTypes = ["sentinel2", "sentinel3", "collection"];
+export const satelliteTypes = ["sentinel2", "sentinel3", "collection", "swot"];
 
 export const matchesSources = (lake, filters) => {
   return filters.every((id) => {

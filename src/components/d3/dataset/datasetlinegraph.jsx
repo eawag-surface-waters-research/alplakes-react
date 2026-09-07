@@ -23,7 +23,9 @@ class DatasetLinegraph extends Component {
       yMin,
       yMax,
       xMin,
-      xMax
+      xMax,
+      scatter,
+      lines,
     } = this.props;
     var inputData = [];
     if (data !== undefined) {
@@ -61,6 +63,8 @@ class DatasetLinegraph extends Component {
             language={language}
             grid={grid}
             noYear={noYear}
+            scatter={scatter}
+            lines={lines}
             fontSize={fontSize}
             setFontSize={setFontSize}
           />

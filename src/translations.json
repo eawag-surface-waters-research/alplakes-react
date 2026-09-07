@@ -647,6 +647,12 @@
     "FR": "Filtrer pour les lacs avec produits dérivés du satellite",
     "IT": "Filtra per laghi con prodotti di derivazione satellitare"
   },
+  "swotDescription": {
+    "EN": "Filter for lakes with satellite water level measurements",
+    "DE": "Filtern für Seen mit satellitengestützten Wasserstandsmessungen",
+    "FR": "Filtrer pour les lacs avec mesures satellitaires du niveau d'eau",
+    "IT": "Filtra per laghi con misurazioni satellitari del livello dell'acqua"
+  },
   "threedDescription": {
     "EN": "Filter for lakes with 3D hydrodynamic models",
     "DE": "Filtern für Seen mit hydrodynamischen 3D-Modellen",
@@ -958,6 +964,72 @@
     "DE": "Durchschnittliche Jahrestemperatur unter verschiedenen Klimaszenarien.",
     "FR": "Température annuelle moyenne dans différents scénarios de changement climatique.",
     "IT": "Temperatura media annuale in una serie di scenari di cambiamento climatico."
+  },
+  "swot": {
+    "EN": "Satellite water level",
+    "DE": "Satelliten-Wasserstand",
+    "FR": "Niveau d'eau satellitaire",
+    "IT": "Livello dell'acqua da satellite"
+  },
+  "swotText": {
+    "EN": "Lake surface elevation measured by the SWOT satellite altimeter.",
+    "DE": "Seespiegelhöhe, gemessen vom Satellitenaltimeter SWOT.",
+    "FR": "Altitude de la surface du lac mesurée par l'altimètre satellitaire SWOT.",
+    "IT": "Quota della superficie del lago misurata dall'altimetro satellitare SWOT."
+  },
+  "datum": {
+    "EN": "Height datum",
+    "DE": "Höhenbezug",
+    "FR": "Référence altimétrique",
+    "IT": "Riferimento altimetrico"
+  },
+  "geoid": {
+    "EN": "geoid",
+    "DE": "Geoid",
+    "FR": "géoïde",
+    "IT": "geoide"
+  },
+  "trend": {
+    "EN": "Trend",
+    "DE": "Trend",
+    "FR": "Tendance",
+    "IT": "Tendenza"
+  },
+  "smoothness": {
+    "EN": "Smoothness (f)",
+    "DE": "Glättung (f)",
+    "FR": "Lissage (f)",
+    "IT": "Livellamento (f)"
+  },
+  "smoothnessText": {
+    "EN": "Controls how many nearby observations are used in each local LOWESS fit. Lower values follow short-term changes more closely; higher values produce a smoother curve.",
+    "DE": "Bestimmt, wie viele benachbarte Messungen in jede lokale LOWESS-Anpassung einfliessen. Kleinere Werte folgen kurzfristigen Änderungen genauer, grössere Werte ergeben eine glattere Kurve.",
+    "FR": "Détermine le nombre d'observations voisines utilisées dans chaque ajustement LOWESS local. Les valeurs faibles suivent de plus près les variations à court terme, les valeurs élevées donnent une courbe plus lisse.",
+    "IT": "Determina quante osservazioni vicine sono usate in ogni adattamento LOWESS locale. Valori bassi seguono più da vicino le variazioni a breve termine, valori alti producono una curva più liscia."
+  },
+  "flagged": {
+    "EN": "Flagged",
+    "DE": "Markiert",
+    "FR": "Signalée",
+    "IT": "Segnalata"
+  },
+  "goodQuality": {
+    "EN": "Good quality",
+    "DE": "Gute Qualität",
+    "FR": "Bonne qualité",
+    "IT": "Buona qualità"
+  },
+  "unvalidatedDatum": {
+    "EN": "This datum conversion has not been validated against reference measurements, use the values as an indication only.",
+    "DE": "Diese Höhenumrechnung wurde nicht anhand von Referenzmessungen validiert, die Werte dienen nur als Anhaltspunkt.",
+    "FR": "Cette conversion altimétrique n'a pas été validée par des mesures de référence, les valeurs sont données à titre indicatif.",
+    "IT": "Questa conversione altimetrica non è stata validata con misure di riferimento, i valori sono solo indicativi."
+  },
+  "lastUpdated": {
+    "EN": "Last updated",
+    "DE": "Zuletzt aktualisiert",
+    "FR": "Dernière mise à jour",
+    "IT": "Ultimo aggiornamento"
   },
   "referencePeriod": {
     "EN": "Reference period",

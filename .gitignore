@@ -26,3 +26,4 @@ yarn-error.log*
 metadata/__pycache__
 metadata/files/*
 !metadata/files/.gitkeep
+metadata/.cache
