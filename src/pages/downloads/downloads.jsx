@@ -629,6 +629,18 @@ class Downloads extends Component {
                       </p>
                     ),
                   },
+                  {
+                    question: "How can I be informed of changes to the API?",
+                    answer: (
+                      <p>
+                        Please email {" "}
+                        <a href="mailto:james.runnalls@eawag.ch">
+                          james.runnalls@eawag.ch
+                        </a>{" "}
+                        to be added to our mailing list.
+                      </p>
+                    ),
+                  },
                 ]}
               />
             </div>
