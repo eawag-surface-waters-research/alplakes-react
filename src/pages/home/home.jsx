@@ -9,6 +9,7 @@ import Translations from "../../translations.json";
 import searchIcon from "../../img/search.png";
 import mapIcon from "../../img/map.png";
 import threedIcon from "../../img/3dicon.png";
+import waveIcon from "../../img/waveicon.png";
 import onedIcon from "../../img/1dicon.png";
 import satelliteIcon from "../../img/satelliteicon.png";
 import insituIcon from "../../img/insituicon.png";
@@ -397,6 +398,12 @@ class Home extends Component {
         icon: threedIcon,
       },
       {
+        id: "2D",
+        name: Translations.waveModel[language],
+        description: Translations.twodDescription[language],
+        icon: waveIcon,
+      },
+      {
         id: "1D",
         name: Translations.onedModel[language],
         description: Translations.onedDescription[language],
@@ -434,7 +441,11 @@ class Home extends Component {
         (l) => Array.isArray(l.satellites) && l.satellites.includes(type)
       )
     );
-    var sourceOptions = [filterTypes[0], filterTypes[1]];
+    var sourceOptions = [filterTypes[0]];
+    if (list.some((l) => Array.isArray(l.filters) && l.filters.includes("2D"))) {
+      sourceOptions.push(filterTypes[1]);
+    }
+    sourceOptions.push(filterTypes[2]);
     if (availableSatellites.length > 0) {
       availableSatellites.forEach((type) => {
         sourceOptions.push({
@@ -448,9 +459,9 @@ class Home extends Component {
         });
       });
     } else {
-      sourceOptions.push(filterTypes[2]);
+      sourceOptions.push(filterTypes[3]);
     }
-    sourceOptions.push(filterTypes[3]);
+    sourceOptions.push(filterTypes[4]);
     const countryNames = {
       CH: Translations.switzerland[language],
       IT: Translations.italy[language],

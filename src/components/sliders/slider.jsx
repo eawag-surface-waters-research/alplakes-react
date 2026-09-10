@@ -22,6 +22,20 @@ class Slider extends Component {
       minute < 10 ? "0" + minute : minute
     } ${date} ${month} ${String(year).slice(-2)}`;
   };
+  buildAreaPath = (values, max) => {
+    const n = values.length;
+    if (n < 2 || !(max > 0)) return "";
+    var d = "M0,100";
+    for (let i = 0; i < n; i++) {
+      const x = (i / (n - 1)) * 100;
+      const clamped = Math.min(Math.max(values[i], 0), max);
+      const y = 100 - (clamped / max) * 100;
+      d += ` L${x.toFixed(2)},${y.toFixed(2)}`;
+    }
+    d += " L100,100 Z";
+    return d;
+  };
+
   calculateValueFromPosition = (event) => {
     var trackRef = document.getElementById("slider-track");
     const trackRect = trackRef.getBoundingClientRect();
@@ -88,13 +102,34 @@ class Slider extends Component {
   }
 
   render() {
-    var { period, timestep, datetime, setDatetime, language, permanentLabel, play } =
+    var { period, timestep, datetime, setDatetime, language, permanentLabel, play, sparkline } =
       this.props;
     var { hoverValue, displayDatetime } = this.state;
     var currentDatetime = play && displayDatetime !== null ? displayDatetime : datetime;
     const values = [currentDatetime];
+    const hasSparkline =
+      sparkline && sparkline.max && sparkline.max.length > 1;
+    const sparkScale = hasSparkline
+      ? sparkline.scaleMax > 0
+        ? sparkline.scaleMax
+        : Math.max(...sparkline.max)
+      : 0;
     return (
       <div className="slider-container">
+        {hasSparkline && sparkScale > 0 && (
+          <div className="slider-sparkline">
+            <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+              <path
+                className="spark-max"
+                d={this.buildAreaPath(sparkline.max, sparkScale)}
+              />
+              <path
+                className="spark-mean"
+                d={this.buildAreaPath(sparkline.mean, sparkScale)}
+              />
+            </svg>
+          </div>
+        )}
         <Range
           label="Select your value"
           step={timestep}

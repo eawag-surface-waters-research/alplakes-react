@@ -128,6 +128,12 @@ L.Streamlines = L.ImageOverlay.extend({
     }
     if (reset) this._reset();
   },
+  setZIndex: function (zIndex) {
+    this.options.zIndex = zIndex;
+    if (this._canvas) {
+      this._canvas.style.zIndex = this.options.zIndex + 100;
+    }
+  },
   _reset: function (event) {
     this._stopAnimation();
     var topLeft = this._map.containerPointToLayerPoint([0, 0]);

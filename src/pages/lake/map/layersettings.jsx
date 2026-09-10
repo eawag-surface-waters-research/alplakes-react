@@ -88,9 +88,11 @@ class Raster extends Component {
     link.parentNode.removeChild(link);
   };
 
-  downloadDates = (model, lake, minDate, maxDate, months) => {
+  downloadDates = (model, lake, minDate, maxDate, months, twod) => {
     var dates = [];
-    var url = `${CONFIG.alplakes_api}/simulations/file/${model}/${lake}`;
+    var url = `${CONFIG.alplakes_api}/simulations/${
+      twod ? "2d/file" : "file"
+    }/${model}/${lake}`;
     const targetDate = new Date(minDate);
     const endDate = new Date(maxDate);
     const daysToSubtract = (targetDate.getDay() + 7) % 7;
@@ -172,6 +174,7 @@ class Raster extends Component {
       start_date,
       end_date,
       Translations.axis[language].months,
+      layer.type === "twod",
     );
     return (
       <div className="layer-settings">
@@ -390,9 +393,11 @@ class Current extends Component {
     link.parentNode.removeChild(link);
   };
 
-  downloadDates = (model, lake, minDate, maxDate, months) => {
+  downloadDates = (model, lake, minDate, maxDate, months, twod) => {
     var dates = [];
-    var url = `${CONFIG.alplakes_api}/simulations/file/${model}/${lake}`;
+    var url = `${CONFIG.alplakes_api}/simulations/${
+      twod ? "2d/file" : "file"
+    }/${model}/${lake}`;
     const targetDate = new Date(minDate);
     const endDate = new Date(maxDate);
     const daysToSubtract = (targetDate.getDay() + 7) % 7;
@@ -551,6 +556,7 @@ class Current extends Component {
       start_date,
       end_date,
       Translations.axis[language].months,
+      layer.type === "twod",
     );
     return (
       <div className="layer-settings">
@@ -1261,6 +1267,186 @@ class Tiff extends Component {
   }
 }
 
+class Direction extends Component {
+  state = {
+    id: Math.round(Math.random() * 100000),
+  };
+
+  toggleDisplay = (type) => {
+    var { id, updateOptions, options } = this.props;
+    options[type] = !options[type];
+    updateOptions(id, type, options);
+  };
+
+  setArrowsColor = (event) => {
+    var { id, updateOptions, options } = this.props;
+    options["arrowsColor"] = event.target.value;
+    updateOptions(id, "direction", options);
+  };
+
+  setOpacity = (event) => {
+    var { id, updateOptions, options } = this.props;
+    options["opacity"] = event.target.value;
+    updateOptions(id, "direction", options);
+  };
+
+  downloadFile = (event) => {
+    var data = event.target.value.split("?");
+    const link = document.createElement("a");
+    link.href = data[0];
+    link.setAttribute("download", data[1]);
+    document.body.appendChild(link);
+    link.click();
+    link.parentNode.removeChild(link);
+  };
+
+  downloadDates = (model, lake, minDate, maxDate, months, twod) => {
+    var dates = [];
+    var url = `${CONFIG.alplakes_api}/simulations/${
+      twod ? "2d/file" : "file"
+    }/${model}/${lake}`;
+    const targetDate = new Date(minDate);
+    const endDate = new Date(maxDate);
+    const daysToSubtract = (targetDate.getDay() + 7) % 7;
+    targetDate.setDate(targetDate.getDate() - daysToSubtract);
+    while (targetDate <= endDate) {
+      dates.push({
+        url: `${url}/${formatAPIDate(
+          targetDate,
+        )}?${model}_${lake}_${formatAPIDate(targetDate)}.nc`,
+        date: formatDateLong(targetDate, months),
+      });
+      targetDate.setDate(targetDate.getDate() + 7);
+    }
+    return dates;
+  };
+
+  render() {
+    var { language, period, setPeriod, setModel, layer } = this.props;
+    var { direction, arrowsColor, opacity } = this.props.options;
+    var missingDates = [];
+    var start_date = new Date();
+    var end_date = new Date();
+    const forecast =
+      "forecast" in layer.sources[layer.source]
+        ? layer.sources[layer.source].forecast
+        : -7;
+    end_date.setDate(start_date.getDate() + forecast);
+    if ("metadata" in layer.sources[layer.source]) {
+      ({ missingDates, start_date, end_date } =
+        layer.sources[layer.source].metadata);
+    } else if ("start_date" in layer.sources[layer.source]) {
+      start_date = new Date(layer.sources[layer.source].start_date);
+    }
+    var { model, key } = layer.sources[layer.source];
+    var downloadDates = this.downloadDates(
+      model,
+      key,
+      start_date,
+      end_date,
+      Translations.axis[language].months,
+      layer.type === "twod",
+    );
+    return (
+      <div className="layer-settings">
+        <div className="sidebar-content-settings">
+          {Translations.modelSettings[language]}
+        </div>
+        <div className="layer-settings-section">
+          <div className="setting half">
+            <div className="label">{Translations.model[language]}</div>
+            <select
+              value={layer["source"]}
+              onChange={(event) => setModel(event, layer.id)}
+            >
+              {Object.entries(layer["sources"]).map(([key, value]) => (
+                <option key={key} value={key}>
+                  {value.name}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="setting half">
+            <div className="label">{Translations.source[language]}</div>
+            <div>
+              <a
+                href="https://www.eawag.ch"
+                alt="Eawag"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Eawag
+              </a>
+            </div>
+          </div>
+          <div className="setting">
+            <div className="label">{Translations.period[language]}</div>
+            <div className="period-selector">
+              <Period
+                period={period}
+                setPeriod={setPeriod}
+                language={language}
+                minDate={start_date}
+                maxDate={end_date}
+                missingDates={missingDates}
+              />
+            </div>
+          </div>
+        </div>
+        <div className="sidebar-content-settings">
+          {Translations.layers[language]}
+        </div>
+        <div className="layer-settings-section">
+          <ToggleBox
+            open={direction}
+            title={Translations.arrows[language]}
+            set="direction"
+            toggleDisplay={this.toggleDisplay}
+            content={
+              <React.Fragment>
+                <div className="setting half">
+                  <div className="label">{Translations.color[language]}</div>
+                  <Color value={arrowsColor} onChange={this.setArrowsColor} />
+                </div>
+                <div className="setting">
+                  <div className="label">{Translations.opacity[language]}</div>
+                  <div className="value">{opacity}</div>
+                  <input
+                    type="range"
+                    min="0"
+                    max="1"
+                    step="0.1"
+                    value={opacity}
+                    onChange={this.setOpacity}
+                  ></input>
+                </div>
+              </React.Fragment>
+            }
+          />
+        </div>
+        <div className="sidebar-content-settings">
+          {Translations.download[language]}
+        </div>
+        <div className="layer-settings-section">
+          <div className="setting">
+            <div className="label">{Translations.rawModelOutput[language]}</div>
+            <select defaultValue="" onChange={this.downloadFile}>
+              <option disabled value="">
+                {Translations.selectWeek[language]}
+              </option>
+              {downloadDates.reverse().map((d) => (
+                <option key={d.url} value={d.url}>
+                  {d.date}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+      </div>
+    );
+  }
+}
+
 class LayerSettings extends Component {
   render() {
     var { layer } = this.props;
@@ -1272,6 +1458,14 @@ class LayerSettings extends Component {
     } else if (type === "current") {
       return (
         <Current id={layer.id} options={layer.displayOptions} {...this.props} />
+      );
+    } else if (type === "direction") {
+      return (
+        <Direction
+          id={layer.id}
+          options={layer.displayOptions}
+          {...this.props}
+        />
       );
     } else if (type === "tiff") {
       return (

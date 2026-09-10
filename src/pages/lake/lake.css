@@ -54,6 +54,71 @@
   position: relative;
 }
 
+.main .lake .twodmodel .map-sidebar .map-sidebar-left {
+  width: 100%;
+  margin-right: 0;
+}
+
+.main .lake .twodmodel .further-information {
+  margin-top: 6px;
+  font-size: 14px;
+  color: var(--background-subtle-font-color);
+}
+
+.main .lake .twodmodel .further-information a {
+  color: var(--link-color);
+}
+
+.main .lake .twodmodel .beta-flag {
+  display: inline-block;
+  position: relative;
+  vertical-align: middle;
+  margin-left: 8px;
+  font-weight: 400;
+}
+
+.main .lake .twodmodel .beta-flag .beta-flag-label {
+  background-color: #a13145;
+  color: #ffffff;
+  border: 1px solid #a13145;
+  border-radius: 20px;
+  padding: 2px 12px;
+  font-size: 14px;
+  line-height: 22px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+  cursor: default;
+}
+
+.main .lake .twodmodel .beta-flag .beta-flag-box {
+  display: none;
+  position: absolute;
+  left: 0;
+  top: calc(100% + 8px);
+  z-index: 99999;
+  width: 282px;
+  padding: 16px;
+  border-radius: 12px;
+  background-color: var(--select-color);
+  border: 1px solid #a13145;
+  color: var(--background-font-color);
+  font-size: 16px;
+  line-height: 1.4;
+  text-align: left;
+  text-transform: none;
+  letter-spacing: normal;
+  font-weight: 400;
+}
+
+.main .lake .twodmodel .beta-flag:hover .beta-flag-label {
+  box-shadow: var(--box-shadow);
+}
+
+.main .lake .twodmodel .beta-flag:hover .beta-flag-box {
+  display: block;
+}
+
 .main .lake .map-sidebar .map-sidebar-left.fullscreen {
   position: fixed;
   left: 0;
@@ -377,7 +442,7 @@
 
 /** 3D Model **/
 
-.main .lake .forecast .threedmodel .map-sidebar .map-sidebar-left .current {
+.main .lake .forecast .map-sidebar .map-sidebar-left .current {
   position: absolute;
   z-index: 999;
   top: calc(var(--padding) / 4);
@@ -391,10 +456,129 @@
   box-sizing: border-box;
 }
 
+.main .lake .forecast .map-sidebar .map-sidebar-left .forecast-boxes {
+  position: absolute;
+  z-index: 999;
+  top: calc(var(--padding) / 4);
+  left: calc(var(--padding) / 4);
+  display: flex;
+  align-items: stretch;
+  gap: calc(var(--padding) / 4);
+}
+
+.main .lake .forecast .map-sidebar .map-sidebar-left .forecast-boxes .current {
+  position: static;
+}
+
+.main .lake .forecast .map-sidebar .map-sidebar-left .wave-range {
+  padding: 12px;
+  background-color: var(--box-color);
+  color: var(--background-font-color);
+  text-align: center;
+  border-radius: 8px;
+  min-width: 80px;
+  box-sizing: border-box;
+  font-size: 14px;
+  display: flex;
+  flex-direction: column;
+}
+
+.main .lake .forecast .map-sidebar .map-sidebar-left .wave-range .summary {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.main .lake .forecast .map-sidebar .map-sidebar-left .wave-range .summary .value {
+  font-weight: 600;
+}
+
+.main .lake .forecast .map-sidebar .map-sidebar-left .wave-range .wave-distribution {
+  position: relative;
+  width: 100%;
+  flex: 1 1 0;
+  min-height: 0;
+  margin-top: 6px;
+}
+
 .main
   .lake
   .forecast
-  .threedmodel
+  .map-sidebar
+  .map-sidebar-left
+  .wave-range
+  .wave-distribution
+  .wave-distribution-tooltip {
+  position: absolute;
+  top: calc(100% + 3px);
+  transform: translateX(-50%);
+  background-color: #ffffff;
+  color: #333333;
+  padding: 2px 6px;
+  border-radius: 6px;
+  font-size: 11px;
+  white-space: nowrap;
+  pointer-events: none;
+  box-shadow: var(--box-shadow);
+  z-index: 10;
+}
+
+.main
+  .lake
+  .forecast
+  .map-sidebar
+  .map-sidebar-left
+  .wave-range
+  .wave-distribution
+  .wave-distribution-tooltip
+  .height {
+  color: #888888;
+  margin-left: 5px;
+}
+
+.main
+  .lake
+  .forecast
+  .map-sidebar
+  .map-sidebar-left
+  .wave-range
+  .wave-distribution
+  .hit {
+  fill: transparent;
+  cursor: default;
+}
+
+.main
+  .lake
+  .forecast
+  .map-sidebar
+  .map-sidebar-left
+  .wave-range
+  .wave-distribution
+  svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.main
+  .lake
+  .forecast
+  .map-sidebar
+  .map-sidebar-left
+  .wave-range
+  .wave-distribution
+  rect {
+  fill: #44bca7;
+}
+
+.main
+  .lake
+  .forecast
   .map-sidebar
   .map-sidebar-left
   .model-source {
@@ -413,7 +597,6 @@
 .main
   .lake
   .forecast
-  .threedmodel
   .map-sidebar
   .map-sidebar-left
   .model-source
@@ -1292,6 +1475,26 @@
   .main .lake h3 {
     margin-bottom: 10px;
     font-size: 16px;
+  }
+
+  .main .lake .twodmodel .beta-flag .beta-flag-label {
+    font-size: 12px;
+    line-height: 18px;
+    padding: 1px 10px;
+  }
+
+  .main .lake .twodmodel .beta-flag .beta-flag-box {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: unset;
+    width: 100%;
+    box-sizing: border-box;
+    border: none;
+    border-radius: 0;
+    padding: 50px;
+    opacity: 0.95;
   }
 
   .main .lake .map-sidebar {

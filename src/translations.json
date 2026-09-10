@@ -413,6 +413,36 @@
     "FR": "Vent",
     "IT": "Vento"
   },
+  "waveModel": {
+    "EN": "Wave Model",
+    "DE": "Wellenmodell",
+    "FR": "Modèle de vagues",
+    "IT": "Modello di onde"
+  },
+  "significant_wave_height": {
+    "EN": "Wave height",
+    "DE": "Wellenhöhe",
+    "FR": "Hauteur",
+    "IT": "Altezza onde"
+  },
+  "max_wave_height": {
+    "EN": "Max wave height",
+    "DE": "Max. Wellenhöhe",
+    "FR": "Hauteur max",
+    "IT": "Altezza max onde"
+  },
+  "mean_wave_period": {
+    "EN": "Wave period",
+    "DE": "Wellenperiode",
+    "FR": "Période",
+    "IT": "Periodo onde"
+  },
+  "wave_direction": {
+    "EN": "Wave direction",
+    "DE": "Wellenrichtung",
+    "FR": "Direction",
+    "IT": "Direzione"
+  },
   "velocity": {
     "EN": "Current",
     "DE": "Strömung",
@@ -514,6 +544,18 @@
     "DE": "Profil hinzufügen",
     "FR": "Ajouter profil",
     "IT": "Aggiungi profilo"
+  },
+  "waveTimeseries": {
+    "EN": "Wave time series",
+    "DE": "Wellen-Zeitreihe",
+    "FR": "Série temporelle des vagues",
+    "IT": "Serie temporale delle onde"
+  },
+  "addWaveTimeseries": {
+    "EN": "Add wave time series",
+    "DE": "Wellen-Zeitreihe hinzufügen",
+    "FR": "Ajouter série temporelle des vagues",
+    "IT": "Aggiungi serie temporale delle onde"
   },
   "addParticles": {
     "EN": "Add particles",
@@ -658,6 +700,12 @@
     "DE": "Filtern für Seen mit hydrodynamischen 3D-Modellen",
     "FR": "Filtrer pour lacs avec modèles hydrodynamiques 3D",
     "IT": "Filtra per laghi con modelli idrodinamici 3D"
+  },
+  "twodDescription": {
+    "EN": "Filter for lakes with 2D wave models",
+    "DE": "Filtern für Seen mit 2D-Wellenmodellen",
+    "FR": "Filtrer pour les lacs avec modèles de vagues 2D",
+    "IT": "Filtra per laghi con modelli di onde 2D"
   },
   "onedDescription": {
     "EN": "Filter for lakes with 1D hydrodynamic models",
@@ -868,6 +916,18 @@
     "DE": "Mithilfe eines 3D-numerischen Modells werden Wassertemperatur und Strömungen vorhergesagt.",
     "FR": "Température de l'eau et courants prévus à l'aide d'un modèle numérique 3D.",
     "IT": "Temperatura dell'acqua e correnti previste tramite un modello numerico 3D."
+  },
+  "waves": {
+    "EN": "Waves",
+    "DE": "Wellen",
+    "FR": "Vagues",
+    "IT": "Onde"
+  },
+  "twodmodelText": {
+    "EN": "Significant wave height and direction forecasted using the SWAN 2D wave model.",
+    "DE": "Signifikante Wellenhöhe und -richtung, prognostiziert mit dem SWAN-2D-Wellenmodell.",
+    "FR": "Hauteur significative et direction des vagues prévues à l'aide du modèle de vagues 2D SWAN.",
+    "IT": "Altezza significativa e direzione delle onde previste utilizzando il modello d'onda 2D SWAN."
   },
   "doyStats": {
     "EN": "Day of year statistics",
@@ -1351,6 +1411,12 @@
     "FR": "Modèle 3D",
     "IT": "Modello 3D"
   },
+  "twod": {
+    "EN": "2D Model",
+    "DE": "2D-Modell",
+    "FR": "Modèle 2D",
+    "IT": "Modello 2D"
+  },
   "meteo": {
     "EN": "Meteo",
     "DE": "Meteo",
@@ -1656,6 +1722,18 @@
     "DE": "Weitere Informationen",
     "FR": "Plus d'informations",
     "IT": "Ulteriori informazioni"
+  },
+  "waveScenarios": {
+    "EN": "An interactive atlas of wave characteristics (significant height, period, wavelength, direction) for prevailing winds and various return periods is available at",
+    "DE": "Ein interaktiver Atlas der Welleneigenschaften (signifikante Höhe, Periode, Wellenlänge, Richtung) für vorherrschende Winde und verschiedene Wiederkehrperioden ist verfügbar auf",
+    "FR": "Un atlas interactif des caractéristiques des vagues (hauteur significative, période, longueur d'onde, direction) pour les vents dominants et différentes périodes de retour est disponible sur",
+    "IT": "Un atlante interattivo delle caratteristiche delle onde (altezza significativa, periodo, lunghezza d'onda, direzione) per i venti dominanti e diversi periodi di ritorno è disponibile su"
+  },
+  "betaWarning": {
+    "EN": "This product is still in beta, results are under evaluation and should be used with caution.",
+    "DE": "Dieses Produkt befindet sich noch in der Beta-Phase, die Ergebnisse werden derzeit evaluiert und sollten mit Vorsicht verwendet werden.",
+    "FR": "Ce produit est encore en version bêta, les résultats sont en cours d'évaluation et doivent être utilisés avec prudence.",
+    "IT": "Questo prodotto è ancora in versione beta, i risultati sono in fase di valutazione e devono essere utilizzati con cautela."
   },
   "parameters": {
     "EN": "Parameters",

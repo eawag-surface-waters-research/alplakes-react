@@ -100,6 +100,12 @@ L.Raster = L.ImageOverlay.extend({
     this._canvas.style.zIndex = this.options.zIndex + 100;
     this._drawLayer();
   },
+  setZIndex: function (zIndex) {
+    this.options.zIndex = zIndex;
+    if (this._canvas) {
+      this._canvas.style.zIndex = this.options.zIndex + 100;
+    }
+  },
   _interpolateGeometryBoundary: function (g) {
     var geometry = g.map((row) => row.slice());
     const d = this._dataWidth;

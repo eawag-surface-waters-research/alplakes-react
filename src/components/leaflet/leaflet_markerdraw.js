@@ -180,7 +180,7 @@ L.Control.MarkerDraw = L.Control.extend({
             permanent: true,
             direction: "top",
             className: "drawn-marker-label",
-            offset: [3, -44],
+            offset: [3, -52],
           })
           .openTooltip();
       }
@@ -199,19 +199,44 @@ L.Control.MarkerDraw = L.Control.extend({
   },
   _createMarkerIcon: function (color) {
     color = color || this.options.markerColor;
+    // When the control has a toolbar logo, embed it in the pin head so markers
+    // from different draw tools can be told apart; otherwise keep the plain dot.
+    var head;
+    if (this.options.svgIcon) {
+      const logo = this.options.svgIcon.replace(/<svg([^>]*)>/, (_m, attrs) => {
+        const cleaned = attrs.replace(/\s(?:width|height|x|y)="[^"]*"/g, "");
+        return `<svg${cleaned} x="4.5" y="4.5" width="16" height="16">`;
+      });
+      head = `<circle cx="12.5" cy="12.5" r="9.5" fill="#fff"/>${logo}`;
+    } else {
+      head = `<circle cx="12.5" cy="12.5" r="4" fill="#fff"/>`;
+    }
+    // The pin teardrop silhouette, reused for both the pin and its cast shadow.
+    const pinPath =
+      "M12.5 0C5.596 0 0 5.596 0 12.5c0 8.437 12.5 28.5 12.5 28.5S25 20.937 25 12.5C25 5.596 19.404 0 12.5 0z";
+    const blurId = "pinshadow-" + Math.round(Math.random() * 1e9);
+    // Canvas is widened to the right (viewBox 0 0 50 41) so the ground shadow,
+    // a flattened/rotated copy of the pin anchored at its foot (12.5, 41), is
+    // not clipped. The pin itself stays in the left half at its original size.
     const svgIcon = `
-    <svg width="25" height="41" viewBox="0 0 25 41" xmlns="http://www.w3.org/2000/svg">
-      <path d="M12.5 0C5.596 0 0 5.596 0 12.5c0 8.437 12.5 28.5 12.5 28.5S25 20.937 25 12.5C25 5.596 19.404 0 12.5 0z" 
-            fill="${color}"/>
-      <circle cx="12.5" cy="12.5" r="4" fill="#fff"/>
+    <svg width="66" height="54" viewBox="0 0 50 41" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="${blurId}" x="-30%" y="-30%" width="160%" height="160%">
+          <feGaussianBlur stdDeviation="0.6"/>
+        </filter>
+      </defs>
+      <path d="${pinPath}" fill="rgba(0,0,0,0.3)" filter="url(#${blurId})"
+            transform="translate(12.5,41) scale(1,0.45) rotate(30) translate(-12.5,-41)"/>
+      <path d="${pinPath}" fill="${color}"/>
+      ${head}
     </svg>
   `;
     return L.divIcon({
       html: svgIcon,
       className: "custom-marker-icon",
-      iconSize: [25, 41],
-      iconAnchor: [12, 41],
-      popupAnchor: [1, -34],
+      iconSize: [66, 54],
+      iconAnchor: [17, 54],
+      popupAnchor: [1, -45],
     });
   },
 });

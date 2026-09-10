@@ -1,0 +1,72 @@
+.wave-timeseries {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  color: var(--background-font-color);
+  cursor: grab;
+}
+
+.wave-timeseries:active {
+  cursor: grabbing;
+}
+
+/* Transparent layer above the line graph for the direction arrows, the period
+   labels and the hover guide. Aligned to the line graph's time scale. */
+.wave-timeseries .wave-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.wave-timeseries .direction-arrow path {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.wave-timeseries .period-label {
+  fill: currentColor;
+  text-anchor: middle;
+  opacity: 0.9;
+}
+
+.wave-timeseries .row-label {
+  fill: currentColor;
+  opacity: 0.55;
+  text-anchor: start;
+}
+
+.wave-timeseries .hover-line {
+  stroke: currentColor;
+  stroke-width: 1;
+  stroke-dasharray: 3 3;
+  opacity: 0.6;
+}
+
+.wave-timeseries .wave-tooltip {
+  position: absolute;
+  transform: translateX(-50%);
+  pointer-events: none;
+  background-color: rgba(255, 255, 255, 0.95);
+  color: #000;
+  border-radius: 8px;
+  box-shadow: var(--box-shadow);
+  padding: 6px 10px;
+  font-size: 12px;
+  white-space: nowrap;
+  z-index: 10;
+}
+
+.main.dark .wave-timeseries .wave-tooltip {
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #fff;
+}
+
+.wave-timeseries .wave-tooltip .time {
+  font-weight: 700;
+  margin-bottom: 4px;
+}

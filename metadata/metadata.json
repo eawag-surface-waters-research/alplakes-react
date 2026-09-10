@@ -101,6 +101,21 @@
                 }
             ]
         },
+        "2D": {
+            "default": "alplakes_swan",
+            "models": {
+                "alplakes_swan": {
+                    "model": "swan",
+                    "name": "SWAN",
+                    "key": "geneva",
+                    "performance": {
+                        "rmse": {
+                            "overall": "NA"
+                        }
+                    }
+                }
+            }
+        },
         "insitu": [
             {
                 "url": "https://www.datalakes-eawag.ch/datadetail/666",
