@@ -10,6 +10,7 @@ import "./lake.css";
 import ThreeDModel from "./components/threedmodel";
 import TwoDModel from "./components/twodmodel";
 import OneDModel from "./components/onedmodel";
+import ExternalModel from "./components/externalmodel";
 import Satellite from "./components/satellite";
 import sortIcon from "../../img/sort.png";
 import WaterTemperature from "./components/watertemperature";
@@ -29,6 +30,7 @@ import ModelPerformance from "../../components/modelperformance/modelperformance
 import back from "../../img/back.png";
 import AiSummary from "./components/aisummary";
 import Phosphorus from "./components/phosphorus";
+import Swot from "./components/swot";
 
 class Lake extends Component {
   state = {
@@ -155,6 +157,12 @@ class Lake extends Component {
                     togglePerformance={this.togglePerformance}
                   />
                 )}
+                {"external_model" in metadata["forecast"] && (
+                  <ExternalModel
+                    parameters={metadata.forecast["external_model"]}
+                    language={language}
+                  />
+                )}
                 {"ai_summary" in metadata["forecast"] && (
                   <AiSummary lake={id} language={language} />
                 )}
@@ -215,35 +223,48 @@ class Lake extends Component {
                 </div>
               </div>
             )}
-            {"trends" in metadata && (
-              <div className="section trends">
+            <div
+              className={
+                "trends" in metadata || metadata.swot
+                  ? "section trends"
+                  : "section trends hidden"
+              }
+            >
+              {("trends" in metadata || metadata.swot) && (
                 <h2>{Translations.trends[language]}</h2>
-                {"doy" in metadata["trends"] && (
-                  <Doy
-                    dark={dark}
-                    parameters={metadata.trends["doy"]}
-                    language={language}
-                  />
-                )}
-                {"year" in metadata["trends"] && (
-                  <PastYear
-                    dark={dark}
-                    parameters={metadata.trends["year"]}
-                    language={language}
-                  />
-                )}
-                {"phosphorus" in metadata["trends"] && (
-                  <Phosphorus dark={dark} lake={id} language={language} />
-                )}
-                {"climate" in metadata["trends"] && (
-                  <Climate
-                    dark={dark}
-                    parameters={metadata.trends["climate"]}
-                    language={language}
-                  />
-                )}
-              </div>
-            )}
+              )}
+              {"trends" in metadata && (
+                <React.Fragment>
+                  {"doy" in metadata["trends"] && (
+                    <Doy
+                      dark={dark}
+                      parameters={metadata.trends["doy"]}
+                      language={language}
+                    />
+                  )}
+                  {"year" in metadata["trends"] && (
+                    <PastYear
+                      dark={dark}
+                      parameters={metadata.trends["year"]}
+                      language={language}
+                    />
+                  )}
+                  {"phosphorus" in metadata["trends"] && (
+                    <Phosphorus dark={dark} lake={id} language={language} />
+                  )}
+                  {"climate" in metadata["trends"] && (
+                    <Climate
+                      dark={dark}
+                      parameters={metadata.trends["climate"]}
+                      language={language}
+                    />
+                  )}
+                </React.Fragment>
+              )}
+              {id !== "" && metadata.swot && (
+                <Swot dark={dark} lake={id} language={language} />
+              )}
+            </div>
             {"properties" in metadata && (
               <div className="section properties" ref={this.divRef}>
                 <h2>{Translations.lakeProperties[language]}</h2>

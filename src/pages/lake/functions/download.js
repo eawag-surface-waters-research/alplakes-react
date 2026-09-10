@@ -987,14 +987,18 @@ export const download2DMetadata = async (model, lake) => {
   const response = await fetchDataParallel(urls);
   const metadata = response[0];
   metadata.start_date = general.stringToDate(metadata.start_date + " 00:00");
-  // The 2D end_date is the exclusive week boundary (the Sunday starting the
-  // first week with no data file), so step back one hourly timestep to the
-  // last requestable datetime.
   metadata.end_date = new Date(
     general.stringToDate(metadata.end_date + " 00:00").getTime() -
       60 * 60 * 1000,
   );
   return metadata;
+}
+
+export const downloadExternalForecast = async (path) => {
+  const response = await fetchDataParallel([
+    [`${CONFIG.alplakes_bucket}/${path}${general.hour()}`],
+  ]);
+  return response[0];
 };
 
 export const download3DMap = async (
@@ -1213,4 +1217,10 @@ const fetchDataParallel = async (urls) => {
       return false;
     }
   });
+};
+
+export const downloadSwot = async (lake) => {
+  const url = `${CONFIG.alplakes_bucket}/swot/${lake}.json${general.hour()}`;
+  const response = await fetchDataParallel([[url]]);
+  return response[0];
 };

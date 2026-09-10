@@ -15,6 +15,29 @@ import Depth from "../../../components/customselect/depth";
 import Loading from "../../../components/loading/loading";
 import ModelPerformanceButton from "../../../components/modelperformance/modelperformancebutton";
 
+const DA_PALETTE = ["#F2C14E", "#47D6AC", "#e0533d", "#8a63d2"];
+
+const defaultRunKey = (parameter) => parameter.default_run || parameter.key;
+
+const getRuns = (parameter) =>
+  Array.isArray(parameter.runs) && parameter.runs.length > 0
+    ? parameter.runs
+    : [{ name: parameter.name, key: parameter.key }];
+
+const runColorMap = (runs, defKey, dark) => {
+  const map = {};
+  let i = 0;
+  runs.forEach((r) => {
+    if (r.key === defKey) {
+      map[r.key] = dark ? "#ffffff" : "#000000";
+    } else {
+      map[r.key] = DA_PALETTE[i % DA_PALETTE.length];
+      i++;
+    }
+  });
+  return map;
+};
+
 class PlaceholderGraph extends Component {
   render() {
     return (
@@ -46,95 +69,97 @@ class Graph extends Component {
     depths: false,
     noData: false,
     loading: false,
+    runs: [],
+    activeRuns: {},
   };
   toggle = () => {
     this.setState({ open: !this.state.open });
   };
+
+  fetchRun = async (runKey, variableKey, depth, start, end) => {
+    const { parameter } = this.props;
+    const data = await download1DLinegraph(
+      parameter.model.toLowerCase(),
+      runKey,
+      start,
+      end,
+      depth,
+      variableKey,
+      false
+    );
+    if (!data) return false;
+    return {
+      x: data.time.map((t) => new Date(t)),
+      y: data["variables"][variableKey]["data"],
+    };
+  };
+
+  refresh = async ({ variable, depth, start, end }) => {
+    const { parameter, dark, language } = this.props;
+    const { activeRuns, display } = this.state;
+    const runs = getRuns(parameter);
+    const defKey = defaultRunKey(parameter);
+    const isT = variable.key === "T";
+    const baseRun = runs.find((r) => r.key === parameter.key) || {
+      key: parameter.key,
+      name: parameter.name,
+    };
+    const targetRuns = isT ? runs.filter((r) => activeRuns[r.key]) : [baseRun];
+    const colorMap = runColorMap(runs, defKey, dark);
+    const results = await Promise.all(
+      targetRuns.map((r) => this.fetchRun(r.key, variable.key, depth, start, end))
+    );
+    if (results.some((r) => r === false)) {
+      window.alert(Translations.serverAlert[language]);
+      this.setState({ loading: false });
+      return;
+    }
+    const seriesData = targetRuns.map((r, i) => ({
+      ...results[i],
+      lineColor: colorMap[r.key],
+      name: r.name,
+    }));
+    display.data = seriesData;
+    display.ylabel = variable.description;
+    display.yunits = variable.unit.replace("deg", "°");
+    display.noData = seriesData.every((s) => s.y.every((item) => item === null));
+    this.setState({ variable, depth, start, end, display, loading: false });
+  };
+
   setPeriod = async (event) => {
-    this.setState({ loading: true }, async () => {
-      const { variable, display, depth } = this.state;
-      const { parameter } = this.props;
-      const start = event[0];
-      const end = event[1];
-      const data = await download1DLinegraph(
-        parameter.model.toLowerCase(),
-        parameter.key,
-        start,
-        end,
-        depth,
-        variable.key,
-        false
-      );
-      if (data) {
-        var x = data.time.map((t) => new Date(t));
-        var y = data["variables"][variable.key]["data"];
-        display.data = { x, y };
-        display.noData = y.every((item) => item === null);
-        this.setState({ start, end, display, loading: false });
-      } else {
-        window.alert(Translations.serverAlert[this.props.language]);
-        this.setState({ loading: false });
-      }
-    });
+    const { variable, depth } = this.state;
+    this.setState({ loading: true }, () =>
+      this.refresh({ variable, depth, start: event[0], end: event[1] })
+    );
   };
 
   setDepth = async (depth) => {
-    this.setState({ loading: true }, async () => {
-      const { parameter } = this.props;
-      const { variable, display, start, end } = this.state;
-      const data = await download1DLinegraph(
-        parameter.model.toLowerCase(),
-        parameter.key,
-        start,
-        end,
-        depth,
-        variable.key,
-        false
-      );
-      if (data) {
-        var x = data.time.map((t) => new Date(t));
-        var y = data["variables"][variable.key]["data"];
-        display.data = { x, y };
-        display.noData = y.every((item) => item === null);
-        this.setState({ depth, display, loading: false });
-      } else {
-        window.alert(Translations.serverAlert[this.props.language]);
-        this.setState({ loading: false });
-      }
-    });
+    const { variable, start, end } = this.state;
+    this.setState({ loading: true }, () =>
+      this.refresh({ variable, depth, start, end })
+    );
   };
 
   setVariable = async (event) => {
     const variable_name = event.target.value;
-    this.setState({ loading: true }, async () => {
-      const { parameter } = this.props;
-      const { variables, display, start, end, depth } = this.state;
-      const variable = variables.find((v) => v.key === variable_name);
-      const data = await download1DLinegraph(
-        parameter.model.toLowerCase(),
-        parameter.key,
-        start,
-        end,
-        depth,
-        variable.key,
-        false
-      );
-      if (data) {
-        var x = data.time.map((t) => new Date(t));
-        var y = data["variables"][variable.key]["data"];
-        display.data = { x, y };
-        display.ylabel = variable.description;
-        display.yunits = variable.unit.replace("deg", "°");
-        display.noData = y.every((item) => item === null);
-        this.setState({ variable, display, loading: false });
-      } else {
-        window.alert(Translations.serverAlert[this.props.language]);
-        this.setState({ loading: false });
-      }
-    });
+    const { variables, start, end, depth } = this.state;
+    const variable = variables.find((v) => v.key === variable_name);
+    this.setState({ loading: true }, () =>
+      this.refresh({ variable, depth, start, end })
+    );
   };
+
+  toggleRun = (runKey) => {
+    const { activeRuns, variable, depth, start, end } = this.state;
+    const next = { ...activeRuns, [runKey]: !activeRuns[runKey] };
+    if (!Object.values(next).some(Boolean)) return;
+    this.setState({ activeRuns: next, loading: true }, () =>
+      this.refresh({ variable, depth, start, end })
+    );
+  };
+
   componentDidUpdate() {
-    const { data } = this.props;
+    const { data, parameter, dark } = this.props;
     if (this.state.display === false && data) {
       const variables = Object.keys(data.metadata.variables)
         .filter((v) => v !== "S")
@@ -145,12 +170,25 @@ class Graph extends Component {
       const variable = variables.find((v) => v.key === "T");
       const depths = data.metadata.depth;
       const depth = depths[0];
+      const runs = getRuns(parameter);
+      const defKey = defaultRunKey(parameter);
+      const colorMap = runColorMap(runs, defKey, dark);
+      const activeRuns = {};
+      runs.forEach((r) => (activeRuns[r.key] = r.key === defKey));
+      const defRun = runs.find((r) => r.key === defKey) || runs[0];
       const display = {
         xlabel: "time",
         xunits: "",
         ylabel: variable.description,
         yunits: variable.unit.replace("deg", "°"),
-        data: { x: data.dt, y: data.value },
+        data: [
+          {
+            x: data.dt,
+            y: data.value,
+            lineColor: colorMap[defKey],
+            name: defRun.name,
+          },
+        ],
         curve: true,
         grid: true,
         noData: data.value.every((item) => item === null),
@@ -165,6 +203,8 @@ class Graph extends Component {
         variables,
         depth,
         depths,
+        runs,
+        activeRuns,
       });
     }
   }
@@ -181,8 +221,16 @@ class Graph extends Component {
       depth,
       depths,
       loading,
+      runs,
+      activeRuns,
     } = this.state;
     const { data, language, dark, parameter, togglePerformance } = this.props;
+    const defKey = defaultRunKey(parameter);
+    const colorMap = runColorMap(runs, defKey, dark);
+    const showRuns = variable && variable.key === "T" && runs.length > 1;
+    const activeRunList = showRuns ? runs.filter((r) => activeRuns[r.key]) : [];
+    const defRun = runs.find((r) => r.key === defKey);
+    const defaultBeta = !!(defRun && defRun.beta);
     const description = {
       EN: "1D lake models simplify lake processes by representing the lake as a single vertical column, divided into layers from the surface to the bottom. Instead of simulating horizontal variations, they focus on vertical changes in temperature, density, and other properties.",
       DE: "1D-See-Modelle vereinfachen die Prozesse in Seen, indem sie den See als eine einzige vertikale Säule darstellen, die in Schichten von der Oberfläche bis zum Grund unterteilt ist. Anstatt horizontale Schwankungen zu simulieren, konzentrieren sie sich auf vertikale Veränderungen von Temperatur, Dichte und anderen Eigenschaften.",
@@ -194,7 +242,10 @@ class Graph extends Component {
     return open ? (
       <div className="map-sidebar">
         <div className="map-sidebar-header">
-          <div className="title">{name}</div>
+          <div className="title">
+            {name}
+            {defaultBeta && <span className="run-beta">beta</span>}
+          </div>
           <div className="minimise" onClick={this.toggle}>
             {Translations.hideDetails[language]}
           </div>
@@ -209,6 +260,19 @@ class Graph extends Component {
           )}
           <div className="line-graph-container">
             <DatasetLinegraph {...display} dark={dark} language={language} />
+            {activeRunList.length > 1 && (
+              <div className="graph-legend">
+                {activeRunList.map((r) => (
+                  <div className="item" key={"legend_" + r.key}>
+                    <div
+                      className="line"
+                      style={{ borderColor: colorMap[r.key] }}
+                    ></div>
+                    <div className="text">{r.name}</div>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
           {loading && (
             <div className="loading-graph">
@@ -264,6 +328,30 @@ class Graph extends Component {
                       onChange={this.setDepth}
                       language={language}
                     />
+                    {showRuns && (
+                      <div className="setting">
+                        <div className="label">
+                          {Translations.runs[language]}
+                        </div>
+                        <div className="run-list">
+                          {runs.map((r) => (
+                            <label className="run-item" key={"run_" + r.key}>
+                              <input
+                                type="checkbox"
+                                checked={!!activeRuns[r.key]}
+                                onChange={() => this.toggleRun(r.key)}
+                              />
+                              <span
+                                className="run-swatch"
+                                style={{ backgroundColor: colorMap[r.key] }}
+                              />
+                              {r.name}
+                              {r.beta && <span className="run-beta">beta</span>}
+                            </label>
+                          ))}
+                        </div>
+                      </div>
+                    )}
                     <div className="setting half">
                       <div className="label">
                         {Translations.model[language]}
@@ -291,19 +379,23 @@ class Graph extends Component {
                           {Translations.performance[language]}
                         </div>
                         <div>
-                          {Object.keys(parameter.performance.rmse).map((k) => (
-                            <div key={k} className="performance">
-                              <div className="performance-value">
-                                {Math.round(
-                                  parameter.performance.rmse[k] * 100
-                                ) / 100}
-                                <div className="performance-unit">°C</div>
+                          {Object.keys(parameter.performance.rmse)
+                            .filter((k) =>
+                              isFinite(parameter.performance.rmse[k])
+                            )
+                            .map((k) => (
+                              <div key={k} className="performance">
+                                <div className="performance-value">
+                                  {Math.round(
+                                    parameter.performance.rmse[k] * 100
+                                  ) / 100}
+                                  <div className="performance-unit">°C</div>
+                                </div>
+                                <div className="performance-name">
+                                  {capitalize(k)} RMSE
+                                </div>
                               </div>
-                              <div className="performance-name">
-                                {capitalize(k)} RMSE
-                              </div>
-                            </div>
-                          ))}
+                            ))}
                         </div>
                       </div>
                     )}
@@ -345,7 +437,10 @@ class Graph extends Component {
         title="Click for details"
       >
         <div className="right">{parameter.model}</div>
-        <div className="title">{name}</div>
+        <div className="title">
+          {name}
+          {defaultBeta && <span className="run-beta">beta</span>}
+        </div>
         {data && data.summary ? (
           <SummaryTable
             start={data.start}
@@ -373,9 +468,10 @@ class OneDModel extends Component {
     var { parameters } = this.props;
     var data = {};
     for (let i = 0; i < parameters.length; i++) {
+      let runKey = defaultRunKey(parameters[i]);
       let metadata = await downloadModelMetadata(
         parameters[i].model.toLowerCase(),
-        parameters[i].key
+        runKey
       );
       if (
         "simstrat_oxygen" in parameters[0] &&
@@ -388,7 +484,7 @@ class OneDModel extends Component {
       let depth = Math.min(...metadata.depth);
       let download = await download1DLinegraph(
         parameters[i].model.toLowerCase(),
-        parameters[i].key,
+        runKey,
         new Date(metadata.end_date.getTime() - 5 * 24 * 60 * 60 * 1000),
         metadata.end_date,
         depth,

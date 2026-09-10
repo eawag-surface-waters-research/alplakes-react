@@ -618,6 +618,39 @@
   width: 500px;
 }
 
+/** External Model **/
+
+.main .lake .forecast .externalmodel .clickable-box {
+  width: 500px;
+}
+
+.main .lake .forecast .externalmodel a {
+  text-decoration: none;
+}
+
+.main .lake .forecast .externalmodel .clickable-box.static {
+  cursor: default;
+}
+
+.main .lake .forecast .externalmodel .clickable-box .title a {
+  color: var(--link-color);
+  font-size: 14px;
+}
+
+.main .lake .forecast .externalmodel .clickable-box .title a:hover {
+  text-decoration: underline;
+}
+
+.main .lake .forecast .externalmodel .model-source {
+  font-size: 14px;
+  color: var(--background-subtle-font-color);
+  margin-top: 6px;
+}
+
+.main .lake .forecast .externalmodel .model-source a {
+  color: var(--link-color);
+}
+
 /** AI Summary **/
 
 .main .lake .forecast .ai-summary .ai-beta {
@@ -1232,6 +1265,10 @@
 
 /** Trends **/
 
+.main .lake .section.trends.hidden {
+  margin-bottom: 0;
+}
+
 .main .lake .map-sidebar .map-sidebar-left .line-graph-container {
   height: 100%;
   display: flex;
@@ -1317,6 +1354,35 @@
   margin-bottom: 5px;
   margin-right: 6px;
   border-bottom: 1px solid grey;
+}
+
+.main
+  .lake
+  .map-sidebar
+  .map-sidebar-left
+  .line-graph-container
+  .graph-legend
+  .item
+  .dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: grey;
+  margin-right: 8px;
+}
+
+.main
+  .lake
+  .map-sidebar
+  .map-sidebar-left
+  .line-graph-container
+  .graph-legend
+  .item
+  .cross {
+  display: inline-block;
+  margin-right: 8px;
+  color: grey;
 }
 
 .main
@@ -1471,6 +1537,11 @@
   }
 
   .main .lake .onedmodel .clickable-box {
+    border: none;
+    margin-top: -10px;
+  }
+
+  .main .lake .externalmodel .clickable-box {
     border: none;
     margin-top: -10px;
   }

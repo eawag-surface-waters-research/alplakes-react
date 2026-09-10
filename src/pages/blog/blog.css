@@ -26,6 +26,16 @@
     transform: translateY(-2px);
 }
 
+.main .blog .post .buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.main .blog .post .buttons a {
+    text-decoration: none;
+}
+
 .main .blog .post .date {
     font-size: 14px;
     margin-bottom: 14px;

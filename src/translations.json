@@ -251,6 +251,12 @@
     "FR": "Modèle",
     "IT": "Modello"
   },
+  "runs": {
+    "EN": "Runs",
+    "DE": "Läufe",
+    "FR": "Simulations",
+    "IT": "Simulazioni"
+  },
   "models": {
     "EN": "Models",
     "DE": "Modelle",
@@ -406,6 +412,12 @@
     "DE": "Wind",
     "FR": "Vent",
     "IT": "Vento"
+  },
+  "waveModel": {
+    "EN": "Wave Model",
+    "DE": "Wellenmodell",
+    "FR": "Modèle de vagues",
+    "IT": "Modello di onde"
   },
   "significant_wave_height": {
     "EN": "Wave height",
@@ -677,11 +689,23 @@
     "FR": "Filtrer pour les lacs avec produits dérivés du satellite",
     "IT": "Filtra per laghi con prodotti di derivazione satellitare"
   },
+  "swotDescription": {
+    "EN": "Filter for lakes with satellite water level measurements",
+    "DE": "Filtern für Seen mit satellitengestützten Wasserstandsmessungen",
+    "FR": "Filtrer pour les lacs avec mesures satellitaires du niveau d'eau",
+    "IT": "Filtra per laghi con misurazioni satellitari del livello dell'acqua"
+  },
   "threedDescription": {
     "EN": "Filter for lakes with 3D hydrodynamic models",
     "DE": "Filtern für Seen mit hydrodynamischen 3D-Modellen",
     "FR": "Filtrer pour lacs avec modèles hydrodynamiques 3D",
     "IT": "Filtra per laghi con modelli idrodinamici 3D"
+  },
+  "twodDescription": {
+    "EN": "Filter for lakes with 2D wave models",
+    "DE": "Filtern für Seen mit 2D-Wellenmodellen",
+    "FR": "Filtrer pour les lacs avec modèles de vagues 2D",
+    "IT": "Filtra per laghi con modelli di onde 2D"
   },
   "onedDescription": {
     "EN": "Filter for lakes with 1D hydrodynamic models",
@@ -754,6 +778,12 @@
     "DE": "Modell entwickelt bei",
     "FR": "modèle développé à",
     "IT": "modello sviluppato presso"
+  },
+  "modelFrom": {
+    "EN": "model from",
+    "DE": "Modell von",
+    "FR": "modèle de",
+    "IT": "modello di"
   },
   "overview": {
     "EN": "Overview",
@@ -875,6 +905,12 @@
     "FR": "Température de l'eau prévue à l'aide d'un modèle numérique 1D, les modèles 1D supposent une uniformité horizontale.",
     "IT": "Temperatura dell'acqua prevista mediante un modello numerico 1D; i modelli 1D presuppongono uniformità orizzontale."
   },
+  "externalmodelText": {
+    "EN": "Water temperature forecast at a single point in the lake, produced by an external 3D model operated by a partner institute.",
+    "DE": "Wassertemperaturvorhersage an einem einzelnen Punkt im See, erstellt von einem externen 3D-Modell eines Partnerinstituts.",
+    "FR": "Prévision de la température de l'eau en un point unique du lac, produite par un modèle 3D externe exploité par un institut partenaire.",
+    "IT": "Previsione della temperatura dell'acqua in un singolo punto del lago, prodotta da un modello 3D esterno gestito da un istituto partner."
+  },
   "threedmodelText": {
     "EN": "Water temperature and currents forecasted using a 3D numerical model.",
     "DE": "Mithilfe eines 3D-numerischen Modells werden Wassertemperatur und Strömungen vorhergesagt.",
@@ -988,6 +1024,72 @@
     "DE": "Durchschnittliche Jahrestemperatur unter verschiedenen Klimaszenarien.",
     "FR": "Température annuelle moyenne dans différents scénarios de changement climatique.",
     "IT": "Temperatura media annuale in una serie di scenari di cambiamento climatico."
+  },
+  "swot": {
+    "EN": "Satellite water level",
+    "DE": "Satelliten-Wasserstand",
+    "FR": "Niveau d'eau satellitaire",
+    "IT": "Livello dell'acqua da satellite"
+  },
+  "swotText": {
+    "EN": "Lake surface elevation measured by the SWOT satellite altimeter.",
+    "DE": "Seespiegelhöhe, gemessen vom Satellitenaltimeter SWOT.",
+    "FR": "Altitude de la surface du lac mesurée par l'altimètre satellitaire SWOT.",
+    "IT": "Quota della superficie del lago misurata dall'altimetro satellitare SWOT."
+  },
+  "datum": {
+    "EN": "Height datum",
+    "DE": "Höhenbezug",
+    "FR": "Référence altimétrique",
+    "IT": "Riferimento altimetrico"
+  },
+  "geoid": {
+    "EN": "geoid",
+    "DE": "Geoid",
+    "FR": "géoïde",
+    "IT": "geoide"
+  },
+  "trend": {
+    "EN": "Trend",
+    "DE": "Trend",
+    "FR": "Tendance",
+    "IT": "Tendenza"
+  },
+  "smoothness": {
+    "EN": "Smoothness (f)",
+    "DE": "Glättung (f)",
+    "FR": "Lissage (f)",
+    "IT": "Livellamento (f)"
+  },
+  "smoothnessText": {
+    "EN": "Controls how many nearby observations are used in each local LOWESS fit. Lower values follow short-term changes more closely; higher values produce a smoother curve.",
+    "DE": "Bestimmt, wie viele benachbarte Messungen in jede lokale LOWESS-Anpassung einfliessen. Kleinere Werte folgen kurzfristigen Änderungen genauer, grössere Werte ergeben eine glattere Kurve.",
+    "FR": "Détermine le nombre d'observations voisines utilisées dans chaque ajustement LOWESS local. Les valeurs faibles suivent de plus près les variations à court terme, les valeurs élevées donnent une courbe plus lisse.",
+    "IT": "Determina quante osservazioni vicine sono usate in ogni adattamento LOWESS locale. Valori bassi seguono più da vicino le variazioni a breve termine, valori alti producono una curva più liscia."
+  },
+  "flagged": {
+    "EN": "Flagged",
+    "DE": "Markiert",
+    "FR": "Signalée",
+    "IT": "Segnalata"
+  },
+  "goodQuality": {
+    "EN": "Good quality",
+    "DE": "Gute Qualität",
+    "FR": "Bonne qualité",
+    "IT": "Buona qualità"
+  },
+  "unvalidatedDatum": {
+    "EN": "This datum conversion has not been validated against reference measurements, use the values as an indication only.",
+    "DE": "Diese Höhenumrechnung wurde nicht anhand von Referenzmessungen validiert, die Werte dienen nur als Anhaltspunkt.",
+    "FR": "Cette conversion altimétrique n'a pas été validée par des mesures de référence, les valeurs sont données à titre indicatif.",
+    "IT": "Questa conversione altimetrica non è stata validata con misure di riferimento, i valori sono solo indicativi."
+  },
+  "lastUpdated": {
+    "EN": "Last updated",
+    "DE": "Zuletzt aktualisiert",
+    "FR": "Dernière mise à jour",
+    "IT": "Ultimo aggiornamento"
   },
   "referencePeriod": {
     "EN": "Reference period",
@@ -2040,5 +2142,107 @@
     "DE": "",
     "FR": "",
     "IT": ""
+  },
+  "sortAndFilter": {
+    "EN": "Sort & filter",
+    "DE": "Sortieren & filtern",
+    "FR": "Trier et filtrer",
+    "IT": "Ordina e filtra"
+  },
+  "sortBy": {
+    "EN": "Sort by",
+    "DE": "Sortieren nach",
+    "FR": "Trier par",
+    "IT": "Ordina per"
+  },
+  "country": {
+    "EN": "Country",
+    "DE": "Land",
+    "FR": "Pays",
+    "IT": "Paese"
+  },
+  "warmest": {
+    "EN": "Warmest",
+    "DE": "Wärmste",
+    "FR": "Les plus chauds",
+    "IT": "Più caldi"
+  },
+  "coolest": {
+    "EN": "Coolest",
+    "DE": "Kälteste",
+    "FR": "Les plus froids",
+    "IT": "Più freddi"
+  },
+  "az": {
+    "EN": "A–Z",
+    "DE": "A–Z",
+    "FR": "A–Z",
+    "IT": "A–Z"
+  },
+  "showLakes": {
+    "EN": "Show # lakes",
+    "DE": "# Seen anzeigen",
+    "FR": "Afficher # lacs",
+    "IT": "Mostra # laghi"
+  },
+  "showLake": {
+    "EN": "Show 1 lake",
+    "DE": "1 See anzeigen",
+    "FR": "Afficher 1 lac",
+    "IT": "Mostra 1 lago"
+  },
+  "clearAll": {
+    "EN": "Clear all",
+    "DE": "Alle zurücksetzen",
+    "FR": "Tout effacer",
+    "IT": "Cancella tutto"
+  },
+  "threedModel": {
+    "EN": "3D Model",
+    "DE": "3D-Modell",
+    "FR": "Modèle 3D",
+    "IT": "Modello 3D"
+  },
+  "onedModel": {
+    "EN": "1D Model",
+    "DE": "1D-Modell",
+    "FR": "Modèle 1D",
+    "IT": "Modello 1D"
+  },
+  "switzerland": {
+    "EN": "Switzerland",
+    "DE": "Schweiz",
+    "FR": "Suisse",
+    "IT": "Svizzera"
+  },
+  "italy": {
+    "EN": "Italy",
+    "DE": "Italien",
+    "FR": "Italie",
+    "IT": "Italia"
+  },
+  "france": {
+    "EN": "France",
+    "DE": "Frankreich",
+    "FR": "France",
+    "IT": "Francia"
+  },
+  "austria": {
+    "EN": "Austria",
+    "DE": "Österreich",
+    "FR": "Autriche",
+    "IT": "Austria"
+  },
+  "germany": {
+    "EN": "Germany",
+    "DE": "Deutschland",
+    "FR": "Allemagne",
+    "IT": "Germania"
+  },
+  "slovenia": {
+    "EN": "Slovenia",
+    "DE": "Slowenien",
+    "FR": "Slovénie",
+    "IT": "Slovenia"
   }
 }

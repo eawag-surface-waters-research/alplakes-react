@@ -957,6 +957,7 @@ const plotLines = (div, g, data, xAxis, yAxis, curve) => {
     );
   }
   for (let j = 0; j < data.length; j++) {
+    if (data[j].lines === false) continue;
     if (curve || data[j].curve) {
       g.append("path")
         .datum(data[j].x)
@@ -1092,6 +1093,7 @@ const plotConfidenceInterval = (g, data, xAxis, yAxis) => {
 const plotScatter = (context, data, xAxis, yAxis, options) => {
   context.clearRect(0, 0, options.canvasWidth, options.canvasHeight);
   for (var i = 0; i < data.length; i++) {
+    if (data[i].scatter === false) continue;
     if ("lineWeight" in data[i]) {
       context.lineWidth = data[i].lineWeight;
     } else {

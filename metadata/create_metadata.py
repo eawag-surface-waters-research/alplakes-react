@@ -7,6 +7,16 @@ import functions as func
 upload = True
 bucket_folder = "static/website/metadata/swan"
 
+flag_country = {
+    "swiss": "CH",
+    "italian": "IT",
+    "france": "FR",
+    "french": "FR",
+    "austrian": "AT",
+    "german": "DE",
+    "slovenian": "SI",
+}
+
 # Load Metadata
 with open("metadata.json") as f:
     metadata = json.load(f)
@@ -56,6 +66,15 @@ srd = response.json()
 
 s3 = boto3.client('s3')
 
+# Load swot data
+swot = []
+paginator = s3.get_paginator('list_objects_v2')
+for page in paginator.paginate(Bucket='alplakes-eawag', Prefix='swot/'):
+    for obj in page.get('Contents', []):
+        swot_key = obj['Key'].split('/')[-1].replace('.json', '')
+        if swot_key != 'metadata':
+            swot.append(swot_key)
+
 # Create files
 home_list = []
 one_dimensional_list = []
@@ -64,6 +83,7 @@ three_dimensional_list = []
 
 for lake in metadata:
     add = False
+    satellites = []
     home = {"key": lake["key"],
             "name": lake["name"],
             "area": lake["area"],
@@ -119,6 +139,16 @@ for lake in metadata:
     if 'mapHide' in lake and lake['mapHide']:
         home['mapHide'] = True
 
+    # Countries
+    if "flags" in lake:
+        countries = []
+        for flag in lake["flags"]:
+            code = flag_country.get(flag)
+            if code and code not in countries:
+                countries.append(code)
+        if len(countries) > 0:
+            home["countries"] = countries
+
     # Three Dimensional Model
     if '3D' in lake:
         add = True
@@ -152,6 +182,7 @@ for lake in metadata:
 
     if '2D' in lake:
         add = True
+        home["filters"].append("2D")
         for model_id in lake["2D"]["models"].keys():
             response = requests.get("https://alplakes-api.eawag.ch/simulations/2d/metadata/{}/{}".format(lake["2D"]["models"][model_id]["model"],lake["key"]))
             model_metadata = response.json()
@@ -230,7 +261,13 @@ for lake in metadata:
                 simstrat_parameters["hydro_source"] = "Bundesamt für Umwelt BAFU"
             if "calibration_source" in simstrat_metadata:
                 simstrat_parameters["calibration_source"] = simstrat_metadata["calibration_source"]
-            data["forecast"]["1d_model"].append({**simstrat_parameters, "parameter": "T", "unit": "°", "simstrat_oxygen": simstrat_oxygen})
+            one_d_entry = {**simstrat_parameters, "parameter": "T", "unit": "°", "simstrat_oxygen": simstrat_oxygen}
+            da = lake.get("simstrat_da", {}).get(k)
+            if da:
+                one_d_entry["runs"] = da["runs"]
+                if da.get("default_run"):
+                    one_d_entry["default_run"] = da["default_run"]
+            data["forecast"]["1d_model"].append(one_d_entry)
             data["trends"]["doy"][k] = {
                 **simstrat_parameters,
                 "depths": [0],
@@ -254,6 +291,12 @@ for lake in metadata:
                 "displayOptions": { "paletteName": "vik", "thresholdStep": 200 }
             }
         home["filters"].append("1D")
+
+    # External Models
+    if "external_model" in lake:
+        if "forecast" not in data:
+            data["forecast"] = {}
+        data["forecast"]["external_model"] = lake["external_model"]
 
     # AI summary
     # Remove AI summary due to Eawag legal concerns - to be added back when resolved
@@ -309,6 +352,8 @@ for lake in metadata:
                 for source in sat["sources"]:
                     if source["satellite"] in satellite[key] and source["parameter"] in satellite[key][source["satellite"]]:
                         sm.append(source["link"].replace("#key#", key))
+                        if source["satellite"] not in satellites:
+                            satellites.append(source["satellite"])
                 if len(sm) > 0:
                     temp = sat.copy()
                     temp["key"] = key
@@ -317,6 +362,17 @@ for lake in metadata:
         if len(satellite_data) > 0:
             home["filters"].append("satellite")
             data["satellite"] = satellite_data
+
+    # Swot data
+    if key in swot and key not in water_levels:
+        add = True
+        data["swot"] = True
+        satellites.append("swot")
+        if "satellite" not in home["filters"]:
+            home["filters"].append("satellite")
+
+    if len(satellites) > 0:
+        home["satellites"] = sorted(satellites)
 
     # Meteo data
     layers["layers"].extend(func.meteo_layers(layers["bounds"]))

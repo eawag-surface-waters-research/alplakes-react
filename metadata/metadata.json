@@ -331,7 +331,7 @@
     {
         "key": "greifensee",
         "name": {
-            "EN": "Lake Greifen",
+            "EN": "Greifensee",
             "DE": "Greifensee",
             "FR": "Lac de Greifen",
             "IT": "Lago di Greifen"
@@ -491,6 +491,22 @@
             "upperlugano",
             "lowerlugano"
         ],
+        "simstrat_da": {
+            "upperlugano": {
+                "default_run": "upperlugano",
+                "runs": [
+                    {
+                        "name": "Standard",
+                        "key": "upperlugano"
+                    },
+                    {
+                        "name": "Data assimilation",
+                        "key": "upperlugano_python_enkf",
+                        "beta": true
+                    }
+                ]
+            }
+        },
         "datalakes_id": [
             22,
             24
@@ -981,6 +997,23 @@
             "upperconstance",
             "lowerconstance"
         ],
+        "external_model": [
+            {
+                "key": "bodensee_online",
+                "name": "Lake Constance",
+                "model": "BodenseeOnline",
+                "model_type": "delft3d-flow",
+                "model_url": "https://www.bodenseeonline.de",
+                "latitude": 47.62,
+                "longitude": 9.37,
+                "url": "https://www.lubw.baden-wuerttemberg.de/wasser/bodenseeonline",
+                "institute": "Landesanstalt für Umwelt Baden-Württemberg (LUBW)",
+                "institute_url": "https://www.lubw.baden-wuerttemberg.de",
+                "data": "simulations/bodensee/cache/constance.json",
+                "parameter": "temperature",
+                "unit": "°"
+            }
+        ],
         "datalakes_id": [
             10,
             53
@@ -1100,7 +1133,7 @@
     {
         "key": "klontalersee",
         "name": {
-            "EN": "Lake Klöntal",
+            "EN": "Klöntalersee",
             "DE": "Klöntalersee",
             "FR": "Lac du Klöntal",
             "IT": "Lago di Klöntal"
@@ -1467,7 +1500,7 @@
     {
         "key": "walensee",
         "name": {
-            "EN": "Lake Walen",
+            "EN": "Walensee",
             "DE": "Walensee",
             "FR": "Lac de Walenstadt",
             "IT": "Lago di Walenstadt"
@@ -2961,7 +2994,7 @@
         "longitude": 6.176,
         "current_temperature": true,
         "flags": [
-            "france"
+            "french"
         ],
         "type": "Natural",
         "volume": 1.12,
@@ -2992,7 +3025,7 @@
         "longitude": 5.862,
         "current_temperature": true,
         "flags": [
-            "france"
+            "french"
         ],
         "type": "Natural",
         "volume": 3.6,
@@ -3113,7 +3146,7 @@
     {
         "key": "ledavsko",
         "name": {
-            "EN": "Lake Ladavsko",
+            "EN": "Lake Ledavsko",
             "DE": "Ledavsko See",
             "FR": "Lac de Ledavsko",
             "IT": "Lago di Ledavsko"
@@ -3276,7 +3309,7 @@
     {
         "key": "fuschlsee",
         "name": {
-            "EN": "Fuschlsee",
+            "EN": "Lake Fuschl",
             "DE": "Fuschlsee",
             "FR": "Fuschlsee",
             "IT": "Fuschlsee"
@@ -3304,7 +3337,7 @@
     {
         "key": "wolfgangsee",
         "name": {
-            "EN": "Wolfgangsee",
+            "EN": "Lake Wolfgang",
             "DE": "Wolfgangsee",
             "FR": "Wolfgangsee",
             "IT": "Wolfgangsee"
@@ -3413,7 +3446,7 @@
     {
         "key": "millstaetter",
         "name": {
-            "EN": "Millstätter See",
+            "EN": "Lake Millstatt",
             "DE": "Millstätter See",
             "FR": "Millstätter See",
             "IT": "Millstätter See"
@@ -3441,7 +3474,7 @@
     {
         "key": "obertrumer",
         "name": {
-            "EN": "Obertrumer",
+            "EN": "Lake Obertrum",
             "DE": "Obertrumer",
             "FR": "Obertrumer",
             "IT": "Obertrumer"
@@ -3469,7 +3502,7 @@
     {
         "key": "ossiacher",
         "name": {
-            "EN": "Ossiacher See",
+            "EN": "Lake Ossiach",
             "DE": "Ossiacher See",
             "FR": "Ossiacher See",
             "IT": "Ossiacher See"
@@ -3553,7 +3586,7 @@
     {
         "key": "zeller",
         "name": {
-            "EN": "Zeller",
+            "EN": "Lake Zell",
             "DE": "Zeller",
             "FR": "Zeller",
             "IT": "Zeller"
@@ -3740,7 +3773,7 @@
     {
         "key": "hallstatter",
         "name": {
-            "EN": "Lake Hallstätter",
+            "EN": "Lake Hallstatt",
             "DE": "Hallstätter See",
             "FR": "Hallstätter See",
             "IT": "Hallstätter See"
@@ -3921,6 +3954,9 @@
         "simstrat": false,
         "latitude": 47.4339,
         "longitude": 8.4976,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": 8,
         "volume": "NA"
@@ -3939,6 +3975,9 @@
         "simstrat": false,
         "latitude": 47.2709,
         "longitude": 9.4578,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": "NA",
         "volume": "NA"
@@ -3957,6 +3996,9 @@
         "simstrat": false,
         "latitude": 47.2684,
         "longitude": 9.4008,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": 15,
         "volume": "NA"
@@ -3975,6 +4017,9 @@
         "simstrat": false,
         "latitude": 47.2516,
         "longitude": 9.4177,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": 31,
         "volume": "NA"
@@ -3993,6 +4038,9 @@
         "simstrat": false,
         "latitude": 47.3987,
         "longitude": 9.3138,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": "NA",
         "volume": "NA"
@@ -4011,6 +4059,9 @@
         "simstrat": false,
         "latitude": 46.9426,
         "longitude": 9.4789,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": "NA",
         "volume": "NA"
@@ -4029,6 +4080,9 @@
         "simstrat": false,
         "latitude": 46.9585,
         "longitude": 8.5721,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": 37,
         "volume": "NA"
@@ -4047,6 +4101,9 @@
         "simstrat": false,
         "latitude": 46.9144,
         "longitude": 9.3772,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": 135,
         "volume": "NA"
@@ -4065,6 +4122,9 @@
         "simstrat": false,
         "latitude": 46.9556,
         "longitude": 9.0998,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": "NA",
         "volume": "NA"
@@ -4083,6 +4143,9 @@
         "simstrat": false,
         "latitude": 46.9802,
         "longitude": 9.0132,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": 30,
         "volume": "NA"
@@ -4101,6 +4164,9 @@
         "simstrat": false,
         "latitude": 47.0393,
         "longitude": 9.1544,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": 26,
         "volume": "NA"
@@ -4119,6 +4185,9 @@
         "simstrat": false,
         "latitude": 47.1562,
         "longitude": 9.3764,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": 8,
         "max_depth": 11.8,
         "volume": 0.001533
@@ -4137,6 +4206,9 @@
         "simstrat": false,
         "latitude": 46.7402,
         "longitude": 9.551,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": 5,
         "volume": "NA"
@@ -4155,6 +4227,9 @@
         "simstrat": false,
         "latitude": 46.836,
         "longitude": 9.0134,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": 125,
         "volume": 0.093
@@ -4173,6 +4248,9 @@
         "simstrat": false,
         "latitude": 46.868,
         "longitude": 8.4298,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": 16,
         "volume": 0.0017
@@ -4191,6 +4269,9 @@
         "simstrat": false,
         "latitude": 46.8199,
         "longitude": 9.8534,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": 53,
         "volume": 0.0156
@@ -4209,6 +4290,9 @@
         "simstrat": false,
         "latitude": 46.8565,
         "longitude": 8.8709,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": "NA",
         "volume": "NA"
@@ -4227,6 +4311,9 @@
         "simstrat": false,
         "latitude": 46.8302,
         "longitude": 9.1035,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": 42,
         "volume": "NA"
@@ -4245,6 +4332,9 @@
         "simstrat": false,
         "latitude": 46.9193,
         "longitude": 8.9041,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": "NA",
         "volume": "NA"
@@ -4263,6 +4353,9 @@
         "simstrat": false,
         "latitude": 46.4049,
         "longitude": 10.0203,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": 53,
         "volume": 0.0186
@@ -4281,6 +4374,9 @@
         "simstrat": false,
         "latitude": 46.3992,
         "longitude": 9.8485,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": "NA",
         "volume": "NA"
@@ -4299,6 +4395,10 @@
         "simstrat": false,
         "latitude": 46.5933,
         "longitude": 10.179,
+        "flags": [
+            "italian",
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": 119,
         "volume": "NA"
@@ -4317,6 +4417,9 @@
         "simstrat": false,
         "latitude": 46.5653,
         "longitude": 10.3882,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": "NA",
         "volume": "NA"
@@ -4335,6 +4438,9 @@
         "simstrat": false,
         "latitude": 47.5964,
         "longitude": 8.1619,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": "NA",
         "volume": "NA"
@@ -4353,6 +4459,9 @@
         "simstrat": false,
         "latitude": 47.5835,
         "longitude": 8.2369,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": 8,
         "volume": "NA"
@@ -4371,6 +4480,9 @@
         "simstrat": false,
         "latitude": 46.967,
         "longitude": 6.5747,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": 11,
         "volume": "NA"
@@ -4389,6 +4501,9 @@
         "simstrat": false,
         "latitude": 46.9653,
         "longitude": 7.3296,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": 20,
         "volume": 0.025
@@ -4407,6 +4522,9 @@
         "simstrat": false,
         "latitude": 46.853,
         "longitude": 7.1654,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": 38,
         "volume": "NA"
@@ -4425,6 +4543,9 @@
         "simstrat": false,
         "latitude": 46.7957,
         "longitude": 7.0406,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": "NA",
         "volume": "NA"
@@ -4443,6 +4564,9 @@
         "simstrat": false,
         "latitude": 46.6655,
         "longitude": 7.2816,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": 9,
         "volume": "NA"
@@ -4461,6 +4585,9 @@
         "simstrat": false,
         "latitude": 46.614,
         "longitude": 7.1425,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": 27,
         "volume": 0.0126
@@ -4479,6 +4606,9 @@
         "simstrat": false,
         "latitude": 46.6872,
         "longitude": 7.5205,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": 44,
         "volume": "NA"
@@ -4497,6 +4627,9 @@
         "simstrat": false,
         "latitude": 46.6895,
         "longitude": 7.6638,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": "NA",
         "volume": "NA"
@@ -4515,6 +4648,9 @@
         "simstrat": false,
         "latitude": 46.6302,
         "longitude": 8.234,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": "NA",
         "volume": "NA"
@@ -4533,6 +4669,9 @@
         "simstrat": false,
         "latitude": 46.6098,
         "longitude": 8.2095,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": "NA",
         "volume": "NA"
@@ -4551,6 +4690,9 @@
         "simstrat": false,
         "latitude": 46.794,
         "longitude": 8.3902,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": 9,
         "volume": "NA"
@@ -4569,6 +4711,9 @@
         "simstrat": false,
         "latitude": 46.7732,
         "longitude": 8.357,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": 49,
         "volume": "NA"
@@ -4587,6 +4732,9 @@
         "simstrat": false,
         "latitude": 46.7709,
         "longitude": 8.2725,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": 18,
         "volume": "NA"
@@ -4605,6 +4753,9 @@
         "simstrat": false,
         "latitude": 46.7738,
         "longitude": 8.3062,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": "NA",
         "volume": 0.0038
@@ -4623,6 +4774,9 @@
         "simstrat": false,
         "latitude": 46.6901,
         "longitude": 8.3587,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": 20,
         "volume": 0.005
@@ -4641,6 +4795,9 @@
         "simstrat": false,
         "latitude": 46.6458,
         "longitude": 8.4839,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": 99,
         "volume": 0.076
@@ -4659,6 +4816,9 @@
         "simstrat": false,
         "latitude": 46.6155,
         "longitude": 8.3299,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": 47,
         "volume": 0.013
@@ -4677,6 +4837,9 @@
         "simstrat": false,
         "latitude": 46.5853,
         "longitude": 8.3281,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": 77,
         "volume": 0.025
@@ -4695,6 +4858,9 @@
         "simstrat": false,
         "latitude": 46.5661,
         "longitude": 8.3015,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": 100,
         "volume": 0.095
@@ -4713,6 +4879,9 @@
         "simstrat": false,
         "latitude": 46.6601,
         "longitude": 8.6632,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": "NA",
         "volume": "NA"
@@ -4731,6 +4900,9 @@
         "simstrat": false,
         "latitude": 46.6315,
         "longitude": 8.7628,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": 122,
         "volume": 0.045
@@ -4749,6 +4921,9 @@
         "simstrat": false,
         "latitude": 46.6272,
         "longitude": 8.7135,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": 136,
         "volume": 0.0411
@@ -4767,6 +4942,9 @@
         "simstrat": false,
         "latitude": 46.5754,
         "longitude": 8.795,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": 86,
         "volume": "NA"
@@ -4785,6 +4963,9 @@
         "simstrat": false,
         "latitude": 46.6072,
         "longitude": 9.0195,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": "NA",
         "volume": "NA"
@@ -4803,6 +4984,9 @@
         "simstrat": false,
         "latitude": 46.569,
         "longitude": 9.1019,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": 140,
         "volume": 0.101
@@ -4821,6 +5005,9 @@
         "simstrat": false,
         "latitude": 46.568,
         "longitude": 8.9776,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": 181,
         "volume": "NA"
@@ -4839,6 +5026,9 @@
         "simstrat": false,
         "latitude": 46.5668,
         "longitude": 9.3686,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": 51,
         "volume": 0.0175
@@ -4857,6 +5047,9 @@
         "simstrat": false,
         "latitude": 46.4233,
         "longitude": 7.0502,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": 105,
         "volume": "NA"
@@ -4875,6 +5068,9 @@
         "simstrat": false,
         "latitude": 46.3455,
         "longitude": 6.8402,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": "NA",
         "volume": "NA"
@@ -4893,6 +5089,9 @@
         "simstrat": false,
         "latitude": 46.3385,
         "longitude": 6.928,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": "NA",
         "volume": "NA"
@@ -4911,6 +5110,9 @@
         "simstrat": false,
         "latitude": 46.496,
         "longitude": 7.0512,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": "NA",
         "volume": "NA"
@@ -4929,6 +5131,9 @@
         "simstrat": false,
         "latitude": 46.4637,
         "longitude": 7.0717,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": "NA",
         "volume": "NA"
@@ -4947,6 +5152,9 @@
         "simstrat": false,
         "latitude": 46.3889,
         "longitude": 7.217,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": 50,
         "volume": 0.0105
@@ -4965,6 +5173,9 @@
         "simstrat": false,
         "latitude": 46.3559,
         "longitude": 7.2941,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": "NA",
         "volume": "NA"
@@ -4983,6 +5194,9 @@
         "simstrat": false,
         "latitude": 46.4117,
         "longitude": 7.6188,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": "NA",
         "volume": "NA"
@@ -5001,6 +5215,9 @@
         "simstrat": false,
         "latitude": 46.3866,
         "longitude": 7.406,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": "NA",
         "volume": "NA"
@@ -5019,6 +5236,9 @@
         "simstrat": false,
         "latitude": 46.3803,
         "longitude": 7.5386,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": "NA",
         "volume": "NA"
@@ -5037,6 +5257,9 @@
         "simstrat": false,
         "latitude": 46.3507,
         "longitude": 7.4303,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": 140,
         "volume": 0.051
@@ -5055,6 +5278,9 @@
         "simstrat": false,
         "latitude": 46.5431,
         "longitude": 8.2574,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": 90,
         "volume": "NA"
@@ -5073,6 +5299,9 @@
         "simstrat": false,
         "latitude": 46.375,
         "longitude": 8.0028,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": 104,
         "volume": 0.0092
@@ -5091,6 +5320,9 @@
         "simstrat": false,
         "latitude": 46.5619,
         "longitude": 8.5412,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": 93,
         "volume": 0.025
@@ -5109,6 +5341,9 @@
         "simstrat": false,
         "latitude": 46.5605,
         "longitude": 8.3402,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": "NA",
         "volume": "NA"
@@ -5127,6 +5362,9 @@
         "simstrat": false,
         "latitude": 46.5526,
         "longitude": 8.298,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": "NA",
         "volume": "NA"
@@ -5145,6 +5383,9 @@
         "simstrat": false,
         "latitude": 46.5028,
         "longitude": 8.4467,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": "NA",
         "volume": "NA"
@@ -5163,6 +5404,9 @@
         "simstrat": false,
         "latitude": 46.4576,
         "longitude": 8.3699,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": 66,
         "volume": 0.0186
@@ -5181,6 +5425,9 @@
         "simstrat": false,
         "latitude": 46.455,
         "longitude": 8.501,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": "NA",
         "volume": 0.029
@@ -5199,6 +5446,9 @@
         "simstrat": false,
         "latitude": 46.4492,
         "longitude": 8.5396,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": "NA",
         "volume": "NA"
@@ -5217,6 +5467,9 @@
         "simstrat": false,
         "latitude": 46.4456,
         "longitude": 8.5166,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": "NA",
         "volume": 0.0067
@@ -5235,6 +5488,9 @@
         "simstrat": false,
         "latitude": 46.4333,
         "longitude": 8.5031,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": 100,
         "volume": "NA"
@@ -5253,6 +5509,9 @@
         "simstrat": false,
         "latitude": 46.3703,
         "longitude": 8.4822,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": 70,
         "volume": "NA"
@@ -5271,6 +5530,9 @@
         "simstrat": false,
         "latitude": 46.3484,
         "longitude": 8.2528,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": "NA",
         "volume": "NA"
@@ -5289,6 +5551,9 @@
         "simstrat": false,
         "latitude": 46.5629,
         "longitude": 8.5995,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": 34,
         "volume": "NA"
@@ -5307,6 +5572,9 @@
         "simstrat": false,
         "latitude": 46.5404,
         "longitude": 8.6903,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": 68,
         "volume": 0.048
@@ -5325,6 +5593,9 @@
         "simstrat": false,
         "latitude": 46.4777,
         "longitude": 8.5686,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": 104,
         "volume": 0.0316
@@ -5343,6 +5614,9 @@
         "simstrat": false,
         "latitude": 46.4793,
         "longitude": 8.7204,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": 50,
         "volume": "NA"
@@ -5361,6 +5635,9 @@
         "simstrat": false,
         "latitude": 46.4647,
         "longitude": 8.6486,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": 124,
         "volume": "NA"
@@ -5379,6 +5656,9 @@
         "simstrat": false,
         "latitude": 46.4509,
         "longitude": 8.7167,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": "NA",
         "volume": "NA"
@@ -5397,6 +5677,9 @@
         "simstrat": false,
         "latitude": 46.3965,
         "longitude": 8.7998,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": "NA",
         "volume": "NA"
@@ -5415,6 +5698,9 @@
         "simstrat": false,
         "latitude": 46.4255,
         "longitude": 9.0265,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": "NA",
         "volume": "NA"
@@ -5433,6 +5719,10 @@
         "simstrat": false,
         "latitude": 46.4505,
         "longitude": 9.4437,
+        "flags": [
+            "italian",
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": 133,
         "volume": 0.197
@@ -5451,6 +5741,9 @@
         "simstrat": false,
         "latitude": 46.4505,
         "longitude": 9.1887,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": 39,
         "volume": "NA"
@@ -5469,6 +5762,9 @@
         "simstrat": false,
         "latitude": 46.5005,
         "longitude": 9.6363,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": 59,
         "volume": "NA"
@@ -5487,6 +5783,9 @@
         "simstrat": false,
         "latitude": 46.38,
         "longitude": 9.7047,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": 17,
         "volume": "NA"
@@ -5505,6 +5804,9 @@
         "simstrat": false,
         "latitude": 46.3284,
         "longitude": 9.6479,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": 108,
         "volume": "NA"
@@ -5523,6 +5825,9 @@
         "simstrat": false,
         "latitude": 46.1962,
         "longitude": 6.0485,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": "NA",
         "volume": "NA"
@@ -5541,6 +5846,9 @@
         "simstrat": false,
         "latitude": 46.2976,
         "longitude": 6.9309,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": "NA",
         "volume": "NA"
@@ -5559,6 +5867,9 @@
         "simstrat": false,
         "latitude": 46.2914,
         "longitude": 6.9592,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": "NA",
         "volume": "NA"
@@ -5577,6 +5888,9 @@
         "simstrat": false,
         "latitude": 46.1407,
         "longitude": 6.9586,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": 48,
         "volume": "NA"
@@ -5595,6 +5909,9 @@
         "simstrat": false,
         "latitude": 46.0799,
         "longitude": 6.9165,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": 161,
         "volume": "NA"
@@ -5613,6 +5930,9 @@
         "simstrat": false,
         "latitude": 46.0615,
         "longitude": 6.8896,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": 42,
         "volume": "NA"
@@ -5631,6 +5951,9 @@
         "simstrat": false,
         "latitude": 46.2122,
         "longitude": 7.3282,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": "NA",
         "volume": "NA"
@@ -5649,6 +5972,9 @@
         "simstrat": false,
         "latitude": 46.1787,
         "longitude": 7.0939,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": 46,
         "volume": "NA"
@@ -5667,6 +5993,9 @@
         "simstrat": false,
         "latitude": 46.1079,
         "longitude": 7.3236,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": 76,
         "volume": 0.02
@@ -5685,6 +6014,9 @@
         "simstrat": false,
         "latitude": 46.1074,
         "longitude": 7.2725,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": "NA",
         "volume": "NA"
@@ -5703,6 +6035,9 @@
         "simstrat": false,
         "latitude": 46.0495,
         "longitude": 7.3083,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": "NA",
         "volume": "NA"
@@ -5721,6 +6056,9 @@
         "simstrat": false,
         "latitude": 46.2573,
         "longitude": 7.6319,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": 64,
         "volume": 0.0066
@@ -5739,6 +6077,9 @@
         "simstrat": false,
         "latitude": 46.1285,
         "longitude": 7.5708,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": 120,
         "volume": 0.078
@@ -5757,6 +6098,9 @@
         "simstrat": false,
         "latitude": 46.0567,
         "longitude": 7.4,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": 227,
         "volume": 0.4
@@ -5775,6 +6119,9 @@
         "simstrat": false,
         "latitude": 46.2876,
         "longitude": 8.1079,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": "NA",
         "volume": 0.00366
@@ -5793,6 +6140,9 @@
         "simstrat": false,
         "latitude": 46.0378,
         "longitude": 7.9607,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": "NA",
         "volume": 0.101
@@ -5811,6 +6161,9 @@
         "simstrat": false,
         "latitude": 46.266,
         "longitude": 8.5849,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": "NA",
         "volume": "NA"
@@ -5829,6 +6182,9 @@
         "simstrat": false,
         "latitude": 46.212,
         "longitude": 8.8528,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": 189,
         "volume": 0.105
@@ -5847,6 +6203,9 @@
         "simstrat": false,
         "latitude": 46.1574,
         "longitude": 8.6246,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": "NA",
         "volume": 0.00426
@@ -5865,6 +6224,9 @@
         "simstrat": false,
         "latitude": 46.255,
         "longitude": 9.2271,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": 16,
         "volume": "NA"
@@ -5883,6 +6245,9 @@
         "simstrat": false,
         "latitude": 46.0284,
         "longitude": 7.1163,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": "NA",
         "volume": "NA"
@@ -5901,6 +6266,9 @@
         "simstrat": false,
         "latitude": 45.9191,
         "longitude": 7.1986,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": 75,
         "volume": 0.02015
@@ -5919,6 +6287,9 @@
         "simstrat": false,
         "latitude": 45.9785,
         "longitude": 7.3534,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": 180,
         "volume": "NA"
@@ -5937,6 +6308,9 @@
         "simstrat": false,
         "latitude": 45.9966,
         "longitude": 8.9276,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": 3,
         "volume": "NA"
@@ -5955,6 +6329,9 @@
         "simstrat": false,
         "latitude": 47.0867,
         "longitude": 9.0143,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": "NA",
         "volume": "NA"
@@ -5973,6 +6350,9 @@
         "simstrat": false,
         "latitude": 47.09,
         "longitude": 8.9183,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": 48,
         "volume": 0.15
@@ -5991,6 +6371,9 @@
         "simstrat": false,
         "latitude": 46.9203,
         "longitude": 8.2737,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": 6,
         "volume": 0.0004
@@ -6009,6 +6392,9 @@
         "simstrat": false,
         "latitude": 46.8636,
         "longitude": 9.0271,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": 98,
         "volume": "NA"
@@ -6027,6 +6413,9 @@
         "simstrat": false,
         "latitude": 46.67,
         "longitude": 10.1567,
+        "flags": [
+            "swiss"
+        ],
         "ave_depth": "NA",
         "max_depth": "NA",
         "volume": 0.0074
@@ -6045,6 +6434,9 @@
         "elevation": 655.6,
         "latitude": 47.7,
         "longitude": 11.226,
+        "flags": [
+            "german"
+        ],
         "simstrat_oxygen": false,
         "type": "Natural",
         "volume": "NA",
@@ -6064,6 +6456,9 @@
         "elevation": 560.4,
         "latitude": 48.058,
         "longitude": 11.179,
+        "flags": [
+            "german"
+        ],
         "simstrat_oxygen": false,
         "current_temperature": true,
         "type": "Natural",
@@ -6087,6 +6482,9 @@
         "elevation": 787.3,
         "latitude": 47.572,
         "longitude": 10.637,
+        "flags": [
+            "german"
+        ],
         "simstrat_oxygen": false,
         "type": "Natural",
         "volume": "NA",
@@ -6106,6 +6504,9 @@
         "elevation": 800.8,
         "latitude": 47.59,
         "longitude": 11.347,
+        "flags": [
+            "german"
+        ],
         "simstrat_oxygen": false,
         "type": "Natural",
         "volume": "NA",
@@ -6129,6 +6530,9 @@
         "elevation": 442.1,
         "latitude": 47.971,
         "longitude": 12.743,
+        "flags": [
+            "german"
+        ],
         "simstrat_oxygen": false,
         "type": "Natural",
         "volume": "NA",
@@ -6148,6 +6552,9 @@
         "elevation": 725.5,
         "latitude": 47.719,
         "longitude": 11.739,
+        "flags": [
+            "german"
+        ],
         "simstrat_oxygen": false,
         "current_temperature": true,
         "type": "Natural",
@@ -6161,7 +6568,7 @@
     {
         "key": "starnberger",
         "name": {
-            "EN": "Starnberger See",
+            "EN": "Lake Starnberg",
             "DE": "Starnberger See",
             "FR": "Starnberger See",
             "IT": "Starnberger See"
@@ -6172,6 +6579,9 @@
         "elevation": 584.2,
         "latitude": 47.9,
         "longitude": 11.317,
+        "flags": [
+            "german"
+        ],
         "simstrat_oxygen": false,
         "current_temperature": true,
         "type": "Natural",
@@ -6197,6 +6607,9 @@
         "elevation": 648.6,
         "latitude": 47.69,
         "longitude": 11.161,
+        "flags": [
+            "german"
+        ],
         "simstrat_oxygen": false,
         "type": "Natural",
         "volume": "NA",
@@ -6219,6 +6632,9 @@
         "elevation": 470.1,
         "latitude": 47.873,
         "longitude": 12.239,
+        "flags": [
+            "german"
+        ],
         "simstrat_oxygen": false,
         "type": "Natural",
         "volume": "NA",
@@ -6238,6 +6654,9 @@
         "elevation": 653.0,
         "latitude": 47.85,
         "longitude": 11.855,
+        "flags": [
+            "german"
+        ],
         "simstrat_oxygen": false,
         "type": "Natural",
         "volume": "NA",
@@ -6257,6 +6676,9 @@
         "elevation": 776.8,
         "latitude": 47.723,
         "longitude": 11.862,
+        "flags": [
+            "german"
+        ],
         "simstrat_oxygen": false,
         "current_temperature": true,
         "type": "Natural",
@@ -6280,6 +6702,9 @@
         "elevation": 703.0,
         "latitude": 47.635,
         "longitude": 10.266,
+        "flags": [
+            "german"
+        ],
         "simstrat_oxygen": false,
         "type": "Natural",
         "volume": "NA",
@@ -6299,6 +6724,9 @@
         "elevation": 603.3,
         "latitude": 47.553,
         "longitude": 12.978,
+        "flags": [
+            "german"
+        ],
         "simstrat_oxygen": false,
         "current_temperature": true,
         "type": "Natural",
@@ -6308,7 +6736,7 @@
     {
         "key": "kochelsee",
         "name": {
-            "EN": "Kochelsee",
+            "EN": "Lake Kochel",
             "DE": "Kochelsee",
             "FR": "Kochelsee",
             "IT": "Kochelsee"
@@ -6319,6 +6747,9 @@
         "elevation": 598.8,
         "latitude": 47.647,
         "longitude": 11.34,
+        "flags": [
+            "german"
+        ],
         "simstrat_oxygen": false,
         "type": "Natural",
         "volume": "NA",
@@ -6338,6 +6769,9 @@
         "elevation": 783.8,
         "latitude": 47.601,
         "longitude": 10.671,
+        "flags": [
+            "german"
+        ],
         "simstrat_oxygen": false,
         "type": "Natural",
         "volume": "NA",
@@ -6357,6 +6791,9 @@
         "elevation": 876.0,
         "latitude": 47.618,
         "longitude": 10.448,
+        "flags": [
+            "german"
+        ],
         "simstrat_oxygen": false,
         "type": "Natural",
         "volume": "NA",
@@ -6376,6 +6813,9 @@
         "elevation": 724.6,
         "latitude": 47.572,
         "longitude": 10.175,
+        "flags": [
+            "german"
+        ],
         "simstrat_oxygen": false,
         "type": "Natural",
         "volume": "NA",
@@ -6398,6 +6838,9 @@
         "elevation": 972.7,
         "latitude": 47.458,
         "longitude": 10.974,
+        "flags": [
+            "german"
+        ],
         "simstrat_oxygen": false,
         "type": "Natural",
         "volume": "NA",
@@ -6421,6 +6864,9 @@
         "elevation": 518.2,
         "latitude": 47.878,
         "longitude": 12.451,
+        "flags": [
+            "german"
+        ],
         "simstrat_oxygen": false,
         "current_temperature": true,
         "type": "Natural",
@@ -6447,6 +6893,9 @@
         "elevation": 785.9,
         "latitude": 47.6,
         "longitude": 10.776,
+        "flags": [
+            "german"
+        ],
         "simstrat_oxygen": false,
         "type": "Natural",
         "volume": "NA",
@@ -6466,6 +6915,9 @@
         "elevation": 532.9,
         "latitude": 48.002,
         "longitude": 11.125,
+        "flags": [
+            "german"
+        ],
         "simstrat_oxygen": false,
         "current_temperature": true,
         "type": "Natural",
@@ -6490,6 +6942,9 @@
           "elevation": 23.0,
           "latitude": 52.889,
           "longitude": 11.474,
+          "flags": [
+              "german"
+          ],
           "simstrat_oxygen": false,
           "current_temperature": true,
           "type": "Natural",

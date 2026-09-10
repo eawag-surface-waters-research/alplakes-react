@@ -106,6 +106,7 @@ class Graph extends Component {
       data,
       dark,
       datetime,
+      playUpdate,
       customProfileLocation,
     } = this.props;
     switch (plotType) {
@@ -148,6 +149,7 @@ class Graph extends Component {
             options={layer.displayOptions}
             language={language}
             datetime={datetime}
+            playUpdate={playUpdate}
             dark={dark}
           />
         );
@@ -171,6 +173,7 @@ class MapGraph extends Component {
       graphSelection,
       dark,
       datetime,
+      playUpdate,
       selectMapGraph,
       graphHide,
       toggleGraphHide,
@@ -239,6 +242,7 @@ class MapGraph extends Component {
               language={language}
               dark={dark}
               datetime={datetime}
+              playUpdate={playUpdate}
               updateOptions={updateOptions}
               customProfileLocation={customProfileLocation}
             />
