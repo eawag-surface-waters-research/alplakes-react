@@ -128,6 +128,7 @@ class ThreeDimensionalResults extends Component {
     this.setState({ week });
   };
   getMetadata = async (model, lake) => {
+    const { twod } = this.props;
     var data;
     try {
       ({ data } = await axios.get(
@@ -137,7 +138,9 @@ class ThreeDimensionalResults extends Component {
       ));
     } catch (e) {
       ({ data } = await axios.get(
-        `${CONFIG.alplakes_api}/simulations/metadata/${model}/${lake}`
+        `${CONFIG.alplakes_api}/simulations/${
+          twod ? "2d/metadata" : "metadata"
+        }/${model}/${lake}`
       ));
     }
     return data;
@@ -186,6 +189,7 @@ class ThreeDimensionalResults extends Component {
     }
   }
   render() {
+    const { twod } = this.props;
     const { model_list, model, lake_list, lake, week_list, week } = this.state;
     return (
       <div className="selector">
@@ -211,9 +215,9 @@ class ThreeDimensionalResults extends Component {
           ))}
         </select>
         <a
-          href={`${
-            CONFIG.alplakes_api
-          }/simulations/file/${model.toLowerCase()}/${lake.toLowerCase()}/${week}`}
+          href={`${CONFIG.alplakes_api}/simulations/${
+            twod ? "2d/file" : "file"
+          }/${model.toLowerCase()}/${lake.toLowerCase()}/${week}`}
         >
           <button className="download">Download</button>
         </a>
@@ -330,6 +334,7 @@ class Downloads extends Component {
   state = {
     swagger_error: false,
     one_dimensional: [],
+    two_dimensional: [],
     three_dimensional: [],
     visibleKey: "inputs",
   };
@@ -375,11 +380,18 @@ class Downloads extends Component {
 
   async componentDidMount() {
     window.scrollTo(0, 0);
-    var { one_dimensional, three_dimensional, swagger_error } = this.state;
+    var { one_dimensional, two_dimensional, three_dimensional, swagger_error } =
+      this.state;
     try {
       ({ data: one_dimensional } = await axios.get(
         CONFIG.alplakes_bucket +
           `/static/website/metadata/${CONFIG.branch}/one_dimensional.json${hour()}`
+      ));
+    } catch (e) {}
+    try {
+      ({ data: two_dimensional } = await axios.get(
+        CONFIG.alplakes_bucket +
+          `/static/website/metadata/${CONFIG.branch}/two_dimensional.json${hour()}`
       ));
     } catch (e) {}
     try {
@@ -395,15 +407,25 @@ class Downloads extends Component {
     }
     window.addEventListener("scroll", this.handleScroll);
     this.handleScroll();
-    this.setState({ one_dimensional, three_dimensional, swagger_error });
+    this.setState({
+      one_dimensional,
+      two_dimensional,
+      three_dimensional,
+      swagger_error,
+    });
   }
   componentWillUnmount() {
     window.removeEventListener("scroll", this.handleScroll);
   }
   render() {
     const language = "EN";
-    var { one_dimensional, three_dimensional, swagger_error, visibleKey } =
-      this.state;
+    var {
+      one_dimensional,
+      two_dimensional,
+      three_dimensional,
+      swagger_error,
+      visibleKey,
+    } = this.state;
     return (
       <React.Fragment>
         <Helmet>
@@ -460,6 +482,13 @@ class Downloads extends Component {
                     here
                   </a>{" "}
                   for more information.
+                </div>
+                <h3>2D Models</h3>
+                <ThreeDimensionalResults list={two_dimensional} twod={true} />
+                <div className="comment space">
+                  Wave results are available per week in NetCDF format, with the
+                  same structure as the 3D output files.{" "}
+                  {Translations.betaWarning[language]}
                 </div>
                 <h3>1D Models</h3>
                 <OneDimensionalResults list={one_dimensional} />

@@ -69,6 +69,56 @@
   color: var(--link-color);
 }
 
+.main .lake .twodmodel .beta-flag {
+  display: inline-block;
+  position: relative;
+  vertical-align: middle;
+  margin-left: 8px;
+  font-weight: 400;
+}
+
+.main .lake .twodmodel .beta-flag .beta-flag-label {
+  background-color: #a13145;
+  color: #ffffff;
+  border: 1px solid #a13145;
+  border-radius: 20px;
+  padding: 2px 12px;
+  font-size: 14px;
+  line-height: 22px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+  cursor: default;
+}
+
+.main .lake .twodmodel .beta-flag .beta-flag-box {
+  display: none;
+  position: absolute;
+  left: 0;
+  top: calc(100% + 8px);
+  z-index: 99999;
+  width: 282px;
+  padding: 16px;
+  border-radius: 12px;
+  background-color: var(--select-color);
+  border: 1px solid #a13145;
+  color: var(--background-font-color);
+  font-size: 16px;
+  line-height: 1.4;
+  text-align: left;
+  text-transform: none;
+  letter-spacing: normal;
+  font-weight: 400;
+}
+
+.main .lake .twodmodel .beta-flag:hover .beta-flag-label {
+  box-shadow: var(--box-shadow);
+}
+
+.main .lake .twodmodel .beta-flag:hover .beta-flag-box {
+  display: block;
+}
+
 .main .lake .map-sidebar .map-sidebar-left.fullscreen {
   position: fixed;
   left: 0;
@@ -1359,6 +1409,26 @@
   .main .lake h3 {
     margin-bottom: 10px;
     font-size: 16px;
+  }
+
+  .main .lake .twodmodel .beta-flag .beta-flag-label {
+    font-size: 12px;
+    line-height: 18px;
+    padding: 1px 10px;
+  }
+
+  .main .lake .twodmodel .beta-flag .beta-flag-box {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: unset;
+    width: 100%;
+    box-sizing: border-box;
+    border: none;
+    border-radius: 0;
+    padding: 50px;
+    opacity: 0.95;
   }
 
   .main .lake .map-sidebar {

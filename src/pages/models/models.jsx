@@ -13,6 +13,7 @@ import ScrollUp from "../../components/scrollup/scrollup";
 class Models extends Component {
   state = {
     one_dimensional: {data: [], columns: []},
+    two_dimensional: {data: [], columns: []},
     three_dimensional: {data: [], columns: []},
     remote_sensing: {data: [], columns: []},
     visibleKey: "threed",
@@ -21,6 +22,7 @@ class Models extends Component {
     super(props);
     this.divRefs = {
       threed: React.createRef(),
+      twod: React.createRef(),
       oned: React.createRef(),
       remotesensing: React.createRef(),
     };
@@ -128,6 +130,15 @@ class Models extends Component {
     } catch (error) {
       console.error("Failed to collect metadata from bucket");
     }
+    try {
+      var { data: data_2d } = await axios.get(
+        CONFIG.alplakes_bucket +
+          `/static/website/metadata/${CONFIG.branch}/two_dimensional.json`
+      );
+      this.setState({ two_dimensional: this.deriveColumns(data_2d, "EN") });
+    } catch (error) {
+      console.error("Failed to collect 2D metadata from bucket");
+    }
     window.addEventListener("scroll", this.handleScroll);
     this.handleScroll();
   }
@@ -136,8 +147,13 @@ class Models extends Component {
   }
   render() {
     const language = "EN";
-    var { one_dimensional, three_dimensional, remote_sensing, visibleKey } =
-      this.state;
+    var {
+      one_dimensional,
+      two_dimensional,
+      three_dimensional,
+      remote_sensing,
+      visibleKey,
+    } = this.state;
     return (
       <React.Fragment>
         <Helmet>
@@ -303,6 +319,79 @@ class Models extends Component {
                 using custom Eawag compilations of MITgcm{" "}
                 <a
                   href="https://github.com/eawag-surface-waters-research/docker"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  here
+                </a>
+                .
+              </p>
+            </div>
+
+            <div className="text-width inner">
+              <h2 ref={this.divRefs["twod"]} id="twod">
+                2D Wave Modelling
+              </h2>
+              <p>
+                2D spectral wave models describe how wind driven surface waves
+                develop across a lake. Rather than resolving the water column,
+                they solve the wave action balance equation over a
+                two-dimensional grid covering the lake surface, accounting for
+                wave generation by wind, dissipation through whitecapping and
+                bottom friction, and the redistribution of energy between
+                frequencies through non-linear interactions. The models return
+                the significant wave height, the mean wave period and the mean
+                wave direction.
+              </p>
+              <p>{Translations.betaWarning[language]}</p>
+              <p>
+                Below is a list of all the 2D models available on the Alplakes
+                platform.
+              </p>
+            </div>
+            <SortableTable
+              data={two_dimensional.data}
+              columns={two_dimensional.columns}
+              language={language}
+              label="two_dimensional_models"
+            />
+            <div className="text-width inner">
+              <h3>Calibration</h3>
+              <h4>SWAN</h4>
+              <p>
+                Calibration of the SWAN models is ongoing. Performance
+                statistics will be published here once the evaluation against
+                in-situ wave measurements is complete.
+              </p>
+              <h3>Input files</h3>
+              <p>
+                The wave models are forced with wind fields from the MeteoSwiss{" "}
+                <a
+                  href="https://opendatadocs.meteoswiss.ch/e-forecast-data/e2-e3-numerical-weather-forecasting-model"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  ICON-CH2-EPS
+                </a>{" "}
+                forecast product, using the same collection code as the 3D
+                models, available{" "}
+                <a
+                  href="https://github.com/eawag-surface-waters-research/alplakes-simulations"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  here
+                </a>
+                . Example input files are not yet published on the{" "}
+                <NavLink to="/downloads">Downloads</NavLink> page, although the
+                model results are available there.
+              </p>
+              <h3>Running the model</h3>
+              <h4>SWAN</h4>
+              <p>
+                Please refer to the official documentation provided by TU Delft{" "}
+                <a
+                  href="https://swanmodel.sourceforge.io/"
                   target="_blank"
                   rel="noreferrer"
                 >
@@ -498,6 +587,12 @@ class Models extends Component {
                 onClick={() => this.scrollToSection(this.divRefs["threed"])}
               >
                 3D Hydrodynamic
+              </div>
+              <div
+                className={visibleKey === "twod" ? "link active" : "link"}
+                onClick={() => this.scrollToSection(this.divRefs["twod"])}
+              >
+                2D Wave
               </div>
               <div
                 className={visibleKey === "oned" ? "link active" : "link"}

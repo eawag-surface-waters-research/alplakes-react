@@ -1627,6 +1627,12 @@
     "FR": "Un atlas interactif des caractéristiques des vagues (hauteur significative, période, longueur d'onde, direction) pour les vents dominants et différentes périodes de retour est disponible sur",
     "IT": "Un atlante interattivo delle caratteristiche delle onde (altezza significativa, periodo, lunghezza d'onda, direzione) per i venti dominanti e diversi periodi di ritorno è disponibile su"
   },
+  "betaWarning": {
+    "EN": "This product is still in beta, results are under evaluation and should be used with caution.",
+    "DE": "Dieses Produkt befindet sich noch in der Beta-Phase, die Ergebnisse werden derzeit evaluiert und sollten mit Vorsicht verwendet werden.",
+    "FR": "Ce produit est encore en version bêta, les résultats sont en cours d'évaluation et doivent être utilisés avec prudence.",
+    "IT": "Questo prodotto è ancora in versione beta, i risultati sono in fase di valutazione e devono essere utilizzati con cautela."
+  },
   "parameters": {
     "EN": "Parameters",
     "DE": "Parameter",

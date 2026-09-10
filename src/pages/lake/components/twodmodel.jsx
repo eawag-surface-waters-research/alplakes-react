@@ -284,6 +284,12 @@ class TwoDModel extends Component {
         <h3>
           {Translations.waves[language]} - 2D{" "}
           <Information information={Translations.twodmodelText[language]} />
+          <div className="beta-flag">
+            <div className="beta-flag-label">beta</div>
+            <div className="beta-flag-box">
+              {Translations.betaWarning[language]}
+            </div>
+          </div>
         </h3>
         <div className="map-sidebar">
           <div className="map-sidebar-left">
