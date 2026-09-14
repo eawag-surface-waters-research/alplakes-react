@@ -66,9 +66,11 @@
   gap: var(--padding);
 }
 
-.main .lake .twodmodel.subsection .extreme-conditions-button {
+.main .lake .twodmodel.subsection .design-conditions-link {
   flex-shrink: 0;
-  display: inline-block;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
   border-radius: 20px;
   padding: 6px 16px;
   font-size: 14px;
@@ -77,13 +79,19 @@
   letter-spacing: normal;
   text-decoration: none;
   color: var(--highlight-color);
-  border: none;
-  background-color: var(--highlight-color-fill);
-  transition: transform 0.2s ease;
+  border: 1px solid var(--highlight-color);
+  background-color: transparent;
+  transition: background-color 0.2s ease;
 }
 
-.main .lake .twodmodel.subsection .extreme-conditions-button:hover {
-  transform: scale(1.05);
+.main .lake .twodmodel.subsection .design-conditions-link .link-site {
+  font-size: 11px;
+  font-weight: 400;
+  opacity: 0.8;
+}
+
+.main .lake .twodmodel.subsection .design-conditions-link:hover {
+  background-color: var(--highlight-color-fill);
   text-decoration: none;
 }
 
@@ -1523,7 +1531,7 @@
     flex-wrap: wrap;
   }
 
-  .main .lake .twodmodel .extreme-conditions-button {
+  .main .lake .twodmodel .design-conditions-link {
     font-size: 12px;
     padding: 4px 12px;
   }

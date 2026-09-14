@@ -1723,11 +1723,11 @@
     "FR": "Plus d'informations",
     "IT": "Ulteriori informazioni"
   },
-  "extremeConditions": {
-    "EN": "Extreme conditions",
-    "DE": "Extreme Bedingungen",
-    "FR": "Conditions extrêmes",
-    "IT": "Condizioni estreme"
+  "designConditions": {
+    "EN": "Design conditions",
+    "DE": "Bemessungsbedingungen",
+    "FR": "Conditions de dimensionnement",
+    "IT": "Condizioni di progetto"
   },
   "newFeatureFeedback": {
     "EN": "This is a new feature. We welcome your feedback at",

@@ -294,12 +294,14 @@ class TwoDModel extends Component {
             </div>
           </span>
           <a
-            className="extreme-conditions-button"
+            className="design-conditions-link"
             href="https://swisslakes.net/"
             target="_blank"
             rel="noopener noreferrer"
+            title="swisslakes.net"
           >
-            {Translations.extremeConditions[language]}
+            {Translations.designConditions[language]}
+            <span className="link-site">swisslakes.net ↗</span>
           </a>
         </h3>
         <div className="map-sidebar">
