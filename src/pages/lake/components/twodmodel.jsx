@@ -282,14 +282,25 @@ class TwoDModel extends Component {
     return (
       <div className="twodmodel subsection">
         <h3>
-          {Translations.waves[language]} - 2D{" "}
-          <Information information={Translations.twodmodelText[language]} />
-          <div className="beta-flag">
-            <div className="beta-flag-label">beta</div>
-            <div className="beta-flag-box">
-              {Translations.betaWarning[language]}
+          <span>
+            {Translations.waves[language]} - 2D{" "}
+            <Information information={Translations.twodmodelText[language]} />
+            <div className="new-flag">
+              <div className="new-flag-label">new</div>
+              <div className="new-flag-box">
+                {Translations.newFeatureFeedback[language]}{" "}
+                  james.runnalls@eawag.ch
+              </div>
             </div>
-          </div>
+          </span>
+          <a
+            className="extreme-conditions-button"
+            href="https://swisslakes.net/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {Translations.extremeConditions[language]}
+          </a>
         </h3>
         <div className="map-sidebar">
           <div className="map-sidebar-left">
@@ -363,16 +374,6 @@ class TwoDModel extends Component {
               setDatetime={this.setDatetime}
             />
           </div>
-        </div>
-        <div className="further-information">
-          {Translations.waveScenarios[language]}{" "}
-          <a
-            href="https://swisslakes.net/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            swisslakes.net
-          </a>
         </div>
       </div>
     );

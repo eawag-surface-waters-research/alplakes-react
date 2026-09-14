@@ -59,17 +59,35 @@
   margin-right: 0;
 }
 
-.main .lake .twodmodel .further-information {
-  margin-top: 6px;
+.main .lake .twodmodel h3 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--padding);
+}
+
+.main .lake .twodmodel.subsection .extreme-conditions-button {
+  flex-shrink: 0;
+  display: inline-block;
+  border-radius: 20px;
+  padding: 6px 16px;
   font-size: 14px;
-  color: var(--background-subtle-font-color);
+  font-weight: 600;
+  text-transform: none;
+  letter-spacing: normal;
+  text-decoration: none;
+  color: var(--highlight-color);
+  border: none;
+  background-color: var(--highlight-color-fill);
+  transition: transform 0.2s ease;
 }
 
-.main .lake .twodmodel .further-information a {
-  color: var(--link-color);
+.main .lake .twodmodel.subsection .extreme-conditions-button:hover {
+  transform: scale(1.05);
+  text-decoration: none;
 }
 
-.main .lake .twodmodel .beta-flag {
+.main .lake .twodmodel .new-flag {
   display: inline-block;
   position: relative;
   vertical-align: middle;
@@ -77,7 +95,7 @@
   font-weight: 400;
 }
 
-.main .lake .twodmodel .beta-flag .beta-flag-label {
+.main .lake .twodmodel .new-flag .new-flag-label {
   background-color: #a13145;
   color: #ffffff;
   border: 1px solid #a13145;
@@ -91,7 +109,7 @@
   cursor: default;
 }
 
-.main .lake .twodmodel .beta-flag .beta-flag-box {
+.main .lake .twodmodel .new-flag .new-flag-box {
   display: none;
   position: absolute;
   left: 0;
@@ -101,7 +119,7 @@
   padding: 16px;
   border-radius: 12px;
   background-color: var(--select-color);
-  border: 1px solid #a13145;
+  border: 1px solid var(--border-color);
   color: var(--background-font-color);
   font-size: 16px;
   line-height: 1.4;
@@ -111,11 +129,15 @@
   font-weight: 400;
 }
 
-.main .lake .twodmodel .beta-flag:hover .beta-flag-label {
+.main .lake .twodmodel .new-flag .new-flag-box a {
+  color: var(--link-color);
+}
+
+.main .lake .twodmodel .new-flag:hover .new-flag-label {
   box-shadow: var(--box-shadow);
 }
 
-.main .lake .twodmodel .beta-flag:hover .beta-flag-box {
+.main .lake .twodmodel .new-flag:hover .new-flag-box {
   display: block;
 }
 
@@ -1477,13 +1499,13 @@
     font-size: 16px;
   }
 
-  .main .lake .twodmodel .beta-flag .beta-flag-label {
+  .main .lake .twodmodel .new-flag .new-flag-label {
     font-size: 12px;
     line-height: 18px;
     padding: 1px 10px;
   }
 
-  .main .lake .twodmodel .beta-flag .beta-flag-box {
+  .main .lake .twodmodel .new-flag .new-flag-box {
     position: fixed;
     left: 0;
     right: 0;
@@ -1495,6 +1517,15 @@
     border-radius: 0;
     padding: 50px;
     opacity: 0.95;
+  }
+
+  .main .lake .twodmodel h3 {
+    flex-wrap: wrap;
+  }
+
+  .main .lake .twodmodel .extreme-conditions-button {
+    font-size: 12px;
+    padding: 4px 12px;
   }
 
   .main .lake .map-sidebar {
