@@ -1531,9 +1531,8 @@
     flex-wrap: wrap;
   }
 
-  .main .lake .twodmodel .design-conditions-link {
-    font-size: 12px;
-    padding: 4px 12px;
+  .main .lake .twodmodel.subsection .design-conditions-link {
+    display: none;
   }
 
   .main .lake .map-sidebar {
