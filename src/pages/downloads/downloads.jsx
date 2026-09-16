@@ -517,6 +517,8 @@ class Downloads extends Component {
               <div className="nonclickbox">
                 <h3>3D Models</h3>
                 <ModelInputs list={three_dimensional} middle={true} />
+                <h3>2D Models</h3>
+                <ModelInputs list={two_dimensional} middle={true} />
                 <h3>1D Models</h3>
                 <ModelInputs list={one_dimensional} full={true} />
               </div>
@@ -547,8 +549,7 @@ class Downloads extends Component {
                 <ThreeDimensionalResults list={two_dimensional} twod={true} />
                 <div className="comment space">
                   Wave results are available per week in NetCDF format, with the
-                  same structure as the 3D output files.{" "}
-                  {Translations.betaWarning[language]}
+                  same structure as the 3D output files.
                 </div>
                 <h3>1D Models</h3>
                 <OneDimensionalResults list={one_dimensional} />

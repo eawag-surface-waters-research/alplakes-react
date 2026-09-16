@@ -12,10 +12,10 @@ import ScrollUp from "../../components/scrollup/scrollup";
 
 class Models extends Component {
   state = {
-    one_dimensional: {data: [], columns: []},
-    two_dimensional: {data: [], columns: []},
-    three_dimensional: {data: [], columns: []},
-    remote_sensing: {data: [], columns: []},
+    one_dimensional: { data: [], columns: [] },
+    two_dimensional: { data: [], columns: [] },
+    three_dimensional: { data: [], columns: [] },
+    remote_sensing: { data: [], columns: [] },
     visibleKey: "threed",
   };
   constructor(props) {
@@ -64,7 +64,9 @@ class Models extends Component {
     }));
     var column_ids = [
       ...new Set(
-        rows.flatMap((row) => Object.keys(row).filter((k) => !["link", "key"].includes(k)))
+        rows.flatMap((row) =>
+          Object.keys(row).filter((k) => !["link", "key"].includes(k)),
+        ),
       ),
     ];
 
@@ -75,6 +77,7 @@ class Models extends Component {
       overallrmse: " (°C)",
       surfacermse: " (°C)",
       bottomrmse: " (°C)",
+      wavermse: " (m)",
       MdSA: " (%)",
     };
 
@@ -85,7 +88,8 @@ class Models extends Component {
     };
 
     data = data.map((d) => {
-      d.function = "link" in d ? () => window.open(String(d.link), "_blank") : false;
+      d.function =
+        "link" in d ? () => window.open(String(d.link), "_blank") : false;
       for (let key in d) {
         if (!["link", "function"].includes(key)) {
           d[key] = { value: d[key] };
@@ -113,17 +117,17 @@ class Models extends Component {
     try {
       var { data: data_1d } = await axios.get(
         CONFIG.alplakes_bucket +
-          `/static/website/metadata/${CONFIG.branch}/one_dimensional.json`
+          `/static/website/metadata/${CONFIG.branch}/one_dimensional.json`,
       );
       const one_dimensional = this.deriveColumns(data_1d, "EN");
       var { data: data_3d } = await axios.get(
         CONFIG.alplakes_bucket +
-          `/static/website/metadata/${CONFIG.branch}/three_dimensional.json`
+          `/static/website/metadata/${CONFIG.branch}/three_dimensional.json`,
       );
       const three_dimensional = this.deriveColumns(data_3d, "EN");
       var { data: data_rs } = await axios.get(
         CONFIG.alplakes_bucket +
-          `/static/website/metadata/${CONFIG.branch}/remote_sensing.json`
+          `/static/website/metadata/${CONFIG.branch}/remote_sensing.json`,
       );
       const remote_sensing = this.deriveColumns(data_rs, "EN");
       this.setState({ one_dimensional, three_dimensional, remote_sensing });
@@ -133,7 +137,7 @@ class Models extends Component {
     try {
       var { data: data_2d } = await axios.get(
         CONFIG.alplakes_bucket +
-          `/static/website/metadata/${CONFIG.branch}/two_dimensional.json`
+          `/static/website/metadata/${CONFIG.branch}/two_dimensional.json`,
       );
       this.setState({ two_dimensional: this.deriveColumns(data_2d, "EN") });
     } catch (error) {
@@ -343,7 +347,6 @@ class Models extends Component {
                 the significant wave height, the mean wave period and the mean
                 wave direction.
               </p>
-              <p>{Translations.betaWarning[language]}</p>
               <p>
                 Below is a list of all the 2D models available on the Alplakes
                 platform.
@@ -359,22 +362,43 @@ class Models extends Component {
               <h3>Calibration</h3>
               <h4>SWAN</h4>
               <p>
-                Calibration of the SWAN models is ongoing. Performance
-                statistics will be published here once the evaluation against
-                in-situ wave measurements is complete.
+                The SWAN models run with SWAN's third-generation default physics
+                (GEN3 wind growth with Komen whitecapping, JONSWAP bottom
+                friction and depth-induced breaking) on a regular grid,
+                with bathymetry interpolated from the corresponding 3D
+                hydrodynamic model. Where in-situ wave measurements exist the
+                models are validated against them:
               </p>
+              <table className="validation-table">
+                <thead>
+                  <tr>
+                    <th>Lake</th>
+                    <th>Model</th>
+                    <th>Validation</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Lake Geneva</td>
+                    <td>SWAN</td>
+                    <td>
+                      <a
+                        href="https://medium.com/@runnalls.james/performance-of-the-alplakes-wave-model-for-lake-geneva-d037b22104d5"
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        LéXPLORE wave buoy, Feb–Apr 2026
+                      </a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
               <h3>Input files</h3>
               <p>
-                The wave models are forced with wind fields from the MeteoSwiss{" "}
-                <a
-                  href="https://opendatadocs.meteoswiss.ch/e-forecast-data/e2-e3-numerical-weather-forecasting-model"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  ICON-CH2-EPS
-                </a>{" "}
-                forecast product, using the same collection code as the 3D
-                models, available{" "}
+                A set of example input files are provided on the{" "}
+                <NavLink to="/downloads">Downloads</NavLink> page for users that
+                want to adapt the models to their own purposes. These files can
+                be generated using the code available{" "}
                 <a
                   href="https://github.com/eawag-surface-waters-research/alplakes-simulations"
                   target="_blank"
@@ -382,9 +406,29 @@ class Models extends Component {
                 >
                   here
                 </a>
-                . Example input files are not yet published on the{" "}
-                <NavLink to="/downloads">Downloads</NavLink> page, although the
-                model results are available there.
+                . Please note users outside of Eawag will need to update the
+                weather data collection functions as we are not permitted to
+                distribute weather data.
+              </p>
+              <p>
+                The wave models are forced with hourly surface wind fields from
+                the MeteoSwiss{" "}
+                <a
+                  href="https://www.meteoswiss.admin.ch/weather/warning-and-forecasting-systems/icon-forecasting-systems/ensemble-data-assimilation.html"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  KENDA-CH1
+                </a>{" "}
+                reanalysis product for the hindcast and the MeteoSwiss{" "}
+                <a
+                  href="https://opendatadocs.meteoswiss.ch/e-forecast-data/e2-e3-numerical-weather-forecasting-model"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  ICON-CH2-EPS
+                </a>{" "}
+                forecast product for the forecast.
               </p>
               <h3>Running the model</h3>
               <h4>SWAN</h4>

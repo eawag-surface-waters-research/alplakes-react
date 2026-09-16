@@ -287,6 +287,12 @@
     "FR": "RMSE inférieur",
     "IT": "RMSE inferiore"
   },
+  "wavermse": {
+    "EN": "Wave height RMSE",
+    "DE": "Wellenhöhen-RMSE",
+    "FR": "RMSE de hauteur des vagues",
+    "IT": "RMSE dell'altezza d'onda"
+  },
   "meteosource": {
     "EN": "Meteostation Source",
     "DE": "Quelle der Wetterstation",

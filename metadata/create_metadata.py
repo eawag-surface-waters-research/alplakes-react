@@ -194,9 +194,8 @@ for lake in metadata:
                 "LatLng": "{}, {}".format(lake["latitude"], lake["longitude"]),
                 "area": lake["area"],
                 "elevation": lake["elevation"],
-                "depth": lake["max_depth"],
                 "timeframe": "{}-{}".format(model_metadata["start_date"][0:4], model_metadata["end_date"][0:4]),
-                "overallrmse": lake["2D"]["models"][model_id]["performance"]["rmse"]["overall"]
+                "wavermse": lake["2D"]["models"][model_id]["performance"]["rmse"]["significant_wave_height"]
                 })
             if model_id == lake["2D"]["default"]:
                 data["forecast"]["2d_model"] = {

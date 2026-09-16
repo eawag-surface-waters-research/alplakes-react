@@ -85,6 +85,18 @@
     margin-top: 12px;
 }
 
+.main .models .content .validation-table {
+    border-collapse: collapse;
+    margin: 4px 0 24px 0;
+}
+
+.main .models .content .validation-table th,
+.main .models .content .validation-table td {
+    text-align: left;
+    padding: 8px 24px 8px 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
 .main .models .content .downloads {
     margin-bottom: 32px;
     margin-top: -28px;

@@ -110,7 +110,7 @@
                     "key": "geneva",
                     "performance": {
                         "rmse": {
-                            "overall": "NA"
+                            "significant_wave_height": 0.056
                         }
                     }
                 }
