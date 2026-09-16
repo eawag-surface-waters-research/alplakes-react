@@ -223,6 +223,106 @@ def model_layers(default, sources, default_depth, spread):
       "sources": thermocline
     }]
 
+def model_layers_2d(default, sources):
+    significant_wave_height = {}
+    mean_wave_period = {}
+    wave_direction = {}
+    for source in sources.keys():
+        significant_wave_height[source] = {
+          "model": sources[source]["model"],
+          "name": sources[source]["name"],
+          "key": sources[source]["key"],
+          "description": {
+            "EN": "Significant wave height, the average height of the highest third of waves, is hindcasted and forecasted using the SWAN wave model. The model is forced by Meteoswiss wind products, hindcasts use the ICON 1-day deterministic product and forecasts use the ICON 5-day ensemble forecast.",
+            "DE": "Die signifikante Wellenhöhe, die mittlere Höhe des höchsten Drittels der Wellen, wird mit dem SWAN-Wellenmodell rückwärts berechnet und prognostiziert. Das Modell wird durch Meteoswiss-Windprodukte angetrieben, Rückprognosen verwenden das deterministische 1-Tages-Produkt ICON und Prognosen verwenden die 5-Tages-Ensembleprognose ICON.",
+            "FR": "La hauteur significative des vagues, la hauteur moyenne du tiers le plus élevé des vagues, est calculée et prévue à l'aide du modèle de vagues SWAN. Le modèle est forcé par les produits de vent Meteoswiss, les prévisions rétrospectives utilisent le produit déterministe ICON sur 1 jour et les prévisions utilisent la prévision d'ensemble ICON sur 5 jours.",
+            "IT": "L'altezza significativa delle onde, l'altezza media del terzo più alto delle onde, è calcolata in modalità hindcast e prevista utilizzando il modello d'onda SWAN. Il modello è forzato dai prodotti di vento Meteoswiss, gli hindcast utilizzano il prodotto deterministico ICON a 1 giorno e le previsioni utilizzano la previsione d'insieme ICON a 5 giorni."
+          }
+        }
+        mean_wave_period[source] = {
+            "model": sources[source]["model"],
+            "name": sources[source]["name"],
+            "key": sources[source]["key"],
+            "description": {
+                "EN": "Mean wave period, the average time between successive waves, is hindcasted and forecasted using the SWAN wave model. The model is forced by Meteoswiss wind products, hindcasts use the ICON 1-day deterministic product and forecasts use the ICON 5-day ensemble forecast.",
+                "DE": "Die mittlere Wellenperiode, die durchschnittliche Zeit zwischen aufeinanderfolgenden Wellen, wird mit dem SWAN-Wellenmodell rückwärts berechnet und prognostiziert. Das Modell wird durch Meteoswiss-Windprodukte angetrieben, Rückprognosen verwenden das deterministische 1-Tages-Produkt ICON und Prognosen verwenden die 5-Tages-Ensembleprognose ICON.",
+                "FR": "La période moyenne des vagues, le temps moyen entre des vagues successives, est calculée et prévue à l'aide du modèle de vagues SWAN. Le modèle est forcé par les produits de vent Meteoswiss, les prévisions rétrospectives utilisent le produit déterministe ICON sur 1 jour et les prévisions utilisent la prévision d'ensemble ICON sur 5 jours.",
+                "IT": "Il periodo medio delle onde, il tempo medio tra onde successive, è calcolato in modalità hindcast e previsto utilizzando il modello d'onda SWAN. Il modello è forzato dai prodotti di vento Meteoswiss, gli hindcast utilizzano il prodotto deterministico ICON a 1 giorno e le previsioni utilizzano la previsione d'insieme ICON a 5 giorni."
+              }
+        }
+        wave_direction[source] = {
+            "model": sources[source]["model"],
+            "name": sources[source]["name"],
+            "key": sources[source]["key"],
+            "description": {
+                "EN": "Mean wave direction, the direction from which the waves are travelling, is hindcasted and forecasted using the SWAN wave model. The model is forced by Meteoswiss wind products, hindcasts use the ICON 1-day deterministic product and forecasts use the ICON 5-day ensemble forecast.",
+                "DE": "Die mittlere Wellenrichtung, die Richtung, aus der sich die Wellen bewegen, wird mit dem SWAN-Wellenmodell rückwärts berechnet und prognostiziert. Das Modell wird durch Meteoswiss-Windprodukte angetrieben, Rückprognosen verwenden das deterministische 1-Tages-Produkt ICON und Prognosen verwenden die 5-Tages-Ensembleprognose ICON.",
+                "FR": "La direction moyenne des vagues, la direction d'où proviennent les vagues, est calculée et prévue à l'aide du modèle de vagues SWAN. Le modèle est forcé par les produits de vent Meteoswiss, les prévisions rétrospectives utilisent le produit déterministe ICON sur 1 jour et les prévisions utilisent la prévision d'ensemble ICON sur 5 jours.",
+                "IT": "La direzione media delle onde, la direzione da cui provengono le onde, è calcolata in modalità hindcast e prevista utilizzando il modello d'onda SWAN. Il modello è forzato dai prodotti di vento Meteoswiss, gli hindcast utilizzano il prodotto deterministico ICON a 1 giorno e le previsioni utilizzano la previsione d'insieme ICON a 5 giorni."
+              }
+        }
+    return [
+    {
+        "id": "2D_significant_wave_height",
+        "type": "twod",
+        "playControls": True,
+        "depth": False,
+        "name": "significant_wave_height",
+        "parameter": "significant_wave_height",
+        "unit": "m",
+        "display": "raster",
+        "source": default,
+        "default_depth": 0,
+        "displayOptions": {
+            "raster": True,
+            "paletteName": "Surfline",
+            "zIndex": 2,
+            "interpolate": True,
+            "timeseries": True
+        },
+        "sources": significant_wave_height
+    },
+    {
+        "id": "2D_mean_wave_period",
+        "type": "twod",
+        "playControls": True,
+        "depth": False,
+        "name": "mean_wave_period",
+        "parameter": "mean_wave_period",
+        "unit": "s",
+        "display": "raster",
+        "source": default,
+        "default_depth": 0,
+        "displayOptions": {
+            "raster": True,
+            "paletteName": "navia",
+            "zIndex": 2,
+            "interpolate": True,
+            "timeseries": True
+        },
+        "sources": mean_wave_period
+    },
+    {
+      "id": "2D_wave_direction",
+      "type": "twod",
+      "playControls": True,
+      "depth": False,
+      "name": "wave_direction",
+      "parameter": "wave_direction",
+      "unit": "°",
+      "display": "direction",
+      "source": default,
+      "default_depth": 0,
+      "displayOptions": {
+        "direction": True,
+        "arrowsColor": "#000000",
+        "opacity": 0.8,
+        "zIndex": 3,
+        "timeseries": True
+      },
+      "sources": wave_direction
+    }]
+
 
 def meteo_layers(b):
     pad_lat = 3 / 111.0

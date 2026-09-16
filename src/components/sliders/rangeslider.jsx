@@ -18,7 +18,7 @@ class RangeSlider extends Component {
   };
 
   calculateValueFromPosition = (event) => {
-    var trackRef = document.getElementById("slider-track");
+    var trackRef = event.currentTarget;
     const trackRect = trackRef.getBoundingClientRect();
     const relativePosition = event.clientX - trackRect.left;
     const percent = Math.min(
@@ -67,7 +67,6 @@ class RangeSlider extends Component {
             <div
               {...props}
               className="slider-track"
-              id="slider-track"
               step={timestep}
               min={period[0]}
               max={period[1]}

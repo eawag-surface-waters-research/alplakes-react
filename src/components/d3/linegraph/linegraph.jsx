@@ -233,6 +233,7 @@ class D3LineGraph extends Component {
       marginRight,
       marginBottom,
       noYear,
+      yPadding,
     } = this.props;
     var { graphid, fontSize } = this.state;
 
@@ -295,6 +296,7 @@ class D3LineGraph extends Component {
     if (xmin) options["xMin"] = xmin;
     if (ymax) options["yMax"] = ymax;
     if (ymin) options["yMin"] = ymin;
+    if (yPadding !== undefined) options["yPadding"] = yPadding;
     plotlinegraph("vis" + graphid, data, options);
   };
 

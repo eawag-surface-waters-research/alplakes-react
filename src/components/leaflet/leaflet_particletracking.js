@@ -242,6 +242,15 @@ L.Control.ParticleTracking = L.Control.extend({
     }
     this._reset();
   },
+  setZIndex: function (zIndex) {
+    this.options.zIndex = zIndex;
+    if (this._canvas) {
+      this._canvas.style.zIndex = this.options.zIndex + 100;
+    }
+    if (this._heatLayer && this._heatLayer._el) {
+      this._heatLayer._el.style.zIndex = this.options.zIndex + 100;
+    }
+  },
   clear: function () {
     this._points = [];
     if (this._heatLayer) {
