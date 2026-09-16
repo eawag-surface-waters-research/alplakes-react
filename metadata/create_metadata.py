@@ -5,7 +5,7 @@ import requests
 import functions as func
 
 upload = True
-bucket_folder = "static/website/metadata/swan"
+bucket_folder = "static/website/metadata/master"
 
 flag_country = {
     "swiss": "CH",
