@@ -10,13 +10,15 @@ import ScrollUp from "../../components/scrollup/scrollup";
 class Blog extends Component {
   state = {
     posts: [],
+    loading: true,
   };
   async componentDidMount() {
     try {
       const { data: posts } = await axios.get(CONFIG.blog_url);
-      this.setState({ posts });
+      this.setState({ posts, loading: false });
     } catch (e) {
       console.error(e);
+      this.setState({ loading: false });
     }
   }
   postBody = (p) => (
@@ -33,7 +35,7 @@ class Blog extends Component {
     </React.Fragment>
   );
   render() {
-    const { posts } = this.state;
+    const { posts, loading } = this.state;
     return (
       <React.Fragment>
         <Helmet>
@@ -47,6 +49,10 @@ class Blog extends Component {
         <div className="text-width blog">
           <div className="content">
             <h1>Blog</h1>
+            {loading &&
+              [0, 1, 2, 3, 4].map((i) => (
+                <div className="post clickable-box placeholder" key={i} />
+              ))}
             {posts.map((p) =>
               Array.isArray(p.link) ? (
                 <div className="post clickable-box" key={p.title}>
