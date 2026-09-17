@@ -2,6 +2,30 @@
     margin: var(--padding) 0 0 0;
 }
 
+.main .blog .post .image {
+    position: relative;
+    margin-bottom: 14px;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.main .blog .post .image img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.main .blog .post .image .source {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    padding: 4px 8px;
+    font-size: 12px;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-top-left-radius: 8px;
+}
+
 .main .blog .post p {
     color: var(--background-subtle-font-color);
 }
@@ -37,9 +61,10 @@
 }
 
 .main .blog .post .date {
-    font-size: 14px;
+    font-size: 16px;
     margin-bottom: 14px;
     color: var(--background-subtle-font-color);
+    margin-top: -10px;
 }
 
 .main .blog .post.clickable-box {

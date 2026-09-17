@@ -19,6 +19,19 @@ class Blog extends Component {
       console.error(e);
     }
   }
+  postBody = (p) => (
+    <React.Fragment>
+      <h2>{p.title}</h2>
+      <div className="date">{p.date}</div>
+      {p.img && (
+        <div className="image">
+          <img src={p.img} alt={p.title} />
+          {p.img_source && <div className="source">{p.img_source}</div>}
+        </div>
+      )}
+      <p>{p.description}</p>
+    </React.Fragment>
+  );
   render() {
     const { posts } = this.state;
     return (
@@ -37,9 +50,7 @@ class Blog extends Component {
             {posts.map((p) =>
               Array.isArray(p.link) ? (
                 <div className="post clickable-box" key={p.title}>
-                  <div className="date">{p.date}</div>
-                  <h2>{p.title}</h2>
-                  <p>{p.description}</p>
+                  {this.postBody(p)}
                   <div className="buttons">
                     {p.link.map((link, i) => (
                       <a
@@ -65,9 +76,7 @@ class Blog extends Component {
                   key={p.title}
                 >
                   <div className="post clickable-box">
-                    <div className="date">{p.date}</div>
-                    <h2>{p.title}</h2>
-                    <p>{p.description}</p>
+                    {this.postBody(p)}
                     <div className="button">
                       {"link_text" in p ? p.link_text : "Read more"}
                     </div>
