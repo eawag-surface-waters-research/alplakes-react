@@ -191,7 +191,7 @@ class About extends Component {
                       className="status-dot"
                       style={{ backgroundColor: "green" }}
                     ></div>
-                    In BETA testing
+                    First model deployed
                   </div>
                 </div>
                 <div class="grid-inner">
