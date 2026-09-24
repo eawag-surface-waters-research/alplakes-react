@@ -93,52 +93,70 @@ L.FloatGeotiff = L.ImageOverlay.extend({
     if (this.options.max === undefined)
       this.options.max = max(this.raster.data[0]);
     this.plotData = this.raster.data[0].slice(0);
+    this.convolve = false;
   },
   _convolve: function () {
     if (this.options.convolve !== this.convolve) {
       if (this.options.convolve === 0) {
         this.plotData = this.raster.data[0].slice(0);
       } else {
-        const multiband = this.raster.data.length > 1;
         const width = this.raster.width;
         const height = this.raster.height;
-        const convolveSize = this.options.convolve;
-        const offsets = [];
-        for (let i = -convolveSize; i <= convolveSize; i++) {
-          for (let j = -convolveSize; j <= convolveSize; j++) {
-            offsets.push([i, j]);
+        const k = this.options.convolve;
+        const span = 2 * k;
+        const n = width * height;
+        const rasterData = this.raster.data[0];
+        const mask = this.raster.data.length > 1 ? this.raster.data[1] : null;
+        const invalidpixel = this.options.invalidpixel;
+
+        const valid = new Uint8Array(n);
+        for (let i = 0; i < n; i++) {
+          valid[i] =
+            !isNaN(rasterData[i]) && (!mask || mask[i] !== invalidpixel);
+        }
+
+        const rowSum = new Float64Array(n);
+        const rowCount = new Uint8Array(n);
+        for (let h = 0; h < height; h++) {
+          const row = h * width;
+          let sum = 0;
+          let count = 0;
+          for (let w = 0; w < width; w++) {
+            const add = row + w;
+            if (valid[add]) {
+              sum += rasterData[add];
+              count++;
+            }
+            if (w > span) {
+              const remove = add - span - 1;
+              if (valid[remove]) {
+                sum -= rasterData[remove];
+                count--;
+              }
+            }
+            if (w >= span) {
+              rowSum[add - k] = sum;
+              rowCount[add - k] = count;
+            }
           }
         }
 
-        const rasterData = this.raster.data[0];
-        const validPixelCheck = (index) =>
-          !isNaN(rasterData[index]) &&
-          (!multiband ||
-            this.raster.data[1][index] !== this.options.invalidpixel);
-
-        const newPlotData = new Float32Array(width * height).fill(NaN);
-
-        for (let h = convolveSize; h < height - convolveSize; h++) {
-          for (let w = convolveSize; w < width - convolveSize; w++) {
-            const centerIndex = h * width + w;
-            if (validPixelCheck(centerIndex)) {
-              let sum = 0;
-              let count = 0;
-
-              for (const [dx, dy] of offsets) {
-                const neighborW = w + dx;
-                const neighborH = h + dy;
-                const neighborIndex = neighborH * width + neighborW;
-
-                if (validPixelCheck(neighborIndex)) {
-                  sum += rasterData[neighborIndex];
-                  count++;
-                }
-              }
-
-              if (count > 0) {
-                newPlotData[centerIndex] = sum / count;
-              }
+        const newPlotData = new Float32Array(n).fill(NaN);
+        const colSum = new Float64Array(width);
+        const colCount = new Int32Array(width);
+        for (let h = 0; h < height; h++) {
+          const add = h * width;
+          const remove = (h - span - 1) * width;
+          const center = (h - k) * width;
+          for (let w = k; w < width - k; w++) {
+            colSum[w] += rowSum[add + w];
+            colCount[w] += rowCount[add + w];
+            if (h > span) {
+              colSum[w] -= rowSum[remove + w];
+              colCount[w] -= rowCount[remove + w];
+            }
+            if (h >= span && valid[center + w] && colCount[w] > 0) {
+              newPlotData[center + w] = colSum[w] / colCount[w];
             }
           }
         }
