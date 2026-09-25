@@ -275,13 +275,29 @@ class SatelliteSummary extends Component {
     this.setData();
   }
 
+  dataChanged = (props) => {
+    return (
+      props.options.coverage !== this.state.coverage ||
+      props.parameter !== this.state.parameter ||
+      (props.input.custom &&
+        this.state.custom_len !== props.input.custom.length)
+    );
+  };
+
+  shouldComponentUpdate(nextProps, nextState) {
+    const { label, unit, dark, language } = this.props;
+    return (
+      nextState !== this.state ||
+      nextProps.label !== label ||
+      nextProps.unit !== unit ||
+      nextProps.dark !== dark ||
+      nextProps.language !== language ||
+      this.dataChanged(nextProps)
+    );
+  }
+
   componentDidUpdate() {
-    if (
-      this.props.options.coverage !== this.state.coverage ||
-      this.props.parameter !== this.state.parameter ||
-      (this.props.input.custom &&
-        this.state.custom_len !== this.props.input.custom.length)
-    ) {
+    if (this.dataChanged(this.props)) {
       this.setData();
     }
   }
