@@ -516,7 +516,12 @@ class Downloads extends Component {
               </p>
               <div className="nonclickbox">
                 <h3>3D Models</h3>
-                <ModelInputs list={three_dimensional} middle={true} />
+                <ModelInputs
+                  list={three_dimensional.filter(
+                    (l) => l.model.toLowerCase() !== "mitgcm"
+                  )}
+                  middle={true}
+                />
                 <h3>2D Models</h3>
                 <ModelInputs list={two_dimensional} middle={true} />
                 <h3>1D Models</h3>
