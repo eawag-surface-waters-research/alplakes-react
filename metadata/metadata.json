@@ -3675,8 +3675,8 @@
         "ave_depth": "NA",
         "max_depth": 3.0,
         "elevation": 475,
-        "latitude": 48.75,
-        "longitude": 15.66,
+        "latitude": 48.7913,
+        "longitude": 15.6605,
         "current_temperature": false,
         "flags": [
             "austrian"

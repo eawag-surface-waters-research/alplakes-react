@@ -31,8 +31,12 @@ NATIONAL_DATUMS = {
 }
 VALIDATED_DATUMS = {"LN02"}
 
-MAX_MATCH_DISTANCE_KM = 25.0
+MIN_MATCH_DISTANCE_KM = 0.5
+MATCH_DISTANCE_PER_LENGTH = 2.0
 MAX_AREA_RATIO = 3.0
+# Reservoir prior lakes are often mapped drawn down, Wichelsee at under a fifth of its full area.
+MIN_AREA_RATIO = 1.0 / 6.0
+MATCH_VERSION = 2
 # Alpine national datums all sit within a couple of metres of EGM2008; anything beyond this is
 # a null transformation rather than a real separation.
 MAX_DATUM_DIFFERENCE_M = 3.0
@@ -140,11 +144,13 @@ def granule_records(session, url):
     return read_dbf(archive.read(name))
 
 
-def build_prior_index(session, lakes, days=180, max_granules=40):
+def build_prior_index(session, lakes, taken=(), days=180, max_granules=40):
     """Union prior lakes from granules over the region until every lake is matched.
 
     One granule covers the whole of Europe, so a handful of passes usually resolves
-    everything; downloading stops as soon as nothing is left unmatched.
+    everything; downloading stops as soon as nothing is left unmatched. Every lake is
+    re-matched against the whole index after each granule, so a neighbour seen in an early
+    granule cannot hold on to a lake whose own prior lake only arrives later.
     """
     bbox = (min(l["longitude"] for l in lakes) - 0.2,
             min(l["latitude"] for l in lakes) - 0.2,
@@ -162,15 +168,15 @@ def build_prior_index(session, lakes, days=180, max_granules=40):
             print("  granule {} failed, {}".format(granule["title"][:48], error))
             continue
         for record in records:
-            index.setdefault(record.get("lake_id"), record)
-
-        for lake in lakes:
-            if lake["key"] in matches:
+            try:
+                record_lat = float(record["p_lat"])
+                record_lon = float(record["p_lon"])
+            except (KeyError, ValueError):
                 continue
-            found = match_prior_lake(index.values(), lake["latitude"], lake["longitude"],
-                                     lake.get("area"))
-            if found:
-                matches[lake["key"]] = found
+            if bbox[0] <= record_lon <= bbox[2] and bbox[1] <= record_lat <= bbox[3]:
+                index.setdefault(record.get("lake_id"), record)
+
+        matches = match_prior_lakes(index.values(), lakes, taken)
         print("  granule {}/{}: {} prior lakes indexed, {}/{} lakes matched".format(
             number, min(len(granules), max_granules), len(index), len(matches), len(lakes)))
         if len(matches) == len(lakes):
@@ -178,39 +184,68 @@ def build_prior_index(session, lakes, days=180, max_granules=40):
     return matches
 
 
-def match_prior_lake(records, latitude, longitude, area):
-    """The prior lake nearest the lake centre whose area is comparable.
+def max_match_distance_km(area):
+    """How far a prior lake centre may sit from the lake centre, scaled by lake size.
+
+    A flat limit let small lakes with no prior lake of their own take a similar sized
+    neighbour up to 25 km away (Versvey got Arnensee). Genuine matches sit within a lake's
+    width of its centre; long reservoirs such as Gruyere need up to about 1.5 widths.
+    """
+    if not area or area <= 0:
+        return MIN_MATCH_DISTANCE_KM
+    return max(MIN_MATCH_DISTANCE_KM, MATCH_DISTANCE_PER_LENGTH * math.sqrt(area))
+
+
+def match_prior_lakes(records, lakes, taken=()):
+    """Assign each lake the nearest comparable prior lake, one lake per prior lake.
 
     Alplakes coordinates are lake centres, so nearest-centroid matching works directly. Area
-    agreement is what stops a small pond next to a large lake being picked.
+    agreement is what stops a small pond next to a large lake being picked. Candidates are
+    assigned closest first, so when two lakes compete for one prior lake the nearer keeps it
+    and the other is left unmatched rather than sharing its neighbour's time series.
     """
-    best = None
+    candidates = []
     for record in records:
+        if record.get("lake_id") in taken:
+            continue
         try:
             record_lat = float(record["p_lat"])
             record_lon = float(record["p_lon"])
             record_area = float(record["p_ref_area"])
         except (KeyError, ValueError):
             continue
-        distance = haversine_km(latitude, longitude, record_lat, record_lon)
-        if distance > MAX_MATCH_DISTANCE_KM or record_area <= 0:
+        if record_area <= 0:
             continue
-        if area and area > 0:
-            ratio = record_area / area
-            if ratio > MAX_AREA_RATIO or ratio < 1.0 / MAX_AREA_RATIO:
+        for lake in lakes:
+            area = lake.get("area")
+            distance = haversine_km(lake["latitude"], lake["longitude"], record_lat, record_lon)
+            if distance > max_match_distance_km(area):
                 continue
-        if best is None or distance < best["match_dist_km"]:
-            best = {
-                "lake_id": record["lake_id"],
-                # lake_name is a ';'-separated list of every named feature merged into the
-                # prior lake, in no useful order, so it is kept whole.
-                "lake_name": record.get("lake_name", ""),
-                "p_lat": record_lat,
-                "p_lon": record_lon,
-                "p_ref_area": round(record_area, 4),
-                "match_dist_km": round(distance, 2),
-            }
-    return best
+            if area and area > 0:
+                ratio = record_area / area
+                if ratio > MAX_AREA_RATIO or ratio < MIN_AREA_RATIO:
+                    continue
+            candidates.append((distance, lake["key"], record, record_lat, record_lon,
+                               record_area))
+
+    matches = {}
+    assigned = set()
+    for distance, key, record, record_lat, record_lon, record_area in sorted(
+            candidates, key=lambda candidate: candidate[0]):
+        if key in matches or record["lake_id"] in assigned:
+            continue
+        assigned.add(record["lake_id"])
+        matches[key] = {
+            "lake_id": record["lake_id"],
+            # lake_name is a ';'-separated list of every named feature merged into the
+            # prior lake, in no useful order, so it is kept whole.
+            "lake_name": record.get("lake_name", ""),
+            "p_lat": record_lat,
+            "p_lon": record_lon,
+            "p_ref_area": round(record_area, 4),
+            "match_dist_km": round(distance, 2),
+        }
+    return matches
 
 
 def enable_proj_network():
@@ -310,9 +345,18 @@ def load_cache(local_path, url):
     return {}
 
 
+def lake_name(lake):
+    name = lake.get("name")
+    if isinstance(name, dict):
+        return name.get("EN") or next(iter(name.values()), lake["key"])
+    return name or lake["key"]
+
+
 def needs_resolving(entry, countries):
     """Whether a cached lake should be attempted again."""
     if entry is None:
+        return True
+    if entry.get("match_version") != MATCH_VERSION:
         return True
     if entry.get("lake_id") is None:
         # Unresolvable lakes are retried occasionally rather than every run.
@@ -341,6 +385,9 @@ def build(lakes, local_path="files/swot.json",
 
     pending = [lake for lake in lakes
                if needs_resolving(cache.get(lake["key"]), lake.get("countries", []))]
+    pending_keys = {lake["key"] for lake in pending}
+    taken = {entry["lake_id"] for key, entry in cache.items()
+             if key not in pending_keys and entry.get("lake_id")}
     if not pending:
         print("SWOT cache up to date ({} lakes)".format(len(cache)))
         return cache
@@ -357,7 +404,7 @@ def build(lakes, local_path="files/swot.json",
     session = requests.Session()
     now = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
-    matches = build_prior_index(session, pending)
+    matches = build_prior_index(session, pending, taken)
 
     for lake in pending:
         key = lake["key"]
@@ -365,15 +412,19 @@ def build(lakes, local_path="files/swot.json",
         try:
             match = matches.get(key)
             if not match:
-                cache[key] = {"lake_id": None, "offsets": {}, "resolved": now,
+                cache[key] = {"name": lake_name(lake), "lake_id": None, "offsets": {},
+                              "resolved": now,
+                              "match_version": MATCH_VERSION,
                               "note": "no SWOT prior lake matched this location"}
                 print("  {}: no prior lake matched".format(key))
                 continue
 
             undulation, offsets = datum_offsets(match["p_lat"], match["p_lon"], countries)
+            match = {"name": lake_name(lake), **match}
             match["egm2008_undulation_m"] = undulation
             match["offsets"] = offsets
             match["resolved"] = now
+            match["match_version"] = MATCH_VERSION
             cache[key] = match
             summary = "  ".join(
                 "{}:{:+.3f}".format(country, values["offset_m"])
