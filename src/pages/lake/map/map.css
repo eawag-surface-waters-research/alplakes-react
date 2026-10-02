@@ -564,6 +564,19 @@
     opacity: 1;
 }
 
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-layers .active-apps .app.filled {
+    cursor: grab;
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-layers .active-apps .app.filled.dragging {
+    opacity: 0.4;
+    cursor: grabbing;
+}
+
+.main .map .layer-map .map-sidebar .sidebar-body .sidebar-layers .active-apps .app.filled.drag-over {
+    box-shadow: -4px 0 0 0 var(--border-color), var(--box-shadow);
+}
+
 .main .map .layer-map .map-sidebar .sidebar-body .sidebar-layers .active-apps .app.filled.active {
     opacity: 1;
 }
@@ -658,6 +671,14 @@
     background-image: linear-gradient(30deg, #4aa091 12%, transparent 12.5%, transparent 87%, #4aa091 87.5%, #4aa091), linear-gradient(150deg, #4aa091 12%, transparent 12.5%, transparent 87%, #4aa091 87.5%, #4aa091), linear-gradient(30deg, #4aa091 12%, transparent 12.5%, transparent 87%, #4aa091 87.5%, #4aa091), linear-gradient(150deg, #4aa091 12%, transparent 12.5%, transparent 87%, #4aa091 87.5%, #4aa091), linear-gradient(60deg, #4aa09177 25%, transparent 25.5%, transparent 75%, #4aa09177 0, #4aa09177), linear-gradient(60deg, #4aa09177 25%, transparent 25.5%, transparent 75%, #4aa09177 0, #4aa09177);
     background-position: 0 0, 0 0, 14px 25px, 14px 25px, 0 0, 14px 25px;
     background-size: 28px 49px;
+}
+
+.main .map .layer-map .app.twod,
+.icon.twod {
+    background-color: #26423d !important;
+    background-image: linear-gradient(45deg, #2f695f 25%, transparent 25%, transparent 75%, #2f695f 75%, #2f695f), linear-gradient(45deg, #2f695f 25%, transparent 25%, transparent 75%, #2f695f 75%, #2f695f);
+    background-position: 0 0, 14px 14px;
+    background-size: 28px 28px;
 }
 
 .main .map .layer-map .app.meteo,

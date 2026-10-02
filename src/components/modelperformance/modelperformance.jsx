@@ -50,6 +50,12 @@ class ModelPerformance extends Component {
       "delft3d-flow": "#00AFD6",
       mitgcm: "	#47D6AC",
     };
+    const fallbackColors = ["#8a63d2", "#e0533d", "#2fb4d6", "#4bd671"];
+    let fallbackIndex = 0;
+    const colorFor = (type) => {
+      if (type in lineColor) return lineColor[type];
+      return fallbackColors[fallbackIndex++ % fallbackColors.length];
+    };
     const plot = [];
     const table = [];
     let selected_location = data.find((l) => l.name === location);
@@ -60,6 +66,9 @@ class ModelPerformance extends Component {
         depth in selected_location.models[i].data &&
         "data" in selected_location.models[i].data[depth]
       ) {
+        let label =
+          selected_location.models[i].name || selected_location.models[i].type;
+        let color = colorFor(label);
         plot.push({
           x: selected_location.models[i].data[depth].data.time.map(
             (t) => new Date(t)
@@ -67,7 +76,7 @@ class ModelPerformance extends Component {
           y: selected_location.models[i].data[depth].data.values,
           name: false,
           curve: true,
-          lineColor: lineColor[selected_location.models[i].type],
+          lineColor: color,
         });
         let rmse = selected_location.models[i].data[depth].rmse;
         let rmse_color = "#76b64b";
@@ -77,8 +86,8 @@ class ModelPerformance extends Component {
           rmse_color = "#fbd247";
         }
         table.push({
-          type: selected_location.models[i].type,
-          color: lineColor[selected_location.models[i].type],
+          type: label,
+          color: color,
           rmse: rmse,
           rmse_color,
         });

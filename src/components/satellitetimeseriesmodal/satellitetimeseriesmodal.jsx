@@ -12,7 +12,7 @@ class SatelliteTimeseriesModal extends Component {
     options: {},
     lat: 0,
     lng: 0,
-    pixels: 10,
+    pixels: 20,
     window_radius: 0,
     statistic: "mean",
     name: "",

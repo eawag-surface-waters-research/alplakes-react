@@ -201,6 +201,7 @@ class D3HeatMap extends Component {
 
   hover = (event) => {
     var { mousex, mousey } = event;
+    if (mousex === this.state.mousex && mousey === this.state.mousey) return;
     this.setState({ mousex, mousey });
   };
 
@@ -308,6 +309,10 @@ class D3HeatMap extends Component {
     });
     myObserver.observe(document.getElementById("vis" + this.state.graphid));
   }
+
+  updateData = (data) => {
+    if (this.heatmap) this.heatmap.updateData(data);
+  };
 
   componentDidUpdate(prevProps, prevState) {
     var { display, fontSize, fullscreen, xgraph, ygraph } = this.state;

@@ -36,19 +36,20 @@ class List extends Component {
       language,
       sortedList,
       results,
-      search,
       filterTypes,
       filters,
       setFavorties,
       favorites,
       sort,
+      loaded,
+      pills,
     } = this.props;
     return (
-      <div className="list">
+      <div className={pills.length > 0 ? "list with-pills" : "list"}>
         <div className="product-wrapper">
           <div className="product-list">
             {results === 0 &&
-              (search.length > 0 ? (
+              (loaded ? (
                 <div className="empty">{Translations.noresults[language]}</div>
               ) : (
                 <React.Fragment>

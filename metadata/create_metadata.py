@@ -7,6 +7,16 @@ import functions as func
 upload = True
 bucket_folder = "static/website/metadata/french"
 
+flag_country = {
+    "swiss": "CH",
+    "italian": "IT",
+    "france": "FR",
+    "french": "FR",
+    "austrian": "AT",
+    "german": "DE",
+    "slovenian": "SI",
+}
+
 # Load Metadata
 with open("metadata.json") as f:
     metadata = json.load(f)
@@ -56,13 +66,24 @@ srd = response.json()
 
 s3 = boto3.client('s3')
 
+# Load swot data
+swot = []
+paginator = s3.get_paginator('list_objects_v2')
+for page in paginator.paginate(Bucket='alplakes-eawag', Prefix='swot/'):
+    for obj in page.get('Contents', []):
+        swot_key = obj['Key'].split('/')[-1].replace('.json', '')
+        if swot_key != 'metadata':
+            swot.append(swot_key)
+
 # Create files
 home_list = []
 one_dimensional_list = []
+two_dimensional_list = []
 three_dimensional_list = []
 
 for lake in metadata:
     add = False
+    satellites = []
     home = {"key": lake["key"],
             "name": lake["name"],
             "area": lake["area"],
@@ -118,6 +139,16 @@ for lake in metadata:
     if 'mapHide' in lake and lake['mapHide']:
         home['mapHide'] = True
 
+    # Countries
+    if "flags" in lake:
+        countries = []
+        for flag in lake["flags"]:
+            code = flag_country.get(flag)
+            if code and code not in countries:
+                countries.append(code)
+        if len(countries) > 0:
+            home["countries"] = countries
+
     # Three Dimensional Model
     if '3D' in lake:
         add = True
@@ -150,6 +181,31 @@ for lake in metadata:
                 }}
         layers["layers"].extend(func.model_layers(lake["3D"]["default"], lake["3D"]["models"], default_depth, spread))
 
+    if '2D' in lake:
+        add = True
+        home["filters"].append("2D")
+        for model_id in lake["2D"]["models"].keys():
+            response = requests.get("https://alplakes-api.eawag.ch/simulations/2d/metadata/{}/{}".format(lake["2D"]["models"][model_id]["model"],lake["key"]))
+            model_metadata = response.json()
+            two_dimensional_list.append({
+                "link": lake["key"],
+                "name": lake["name"]["EN"],
+                "model_key": lake["2D"]["models"][model_id]["key"],
+                "model": lake["2D"]["models"][model_id]["name"],
+                "LatLng": "{}, {}".format(lake["latitude"], lake["longitude"]),
+                "area": lake["area"],
+                "elevation": lake["elevation"],
+                "timeframe": "{}-{}".format(model_metadata["start_date"][0:4], model_metadata["end_date"][0:4]),
+                "wavermse": lake["2D"]["models"][model_id]["performance"]["rmse"]["significant_wave_height"]
+                })
+            if model_id == lake["2D"]["default"]:
+                data["forecast"]["2d_model"] = {
+                    "key": key,
+                    "model": lake["2D"]["models"][lake["2D"]["default"]]["model"],
+                    "parameters": ["significant_wave_height", "wave_direction"],
+                    "performance": lake["2D"]["models"][lake["2D"]["default"]]["performance"]
+                }
+        layers["layers"].extend(func.model_layers_2d(lake["2D"]["default"], lake["2D"]["models"]))
 
     # One Dimensional Model
     if "simstrat" not in lake:
@@ -205,7 +261,13 @@ for lake in metadata:
                 simstrat_parameters["hydro_source"] = "Bundesamt für Umwelt BAFU"
             if "calibration_source" in simstrat_metadata:
                 simstrat_parameters["calibration_source"] = simstrat_metadata["calibration_source"]
-            data["forecast"]["1d_model"].append({**simstrat_parameters, "parameter": "T", "unit": "°", "simstrat_oxygen": simstrat_oxygen})
+            one_d_entry = {**simstrat_parameters, "parameter": "T", "unit": "°", "simstrat_oxygen": simstrat_oxygen}
+            da = lake.get("simstrat_da", {}).get(k)
+            if da:
+                one_d_entry["runs"] = da["runs"]
+                if da.get("default_run"):
+                    one_d_entry["default_run"] = da["default_run"]
+            data["forecast"]["1d_model"].append(one_d_entry)
             data["trends"]["doy"][k] = {
                 **simstrat_parameters,
                 "depths": [0],
@@ -229,6 +291,12 @@ for lake in metadata:
                 "displayOptions": { "paletteName": "vik", "thresholdStep": 200 }
             }
         home["filters"].append("1D")
+
+    # External Models
+    if "external_model" in lake:
+        if "forecast" not in data:
+            data["forecast"] = {}
+        data["forecast"]["external_model"] = lake["external_model"]
 
     # AI summary
     # Remove AI summary due to Eawag legal concerns - to be added back when resolved
@@ -284,6 +352,8 @@ for lake in metadata:
                 for source in sat["sources"]:
                     if source["satellite"] in satellite[key] and source["parameter"] in satellite[key][source["satellite"]]:
                         sm.append(source["link"].replace("#key#", key))
+                        if source["satellite"] not in satellites:
+                            satellites.append(source["satellite"])
                 if len(sm) > 0:
                     temp = sat.copy()
                     temp["key"] = key
@@ -292,6 +362,17 @@ for lake in metadata:
         if len(satellite_data) > 0:
             home["filters"].append("satellite")
             data["satellite"] = satellite_data
+
+    # Swot data
+    if key in swot and key not in water_levels:
+        add = True
+        data["swot"] = True
+        satellites.append("swot")
+        if "satellite" not in home["filters"]:
+            home["filters"].append("satellite")
+
+    if len(satellites) > 0:
+        home["satellites"] = sorted(satellites)
 
     # Meteo data
     layers["layers"].extend(func.meteo_layers(layers["bounds"]))
@@ -326,6 +407,8 @@ with open('files/one_dimensional.json', 'w') as json_file:
     json_file.write(json.dumps(one_dimensional_list, separators=(',', ':'), ensure_ascii=False))
 with open('files/three_dimensional.json', 'w') as json_file:
     json_file.write(json.dumps(three_dimensional_list, separators=(',', ':'), ensure_ascii=False))
+with open('files/two_dimensional.json', 'w') as json_file:
+    json_file.write(json.dumps(two_dimensional_list, separators=(',', ':'), ensure_ascii=False))
 if upload:
     s3.upload_file(
         'files/list.json',
@@ -339,6 +422,14 @@ if upload:
         'files/one_dimensional.json',
         'alplakes-eawag',
         '{}/one_dimensional.json'.format(bucket_folder),
+        ExtraArgs={
+            'ContentType': 'application/json',
+        },
+    )
+    s3.upload_file(
+        'files/two_dimensional.json',
+        'alplakes-eawag',
+        '{}/two_dimensional.json'.format(bucket_folder),
         ExtraArgs={
             'ContentType': 'application/json',
         },

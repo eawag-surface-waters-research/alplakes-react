@@ -20,8 +20,10 @@ class Basemap extends Component {
     datetime: false,
     timestep: false,
     data: false,
+    sparkline: false,
     duration: 12000,
   };
+  playUpdate = { setDatetime: null };
   togglePlay = () => {
     const play = !this.state.play;
     this._playing = play;
@@ -54,6 +56,8 @@ class Basemap extends Component {
           datetime = newDatetime;
           setPlayDatetime(this.layers, datetime, period, data);
           this.map.triggerLayersUpdate();
+          if (this.playUpdate.setDatetime)
+            this.playUpdate.setDatetime(datetime);
           this._playDatetime = datetime;
 
           if (this.props.setDatetime && now - lastCallbackUpdate >= callbackInterval) {
@@ -87,7 +91,7 @@ class Basemap extends Component {
     if (this.props.setDatetime) this.props.setDatetime(datetime, false);
     this.setState({ datetime, play: false });
   };
-  addControls = (period, datetime, timestep, data) => {
+  addControls = (period, datetime, timestep, data, sparkline = false) => {
     this.setState({
       controls: true,
       play: false,
@@ -95,6 +99,7 @@ class Basemap extends Component {
       datetime,
       timestep,
       data,
+      sparkline,
     });
   };
   removeControls = () => {
@@ -105,6 +110,7 @@ class Basemap extends Component {
       datetime: false,
       timestep: false,
       data: false,
+      sparkline: false,
     });
   };
   disableControls = () => {
@@ -139,12 +145,14 @@ class Basemap extends Component {
       getTransect,
       getProfile,
       getSatelliteTimeseries,
+      getWaveTimeseries,
     } = this.props;
     var { basemap } = this.props;
     const server = {
       getTransect,
       getProfile,
       getSatelliteTimeseries,
+      getWaveTimeseries,
       disableControls: this.disableControls,
     };
     if (updates.length > 0) {
@@ -241,7 +249,8 @@ class Basemap extends Component {
       downloadSatelliteTimeseries,
       closeSatelliteTimeseriesModel,
     } = this.props;
-    const { controls, play, period, datetime, timestep } = this.state;
+    const { controls, play, period, datetime, timestep, sparkline } =
+      this.state;
     return (
       <React.Fragment>
         <div
@@ -272,6 +281,7 @@ class Basemap extends Component {
                   permanentLabel={permanentLabel}
                   play={play}
                   duration={this.state.duration}
+                  sparkline={sparkline}
                 />
               </div>
             </div>
@@ -282,6 +292,7 @@ class Basemap extends Component {
               language={language}
               graphSelection={graphSelection}
               datetime={datetime}
+              playUpdate={this.playUpdate}
               selectMapGraph={selectMapGraph}
               dark={dark}
               graphHide={graphHide}
@@ -299,6 +310,7 @@ class Basemap extends Component {
             language={language}
             graphSelection={graphSelection}
             datetime={datetime}
+            playUpdate={this.playUpdate}
             selectMapGraph={selectMapGraph}
             dark={dark}
             graphHide={graphHide}

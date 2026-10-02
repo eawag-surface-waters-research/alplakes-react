@@ -90,7 +90,7 @@
 }
 
 :root {
-  --search-height: calc(var(--padding) * 2 + 132px);
+  --search-height: calc(var(--padding) * 2 + 92px);
   --header-height: calc(var(--padding) + 20px);
 }
 
@@ -135,14 +135,14 @@
     --header-height: calc(var(--padding) * 2 + 22px);
     --footer-height: 58px;
     --top-margin: 87px;
-    --search-height: calc(var(--padding) * 2.5 + 125px);
+    --search-height: calc(var(--padding) * 2.5 + 95px);
   }
 }
 
 @media screen and (max-width: 500px) {
   :root {
     --background-color: white;
-    --search-height: 138px;
+    --search-height: 100px;
     --select-color: #f3f4f6;
   }
 
@@ -614,6 +614,45 @@ p {
 
 .main .setting-warning button:hover {
   transform: scale(1.05);
+}
+
+.main .setting .run-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.main .setting .run-list .run-item {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.main .setting .run-list .run-item input[type="checkbox"] {
+  margin: 0 8px 0 0;
+  cursor: pointer;
+}
+
+.main .setting .run-list .run-item .run-swatch {
+  display: inline-block;
+  width: 16px;
+  height: 4px;
+  border-radius: 2px;
+  margin-right: 8px;
+}
+
+.main .run-beta {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 1px 6px;
+  border-radius: 6px;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background-color: var(--background-subtle-font-color);
+  color: var(--background-color);
+  vertical-align: middle;
 }
 
 .main .setting input[type="range"] {

@@ -9,6 +9,7 @@ import {
   collectMetadata,
   getProfileAlplakesHydrodynamic,
   getTransectAlplakesHydrodynamic,
+  getWaveTimeseriesAlplakes,
 } from "../functions/download";
 import "./map.css";
 import Basemap from "../../../components/leaflet/basemap";
@@ -124,6 +125,30 @@ class Map extends Component {
     if (data) {
       layer.graph = { ...layer.graph, profile_plot: data };
       var graphSelection = { id: layer.id, type: "profile_plot" };
+      this.setState({ layers, graphSelection, graphHide: false });
+      return { lat: data.lat, lng: data.lng };
+    } else {
+      window.alert(Translations.serverAlert[this.props.language]);
+    }
+  };
+
+  getWaveTimeseries = async (latlng, id) => {
+    var { language } = this.props;
+    var { period, layers } = this.state;
+    var layer = layers.find((l) => l.id === id);
+    var source = layer.sources[layer.source];
+    this.loading(Translations.downloadingData[language]);
+    var data = await getWaveTimeseriesAlplakes(
+      CONFIG.alplakes_api,
+      source.model,
+      source.key,
+      period,
+      latlng,
+    );
+    this.loaded();
+    if (data) {
+      layer.graph = { ...layer.graph, wave_timeseries: data };
+      var graphSelection = { id: layer.id, type: "wave_timeseries" };
       this.setState({ layers, graphSelection, graphHide: false });
       return { lat: data.lat, lng: data.lng };
     } else {
@@ -342,6 +367,27 @@ class Map extends Component {
     var { layers, updates } = this.state;
     updates.push({ event: "updateLayer", id, type, options });
     layers.find((l) => l.id === id).displayOptions = options;
+    this.setState({ layers, updates });
+  };
+
+  reorderLayers = (orderedIds) => {
+    var { layers, updates } = this.state;
+    // orderedIds is left-to-right in the active-apps row = top-to-bottom of the
+    // map stack. Assign a strictly descending sequence so the first id gets the
+    // highest zIndex (drawn on top). Anchor at the current max and decrement,
+    // which keeps values sensible and stays unique even when layers share a
+    // zIndex (e.g. all satellite layers default to 2).
+    var top = Math.max(
+      ...orderedIds.map((id) => layers.find((l) => l.id === id).displayOptions.zIndex),
+    );
+    orderedIds.forEach((id, index) => {
+      var layer = layers.find((l) => l.id === id);
+      var zIndex = top - index;
+      if (layer.displayOptions.zIndex !== zIndex) {
+        layer.displayOptions.zIndex = zIndex;
+        updates.push({ event: "reorderLayer", id, options: { zIndex } });
+      }
+    });
     this.setState({ layers, updates });
   };
 
@@ -582,6 +628,7 @@ class Map extends Component {
               addLayers={this.addLayers}
               updateOptions={this.updateOptions}
               removeLayer={this.removeLayer}
+              reorderLayers={this.reorderLayers}
               setDepth={this.setDepth}
               setPeriod={this.setPeriod}
               setModel={this.setModel}
@@ -601,6 +648,7 @@ class Map extends Component {
               satelliteTimeseriesCount={satelliteTimeseriesCount}
               getTransect={this.getTransect}
               getProfile={this.getProfile}
+              getWaveTimeseries={this.getWaveTimeseries}
               getSatelliteTimeseries={this.getSatelliteTimeseries}
               downloadSatelliteTimeseries={this.downloadSatelliteTimeseries}
               closeSatelliteTimeseriesModel={this.closeSatelliteTimeseriesModel}

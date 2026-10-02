@@ -128,6 +128,7 @@ class ThreeDimensionalResults extends Component {
     this.setState({ week });
   };
   getMetadata = async (model, lake) => {
+    const { twod } = this.props;
     var data;
     try {
       ({ data } = await axios.get(
@@ -137,7 +138,9 @@ class ThreeDimensionalResults extends Component {
       ));
     } catch (e) {
       ({ data } = await axios.get(
-        `${CONFIG.alplakes_api}/simulations/metadata/${model}/${lake}`
+        `${CONFIG.alplakes_api}/simulations/${
+          twod ? "2d/metadata" : "metadata"
+        }/${model}/${lake}`
       ));
     }
     return data;
@@ -186,6 +189,7 @@ class ThreeDimensionalResults extends Component {
     }
   }
   render() {
+    const { twod } = this.props;
     const { model_list, model, lake_list, lake, week_list, week } = this.state;
     return (
       <div className="selector">
@@ -211,9 +215,9 @@ class ThreeDimensionalResults extends Component {
           ))}
         </select>
         <a
-          href={`${
-            CONFIG.alplakes_api
-          }/simulations/file/${model.toLowerCase()}/${lake.toLowerCase()}/${week}`}
+          href={`${CONFIG.alplakes_api}/simulations/${
+            twod ? "2d/file" : "file"
+          }/${model.toLowerCase()}/${lake.toLowerCase()}/${week}`}
         >
           <button className="download">Download</button>
         </a>
@@ -326,12 +330,49 @@ class OneDimensionalResults extends Component {
   }
 }
 
+class Faq extends Component {
+  state = {
+    open: [],
+  };
+  toggle = (index) => {
+    const { open } = this.state;
+    this.setState({
+      open: open.includes(index)
+        ? open.filter((i) => i !== index)
+        : [...open, index],
+    });
+  };
+  render() {
+    const { questions } = this.props;
+    const { open } = this.state;
+    return (
+      <div className="faq">
+        {questions.map((q, index) => (
+          <div
+            key={q.question}
+            className={open.includes(index) ? "faq-item open" : "faq-item"}
+          >
+            <div className="faq-question" onClick={() => this.toggle(index)}>
+              {q.question}
+              <span className="faq-toggle">
+                {open.includes(index) ? "−" : "+"}
+              </span>
+            </div>
+            <div className="faq-answer">{q.answer}</div>
+          </div>
+        ))}
+      </div>
+    );
+  }
+}
+
 class Downloads extends Component {
   state = {
     swagger_error: false,
     one_dimensional: [],
+    two_dimensional: [],
     three_dimensional: [],
-    visibleKey: "inputs",
+    visibleKey: "licence",
   };
 
   constructor(props) {
@@ -339,6 +380,8 @@ class Downloads extends Component {
     this.divRefs = {
       inputs: React.createRef(),
       outputs: React.createRef(),
+      licence: React.createRef(),
+      faq: React.createRef(),
       api: React.createRef(),
     };
   }
@@ -375,11 +418,18 @@ class Downloads extends Component {
 
   async componentDidMount() {
     window.scrollTo(0, 0);
-    var { one_dimensional, three_dimensional, swagger_error } = this.state;
+    var { one_dimensional, two_dimensional, three_dimensional, swagger_error } =
+      this.state;
     try {
       ({ data: one_dimensional } = await axios.get(
         CONFIG.alplakes_bucket +
           `/static/website/metadata/${CONFIG.branch}/one_dimensional.json${hour()}`
+      ));
+    } catch (e) {}
+    try {
+      ({ data: two_dimensional } = await axios.get(
+        CONFIG.alplakes_bucket +
+          `/static/website/metadata/${CONFIG.branch}/two_dimensional.json${hour()}`
       ));
     } catch (e) {}
     try {
@@ -395,15 +445,25 @@ class Downloads extends Component {
     }
     window.addEventListener("scroll", this.handleScroll);
     this.handleScroll();
-    this.setState({ one_dimensional, three_dimensional, swagger_error });
+    this.setState({
+      one_dimensional,
+      two_dimensional,
+      three_dimensional,
+      swagger_error,
+    });
   }
   componentWillUnmount() {
     window.removeEventListener("scroll", this.handleScroll);
   }
   render() {
     const language = "EN";
-    var { one_dimensional, three_dimensional, swagger_error, visibleKey } =
-      this.state;
+    var {
+      one_dimensional,
+      two_dimensional,
+      three_dimensional,
+      swagger_error,
+      visibleKey,
+    } = this.state;
     return (
       <React.Fragment>
         <Helmet>
@@ -425,6 +485,28 @@ class Downloads extends Component {
               the API below. All in-situ data must be downloaded directly from
               the original data providers.
             </div>
+
+            <div ref={this.divRefs["licence"]} id="licence" className="section">
+              <h2>Licence</h2>
+              <p>
+                All data produced by Alplakes is released under the{" "}
+                <a
+                  href="https://creativecommons.org/licenses/by/4.0/"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Creative Commons Attribution 4.0 International (CC BY 4.0)
+                </a>{" "}
+                licence. You are free to share and adapt the data for any
+                purpose, including commercially, as long as you give appropriate
+                credit to Alplakes and indicate if any changes were made.
+              </p>
+              <div className="comment">
+                In-situ data remains subject to the licence terms of the
+                original data provider.
+              </div>
+            </div>
+            
             <div ref={this.divRefs["inputs"]} id="inputs" className="section">
               <h2>Model Inputs</h2>
               <p>
@@ -434,7 +516,14 @@ class Downloads extends Component {
               </p>
               <div className="nonclickbox">
                 <h3>3D Models</h3>
-                <ModelInputs list={three_dimensional} middle={true} />
+                <ModelInputs
+                  list={three_dimensional.filter(
+                    (l) => l.model.toLowerCase() !== "mitgcm"
+                  )}
+                  middle={true}
+                />
+                <h3>2D Models</h3>
+                <ModelInputs list={two_dimensional} middle={true} />
                 <h3>1D Models</h3>
                 <ModelInputs list={one_dimensional} full={true} />
               </div>
@@ -461,6 +550,12 @@ class Downloads extends Component {
                   </a>{" "}
                   for more information.
                 </div>
+                <h3>2D Models</h3>
+                <ThreeDimensionalResults list={two_dimensional} twod={true} />
+                <div className="comment space">
+                  Wave results are available per week in NetCDF format, with the
+                  same structure as the 3D output files.
+                </div>
                 <h3>1D Models</h3>
                 <OneDimensionalResults list={one_dimensional} />
                 <div className="comment">
@@ -478,6 +573,111 @@ class Downloads extends Component {
                   provides an example of processing the raw data.
                 </div>
               </div>
+            </div>
+            <div ref={this.divRefs["faq"]} id="faq" className="section">
+              <h2>FAQ</h2>
+              <Faq
+                questions={[
+                  {
+                    question: "How should I cite the data?",
+                    answer: (
+                      <p>
+                        The data is released under CC BY 4.0, so please credit
+                        Alplakes and link back to{" "}
+                        <a
+                          href="https://www.alplakes.eawag.ch"
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          alplakes.eawag.ch
+                        </a>
+                        , indicating if you have made any changes to the data.
+                      </p>
+                    ),
+                  },
+                  {
+                    question:
+                      "Should I download the raw files or use the API?",
+                    answer: (
+                      <p>
+                        Use the API if you need a subset of the data, for
+                        example a time series at a point, a depth profile or a
+                        single variable over a given period. Download the raw
+                        files if you need the complete model output, or want to
+                        do processing that the API does not support.
+                      </p>
+                    ),
+                  },
+                  {
+                    question: "How often are the model outputs updated?",
+                    answer: (
+                      <p>
+                        The models are run each morning and the outputs are updated on the platform as soon as the model run is complete. 
+
+                      </p>
+                    ),
+                  },
+                  {
+                    question: "Can I run the models myself?",
+                    answer: (
+                      <p>
+                        Yes. Example input files for every lake are available in
+                        the Model Inputs section above, and the <b>Models</b>{" "}
+                        page describes how these files are generated.
+                      </p>
+                    ),
+                  },
+                  {
+                    question: "Can I use the data in my website or application?",
+                    answer: (
+                      <p>
+                        Yes! We are happy for people to build on our work and use the data in their own applications. 
+                        Please follow the licence and credit Alplakes. Please cache the data on your own servers and 
+                        do not make repeated requests to our API, as this will slow down the service for everyone.
+                      </p>
+                    ),
+                  },
+                  {
+                    question: "My lake isn't listed, can it be added?",
+                    answer: (
+                      <p>
+                        Possibly. Adding a lake requires bathymetry,
+                        meteorological forcing and ideally in-situ data for
+                        calibration. Get in touch at{" "}
+                        <a href="mailto:james.runnalls@eawag.ch">
+                          james.runnalls@eawag.ch
+                        </a>{" "}
+                        to discuss it.
+                      </p>
+                    ),
+                  },
+                  {
+                    question: "Can I contribute a lake model or data?",
+                    answer: (
+                      <p>
+                        Absolutely, we are always looking for collaborators. Please get in touch and we can 
+                        discuss how to integrate your work into the platform. Get in touch at{" "}
+                        <a href="mailto:james.runnalls@eawag.ch">
+                          james.runnalls@eawag.ch
+                        </a>{" "}
+                        to discuss it.
+                      </p>
+                    ),
+                  },
+                  {
+                    question: "How can I be informed of changes to the API?",
+                    answer: (
+                      <p>
+                        Please email {" "}
+                        <a href="mailto:james.runnalls@eawag.ch">
+                          james.runnalls@eawag.ch
+                        </a>{" "}
+                        to be added to our mailing list.
+                      </p>
+                    ),
+                  },
+                ]}
+              />
             </div>
             <h2 ref={this.divRefs["api"]} id="api" className="api">
               API Documentation
@@ -529,19 +729,31 @@ class Downloads extends Component {
             <div className="sidebar-inner">
               <h3>Contents</h3>
               <div
-                className={visibleKey === "inputs" ? "model_key active" : "model_key"}
+                className={visibleKey === "licence" ? "link active" : "link"}
+                onClick={() => this.scrollToSection(this.divRefs["licence"])}
+              >
+                Licence
+              </div>
+              <div
+                className={visibleKey === "inputs" ? "link active" : "link"}
                 onClick={() => this.scrollToSection(this.divRefs["inputs"])}
               >
                 Model Inputs
               </div>
               <div
-                className={visibleKey === "outputs" ? "model_key active" : "model_key"}
+                className={visibleKey === "outputs" ? "link active" : "link"}
                 onClick={() => this.scrollToSection(this.divRefs["outputs"])}
               >
                 Model Outputs
               </div>
               <div
-                className={visibleKey === "api" ? "model_key active" : "model_key"}
+                className={visibleKey === "faq" ? "link active" : "link"}
+                onClick={() => this.scrollToSection(this.divRefs["faq"])}
+              >
+                FAQ
+              </div>
+              <div
+                className={visibleKey === "api" ? "link active" : "link"}
                 onClick={() => this.scrollToSection(this.divRefs["api"])}
               >
                 API Documentation

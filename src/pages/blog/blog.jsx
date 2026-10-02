@@ -10,17 +10,32 @@ import ScrollUp from "../../components/scrollup/scrollup";
 class Blog extends Component {
   state = {
     posts: [],
+    loading: true,
   };
   async componentDidMount() {
     try {
       const { data: posts } = await axios.get(CONFIG.blog_url);
-      this.setState({ posts });
+      this.setState({ posts, loading: false });
     } catch (e) {
       console.error(e);
+      this.setState({ loading: false });
     }
   }
+  postBody = (p) => (
+    <React.Fragment>
+      <h2>{p.title}</h2>
+      <div className="date">{p.date}</div>
+      {p.img && (
+        <div className="image">
+          <img src={p.img} alt={p.title} />
+          {p.img_source && <div className="source">{p.img_source}</div>}
+        </div>
+      )}
+      <p>{p.description}</p>
+    </React.Fragment>
+  );
   render() {
-    const { posts } = this.state;
+    const { posts, loading } = this.state;
     return (
       <React.Fragment>
         <Helmet>
@@ -34,18 +49,47 @@ class Blog extends Component {
         <div className="text-width blog">
           <div className="content">
             <h1>Blog</h1>
-            {posts.map((p) => (
-              <a href={p.link} target="_blank" rel="noopener noreferrer">
+            {loading &&
+              [0, 1, 2, 3, 4].map((i) => (
+                <div className="post clickable-box placeholder" key={i} />
+              ))}
+            {posts.map((p) =>
+              Array.isArray(p.link) ? (
                 <div className="post clickable-box" key={p.title}>
-                  <div className="date">{p.date}</div>
-                  <h2>{p.title}</h2>
-                  <p>{p.description}</p>
-                  <div className="button">
-                    {"link_text" in p ? p.link_text : "Read more"}
+                  {this.postBody(p)}
+                  <div className="buttons">
+                    {p.link.map((link, i) => (
+                      <a
+                        href={link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        key={link}
+                      >
+                        <div className="button">
+                          {Array.isArray(p.link_text)
+                            ? p.link_text[i]
+                            : "Read more"}
+                        </div>
+                      </a>
+                    ))}
                   </div>
                 </div>
-              </a>
-            ))}
+              ) : (
+                <a
+                  href={p.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  key={p.title}
+                >
+                  <div className="post clickable-box">
+                    {this.postBody(p)}
+                    <div className="button">
+                      {"link_text" in p ? p.link_text : "Read more"}
+                    </div>
+                  </div>
+                </a>
+              )
+            )}
           </div>
         </div>
         <ScrollUp />

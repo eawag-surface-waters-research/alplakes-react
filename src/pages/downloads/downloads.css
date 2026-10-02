@@ -110,6 +110,49 @@
   margin-bottom: var(--padding);
 }
 
+.main .downloads .faq-item {
+  border-bottom: 1px solid var(--border-color);
+}
+
+.main .downloads .faq-item:first-child {
+  border-top: 1px solid var(--border-color);
+}
+
+.main .downloads .faq-question {
+  position: relative;
+  padding: 16px 40px 16px 0;
+  cursor: pointer;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.main .downloads .faq-question:hover {
+  color: var(--highlight-color);
+}
+
+.main .downloads .faq-toggle {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 20px;
+  line-height: 1;
+  color: var(--highlight-color);
+}
+
+.main .downloads .faq-answer {
+  display: none;
+  padding-bottom: 16px;
+}
+
+.main .downloads .faq-item.open .faq-answer {
+  display: block;
+}
+
+.main .downloads .faq-answer p {
+  margin: 0;
+}
+
 .main .downloads .error {
   font-size: 30px;
   padding: 50px 0;
