@@ -32,12 +32,23 @@
     margin-bottom: 14px;
     border-radius: 12px;
     overflow: hidden;
+    min-height: 300px;
+}
+
+.main .blog .post .image:has(img.loaded) {
+    min-height: 0;
 }
 
 .main .blog .post .image img {
     display: block;
     width: 100%;
     height: auto;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.main .blog .post .image img.loaded {
+    opacity: 1;
 }
 
 .main .blog .post .image .source {
