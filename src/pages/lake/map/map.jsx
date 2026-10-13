@@ -536,7 +536,12 @@ class Map extends Component {
             Math.round((new Date().getTime() + 1800000) / 3600000) * 3600 - 3600
           }`,
       );
-      var layers = data.layers;
+      var layers = data.layers.filter((layer) => {
+        if (layer.type !== "satellite") return true;
+        let source = layer.sources[layer.source];
+        source.models = source.models.filter((m) => m.model !== "Sentinel3");
+        return source.models.length > 0;
+      });
       updates.push({ event: "bounds", options: data.bounds });
       this.setState(
         {
