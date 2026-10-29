@@ -609,6 +609,17 @@ class Models extends Component {
                 ).
               </p>
               <p>
+                The Sentinel-3 water quality maps from 2016 to 2025 are
+                available as a citable dataset in NetCDF format. Runnalls, J.,
+                Odermatt, D., & Werther, M. (2026). Sentinel-3 water quality
+                maps for 50 European perialpine lakes (2016–2025) (Version
+                1.0). Eawag: Swiss Federal Institute of Aquatic Science and
+                Technology.{" "}
+                <a href="https://doi.org/10.25678/000HXJ">
+                  https://doi.org/10.25678/000HXJ
+                </a>
+              </p>
+              <p>
                 The surface temperature product is sourced from Landsat
                 Collection 2. Further details are available{" "}
                 <a href="https://d9-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/s3fs-public/media/files/LSDS-1619_Landsat8-9-Collection2-Level2-Science-Product-Guide-v6.pdf">
