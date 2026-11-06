@@ -246,6 +246,7 @@ class LandCover extends Component {
             {polygon && (
               <CatchmentMap
                 dark={dark}
+                language={language}
                 mapId={mapId}
                 polygon={polygon}
                 wmts_url={wmts.url}

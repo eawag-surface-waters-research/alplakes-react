@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import L from "leaflet";
-import CONFIG from "../../config.json";
 import { update, setPlayDatetime } from "./update";
 import "./leaflet_customtooltip";
-import "./leaflet_tileclass";
+import { addBasemap, updateBasemap } from "./maplibre_basemap";
 import "./css/leaflet.css";
 import "./css/basemap.css";
 import Legend from "../legend/legend";
@@ -134,6 +133,9 @@ class Basemap extends Component {
   componentWillUnmount() {
     this._playing = false;
     cancelAnimationFrame(this._rafId);
+    this._unmounted = true;
+    this.map.off();
+    this.map.remove();
   }
   async componentDidUpdate(prevProps) {
     const {
@@ -147,7 +149,6 @@ class Basemap extends Component {
       getSatelliteTimeseries,
       getWaveTimeseries,
     } = this.props;
-    var { basemap } = this.props;
     const server = {
       getTransect,
       getProfile,
@@ -159,38 +160,31 @@ class Basemap extends Component {
       const loading_div = document.getElementById(`loading_${mapId}`);
       loading_div.style.opacity = 0.6;
       updated();
-      await update(
-        this.map,
-        this.layers,
-        updates,
-        language,
-        this.addControls,
-        this.removeControls,
-        server,
-        this.state.play,
-        this.togglePlay,
-      );
+      try {
+        await update(
+          this.map,
+          this.layers,
+          updates,
+          language,
+          this.addControls,
+          this.removeControls,
+          server,
+          this.state.play,
+          this.togglePlay,
+        );
+      } catch (e) {
+        // An update still running at unmount fails once the map is removed
+        if (!this._unmounted) throw e;
+      }
+      if (this._unmounted) return;
       loading_div.style.opacity = 0;
     }
-    if (prevProps.basemap !== basemap || prevProps.dark !== dark) {
-      if (!(basemap in CONFIG.basemaps)) basemap = "default";
-      var { url, attribution, lightMap, darkMap, tileClass } =
-        CONFIG.basemaps[basemap];
-      if (url.includes("_bright_"))
-        url = url.replace("_bright_", dark ? darkMap : lightMap);
-      var newBasemap = L.tileLayer
-        .default(url, {
-          maxZoom: 19,
-          attribution: attribution,
-          tileClass: tileClass,
-        })
-        .addTo(this.map);
-      this.map.removeLayer(this.basemap);
-      this.basemap = newBasemap;
+    if (prevProps.dark !== dark || prevProps.language !== language) {
+      updateBasemap(this.basemap, dark, language);
     }
   }
   async componentDidMount() {
-    var { dark, mapId, bounds, basemap } = this.props;
+    var { dark, language, mapId, bounds } = this.props;
     this.map = L.map(mapId, {
       preferCanvas: true,
       center: [46.9, 8.2],
@@ -211,18 +205,7 @@ class Basemap extends Component {
       });
     }
     this.map.doubleClickZoom.disable();
-    if (!(basemap in CONFIG.basemaps)) basemap = "default";
-    var { url, attribution, lightMap, darkMap, tileClass } =
-      CONFIG.basemaps[basemap];
-    if (url.includes("_bright_"))
-      url = url.replace("_bright_", dark ? darkMap : lightMap);
-    this.basemap = L.tileLayer
-      .default(url, {
-        maxZoom: 19,
-        attribution: attribution,
-        tileClass: tileClass,
-      })
-      .addTo(this.map);
+    this.basemap = addBasemap(this.map, dark, language);
     this.map.attributionControl.setPosition("bottomleft");
     this.layers = {};
   }

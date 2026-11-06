@@ -152,6 +152,7 @@ L.Streamlines = L.ImageOverlay.extend({
   },
 
   onRemove: function (map) {
+    this._stopAnimation();
     if (this.options.pane) {
       this.getPane().removeChild(this._canvas);
     } else {
