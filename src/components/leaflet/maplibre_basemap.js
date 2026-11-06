@@ -1,7 +1,16 @@
 import L from "leaflet";
+import { setWorkerUrl } from "maplibre-gl";
 import { maplibreGL } from "@maplibre/maplibre-gl-leaflet";
 import "maplibre-gl/dist/maplibre-gl.css";
+// eslint-disable-next-line import/no-webpack-loader-syntax
+import maplibreWorkerUrl from "!!file-loader?esModule=false&name=static/js/[name].[contenthash:8].[ext]!maplibre-gl/dist/maplibre-gl-csp-worker.js";
 import CONFIG from "../../config.json";
+
+// MapLibre's built-in worker is created from the source of a function in its
+// bundle. In production builds Babel moves helpers out of that function, so the
+// worker crashes with "ReferenceError: y is not defined" and no tiles render.
+// The prebuilt worker file bypasses Babel.
+setWorkerUrl(maplibreWorkerUrl);
 
 // "detail" adds villages and major roads when zoomed in
 const variants = {
