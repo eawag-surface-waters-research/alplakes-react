@@ -324,12 +324,12 @@ p {
   border-color: var(--box-color) transparent transparent transparent;
 }
 
-.main .tile-class.leaflet-tile {
-  filter: grayscale(100%) !important;
+.main .basemap-fallback {
+  filter: grayscale(100%);
 }
 
-.main.dark .tile-class.leaflet-tile {
-  filter: brightness(2) contrast(0.8) !important;
+.main.dark .basemap-fallback {
+  filter: brightness(2) contrast(0.8);
 }
 
 /* Map icons */
