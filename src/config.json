@@ -9,13 +9,6 @@
   "sentinel3_wms": "https://sh.dataspace.copernicus.eu/ogc/wms/72f97144-cd2d-4c22-b6cc-f9ab88a17afd",
   "landsat89_wms": "https://sh.dataspace.copernicus.eu/ogc/wms/527b435c-3e15-4609-a541-5ff3d3db6b08",
   "basemaps": {
-    "fallback": {
-      "url": "https://{s}.basemaps.cartocdn.com/_bright_/{z}/{x}/{y}{r}.png?key=cb1_2ah7_1_30e25a1bc163bf7f25b056d8",
-      "attribution": "&copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors &copy; <a href='https://carto.com/attributions'>CARTO</a>",
-      "title": "Fallback",
-      "lightMap": "light_all",
-      "darkMap": "dark_all"
-    },
     "satellite": {
       "url": "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
       "attribution": "Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community",

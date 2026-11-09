@@ -324,14 +324,6 @@ p {
   border-color: var(--box-color) transparent transparent transparent;
 }
 
-.main .basemap-fallback {
-  filter: grayscale(100%);
-}
-
-.main.dark .basemap-fallback {
-  filter: brightness(2) contrast(0.8);
-}
-
 /* Map icons */
 
 .custom-square-marker div {

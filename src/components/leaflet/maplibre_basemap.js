@@ -1,10 +1,8 @@
-import L from "leaflet";
 import { setWorkerUrl } from "maplibre-gl";
 import { maplibreGL } from "@maplibre/maplibre-gl-leaflet";
 import "maplibre-gl/dist/maplibre-gl.css";
 // eslint-disable-next-line import/no-webpack-loader-syntax
 import maplibreWorkerUrl from "!!file-loader?esModule=false&name=static/js/[name].[contenthash:8].[ext]!maplibre-gl/dist/maplibre-gl-csp-worker.js";
-import CONFIG from "../../config.json";
 
 // MapLibre's built-in worker is created from the source of a function in its
 // bundle. In production builds Babel moves helpers out of that function, so the
@@ -38,7 +36,6 @@ const variants = {
 
 // MapLibre zoom levels are one below Leaflet's, so 10 here is Leaflet zoom 11
 const DETAIL_MIN_ZOOM = 10;
-const TERRAIN_FAILURES_BEFORE_FALLBACK = 3;
 
 const placeLabelLayout = (language, textSize) => ({
   "text-field": [
@@ -225,69 +222,18 @@ const supportsWebGL = () => {
   return webGLSupported;
 };
 
-const fallbackUrl = (dark) => {
-  const { url, lightMap, darkMap } = CONFIG.basemaps.fallback;
-  return url.replace("_bright_", dark ? darkMap : lightMap);
-};
-
-// Plain Leaflet tiles, used when the MapLibre basemap can't be shown
-const showFallback = (basemap) => {
-  const { map, layer, dark } = basemap;
-  if (layer) {
-    if (!map.hasLayer(layer)) return; // The map has since been removed
-    // Leaflet can't clear this itself, as the layer has no style once removed
-    const attribution = layer.getAttribution();
-    map.removeLayer(layer);
-    if (map.attributionControl) {
-      map.attributionControl.removeAttribution(attribution);
-    }
-    basemap.layer = null;
-  }
-  basemap.fallback = L.tileLayer(fallbackUrl(dark), {
-    maxZoom: 19,
-    attribution: CONFIG.basemaps.fallback.attribution,
-    className: "basemap-fallback",
-    zIndex: 0, // Keeps it below data overlays, which are also tile layers
-  }).addTo(map);
-};
-
-// Missing tiles (404s) raise no error, so this only counts real failures. Once
-// any elevation tile has loaded, later failures are treated as temporary.
-const watchTerrain = (basemap) => {
-  const glMap = basemap.layer.getMaplibreMap();
-  let loaded = false;
-  let failures = 0;
-  glMap.on("sourcedata", (e) => {
-    if (e.sourceId === "terrain" && e.tile) loaded = true;
-  });
-  glMap.on("error", (e) => {
-    console.error(e.error); // MapLibre stops logging once there is a listener
-    if (e.sourceId !== "terrain" || loaded) return;
-    failures += 1;
-    if (failures === TERRAIN_FAILURES_BEFORE_FALLBACK) {
-      // Deferred so the MapLibre map isn't removed while it's firing this event
-      console.warn("Basemap: elevation tiles failed, using fallback tiles");
-      setTimeout(() => showFallback(basemap));
-    }
-  });
-};
-
+// Without WebGL there is no basemap, so this returns null
 export const addBasemap = (map, dark, language, variant) => {
-  const basemap = { map, dark, layer: null, fallback: null };
   if (!supportsWebGL()) {
-    showFallback(basemap);
-    return basemap;
+    console.warn("Basemap: WebGL is not supported, no basemap shown");
+    return null;
   }
-  basemap.layer = maplibreGL({
+  return maplibreGL({
     style: basemapStyle(dark, language, variant),
   }).addTo(map);
-  watchTerrain(basemap);
-  return basemap;
 };
 
-export const updateBasemap = (basemap, dark, language, variant) => {
-  basemap.dark = dark;
-  if (basemap.fallback) basemap.fallback.setUrl(fallbackUrl(dark));
-  const glMap = basemap.layer && basemap.layer.getMaplibreMap();
+export const updateBasemap = (layer, dark, language, variant) => {
+  const glMap = layer && layer.getMaplibreMap();
   if (glMap) glMap.setStyle(basemapStyle(dark, language, variant));
 };
