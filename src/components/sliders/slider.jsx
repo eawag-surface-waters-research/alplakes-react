@@ -50,13 +50,20 @@ class Slider extends Component {
     return Math.round((min + percent * (max - min)) / step) * step;
   };
 
-  handleMouseMove = (event) => {
-    const value = this.calculateValueFromPosition(event);
+  // Report hover changes to the parent so it can preview the hovered time.
+  // Only fire when the snapped timestep changes, not on every pixel.
+  setHover = (value) => {
+    if (value === this.state.hoverValue) return;
     this.setState({ hoverValue: value });
+    if (this.props.onHover) this.props.onHover(value);
+  };
+
+  handleMouseMove = (event) => {
+    this.setHover(this.calculateValueFromPosition(event));
   };
 
   handleMouseLeave = () => {
-    this.setState({ hoverValue: null });
+    this.setHover(null);
   };
 
   _startPlayLoop = () => {
@@ -164,6 +171,21 @@ class Slider extends Component {
                     Translations.axis[language].months,
                   )}
                 </div>
+              )}
+              {hoverValue !== null && period[1] > period[0] && (
+                <div
+                  className="slider-ghost-thumb"
+                  style={{
+                    left: `${Math.min(
+                      Math.max(
+                        ((hoverValue - period[0]) / (period[1] - period[0])) *
+                          100,
+                        0,
+                      ),
+                      100,
+                    )}%`,
+                  }}
+                />
               )}
               {children}
             </div>

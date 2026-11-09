@@ -195,6 +195,8 @@ class ListItem extends Component {
                   end={lake.end}
                   dt={lake.time}
                   value={lake.values}
+                  lower={lake.lower}
+                  upper={lake.upper}
                   summary={lake.summary}
                   unit={"°"}
                   language={language}

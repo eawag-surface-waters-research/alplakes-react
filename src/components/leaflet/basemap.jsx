@@ -265,6 +265,7 @@ class Basemap extends Component {
                   play={play}
                   duration={this.state.duration}
                   sparkline={sparkline}
+                  onHover={this.props.setHoverDatetime}
                 />
               </div>
             </div>

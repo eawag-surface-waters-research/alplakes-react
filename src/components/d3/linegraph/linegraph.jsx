@@ -67,30 +67,38 @@ class D3LineGraph extends Component {
         y_units = "";
         y_parse = dateparse;
       }
+      const hasBand = (d) =>
+        "confidenceLabel" in d &&
+        Array.isArray(d.lower) &&
+        Array.isArray(d.upper);
+      const header = (d) =>
+        `${xlabel}${x_units},${ylabel}${y_units}` +
+        (hasBand(d)
+          ? `,${ylabel} ${d.confidenceLabel} lower${y_units},${ylabel} ${d.confidenceLabel} upper${y_units}`
+          : "");
+      const row = (d, j) =>
+        `${x_parse(d.x[j])},${y_parse(d.y[j])}` +
+        (hasBand(d) ? `,${d.lower[j]},${d.upper[j]}` : "");
       var csvContent = "";
       if (!Array.isArray(data) || data.length === 1) {
         if (Array.isArray(data)) data = data[0];
         csvContent =
-          csvContent +
-          `data:text/csv;charset=utf-8,${xlabel}${x_units},${ylabel}${y_units}\n`;
+          csvContent + `data:text/csv;charset=utf-8,${header(data)}\n`;
         for (var i = 0; i < data.x.length; i++) {
-          csvContent =
-            csvContent + `${x_parse(data.x[i])},${y_parse(data.y[i])}\n`;
+          csvContent = csvContent + `${row(data, i)}\n`;
         }
       } else {
         csvContent = csvContent + "data:text/csv;charset=utf-8";
         var rows = -Infinity;
         for (let i = 0; i < data.length; i++) {
-          csvContent = csvContent + `,${xlabel}${x_units},${ylabel}${y_units}`;
+          csvContent = csvContent + `,${header(data[i])}`;
           rows = Math.max(rows, data[i].x.length);
         }
         csvContent = csvContent + "\n";
         for (let j = 0; j < rows; j++) {
-          csvContent =
-            csvContent + `${x_parse(data[0].x[j])},${y_parse(data[0].y[j])}`;
+          csvContent = csvContent + row(data[0], j);
           for (let i = 1; i < data.length; i++) {
-            csvContent =
-              csvContent + `,${x_parse(data[i].x[j])},${y_parse(data[i].y[j])}`;
+            csvContent = csvContent + `,${row(data[i], j)}`;
           }
           csvContent = csvContent + "\n";
         }

@@ -85,6 +85,7 @@ class TwoDModel extends Component {
     metadata: {},
     data: {},
     datetime: false,
+    hoverDatetime: null,
     warning: false,
     waveHeightRange: [],
     waveHeightHist: [],
@@ -137,6 +138,16 @@ class TwoDModel extends Component {
 
   setDatetime = (datetime) => {
     this.setState({ datetime });
+  };
+
+  // Hovering the time slider previews that timestep in the forecast boxes.
+  setHoverDatetime = (hoverDatetime) => {
+    this.setState({ hoverDatetime });
+  };
+
+  displayDatetime = () => {
+    var { datetime, hoverDatetime } = this.state;
+    return hoverDatetime !== null ? hoverDatetime : datetime;
   };
 
   closeWarning = () => {
@@ -250,7 +261,8 @@ class TwoDModel extends Component {
   }
 
   currentIndex = () => {
-    var { datetime, waveHeightRange, period } = this.state;
+    var { waveHeightRange, period } = this.state;
+    var datetime = this.displayDatetime();
     if (!datetime || !period || waveHeightRange.length === 0) return -1;
     const dt = new Date(datetime).getTime();
     const timestep = (period[1] - period[0]) / waveHeightRange.length;
@@ -274,7 +286,8 @@ class TwoDModel extends Component {
   };
 
   render() {
-    var { updates, mapId, datetime, warning, metadata } = this.state;
+    var { updates, mapId, warning, metadata } = this.state;
+    var datetime = this.displayDatetime();
     var { dark, bounds, language, id, parameters, togglePerformance } =
       this.props;
     var range = this.currentRange();
@@ -323,7 +336,7 @@ class TwoDModel extends Component {
                       {Math.round(range.max * 100) / 100} m
                     </span>
                   </div>
-                  {hist && range.max >= 0.05 && (
+                  {hist && (
                     <WaveDistribution
                       counts={hist}
                       min={range.min}
@@ -374,6 +387,7 @@ class TwoDModel extends Component {
               load={true}
               language={language}
               setDatetime={this.setDatetime}
+              setHoverDatetime={this.setHoverDatetime}
             />
           </div>
         </div>

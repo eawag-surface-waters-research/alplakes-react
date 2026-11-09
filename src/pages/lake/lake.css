@@ -201,6 +201,15 @@
   bottom: 40px;
 }
 
+.main
+  .lake
+  .onedmodel
+  .map-sidebar
+  .map-sidebar-left.has-legend
+  .model-performance-button {
+  bottom: 72px;
+}
+
 .main .lake .map-sidebar .map-sidebar-left .popup {
   position: absolute;
   z-index: 9999;
@@ -528,8 +537,8 @@
 .main .lake .forecast .map-sidebar .map-sidebar-left .wave-range .wave-distribution {
   position: relative;
   width: 100%;
-  flex: 1 1 0;
-  min-height: 0;
+  flex: 1 1 auto;
+  min-height: 32px;
   margin-top: 6px;
 }
 
@@ -1334,6 +1343,67 @@
   transform: translate(-50%, -50%);
   padding: 12px;
   border-radius: 12px;
+}
+
+.main
+  .lake
+  .map-sidebar
+  .map-sidebar-left
+  .line-graph-container
+  .graph-legend
+  .item.band-item {
+  position: relative;
+}
+
+.main
+  .lake
+  .map-sidebar
+  .map-sidebar-left
+  .line-graph-container
+  .graph-legend
+  .band-item
+  .information-symbol {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  margin-left: 6px;
+  border-radius: 50%;
+  background-color: #8a8a8a;
+  color: #ffffff;
+  font-size: 11px;
+  line-height: 16px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.main
+  .lake
+  .map-sidebar
+  .map-sidebar-left
+  .line-graph-container
+  .graph-legend
+  .band-item
+  .information:hover
+  .information-symbol {
+  background-color: #6e6e6e;
+  color: #ffffff;
+}
+
+@media screen and (min-width: 501px) {
+  .main
+    .lake
+    .map-sidebar
+    .map-sidebar-left
+    .line-graph-container
+    .graph-legend
+    .band-item
+    .information-box {
+    width: 282px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: left;
+  }
 }
 
 .main .lake .map-sidebar .map-sidebar-left .line-graph-container .graph-legend {

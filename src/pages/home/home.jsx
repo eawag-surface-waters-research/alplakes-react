@@ -338,6 +338,8 @@ class Home extends Component {
         try {
           l.time = forecast[l.key]["time"];
           l.values = forecast[l.key]["temperature"];
+          l.lower = forecast[l.key]["temperature_p10"] || false;
+          l.upper = forecast[l.key]["temperature_p90"] || false;
           let { summary, start, end } = summariseData(l.time, l.values);
           if (Object.keys(summary).length > days.length)
             days = Object.keys(summary);

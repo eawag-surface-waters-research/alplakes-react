@@ -619,14 +619,16 @@ export const download1DLinegraph = async (
   parameter,
   bucket = false,
 ) => {
+  const parameters = Array.isArray(parameter) ? parameter : [parameter];
+  const query = parameters.map((p) => `variables=${p}`).join("&");
   const apiUrl = `${
     CONFIG.alplakes_api
   }/simulations/1d/point/${model}/${lake}/${general.formatAPIDatetime(
     start,
-  )}/${general.formatAPIDatetime(end)}/${depth}?variables=${parameter}`;
+  )}/${general.formatAPIDatetime(end)}/${depth}?${query}`;
   const bucketUrl = `${
     CONFIG.alplakes_bucket
-  }/simulations/${model}/cache/${lake}/linegraph_${parameter}.json${general.hour()}`;
+  }/simulations/${model}/cache/${lake}/linegraph_${parameters[0]}.json${general.hour()}`;
   const urls = bucket ? [[bucketUrl, apiUrl]] : [[apiUrl]];
   const response = await fetchDataParallel(urls);
   return response[0];

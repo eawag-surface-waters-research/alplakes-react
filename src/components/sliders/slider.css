@@ -37,6 +37,16 @@
   border-radius: 3px;
 }
 
+/* Invisible hit area so the track is as easy to grab as the 42px thumb */
+.slider-container .slider-track::before {
+  content: "";
+  position: absolute;
+  top: -18px;
+  bottom: -18px;
+  left: 0;
+  right: 0;
+}
+
 .slider-container .slider-thumb {
   height: 42px;
   width: 42px;
@@ -69,6 +79,24 @@
   font-size: 14px;
   text-wrap: nowrap;
   right: 0px;
+}
+
+/* Preview of where the thumb would land at the mouse position */
+.slider-container .slider-ghost-thumb {
+  position: absolute;
+  top: 50%;
+  height: 12px;
+  width: 12px;
+  border-radius: 50%;
+  /* Opaque tint of the highlight so the track doesn't show through */
+  background-color: rgb(199, 235, 229);
+  background-color: color-mix(
+    in srgb,
+    var(--highlight-color) 30%,
+    var(--box-color)
+  );
+  transform: translate(-50%, -50%);
+  pointer-events: none;
 }
 
 .slider-thumb-label {

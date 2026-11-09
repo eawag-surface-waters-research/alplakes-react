@@ -251,6 +251,18 @@
     "FR": "Modèle",
     "IT": "Modello"
   },
+  "ensembleRangeInfo": {
+    "EN": "The shaded band shows the 10–90% range of lake simulations driven by the different weather scenarios in the ICON-CH2-EPS ensemble forecast. It reflects uncertainty in the weather forecast only, which grows with lead time, and does not include model error (see ± RMSE).",
+    "DE": "Das schattierte Band zeigt den 10–90%-Bereich der Seesimulationen, die mit den verschiedenen Wetterszenarien der ICON-CH2-EPS-Ensemblevorhersage berechnet wurden. Es bildet nur die Unsicherheit der Wettervorhersage ab, die mit zunehmender Vorhersagezeit wächst, und enthält keine Modellfehler (siehe ± RMSE).",
+    "FR": "La bande ombrée indique l'intervalle 10–90 % des simulations du lac forcées par les différents scénarios météorologiques de la prévision d'ensemble ICON-CH2-EPS. Elle reflète uniquement l'incertitude de la prévision météorologique, qui augmente avec l'échéance, et n'inclut pas l'erreur du modèle (voir ± RMSE).",
+    "IT": "La banda ombreggiata mostra l'intervallo 10–90% delle simulazioni del lago guidate dai diversi scenari meteorologici della previsione d'insieme ICON-CH2-EPS. Riflette solo l'incertezza della previsione meteorologica, che aumenta con l'orizzonte di previsione, e non include l'errore del modello (vedi ± RMSE)."
+  },
+  "ensembleRange": {
+    "EN": "10–90% ensemble range",
+    "DE": "10–90% Ensemble-Bereich",
+    "FR": "Plage d'ensemble 10–90%",
+    "IT": "Intervallo d'ensemble 10–90%"
+  },
   "runs": {
     "EN": "Runs",
     "DE": "Läufe",
