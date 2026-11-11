@@ -279,7 +279,7 @@ class SatelliteSummary extends Component {
     return (
       props.options.coverage !== this.state.coverage ||
       props.parameter !== this.state.parameter ||
-      (props.input.custom &&
+      (!!props.input.custom &&
         this.state.custom_len !== props.input.custom.length)
     );
   };

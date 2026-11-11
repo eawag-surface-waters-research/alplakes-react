@@ -27,7 +27,12 @@ class Blog extends Component {
       <div className="date">{p.date}</div>
       {p.img && (
         <div className="image">
-          <img src={p.img} alt={p.title} />
+          <img
+            src={p.img}
+            alt={p.title}
+            loading="lazy"
+            onLoad={(e) => e.currentTarget.classList.add("loaded")}
+          />
           {p.img_source && <div className="source">{p.img_source}</div>}
         </div>
       )}

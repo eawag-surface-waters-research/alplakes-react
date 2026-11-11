@@ -435,6 +435,8 @@ const updateWms = async (map, layers, id, options, language) => {
   if (options.wms) {
     var url = "";
     var type = "TRUE_COLOR";
+    var attribution =
+      '&copy; <a href="https://dataspace.copernicus.eu/" target="_blank">Copernicus Data Space Ecosystem</a>';
     var time = formatWmsDate(options.time);
     if (options.url.includes("sentinel2")) {
       url = CONFIG.sentinel2_wms;
@@ -446,13 +448,13 @@ const updateWms = async (map, layers, id, options, language) => {
       options.url.includes("landsat")
     ) {
       url = CONFIG.landsat89_wms;
-      type = "TRUE-COLOR-L1";
+      type = "1_TRUE_COLOR";
+      attribution += ', Landsat courtesy of <a href="https://www.usgs.gov/" target="_blank">USGS</a>';
     }
     layers[id]["wms"] = L.tileLayer
       .wms(url, {
         tileSize: 512,
-        attribution:
-          '&copy; <a href="http://www.sentinel-hub.com/" target="_blank">Sentinel Hub</a>',
+        attribution: attribution,
         minZoom: 6,
         maxZoom: 16,
         preset: type,
