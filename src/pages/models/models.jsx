@@ -535,15 +535,19 @@ class Models extends Component {
               </p>
               <p>
                 The meteorological forcing data is produced from a combination
-                of insitu data and forecasts from either the MeteoSwiss (
+                of insitu data and forecasts from the MeteoSwiss{" "}
                 <a
                   href="https://opendatadocs.meteoswiss.ch/e-forecast-data/e2-e3-numerical-weather-forecasting-model"
                   target="_blank"
                   rel="noreferrer"
                 >
                   ICON-CH2-EPS
-                </a>
-                ) or{" "}
+                </a>{" "}
+                ensemble, which covers Switzerland and the surrounding Alpine
+                region. For these lakes the forecast also includes the 10th and
+                90th percentile of the ensemble, which shows the uncertainty
+                coming from the weather forecast (not model error). For the few
+                lakes outside the ICON-CH2 domain, forecasts from{" "}
                 <a
                   href="https://www.visualcrossing.com/"
                   target="_blank"
@@ -551,8 +555,7 @@ class Models extends Component {
                 >
                   Visual Crossing
                 </a>{" "}
-                for lakes outside of Switzerland. Hydrological data is sourced
-                from BAFU.
+                are used instead. Hydrological data is sourced from BAFU.
               </p>
               <h3>Running the model</h3>
               <h4>Simstrat</h4>

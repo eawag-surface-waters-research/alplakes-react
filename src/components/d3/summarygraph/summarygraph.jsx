@@ -7,7 +7,7 @@ class SummaryGraph extends Component {
   };
   plot = () => {
     var { graphid } = this.state;
-    var { dt, value, dtMin, dtMax } = this.props;
+    var { dt, value, dtMin, dtMax, lower, upper } = this.props;
     var stroke = "rgba(68,188,167,255)";
     var stroke_width = 2;
     try {
@@ -45,15 +45,34 @@ class SummaryGraph extends Component {
       data.push({ x: dt[i], y: value[i] });
     }
 
-    var yMin = d3.min(value);
-    var yMax = d3.max(value);
+    var band = this.bandData(dt, lower, upper, xMin, xMax);
 
-    yMin = yMin - (yMax - yMin) / 2;
+    // Gradient fill follows the lower bound where it exists, else the mean.
+    var fillData = data;
+    if (band.length > 1) {
+      fillData = [];
+      for (var j = 0; j < dt.length; j++) {
+        if (!isNaN(parseFloat(value[j])) && isFinite(value[j])) {
+          var lo = lower[j];
+          var useLower = lo !== null && lo !== undefined && isFinite(lo);
+          fillData.push({ x: dt[j], y: useLower ? lo : value[j] });
+        }
+      }
+    }
 
     var x = d3.scaleTime().range([0, this.width]);
     var y = d3.scaleLinear().range([this.height, 0]);
-
     x.domain([xMin, xMax]);
+
+    var yMin = d3.min(value);
+    var yMax = d3.max(value);
+    if (band.length > 1) {
+      yMin = d3.min([yMin, ...band.map((d) => d.y0)]);
+      yMax = d3.max([yMax, ...band.map((d) => d.y1)]);
+    }
+
+    yMin = yMin - (yMax - yMin) / 2;
+
     y.domain([yMin, yMax]);
 
     var yGMin = y(yMin);
@@ -88,7 +107,7 @@ class SummaryGraph extends Component {
 
     this.svg
       .append("path")
-      .datum(data)
+      .datum(fillData)
       .attr("class", "area")
       .attr(
         "d",
@@ -99,7 +118,7 @@ class SummaryGraph extends Component {
           })
           .y0(this.height)
           .y1(function (d) {
-            return y(d.y) + 4;
+            return y(d.y) + 6;
           })
           .curve(d3.curveNatural)
       )
@@ -126,6 +145,46 @@ class SummaryGraph extends Component {
       .attr("fill", "none")
       .attr("stroke", stroke)
       .attr("stroke-width", stroke_width);
+
+    if (band.length > 1) {
+      this.svg
+        .append("path")
+        .datum(band)
+        .attr("class", "band")
+        .attr(
+          "d",
+          d3
+            .area()
+            .x((d) => x(d.x))
+            .y0((d) => y(d.y0))
+            .y1((d) => y(d.y1))
+            .curve(d3.curveBasis)
+        )
+        .attr("stroke", "none");
+    }
+  };
+
+  bandData = (dt, lower, upper, xMin, xMax) => {
+    var band = [];
+    if (
+      !Array.isArray(lower) ||
+      !Array.isArray(upper) ||
+      lower.length !== dt.length ||
+      upper.length !== dt.length
+    )
+      return band;
+    var isNum = (v) => v !== null && v !== undefined && isFinite(v);
+    for (var i = 0; i < dt.length; i++) {
+      if (
+        isNum(lower[i]) &&
+        isNum(upper[i]) &&
+        dt[i] >= xMin &&
+        dt[i] <= xMax
+      ) {
+        band.push({ x: dt[i], y0: lower[i], y1: upper[i] });
+      }
+    }
+    return band;
   };
 
   componentDidMount() {

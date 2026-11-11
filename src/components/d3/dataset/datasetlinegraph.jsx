@@ -26,6 +26,7 @@ class DatasetLinegraph extends Component {
       xMax,
       scatter,
       lines,
+      legend,
     } = this.props;
     var inputData = [];
     if (data !== undefined) {
@@ -65,6 +66,7 @@ class DatasetLinegraph extends Component {
             noYear={noYear}
             scatter={scatter}
             lines={lines}
+            legend={legend}
             fontSize={fontSize}
             setFontSize={setFontSize}
           />

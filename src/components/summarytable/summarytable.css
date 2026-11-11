@@ -53,6 +53,14 @@
     z-index: 1;
 }
 
+.summary-table .summarygraph .band {
+    fill: rgba(68, 188, 167, 0.3);
+}
+
+.main.dark .summary-table .summarygraph .band {
+    fill: rgba(68, 188, 167, 0.6);
+}
+
 @media screen and (max-width: 500px) {
     .summary-table .inner .ave {
         font-size: 18px;

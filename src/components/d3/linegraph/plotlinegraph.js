@@ -781,12 +781,27 @@ const addTooltip = (data, div, xAxis, yAxis, options) => {
           "hoverColor" in data[idx]
             ? data[idx].hoverColor
             : data[idx].lineColor;
+        var rangeRow = "";
+        if (
+          "confidenceLabel" in data[idx] &&
+          Array.isArray(data[idx].lower) &&
+          Array.isArray(data[idx].upper) &&
+          data[idx].lower[idy] !== null &&
+          data[idx].upper[idy] !== null &&
+          isNumeric(data[idx].lower[idy]) &&
+          isNumeric(data[idx].upper[idy])
+        ) {
+          rangeRow = `<tr><td>${data[idx].confidenceLabel}:</td><td>${formatNumber(
+            data[idx].lower[idy]
+          )} – ${formatNumber(data[idx].upper[idy])} ${yu}</td></tr>`;
+        }
         var html = `<div>
         ${label}
                 <table style="border-bottom: 1px solid ${lineColor};padding-bottom:5px;margin-bottom:5px;">
                     <tbody >
                         <tr><td>x:</td><td>${xval} ${xu}</td></tr>
                         <tr><td>y:</td><td>${yval} ${yu}</td></tr>
+                        ${rangeRow}
                     </tbody>
                 </table></div`;
 
@@ -953,7 +968,8 @@ const plotLines = (div, g, data, xAxis, yAxis, curve) => {
       g,
       data[j],
       xAxis[data[j].xaxis],
-      yAxis[data[j].yaxis]
+      yAxis[data[j].yaxis],
+      curve || data[j].curve
     );
   }
   for (let j = 0; j < data.length; j++) {
@@ -1019,7 +1035,7 @@ const plotLines = (div, g, data, xAxis, yAxis, curve) => {
   }
 };
 
-const plotConfidenceInterval = (g, data, xAxis, yAxis) => {
+const plotConfidenceInterval = (g, data, xAxis, yAxis, curve = false) => {
   if ("upper" in data && "lower" in data && "confidenceAxis" in data) {
     if (
       data.upper.length === data.x.length &&
@@ -1033,7 +1049,7 @@ const plotConfidenceInterval = (g, data, xAxis, yAxis) => {
           .attr("opacity", 0.15)
           .attr(
             "d",
-            area()
+            (curve ? area().curve(curveNatural) : area())
               .y(function (d) {
                 return yAxis.ax(d);
               })
@@ -1063,7 +1079,7 @@ const plotConfidenceInterval = (g, data, xAxis, yAxis) => {
           .attr("opacity", 0.15)
           .attr(
             "d",
-            area()
+            (curve ? area().curve(curveNatural) : area())
               .x(function (d) {
                 return xAxis.ax(d);
               })

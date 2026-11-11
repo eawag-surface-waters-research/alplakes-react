@@ -19,6 +19,41 @@ const DA_PALETTE = ["#F2C14E", "#47D6AC", "#e0533d", "#8a63d2"];
 
 const defaultRunKey = (parameter) => parameter.default_run || parameter.key;
 
+const isPercentileKey = (key) => /_p(10|90)$/.test(key);
+
+const hasPercentiles = (variables, key) =>
+  !!variables && `${key}_p10` in variables && `${key}_p90` in variables;
+
+// Percentiles only come from the ICON-CH2-EPS ensemble, so a lake that has them
+// is forced by ICON even if its metadata still names Visual Crossing.
+const meteoSource = (source, variables) =>
+  hasPercentiles(variables, "T")
+    ? source.replace(/Visual\s?Crossing/gi, "MeteoSwiss ICON")
+    : source;
+
+const isNum = (v) => v !== null && v !== undefined && isFinite(v);
+
+// Attach a p10-p90 band to a series only when there is something to draw,
+// so lakes/periods without percentiles render exactly as before.
+const withBand = (series, lower, upper) => {
+  if (
+    !Array.isArray(lower) ||
+    !Array.isArray(upper) ||
+    lower.length !== series.x.length ||
+    upper.length !== series.x.length ||
+    !lower.some(isNum) ||
+    !upper.some(isNum)
+  )
+    return series;
+  return {
+    ...series,
+    confidenceAxis: "y",
+    lower,
+    upper,
+    confidenceLabel: "10–90%",
+  };
+};
+
 const getRuns = (parameter) =>
   Array.isArray(parameter.runs) && parameter.runs.length > 0
     ? parameter.runs
@@ -72,26 +107,60 @@ class Graph extends Component {
     runs: [],
     activeRuns: {},
   };
+  runVariables = {};
+
   toggle = () => {
     this.setState({ open: !this.state.open });
   };
 
+  loadRunVariables = async (runs) => {
+    const { parameter } = this.props;
+    const missing = runs.filter((r) => !(r.key in this.runVariables));
+    const variables = await Promise.all(
+      missing.map(async (r) => {
+        try {
+          const metadata = await downloadModelMetadata(
+            parameter.model.toLowerCase(),
+            r.key
+          );
+          return (metadata && metadata.variables) || {};
+        } catch (e) {
+          return {};
+        }
+      })
+    );
+    missing.forEach((r, i) => (this.runVariables[r.key] = variables[i]));
+  };
+
   fetchRun = async (runKey, variableKey, depth, start, end) => {
     const { parameter } = this.props;
-    const data = await download1DLinegraph(
-      parameter.model.toLowerCase(),
-      runKey,
-      start,
-      end,
-      depth,
-      variableKey,
-      false
-    );
+    const model = parameter.model.toLowerCase();
+    const percentiles =
+      hasPercentiles(this.runVariables[runKey], variableKey) &&
+      end > new Date();
+    const [data, bandData] = await Promise.all([
+      download1DLinegraph(model, runKey, start, end, depth, variableKey, false),
+      percentiles
+        ? download1DLinegraph(
+            model,
+            runKey,
+            start,
+            end,
+            depth,
+            [`${variableKey}_p10`, `${variableKey}_p90`],
+            false
+          )
+        : Promise.resolve(false),
+    ]);
     if (!data) return false;
-    return {
+    const series = {
       x: data.time.map((t) => new Date(t)),
       y: data["variables"][variableKey]["data"],
     };
+    if (!bandData || !bandData.variables) return series;
+    const p10 = bandData.variables[`${variableKey}_p10`];
+    const p90 = bandData.variables[`${variableKey}_p90`];
+    return withBand(series, p10 && p10.data, p90 && p90.data);
   };
 
   refresh = async ({ variable, depth, start, end }) => {
@@ -106,6 +175,7 @@ class Graph extends Component {
     };
     const targetRuns = isT ? runs.filter((r) => activeRuns[r.key]) : [baseRun];
     const colorMap = runColorMap(runs, defKey, dark);
+    await this.loadRunVariables(targetRuns);
     const results = await Promise.all(
       targetRuns.map((r) => this.fetchRun(r.key, variable.key, depth, start, end))
     );
@@ -162,7 +232,7 @@ class Graph extends Component {
     const { data, parameter, dark } = this.props;
     if (this.state.display === false && data) {
       const variables = Object.keys(data.metadata.variables)
-        .filter((v) => v !== "S")
+        .filter((v) => v !== "S" && !isPercentileKey(v))
         .map((v) => {
           data.metadata.variables[v].key = v;
           return data.metadata.variables[v];
@@ -176,18 +246,23 @@ class Graph extends Component {
       const activeRuns = {};
       runs.forEach((r) => (activeRuns[r.key] = r.key === defKey));
       const defRun = runs.find((r) => r.key === defKey) || runs[0];
+      this.runVariables[defKey] = data.metadata.variables;
       const display = {
         xlabel: "time",
         xunits: "",
         ylabel: variable.description,
         yunits: variable.unit.replace("deg", "°"),
         data: [
-          {
-            x: data.dt,
-            y: data.value,
-            lineColor: colorMap[defKey],
-            name: defRun.name,
-          },
+          withBand(
+            {
+              x: data.dt,
+              y: data.value,
+              lineColor: colorMap[defKey],
+              name: defRun.name,
+            },
+            data.lower,
+            data.upper
+          ),
         ],
         curve: true,
         grid: true,
@@ -231,6 +306,18 @@ class Graph extends Component {
     const activeRunList = showRuns ? runs.filter((r) => activeRuns[r.key]) : [];
     const defRun = runs.find((r) => r.key === defKey);
     const defaultBeta = !!(defRun && defRun.beta);
+    const bandSeries =
+      display && Array.isArray(display.data)
+        ? display.data.filter((s) => s.confidenceAxis)
+        : [];
+    const showRunLegend = activeRunList.length > 1;
+    const showLegend = showRunLegend || bandSeries.length > 0;
+    const bandColor =
+      bandSeries.length === 1
+        ? bandSeries[0].lineColor
+        : dark
+        ? "#ffffff"
+        : "#000000";
     const description = {
       EN: "1D lake models simplify lake processes by representing the lake as a single vertical column, divided into layers from the surface to the bottom. Instead of simulating horizontal variations, they focus on vertical changes in temperature, density, and other properties.",
       DE: "1D-See-Modelle vereinfachen die Prozesse in Seen, indem sie den See als eine einzige vertikale Säule darstellen, die in Schichten von der Oberfläche bis zum Grund unterteilt ist. Anstatt horizontale Schwankungen zu simulieren, konzentrieren sie sich auf vertikale Veränderungen von Temperatur, Dichte und anderen Eigenschaften.",
@@ -250,7 +337,11 @@ class Graph extends Component {
             {Translations.hideDetails[language]}
           </div>
         </div>
-        <div className="map-sidebar-left">
+        <div
+          className={
+            showLegend ? "map-sidebar-left has-legend" : "map-sidebar-left"
+          }
+        >
           {data.metadata.rmse && (
             <ModelPerformanceButton
               rmse={data.metadata.rmse}
@@ -259,18 +350,40 @@ class Graph extends Component {
             />
           )}
           <div className="line-graph-container">
-            <DatasetLinegraph {...display} dark={dark} language={language} />
-            {activeRunList.length > 1 && (
+            <DatasetLinegraph
+              {...display}
+              dark={dark}
+              language={language}
+              legend={false}
+            />
+            {showLegend && (
               <div className="graph-legend">
-                {activeRunList.map((r) => (
-                  <div className="item" key={"legend_" + r.key}>
+                {showRunLegend &&
+                  activeRunList.map((r) => (
+                    <div className="item" key={"legend_" + r.key}>
+                      <div
+                        className="line"
+                        style={{ borderColor: colorMap[r.key] }}
+                      ></div>
+                      <div className="text">{r.name}</div>
+                    </div>
+                  ))}
+                {bandSeries.length > 0 && (
+                  <div className="item band-item" key="legend_band">
                     <div
-                      className="line"
-                      style={{ borderColor: colorMap[r.key] }}
+                      className="box"
+                      style={{ backgroundColor: bandColor }}
                     ></div>
-                    <div className="text">{r.name}</div>
+                    <div className="text">
+                      {Translations.ensembleRange[language]}
+                    </div>
+                    <Information
+                      information={Translations.ensembleRangeInfo[language]}
+                      small={true}
+                      above={true}
+                    />
                   </div>
-                ))}
+                )}
               </div>
             )}
           </div>
@@ -404,7 +517,12 @@ class Graph extends Component {
                         <div className="label">
                           {Translations.meteodata[language]}
                         </div>
-                        <div>{parameter.meteo_source}</div>
+                        <div>
+                          {meteoSource(
+                            parameter.meteo_source,
+                            data.metadata.variables
+                          )}
+                        </div>
                       </div>
                     )}
                     {"hydro_source" in parameter && (
@@ -447,6 +565,8 @@ class Graph extends Component {
             end={data.end}
             dt={data.dt}
             value={data.value}
+            lower={data.lower}
+            upper={data.upper}
             summary={data.summary}
             unit={"°"}
             language={language}
@@ -500,13 +620,18 @@ class OneDModel extends Component {
           download["variables"][parameters[i].parameter]["data"]
         ));
       }
+      const key = parameters[i].parameter;
+      const p10 = download["variables"][`${key}_p10`];
+      const p90 = download["variables"][`${key}_p90`];
       data[parameters[i].key] = {
         summary,
         start,
         end,
         metadata,
         dt: download["time"].map((t) => new Date(t)),
-        value: download["variables"][parameters[i].parameter]["data"],
+        value: download["variables"][key]["data"],
+        lower: p10 ? p10.data : false,
+        upper: p90 ? p90.data : false,
       };
     }
     this.setState({ data });

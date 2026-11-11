@@ -30,7 +30,8 @@ class SummaryTable extends Component {
     return daysOfWeekNames[dayOfWeekNumber];
   };
   render() {
-    var { start, end, dt, value, summary, unit, language } = this.props;
+    var { start, end, dt, value, lower, upper, summary, unit, language } =
+      this.props;
     return (
       <div className="summary-table">
         {Object.keys(summary).map((day, i, arr) => (
@@ -44,7 +45,14 @@ class SummaryTable extends Component {
             </div>
           </div>
         ))}
-        <SummaryGraph dt={dt} value={value} dtMin={start} dtMax={end} />
+        <SummaryGraph
+          dt={dt}
+          value={value}
+          lower={lower}
+          upper={upper}
+          dtMin={start}
+          dtMax={end}
+        />
       </div>
     );
   }
