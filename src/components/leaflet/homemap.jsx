@@ -3,9 +3,8 @@ import L from "leaflet";
 import { dayName, formatDateYYYYMMDD } from "./general";
 import Translations from "../../translations.json";
 import alpinespace from "./alpinespace.json";
-import CONFIG from "../../config.json";
 import { round, formatDatetime, capitalize } from "./general";
-import "./leaflet_tileclass";
+import { addBasemap, updateBasemap } from "./maplibre_basemap";
 import "./leaflet_customcontrol";
 import "./css/leaflet.css";
 
@@ -415,7 +414,10 @@ class HomeMap extends Component {
   };
   componentDidUpdate(prevProps) {
     var { day } = this.state;
-    var { list, days, insitu } = this.props;
+    var { list, days, insitu, dark, language } = this.props;
+    if (prevProps.dark !== dark || prevProps.language !== language) {
+      updateBasemap(this.tiles, dark, language, "home");
+    }
     if (this.plot && list.length > 0) {
       day = days[0];
       this.plotPolygons(day);
@@ -440,23 +442,10 @@ class HomeMap extends Component {
         .getContainer()
         .querySelector(".fullscreen-btn");
       btn.innerHTML = this.props.fullscreen ? collapseSVG : expandSVG;
-    } else if (prevProps.dark !== this.props.dark) {
-      this.map.removeLayer(this.tiles);
-      var { url, attribution, lightMap, darkMap, tileClass } =
-        CONFIG.basemaps["default"];
-      if (url.includes("_bright_"))
-        url = url.replace("_bright_", this.props.dark ? darkMap : lightMap);
-      this.tiles = L.tileLayer
-        .default(url, {
-          maxZoom: 19,
-          attribution: attribution,
-          tileClass: tileClass,
-        })
-        .addTo(this.map);
     }
   }
   async componentDidMount() {
-    var { dark } = this.props;
+    var { dark, language } = this.props;
     var { minZoom, maxZoom } = this.state;
     var center = [46.77, 9.962];
     var zoom = 7;
@@ -471,17 +460,7 @@ class HomeMap extends Component {
     });
     this.map = map;
 
-    var { url, attribution, lightMap, darkMap, tileClass } =
-      CONFIG.basemaps["default"];
-    if (url.includes("_bright_"))
-      url = url.replace("_bright_", dark ? darkMap : lightMap);
-    this.tiles = L.tileLayer
-      .default(url, {
-        maxZoom: 19,
-        attribution: attribution,
-        tileClass: tileClass,
-      })
-      .addTo(this.map);
+    this.tiles = addBasemap(this.map, dark, language, "home");
     L.control
       .zoom({
         position: "topright",
@@ -502,7 +481,7 @@ class HomeMap extends Component {
     L.geoJSON(alpinespace, {
       style: function (feature) {
         return {
-          color: "#44bca82c",
+          color: "#44bca899",
           weight: 2,
           fillColor: "#44bca7",
           fillOpacity: 0,

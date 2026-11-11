@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import L from "leaflet";
-import CONFIG from "../../config.json";
 import "./leaflet_customtooltip";
-import "./leaflet_tileclass";
+import { addBasemap, updateBasemap } from "./maplibre_basemap";
 import "./leaflet_wmts";
 import "./css/leaflet.css";
 import "./css/catchment.css";
@@ -19,8 +18,17 @@ class CatchmentMap extends Component {
   };
 
   async componentDidMount() {
-    var { dark, mapId, polygon, points, wmts_url, options, lookup, maxZoom } =
-      this.props;
+    var {
+      dark,
+      language,
+      mapId,
+      polygon,
+      points,
+      wmts_url,
+      options,
+      lookup,
+      maxZoom,
+    } = this.props;
     var { opacity } = this.state;
     this.map = L.map(mapId, {
       preferCanvas: true,
@@ -43,18 +51,7 @@ class CatchmentMap extends Component {
     });
 
     this.map.doubleClickZoom.disable();
-    const basemap = "default";
-    var { url, attribution, lightMap, darkMap, tileClass } =
-      CONFIG.basemaps[basemap];
-    if (url.includes("_bright_"))
-      url = url.replace("_bright_", dark ? darkMap : lightMap);
-    this.basemap = L.tileLayer
-      .default(url, {
-        maxZoom: 19,
-        attribution: attribution,
-        tileClass: tileClass,
-      })
-      .addTo(this.map);
+    this.basemap = addBasemap(this.map, dark, language);
 
     if (lookup) {
       options["lookup"] = lookup;
@@ -92,25 +89,12 @@ class CatchmentMap extends Component {
   }
 
   async componentDidUpdate(prevProps) {
-    const { dark, wmts_url, options, lookup, polygon } = this.props;
+    const { dark, language, wmts_url, options, lookup, polygon } = this.props;
     const { opacity } = this.state;
-    var basemap = "default";
-    if (prevProps.dark !== dark) {
-      if (!(basemap in CONFIG.basemaps)) basemap = "default";
-      var { url, attribution, lightMap, darkMap, tileClass } =
-        CONFIG.basemaps[basemap];
-      if (url.includes("_bright_"))
-        url = url.replace("_bright_", dark ? darkMap : lightMap);
-      var newBasemap = L.tileLayer
-        .default(url, {
-          maxZoom: 19,
-          attribution: attribution,
-          tileClass: tileClass,
-        })
-        .addTo(this.map);
-      this.map.removeLayer(this.basemap);
-      this.basemap = newBasemap;
-    } else if (prevProps.wmts_url !== wmts_url) {
+    if (prevProps.dark !== dark || prevProps.language !== language) {
+      updateBasemap(this.basemap, dark, language);
+    }
+    if (prevProps.wmts_url !== wmts_url) {
       this.map.removeLayer(this.display);
       this.display = null;
       if (lookup) {
