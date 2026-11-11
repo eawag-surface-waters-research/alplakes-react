@@ -69,6 +69,15 @@ class Lake extends Component {
             Math.round((new Date().getTime() + 1800000) / 3600000) * 3600 - 3600
           }`
       );
+      if ("satellite" in data) {
+        data.satellite = data.satellite
+          .map((p) => ({
+            ...p,
+            metadata: p.metadata.filter((m) => !m.includes("/sentinel3/")),
+          }))
+          .filter((p) => p.metadata.length > 0);
+        if (data.satellite.length === 0) delete data.satellite;
+      }
       this.setState({
         id,
         metadata: data,

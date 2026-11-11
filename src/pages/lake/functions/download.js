@@ -76,7 +76,8 @@ const satelliteMetadata = async (parameters, unit) => {
   var overallLake = "";
   for (let model of parameters.models) {
     let { data: files } = await axios.get(
-      CONFIG.sencast_bucket + model.metadata,
+      CONFIG.sencast_bucket +
+        model.metadata.replace("/sentinel2/", "/sentinel2_v2/"),
     );
     let max_pixels = d3.max(files.map((m) => parseFloat(m.p)));
     for (let file of files) {
@@ -84,7 +85,7 @@ const satelliteMetadata = async (parameters, unit) => {
       let date = general.formatSencastDay(time);
       let { lake, satellite, group } = general.componentsFromFilename(file.k);
       overallLake = lake;
-      let url = `${CONFIG.sencast_bucket}/alplakes/cropped/${group}/${lake}/${file.k.replace("_lowres", "")}`;
+      let url = `${CONFIG.sencast_bucket}/alplakes/cropped/${group === "sentinel2" ? "sentinel2_v2" : group}/${lake}/${file.k.replace("_lowres", "")}`;
       let split = file.k.split("_");
       let tile = split[split.length - 1].split(".")[0];
       let percent = Math.ceil((parseFloat(file.vp) / max_pixels) * 100);
