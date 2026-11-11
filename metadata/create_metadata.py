@@ -5,7 +5,7 @@ import requests
 import functions as func
 
 upload = True
-bucket_folder = "static/website/metadata/master"
+bucket_folder = "static/website/metadata/ai"
 
 flag_country = {
     "swiss": "CH",
@@ -300,11 +300,11 @@ for lake in metadata:
 
     # AI summary
     # Remove AI summary due to Eawag legal concerns - to be added back when resolved
-    """if "ai_summary" in lake and lake["ai_summary"]:
+    if "ai_summary" in lake and lake["ai_summary"]:
         if "forecast" not in data:
             data["forecast"] = {"ai_summary": True}
         else:
-            data["forecast"]["ai_summary"] = True"""
+            data["forecast"]["ai_summary"] = True
 
 
     # Measurement Data
