@@ -48,7 +48,8 @@
       ],
       "models": [
         {"type": "delft3d-flow", "id": "murten"},
-        {"type": "simstrat", "id": "murten"}
+        {"type": "simstrat", "id": "murten"},
+        {"type": "simstrat", "id": "murten_python_enkf", "name": "simstrat da enkf"}
 
       ]
     }
@@ -68,7 +69,8 @@
       ],
       "models": [
         {"type": "delft3d-flow", "id": "ageri"},
-        {"type": "simstrat", "id": "aegeri"}
+        {"type": "simstrat", "id": "aegeri"},
+        {"type": "simstrat", "id": "aegeri_python_enkf", "name": "simstrat da enkf"}
 
       ]
     }
@@ -87,7 +89,8 @@
         {"name": "43.0 m", "depth": 43.0}],
       "models": [
         {"type": "delft3d-flow", "id": "hallwil"},
-        {"type": "simstrat", "id": "hallwil"}
+        {"type": "simstrat", "id": "hallwil"},
+        {"type": "simstrat", "id": "hallwil_python_enkf", "name": "simstrat da enkf"}
 
       ]
     }
@@ -107,7 +110,8 @@
       ],
       "models": [
         {"type": "delft3d-flow", "id": "greifensee"},
-        {"type": "simstrat", "id": "greifensee"}
+        {"type": "simstrat", "id": "greifensee"},
+        {"type": "simstrat", "id": "greifensee_python_enkf", "name": "simstrat da enkf"}
 
       ]
     }
@@ -121,7 +125,7 @@
       "url": "https://www.datalakes-eawag.ch/datadetail/1334",
       "lat": 45.999,
       "lng": 8.98,
-      "depth": [{"name": "0.5 m", "depth": 0.5}],
+      "depth": [{"name": "0.5 m", "depth": 0.5}, {"name": "40 m", "depth": 40}],
       "models": [
         {"type": "delft3d-flow", "id": "lugano"},
         {"type": "simstrat", "id": "upperlugano"},
@@ -158,7 +162,8 @@
       "depth": [{"name": "0.25 m", "depth": 0.25},{"name": "90.0 m", "depth": 90.0}],
       "models": [
         {"type": "delft3d-flow", "id": "geneva"},
-        {"type": "simstrat", "id": "geneva"}
+        {"type": "simstrat", "id": "geneva"},
+        {"type": "simstrat", "id": "geneva_python_enkf", "name": "simstrat da enkf"}
 
       ]
     },
@@ -173,7 +178,8 @@
       "depth": [{"name": "1.0 m", "depth": 1.0}],
       "models": [
         {"type": "delft3d-flow", "id": "geneva"},
-        {"type": "simstrat", "id": "geneva"}
+        {"type": "simstrat", "id": "geneva"},
+        {"type": "simstrat", "id": "geneva_python_enkf", "name": "simstrat da enkf"}
 
       ]
     }
@@ -251,7 +257,8 @@
       "lng": 8.731,
       "depth": [{"name": "0.5 m", "depth": 0.5}],
       "models": [
-        {"type": "simstrat", "id": "maggiore"}
+        {"type": "simstrat", "id": "maggiore"},
+        {"type": "simstrat", "id": "maggiore_python_enkf", "name": "simstrat da enkf"}
       ]
     }
   ],

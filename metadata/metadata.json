@@ -1,6 +1,22 @@
 [
     {
         "key": "geneva",
+        "simstrat_da": {
+            "geneva": {
+                "default_run": "geneva",
+                "runs": [
+                    {
+                        "name": "Standard",
+                        "key": "geneva"
+                    },
+                    {
+                        "name": "Data assimilation",
+                        "key": "geneva_python_enkf",
+                        "beta": true
+                    }
+                ]
+            }
+        },
         "name": {
             "EN": "Lake Geneva",
             "DE": "Genfersee",
@@ -330,6 +346,22 @@
     },
     {
         "key": "greifensee",
+        "simstrat_da": {
+            "greifensee": {
+                "default_run": "greifensee",
+                "runs": [
+                    {
+                        "name": "Standard",
+                        "key": "greifensee"
+                    },
+                    {
+                        "name": "Data assimilation",
+                        "key": "greifensee_python_enkf",
+                        "beta": true
+                    }
+                ]
+            }
+        },
         "name": {
             "EN": "Greifensee",
             "DE": "Greifensee",
@@ -574,6 +606,22 @@
     },
     {
         "key": "murten",
+        "simstrat_da": {
+            "murten": {
+                "default_run": "murten",
+                "runs": [
+                    {
+                        "name": "Standard",
+                        "key": "murten"
+                    },
+                    {
+                        "name": "Data assimilation",
+                        "key": "murten_python_enkf",
+                        "beta": true
+                    }
+                ]
+            }
+        },
         "name": {
             "EN": "Lake Murten",
             "DE": "Murtensee",
@@ -690,6 +738,22 @@
     },
     {
         "key": "ageri",
+        "simstrat_da": {
+            "aegeri": {
+                "default_run": "aegeri",
+                "runs": [
+                    {
+                        "name": "Standard",
+                        "key": "aegeri"
+                    },
+                    {
+                        "name": "Data assimilation",
+                        "key": "aegeri_python_enkf",
+                        "beta": true
+                    }
+                ]
+            }
+        },
         "name": {
             "EN": "Lake Aegeri",
             "DE": "Ägerisee",
@@ -826,6 +890,22 @@
     },
     {
         "key": "hallwil",
+        "simstrat_da": {
+            "hallwil": {
+                "default_run": "hallwil",
+                "runs": [
+                    {
+                        "name": "Standard",
+                        "key": "hallwil"
+                    },
+                    {
+                        "name": "Data assimilation",
+                        "key": "hallwil_python_enkf",
+                        "beta": true
+                    }
+                ]
+            }
+        },
         "name": {
             "EN": "Lake Hallwil",
             "DE": "Hallwilersee",
@@ -1160,6 +1240,22 @@
     },
     {
         "key": "maggiore",
+        "simstrat_da": {
+            "maggiore": {
+                "default_run": "maggiore",
+                "runs": [
+                    {
+                        "name": "Standard",
+                        "key": "maggiore"
+                    },
+                    {
+                        "name": "Data assimilation",
+                        "key": "maggiore_python_enkf",
+                        "beta": true
+                    }
+                ]
+            }
+        },
         "name": {
             "EN": "Lake Maggiore",
             "DE": "Langensee",
