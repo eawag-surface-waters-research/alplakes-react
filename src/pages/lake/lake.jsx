@@ -38,6 +38,7 @@ class Lake extends Component {
     metadata: {},
     error: false,
     performance: false,
+    performanceParameter: "temperature",
   };
 
   constructor(props) {
@@ -45,8 +46,12 @@ class Lake extends Component {
     this.divRef = React.createRef();
   }
 
-  togglePerformance = () => {
-    this.setState({ performance: !this.state.performance });
+  togglePerformance = (parameter) => {
+    this.setState({
+      performance: !this.state.performance,
+      performanceParameter:
+        typeof parameter === "string" ? parameter : "temperature",
+    });
   };
 
   scrollToSection = (sectionRef) => {
@@ -80,7 +85,8 @@ class Lake extends Component {
   }
 
   render() {
-    var { metadata, error, id, performance } = this.state;
+    var { metadata, error, id, performance, performanceParameter } =
+      this.state;
     var { language, dark } = this.props;
     const title = "name" in metadata ? metadata.name[language] : "";
     return (
@@ -118,6 +124,7 @@ class Lake extends Component {
                 language={language}
                 dark={dark}
                 lake={id}
+                parameter={performanceParameter}
                 togglePerformance={this.togglePerformance}
               />
             )}

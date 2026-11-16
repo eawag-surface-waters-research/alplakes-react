@@ -5,6 +5,7 @@ import CONFIG from "../../config.json";
 import Translations from "../../translations.json";
 import "./modelperformance.css";
 import Loading from "../loading/loading";
+import { parameterConfig, rmseColor } from "./parameters";
 
 export const hour = () => {
   return `?timestamp=${
@@ -49,6 +50,7 @@ class ModelPerformance extends Component {
       simstrat: "	#F2C14E",
       "delft3d-flow": "#00AFD6",
       mitgcm: "	#47D6AC",
+      swan: "#00AFD6",
     };
     const fallbackColors = ["#8a63d2", "#e0533d", "#2fb4d6", "#4bd671"];
     let fallbackIndex = 0;
@@ -79,12 +81,7 @@ class ModelPerformance extends Component {
           lineColor: color,
         });
         let rmse = selected_location.models[i].data[depth].rmse;
-        let rmse_color = "#76b64b";
-        if (rmse >= 2) {
-          rmse_color = "#f34b3e";
-        } else if (rmse >= 1) {
-          rmse_color = "#fbd247";
-        }
+        let rmse_color = rmseColor(rmse, this.props.parameter);
         table.push({
           type: label,
           color: color,
@@ -106,9 +103,11 @@ class ModelPerformance extends Component {
     this.setState({ location, depth, plot, table });
   };
   async componentDidMount() {
-    const { lake, togglePerformance } = this.props;
+    const { lake, togglePerformance, parameter } = this.props;
     try {
-      const url = `${CONFIG.alplakes_bucket}/performance/${lake}.json${hour()}`;
+      const url = `${CONFIG.alplakes_bucket}/${parameterConfig(
+        parameter
+      ).file(lake)}${hour()}`;
       const response = await axios.get(url);
       if (response.status === 200) {
         const rd = response.data;
@@ -136,6 +135,7 @@ class ModelPerformance extends Component {
     var { language, dark, togglePerformance } = this.props;
     var { location, depth, fontSize, plot, table, data } = this.state;
     const location_metadata = data.find((d) => d.name === location);
+    const { unit, label } = parameterConfig(this.props.parameter);
     return (
       <div className="model-performance" onClick={this.closeModal}>
         <div className="model-performance-inner" id="model-performance-inner">
@@ -151,8 +151,8 @@ class ModelPerformance extends Component {
                 <DatasetLinegraph
                   xlabel="time"
                   xunits=""
-                  ylabel={Translations.watertemperature[language]}
-                  yunits="°C"
+                  ylabel={Translations[label][language]}
+                  yunits={unit}
                   data={plot}
                   dark={dark}
                   language={language}
@@ -212,7 +212,9 @@ class ModelPerformance extends Component {
                               style={{ backgroundColor: t.rmse_color }}
                             />
                           </td>
-                          <td>± {t.rmse} °C</td>
+                          <td>
+                            ± {t.rmse} {unit}
+                          </td>
                         </tr>
                       ))}
                     </tbody>
@@ -234,16 +236,20 @@ class ModelPerformance extends Component {
                       ))}
                     </select>
                   </div>
-                  <div className="setting">
-                    <div className="label">{Translations.depth[language]}</div>
-                    <select value={depth} onChange={this.setDepth}>
-                      {location_metadata.depth.map((d) => (
-                        <option key={d.name} value={d.name}>
-                          {d.name}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
+                  {location_metadata.depth.length > 1 && (
+                    <div className="setting">
+                      <div className="label">
+                        {Translations.depth[language]}
+                      </div>
+                      <select value={depth} onChange={this.setDepth}>
+                        {location_metadata.depth.map((d) => (
+                          <option key={d.name} value={d.name}>
+                            {d.name}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  )}
                   <div className="setting">
                     <div className="label">{Translations.source[language]}</div>
                     {"url" in location_metadata ? (

@@ -182,6 +182,20 @@
         {"type": "simstrat", "id": "geneva_python_enkf", "name": "simstrat da enkf"}
 
       ]
+    },
+    {
+      "name": "LéXPLORE Wave Buoy",
+      "type": "datalakes",
+      "id": "885",
+      "parameter": "significant_wave_height",
+      "source": "Eawag / EPFL",
+      "url": "https://www.datalakes-eawag.ch/datadetail/885",
+      "lat": 46.5,
+      "lng": 6.67,
+      "depth": [{"name": "Surface", "depth": 0}],
+      "models": [
+        {"type": "swan", "id": "geneva"}
+      ]
     }
   ],
   "constance": [

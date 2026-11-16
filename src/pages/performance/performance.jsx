@@ -9,33 +9,38 @@ import "./performance.css";
 import SortableTable from "../../components/table/table";
 import ScrollUp from "../../components/scrollup/scrollup";
 import ModelPerformance from "../../components/modelperformance/modelperformance";
-import { downloadModelMetadata } from "../lake/functions/download";
+import {
+  downloadModelMetadata,
+  download2DMetadata,
+} from "../lake/functions/download";
+import {
+  defaultParameter,
+  performanceParameters,
+  parameterConfig,
+} from "../../components/modelperformance/parameters";
 
 class Performance extends Component {
   state = {
-    table: { data: [], columns: [] },
+    tables: [],
     performance: false,
     lake: "",
+    parameter: defaultParameter,
   };
-  openPerformance = (lake) => {
-    this.setState({ performance: true, lake: lake });
+  openPerformance = (lake, parameter) => {
+    this.setState({ performance: true, lake, parameter });
   };
   togglePerformance = () => {
     this.setState({ performance: !this.state.performance });
   };
-  async componentDidMount() {
-    var { data: models } = await axios.get(
-      `${CONFIG.alplakes_bucket}/static/website/metadata/${CONFIG.branch}/performance.json`
-    );
-
-    var { data: list } = await axios.get(
-      `${CONFIG.alplakes_bucket}/static/website/metadata/${CONFIG.branch}/list.json`
-    );
-
-    const nameConvert = Object.fromEntries(
-      list.map((lake) => [lake.key, lake.name.EN])
-    );
-
+  buildTable = async (parameter, models, nameConvert) => {
+    const { unit } = parameterConfig(parameter);
+    const modelNames = {
+      "delft3d-flow": "Delft3D-FLOW",
+      mitgcm: "MITgcm",
+      simstrat: "Simstrat",
+      swan: "SWAN",
+    };
+    const twoDModels = ["swan"];
     const lakeNames = Object.keys(models);
     const modelTypes = [
       ...new Set(
@@ -54,46 +59,74 @@ class Performance extends Component {
       ])
     );
 
-    const colDict = {
-      name: "Name",
-      "delft3d-flow": "Delft3D-FLOW RMSE (°C)",
-      mitgcm: "MITgcm RMSE (°C)",
-      simstrat: "Simstrat RMSE (°C)",
-    };
-
     const columns = ["name", ...modelTypes].map((c) => {
-      return { key: c, value: c in colDict ? colDict[c] : c };
+      if (c === "name") return { key: c, value: "Name" };
+      return { key: c, value: `${modelNames[c] || c} RMSE (${unit})` };
     });
     var data = lakeNames.map((l) => ({
       name: { value: l },
-      function: () => this.openPerformance(l),
+      function: () => this.openPerformance(l, parameter),
       ...Object.fromEntries(modelTypes.map((m) => [m, { value: "" }])),
     }));
 
     data = await Promise.all(
       data.map(async (row) => {
         for (let model of Object.keys(available[row.name.value])) {
-          let metadata = await downloadModelMetadata(
-            model,
-            available[row.name.value][model]
-          );
-          if ("rmse" in metadata) {
-            row[model].value = metadata.rmse;
-          } else {
-            row[model].value = "NA";
+          let metadata = false;
+          try {
+            metadata = twoDModels.includes(model)
+              ? await download2DMetadata(model, available[row.name.value][model])
+              : await downloadModelMetadata(
+                  model,
+                  available[row.name.value][model]
+                );
+          } catch (e) {
+            console.error(e);
           }
+          row[model].value = metadata && "rmse" in metadata ? metadata.rmse : "NA";
         }
-        row["name"].value = nameConvert[row["name"].value]
+        row["name"].value = nameConvert[row["name"].value];
         return row;
       })
     );
+    return { parameter, data, columns };
+  };
+  async componentDidMount() {
+    var { data: models } = await axios.get(
+      `${CONFIG.alplakes_bucket}/static/website/metadata/${CONFIG.branch}/performance.json`
+    );
 
-    this.setState({ table: { data, columns } });
+    var { data: list } = await axios.get(
+      `${CONFIG.alplakes_bucket}/static/website/metadata/${CONFIG.branch}/list.json`
+    );
+
+    const nameConvert = Object.fromEntries(
+      list.map((lake) => [lake.key, lake.name.EN])
+    );
+
+    const byParameter = {};
+    for (const [lake, sensors] of Object.entries(models)) {
+      for (const sensor of sensors) {
+        const parameter = sensor.parameter || defaultParameter;
+        if (!(parameter in performanceParameters)) continue;
+        byParameter[parameter] = byParameter[parameter] || {};
+        byParameter[parameter][lake] = byParameter[parameter][lake] || [];
+        byParameter[parameter][lake].push(sensor);
+      }
+    }
+
+    const tables = await Promise.all(
+      Object.keys(performanceParameters)
+        .filter((p) => p in byParameter)
+        .map((p) => this.buildTable(p, byParameter[p], nameConvert))
+    );
+
+    this.setState({ tables });
   }
   render() {
     const language = "EN";
     const { dark } = this.props;
-    const { table, performance, lake } = this.state;
+    const { tables, performance, lake, parameter } = this.state;
     return (
       <React.Fragment>
         <Helmet>
@@ -114,17 +147,35 @@ class Performance extends Component {
                 name to see more detailed performance information.
               </div>
             </div>
-            <SortableTable
-              data={table.data}
-              columns={table.columns}
-              language={language}
-              label="performance"
-            />
+            {tables.map((table) => (
+              <React.Fragment key={table.parameter}>
+                {tables.length > 1 && (
+                  <h2>
+                    {
+                      Translations[parameterConfig(table.parameter).label][
+                        language
+                      ]
+                    }
+                  </h2>
+                )}
+                <SortableTable
+                  data={table.data}
+                  columns={table.columns}
+                  language={language}
+                  label={
+                    table.parameter === defaultParameter
+                      ? "performance"
+                      : `performance_${table.parameter}`
+                  }
+                />
+              </React.Fragment>
+            ))}
             {performance && (
               <ModelPerformance
                 language={language}
                 dark={dark}
                 lake={lake}
+                parameter={parameter}
                 togglePerformance={this.togglePerformance}
               />
             )}

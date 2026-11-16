@@ -365,8 +365,9 @@ class TwoDModel extends Component {
             {metadata.rmse && (
               <ModelPerformanceButton
                 rmse={metadata.rmse}
+                parameter="significant_wave_height"
                 language={language}
-                open={togglePerformance}
+                open={() => togglePerformance("significant_wave_height")}
               />
             )}
             <div className="popup">
