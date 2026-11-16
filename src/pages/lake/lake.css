@@ -501,11 +501,28 @@
   top: calc(var(--padding) / 4);
   left: calc(var(--padding) / 4);
   display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: calc(var(--padding) / 4);
+}
+
+.main .lake .forecast .map-sidebar .map-sidebar-left .forecast-boxes .forecast-row {
+  display: flex;
   align-items: stretch;
   gap: calc(var(--padding) / 4);
 }
 
 .main .lake .forecast .map-sidebar .map-sidebar-left .forecast-boxes .current {
+  position: static;
+}
+
+.main
+  .lake
+  .forecast
+  .map-sidebar
+  .map-sidebar-left
+  .forecast-boxes
+  .model-performance-button {
   position: static;
 }
 

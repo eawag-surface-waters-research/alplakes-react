@@ -302,7 +302,7 @@ class TwoDModel extends Component {
               <div className="new-flag-label">new</div>
               <div className="new-flag-box">
                 {Translations.newFeatureFeedback[language]}{" "}
-                  james.runnalls@eawag.ch
+                james.runnalls@eawag.ch
               </div>
             </div>
           </span>
@@ -320,30 +320,40 @@ class TwoDModel extends Component {
         <div className="map-sidebar">
           <div className="map-sidebar-left">
             <div className="forecast-boxes">
-              {datetime && (
-                <div className="current">
-                  <div>{formatReadableDate(datetime, language)}</div>
-                  <div>{formatTime(datetime)}</div>
-                </div>
-              )}
-              {range && (
-                <div className="wave-range">
-                  <div className="summary">
-                    <span className="label">
-                      {Translations.max_wave_height[language]}
-                    </span>
-                    <span className="value">
-                      {Math.round(range.max * 100) / 100} m
-                    </span>
+              <div className="forecast-row">
+                {datetime && (
+                  <div className="current">
+                    <div>{formatReadableDate(datetime, language)}</div>
+                    <div>{formatTime(datetime)}</div>
                   </div>
-                  {hist && (
-                    <WaveDistribution
-                      counts={hist}
-                      min={range.min}
-                      max={range.max}
-                    />
-                  )}
-                </div>
+                )}
+                {range && (
+                  <div className="wave-range">
+                    <div className="summary">
+                      <span className="label">
+                        {Translations.max_wave_height[language]}
+                      </span>
+                      <span className="value">
+                        {Math.round(range.max * 100) / 100} m
+                      </span>
+                    </div>
+                    {hist && (
+                      <WaveDistribution
+                        counts={hist}
+                        min={range.min}
+                        max={range.max}
+                      />
+                    )}
+                  </div>
+                )}
+              </div>
+              {metadata.rmse && (
+                <ModelPerformanceButton
+                  rmse={metadata.rmse}
+                  parameter="significant_wave_height"
+                  language={language}
+                  open={() => togglePerformance("significant_wave_height")}
+                />
               )}
             </div>
             <div className="model-source">
@@ -362,14 +372,6 @@ class TwoDModel extends Component {
               link={`/map/${id}?layers=2D_significant_wave_height,2D_wave_direction`}
               language={language}
             />
-            {metadata.rmse && (
-              <ModelPerformanceButton
-                rmse={metadata.rmse}
-                parameter="significant_wave_height"
-                language={language}
-                open={() => togglePerformance("significant_wave_height")}
-              />
-            )}
             <div className="popup">
               {warning && (
                 <div className="warning-popup" onClick={this.closeWarning}>
