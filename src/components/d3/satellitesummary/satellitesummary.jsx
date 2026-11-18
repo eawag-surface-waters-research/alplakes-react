@@ -169,7 +169,7 @@ class SatelliteSummary extends Component {
       for (let image of date.images) {
         if (!satellites.includes(image.satellite.slice(0, 2)))
           satellites.push(image.satellite.slice(0, 2));
-        if (image.percent > options.coverage && image.percent > 10) {
+        if (image.percent > options.coverage) {
           let tooltip = `<div><div>${image.satellite} ${image.percent}% coverage</div><div></div>Click to view</div>`;
           ymin = Math.min(ymin, image.ave);
           ymax = Math.max(ymax, image.ave);
