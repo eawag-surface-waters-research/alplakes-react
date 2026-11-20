@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import L from "leaflet";
-import { update, setPlayDatetime } from "./update";
+import { update, setPlayDatetime, addNearbyLakes } from "./update";
 import "./leaflet_customtooltip";
 import { addBasemap, updateBasemap } from "./maplibre_basemap";
 import "./css/leaflet.css";
@@ -148,14 +148,26 @@ class Basemap extends Component {
       getProfile,
       getSatelliteTimeseries,
       getWaveTimeseries,
+      nearbyLakes,
+      getLakeAvailability,
+      goToLake,
     } = this.props;
     const server = {
       getTransect,
       getProfile,
       getSatelliteTimeseries,
       getWaveTimeseries,
+      getLakeAvailability,
+      goToLake,
       disableControls: this.disableControls,
     };
+    if (
+      nearbyLakes &&
+      goToLake &&
+      (prevProps.nearbyLakes !== nearbyLakes || prevProps.language !== language)
+    ) {
+      addNearbyLakes(this.map, nearbyLakes, language, server);
+    }
     if (updates.length > 0) {
       const loading_div = document.getElementById(`loading_${mapId}`);
       loading_div.style.opacity = 0.6;

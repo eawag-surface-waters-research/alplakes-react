@@ -614,6 +614,130 @@ const genericRemoveLayer = (map, layers, id) => {
   }
 };
 
+const nearbyLakeStatus = (availability, language) => {
+  if (!availability || availability.active === 0) {
+    return `<div class="status">${Translate.nearbyLakeOpen[language]}</div>`;
+  }
+  if (availability.missing.length === 0) {
+    return `<div class="status full">${Translate.nearbyLakeAllAvailable[language]}</div>`;
+  }
+  if (availability.available.length === 0) {
+    return `<div class="status none">${Translate.nearbyLakeNoneAvailable[language]}</div>`;
+  }
+  return `<div class="status partial">${
+    Translate.nearbyLakeMissing[language]
+  }: ${availability.missing.join(", ")}</div>`;
+};
+
+// Other lakes are invisible until hovered. Hover shades the lake and shows a
+// label that follows the mouse with the lake name and availability of the
+// active layers; click opens the same view for that lake.
+export const addNearbyLakes = (map, lakes, language, server) => {
+  if (map.nearbyLakes) {
+    map.removeLayer(map.nearbyLakes.group);
+    map.off("click", map.nearbyLakes.onMapClick);
+  }
+  if (!map.getPane("nearbyLakeAreas")) {
+    const pane = map.createPane("nearbyLakeAreas");
+    pane.style.zIndex = 450;
+    pane.classList.add("nearby-lakes-pane");
+  }
+  const renderer = L.svg({ pane: "nearbyLakeAreas" });
+  const group = L.featureGroup().addTo(map);
+  const options = {
+    pane: "nearbyLakeAreas",
+    renderer,
+    bubblingMouseEvents: false,
+    className: "nearby-lake-area",
+    stroke: false,
+    fillOpacity: 0,
+  };
+
+  // Touch devices have no hover: the first tap shows the label, the second navigates
+  const tapState = { armed: false, close: false };
+  const disarm = () => {
+    const close = tapState.close;
+    tapState.armed = false;
+    tapState.close = false;
+    if (close) close();
+  };
+  const onMapClick = disarm;
+  map.on("click", onMapClick);
+
+  for (const lake of lakes) {
+    if (!lake.latitude || !lake.longitude) continue;
+    const name = lake.name[language] || lake.name.EN || lake.key;
+    const header = `<div class="name">${name}<span class="go">&rarr;</span></div>`;
+
+    // Invisible hover/click area: the lake polygon, or a small circle at the
+    // lake's point when there is no polygon (GeoJSON passes the options
+    // through to each child path)
+    const area = lake.geometry
+      ? L.geoJSON(lake.geometry, options)
+      : L.circleMarker([lake.latitude, lake.longitude], {
+          ...options,
+          radius: 12,
+        });
+    area.bindTooltip(
+      header +
+        `<div class="details"><div class="status">${Translate.nearbyLakeChecking[language]}</div></div>`,
+      {
+        sticky: true,
+        direction: "top",
+        offset: [0, -14],
+        opacity: 1,
+        className: "nearby-lake-tooltip",
+      },
+    );
+
+    const refresh = async () => {
+      const availability = await server.getLakeAvailability(lake.key);
+      const hint =
+        tapState.armed === lake.key
+          ? `<div class="hint">${Translate.nearbyLakeTapAgain[language]}</div>`
+          : "";
+      area.setTooltipContent(
+        header +
+          `<div class="details">${nearbyLakeStatus(availability, language)}${hint}</div>`,
+      );
+    };
+    const setShaded = (shaded) => {
+      // Only shade real lake shapes, not the fallback circle
+      if (!lake.geometry) return;
+      area.eachLayer((path) => {
+        const pathElement = path.getElement();
+        if (pathElement) pathElement.classList.toggle("shaded", shaded);
+      });
+    };
+    const open = () => {
+      setShaded(true);
+      refresh();
+    };
+    const close = () => {
+      if (tapState.armed === lake.key) return;
+      setShaded(false);
+      area.closeTooltip();
+    };
+    const click = (e) => {
+      const touch =
+        L.Browser.mobile ||
+        (e.originalEvent && e.originalEvent.pointerType === "touch");
+      if (touch && tapState.armed !== lake.key) {
+        disarm();
+        tapState.armed = lake.key;
+        tapState.close = close;
+        open();
+        area.openTooltip(e.latlng);
+        return;
+      }
+      server.goToLake(lake.key);
+    };
+
+    area.on({ mouseover: open, mouseout: close, click }).addTo(group);
+  }
+  map.nearbyLakes = { group, onMapClick };
+};
+
 const setBounds = (map, bounds) => {
   map.fitBounds(L.latLngBounds(L.latLng(bounds[0]), L.latLng(bounds[1])), {
     padding: [20, 20],

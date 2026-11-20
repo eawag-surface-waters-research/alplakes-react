@@ -96,3 +96,65 @@
   padding: 3px 6px;
   border-radius: 8px;
 }
+
+
+/* Nearby lakes: invisible until hovered, then shaded with a label at the mouse */
+.nearby-lakes-pane svg {
+  pointer-events: none;
+}
+
+.nearby-lakes-pane path.nearby-lake-area {
+  cursor: pointer;
+  fill: var(--highlight-color);
+  fill-opacity: 0;
+  transition: fill-opacity 0.2s ease;
+}
+
+.nearby-lakes-pane path.nearby-lake-area.shaded {
+  fill-opacity: 0.2;
+}
+
+.leaflet-tooltip.nearby-lake-tooltip {
+  background-color: var(--box-color);
+  color: var(--box-font-color);
+  border: none;
+  border-radius: 11px;
+  box-shadow: var(--box-shadow-hover);
+  padding: 4px 10px 5px 10px;
+  white-space: nowrap;
+  /* Let the mouse pass through so moving onto the label doesn't leave the lake */
+  pointer-events: none;
+}
+
+.leaflet-tooltip.nearby-lake-tooltip::before {
+  display: none;
+}
+
+.nearby-lake-tooltip .name {
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 16px;
+}
+
+.nearby-lake-tooltip .name .go {
+  margin-left: 6px;
+  color: var(--highlight-color);
+}
+
+.nearby-lake-tooltip .details > div {
+  font-size: 11px;
+  line-height: 14px;
+  color: var(--background-subtle-font-color);
+}
+
+.nearby-lake-tooltip .status.full {
+  color: var(--highlight-color);
+}
+
+.nearby-lake-tooltip .status.partial {
+  color: #c98a1e;
+}
+
+.nearby-lake-tooltip .status.none {
+  color: #c0504d;
+}

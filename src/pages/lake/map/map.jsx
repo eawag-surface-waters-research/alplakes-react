@@ -40,6 +40,99 @@ class Map extends Component {
     measurements: false,
     satelliteTimeseriesModal: false,
     satelliteTimeseriesCount: 1,
+    nearbyLakes: false,
+    addLayersModal: false,
+    initialLoadDone: false,
+  };
+
+  // Cache of layer id lists for other lakes, keyed by lake key (promises)
+  lakeLayerIds = {};
+
+  layersUrl = (key) =>
+    CONFIG.alplakes_bucket +
+    `/static/website/metadata/${CONFIG.branch}/${key}_layers.json?timestamp=${
+      Math.round((new Date().getTime() + 1800000) / 3600000) * 3600 - 3600
+    }`;
+
+  layerLabel = (layer, language) => {
+    const name = Translations[layer.name]
+      ? Translations[layer.name][language]
+      : layer.name;
+    const type = Translations[layer.type]
+      ? Translations[layer.type][language]
+      : layer.type;
+    return `${name} (${type})`;
+  };
+
+  loadNearbyLakes = async (id) => {
+    try {
+      const base = `${CONFIG.alplakes_bucket}/static/website/metadata/${CONFIG.branch}`;
+      const [{ data: list }, { data: geometry }] = await Promise.all([
+        axios.get(`${base}/list.json`),
+        axios.get(`${base}/lakes.geojson`),
+      ]);
+      const polygons = {};
+      for (const feature of geometry.features) {
+        polygons[feature.properties.key] = feature.geometry;
+      }
+      const nearbyLakes = list
+        .filter((lake) => lake.key !== id)
+        .map((lake) => ({
+          key: lake.key,
+          name: lake.name,
+          latitude: lake.latitude,
+          longitude: lake.longitude,
+          geometry: polygons[lake.key] || false,
+        }));
+      this.setState({ nearbyLakes });
+    } catch (e) {
+      console.error("Failed to load nearby lakes", e);
+    }
+  };
+
+  fetchLakeLayerIds = (key) => {
+    if (!(key in this.lakeLayerIds)) {
+      this.lakeLayerIds[key] = axios
+        .get(this.layersUrl(key))
+        .then(({ data }) => data.layers.map((l) => l.id))
+        .catch((e) => {
+          console.error(`Failed to load layers for ${key}`, e);
+          delete this.lakeLayerIds[key];
+          return false;
+        });
+    }
+    return this.lakeLayerIds[key];
+  };
+
+  getLakeAvailability = async (key) => {
+    const { language } = this.props;
+    const ids = await this.fetchLakeLayerIds(key);
+    if (!ids) return false;
+    const active = this.state.layers.filter((l) => l.active);
+    return {
+      active: active.length,
+      available: active.filter((l) => ids.includes(l.id)).map((l) => l.id),
+      missing: active
+        .filter((l) => !ids.includes(l.id))
+        .map((l) => this.layerLabel(l, language)),
+    };
+  };
+
+  goToLake = async (key) => {
+    const availability = await this.getLakeAvailability(key);
+    var layers;
+    if (availability) {
+      layers = availability.available;
+    } else {
+      // Availability unknown: pass everything, the target map drops what it lacks
+      layers = this.state.layers.filter((l) => l.active).map((l) => l.id);
+    }
+    const params = new URLSearchParams();
+    if (layers.length > 0) params.set("layers", layers.join(","));
+    const iframe = new URLSearchParams(window.location.search).get("iframe");
+    if (iframe) params.set("iframe", iframe);
+    const query = params.toString();
+    window.location.assign(`/map/${key}${query ? `?${query}` : ""}`);
   };
 
   loading = (text) => {
@@ -79,6 +172,10 @@ class Map extends Component {
 
   toggleSidebar = () => {
     this.setState({ sidebar: !this.state.sidebar });
+  };
+
+  toggleAddLayersModal = () => {
+    this.setState({ addLayersModal: !this.state.addLayersModal });
   };
 
   selectMapGraph = (graphSelection) => {
@@ -528,15 +625,11 @@ class Map extends Component {
         .filter((l) => l !== "");
     }
     try {
-      var { data } = await axios.get(
-        CONFIG.alplakes_bucket +
-          `/static/website/metadata/${
-            CONFIG.branch
-          }/${id}_layers.json?timestamp=${
-            Math.round((new Date().getTime() + 1800000) / 3600000) * 3600 - 3600
-          }`,
-      );
+      var { data } = await axios.get(this.layersUrl(id));
       var layers = data.layers;
+      // Ignore requested layers this lake doesn't have (e.g. links from other lakes)
+      const layerIds = layers.map((l) => l.id);
+      active_layers = active_layers.filter((l) => layerIds.includes(l));
       updates.push({ event: "bounds", options: data.bounds });
       this.setState(
         {
@@ -547,7 +640,14 @@ class Map extends Component {
           iframe,
           sidebar,
         },
-        () => this.addLayers(active_layers, true),
+        () => {
+          this.addLayers(active_layers, true).finally(() => {
+            // Enables the "no layers" prompt once the initial load is done
+            this.setState({ initialLoadDone: true });
+            // Load nearby lakes after the initial layers so they don't compete for bandwidth
+            this.loadNearbyLakes(id);
+          });
+        },
       );
     } catch (e) {
       console.error(e);
@@ -572,6 +672,9 @@ class Map extends Component {
       graphFull,
       satelliteTimeseriesModal,
       satelliteTimeseriesCount,
+      nearbyLakes,
+      addLayersModal,
+      initialLoadDone,
     } = this.state;
     var { language, dark } = this.props;
     var title = "";
@@ -585,6 +688,11 @@ class Map extends Component {
       queryParams.get("iframe") && queryParams.get("iframe") === "true"
         ? true
         : false;
+    const showNoLayers =
+      initialLoadDone &&
+      !iframe &&
+      !addLayersModal &&
+      !layers.some((l) => l.active);
     return (
       <div className={sidebar ? "map sidebar-open" : "map"}>
         <Helmet>
@@ -617,6 +725,8 @@ class Map extends Component {
             <Sidebar
               sidebar={sidebar}
               toggleSidebar={this.toggleSidebar}
+              addLayersModal={addLayersModal}
+              toggleAddLayersModal={this.toggleAddLayersModal}
               layers={layers}
               title={title}
               period={period}
@@ -658,7 +768,28 @@ class Map extends Component {
               graphFull={graphFull}
               toggleGraphFull={this.toggleGraphFull}
               updateOptions={this.updateOptions}
+              nearbyLakes={nearbyLakes}
+              getLakeAvailability={this.getLakeAvailability}
+              goToLake={this.goToLake}
             />
+            {showNoLayers && (
+              <div className="no-layers">
+                <div className="no-layers-card">
+                  <div className="no-layers-title">
+                    {Translations.noLayersTitle[language]}
+                  </div>
+                  <div className="no-layers-text">
+                    {Translations.noLayersText[language]}
+                  </div>
+                  <button
+                    className="no-layers-button"
+                    onClick={this.toggleAddLayersModal}
+                  >
+                    + {Translations.addlayers[language]}
+                  </button>
+                </div>
+              </div>
+            )}
             <div className="map-loading" id={`map_loading_${mapId}`}>
               <div className="map-loading-inner">
                 <Loading />

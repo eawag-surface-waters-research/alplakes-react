@@ -2268,5 +2268,53 @@
     "DE": "Slowenien",
     "FR": "Slovénie",
     "IT": "Slovenia"
+  },
+  "nearbyLakeOpen": {
+    "EN": "Open map",
+    "DE": "Karte öffnen",
+    "FR": "Ouvrir la carte",
+    "IT": "Apri la mappa"
+  },
+  "nearbyLakeChecking": {
+    "EN": "Checking available layers...",
+    "DE": "Verfügbare Ebenen werden geprüft...",
+    "FR": "Vérification des couches disponibles...",
+    "IT": "Verifica dei livelli disponibili..."
+  },
+  "nearbyLakeAllAvailable": {
+    "EN": "All active layers available",
+    "DE": "Alle aktiven Ebenen verfügbar",
+    "FR": "Toutes les couches actives disponibles",
+    "IT": "Tutti i livelli attivi disponibili"
+  },
+  "nearbyLakeMissing": {
+    "EN": "Not available",
+    "DE": "Nicht verfügbar",
+    "FR": "Non disponible",
+    "IT": "Non disponibile"
+  },
+  "nearbyLakeNoneAvailable": {
+    "EN": "None of the active layers are available",
+    "DE": "Keine der aktiven Ebenen ist verfügbar",
+    "FR": "Aucune des couches actives n'est disponible",
+    "IT": "Nessuno dei livelli attivi è disponibile"
+  },
+  "nearbyLakeTapAgain": {
+    "EN": "Tap again to open",
+    "DE": "Erneut tippen zum Öffnen",
+    "FR": "Appuyez à nouveau pour ouvrir",
+    "IT": "Tocca di nuovo per aprire"
+  },
+  "noLayersTitle": {
+    "EN": "No layers selected",
+    "DE": "Keine Ebenen ausgewählt",
+    "FR": "Aucune couche sélectionnée",
+    "IT": "Nessun livello selezionato"
+  },
+  "noLayersText": {
+    "EN": "Add a layer to start exploring the data for this lake.",
+    "DE": "Fügen Sie eine Ebene hinzu, um die Daten für diesen See zu erkunden.",
+    "FR": "Ajoutez une couche pour explorer les données de ce lac.",
+    "IT": "Aggiungi un livello per esplorare i dati di questo lago."
   }
 }

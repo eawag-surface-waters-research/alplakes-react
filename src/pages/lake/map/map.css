@@ -1093,3 +1093,80 @@
         display: block;
     }
 }
+/* Prompt shown when the map has no active layers */
+.main .map .layer-map .no-layers {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
+    box-sizing: border-box;
+    z-index: 1001;
+    pointer-events: none;
+}
+
+.main .map.sidebar-open .layer-map .no-layers {
+    width: calc(100% - 424px);
+}
+
+@media screen and (max-width: 1000px) {
+    .main .map.sidebar-open .layer-map .no-layers {
+        width: 100%;
+    }
+}
+
+.main .map .layer-map .no-layers-card {
+    pointer-events: all;
+    max-width: 340px;
+    background-color: var(--box-color);
+    color: var(--box-font-color);
+    border-radius: 22px;
+    box-shadow: var(--box-shadow);
+    padding: 24px 28px;
+    text-align: center;
+    animation: no-layers-in 0.3s ease;
+}
+
+.main .map .layer-map .no-layers-title {
+    font-size: 20px;
+    margin-bottom: 8px;
+}
+
+.main .map .layer-map .no-layers-text {
+    font-size: 14px;
+    color: var(--background-subtle-font-color);
+    margin-bottom: 20px;
+}
+
+.main .map .layer-map .no-layers-button {
+    font-family: inherit;
+    font-size: 15px;
+    cursor: pointer;
+    border: none;
+    border-radius: 12px;
+    padding: 10px 20px;
+    background-color: var(--highlight-color);
+    color: white;
+    box-shadow: var(--box-shadow);
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.main .map .layer-map .no-layers-button:hover {
+    box-shadow: var(--box-shadow-hover);
+    transform: translateY(-1px);
+}
+
+@keyframes no-layers-in {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

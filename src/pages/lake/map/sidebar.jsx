@@ -23,13 +23,6 @@ import ShowMoreText from "../../../components/showmore/showmore";
 import AddLayers from "./addlayers";
 
 class Sidebar extends Component {
-  state = {
-    addLayersModal: false,
-  };
-
-  toggleAddLayersModal = () => {
-    this.setState({ addLayersModal: !this.state.addLayersModal });
-  };
   render() {
     const {
       title,
@@ -49,8 +42,9 @@ class Sidebar extends Component {
       setDepth,
       sidebar,
       toggleSidebar,
+      addLayersModal,
+      toggleAddLayersModal,
     } = this.props;
-    const { addLayersModal } = this.state;
     const images = {
       temperature: temperature_icon,
       airtemperature: temperature_icon,
@@ -91,7 +85,7 @@ class Sidebar extends Component {
                 setSelection={setSelection}
                 removeLayer={removeLayer}
                 reorderLayers={reorderLayers}
-                toggleAddLayersModal={this.toggleAddLayersModal}
+                toggleAddLayersModal={toggleAddLayersModal}
               />
             </div>
             <div
@@ -149,7 +143,7 @@ class Sidebar extends Component {
           images={images}
           addLayers={addLayers}
           addLayersModal={addLayersModal}
-          toggleAddLayersModal={this.toggleAddLayersModal}
+          toggleAddLayersModal={toggleAddLayersModal}
         />
       </React.Fragment>
     );
