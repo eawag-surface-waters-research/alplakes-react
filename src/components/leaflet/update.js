@@ -614,24 +614,35 @@ const genericRemoveLayer = (map, layers, id) => {
   }
 };
 
+// One dot per active layer (filled if the lake has it) and a short summary.
+// Nothing is shown while loading, if the check failed or with no active layers.
 const nearbyLakeStatus = (availability, language) => {
-  if (!availability || availability.active === 0) {
-    return `<div class="status">${Translate.nearbyLakeOpen[language]}</div>`;
+  if (!availability || availability.active === 0) return "";
+  const have = availability.available.length;
+  const total = availability.active;
+  var text;
+  if (have === total) {
+    text = Translate.nearbyLakeAllAvailable[language];
+  } else if (have === 0) {
+    text = Translate.nearbyLakeNoneAvailable[language];
+  } else {
+    text = Translate.nearbyLakeSomeAvailable[language]
+      .replace("{a}", have)
+      .replace("{b}", total);
   }
-  if (availability.missing.length === 0) {
-    return `<div class="status full">${Translate.nearbyLakeAllAvailable[language]}</div>`;
-  }
-  if (availability.available.length === 0) {
-    return `<div class="status none">${Translate.nearbyLakeNoneAvailable[language]}</div>`;
-  }
-  return `<div class="status partial">${
-    Translate.nearbyLakeMissing[language]
-  }: ${availability.missing.join(", ")}</div>`;
+  const dots = Array.from(
+    { length: Math.min(total, 6) },
+    (_, i) => `<span class="dot${i < have ? " on" : ""}"></span>`,
+  ).join("");
+  return `<div class="status"><span class="dots">${dots}</span>${text}</div>`;
 };
 
-// Other lakes are invisible until hovered. Hover shades the lake and shows a
-// label that follows the mouse with the lake name and availability of the
-// active layers; click opens the same view for that lake.
+const nearbyLakeLabel = (name, status = "", hint = "") =>
+  `<div class="nearby-lake-label"><div class="text"><div class="name">${name}</div>${status}${hint}</div><div class="go"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>`;
+
+// Other lakes are invisible until hovered. Hover shows a label that follows
+// the mouse with the lake name and availability of the active layers; click
+// opens the same view for that lake.
 export const addNearbyLakes = (map, lakes, language, server) => {
   if (map.nearbyLakes) {
     map.removeLayer(map.nearbyLakes.group);
@@ -667,7 +678,6 @@ export const addNearbyLakes = (map, lakes, language, server) => {
   for (const lake of lakes) {
     if (!lake.latitude || !lake.longitude) continue;
     const name = lake.name[language] || lake.name.EN || lake.key;
-    const header = `<div class="name">${name}<span class="go">&rarr;</span></div>`;
 
     // Invisible hover/click area: the lake polygon, or a small circle at the
     // lake's point when there is no polygon (GeoJSON passes the options
@@ -678,17 +688,13 @@ export const addNearbyLakes = (map, lakes, language, server) => {
           ...options,
           radius: 12,
         });
-    area.bindTooltip(
-      header +
-        `<div class="details"><div class="status">${Translate.nearbyLakeChecking[language]}</div></div>`,
-      {
-        sticky: true,
-        direction: "top",
-        offset: [0, -14],
-        opacity: 1,
-        className: "nearby-lake-tooltip",
-      },
-    );
+    area.bindTooltip(nearbyLakeLabel(name), {
+      sticky: true,
+      direction: "top",
+      offset: [0, -14],
+      opacity: 1,
+      className: "nearby-lake-tooltip",
+    });
 
     const refresh = async () => {
       const availability = await server.getLakeAvailability(lake.key);
@@ -697,25 +703,12 @@ export const addNearbyLakes = (map, lakes, language, server) => {
           ? `<div class="hint">${Translate.nearbyLakeTapAgain[language]}</div>`
           : "";
       area.setTooltipContent(
-        header +
-          `<div class="details">${nearbyLakeStatus(availability, language)}${hint}</div>`,
+        nearbyLakeLabel(name, nearbyLakeStatus(availability, language), hint),
       );
     };
-    const setShaded = (shaded) => {
-      // Only shade real lake shapes, not the fallback circle
-      if (!lake.geometry) return;
-      area.eachLayer((path) => {
-        const pathElement = path.getElement();
-        if (pathElement) pathElement.classList.toggle("shaded", shaded);
-      });
-    };
-    const open = () => {
-      setShaded(true);
-      refresh();
-    };
+    const open = () => refresh();
     const close = () => {
       if (tapState.armed === lake.key) return;
-      setShaded(false);
       area.closeTooltip();
     };
     const click = (e) => {

@@ -54,16 +54,6 @@ class Map extends Component {
       Math.round((new Date().getTime() + 1800000) / 3600000) * 3600 - 3600
     }`;
 
-  layerLabel = (layer, language) => {
-    const name = Translations[layer.name]
-      ? Translations[layer.name][language]
-      : layer.name;
-    const type = Translations[layer.type]
-      ? Translations[layer.type][language]
-      : layer.type;
-    return `${name} (${type})`;
-  };
-
   loadNearbyLakes = async (id) => {
     try {
       const base = `${CONFIG.alplakes_bucket}/static/website/metadata/${CONFIG.branch}`;
@@ -105,16 +95,12 @@ class Map extends Component {
   };
 
   getLakeAvailability = async (key) => {
-    const { language } = this.props;
     const ids = await this.fetchLakeLayerIds(key);
     if (!ids) return false;
     const active = this.state.layers.filter((l) => l.active);
     return {
       active: active.length,
       available: active.filter((l) => ids.includes(l.id)).map((l) => l.id),
-      missing: active
-        .filter((l) => !ids.includes(l.id))
-        .map((l) => this.layerLabel(l, language)),
     };
   };
 

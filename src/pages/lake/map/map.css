@@ -1093,6 +1093,7 @@
         display: block;
     }
 }
+
 /* Prompt shown when the map has no active layers */
 .main .map .layer-map .no-layers {
     position: absolute;

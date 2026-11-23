@@ -70,10 +70,6 @@ L.Geotiff = L.ImageOverlay.extend({
             (this._rasterBounds._northEast.lat -
               this._rasterBounds._southWest.lat)
         );
-      // Outside the raster: without this, x wraps into the neighbouring row
-      if (x < 0 || x >= this.raster.width || y < 0 || y >= this.raster.height) {
-        return undefined;
-      }
       var i = y * this.raster.width + x;
       return this.raster.data[i];
     } catch (err) {

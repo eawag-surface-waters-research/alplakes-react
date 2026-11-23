@@ -97,30 +97,22 @@
   border-radius: 8px;
 }
 
-
-/* Nearby lakes: invisible until hovered, then shaded with a label at the mouse */
+/* Nearby lakes: invisible hover areas with a label at the mouse */
 .nearby-lakes-pane svg {
   pointer-events: none;
 }
 
 .nearby-lakes-pane path.nearby-lake-area {
   cursor: pointer;
-  fill: var(--highlight-color);
-  fill-opacity: 0;
-  transition: fill-opacity 0.2s ease;
-}
-
-.nearby-lakes-pane path.nearby-lake-area.shaded {
-  fill-opacity: 0.2;
 }
 
 .leaflet-tooltip.nearby-lake-tooltip {
   background-color: var(--box-color);
   color: var(--box-font-color);
   border: none;
-  border-radius: 11px;
+  border-radius: 12px;
   box-shadow: var(--box-shadow-hover);
-  padding: 4px 10px 5px 10px;
+  padding: 7px 8px 7px 12px;
   white-space: nowrap;
   /* Let the mouse pass through so moving onto the label doesn't leave the lake */
   pointer-events: none;
@@ -130,31 +122,78 @@
   display: none;
 }
 
-.nearby-lake-tooltip .name {
+.nearby-lake-label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  animation: nearby-lake-in 0.15s ease-out;
+}
+
+@keyframes nearby-lake-in {
+  from {
+    opacity: 0;
+    transform: translateY(3px);
+  }
+}
+
+.nearby-lake-label .name {
   font-size: 13px;
-  font-weight: 500;
-  line-height: 16px;
+  font-weight: 600;
+  line-height: 17px;
 }
 
-.nearby-lake-tooltip .name .go {
-  margin-left: 6px;
-  color: var(--highlight-color);
-}
-
-.nearby-lake-tooltip .details > div {
+.nearby-lake-label .status,
+.nearby-lake-label .hint {
+  display: flex;
+  align-items: center;
+  margin-top: 2px;
   font-size: 11px;
   line-height: 14px;
   color: var(--background-subtle-font-color);
 }
 
-.nearby-lake-tooltip .status.full {
+.nearby-lake-label .hint {
   color: var(--highlight-color);
 }
 
-.nearby-lake-tooltip .status.partial {
-  color: #c98a1e;
+.nearby-lake-label .dots {
+  display: inline-flex;
+  gap: 3px;
+  margin-right: 6px;
 }
 
-.nearby-lake-tooltip .status.none {
-  color: #c0504d;
+.nearby-lake-label .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  box-sizing: border-box;
+  border: 1.5px solid var(--background-subtle-font-color);
+  opacity: 0.6;
+}
+
+.nearby-lake-label .dot.on {
+  border-color: var(--highlight-color);
+  background-color: var(--highlight-color);
+  opacity: 1;
+}
+
+.nearby-lake-label .go {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: var(--highlight-color-subtle);
+  color: var(--highlight-color);
+}
+
+.nearby-lake-label .go svg {
+  width: 14px;
+  height: 14px;
+}
+
+.dark .nearby-lake-label .go {
+  color: #fff;
 }

@@ -2269,35 +2269,23 @@
     "FR": "Slovénie",
     "IT": "Slovenia"
   },
-  "nearbyLakeOpen": {
-    "EN": "Open map",
-    "DE": "Karte öffnen",
-    "FR": "Ouvrir la carte",
-    "IT": "Apri la mappa"
-  },
-  "nearbyLakeChecking": {
-    "EN": "Checking available layers...",
-    "DE": "Verfügbare Ebenen werden geprüft...",
-    "FR": "Vérification des couches disponibles...",
-    "IT": "Verifica dei livelli disponibili..."
-  },
   "nearbyLakeAllAvailable": {
-    "EN": "All active layers available",
-    "DE": "Alle aktiven Ebenen verfügbar",
-    "FR": "Toutes les couches actives disponibles",
-    "IT": "Tutti i livelli attivi disponibili"
+    "EN": "All layers available",
+    "DE": "Alle Ebenen verfügbar",
+    "FR": "Toutes les couches disponibles",
+    "IT": "Tutti i livelli disponibili"
   },
-  "nearbyLakeMissing": {
-    "EN": "Not available",
-    "DE": "Nicht verfügbar",
-    "FR": "Non disponible",
-    "IT": "Non disponibile"
+  "nearbyLakeSomeAvailable": {
+    "EN": "{a} of {b} layers available",
+    "DE": "{a} von {b} Ebenen verfügbar",
+    "FR": "{a} couches sur {b} disponibles",
+    "IT": "{a} livelli su {b} disponibili"
   },
   "nearbyLakeNoneAvailable": {
-    "EN": "None of the active layers are available",
-    "DE": "Keine der aktiven Ebenen ist verfügbar",
-    "FR": "Aucune des couches actives n'est disponible",
-    "IT": "Nessuno dei livelli attivi è disponibile"
+    "EN": "No layers available",
+    "DE": "Keine Ebenen verfügbar",
+    "FR": "Aucune couche disponible",
+    "IT": "Nessun livello disponibile"
   },
   "nearbyLakeTapAgain": {
     "EN": "Tap again to open",
